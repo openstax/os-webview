@@ -7,9 +7,9 @@ const debouncedDebug = debounce((...args) => console.debug(...args), 100);
 
 function checkUserForProblems(user) {
     if (!user || Reflect.ownKeys(user).length === 0) {
-        console.debug('No user info retrieved');
+        debouncedDebug('No user info retrieved');
     } else if (!('pending_verification' in user)) {
-        console.debug('No pending_verification flag set in user info', user);
+        debouncedDebug('No pending_verification flag set in user info', user);
     } else {
         debouncedDebug('User info:', {
             email: user.email,

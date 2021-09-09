@@ -22,7 +22,7 @@ function useContextValue() {
         }
     }, [data, language]);
 
-    if (data) {
+    if (data?.books) {
         data.books = data.books.filter((b) => b.bookState !== 'retired');
     }
 

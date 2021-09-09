@@ -1,18 +1,23 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useCallback} from 'react';
+import {useErrorBoundary} from 'preact/hooks';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {useLocation} from 'react-router-dom';
 
 function useContextValue() {
-    const [isValid, setIsValid] = useState(true);
-    const reset = () => setIsValid(true);
+    const [error, resetError] = useErrorBoundary(
+        (err) => console.warn('Error boundary error:', err)
+    );
     const loc = useLocation();
+    const fail = useCallback((info = 'Router force fail') => {
+        throw (new Error(info));
+    }, []);
 
-    useEffect(reset, [loc]);
+    useEffect(resetError, [loc]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return {
-        isValid,
-        reset,
-        fail() {setIsValid(false);}
+        isValid: !error,
+        reset: resetError,
+        fail
     };
 }
 

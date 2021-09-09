@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {LanguageContextProvider} from '~/contexts/language';
 import {SubjectCategoryContextProvider} from '~/contexts/subject-category';
 import {UserContextProvider} from '~/contexts/user';
 import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
+import retry from '~/helpers/retry';
 import ReactModal from 'react-modal';
 import {FlagContextProvider} from './flag-context';
 import Welcome from './welcome/welcome';
@@ -33,28 +34,17 @@ function setUpBus(mainEl) {
     });
 }
 
-function Suspense() {
-    return (
-        <div>Loading...</div>
-    );
-}
-
-// Because lazy/Suspense is not yet recommended...
 function ImportedComponent({name}) {
-    const [Content, setContent] = React.useState(Suspense);
-
-    React.useEffect(
-        () => import(`./${name}/${name}`)
-            .then(
-                (content) => setContent(<content.default />),
-                (cause) => {
-                    throw (new Error(`Lazy load failed for ${name}`, {cause}));
-                }
-            ),
+    const Component = React.useMemo(
+        () => React.lazy(() => retry(() => import(`./${name}/${name}`))),
         [name]
     );
 
-    return Content;
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <Component />
+        </Suspense>
+    );
 }
 
 const Microsurvey = () => <ImportedComponent name="microsurvey-popup" />;

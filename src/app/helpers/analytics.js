@@ -16,6 +16,7 @@ const waitForAnalytics = new Promise((resolve, reject) => {
             --triesLeft;
         } else {
             window.clearInterval(tryInterval);
+            window.ga = () => null;
             reject('Failed to load Google Analytics');
         }
     }, 500);
@@ -42,7 +43,7 @@ class Analytics {
                 }
             },
             (problem) => {
-                console.warn(problem);
+                console.warn(`Waiting for analytics: ${problem}`);
             }
         );
     }
@@ -99,17 +100,22 @@ class Analytics {
     sendTOCEvent(href) {
         const slug = document.querySelector('[data-slug]').dataset.slug;
 
-        booksPromise.then((books) => {
-            const book = books.find((b) => b.slug === slug);
+        booksPromise.then(
+            (books) => {
+                const book = books.find((b) => b.slug === slug);
 
-            if (book) {
-                this.sendPageEvent(
-                    `Webview ${book.title} TOC`,
-                    'open',
-                    href
-                );
+                if (book) {
+                    this.sendPageEvent(
+                        `Webview ${book.title} TOC`,
+                        'open',
+                        href
+                    );
+                }
+            },
+            (err) => {
+                throw new Error(`Could not load books: ${err}`);
             }
-        });
+        );
     }
 
     record(href) {

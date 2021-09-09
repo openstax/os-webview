@@ -32,7 +32,7 @@ export default function ContactInfo({validatorRef}) {
     }
 
     function onChange(event) {
-        setSchoolIsOk(schoolSet.has(event.target.value.toLowerCase()));
+        setSchoolIsOk(schoolSet.has(event.target.value?.toLowerCase()));
     }
     function onClose() {
         setSchoolIsOk(true);

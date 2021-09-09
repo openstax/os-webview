@@ -69,9 +69,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
             if (document.activeElement === topRef.current) {
                 dropdownRef.current.firstChild.focus();
             } else {
-                const focusOn = document.activeElement.nextElementSibling;
-
-                focusOn && focusOn.focus();
+                document.activeElement.nextElementSibling?.focus();
             }
             break;
         case 'ArrowUp':

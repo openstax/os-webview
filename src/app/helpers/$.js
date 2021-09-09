@@ -147,25 +147,6 @@ $.scrollToHash = () => {
     }
 };
 
-$.scrollToFrame = ({divEl, newFrameNumber, oldFrameNumber, unit='vw'}) => {
-    const SCROLL_TICKS = $.isMobileDisplay() ? 9 : 12;
-    let posVw = oldFrameNumber * -100;
-    const newPosVw = newFrameNumber * -100;
-    const step = (newPosVw - posVw) / SCROLL_TICKS;
-    const takeStep = () => {
-        if (Math.abs(newPosVw - posVw) <= Math.abs(step)) {
-            posVw = newPosVw;
-            divEl.style.left = `${Math.round(posVw)}${unit}`;
-        } else {
-            posVw += step;
-            divEl.style.left = `${Math.round(posVw)}${unit}`;
-            window.requestAnimationFrame(takeStep);
-        }
-    };
-
-    window.requestAnimationFrame(takeStep);
-};
-
 $.setPageDescription = (description) => {
     const descriptionEl = document.querySelector('head meta[name="description"]');
     const defaultDescription = 'Access our free college textbooks and low-cost learning materials.';
@@ -241,7 +222,7 @@ $.activateScripts = function (el) {
             .forEach((a) => newScript.setAttribute(a.name, a.value));
         newScript.appendChild(document.createTextNode(s.textContent));
         newScript.async = false;
-        s.parentNode.replaceChild(newScript, s);
+        s.parentNode?.replaceChild(newScript, s);
 
         p.then(processOne);
     });
@@ -282,27 +263,6 @@ $.parseSearchString = (searchString) => {
         (k in result) ? result[k].push(decodeURIComponent(v)) : result[k] = [decodeURIComponent(v)];
     });
     return result;
-};
-
-$.fade = (element, {fromOpacity, toOpacity, steps=10}) => {
-    return new Promise((resolve) => {
-        let opacity = fromOpacity;
-        const byStep = (toOpacity - fromOpacity)/steps;
-        const doStep = function () {
-            opacity += byStep;
-            if ((byStep > 0 && opacity >= toOpacity) ||
-                (byStep < 0 && opacity <= toOpacity)) {
-                element.style.opacity = toOpacity;
-                resolve();
-                return true;
-            }
-            element.style.opacity = opacity;
-            window.requestAnimationFrame(doStep);
-            return false;
-        };
-
-        window.requestAnimationFrame(doStep);
-    });
 };
 
 function camelCase(underscored) {

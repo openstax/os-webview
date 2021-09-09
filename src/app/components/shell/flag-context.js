@@ -7,7 +7,7 @@ function useContextValue() {
 
     useEffect(() => {
         cmsFetch('flags?flag=enable_my_openstax')
-            .then(([obj]) => setValue((/true|on/i).test(obj.conditions[0].value)));
+            .then(([obj]) => setValue((/true|on/i).test(obj.conditions[0]?.value)));
     }, []);
 
     return value;

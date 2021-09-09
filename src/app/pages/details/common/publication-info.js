@@ -217,7 +217,7 @@ export default function PublicationInfo({model, url, polish}) {
     const texts = localizedTexts[language].pub;
 
     useEffect(() => {
-        const isTutor = model.webviewRexLink.includes('tutor');
+        const isTutor = model.webviewRexLink?.includes('tutor');
         const isRex = !isTutor && Boolean(model.webviewRexLink);
 
         if (isRex) {

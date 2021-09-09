@@ -22,11 +22,11 @@ export function FooterDialog({
     const footerEl = document.getElementById('footer');
 
     if (!isOpen) {
-        footerEl.style.removeProperty('z-index');
+        footerEl?.style.removeProperty('z-index');
         return null;
     }
 
-    footerEl.style.zIndex = 1;
+    footerEl?.style.setProperty('z-index', 1);
     return (
         <dialog className={cn('footer-dialog', className)}>
             {

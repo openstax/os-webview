@@ -71,7 +71,7 @@ export default function useInstitutions() {
     const {primarySchoolId, schoolIds=[]} = useUserSchoolIds();
     const institutions = useLookedupSchools(schoolIds);
     const {user, dispatch} = useStoreon('user');
-    const contactId = user && user.contact && user.contact.salesforceId;
+    const contactId = user?.contact?.salesforceId;
 
     return {
         primarySchoolId,

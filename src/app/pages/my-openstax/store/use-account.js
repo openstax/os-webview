@@ -26,12 +26,12 @@ export default function useAccount() {
     const {userModel} = useUserContext();
     const [value, setValue] = useState({});
 
-    if (user.error) {
+    if (!user || user.error) {
         console.warn('Error reading account:', user.error);
     }
 
     useEffect(() => {
-        if (!userModel) {
+        if (!userModel || !user) {
             return;
         }
         const {accountsModel} = userModel;

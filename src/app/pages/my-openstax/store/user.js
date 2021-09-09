@@ -6,7 +6,7 @@ import $ from '~/helpers/$';
 export async function fetchUser() {
     const user = await sfApiFetch('users');
 
-    if (!user.contact) {
+    if (user && !user.contact) {
         user.error = 'no contact';
     }
     return $.camelCaseKeys(user);
@@ -16,9 +16,13 @@ export function useMyOpenStaxIsAvailable() {
     const [user, setUser] = React.useState({error: 'not loaded'});
     const isEnabled = useFlagContext();
 
-    React.useEffect(() => fetchUser().then(setUser), []);
+    React.useEffect(() => {
+        if (isEnabled) {
+            fetchUser().then(setUser);
+        }
+    }, [isEnabled]);
 
-    return !(user.error || !isEnabled);
+    return isEnabled && !user.error;
 }
 
 export default function (store) {

@@ -154,7 +154,7 @@ export function WebviewOption({model}) {
     const [showCallout, hideForever] = useCalloutCounter(model.slug);
     const {language} = useDetailsContext();
     const texts = localizedTexts[language].webview;
-    const isTutor = model.webviewRexLink.includes('tutor');
+    const isTutor = model.webviewRexLink?.includes('tutor');
     const isRex = !isTutor && Boolean(model.webviewRexLink);
     const webviewLink = model.webviewRexLink || model.webviewLink;
     const iconAndTextArgs = isTutor ? {

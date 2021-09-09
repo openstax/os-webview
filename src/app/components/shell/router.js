@@ -1,53 +1,21 @@
-import React from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {
     Switch,
     Route,
     Redirect,
     useLocation,
-    useHistory
+    useHistory,
+    useParams
 } from 'react-router-dom';
 import Error404 from '~/pages/404/404';
 import linkHelper from '~/helpers/link';
+import retry from '~/helpers/retry';
 import analytics from '~/helpers/analytics';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import useFlagContext from './flag-context';
 import $ from '~/helpers/$';
 import {fetchUser} from '~/pages/my-openstax/store/user';
 import useRouterContext, {RouterContextProvider} from './router-context';
-
-const PAGES = [
-    'about',
-    'adopters',
-    'adoption',
-    'annual-report',
-    'article',
-    'blog',
-    'bookstore-suppliers',
-    'campaign',
-    'confirmation',
-    'contact',
-    'creator-fest',
-    'details',
-    'faq',
-    'foundation',
-    'general',
-    'global-reach',
-    'hero-journey',
-    'impact',
-    'institutional-partnership-application',
-    'institutional-partnership',
-    'interest',
-    'llph',
-    'openstax-tutor',
-    'partners',
-    'press',
-    'research',
-    'separatemap',
-    'subjects',
-    'team',
-    'technology',
-    'webinars'
-];
 
 const FOOTER_PAGES = [
     'license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers'
@@ -117,17 +85,21 @@ function useLinkHandler() {
         }
 
         if (e.trackingInfo) {
-            fetch(
-                `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
-                {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(e.trackingInfo)
-                }
-            ).finally(followLink);
+            retry(
+                () => fetch(
+                    `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
+                    {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(e.trackingInfo)
+                    }
+                )
+            )
+                .catch((err) => {throw new Error(`Unable to download-track: ${err}`);})
+                .finally(followLink);
         } else {
             followLink();
         }
@@ -137,49 +109,54 @@ function useLinkHandler() {
 }
 
 function ImportedPage({name}) {
-    const [Content, setContent] = React.useState(LoadingPlaceholder);
     const history = useHistory();
+    const {isValid} = useRouterContext();
     const isRedirect = history.location.state?.redirect;
+    const Component = React.useMemo(
+        () => React.lazy(() => retry(() => import(`~/pages/${name}/${name}`))),
+        [name]
+    );
 
-    React.useEffect(() => {
-        import(`~/pages/${name}/${name}`).then(
-            (content) => {
-                setContent(<content.default />);
-                window.scrollTo(0, 0);
-            },
-            (cause) => {
-                throw (new Error(`Unable to load page ${name}`, {cause}));
-            }
-        );
+    useEffect(() => {
+        window.scrollTo(0, 0);
         if (!isRedirect) {
             analytics.sendPageview();
         }
     }, [name, isRedirect]);
 
-    return Content;
+    if (!isValid) {
+        return (<Error404 />);
+    }
+
+    return (
+        <Suspense fallback={<LoadingPlaceholder />}>
+            <Component />
+        </Suspense>
+    );
 }
 
 function useHomeOrMyOpenStax() {
     const [user, setUser] = React.useState({error: 'not loaded'});
     const isEnabled = useFlagContext();
 
-    React.useEffect(() => fetchUser().then(setUser), []);
+    useEffect(() => fetchUser().then(setUser), []);
 
     return (user.error || !isEnabled) ? 'home' : 'my-openstax';
 }
 
-function NormalRoutes() {
+function TopLevelPage() {
+    const {name} = useParams();
+
+    return (
+        <ImportedPage name={name} />
+    );
+}
+
+function Routes() {
     const homeOrMyOpenStax = useHomeOrMyOpenStax();
 
     return (
         <Switch>
-            {
-                PAGES.map((pageName) =>
-                    <Route key={pageName} path={`/${pageName}/`}>
-                        <ImportedPage name={pageName} />
-                    </Route>
-                )
-            }
             <Route path="/" exact>
                 <ImportedPage name={homeOrMyOpenStax} />
             </Route>
@@ -200,19 +177,11 @@ function NormalRoutes() {
                     <Redirect exact from="/books/:title" to="/details/books/:title" />
                 </Switch>
             </Route>
-            <Route>
-                <Error404 />
+            <Route path="/:name">
+                <TopLevelPage />
             </Route>
         </Switch>
     );
-}
-
-function Routes() {
-    const {isValid} = useRouterContext();
-
-    return isValid ?
-        <NormalRoutes /> :
-        <Error404 />;
 }
 
 export default function Router() {
@@ -220,13 +189,13 @@ export default function Router() {
     const {origin, pathname} = useLocation();
     const canonicalUrl = `${origin}${pathname}`;
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.addEventListener('click', linkHandler);
 
         return () => document.removeEventListener('click', linkHandler);
     }, [linkHandler]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Track initial page view in Pardot
         if ('piTracker' in window) {
             piTracker(canonicalUrl);
