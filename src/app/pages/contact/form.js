@@ -1,6 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form';
-import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
 import Select from '~/components/select/select.jsx';
 import {useHistory} from 'react-router-dom';
 
@@ -44,17 +43,15 @@ function LabeledInputWithInvalidMessage({
     );
 }
 
-function ContactForm({defaultPostTo}) {
-    const selected = (subj) => subj === this.selectedSubject;
-    const [postTo, setPostTo] = useState(defaultPostTo);
+export default function ContactForm() {
+    const [postTo, setPostTo] = useState();
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
-    const selectRef = useRef();
     const history = useHistory();
 
     function onChangeSubject(event) {
         const isPolish = event.target.value === 'OpenStax Polska';
 
-        setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : defaultPostTo);
+        setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : null);
     }
     function beforeSubmit() {
         setShowInvalidMessages(true);
@@ -68,14 +65,10 @@ function ContactForm({defaultPostTo}) {
             <input type="hidden" name="external" value="1" />
             <label>
                 What is your question about?
-                <Select name="subject" ref={selectRef} onChange={onChangeSubject}>
+                <Select name="subject" onChange={onChangeSubject}>
                     {
                         subjects.map((subject) =>
-                            <option
-                                key={subject}
-                                value={subject}
-                                selected={selected(subject)}
-                            >
+                            <option key={subject} value={subject}>
                                 {subject}
                             </option>
                         )
@@ -96,19 +89,5 @@ function ContactForm({defaultPostTo}) {
             </LabeledInputWithInvalidMessage>
             <input type="submit" value="Send" className="btn btn-orange" onClick={beforeSubmit} />
         </SalesforceForm>
-    );
-}
-
-export default function ContactFormLoader() {
-    const sfLoaded = useSalesforceLoadedState();
-
-    if (!sfLoaded) {
-        return (<div>Loading</div>);
-    }
-
-    const defaultPostTo = salesforce.webtoleadUrl.replace('ToLead', 'ToCase');
-
-    return (
-        <ContactForm defaultPostTo={defaultPostTo} />
     );
 }

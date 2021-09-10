@@ -1,28 +1,32 @@
 import React, {useState} from 'react';
-import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
+import useSalesforceContext from '~/contexts/salesforce';
 
-function HiddenFieldsInternals({leadSource}) {
+export function HiddenFields({leadSource}) {
+    const {oid, debug} = useSalesforceContext();
+
+    if (!oid) {
+        return (<div>Loading...</div>);
+    }
     return (
         <React.Fragment>
             <input name="utf8" type="hidden" value="✓" />
             <input type="hidden" name="Application_Source__c" value="OS Web" />
-            <input type="hidden" name="oid" value={salesforce.oid} />
+            <input type="hidden" name="oid" value={oid} />
             {
-                salesforce.debug && <input type="hidden" name="debug" value="1" />
+                debug && <input type="hidden" name="debug" value="1" />
             }
             <input type="hidden" name="lead_source" value={leadSource} />
         </React.Fragment>
     );
 }
 
-export function HiddenFields(props) {
-    return (
-        <LoadPageAfterSalesforce Child={HiddenFieldsInternals} {...props} />
-    );
-}
-
-function SfForm({children, postTo = salesforce.webtoleadUrl, afterSubmit}) {
+export default function SfForm({children, postTo, afterSubmit}) {
     const [listening, setListening] = useState(false);
+    const {webtocaseUrl, debug, oid} = useSalesforceContext();
+
+    if (!webtocaseUrl) {
+        return (<div>Loading...</div>);
+    }
 
     function onSubmit() {
         setListening(true);
@@ -42,13 +46,13 @@ function SfForm({children, postTo = salesforce.webtoleadUrl, afterSubmit}) {
                 src="" width="0" height="0" tabIndex="-1" onLoad={onLoad} />
             <form
                 acceptCharset="UTF-8" className="form"
-                target={salesforce.debug ? undefined : 'form-response'}
-                action={postTo} method="post"
+                target={debug ? undefined : 'form-response'}
+                action={postTo || webtocaseUrl} method="post"
                 onSubmit={onSubmit}
             >
-                <input type="hidden" name="orgid" value={salesforce.oid} />
+                <input type="hidden" name="orgid" value={oid} />
                 {
-                    salesforce.debug &&
+                    debug &&
                         <input type="hidden" name="debug" value="1" />
                 }
                 <div className="form-content">
@@ -56,11 +60,5 @@ function SfForm({children, postTo = salesforce.webtoleadUrl, afterSubmit}) {
                 </div>
             </form>
         </React.Fragment>
-    );
-}
-
-export default function SalesforceForm(props) {
-    return (
-        <LoadPageAfterSalesforce Child={SfForm} {...props} />
     );
 }

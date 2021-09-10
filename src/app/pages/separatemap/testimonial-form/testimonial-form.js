@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import FormSelect from '~/components/form-select/form-select.jsx';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import booksPromise from '~/models/books';
-import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
+import useSalesforceContext from '~/contexts/salesforce';
 import './testimonial-form.scss';
 
 function Controls() {
@@ -24,9 +24,9 @@ export default function TestimonialForm({email, school, firstName, lastName, aft
             label: i.title,
             value: i.salesforce_abbreviation
         }));
-    const sfLoaded = useSalesforceLoadedState();
+    const {oid, webtoleadUrl} = useSalesforceContext();
 
-    if (!sfLoaded) {
+    if (!webtoleadUrl) {
         return null;
     }
 
@@ -49,10 +49,10 @@ export default function TestimonialForm({email, school, firstName, lastName, aft
             />
             <form
                 acceptCharset="UTF-8" className="form" target="form-response"
-                action={salesforce.webtoleadUrl} method="post"
+                action={webtoleadUrl} method="post"
                 onSubmit={onSubmit}
             >
-                <input type="hidden" name="oid" value={salesforce.oid} />
+                <input type="hidden" name="oid" value={oid} />
                 <input type="hidden" name="lead_source" value="Testimonial" />
                 <input type="hidden" name="first_name" value={firstName} />
                 <input type="hidden" name="last_name" value={lastName} />

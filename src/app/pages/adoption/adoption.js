@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {useDataFromPromise, useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
@@ -8,7 +8,7 @@ import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import {HiddenFields} from '~/components/salesforce-form/salesforce-form';
 import ContactInfo from '~/components/contact-info/contact-info';
 import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
-import salesforcePromise from '~/models/salesforce';
+import useSalesforceContext from '~/contexts/salesforce';
 import HowUsing from './how-using/how-using';
 import {afterFormSubmit} from '~/models/books';
 import useSubmitContext, {SubmitContextProvider} from './submit-context';
@@ -60,7 +60,7 @@ function FacultyForm({selectedRole, onPageChange}) {
     const selectedBooksRef = useRef();
     const {currentBook, setCurrentBook} = useSubmitContext();
     const formRef = useRef();
-    const salesforce = useDataFromPromise(salesforcePromise, {});
+    const {webtoleadUrl, debug} = useSalesforceContext();
     const history = useHistory();
 
     function validatePage(page) {
@@ -111,8 +111,8 @@ function FacultyForm({selectedRole, onPageChange}) {
 
     return (
         <MultiPageForm
-            validatePage={validatePage} action={salesforce.webtoleadUrl}
-            onPageChange={onPageChange} onSubmit={onSubmit} debug={salesforce.debug}
+            validatePage={validatePage} action={webtoleadUrl}
+            onPageChange={onPageChange} onSubmit={onSubmit} debug={debug}
             submitting={currentBook}
         >
             <ContactInfoPage selectedRole={selectedRole} validatorRef={contactValidatorRef} />

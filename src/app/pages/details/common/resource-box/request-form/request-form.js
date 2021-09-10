@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
+import useSalesforceContext from '~/contexts/salesforce';
 import useUserContext from '~/contexts/user';
 import './request-form.scss';
 
 function RequestForm({model, done, afterSubmit}) {
     const {userStatus} = useUserContext();
-    const sfLoaded = useSalesforceLoadedState();
+    const {oid, webtocaseUrl} = useSalesforceContext();
 
     function listenForResponse() {
         const iframeEl = document.getElementById('form-response');
@@ -17,7 +17,7 @@ function RequestForm({model, done, afterSubmit}) {
         iframeEl.addEventListener('load', onLoad);
     }
 
-    if (!userStatus || !sfLoaded) {
+    if (!userStatus || !webtocaseUrl) {
         return null;
     }
     const {salesforceAbbreviation, title, coverUrl} = model.bookModel;
@@ -36,11 +36,11 @@ function RequestForm({model, done, afterSubmit}) {
             </div>
             <form
                 acceptCharset="UTF-8" target="form-response"
-                action={salesforce.webtoleadUrl} method="post"
+                action={webtocaseUrl} method="post"
             >
                 <div>
                     <input type="hidden" name="utf8" value="✓" />
-                    <input type="hidden" name="oid" value={salesforce.oid} />
+                    <input type="hidden" name="oid" value={oid} />
                     <input type="hidden" name="lead_source" value="Comp Request" />
                     <input type="hidden" name="first_name" value={userStatus.firstName} />
                     <input type="hidden" name="last_name" value={userStatus.lastName} />

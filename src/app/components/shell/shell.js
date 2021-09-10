@@ -2,6 +2,7 @@ import React, {Suspense} from 'react';
 import {LanguageContextProvider} from '~/contexts/language';
 import {SubjectCategoryContextProvider} from '~/contexts/subject-category';
 import {UserContextProvider} from '~/contexts/user';
+import {SalesforceContextProvider} from '~/contexts/salesforce';
 import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
 import retry from '~/helpers/retry';
@@ -75,12 +76,14 @@ function App() {
                         <div id="lower-sticky-note">
                             <LowerStickyNote />
                         </div>
-                        <FlagContextProvider>
-                            <div id="main" ref={ref}>
-                                <Welcome />
-                                <Router />
-                            </div>
-                        </FlagContextProvider>
+                        <SalesforceContextProvider>
+                            <FlagContextProvider>
+                                <div id="main" ref={ref}>
+                                    <Welcome />
+                                    <Router />
+                                </div>
+                            </FlagContextProvider>
+                        </SalesforceContextProvider>
                         <footer id="footer">
                             <Footer />
                         </footer>
