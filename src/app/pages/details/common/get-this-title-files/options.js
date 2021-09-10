@@ -100,7 +100,7 @@ const localizedTexts = {
 
 export function TocOption({model}) {
     const {toggle, isOpen} = useTOCContext();
-    const includeTOC = ['live', 'new_edition_available'].includes(model.bookState);
+    const includeTOC = ['live', 'deprecated', 'new_edition_available'].includes(model.bookState);
     const {language} = useDetailsContext();
     const text = $.isPolish(model.title) ? 'Spis treści' : localizedTexts[language].toc;
 
