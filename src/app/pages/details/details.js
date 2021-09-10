@@ -110,12 +110,14 @@ function LinksToTranslations() {
     const localLanguage = languageTranslations[locale][locale];
     const {language, setLanguage} = useLanguageContext();
 
+    useEffect(() => {
+        if (language !== locale) {
+            setLanguage(locale);
+        }
+    }, [locale, language, setLanguage]);
+
     if (translations.length === 0) {
         return null;
-    }
-
-    if (language !== locale) {
-        setLanguage(locale);
     }
 
     return (
