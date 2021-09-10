@@ -8,6 +8,7 @@ import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
 import {languageTranslations} from '~/components/language-selector/language-selector';
 import {useTableOfContents} from './common/hooks';
+import useLanguageContext from '~/contexts/language';
 import useDetailsContext, {DetailsContextProvider} from './context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
@@ -107,6 +108,13 @@ function AnotherLanguage({locale, translation}) {
 function LinksToTranslations() {
     const {translations: [translations=[]], meta: {locale}} = useDetailsContext();
     const localLanguage = languageTranslations[locale][locale];
+    const {language, setLanguage} = useLanguageContext();
+
+    useEffect(() => {
+        if (language !== locale) {
+            setLanguage(locale);
+        }
+    }, [locale, language, setLanguage]);
 
     if (translations.length === 0) {
         return null;
