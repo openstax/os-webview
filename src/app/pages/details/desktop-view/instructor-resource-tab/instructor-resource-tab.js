@@ -103,15 +103,6 @@ function InstructorResourceTab({model, userStatus}) {
         )
         .map((res) => resourceBoxModel(res, userStatus, model));
 
-    const communityResource = {
-        heading: model.communityResourceHeading,
-        logoUrl: model.communityResourceLogoUrl,
-        url: model.communityResourceUrl,
-        cta: model.communityResourceCta,
-        blurb: model.communityResourceBlurb,
-        featureUrl: model.communityResourceFeatureLinkUrl,
-        featureText: model.communityResourceFeatureText
-    };
     const partnerListLabel = model.partnerListLabel || '[partner_list_label]';
     const seeMoreText = model.partnerPageLinkText || '[partner_page_link_text]';
     const [blurbs, includePartners] = usePartnerFeatures(bookAbbreviation);
@@ -141,7 +132,7 @@ function InstructorResourceTab({model, userStatus}) {
                             blogLinkModels={blogLinkModels}
                             referenceModels={referenceModels}
                         />
-                        <ResourceBoxes communityResource={communityResource} models={otherModels} />
+                        <ResourceBoxes models={otherModels} />
                     </div>
                     <Partners
                         bookAbbreviation={bookAbbreviation}
