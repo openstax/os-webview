@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import ValidationMessage from '~/components/validation-message/validation-message';
 import './select.scss';
 
 function Option({optionEl, setValue, active}) {
@@ -60,6 +61,7 @@ function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
                         )
                 }
             </ul>
+            <ValidationMessage el={selectEl} />
         </React.Fragment>
     );
 }
@@ -124,7 +126,7 @@ export default function Select({children, placeholder, onChange, ...selectProps}
             <select {...selectProps} ref={selectRef} onChange={onChange}>
                 {
                     placeholder &&
-                        <option disabled selected value>{placeholder}</option>
+                        <option disabled selected>{placeholder}</option>
                 }
                 {children}
             </select>
