@@ -5,7 +5,6 @@
     .summary-table-mobile {
         @include set-font(helper-label);
 
-
         background-color: text-color(white);
         border: thin solid ui-color(form-border);
         border-collapse: collapse;
@@ -120,6 +119,7 @@
         }
 
         th:first-child {
+            max-width: 40vw;
             width: 15rem;
         }
     }
