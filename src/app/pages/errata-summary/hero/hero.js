@@ -30,12 +30,13 @@ function useBookInfo(book) {
 }
 
 const middle = '-135';
+const margin = 3;
 
 function shiftIntoView(ref, leftOffset, setLeftOffset) {
     const {left, right} = ref.current.getBoundingClientRect();
     const {right: pageRight} = ref.current.closest('.page').getBoundingClientRect();
-    const overRight = right - pageRight - 15;
-    const overLeft = 15 - left;
+    const overRight = right - pageRight + margin;
+    const overLeft = margin - left;
     const rightWants = Math.min(middle, leftOffset - overRight);
     const leftWants = Math.max(rightWants, leftOffset + overLeft);
 
