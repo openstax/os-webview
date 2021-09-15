@@ -38,7 +38,7 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data}) {
 
     return (
         <div className="give-before-pdf">
-            <img src={data.download_image} alt="" />
+            <img className="download-icon" src={data.download_image} alt="" />
             <h1>{data.download_ready}</h1>
             <hr />
             <img
