@@ -66,28 +66,28 @@ function App() {
         <UserContextProvider>
             <LanguageContextProvider>
                 <SubjectCategoryContextProvider>
-                    <BrowserRouter>
-                        <div id="microsurvey">
-                            <Microsurvey />
-                        </div>
-                        <header id="header">
-                            <Header />
-                        </header>
-                        <div id="lower-sticky-note">
-                            <LowerStickyNote />
-                        </div>
-                        <SalesforceContextProvider>
-                            <FlagContextProvider>
+                    <FlagContextProvider>
+                        <BrowserRouter>
+                            <div id="microsurvey">
+                                <Microsurvey />
+                            </div>
+                            <header id="header">
+                                <Header />
+                            </header>
+                            <div id="lower-sticky-note">
+                                <LowerStickyNote />
+                            </div>
+                            <SalesforceContextProvider>
                                 <div id="main" ref={ref}>
                                     <Welcome />
                                     <Router />
                                 </div>
-                            </FlagContextProvider>
-                        </SalesforceContextProvider>
-                        <footer id="footer">
-                            <Footer />
-                        </footer>
-                    </BrowserRouter>
+                            </SalesforceContextProvider>
+                            <footer id="footer">
+                                <Footer />
+                            </footer>
+                        </BrowserRouter>
+                    </FlagContextProvider>
                 </SubjectCategoryContextProvider>
             </LanguageContextProvider>
         </UserContextProvider>
