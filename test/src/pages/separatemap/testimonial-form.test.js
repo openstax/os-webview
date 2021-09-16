@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import TestimonialForm from '~/pages/separatemap/testimonial-form/testimonial-form';
+import {SalesforceContextProvider} from '~/contexts/salesforce';
 
 const props = {
     email: 'e@mail.com',
@@ -14,7 +15,7 @@ const props = {
 };
 
 test('initially hides textarea and submit', (done) => {
-    render(<TestimonialForm {...props} />);
+    render(<SalesforceContextProvider><TestimonialForm {...props} /></SalesforceContextProvider>);
 
     setTimeout(() => {
         expect(screen.queryAllByRole('textbox')).toHaveLength(0);
