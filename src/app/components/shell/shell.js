@@ -65,26 +65,26 @@ function App() {
         <UserContextProvider>
             <LanguageContextProvider>
                 <SubjectCategoryContextProvider>
-                    <BrowserRouter>
-                        <div id="microsurvey">
-                            <Microsurvey />
-                        </div>
-                        <header id="header">
-                            <Header />
-                        </header>
-                        <div id="lower-sticky-note">
-                            <LowerStickyNote />
-                        </div>
-                        <FlagContextProvider>
+                    <FlagContextProvider>
+                        <BrowserRouter>
+                            <div id="microsurvey">
+                                <Microsurvey />
+                            </div>
+                            <header id="header">
+                                <Header />
+                            </header>
+                            <div id="lower-sticky-note">
+                                <LowerStickyNote />
+                            </div>
                             <div id="main" ref={ref}>
                                 <Welcome />
                                 <Router />
                             </div>
-                        </FlagContextProvider>
-                        <footer id="footer">
-                            <Footer />
-                        </footer>
-                    </BrowserRouter>
+                            <footer id="footer">
+                                <Footer />
+                            </footer>
+                        </BrowserRouter>
+                    </FlagContextProvider>
                 </SubjectCategoryContextProvider>
             </LanguageContextProvider>
         </UserContextProvider>

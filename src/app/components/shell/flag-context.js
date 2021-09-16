@@ -3,7 +3,7 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/models/cmsFetch';
 
 function useContextValue() {
-    const [value, setValue] = useState([]);
+    const [value, setValue] = useState(false);
 
     useEffect(() => {
         cmsFetch('flags?flag=enable_my_openstax')
