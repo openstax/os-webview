@@ -9,7 +9,11 @@
     text-align: center;
 
     .download-icon {
-        font-size: 4rem;
+        max-height: calc(100vh - 64rem);
+
+        @media (max-height: #{74em * $scale-factor}) {
+            display: none;
+        }
     }
 
     &.loading {
@@ -45,8 +49,14 @@
     .header-image {
         border-radius: 50%;
         height: 16.5rem;
+        max-height: calc(100vh - 52rem);
+        max-width: calc(100vh - 52rem);
         margin: $normal-margin 0;
         width: 16.5rem;
+
+        @media (max-height: #{63em * $scale-factor}) {
+            display: none;
+        }
     }
 
     .header-title {
