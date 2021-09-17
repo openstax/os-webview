@@ -6,3 +6,6 @@ const settings = {
 };
 
 window.SETTINGS = settings;
+window.piAId = '309222';
+window.piCId = '2311';
+window.piHostname = 'pi.demo.pardot.com';

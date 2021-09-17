@@ -82,7 +82,7 @@ export default function ContactInfo({validatorRef}) {
                 suggestions={schools}
                 inputProps={{
                     type: 'text',
-                    name: 'company',
+                    name: 'school',
                     required: true,
                     autocomplete: 'off',
                     onChange
