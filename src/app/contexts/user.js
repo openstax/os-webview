@@ -46,7 +46,7 @@ function useContextValue() {
         }
     }, [model]);
 
-    return (model && model.last_name) ? {
+    return model?.last_name ? {
         accountId: model.id,
         userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`,
         userModel: model,
