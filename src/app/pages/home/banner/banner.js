@@ -23,7 +23,7 @@ function LoggedInButtons({data}) {
 
 export default function Banner({data}) {
     const userModel = useUserContext();
-    const Buttons = userModel?.id ? LoggedInButtons : NotLoggedInButtons;
+    const Buttons = userModel?.accountId ? LoggedInButtons : NotLoggedInButtons;
 
     return (
         <section className="banner">
