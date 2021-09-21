@@ -94,19 +94,24 @@ const leadInText = {
     es: 'Este libro de texto está disponible en'
 };
 
+const andText = {
+    en: 'and',
+    es: 'y'
+};
+
 function AnotherLanguage({locale, translation}) {
     const tr = languageTranslations[locale];
 
     return (
         <React.Fragment>
-            {' '}and{' '}
+            {' '}{andText[locale]}{' '}
             <a href={`/details/books/${translation.slug}`}>{tr[translation.locale]}</a>
         </React.Fragment>
     );
 }
 
 function LinksToTranslations() {
-    const {translations: [translations=[]], meta: {locale}} = useDetailsContext();
+    const {translations: [translations=[]], meta: {locale='en'}} = useDetailsContext();
     const localLanguage = languageTranslations[locale][locale];
     const {language, setLanguage} = useLanguageContext();
 
@@ -124,7 +129,7 @@ function LinksToTranslations() {
         <div className="language-selector">
             <FontAwesomeIcon icon={faGlobe} />
             <span>
-                {leadInText[locale] || leadInText.en}{' '}
+                {leadInText[locale]}{' '}
                 {localLanguage}
                 {
                     translations.map((t) =>
