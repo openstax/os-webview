@@ -50,6 +50,7 @@ function useContextValue() {
         accountId: model.id,
         userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`,
         userModel: model,
+        uuid: model.uuid,
         userStatus
     } : {userStatus};
 }

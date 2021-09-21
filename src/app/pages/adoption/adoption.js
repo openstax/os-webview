@@ -6,20 +6,13 @@ import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import ContactInfo from '~/components/contact-info/contact-info';
-import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
+import BookSelector, {useSelectedBooks, useAfterSubmit, useFirstSearchArgument}
+    from '~/components/book-selector/book-selector';
 import HowUsing from './how-using/how-using';
 import useFormTarget from '~/components/form-target/form-target';
-import {afterFormSubmit} from '~/models/books';
-import {useHistory, useLocation} from 'react-router-dom';
 import './adoption.scss';
 
 const formDestination = 'https://go.demo.pardot.com/l/308222/2021-09-17/33n';
-
-function useFirstSearchArgument() {
-    const {search} = useLocation();
-
-    return decodeURIComponent(search.substr(1).replace(/&.*/, ''));
-}
 
 function BookSelectorPage({selectedBooksRef}) {
     const preselectedTitle = useFirstSearchArgument();
@@ -38,22 +31,12 @@ function BookSelectorPage({selectedBooksRef}) {
             <label>
                 <div className="control-group">
                     <HowUsing selectedBooks={selectedBooks} />
-                    <input type="checkbox" name="Have_Xanedu__c" />
+                    <input type="checkbox" name="have_xanedu" />
                     Have Xanedu, the OpenStax print partner, contact me about how to
                     get print copies for my students.
                 </div>
             </label>
         </React.Fragment>
-    );
-}
-
-function useAfterSubmit(selectedBooksRef) {
-    const history = useHistory();
-    const preselectedTitle = useFirstSearchArgument();
-
-    return React.useCallback(
-        () => afterFormSubmit(history, preselectedTitle, selectedBooksRef.current),
-        [history, selectedBooksRef, preselectedTitle]
     );
 }
 

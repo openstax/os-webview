@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import FormInput from '~/components/form-input/form-input';
 import schoolPromise from '~/models/schools';
+import useUserContext from '~/contexts/user';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import ReactModal from 'react-modal';
 import shellBus from '~/components/shell/shell-bus';
@@ -8,6 +9,21 @@ import './contact-info.scss';
 
 const message = 'Please enter your full school name without abbreviations.' +
     ' If this is your full school name, you can click Next.';
+
+function AccountInfo() {
+    const {userModel} = useUserContext();
+
+    if (!userModel?.id) {
+        return null;
+    }
+
+    return (
+        <React.Fragment>
+            <input type="hidden" name="accounts_uuid" value={userModel.uuid} />
+            <input type="hidden" name="accounts_id" value={userModel.id} />
+        </React.Fragment>
+    );
+}
 
 export default function ContactInfo({validatorRef}) {
     const [schoolIsOk, setSchoolIsOk] = useState(false);
@@ -41,6 +57,7 @@ export default function ContactInfo({validatorRef}) {
 
     return (
         <div className="contact-info">
+            <AccountInfo />
             <FormInput
                 label="First name"
                 inputProps={{

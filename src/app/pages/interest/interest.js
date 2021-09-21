@@ -5,28 +5,30 @@ import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import {HiddenFields} from '~/components/salesforce-form/salesforce-form';
 import ContactInfo from '~/components/contact-info/contact-info';
-import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
+import BookSelector, {useSelectedBooks, useAfterSubmit, useFirstSearchArgument}
+    from '~/components/book-selector/book-selector';
+import useFormTarget from '~/components/form-target/form-target';
 import FormInput from '~/components/form-input/form-input';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
-import useSalesforceContext from '~/contexts/salesforce';
-import {useHistory} from 'react-router-dom';
-import {afterFormSubmit} from '~/models/books';
 import './interest.scss';
 
-function ContactInfoPage({selectedRole, validatorRef}) {
-    return (
-        <React.Fragment>
-            <HiddenFields leadSource="Interest Form" />
-            <input type="hidden" name="Role__c" value={selectedRole} />
-            <ContactInfo validatorRef={validatorRef} />
-        </React.Fragment>
-    );
-}
+const formDestination = 'https://go.demo.pardot.com/l/308222/2021-09-15/2xv';
 
-function firstSearchArgument() {
-    return decodeURIComponent(window.location.search.substr(1).replace(/&.*/, ''));
+function useBundledValues() {
+    const [bundledValues, setBundledValues] = useState('');
+    const onChange = React.useCallback(
+        (values) => setBundledValues(values.join('; ')),
+        []
+    );
+
+    function BundledValuesInput() {
+        return (
+            <input type="hidden" name="how_did_you_hear" value={bundledValues} />
+        );
+    }
+
+    return {onChange, BundledValuesInput};
 }
 
 function HowDidYouHear() {
@@ -40,22 +42,28 @@ function HowDidYouHear() {
         {value: 'Webinar', label: 'Webinar'},
         {value: 'Partner organization', label: 'Partner organization'}
     ];
+    const {onChange, BundledValuesInput} = useBundledValues();
 
     return (
-        <FormCheckboxgroup
-            name="How_did_you_Hear__c"
-            longLabel="How did you hear about OpenStax?"
-            instructions="Select all that apply (optional)."
-            options={options}
-        />
+        <React.Fragment>
+            <FormCheckboxgroup
+                longLabel="How did you hear about OpenStax?"
+                instructions="Select all that apply (optional)."
+                options={options}
+                onChange={onChange}
+            />
+            <BundledValuesInput />
+        </React.Fragment>
     );
 }
 
-function BookSelectorPage({selectedBooksRef, bookBeingSubmitted}) {
-    const preselectedTitle = firstSearchArgument();
+function BookSelectorPage({selectedBooksRef}) {
+    const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
+    const bookList = selectedBooks.map((b) => b.value).join('; ');
 
     selectedBooksRef.current = selectedBooks;
+
     return (
         <div className="page-2">
             <BookSelector
@@ -68,83 +76,44 @@ function BookSelectorPage({selectedBooksRef, bookBeingSubmitted}) {
             <FormInput
                 longLabel="How many students do you teach each semester?"
                 inputProps={{
-                    name: 'Number_of_Students__c',
+                    name: 'number_of_students',
                     type: 'number',
                     min: '1',
                     max: '999',
                     required: true
                 }}
             />
+            <input type="hidden" name="subject" value={bookList} />
             <HowDidYouHear />
-            {
-                bookBeingSubmitted &&
-                    <React.Fragment>
-                        <input type="hidden" name="Subject__c" value={bookBeingSubmitted.value} />
-                        <input type="hidden" name="First__c" value={bookBeingSubmitted === selectedBooks[0]} />
-                    </React.Fragment>
-            }
         </div>
     );
 }
 
-function FacultyForm({selectedRole, onPageChange}) {
-    const {debug, webtoleadUrl} = useSalesforceContext();
+function FacultyForm({onPageChange}) {
     const contactValidatorRef = useRef();
     const selectedBooksRef = useRef();
-    const [currentBook, setCurrentBook] = useState();
-    const formRef = useRef();
-    const history = useHistory();
+    const afterSubmit = useAfterSubmit(selectedBooksRef);
+    const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
 
     function validatePage(page) {
         return Boolean(page !== 1 || contactValidatorRef.current());
     }
 
-    useEffect(() => {
-        if (currentBook) {
-            formRef.current.submit();
-        }
-    }, [currentBook]);
-
-    function onSubmit(form) {
-        const selectedBooks = selectedBooksRef.current;
-        const submitQueue = selectedBooks.slice();
-        const iframe = document.getElementById(form.target);
-
-        if (submitQueue.length === 0) {
-            return;
-        }
-
-        // eslint-disable-next-line no-use-before-define
-        const submitAfterDelay = () => window.setTimeout(submitNextBook, 300);
-
-        function submitNextBook() {
-            const preselectedTitle = firstSearchArgument();
-
-            if (submitQueue.length > 0) {
-                setCurrentBook(submitQueue.shift());
-            } else if (iframe) {
-                setCurrentBook(null);
-                iframe.removeEventListener('load', submitAfterDelay);
-                afterFormSubmit(history, preselectedTitle, selectedBooks);
-            }
-        }
-
-        formRef.current = form;
-        if (iframe) {
-            iframe.addEventListener('load', submitAfterDelay);
-        }
-        submitNextBook();
+    function doSubmit(form) {
+        form.submit();
+        onSubmit();
     }
 
     return (
         <React.Fragment>
+            <FormTarget submitting={submitting} />
             <MultiPageForm
-                validatePage={validatePage} action={webtoleadUrl}
-                onPageChange={onPageChange} onSubmit={onSubmit} debug={debug}
-                submitting={currentBook}
+                validatePage={validatePage} action={formDestination}
+                onPageChange={onPageChange} onSubmit={doSubmit}
+                submitting={submitting} target="form-target"
             >
-                <ContactInfoPage selectedRole={selectedRole} validatorRef={contactValidatorRef} />
-                <BookSelectorPage selectedBooksRef={selectedBooksRef} bookBeingSubmitted={currentBook} />
+                <ContactInfo validatorRef={contactValidatorRef} />
+                <BookSelectorPage selectedBooksRef={selectedBooksRef} />
             </MultiPageForm>
         </React.Fragment>
     );
@@ -172,7 +141,7 @@ export default function InterestForm() {
             <div className="text-content" ref={ref}>
                 <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
                     <StudentForm />
-                    <FacultyForm selectedRole={selectedRole} onPageChange={onPageChange} />
+                    <FacultyForm onPageChange={onPageChange} />
                 </RoleSelector>
             </div>
         </main>

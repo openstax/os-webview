@@ -1,7 +1,8 @@
 import React, {useState, useRef, useLayoutEffect} from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {salesforceTitles} from '~/models/books';
+import {salesforceTitles, afterFormSubmit} from '~/models/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
+import {useHistory, useLocation} from 'react-router-dom';
 import './book-selector.scss';
 
 function Subject({subject, books, name, selectedBooks, toggleBook}) {
@@ -67,6 +68,23 @@ export function useSelectedBooks() {
 
     return [selectedBooks, toggleBook];
 }
+
+export function useFirstSearchArgument() {
+    const {search} = useLocation();
+
+    return decodeURIComponent(search.substr(1).replace(/&.*/, ''));
+}
+
+export function useAfterSubmit(selectedBooksRef) {
+    const history = useHistory();
+    const preselectedTitle = useFirstSearchArgument();
+
+    return React.useCallback(
+        () => afterFormSubmit(history, preselectedTitle, selectedBooksRef.current),
+        [history, selectedBooksRef, preselectedTitle]
+    );
+}
+
 
 export default function BookSelectorLoader(props) {
     return (
