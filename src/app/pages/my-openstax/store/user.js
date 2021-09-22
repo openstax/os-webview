@@ -9,7 +9,7 @@ export async function fetchUser() {
     if (user && !user.contact) {
         user.error = 'no contact';
     }
-    return $.camelCaseKeys(user);
+    return $.camelCaseKeys(user || {});
 }
 
 export function useMyOpenStaxIsAvailable() {
