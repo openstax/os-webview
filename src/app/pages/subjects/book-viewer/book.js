@@ -23,8 +23,8 @@ function QuickLink({url, icon, text}) {
 const qlLabelsByLanguage = {
     en: [
         'Get this book',
-        'Instructor Resources',
-        'Student Resources'
+        'Instructor resources',
+        'Student resources'
     ],
     es: [
         'Consigue este libro',
