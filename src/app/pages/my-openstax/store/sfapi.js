@@ -1,7 +1,6 @@
 const subdomains = ['dev.', 'qa.', 'staging.'];
 const subdomain = subdomains.find((sd) => window.SETTINGS.accountHref.includes(sd)) || '';
-const server = `https://${subdomain}salesforce.openstax.org`; // 'http://localhost:4004'
-//  /api/v1/opportunities/0060v000008WUp1AAG
+const server = `https://${subdomain}salesforce.openstax.org`;
 
 export async function sfApiPost(objectType, data, method = 'POST') {
     try {
