@@ -1,63 +1,101 @@
 import React, {useState} from 'react';
 import FormInput from '~/components/form-input/form-input';
+import FormSelect from '~/components/form-select/form-select.jsx';
+import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import schoolPromise from '~/models/schools';
-import useUserContext from '~/contexts/user';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import ReactModal from 'react-modal';
-import shellBus from '~/components/shell/shell-bus';
 import './contact-info.scss';
 
-const message = 'Please enter your full school name without abbreviations.' +
-    ' If this is your full school name, you can click Next.';
+// const message = 'Please enter your full school name without abbreviations.' +
+//     ' If this is your full school name, you can click Next.';
 
-function AccountInfo() {
-    const {userModel} = useUserContext();
+const schoolTypeOptions = [
+    'Technical/Community College',
+    'College or University',
+    'High School',
+    'Middle School',
+    'Elementary School',
+    'K-12 institution',
+    'Homeschool',
+    'Other'
+].map((text) => ({label: text, value: text}));
 
-    if (!userModel?.id) {
-        return null;
+function SchoolSelector() {
+    const schools = useDataFromPromise(schoolPromise, []).sort();
+    const schoolNames = schools.map((s) => s.name);
+    const schoolSet = new window.Set(schoolNames.map((s) => s.toLowerCase()));
+    const [value, setValue] = useState('');
+    const [schoolLocation, setSchoolLocation] = useState();
+    const schoolIsOk = schoolSet.has(value.toLowerCase());
+    const selectedEntry = schoolIsOk && schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
+
+    function onChange({target}) {
+        setValue(target.value);
     }
 
     return (
         <React.Fragment>
-            <input type="hidden" name="accounts_uuid" value={userModel.uuid} />
-            <input type="hidden" name="accounts_id" value={userModel.id} />
+            <FormInput
+                label="School name"
+                suggestions={schoolNames}
+                inputProps={{
+                    type: 'text',
+                    name: 'school',
+                    required: true,
+                    autocomplete: 'off',
+                    value,
+                    onChange
+                }}
+            />
+            {
+                selectedEntry &&
+                <React.Fragment>
+                    <input type="hidden" name="school_type" value={selectedEntry.type} />
+                    <input type="hidden" name="school_location" value={selectedEntry.location} />
+                    <input
+                        type="hidden" name="school_total_enrollment"
+                        value={selectedEntry.total_school_enrollment}
+                    />
+                </React.Fragment>
+            }
+            {
+                !schoolIsOk && value.length > 3 &&
+                <div className="school-info">
+                    <div className="instructions">
+                        We don&apos;t have that school in our system. Please tell us a little
+                        more about it:
+                    </div>
+                    <FormSelect
+                        label="What type of school is it?"
+                        name="school_type"
+                        selectAttributes={{required: true}}
+                        options={schoolTypeOptions}
+                    />
+                    <FormRadioGroup
+                        longLabel="Is it located in the United States?"
+                        name="school_location"
+                        options={[
+                            {label: 'Yes', value: 'Domestic'},
+                            {label: 'No', value: 'Foreign'}
+                        ]}
+                        selectedValue={schoolLocation}
+                        setSelectedValue={setSchoolLocation}
+                        required
+                    />
+                </div>
+            }
         </React.Fragment>
     );
 }
 
 export default function ContactInfo({validatorRef}) {
-    const [schoolIsOk, setSchoolIsOk] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);
-    const schools = useDataFromPromise(schoolPromise, []).sort();
-    const schoolSet = new window.Set(schools.map((s) => s.toLowerCase()));
-
-    React.useEffect(() => {
-        shellBus.emit(showPopup ? 'with-modal' : 'no-modal');
-
-        return () => shellBus.emit('no-modal');
-    }, [showPopup]);
-
     if (validatorRef) {
-        validatorRef.current = function validate() {
-            if (!schoolIsOk) {
-                setShowPopup(true);
-                return false;
-            }
-            return true;
-        };
+        validatorRef.current = () => true;
     }
 
-    function onChange(event) {
-        setSchoolIsOk(schoolSet.has(event.target.value?.toLowerCase()));
-    }
-    function onClose() {
-        setSchoolIsOk(true);
-        setShowPopup(false);
-    }
 
     return (
         <div className="contact-info">
-            <AccountInfo />
             <FormInput
                 label="First name"
                 inputProps={{
@@ -94,26 +132,7 @@ export default function ContactInfo({validatorRef}) {
                     autocomplete: 'tel-national'
                 }}
             />
-            <FormInput
-                label="School name"
-                suggestions={schools}
-                inputProps={{
-                    type: 'text',
-                    name: 'school',
-                    required: true,
-                    autocomplete: 'off',
-                    onChange
-                }}
-            />
-            <ReactModal
-                isOpen={showPopup}
-                className="modal contact-info-modal" overlayClassName="modal-overlay"
-            >
-                <p id="popupMessage">{message}</p>
-                <button type="button" className="dismiss" tabIndex="1" onClick={onClose}>
-                    Got it
-                </button>
-            </ReactModal>
+            <SchoolSelector />
         </div>
     );
 }

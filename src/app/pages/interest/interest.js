@@ -89,7 +89,7 @@ function BookSelectorPage({selectedBooksRef}) {
     );
 }
 
-function FacultyForm({onPageChange}) {
+function FacultyForm({position, onPageChange}) {
     const contactValidatorRef = useRef();
     const selectedBooksRef = useRef();
     const afterSubmit = useAfterSubmit(selectedBooksRef);
@@ -112,7 +112,13 @@ function FacultyForm({onPageChange}) {
                 onPageChange={onPageChange} onSubmit={doSubmit}
                 submitting={submitting} target="form-target"
             >
-                <ContactInfo validatorRef={contactValidatorRef} />
+                <React.Fragment>
+                    <input type="hidden" name="application_source" value="OS Web" />
+                    <input type="hidden" name="position" value={position} />
+                    <input type="hidden" name="role" value="Instructor" />
+                    <input type="hidden" name="lead_source" value="Interest Form" />
+                    <ContactInfo validatorRef={contactValidatorRef} />
+                </React.Fragment>
                 <BookSelectorPage selectedBooksRef={selectedBooksRef} />
             </MultiPageForm>
         </React.Fragment>
@@ -141,7 +147,7 @@ export default function InterestForm() {
             <div className="text-content" ref={ref}>
                 <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
                     <StudentForm />
-                    <FacultyForm onPageChange={onPageChange} />
+                    <FacultyForm position={selectedRole} onPageChange={onPageChange} />
                 </RoleSelector>
             </div>
         </main>
