@@ -294,10 +294,10 @@ function ResourceBox({model}) {
     );
 }
 
-export default function ResourceBoxes({models}) {
+export default function ResourceBoxes({models, includeCommonsHub=false}) {
     return (
         <React.Fragment>
-            <CommonsHubBox />
+            {includeCommonsHub && <CommonsHubBox />}
             {
                 models.map((model) =>
                     <ResourceBox model={model} key={model.heading} />
