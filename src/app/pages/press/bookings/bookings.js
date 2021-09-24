@@ -1,5 +1,5 @@
-import PageContext from '../page-context';
-import React, {useContext} from 'react';
+import usePageContext from '../page-context';
+import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './bookings.scss';
 
@@ -24,7 +24,7 @@ function Booking({imageUrl, name, contact, bio, title}) {
 }
 
 export default function Bookings() {
-    const pageData = useContext(PageContext);
+    const pageData = usePageContext();
 
     if (!pageData) {
         return null;

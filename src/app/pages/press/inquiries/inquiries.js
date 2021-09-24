@@ -1,5 +1,5 @@
-import PageContext from '../page-context';
-import React, {useContext} from 'react';
+import usePageContext from '../page-context';
+import React from 'react';
 import './inquiries.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebook} from '@fortawesome/free-brands-svg-icons/faFacebook';
@@ -9,9 +9,10 @@ import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
 import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 
 export default function Inquiries() {
-    const pageData = useContext(PageContext);
+    const pageData = usePageContext();
 
     if (!pageData) {
+        console.info('No page data');
         return null;
     }
 
