@@ -182,7 +182,7 @@ function interceptLinkClicks(event, book, userModel) {
     if (!el) {
         return;
     }
-    const trackThis = userModel.accounts_id && el.dataset.track;
+    const trackThis = userModel?.accounts_id && el.dataset.track;
 
     if (trackThis) {
         /* eslint-disable camelcase */
