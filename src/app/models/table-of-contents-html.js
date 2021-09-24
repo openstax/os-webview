@@ -13,7 +13,7 @@ export default function ({isRex, cnxId, webviewLink, isTutor}) {
         const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
 
         return isRex ?
-            `${rexRoot}/pages/${entry.slug}` :
+            `${rexRoot}/pages/${entry.slug || entry.shortId}` :
             `${webviewLink}:${entry.shortId}`;
     }
 
