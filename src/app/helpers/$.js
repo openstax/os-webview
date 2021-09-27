@@ -9,8 +9,6 @@ $.isMobileDisplay = () => {
     return window.innerWidth <= 960;
 };
 
-$.isTestingEnvironment = () => (/(localhost|staging|dev|qa)/).test(window.location.hostname);
-
 $.isPolish = (titleOrSlug) => (/fizyka|psychologia/i).test(titleOrSlug);
 
 $.focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
