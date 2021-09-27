@@ -10,17 +10,10 @@ const fetchRexInfo = memoize((rexOrigin) => {
     return retry(() => fetch(`${rexOrigin}/rex/environment.json`))
         .then((response) => response.json())
         .then((environment) => Promise.all([
-<<<<<<< HEAD
-          fetch(`${rexOrigin}/rex/releases/${environment.release_id}/rex/release.json`)
-            .then(response => response.json()),
-          fetch(`${rexOrigin}/rex/releases/${environment.release_id}/rex/config.json`)
-            .then(response => response.json())
-=======
             fetch(`${rexOrigin}/rex/releases/${environment.release_id}/rex/release.json`)
                 .then((response) => response.json()),
             fetch(`${rexOrigin}/rex/releases/${environment.release_id}/rex/config.json`)
                 .then((response) => response.json())
->>>>>>> origin/rex-rap-content
         ]))
         .then(([release, config]) => ({release, config}))
     ;
