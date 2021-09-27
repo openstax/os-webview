@@ -37,7 +37,7 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
               ? `/apps/archive/${archiveVersion}`
               : rexInfo.config.REACT_APP_ARCHIVE_URL;
 
-          return fetch(`${window.SETTINGS.apiOrigin}/${archivePath}/contents/${cnxId}@${bookVersion}.json`)
+          return fetch(`${window.SETTINGS.apiOrigin}${archivePath}/contents/${cnxId}@${bookVersion}.json`)
         })
         .then((response) => response.json());
 });
