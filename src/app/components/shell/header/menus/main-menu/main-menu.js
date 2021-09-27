@@ -18,7 +18,7 @@ function SubjectsMenu() {
                 categories.map((obj) =>
                     <MenuItem
                         key={obj.value}
-                        label={obj.html.replace('View ', '')}
+                        label={obj.html?.replace('View ', '')}
                         url={`/subjects/${obj.value}`}
                     />
                 )
