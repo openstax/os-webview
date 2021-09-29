@@ -63,6 +63,7 @@ $baby-blue: #dbf3f8;
 
             .poptip {
                 box-shadow: 0 1rem 2rem rgba(ui-color(black), 0.2);
+                max-width: calc(100vw - 2rem);
                 position: relative;
                 width: 30rem;
 

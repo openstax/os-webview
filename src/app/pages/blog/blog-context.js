@@ -52,7 +52,7 @@ function useContextValue() {
     const pinnedStory = pinnedData && $.camelCaseKeys(pinnedData.items[0]);
 
     function setPath(href) {
-        const {pathname, search, hash} = new window.URL(href);
+        const {pathname, search, hash} = new window.URL(href, window.location);
 
         history.push(`${pathname}${search}${hash}`, stayHere);
         window.scrollTo(0, 0);

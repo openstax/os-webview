@@ -13,7 +13,7 @@ export const languageTranslations = {
         and: 'and'
     },
     es: {
-        en: 'inglés.',
+        en: 'inglés',
         es: 'español',
         and: 'y'
     }
@@ -30,7 +30,7 @@ function AnotherLanguage({locale}) {
 
     return (
         <React.Fragment>
-            {' '}and{' '}
+            {' '}{tr.and}{' '}
             <a href={locale} onClick={onClick}>{tr[locale]}</a>
         </React.Fragment>
     );
