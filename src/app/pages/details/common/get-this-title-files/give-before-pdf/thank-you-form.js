@@ -43,9 +43,9 @@ function FormWithAfterSubmit({
 
 export default function ThankYou({link, close}) {
     const {userModel} = useUserContext();
-    const first = userModel.first_name;
-    const last = userModel.last_name;
-    const school = userModel.self_reported_school;
+    const first = userModel?.first_name;
+    const last = userModel?.last_name;
+    const school = userModel?.self_reported_school;
 
     function afterSubmit() {
         window.open(link);

@@ -182,7 +182,7 @@ function interceptLinkClicks(event, book, userModel) {
     if (!el) {
         return;
     }
-    const trackThis = userModel.accounts_id && el.dataset.track;
+    const trackThis = userModel?.accounts_id && el.dataset.track;
 
     if (trackThis) {
         /* eslint-disable camelcase */
@@ -294,10 +294,10 @@ function ResourceBox({model}) {
     );
 }
 
-export default function ResourceBoxes({models}) {
+export default function ResourceBoxes({models, includeCommonsHub=false}) {
     return (
         <React.Fragment>
-            <CommonsHubBox />
+            {includeCommonsHub && <CommonsHubBox />}
             {
                 models.map((model) =>
                     <ResourceBox model={model} key={model.heading} />

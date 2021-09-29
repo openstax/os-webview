@@ -132,7 +132,7 @@ function InstructorResourceTab({model, userStatus}) {
                             blogLinkModels={blogLinkModels}
                             referenceModels={referenceModels}
                         />
-                        <ResourceBoxes models={otherModels} />
+                        <ResourceBoxes models={otherModels} includeCommonsHub />
                     </div>
                     <Partners
                         bookAbbreviation={bookAbbreviation}

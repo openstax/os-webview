@@ -26,7 +26,12 @@ function GiveItem() {
         return null;
     }
     return (
-        <a className="nav-menu" href="/give" target="_blank" rel="noreferrer">Give</a>
+        <a
+            className="nav-menu" target="_blank" rel="noreferrer"
+            href="https://riceconnect.rice.edu/donation/support-openstax-header"
+        >
+            Give
+        </a>
     );
 }
 

@@ -65,7 +65,7 @@ export function InstructorResourcesPane({model, userStatus}) {
             </a>
             <div className="free-resources-region">
                 <VideoResourceBoxes models={model.bookVideoFacultyResources} referenceModels={referenceModels} />
-                <ResourceBoxes models={otherModels} />
+                <ResourceBoxes models={otherModels} includeCommonsHub />
             </div>
         </div>
     );
