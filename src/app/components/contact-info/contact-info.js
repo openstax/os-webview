@@ -6,20 +6,6 @@ import schoolPromise from '~/models/schools';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './contact-info.scss';
 
-// const message = 'Please enter your full school name without abbreviations.' +
-//     ' If this is your full school name, you can click Next.';
-
-const schoolTypeOptions = [
-    'Technical/Community College',
-    'College or University',
-    'High School',
-    'Middle School',
-    'Elementary School',
-    'K-12 institution',
-    'Homeschool',
-    'Other'
-].map((text) => ({label: text, value: text}));
-
 function SchoolSelector() {
     const schools = useDataFromPromise(schoolPromise, []).sort();
     const schoolNames = schools.map((s) => s.name);
@@ -28,6 +14,15 @@ function SchoolSelector() {
     const [schoolLocation, setSchoolLocation] = useState();
     const schoolIsOk = schoolSet.has(value.toLowerCase());
     const selectedEntry = schoolIsOk && schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
+    const schoolTypeOptions = React.useMemo(
+        () => schools.reduce((a, b) => {
+            if (b.type && !a.includes(b.type)) {
+                a.unshift(b.type);
+            }
+            return a;
+        }, ['Other']).map((text) => ({label: text, value: text})),
+        [schools]
+    );
 
     function onChange({target}) {
         setValue(target.value);

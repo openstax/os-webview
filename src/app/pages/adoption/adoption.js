@@ -76,6 +76,7 @@ function FacultyForm({position, onPageChange}) {
                     <input type="hidden" name="position" value={position} />
                     <input type="hidden" name="role" value="Instructor" />
                     <input type="hidden" name="lead_source" value="Adoption Form" />
+                    <input type="hidden" name="process_adoptions" value={true} />
                     <ContactInfo validatorRef={contactValidatorRef} />
                 </React.Fragment>
                 <BookSelectorPage selectedBooksRef={selectedBooksRef} />

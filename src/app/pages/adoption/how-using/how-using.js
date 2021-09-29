@@ -11,7 +11,7 @@ function HowManyStudents({book, dispatch}) {
         <div>
             How many students are using {book.text} each semester?
             <div className="hint">Include sections taught by TAs that you oversee</div>
-            <input type="hidden" name="book" value={book.value} />
+            <input type="hidden" value={book.value} />
             <FormInput
                 inputProps={{
                     type: 'number',
@@ -35,8 +35,7 @@ export default function HowUsing({selectedBooks}) {
         ({value: name}) => ({name, students: +bookData[name]})
     );
     const json = JSON.stringify({
-        'Books': rewrittenBookData,
-        newAdoption: true
+        'Books': rewrittenBookData
     });
 
     return (
