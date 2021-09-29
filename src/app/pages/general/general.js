@@ -1,6 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useTextFromSlug} from '~/helpers/controller/cms-mixin';
+import useRouterContext from '~/components/shell/router-context';
 import $ from '~/helpers/$';
 import './general.scss';
 
@@ -29,10 +30,15 @@ function GeneralPage({html}) {
 export default function GeneralPageLoader() {
     const slug = window.location.pathname.substr(1).replace('general', 'spike');
     const html = useTextFromSlug(slug);
+    const {fail} = useRouterContext();
 
     React.useEffect(() => {
         $.setPageTitleAndDescription();
     }, []);
+
+    if (html instanceof Error) {
+        fail(`Could not load ${slug}`);
+    }
 
     return (
         <main>

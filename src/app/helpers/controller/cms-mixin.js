@@ -123,12 +123,15 @@ export function useTextFromSlug(slug) {
     React.useEffect(() => {
         const url = urlFromSlug(slug);
 
-        fetch(url).then((r) => r.text()).then((pageHtml) => {
-            const parser = new window.DOMParser();
-            const newDoc = parser.parseFromString(pageHtml, 'text/html');
+        fetch(url)
+            .catch((err) => setText(err))
+            .then((r) => r.text())
+            .then((pageHtml) => {
+                const parser = new window.DOMParser();
+                const newDoc = parser.parseFromString(pageHtml, 'text/html');
 
-            setText(newDoc.body.innerHTML);
-        });
+                setText(newDoc.body.innerHTML);
+            });
     }, [slug]);
 
     return text;
