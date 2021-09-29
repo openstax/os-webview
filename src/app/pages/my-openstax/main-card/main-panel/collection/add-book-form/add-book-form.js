@@ -6,7 +6,7 @@ import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import {useStyledCheckbox, LabeledElement, ClickForwardingLabel} from '~/components/form-elements/form-elements';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
-import {salesforce} from '~/models/salesforce';
+import useSalesforceContext from '~/contexts/salesforce';
 import useAdoptions from '~/pages/my-openstax/store/use-adoptions';
 import useInstitutions from '~/pages/my-openstax/store/use-institutions';
 import useBooks from '~/pages/my-openstax/store/use-books';
@@ -86,11 +86,15 @@ function InstitutionList({adoption}) {
     );
 }
 
-const options = salesforce.adoption(['adopted', 'recommended', 'interest'])
-    .map((a) => ({
-        label: a.text,
-        value: a.value
-    }));
+function useOptions() {
+    const {adoption} = useSalesforceContext();
+
+    return adoption(['adopted', 'recommended', 'interest'])
+        .map((a) => ({
+            label: a.text,
+            value: a.value
+        }));
+}
 
 function payloadFromFormData(formData, books) {
     const bookMightNeedLookup = formData.get('book');
@@ -123,6 +127,7 @@ export function EditBookForm({book, afterSubmit}) {
     const {adoptions, update} = useAdoptions();
     const thisAdoption = adoptions[book.value];
     const [levelOfUseValue, setLevelOfUseValue] = React.useState(thisAdoption[0].stageName);
+    const options = useOptions();
 
     function onSubmit(event) {
         event.preventDefault();
@@ -183,7 +188,8 @@ export default function AddBookForm({afterSubmit}) {
     const suggestions = books
         .filter((b) => !alreadyAdoptedNames.includes(b.value))
         .map((b) => b.label);
-    const ref = React.useRef()
+    const ref = React.useRef();
+    const options = useOptions();
 
     function onSubmit(event) {
         event.preventDefault();

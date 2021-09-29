@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {LoadPageAfterSalesforce, salesforce} from '~/models/salesforce';
+import useSalesforceContext from '~/contexts/salesforce';
 import FormInput from '~/components/form-input/form-input';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import useSubmitContext from '../submit-context';
 import './how-using.scss';
 
 function HowUsingBook({book, selectedValue, setSelectedValue}) {
-    const sfOptions = salesforce.adoption(['adopted', 'recommended']);
+    const {adoption} = useSalesforceContext();
+    const sfOptions = adoption(['adopted', 'recommended']);
     // Tricky: don't want a name at submit time, but need one for validation
     // Also, required is invalid if there is no name
     const name = selectedValue ? null : book.value;
@@ -66,7 +67,7 @@ function BothQuestionsForBook({book, isFirst}) {
     );
 }
 
-function HowUsing({selectedBooks}) {
+export default function HowUsing({selectedBooks}) {
     return (
         <div className="how-using">
             {
@@ -75,11 +76,5 @@ function HowUsing({selectedBooks}) {
                 )
             }
         </div>
-    );
-}
-
-export default function HowUsingLoader(props) {
-    return (
-        <LoadPageAfterSalesforce Child={HowUsing} {...props} />
     );
 }

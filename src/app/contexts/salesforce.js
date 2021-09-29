@@ -1,5 +1,6 @@
-import cmsFetch from './cmsFetch';
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
+import buildContext from '~/components/jsx-helpers/build-context';
+import cmsFetch from '~/models/cmsFetch';
 
 const adoptionName = '[name="Adoption_Status__c"]';
 const adoptionOptions = [{
@@ -31,41 +32,27 @@ function adoption(options) {
     return adoptionOptions.filter((option) => options.includes(option.key));
 }
 
-export const salesforce = {
-    adoption,
-    adoptionName
-};
+const initialContextValue = {adoption, adoptionName};
 
-const salesforcePromise = cmsFetch('salesforce/forms/').then((sfData) => {
-    const {oid, debug, posting_url: webtoleadUrl} = sfData[0];
-
-    Object.assign(salesforce, {
-        oid,
-        debug,
-        webtoleadUrl
-    });
-
-    return salesforce;
-});
-
-export function useSalesforceLoadedState() {
-    const [sfLoaded, setSfLoaded] = useState(false);
+function useContextValue() {
+    const [value, setValue] = useState(initialContextValue);
 
     useEffect(() => {
-        salesforcePromise.then(() => setSfLoaded(true));
+        cmsFetch('salesforce/forms/')
+            .then((sfData) => {
+                const {oid, debug, posting_url: webtoleadUrl} = sfData[0];
+                const webtocaseUrl = webtoleadUrl.replace('ToLead', 'ToCase');
+
+                setValue({...initialContextValue, oid, debug, webtoleadUrl, webtocaseUrl});
+            });
     }, []);
 
-    return sfLoaded;
+    return value;
 }
 
-export function LoadPageAfterSalesforce({Child, ...props}) {
-    const sfLoaded = useSalesforceLoadedState();
+const {useContext, ContextProvider} = buildContext({useContextValue});
 
-    if (!sfLoaded) {
-        return (<div>Loading</div>);
-    }
-
-    return <Child {...props} />;
-}
-
-export default salesforcePromise;
+export {
+    useContext as default,
+    ContextProvider as SalesforceContextProvider
+};

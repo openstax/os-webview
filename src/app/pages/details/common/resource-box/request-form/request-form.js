@@ -1,26 +1,24 @@
 import React, {useState} from 'react';
-import {useSalesforceLoadedState, salesforce} from '~/models/salesforce';
+import SalesforceForm from '~/components/salesforce-form/salesforce-form';
+import useSalesforceContext from '~/contexts/salesforce';
 import useUserContext from '~/contexts/user';
 import './request-form.scss';
 
 function RequestForm({model, done, afterSubmit}) {
     const {userStatus} = useUserContext();
-    const sfLoaded = useSalesforceLoadedState();
+    const {webtocaseUrl} = useSalesforceContext();
+    const [count, setCount] = useState();
 
-    function listenForResponse() {
-        const iframeEl = document.getElementById('form-response');
-        const onLoad = () => {
-            iframeEl.removeEventListener('load', onLoad);
-            afterSubmit();
-        };
-
-        iframeEl.addEventListener('load', onLoad);
+    function onCountChange(event) {
+        setCount(event.target.value);
     }
 
-    if (!userStatus || !sfLoaded) {
+    if (!userStatus || !webtocaseUrl) {
         return null;
     }
     const {salesforceAbbreviation, title, coverUrl} = model.bookModel;
+    const description = `iBooks comp request for ${salesforceAbbreviation}
+Student count ${count}`;
 
     return (
         <div className="comp-copy-request-form">
@@ -32,25 +30,24 @@ function RequestForm({model, done, afterSubmit}) {
                 <div className="header">Book requested</div>
                 <img src={coverUrl} />
                 {title}
-                <iframe name="form-response" id="form-response" src="about:blank" width="0" height="0" />
             </div>
-            <form
-                acceptCharset="UTF-8" target="form-response"
-                action={salesforce.webtoleadUrl} method="post"
-            >
+            <SalesforceForm postTo={webtocaseUrl} afterSubmit={afterSubmit}>
                 <div>
-                    <input type="hidden" name="utf8" value="✓" />
-                    <input type="hidden" name="oid" value={salesforce.oid} />
-                    <input type="hidden" name="lead_source" value="Comp Request" />
-                    <input type="hidden" name="first_name" value={userStatus.firstName} />
-                    <input type="hidden" name="last_name" value={userStatus.lastName} />
+                    <input type="hidden" name="external" value="1" />
+                    <input type="hidden" name="Product__c" value="Textbook" />
+                    <input type="hidden" name="Feature__c" value="Comp" />
+                    <input type="hidden" name="subject" value="Comp request" />
+                    <input
+                        type="hidden" name="name"
+                        value={`${userStatus.firstName} ${userStatus.lastName}`}
+                    />
                     <input type="hidden" name="email" value={userStatus.email} />
-                    <input type="hidden" name="00NU00000053nzR" value={salesforceAbbreviation} />
+                    <input type="hidden" name="description" value={description} />
                     How many students will be using {title} this semester?
                     <div className="hint">
                         Include sections taught by any teaching assistants that you supervise.
                     </div>
-                    <input name="00NU00000052VId" type="number" min="0" required />
+                    <input type="number" min="0" required value={count} onChange={onCountChange} />
                 </div>
                 {
                     model.notAvailable ?
@@ -59,14 +56,13 @@ function RequestForm({model, done, afterSubmit}) {
                             <button
                                 className="primary"
                                 disabled={!salesforceAbbreviation}
-                                onClick={listenForResponse}
                             >
                                 Request iBooks edition
                             </button>
                             <button type="reset" onClick={done}>Cancel</button>
                         </div>
                 }
-            </form>
+            </SalesforceForm>
         </div>
     );
 }
