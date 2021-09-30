@@ -125,7 +125,7 @@ export function useTextFromSlug(slug) {
 
         fetch(url)
             .catch((err) => setText(err))
-            .then((r) => r.text())
+            .then((r) => r?.text())
             .then((pageHtml) => {
                 const parser = new window.DOMParser();
                 const newDoc = parser.parseFromString(pageHtml, 'text/html');

@@ -8,12 +8,14 @@ import {
     useParams
 } from 'react-router-dom';
 import Error404 from '~/pages/404/404';
+import {GeneralPageFromSlug} from '~/pages/general/general';
 import linkHelper from '~/helpers/link';
 import retry from '~/helpers/retry';
 import analytics from '~/helpers/analytics';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import useFlagContext from './flag-context';
 import $ from '~/helpers/$';
+import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {fetchUser} from '~/pages/my-openstax/store/user';
 import useRouterContext, {RouterContextProvider} from './router-context';
 
@@ -108,13 +110,17 @@ function useLinkHandler() {
     return linkHandler;
 }
 
-function ImportedPage({name}) {
+function ImportedPage({name, fallback}) {
     const history = useHistory();
-    const {isValid} = useRouterContext();
     const isRedirect = history.location.state?.redirect;
+    const {fail} = useRouterContext();
     const Component = React.useMemo(
-        () => React.lazy(() => retry(() => import(`~/pages/${name}/${name}`))),
-        [name]
+        () => {
+            const importFn = () => import(`~/pages/${name}/${name}`);
+
+            return React.lazy(() => retry(importFn).catch(fallback || fail));
+        },
+        [name, fallback, fail]
     );
 
     useEffect(() => {
@@ -123,10 +129,6 @@ function ImportedPage({name}) {
             analytics.sendPageview();
         }
     }, [name, isRedirect]);
-
-    if (!isValid) {
-        return (<Error404 />);
-    }
 
     return (
         <Suspense fallback={<LoadingPlaceholder />}>
@@ -144,11 +146,32 @@ function useHomeOrMyOpenStax() {
     return (user.error || !isEnabled) ? 'home' : 'my-openstax';
 }
 
+function FallbackToGeneralPage({name}) {
+    const [fallback, setFallback] = useToggle(false);
+
+    if (fallback) {
+        return (<Error404 />);
+    }
+    return (
+        <GeneralPageFromSlug slug={`spike/${name}`} fallback={setFallback} />
+    );
+}
+
 function TopLevelPage() {
     const {name} = useParams();
+    const [fallback, setFallback] = useToggle(false);
+    const {isValid, goto404} = useRouterContext();
+
+    if (!isValid || goto404) {
+        return (<Error404 />);
+    }
+
+    if (fallback) {
+        return (<FallbackToGeneralPage name={name} />);
+    }
 
     return (
-        <ImportedPage name={name} />
+        <ImportedPage name={name} fallback={setFallback} />
     );
 }
 

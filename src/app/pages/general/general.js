@@ -2,6 +2,7 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useTextFromSlug} from '~/helpers/controller/cms-mixin';
 import useRouterContext from '~/components/shell/router-context';
+import {useLocation} from 'react-router-dom';
 import $ from '~/helpers/$';
 import './general.scss';
 
@@ -27,8 +28,7 @@ function GeneralPage({html}) {
     );
 }
 
-export default function GeneralPageLoader() {
-    const slug = window.location.pathname.substr(1).replace('general', 'spike');
+export function GeneralPageFromSlug({slug, fallback}) {
     const html = useTextFromSlug(slug);
     const {fail} = useRouterContext();
 
@@ -37,12 +37,21 @@ export default function GeneralPageLoader() {
     }, []);
 
     if (html instanceof Error) {
-        fail(`Could not load ${slug}`);
+        fallback ? fallback() : fail(`Could not load ${slug}`);
     }
 
     return (
         <main>
             {html ? <GeneralPage html={html} /> : <h1>Loading...</h1>}
         </main>
+    );
+}
+
+export default function GeneralPageLoader() {
+    const location = useLocation();
+    const slug = location.pathname.substr(1).replace('general', 'spike');
+
+    return (
+        <GeneralPageFromSlug slug={slug} />
     );
 }
