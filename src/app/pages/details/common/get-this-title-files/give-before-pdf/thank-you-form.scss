@@ -3,7 +3,7 @@
 .thank-you-form {
     display: flex;
     flex-direction: column;
-    padding: 3rem 4rem;
+    padding: 3rem 5rem;
     row-gap: 3rem;
 
     h1 {
@@ -24,6 +24,7 @@
             @extend %primary;
 
             align-self: flex-end;
+            padding: 0 4rem;
         }
     }
 
@@ -56,6 +57,32 @@
         column-gap: 2rem;
         display: grid;
         grid-template-columns: 1fr 1fr;
+        row-gap: 3rem;
+    }
 
+    .cb-group {
+        @include set-font(body-regular);
+
+        align-items: center;
+        column-gap: $normal-margin;
+        display: grid;
+        grid-template-columns: 2rem auto;
+        max-width: 55rem;
+
+        [type="checkbox"] {
+            border: thin solid ui-color(form-border);
+            border-radius: 0.2rem;
+            height: 2rem;
+            margin: 0;
+            width: 2rem;
+
+            &:not(:checked) {
+                appearance: none;
+            }
+
+            &:checked {
+                margin-right: 0.1rem;
+            }
+        }
     }
 }

@@ -91,16 +91,36 @@ export default function ThankYou({link, close}) {
                         defaultValue={last}
                     />
                 </label>
+                <label>
+                    Institution name <span className="asterisk" />
+                    <input
+                        name="institution" type="text"
+                        placeholder="Your school"
+                        required
+                        defaultValue={school}
+                    />
+                </label>
+                <label>
+                    Email address
+                    <input
+                        name="contact_email_address" type="email"
+                        placeholder="Your email (optional)"
+                    />
+                </label>
             </div>
-            <label>
-                Institution name <span className="asterisk" />
-                <input
-                    name="institution" type="text"
-                    placeholder="Your school"
-                    required
-                    defaultValue={school}
-                />
-            </label>
+            <div className="consent-checkbox">
+                <label>
+                    Consent <span className="asterisk" />
+                </label>
+                <label className="cb-group">
+                    <input
+                        type="checkbox" name="consent_to_share_or_contact" value="True" required
+                    />
+                    By clicking here I understand that OpenStax may include my story
+                    in publications and distribution in printed, electronic, and digital
+                    media.
+                </label>
+            </div>
             <button className="primary">Submit note and go to PDF</button>
             <a className="never-mind" href={link}>Never mind, just go to the PDF</a>
         </FormWithAfterSubmit>
