@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {PartnerContextProvider} from './partner-context';
+import usePartnerContext, {PartnerContextProvider} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
 import Reviews from './reviews/reviews';
@@ -8,6 +8,7 @@ import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import booksPromise from '~/models/books';
 import analyticsEvents from '../analytics-events';
+import InfoRequestForm from './info-request-form/info-request-form';
 import './partner-details.scss';
 
 function useRealTitles(books) {
@@ -36,16 +37,21 @@ function useRealTitles(books) {
     return titles;
 }
 
-function RequestInfoButton({infoUrl, infoText, partnerName}) {
-    function trackInfoRequest() {
+function RequestInfoButton({infoText='Request info', partnerName}) {
+    const {toggleForm} = usePartnerContext();
+
+    function gotoForm() {
         analyticsEvents.requestInfo(partnerName);
+        toggleForm();
     }
 
     return (
-        infoUrl && infoText &&
-            <section>
-                <a className="btn primary" href={infoUrl} onClick={trackInfoRequest}>{infoText}</a>
-            </section>
+        <section>
+            <button
+                type="button" className="primary"
+                onClick={gotoForm}
+            >{infoText}</button>
+        </section>
     );
 }
 
@@ -144,10 +150,20 @@ function PartnerDetails({model}) {
     );
 }
 
+function PartnerDetailsOrInfoRequestForm({model}) {
+    const {showInfoRequestForm} = usePartnerContext();
+
+    return showInfoRequestForm ? (
+        <InfoRequestForm />
+    ) : (
+        <PartnerDetails model={model} />
+    );
+}
+
 export default function PartnerDetailsWrapper({detailData: {id, ...model}}) {
     return (
         <PartnerContextProvider contextValueParameters={id}>
-            <PartnerDetails model={model} />
+            <PartnerDetailsOrInfoRequestForm model={model} />
         </PartnerContextProvider>
     );
 }

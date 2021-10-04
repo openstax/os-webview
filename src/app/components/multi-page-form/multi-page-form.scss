@@ -1,9 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .multi-page-form {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     grid-gap: 4rem;
-    grid-template-columns: minmax(auto, 47rem);
     justify-content: center;
     margin-top: 4rem;
 

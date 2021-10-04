@@ -1,0 +1,65 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.info-request-form {
+    margin-top: -3rem;
+    padding: 3rem;
+    padding-top: 0;
+
+    .form-page {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 48rem;
+
+        .grid {
+            align-items: end;
+            column-gap: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 1rem;
+            row-gap: 1rem;
+        }
+
+        .suggestion-list {
+            border: thin solid ui-color(form-border);
+            border-top: 0;
+            max-height: 25rem;
+            overflow: auto;
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+
+            [role="option"] {
+                padding: 0 1rem;
+            }
+        }
+    }
+
+    .headline {
+        @include set-font(body-regular);
+
+        font-weight: bold;
+    }
+
+    p {
+        @include set-font(helper-label);
+
+        margin: 0;
+    }
+
+    .instruction,
+    .form-group label {
+        @include set-font(helper-label);
+
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .button-row {
+        justify-content: end;
+
+        .secondary {
+            @include button-type-specific(default);
+        }
+    }
+}

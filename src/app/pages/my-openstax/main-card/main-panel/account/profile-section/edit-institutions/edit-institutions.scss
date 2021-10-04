@@ -76,10 +76,14 @@ dialog .edit-institutions {
     }
 
     .input-with-suggestions {
+        position: relative;
+
         .suggestion-list {
             max-height: 40vh;
             overflow: auto;
+            position: absolute;
             width: 100%;
+            z-index: 1;
         }
     }
 }

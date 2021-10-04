@@ -120,6 +120,7 @@ export function useSelectList({
         case ' ':
             if (activeIndex > -1) {
                 accept(items[activeIndex]);
+                event.preventDefault();
                 setActiveIndex(-1);
             } else {
                 handled = false;
