@@ -1,0 +1,41 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.multiselect .book-options {
+    max-height: 40vh;
+    overflow: auto;
+    padding: 0 2rem 2rem;
+
+    .option-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .group-header {
+        @include set-font(h4);
+
+        margin-bottom: 0.5rem;
+        margin-top: 2.5rem;
+    }
+
+    .book-option {
+        @include set-font(helper-label);
+
+        align-items: center;
+        border: thin solid ui-color(form-border);
+        border-radius: 0.3rem;
+        display: flex;
+        height: 3rem;
+        padding: 0 1rem;
+
+        &[aria-selected="true"] {
+            background-color: text-color(link);
+            border: 0;
+            color: text-color(white);
+        }
+    }
+
+    [role="option"] {
+        cursor: pointer;
+    }
+}

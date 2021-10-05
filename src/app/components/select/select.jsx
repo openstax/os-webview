@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import ValidationMessage from '~/components/validation-message/validation-message';
+import {OldValidationMessage} from '~/components/validation-message/validation-message';
 import './select.scss';
 
 function Option({optionEl, setValue, active}) {
@@ -61,7 +61,7 @@ function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
                         )
                 }
             </ul>
-            <ValidationMessage el={selectEl} />
+            <OldValidationMessage el={selectEl} />
         </React.Fragment>
     );
 }
@@ -114,6 +114,8 @@ export default function Select({children, placeholder, onChange, ...selectProps}
     function onBlur() {
         setOpen(false);
     }
+
+    console.info('USING SELECT');
 
     return (
         <div

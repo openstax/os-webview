@@ -3,6 +3,7 @@ import usePartnerContext from '../partner-context';
 import useSchoolSuggestionList from '~/models/use-school-suggestion-list';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
+import BookTagsMultiselect from '~/components/multiselect/book-tags/book-tags';
 import FormRadiogroup from '~/components/form-radiogroup/form-radiogroup';
 import FormSelect from '~/components/form-select/form-select.jsx';
 import {FilteringSelect} from '~/components/form-elements/form-elements';
@@ -10,7 +11,7 @@ import inputProps from '~/components/form-elements/input-props';
 import FormInput from '~/components/form-input/form-input';
 import './info-request-form.scss';
 
-const action = 'https://example.com';
+const action = 'http://www2.openstax.org/l/218812/2021-10-06/t5tr2x';
 const yesNoOptions = [
     {label: 'Yes', value: 'yes'},
     {label: 'No', value: 'no'}
@@ -34,7 +35,7 @@ function Page1() {
             </p>
             <div className="form-group">
                 <label>Book of interest</label>
-                <div>Book selector placeholder</div>
+                <BookTagsMultiselect name="book" required />
             </div>
             <div>
                 <p className="instruction">

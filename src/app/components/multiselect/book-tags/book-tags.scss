@@ -1,0 +1,34 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.multiselect {
+    border: thin solid ui-color(form-border);
+
+    .tag-list {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        height: 100%;
+        padding: 1rem;
+    }
+
+    .removable-tag {
+        @include set-font(helper-label);
+
+        align-items: center;
+        background-color: rgba(text-color(link), 0.1);
+        border: thin solid text-color(link);
+        border-radius: 0.3rem;
+        display: flex;
+        min-height: 3rem;
+        padding: 0 1rem;
+
+        .put-away {
+            font-size: inherit;
+        }
+    }
+
+    .arrow-toggle {
+        border: 0;
+    }
+}

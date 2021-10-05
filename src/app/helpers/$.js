@@ -18,16 +18,19 @@ $.booleanAttribute = (whether) => whether ? '' : null;
 $.apiOriginAndPrefix = `${settings.apiOrigin}/apps/cms/api/v2`;
 $.apiOriginAndOldPrefix = $.apiOriginAndPrefix.replace('/v2', '');
 
-$.treatSpaceOrEnterAsClick = (event) => {
-    if (['Enter', ' '].includes(event.key)) {
+$.treatKeydownAsClick = (event, keyList) => {
+    if (keyList.includes(event.key)) {
         event.target.dispatchEvent(new window.MouseEvent('click', {
             'view': window,
             'bubbles': true,
             'cancelable': true
         }));
         event.preventDefault();
+        event.stopPropagation();
     }
 };
+
+$.treatSpaceOrEnterAsClick = (event) => $.treatKeydownAsClick(event, ['Enter', ' ']);
 
 $.forwardEvent = (event, el) => {
     const newE = new event.constructor(event.type, event);
@@ -282,16 +285,5 @@ function camelCaseKeys(obj) {
     }, {});
 }
 $.camelCaseKeys = camelCaseKeys;
-
-$.key = {
-    esc: 27,
-    space: 32,
-    enter: 13,
-    up: 38,
-    down: 40,
-    left: 37,
-    right: 39,
-    tab: 9
-};
 
 export default $;
