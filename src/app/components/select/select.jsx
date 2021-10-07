@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {OldValidationMessage} from '~/components/validation-message/validation-message';
+import ValidationMessage from '~/components/validation-message/validation-message';
 import './select.scss';
 
 function Option({optionEl, setValue, active}) {
@@ -44,8 +44,9 @@ function SelectedItem({selectEl}) {
         <span className="item">{selectedOption.textContent}</span>;
 }
 
-function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
+function SelectProxyFor({selectRef, open, activeIndex, setValue}) {
     const optionsClassList = `options ${open ? ' open' : ''}`;
+    const selectEl = selectRef.current
 
     return (
         <React.Fragment>
@@ -61,21 +62,23 @@ function SelectProxyFor({selectEl, open, activeIndex, setValue}) {
                         )
                 }
             </ul>
-            <OldValidationMessage el={selectEl} />
         </React.Fragment>
     );
 }
 
 export default function Select({children, placeholder, onChange, ...selectProps}) {
     const [open, setOpen] = useState(false);
-    const [selectEl, setSelectEl] = useState();
     const selectRef = useRef();
+    const selectEl = selectRef.current;
+    const [watchValue, setWatchValue] = useState(selectEl?.value);
 
     function setValue(newValue) {
+        setWatchValue(newValue);
         selectEl.value = newValue;
         selectEl.dispatchEvent(new window.Event('change'));
         setOpen(false);
     }
+
     const [activeIndex, handleKeyDown] = useSelectList({
         getItems: () => selectEl.children,
         accept(item) {
@@ -86,10 +89,6 @@ export default function Select({children, placeholder, onChange, ...selectProps}
         },
         minActiveIndex: placeholder ? 1 : 0
     });
-
-    useEffect(() => {
-        setSelectEl(selectRef.current);
-    }, []);
 
     function onClick(event) {
         setOpen(!open);
@@ -115,9 +114,8 @@ export default function Select({children, placeholder, onChange, ...selectProps}
         setOpen(false);
     }
 
-    console.info('USING SELECT');
-
     return (
+        <React.Fragment>
         <div
             className={`select with-arrow ${open ? 'open' : ''}`}
             onClick={onClick}
@@ -134,13 +132,15 @@ export default function Select({children, placeholder, onChange, ...selectProps}
             </select>
             {
                 Boolean(selectEl) &&
-                    <SelectProxyFor
-                        selectEl={selectEl}
-                        open={open}
-                        activeIndex={activeIndex}
-                        setValue={setValue}
-                    />
+                        <SelectProxyFor
+                            selectRef={selectRef}
+                            open={open}
+                            activeIndex={activeIndex}
+                            setValue={setValue}
+                        />
             }
         </div>
+        <ValidationMessage elementRef={selectRef} watchValue={watchValue} />
+        </React.Fragment>
     );
 }

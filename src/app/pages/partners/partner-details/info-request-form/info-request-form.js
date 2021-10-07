@@ -102,7 +102,8 @@ function Page2({roleOptions}) {
             <div className="grid">
                 <FormSelect
                     selectAttributes={{
-                        placeholder: 'Select your role'
+                        placeholder: 'Select your role',
+                        required: true
                     }}
                     label="Role" options={roleOptions}
                 />
