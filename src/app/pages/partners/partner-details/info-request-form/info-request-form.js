@@ -2,6 +2,7 @@ import React from 'react';
 import usePartnerContext from '../partner-context';
 import useSchoolSuggestionList from '~/models/use-school-suggestion-list';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import BookTagsMultiselect from '~/components/multiselect/book-tags/book-tags';
 import FormRadiogroup from '~/components/form-radiogroup/form-radiogroup';
@@ -9,6 +10,7 @@ import FormSelect from '~/components/form-select/form-select.jsx';
 import {FilteringSelect} from '~/components/form-elements/form-elements';
 import inputProps from '~/components/form-elements/input-props';
 import FormInput from '~/components/form-input/form-input';
+import useFormTarget from '~/components/form-target/form-target';
 import './info-request-form.scss';
 
 const action = 'http://www2.openstax.org/l/218812/2021-10-06/t5tr2x';
@@ -18,7 +20,7 @@ const yesNoOptions = [
 ];
 const countryOptions = [
     {label: 'United States', value: 'Domestic'},
-    {label: 'Elsewhere', value: 'Foreign'}
+    {label: 'Non-US', value: 'Foreign'}
 ];
 
 function Page1() {
@@ -90,6 +92,22 @@ function SchoolSelector() {
 }
 
 function Page2({roleOptions}) {
+    const {userModel, userStatus} = useUserContext();
+    const schoolCountries = React.useMemo(() => {
+        const schoolLocation = userModel?.accountsModel?.school_location;
+
+        if (schoolLocation) {
+            const schoolCountrySelection = countryOptions
+                .find((opt) => schoolLocation.startsWith(opt.value.toLowerCase()));
+
+            if (schoolCountrySelection) {
+                schoolCountrySelection.selected = true;
+                return ([...countryOptions]);
+            }
+        }
+        return countryOptions;
+    }, [userModel]);
+
     return (
         <div className="form-page">
             <p className="headline">
@@ -102,6 +120,7 @@ function Page2({roleOptions}) {
             <div className="grid">
                 <FormSelect
                     selectAttributes={{
+                        name: 'role',
                         placeholder: 'Select your role',
                         required: true
                     }}
@@ -120,15 +139,15 @@ function Page2({roleOptions}) {
                 />
                 <FormInput
                     label="School issued email address"
-                    inputProps={{...inputProps.email}}
+                    inputProps={{...inputProps.email, value: userStatus.email}}
                 />
                 <FormInput
                     label="First name"
-                    inputProps={{...inputProps.firstName}}
+                    inputProps={{...inputProps.firstName, value: userStatus.firstName}}
                 />
                 <FormInput
                     label="Last name"
-                    inputProps={{...inputProps.lastName}}
+                    inputProps={{...inputProps.lastName, value: userStatus.lastName}}
                 />
                 <FormInput
                     label="Phone number"
@@ -136,9 +155,11 @@ function Page2({roleOptions}) {
                 />
                 <FormSelect
                     selectAttributes={{
-                        placeholder: 'Select your country'
+                        name: 'country',
+                        placeholder: 'Select your country',
+                        required: true
                     }}
-                    label="Country" options={countryOptions}
+                    label="Country" options={schoolCountries}
                 />
             </div>
         </div>
@@ -149,11 +170,24 @@ export default function InfoRequestForm() {
     const {toggleForm} = usePartnerContext();
     const roles = useDataFromSlug('snippets/roles');
     const roleOptions = roles?.map((r) => ({label: r.display_name, value: r.salesforce_name}));
+    const {onSubmit, submitting, FormTarget} = useFormTarget(toggleForm);
+
+    function doSubmit(form) {
+        form.submit();
+        onSubmit();
+    }
 
     return (
-        <MultiPageForm action={action} onSubmit={toggleForm} className="info-request-form">
-            <Page1 />
-            <Page2 roleOptions={roleOptions} />
-        </MultiPageForm>
+        <React.Fragment>
+            <FormTarget submitting={submitting} />
+            <MultiPageForm
+                action={action} className="info-request-form"
+                onSubmit={doSubmit} submitting={submitting}
+                target="form-target"
+            >
+                <Page1 />
+                <Page2 roleOptions={roleOptions} />
+            </MultiPageForm>
+        </React.Fragment>
     );
 }
