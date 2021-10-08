@@ -124,14 +124,19 @@ export function useTextFromSlug(slug) {
         const url = urlFromSlug(slug);
 
         fetch(url)
-            .catch((err) => setText(err))
-            .then((r) => r?.text())
-            .then((pageHtml) => {
-                const parser = new window.DOMParser();
-                const newDoc = parser.parseFromString(pageHtml, 'text/html');
+            .then((r) => {
+                if (r?.ok) {
+                    r.text().then((pageHtml) => {
+                        const parser = new window.DOMParser();
+                        const newDoc = parser.parseFromString(pageHtml, 'text/html');
 
-                setText(newDoc.body.innerHTML);
-            });
+                        setText(newDoc.body.innerHTML);
+                    });
+                } else {
+                    setText(new Error(r?.statusText || `Failed to load ${slug}`));
+                }
+            })
+            .catch((err) => setText(err));
     }, [slug]);
 
     return text;
