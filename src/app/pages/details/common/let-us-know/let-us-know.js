@@ -38,7 +38,11 @@ function useDataStuffFor(title) {
 
 export default function LetUsKnow({title}) {
     const {url1, url2, text1, text2} = useDataStuffFor(title);
+    const {language} = useDetailsContext();
 
+    if (language !== 'en') {
+        return null;
+    }
     return (
         <div className="let-us-know">
             <a className="top" href={url1}>
