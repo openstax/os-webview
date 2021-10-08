@@ -124,7 +124,6 @@ export function useTextFromSlug(slug) {
         const url = urlFromSlug(slug);
 
         fetch(url)
-            .catch((err) => setText(err))
             .then((r) => {
                 if (r?.ok) {
                     r.text().then((pageHtml) => {
@@ -136,7 +135,8 @@ export function useTextFromSlug(slug) {
                 } else {
                     setText(new Error(r?.statusText || `Failed to load ${slug}`));
                 }
-            });
+            })
+            .catch((err) => setText(err));
     }, [slug]);
 
     return text;
