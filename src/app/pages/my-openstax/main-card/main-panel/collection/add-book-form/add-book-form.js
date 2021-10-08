@@ -2,7 +2,7 @@
 import React from 'react';
 import { PlusBox, PutAway } from '../../common';
 import FormInput from '~/components/form-input/form-input';
-import FormSelect from '~/components/form-select/form-select';
+import FormSelect from '~/components/form-select/form-select.jsx';
 import {useStyledCheckbox, LabeledElement, ClickForwardingLabel} from '~/components/form-elements/form-elements';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import useSalesforceContext from '~/contexts/salesforce';

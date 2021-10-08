@@ -27,8 +27,6 @@ const wtStates = [
 ];
 
 function Walkthrough({title, index, hideWalkthrough}) {
-    console.info('Active index (step?)', index);
-
     const wtState = wtStates[index];
     const {setActiveId, targetIds} = useNavigationContext();
 

@@ -3,8 +3,4 @@
 .toggle-control-bar {
     display: grid;
     grid-template-columns: 1fr auto;
-
-    &.open {
-        border-bottom: thin solid ui-color(form-border);
-    }
 }

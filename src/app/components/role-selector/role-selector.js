@@ -1,37 +1,29 @@
 import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import Select from '~/components/select/select.jsx';
+import DropdownSelect from '~/components/select/drop-down/drop-down';
 import './role-selector.scss';
-
+/* eslint-disable */
 function RoleSelector({data: options, value, setValue, children, hidden=false}) {
     const [studentContent, facultyContent] = children;
-
-    function onChange(event) {
-        setValue(event.target.value);
-    }
+    const optionsAsOptions = options.map((opt) => (
+        {label: opt.displayName, value: opt.salesforceName}
+    ));
 
     return (
         <div className="role-selector">
             <form data-region="selector">
                 <label hidden={hidden}>
                     I am a
-                    <Select onChange={onChange} placeholder="Please select one">
-                        {
-                            options.map((opt) =>
-                                <option
-                                    value={opt.salesforceName}
-                                    selected={value === opt.salesforceName}
-                                    key={opt.salesforceName}
-                                >
-                                    {opt.displayName}
-                                </option>
-                            )
-                        }
-                    </Select>
+                    <DropdownSelect
+                        name="subject" required
+                        options={optionsAsOptions}
+                        placeholder="Please select one"
+                        onValueUpdate={setValue}
+                    />
                 </label>
             </form>
             {value === 'Student' && studentContent}
-            {!['', 'Student'].includes(value) && facultyContent}
+            {!['', undefined, 'Student'].includes(value) && facultyContent}
         </div>
     );
 }
