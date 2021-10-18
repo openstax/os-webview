@@ -38,7 +38,7 @@ const accountsModel = {
         //     opt_out_of_cookies: false,
         //     using_openstax: false,
         //     salesforce_contact_id: '0037h00000SEXNqAAP',
-        //     faculty_status: 'no_faculty_info',
+        //     faculty_status: 'confirmed_faculty',
         //     is_newflow: true,
         //     is_instructor_verification_stale: false,
         //     needs_complete_edu_profile: false,
@@ -121,6 +121,7 @@ function oldUserModel(sfUserModel) {
     return {
         id: sfUserModel.id,
         accounts_id: sfUserModel.id,
+        uuid: sfUserModel.uuid,
         email: (sfUserModel.contact_infos || []).length ? findPreferredEmail(sfUserModel.contact_infos) : null,
         first_name: sfUserModel.first_name,
         groups,

@@ -42,7 +42,7 @@ export default function GetThisTitle({model}) {
             /* eslint-disable camelcase */
             event.trackingInfo = {
                 book: model.id,
-                account_id: userInfo.accounts_id,
+                account_uuid: userInfo.uuid,
                 book_format: el.dataset.track,
                 contact_id: userInfo.salesforce_contact_id
             };
