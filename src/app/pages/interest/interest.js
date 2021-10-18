@@ -9,11 +9,10 @@ import ContactInfo from '~/components/contact-info/contact-info';
 import BookSelector, {useSelectedBooks, useAfterSubmit, useFirstSearchArgument}
     from '~/components/book-selector/book-selector';
 import useFormTarget from '~/components/form-target/form-target';
+import useSalesforceContext from '~/contexts/salesforce';
 import FormInput from '~/components/form-input/form-input';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import './interest.scss';
-
-const formDestination = 'https://go.demo.pardot.com/l/308222/2021-09-15/2xv';
 
 function useBundledValues() {
     const [bundledValues, setBundledValues] = useState('');
@@ -94,6 +93,7 @@ function FacultyForm({position, onPageChange}) {
     const selectedBooksRef = useRef();
     const afterSubmit = useAfterSubmit(selectedBooksRef);
     const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
+    const {interestUrl} = useSalesforceContext();
 
     function validatePage(page) {
         return Boolean(page !== 1 || contactValidatorRef.current());
@@ -108,7 +108,7 @@ function FacultyForm({position, onPageChange}) {
         <React.Fragment>
             <FormTarget submitting={submitting} />
             <MultiPageForm
-                validatePage={validatePage} action={formDestination}
+                validatePage={validatePage} action={interestUrl}
                 onPageChange={onPageChange} onSubmit={doSubmit}
                 submitting={submitting} target="form-target"
             >
