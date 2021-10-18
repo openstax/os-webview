@@ -11,9 +11,9 @@ import {FilteringSelect} from '~/components/form-elements/form-elements';
 import inputProps from '~/components/form-elements/input-props';
 import FormInput from '~/components/form-input/form-input';
 import useFormTarget from '~/components/form-target/form-target';
+import {useContextValue as useSalesforceContextValue} from '~/contexts/salesforce';
 import './info-request-form.scss';
 
-const action = 'http://www2.openstax.org/l/218812/2021-10-06/t5tr2x';
 const yesNoOptions = [
     {label: 'Yes', value: 'yes'},
     {label: 'No', value: 'no'}
@@ -171,6 +171,7 @@ export default function InfoRequestForm() {
     const roles = useDataFromSlug('snippets/roles');
     const roleOptions = roles?.map((r) => ({label: r.display_name, value: r.salesforce_name}));
     const {onSubmit, submitting, FormTarget} = useFormTarget(toggleForm);
+    const {techScoutUrl} = useSalesforceContextValue();
 
     function doSubmit(form) {
         form.submit();
@@ -181,7 +182,7 @@ export default function InfoRequestForm() {
         <React.Fragment>
             <FormTarget submitting={submitting} />
             <MultiPageForm
-                action={action} className="info-request-form"
+                action={techScoutUrl} className="info-request-form"
                 onSubmit={doSubmit} submitting={submitting}
                 target="form-target"
             >
