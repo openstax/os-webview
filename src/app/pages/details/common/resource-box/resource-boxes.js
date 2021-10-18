@@ -188,7 +188,7 @@ function interceptLinkClicks(event, book, userModel) {
         /* eslint-disable camelcase */
         event.trackingInfo = {
             book,
-            account_id: userModel.accounts_id,
+            account_uuid: userModel.uuid,
             resource_name: el.dataset.track,
             contact_id: userModel.salesforce_contact_id
         };
