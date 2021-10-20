@@ -1,8 +1,8 @@
 import React from 'react';
 import useMultiselectContext, {MultiselectContextProvider} from './multiselect-context';
 import ValidationMessage from '~/components/validation-message/validation-message';
+import './multiselect.scss';
 
-// All native selects are hidden in osweb
 function HiddenSelect({name, required, elementRef}) {
     const {selectedItems} = useMultiselectContext();
 
@@ -17,6 +17,18 @@ function HiddenSelect({name, required, elementRef}) {
     );
 }
 
+function HiddenSingleField({name, required, elementRef}) {
+    const {selectedItems} = useMultiselectContext();
+    const value = selectedItems.map((i) => i.value).join(';');
+
+    return (
+        <input
+            type="text" className="hidden-input"
+            name={name} required={required} ref={elementRef} value={value}
+        />
+    );
+}
+
 function MSValidationMessage({elementRef}) {
     const {selectedItems} = useMultiselectContext();
 
@@ -25,13 +37,14 @@ function MSValidationMessage({elementRef}) {
     );
 }
 
-export default function Multiselect({name, required, children}) {
+export default function Multiselect({name, required, children, oneField}) {
     const elementRef = React.useRef();
+    const HiddenField = oneField ? HiddenSingleField : HiddenSelect;
 
     return (
         <MultiselectContextProvider>
             <div className="multiselect">
-                {name && <HiddenSelect {...{name, required, elementRef}} />}
+                {name && <HiddenField {...{name, required, elementRef}} />}
                 {children}
             </div>
             <MSValidationMessage elementRef={elementRef} />

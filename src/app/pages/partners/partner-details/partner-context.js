@@ -31,7 +31,8 @@ function useContextValue(partnerId) {
         reviewCount,
         postRating,
         showInfoRequestForm,
-        toggleForm
+        toggleForm,
+        partnerType: ratings?.partnerType
     };
 }
 

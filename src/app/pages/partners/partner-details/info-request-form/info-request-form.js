@@ -14,20 +14,69 @@ import useFormTarget from '~/components/form-target/form-target';
 import {useContextValue as useSalesforceContextValue} from '~/contexts/salesforce';
 import './info-request-form.scss';
 
-const yesNoOptions = [
-    {label: 'Yes', value: 'yes'},
-    {label: 'No', value: 'no'}
-];
 const countryOptions = [
     {label: 'United States', value: 'Domestic'},
     {label: 'Non-US', value: 'Foreign'}
 ];
+
+function AdoptedQuestion() {
+    const {adoption} = useSalesforceContextValue();
+    const [yesObj, noObj] = adoption(['adopted', 'recommended']);
+    const adoptionYesNoOptions = [
+        {label: 'Yes', value: yesObj.value},
+        {label: 'No', value: noObj.value}
+    ];
+
+    return (
+        <div>
+            <p className="instruction">
+                Are you currently using an OpenStax book as the primary textbook
+                for your course?
+            </p>
+            <FormRadiogroup
+                name="are_you_currently_using_openstax"
+                required
+                options={adoptionYesNoOptions}
+            />
+        </div>
+    );
+}
+
+function PartnerTypeQuestion() {
+    const {partnerName, partnerType} = usePartnerContext();
+
+    if (!partnerType) {
+        return null;
+    }
+
+    const pt = partnerType.toLowerCase();
+    const aAn = (/^[aeiou]/).test(pt) ? 'an' : 'a';
+    const yesNoOptions = [
+        {label: 'Yes', value: partnerType},
+        {label: 'No', value: ''}
+    ];
+
+    return (
+        <div>
+            <p className="instruction">
+                {partnerName}{' '}is {aAn} {pt} product. Would you
+                also like to receive information about our other {pt} partners?
+            </p>
+            <FormRadiogroup
+                name="partner_category_interest"
+                required
+                options={yesNoOptions}
+            />
+        </div>
+    );
+}
 
 function Page1() {
     const {partnerName} = usePartnerContext();
 
     return (
         <div className="form-page">
+            <input type="hidden" name="partner_product_interest" value={partnerName} />
             <p className="headline">
                 Please give us a little more information about your interest in
                 {' '}{partnerName}.
@@ -37,31 +86,10 @@ function Page1() {
             </p>
             <div className="form-group">
                 <label>Book of interest</label>
-                <BookTagsMultiselect name="book" required />
+                <BookTagsMultiselect name="subjects_of_interest" required oneField />
             </div>
-            <div>
-                <p className="instruction">
-                    {partnerName}{' '}is an adaptive courseware product. Would you
-                    also like to receive information about our other adaptive
-                    courseware partners?
-                </p>
-                <FormRadiogroup
-                    name="otherPartners"
-                    required
-                    options={yesNoOptions}
-                />
-            </div>
-            <div>
-                <p className="instruction">
-                    Are you currently using an OpenStax book as the primary textbook
-                    for your course?
-                </p>
-                <FormRadiogroup
-                    name="primaryText"
-                    required
-                    options={yesNoOptions}
-                />
-            </div>
+            <PartnerTypeQuestion />
+            <AdoptedQuestion />
         </div>
     );
 }
@@ -79,6 +107,7 @@ function SchoolSelector() {
             <FilteringSelect
                 options={schoolOptions}
                 inputProps={{
+                    name: 'institution_name',
                     placeholder: 'School where you work',
                     required: true,
                     value,
@@ -131,7 +160,7 @@ function Page2({roleOptions}) {
                     label="Number of students you're teaching this year"
                     inputProps={{
                         type: 'number',
-                        name: 'num_students',
+                        name: 'number_of_students_you_are_teaching_this_year',
                         required: true,
                         min: '1',
                         max: '999'
