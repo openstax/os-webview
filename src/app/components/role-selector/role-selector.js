@@ -6,7 +6,7 @@ import './role-selector.scss';
 function RoleSelector({data: options, value, setValue, children, hidden=false}) {
     const [studentContent, facultyContent] = children;
 
-    function onChangeSubject(event) {
+    function onChange(event) {
         setValue(event.target.value);
     }
 
@@ -15,7 +15,7 @@ function RoleSelector({data: options, value, setValue, children, hidden=false}) 
             <form data-region="selector">
                 <label hidden={hidden}>
                     I am a
-                    <Select name="subject" onChange={onChangeSubject} placeholder="Please select one">
+                    <Select onChange={onChange} placeholder="Please select one">
                         {
                             options.map((opt) =>
                                 <option

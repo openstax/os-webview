@@ -5,32 +5,16 @@ import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import {HiddenFields} from '~/components/salesforce-form/salesforce-form';
 import ContactInfo from '~/components/contact-info/contact-info';
-import BookSelector, {useSelectedBooks} from '~/components/book-selector/book-selector';
-import useSalesforceContext from '~/contexts/salesforce';
+import BookSelector, {useSelectedBooks, useAfterSubmit, useFirstSearchArgument}
+    from '~/components/book-selector/book-selector';
 import HowUsing from './how-using/how-using';
-import {afterFormSubmit} from '~/models/books';
-import useSubmitContext, {SubmitContextProvider} from './submit-context';
-import {useHistory} from 'react-router-dom';
+import useSalesforceContext from '~/contexts/salesforce';
+import useFormTarget from '~/components/form-target/form-target';
 import './adoption.scss';
 
-function ContactInfoPage({selectedRole, validatorRef}) {
-    return (
-        <React.Fragment>
-            <HiddenFields leadSource="Adoption Form" />
-            <input type="hidden" name="Role__c" value={selectedRole} />
-            <ContactInfo validatorRef={validatorRef} />
-        </React.Fragment>
-    );
-}
-
-function firstSearchArgument() {
-    return decodeURIComponent(window.location.search.substr(1).replace(/&.*/, ''));
-}
-
 function BookSelectorPage({selectedBooksRef}) {
-    const preselectedTitle = firstSearchArgument();
+    const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
 
     selectedBooksRef.current = selectedBooks;
@@ -43,10 +27,10 @@ function BookSelectorPage({selectedBooksRef}) {
                 preselectedTitle={preselectedTitle}
                 toggleBook={toggleBook}
             />
-            <HowUsing selectedBooks={selectedBooks} />
             <label>
                 <div className="control-group">
-                    <input type="checkbox" name="Have_Xanedu__c" />
+                    <HowUsing selectedBooks={selectedBooks} />
+                    <input type="checkbox" name="have_xanedu" />
                     Have Xanedu, the OpenStax print partner, contact me about how to
                     get print copies for my students.
                 </div>
@@ -55,13 +39,12 @@ function BookSelectorPage({selectedBooksRef}) {
     );
 }
 
-function FacultyForm({selectedRole, onPageChange}) {
+function FacultyForm({position, onPageChange}) {
     const contactValidatorRef = useRef();
     const selectedBooksRef = useRef();
-    const {currentBook, setCurrentBook} = useSubmitContext();
-    const formRef = useRef();
-    const {webtoleadUrl, debug} = useSalesforceContext();
-    const history = useHistory();
+    const afterSubmit = useAfterSubmit(selectedBooksRef);
+    const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
+    const {adoptionUrl} = useSalesforceContext();
 
     function validatePage(page) {
         const validateContactInfo = contactValidatorRef.current;
@@ -75,49 +58,30 @@ function FacultyForm({selectedRole, onPageChange}) {
         return true;
     }
 
-    useEffect(() => {
-        if (currentBook) {
-            formRef.current.submit();
-        }
-    }, [currentBook]);
-
-
-    function onSubmit(form) {
-        const selectedBooks = selectedBooksRef.current;
-        const submitQueue = selectedBooks.slice();
-        const iframe = document.getElementById(form.target);
-
-        // eslint-disable-next-line no-use-before-define
-        const submitAfterDelay = () => window.setTimeout(submitNextBook, 3000);
-
-        function submitNextBook() {
-            const preselectedTitle = firstSearchArgument();
-
-            if (submitQueue.length > 0) {
-                setCurrentBook(submitQueue.shift());
-            } else if (iframe) {
-                setCurrentBook(null);
-                iframe.removeEventListener('load', submitAfterDelay);
-                afterFormSubmit(history, preselectedTitle, selectedBooks);
-            }
-        }
-
-        formRef.current = form;
-        if (iframe) {
-            iframe.addEventListener('load', submitAfterDelay);
-        }
-        submitNextBook();
+    function doSubmit(form) {
+        form.submit();
+        onSubmit();
     }
 
     return (
-        <MultiPageForm
-            validatePage={validatePage} action={webtoleadUrl}
-            onPageChange={onPageChange} onSubmit={onSubmit} debug={debug}
-            submitting={currentBook}
-        >
-            <ContactInfoPage selectedRole={selectedRole} validatorRef={contactValidatorRef} />
-            <BookSelectorPage selectedBooksRef={selectedBooksRef} />
-        </MultiPageForm>
+        <React.Fragment>
+            <FormTarget submitting={submitting} />
+            <MultiPageForm
+                validatePage={validatePage} action={adoptionUrl}
+                onPageChange={onPageChange} onSubmit={doSubmit}
+                submitting={submitting} target="form-target"
+            >
+                <React.Fragment>
+                    <input type="hidden" name="application_source" value="OS Web" />
+                    <input type="hidden" name="position" value={position} />
+                    <input type="hidden" name="role" value="Instructor" />
+                    <input type="hidden" name="lead_source" value="Adoption Form" />
+                    <input type="hidden" name="process_adoptions" value={true} />
+                    <ContactInfo validatorRef={contactValidatorRef} />
+                </React.Fragment>
+                <BookSelectorPage selectedBooksRef={selectedBooksRef} />
+            </MultiPageForm>
+        </React.Fragment>
     );
 }
 
@@ -143,9 +107,7 @@ export default function AdoptionForm() {
             <div className="text-content" ref={ref}>
                 <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
                     <StudentForm />
-                    <SubmitContextProvider>
-                        <FacultyForm selectedRole={selectedRole} onPageChange={onPageChange} />
-                    </SubmitContextProvider>
+                    <FacultyForm position={selectedRole} onPageChange={onPageChange} />
                 </RoleSelector>
             </div>
         </main>

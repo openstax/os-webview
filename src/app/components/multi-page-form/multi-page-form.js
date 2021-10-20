@@ -1,5 +1,4 @@
 import React, {useState, useRef, useEffect} from 'react';
-import analytics from '~/helpers/analytics';
 import './multi-page-form.scss';
 
 function pass() {
@@ -25,19 +24,6 @@ function MarkupChildren({children, currentPage, activeRef, validatedPages}) {
     });
 }
 
-function trackSubmissionInGA(form) {
-    if (form.action.startsWith('https://webto.salesforce.com/')) {
-        const formData = new window.FormData(form);
-        const eventLabel = formData.get('lead_source');
-
-        analytics.sendEvent({
-            eventCategory: 'Salesforce',
-            eventAction: 'submit',
-            eventLabel
-        });
-    }
-}
-
 function ButtonRow({pages, currentPage, setCurrentPage,
     validatePage, validatedPages, setValidatedPages,
     activeRef, formRef, onSubmit, disabled=false
@@ -59,7 +45,6 @@ function ButtonRow({pages, currentPage, setCurrentPage,
     function validateAndSubmit(event) {
         if (validateCurrentPage()) {
             onSubmit(formRef.current);
-            trackSubmissionInGA(formRef.current);
         }
         event.preventDefault();
     }
@@ -95,9 +80,9 @@ function ButtonRow({pages, currentPage, setCurrentPage,
 }
 
 export default function MultiPageForm({
-    debug, action, children,
+    children,
     validatePage=pass, onPageChange=pass, onSubmit=pass,
-    submitting
+    submitting, ...formParams
 }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [validatedPages, setValidatedPages] = useState({});
@@ -122,13 +107,9 @@ export default function MultiPageForm({
 
     return (
         <div className="multi-page-form">
-            <iframe
-                name="form-response" id="form-response" className="hidden"
-                src="" width="0" height="0" tabIndex="-1" />
             <form
                 acceptCharset="UTF-8" className="form"
-                target={debug ? undefined : 'form-response'}
-                action={action} method="post" ref={formRef}>
+                method="post" ref={formRef} {...formParams}>
                 <MarkupChildren
                     children={children}
                     currentPage={currentPage}

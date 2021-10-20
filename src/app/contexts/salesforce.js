@@ -33,17 +33,27 @@ function adoption(options) {
 }
 
 const initialContextValue = {adoption, adoptionName};
+const fetchPromise = cmsFetch('salesforce/forms/');
 
-function useContextValue() {
+export function useContextValue() {
     const [value, setValue] = useState(initialContextValue);
 
     useEffect(() => {
-        cmsFetch('salesforce/forms/')
+        fetchPromise
             .then((sfData) => {
-                const {oid, debug, posting_url: webtoleadUrl} = sfData[0];
+                const {
+                    oid, debug, posting_url: webtoleadUrl,
+                    adoption_form_posting_url: adoptionUrl,
+                    interest_form_posting_url: interestUrl,
+                    tech_scout_form_posting_url: techScoutUrl
+                } = sfData[0];
                 const webtocaseUrl = webtoleadUrl.replace('ToLead', 'ToCase');
 
-                setValue({...initialContextValue, oid, debug, webtoleadUrl, webtocaseUrl});
+                setValue({
+                    ...initialContextValue,
+                    oid, debug, webtoleadUrl, webtocaseUrl,
+                    adoptionUrl, interestUrl, techScoutUrl
+                });
             });
     }, []);
 
