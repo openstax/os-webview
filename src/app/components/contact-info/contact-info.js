@@ -6,14 +6,24 @@ import schoolPromise from '~/models/schools';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './contact-info.scss';
 
-function SchoolSelector() {
-    const schools = useDataFromPromise(schoolPromise, []).sort();
-    const schoolNames = schools.map((s) => s.name);
-    const schoolSet = new window.Set(schoolNames.map((s) => s.toLowerCase()));
-    const [value, setValue] = useState('');
-    const [schoolLocation, setSchoolLocation] = useState();
-    const schoolIsOk = schoolSet.has(value.toLowerCase());
-    const selectedEntry = schoolIsOk && schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
+function SchoolHiddenInfo({school}) {
+    if (!school) {
+        return null;
+    }
+
+    return (
+        <React.Fragment>
+            <input type="hidden" name="school_type" value={school.type} />
+            <input type="hidden" name="school_location" value={school.location} />
+            <input
+                type="hidden" name="school_total_enrollment"
+                value={school.total_school_enrollment}
+            />
+        </React.Fragment>
+    );
+}
+
+function SchoolInfo({schools}) {
     const schoolTypeOptions = React.useMemo(
         () => schools.reduce((a, b) => {
             if (b.type && !a.includes(b.type)) {
@@ -23,6 +33,42 @@ function SchoolSelector() {
         }, ['Other']).map((text) => ({label: text, value: text})),
         [schools]
     );
+    const [schoolLocation, setSchoolLocation] = useState();
+
+    return (
+        <div className="school-info">
+            <div className="instructions">
+                We don&apos;t have that school in our system. Please tell us a little
+                more about it:
+            </div>
+            <FormSelect
+                label="What type of school is it?"
+                name="school_type"
+                selectAttributes={{required: true}}
+                options={schoolTypeOptions}
+            />
+            <FormRadioGroup
+                longLabel="Is it located in the United States?"
+                name="school_location"
+                options={[
+                    {label: 'Yes', value: 'Domestic'},
+                    {label: 'No', value: 'Foreign'}
+                ]}
+                selectedValue={schoolLocation}
+                setSelectedValue={setSchoolLocation}
+                required
+            />
+        </div>
+    );
+}
+
+function SchoolSelector() {
+    const schools = useDataFromPromise(schoolPromise, []).sort();
+    const schoolNames = schools.map((s) => s.name);
+    const schoolSet = new window.Set(schoolNames.map((s) => s.toLowerCase()));
+    const [value, setValue] = useState('');
+    const schoolIsOk = schoolSet.has(value.toLowerCase());
+    const selectedEntry = schoolIsOk && schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
 
     function onChange({target}) {
         setValue(target.value);
@@ -42,43 +88,8 @@ function SchoolSelector() {
                     onChange
                 }}
             />
-            {
-                selectedEntry &&
-                <React.Fragment>
-                    <input type="hidden" name="school_type" value={selectedEntry.type} />
-                    <input type="hidden" name="school_location" value={selectedEntry.location} />
-                    <input
-                        type="hidden" name="school_total_enrollment"
-                        value={selectedEntry.total_school_enrollment}
-                    />
-                </React.Fragment>
-            }
-            {
-                !schoolIsOk && value.length > 3 &&
-                <div className="school-info">
-                    <div className="instructions">
-                        We don&apos;t have that school in our system. Please tell us a little
-                        more about it:
-                    </div>
-                    <FormSelect
-                        label="What type of school is it?"
-                        name="school_type"
-                        selectAttributes={{required: true}}
-                        options={schoolTypeOptions}
-                    />
-                    <FormRadioGroup
-                        longLabel="Is it located in the United States?"
-                        name="school_location"
-                        options={[
-                            {label: 'Yes', value: 'Domestic'},
-                            {label: 'No', value: 'Foreign'}
-                        ]}
-                        selectedValue={schoolLocation}
-                        setSelectedValue={setSchoolLocation}
-                        required
-                    />
-                </div>
-            }
+            <SchoolHiddenInfo school={selectedEntry} />
+            {!schoolIsOk && value.length > 3 && <SchoolInfo schools={schools} />}
         </React.Fragment>
     );
 }
