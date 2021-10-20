@@ -1,6 +1,6 @@
 {
     "name": "@openstax/os-webview",
-    "version": "2.87.1",
+    "version": "2.89.0",
     "description": "OpenStax webview",
     "scripts": {
         "test": "jest ./test/src",
@@ -19,8 +19,8 @@
         "@fortawesome/free-regular-svg-icons": "^5.15.3",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/react-fontawesome": "^0.1.14",
-        "@sentry/react": "^6.13.2",
-        "@sentry/tracing": "^6.13.2",
+        "@sentry/react": "^6.13.3",
+        "@sentry/tracing": "^6.13.3",
         "classnames": "^2.3.1",
         "react-accessible-accordion": "^3.3.4",
         "react-lazyload": "^3.2.0",
