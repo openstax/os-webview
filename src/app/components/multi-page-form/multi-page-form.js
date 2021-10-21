@@ -24,6 +24,15 @@ function MarkupChildren({children, currentPage, activeRef, validatedPages}) {
     });
 }
 
+function PageCount({pages, currentPage}) {
+    return (
+        <div className="page-count">
+            Step {currentPage} of {pages}
+        </div>
+    );
+}
+
+
 function ButtonRow({pages, currentPage, setCurrentPage,
     validatePage, validatedPages, setValidatedPages,
     activeRef, formRef, onSubmit, disabled=false
@@ -117,6 +126,7 @@ export default function MultiPageForm({
                     validatedPages={validatedPages}
                     onSubmit={onSubmit}
                 />
+                <PageCount {...{pages, currentPage}} />
                 {
                     submitting &&
                         <div className="big-message">Submitting...</div>

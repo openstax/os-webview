@@ -5,6 +5,7 @@ import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import BookTagsMultiselect from '~/components/multiselect/book-tags/book-tags';
+import {books} from '../../store';
 import FormRadiogroup from '~/components/form-radiogroup/form-radiogroup';
 import FormSelect from '~/components/form-select/form-select.jsx';
 import {FilteringSelect} from '~/components/form-elements/form-elements';
@@ -52,7 +53,7 @@ function PartnerTypeQuestion() {
     const pt = partnerType.toLowerCase();
     const aAn = (/^[aeiou]/).test(pt) ? 'an' : 'a';
     const yesNoOptions = [
-        {label: 'Yes', value: partnerType},
+        {label: 'Yes', value: partnerType, checked: true},
         {label: 'No', value: ''}
     ];
 
@@ -74,6 +75,7 @@ function PartnerTypeQuestion() {
 function Page1() {
     const {partnerName} = usePartnerContext();
 
+    console.info('Books:', books.value);
     return (
         <div className="form-page">
             <input type="hidden" name="partner_product_interest" value={partnerName} />
@@ -86,7 +88,10 @@ function Page1() {
             </p>
             <div className="form-group">
                 <label>Book of interest</label>
-                <BookTagsMultiselect name="subjects_of_interest" required oneField />
+                <BookTagsMultiselect
+                    name="subjects_of_interest" required
+                    selected={books.value} oneField
+                />
             </div>
             <PartnerTypeQuestion />
             <AdoptedQuestion />

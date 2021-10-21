@@ -1,21 +1,10 @@
 import React from 'react';
-import fetchBooks, {salesforceTitles, subjects as getSubjects} from '~/models/books';
 import useMultiselectContext from '../multiselect-context.js';
+import useSFBookContext from './sf-book-context';
 import useToggleContext from '~/components/toggle/toggle-context.js';
 import $ from '~/helpers/$';
 import './book-options.scss';
 
-function useSalesforceBooks() {
-    const [books, setBooks] = React.useState([]);
-    const subjects = React.useMemo(() => getSubjects(books).sort(), [books]);
-
-    React.useEffect(() => fetchBooks.then(salesforceTitles).then(setBooks), []);
-
-    return {
-        subjects,
-        books
-    };
-}
 
 function BookOption({book}) {
     const {select, deselect, isSelected} = useMultiselectContext();
@@ -61,7 +50,7 @@ function SubjectListing({subject, books}) {
 }
 
 export default function BookOptions() {
-    const {subjects, books} = useSalesforceBooks();
+    const {subjects, books} = useSFBookContext();
 
     return (
         <div className="book-options">

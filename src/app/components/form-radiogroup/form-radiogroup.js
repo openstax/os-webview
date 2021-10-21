@@ -24,7 +24,8 @@ export default function FormRadioGroup({
 }) {
     const ref = React.useRef();
     const [validationMessage, setValidationMessage] = useState('');
-    const [selectedValue, setSelectedValue] = useState();
+    const checkedValue = options.find((opt) => opt.checked)?.value;
+    const [selectedValue, setSelectedValue] = useState(checkedValue);
 
     function validate() {
         const invalid = ref.current.querySelector(':invalid');

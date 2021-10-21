@@ -28,11 +28,19 @@
         display: none;
     }
 
+    .page-count {
+        margin: 1.8rem 0;
+    }
+
     .button-row {
-        display: grid;
-        grid-auto-flow: column;
-        grid-gap: 1rem;
+        align-items: center;
+        display: flex;
+        gap: 1rem;
         justify-content: start;
+
+        .page-count {
+            justify-self: left;
+        }
     }
 
     form > div {
