@@ -19,7 +19,10 @@ export default function ToggleControlBar({Indicator, children}) {
 
     React.useEffect(() => {
         if (!isOpen) {
-            focusRef.current.focus();
+            // Restore focus to an input if there is one, otherwise to focusRef
+            const focusOn = focusRef.current.querySelector('input') || focusRef.current;
+
+            focusOn.focus();
         }
     }, [isOpen, focusRef]);
 

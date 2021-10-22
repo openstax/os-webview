@@ -14,6 +14,33 @@ function useContextValue(selectedValues) {
     const books = useSFBooks();
     const subjects = React.useMemo(() => getSubjects(books).sort(), [books]);
     const {select, isSelected} = useMultiselectContext();
+    const [filter, setFilter] = React.useState('');
+    const matchingBooks = React.useMemo(
+        () => books.filter(
+            (b) => b.text.toLowerCase().includes(filter.toLowerCase())
+        ),
+        [books, filter]
+    );
+    const matchingSubjects = React.useMemo(
+        () => subjects.filter(
+            (s) => s.toLowerCase().includes(filter.toLowerCase())
+        ),
+        [subjects, filter]
+    );
+    const filteredSubjects = React.useMemo(
+        () => subjects.filter(
+            (s) => matchingSubjects.includes(s) ||
+            matchingBooks.find((b) => b.subjects.includes(s))
+        ),
+        [subjects, matchingSubjects, matchingBooks]
+    );
+    const filteredBooks = React.useMemo(
+        () => books.filter(
+            (b) => matchingBooks.includes(b) ||
+            b.subjects.find((s) => matchingSubjects.includes(s))
+        ),
+        [books, matchingBooks, matchingSubjects]
+    );
 
     React.useEffect(
         () => books
@@ -23,8 +50,10 @@ function useContextValue(selectedValues) {
     );
 
     return {
-        subjects,
-        books
+        subjects: filteredSubjects,
+        books: filteredBooks,
+        filter,
+        setFilter
     };
 }
 
