@@ -83,7 +83,7 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
     }
 
     data.slug = slug;
-    return preserveWrapping ? data : transformData(data);
+    return (preserveWrapping || data.error) ? data : transformData(data);
 }
 
 async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDescription=true}) {

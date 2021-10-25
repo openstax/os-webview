@@ -37,7 +37,7 @@ export function GeneralPageFromSlug({slug, fallback}) {
     }, []);
 
     if (html instanceof Error) {
-        fallback ? fallback() : fail(`Could not load ${slug}`);
+        fallback ? fallback() : fail(`Could not load general page from ${slug}`);
     }
 
     return (
