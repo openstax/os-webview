@@ -141,9 +141,16 @@ function useHomeOrMyOpenStax() {
     const [user, setUser] = React.useState({error: 'not loaded'});
     const isEnabled = useFlagContext();
 
-    useEffect(() => fetchUser().then(setUser), []);
+    useEffect(
+        () => {
+            if (isEnabled) {
+                fetchUser().then(setUser);
+            }
+        },
+        [isEnabled]
+    );
 
-    return (user.error || !isEnabled) ? 'home' : 'my-openstax';
+    return (user.error) ? 'home' : 'my-openstax';
 }
 
 function FallbackToGeneralPage({name}) {
