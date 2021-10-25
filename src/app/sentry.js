@@ -54,6 +54,12 @@ function beforeSend(event, hint) {
     if (error?.message?.match(/mce-visual-caret/i)) {
         return null;
     }
+    if (error?.message?.includes('g.readyState')) {
+        return null;
+    }
+    if (error?.message?.includes('PulseInsightsObject.survey')) {
+        return null;
+    }
     if (error?.message?.match(/unexpected token/i)) {
         event.fingerprint = ['unexpected token'];
     }
