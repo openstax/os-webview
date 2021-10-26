@@ -10,8 +10,8 @@ function useSFBooks() {
     return books;
 }
 
-function useContextValue(selectedValues) {
-    const books = useSFBooks();
+function useContextValue({selected: selectedValues, booksAllowed}) {
+    const books = useSFBooks().filter((b) => booksAllowed.includes(b.value));
     const subjects = React.useMemo(() => getSubjects(books).sort(), [books]);
     const {select, isSelected} = useMultiselectContext();
     const [filter, setFilter] = React.useState('');

@@ -73,9 +73,8 @@ function PartnerTypeQuestion() {
 }
 
 function Page1() {
-    const {partnerName} = usePartnerContext();
+    const {partnerName, books: booksAllowed} = usePartnerContext();
 
-    console.info('Books:', books.value);
     return (
         <div className="form-page">
             <input type="hidden" name="partner_product_interest" value={partnerName} />
@@ -91,6 +90,7 @@ function Page1() {
                 <BookTagsMultiselect
                     name="subjects_of_interest" required
                     selected={books.value} oneField
+                    booksAllowed={booksAllowed}
                 />
             </div>
             <PartnerTypeQuestion />

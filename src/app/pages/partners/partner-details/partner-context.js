@@ -3,7 +3,7 @@ import useReviews from '~/models/reviews';
 import useDialogContext from '../results/dialog-context';
 
 // eslint-disable-next-line complexity
-function useContextValue(partnerId) {
+function useContextValue({id: partnerId, model}) {
     const [ratings, postRating] = useReviews(partnerId);
     const [partnerName, summary, reviews] = ratings ?
         [
@@ -32,7 +32,8 @@ function useContextValue(partnerId) {
         postRating,
         showInfoRequestForm,
         toggleForm,
-        partnerType: ratings?.partnerType
+        partnerType: ratings?.partnerType,
+        books: model.books
     };
 }
 

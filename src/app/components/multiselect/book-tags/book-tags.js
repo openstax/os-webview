@@ -65,10 +65,10 @@ function TagList() {
     );
 }
 
-export default function BookTagsMultiselect({selected, ...passThruProps}) {
+export default function BookTagsMultiselect({selected, booksAllowed, ...passThruProps}) {
     return (
         <Multiselect {...passThruProps}>
-            <SFBookContextProvider contextValueParameters={selected}>
+            <SFBookContextProvider contextValueParameters={{selected, booksAllowed}}>
                 <ToggleContextProvider>
                     <ToggleControlBar Indicator={ArrowToggle}>
                         <TagList />
