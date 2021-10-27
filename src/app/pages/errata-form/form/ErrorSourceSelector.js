@@ -1,6 +1,11 @@
 import React, {useState, useRef} from 'react';
+import useErrataFormContext from '../errata-form-context';
 import managedInvalidMessage from './InvalidMessage.js';
 import getFields from '~/models/errata-fields';
+
+const sourceNames = {
+    tutor: 'OpenStax Tutor'
+};
 
 const resourcePromise = getFields('resources')
     .then((resources) => resources.map((entry) => entry.field));
@@ -22,29 +27,67 @@ function OtherSourceInput() {
     );
 }
 
-export default function ErrorSourceSelector({initialSource}) {
-    const subnotes = {'Textbook': 'includes print, PDF, and web view'};
+const subnotes = {'Textbook': 'includes print, PDF, and web view'};
+
+function Subnote({sType}) {
+    return (
+        <div className="label-text">
+            {sType}
+            {
+                (sType in subnotes) &&
+                <div className="indented subnote">{subnotes[sType]}</div>
+            }
+        </div>
+    );
+}
+
+function LabeledButton({selectedSource, sType, onChange, radioRef}) {
+    const checked = selectedSource === sType;
+    const showOtherInput = checked && selectedSource === 'Other';
+
+    return (
+        <label>
+            <input
+                type="radio" name="resource"
+                value={sType}
+                defaultChecked={checked}
+                ref={radioRef}
+                onChange={onChange}
+                required
+            />
+            <Subnote sType={sType} />
+            {showOtherInput && <OtherSourceInput />}
+        </label>
+    );
+}
+
+function useSourceTypes() {
+    const {searchParams} = useErrataFormContext();
+    const source = searchParams.get('source');
+    const initialSource = source && sourceNames[source.toLowerCase()];
     const [sourceTypes, updateSourceTypes] = useState([]);
     const [selectedSource, updateSelectedSource] = useState(initialSource);
+    const onChange = React.useCallback(
+        ({target: {value}}) => updateSelectedSource(value),
+        []
+    );
+
+    React.useEffect(() => {
+        resourcePromise.then(updateSourceTypes);
+    }, []);
+
+    return {sourceTypes, selectedSource, onChange};
+}
+
+export default function ErrorSourceSelector() {
     const radioRef = useRef();
+    const {sourceTypes, onChange, selectedSource} = useSourceTypes();
     const [RadioInvalidMessage, updateRadioInvalidMessage] = managedInvalidMessage(radioRef);
 
-    resourcePromise.then(updateSourceTypes).then(updateRadioInvalidMessage);
-    function onChange(event) {
-        updateSelectedSource(event.target.value);
-        updateRadioInvalidMessage();
-    }
-    function Subnote({sType}) {
-        return (
-            <div className="label-text">
-                {sType}
-                {
-                    (sType in subnotes) &&
-                    <div className="indented subnote">{subnotes[sType]}</div>
-                }
-            </div>
-        );
-    }
+    React.useEffect(
+        updateRadioInvalidMessage,
+        [sourceTypes, selectedSource, updateRadioInvalidMessage]
+    );
 
     return (
         <React.Fragment>
@@ -53,21 +96,11 @@ export default function ErrorSourceSelector({initialSource}) {
                 <RadioInvalidMessage />
                 {
                     sourceTypes.map((sType, index) => (
-                        <label key={sType}>
-                            <input
-                                type="radio" name="resource"
-                                value={sType}
-                                defaultChecked={selectedSource === sType ? '' : null}
-                                ref={index === 0 ? radioRef : null}
-                                onChange={onChange}
-                                required
-                            />
-                            <Subnote sType={sType} />
-                            {
-                                (sType === 'Other' && selectedSource === 'Other') &&
-                                <OtherSourceInput />
-                            }
-                        </label>
+                        <LabeledButton
+                            key={sType}
+                            sType={sType} selectedSource={selectedSource}
+                            onChange={onChange} radioRef={index === 0 ? radioRef : null}
+                        />
                     ))
                 }
             </div>

@@ -3,7 +3,7 @@ import {cnxFetch} from './table-of-contents-html';
 import memoize from 'lodash/memoize';
 
 export function bookToc(slug) {
-    return cmsFetch(`books/${slug}`)
+    return slug ? cmsFetch(slug)
         .then((bi) => {
             const isRex = Boolean(bi.webview_rex_link);
             const webviewLink = isRex ? bi.webview_rex_link : bi.webview_link;
@@ -15,7 +15,7 @@ export function bookToc(slug) {
             };
         })
         .then(cnxFetch)
-        .then((result) => result.tree.contents);
+        .then((result) => result.tree.contents) : Promise.reject(new Error('No slug to fetch'));
 }
 
 export default memoize(bookToc);

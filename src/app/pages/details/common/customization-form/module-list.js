@@ -96,7 +96,7 @@ function ModuleList({contents, selectedModules}) {
 }
 
 export default function LoadModuleList({model, selectedModules}) {
-    const contents = useDataFromPromise(bookToc(model.meta.slug), []);
+    const contents = useDataFromPromise(bookToc(`books/${model.meta.slug}`), []);
 
     return (
         <ModuleList contents={contents} selectedModules={selectedModules} />

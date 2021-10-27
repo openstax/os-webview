@@ -352,6 +352,8 @@ a:not([href]) {
 
 [type="radio"] {
     @include radio-button();
+
+    margin-top: 0;
 }
 
 @import 'components/animations';

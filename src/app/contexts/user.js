@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {useUserModel} from '~/models/usermodel';
 import debounce from 'lodash/debounce';
@@ -39,6 +39,17 @@ function getUserStatus(user={}) {
 function useContextValue() {
     const model = useUserModel();
     const userStatus = getUserStatus(model);
+    const value = useMemo(
+        () => model?.last_name ?
+            {
+                accountId: model.id,
+                userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`,
+                userModel: model,
+                uuid: model.uuid,
+                userStatus
+            } : {userStatus},
+        [model, userStatus]
+    );
 
     useEffect(() => {
         if (model && model.id) {
@@ -46,13 +57,7 @@ function useContextValue() {
         }
     }, [model]);
 
-    return model?.last_name ? {
-        accountId: model.id,
-        userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`,
-        userModel: model,
-        uuid: model.uuid,
-        userStatus
-    } : {userStatus};
+    return value;
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
