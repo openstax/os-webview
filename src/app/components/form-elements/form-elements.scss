@@ -27,13 +27,23 @@
     display: flex;
 }
 
-.suggestion-list {
-    [role="option"]  {
-        cursor: pointer;
-        padding: 0.5rem;
 
-        &.active {
-            background-color: ui-color(page-bg);
+.input-with-suggestions {
+    position: relative;
+
+    .suggestion-list {
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+
+        [role="option"]  {
+            background: ui-color(white);
+            cursor: pointer;
+            padding: 0.5rem;
+
+            &.active {
+                background-color: ui-color(page-bg);
+            }
         }
     }
 }

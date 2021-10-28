@@ -108,7 +108,8 @@ export default function ContactInfo({validatorRef}) {
                     type: 'text',
                     name: 'first_name',
                     required: true,
-                    autocomplete: 'given-name'
+                    autocomplete: 'given-name',
+                    maxlength: 35
                 }}
             />
             <FormInput
@@ -117,7 +118,9 @@ export default function ContactInfo({validatorRef}) {
                     type: 'text',
                     name: 'last_name',
                     required: true,
-                    autocomplete: 'family-name'
+                    autocomplete: 'family-name',
+                    maxlength: 35
+
                 }}
             />
             <FormInput
@@ -126,16 +129,20 @@ export default function ContactInfo({validatorRef}) {
                     type: 'email',
                     name: 'email',
                     required: true,
-                    autocomplete: 'email'
+                    autocomplete: 'email',
+                    maxlength: 64
                 }}
             />
             <FormInput
                 label="Phone number"
                 inputProps={{
-                    type: 'text',
+                    type: 'tel',
                     name: 'phone',
                     required: true,
-                    autocomplete: 'tel-national'
+                    autocomplete: 'tel-national',
+                    minlength: 9,
+                    maxlength: 20,
+                    pattern: '[^a-zA-Z]{9,20}'
                 }}
             />
             <SchoolSelector />

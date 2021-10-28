@@ -1,13 +1,10 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState} from 'react';
+import $ from '~/helpers/$';
 
-function Option({item, name, required, selectedValue, setSelectedValue}) {
-    function onChange({target: {value}}) {
-        setSelectedValue(value);
-    }
-
+function Option({item, name, required, selectedValue, onChange}) {
     return (
         <div className="radio-control-group">
-            <label>
+            <label tabIndex="0" onKeyDown={$.treatSpaceOrEnterAsClick}>
                 <input
                     type="radio"
                     name={name}
@@ -22,21 +19,34 @@ function Option({item, name, required, selectedValue, setSelectedValue}) {
     );
 }
 
-export default function FormRadioGroup({label, longLabel, name, options, selectedValue, setSelectedValue, required}) {
+export default function FormRadioGroup({
+    label, longLabel, name, options, required
+}) {
+    const ref = React.useRef();
     const [validationMessage, setValidationMessage] = useState('');
-    const passThruProps = {name, required, selectedValue, setSelectedValue};
+    const checkedValue = options.find((opt) => opt.checked)?.value;
+    const [selectedValue, setSelectedValue] = useState(checkedValue);
 
-    useLayoutEffect(() => {
-        const invalid = required && !options.find((opt) => selectedValue === opt.value);
+    function validate() {
+        const invalid = ref.current.querySelector(':invalid');
 
-        setValidationMessage(invalid ? 'Please select one' : '');
-    }, [selectedValue, options, required]);
+        setValidationMessage(invalid ? invalid.validationMessage : '');
+    }
+
+    function onChange({target: {value}}) {
+        setSelectedValue(value);
+        validate();
+    }
+
+    React.useEffect(validate, []);
+
+    const passThruProps = {name, required, selectedValue, onChange};
 
     return (
         <div className='form-radiogroup'>
             {label && <label className="field-label">{label}</label>}
             {longLabel && <label className="field-long-label">{longLabel}</label>}
-            <div>
+            <div ref={ref}>
                 {options.map((item) => <Option item={item} {...passThruProps} key={item} />)}
             </div>
             <div className="invalid-message">{validationMessage}</div>

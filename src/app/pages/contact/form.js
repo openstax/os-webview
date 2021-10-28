@@ -1,9 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form';
-import Select from '~/components/select/select.jsx';
+import DropdownSelect from '~/components/select/drop-down/drop-down';
 import {useHistory} from 'react-router-dom';
 
-const subjects = [
+const options = [
     'General',
     'Adopting OpenStax Textbooks',
     'OpenStax Tutor Support',
@@ -15,7 +15,10 @@ const subjects = [
     'OpenStax Partners',
     'Website',
     'OpenStax Polska'
-];
+].map((s) => ({label: s, value: s}));
+
+options[0].selected = true;
+
 
 function LabeledInputWithInvalidMessage({
     className, children, eventType='input', showMessage
@@ -48,8 +51,8 @@ export default function ContactForm() {
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
     const history = useHistory();
 
-    function onChangeSubject(event) {
-        const isPolish = event.target.value === 'OpenStax Polska';
+    function onChangeSubject(value) {
+        const isPolish = value === 'OpenStax Polska';
 
         setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : null);
     }
@@ -65,15 +68,10 @@ export default function ContactForm() {
             <input type="hidden" name="external" value="1" />
             <label>
                 What is your question about?
-                <Select name="subject" onChange={onChangeSubject}>
-                    {
-                        subjects.map((subject) =>
-                            <option key={subject} value={subject}>
-                                {subject}
-                            </option>
-                        )
-                    }
-                </Select>
+                <DropdownSelect
+                    name="subject" options={options}
+                    onValueUpdate={onChangeSubject}
+                />
             </label>
             <LabeledInputWithInvalidMessage showMessage={showInvalidMessages}>
                 Your Name
