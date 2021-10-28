@@ -1,7 +1,8 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useMemo} from 'react';
 import useErrataFormContext from '../errata-form-context';
 import managedInvalidMessage from './InvalidMessage.js';
 import getFields from '~/models/errata-fields';
+import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 const sourceNames = {
     tutor: 'OpenStax Tutor'
@@ -61,22 +62,70 @@ function LabeledButton({selectedSource, sType, onChange, radioRef}) {
     );
 }
 
+function filterForBook(bookInfo, tutorBookList) {
+    // eslint-disable-next-line complexity
+    return function (type) {
+        if (type.startsWith('iBooks')) {
+            return Boolean(bookInfo.ibook_link);
+        }
+        if (type.startsWith('Rover')) {
+            return false;
+        }
+        if (type.endsWith('Tutor')) {
+            return tutorBookList.includes(bookInfo.title);
+        }
+        if (type.endsWith('SE')) {
+            return bookInfo.enable_study_edge;
+        }
+        if (type.startsWith('Kindle')) {
+            return Boolean(bookInfo.kindle_link);
+        }
+        if (type === 'Instructor solution manual') {
+            return bookInfo.book_faculty_resources?.find(
+                (r) => (/^Instructor (Solution|Answer)/).test(r.resource_heading)
+            );
+        }
+        if (type === 'Student solution manual') {
+            return bookInfo.book_student_resources?.find(
+                (r) => (/^Student (Solution|Answer)/).test(r.resource_heading)
+            );
+        }
+        return true;
+    };
+}
+
+function useTutorBookList() {
+    const tutorPageData = useDataFromSlug('pages/openstax-tutor');
+    const list = useMemo(
+        () => tutorPageData?.tutor_books.map((b) => b.title) || [],
+        [tutorPageData]
+    );
+
+    return list;
+}
+
 function useSourceTypes() {
-    const {searchParams} = useErrataFormContext();
+    const {searchParams, selectedBook} = useErrataFormContext();
     const source = searchParams.get('source');
     const initialSource = source && sourceNames[source.toLowerCase()];
     const [sourceTypes, updateSourceTypes] = useState([]);
+    const tutorBookList = useTutorBookList();
+    const filteredSourceTypes = useMemo(
+        () => sourceTypes.filter(filterForBook(selectedBook, tutorBookList)),
+        [sourceTypes, selectedBook, tutorBookList]
+    );
     const [selectedSource, updateSelectedSource] = useState(initialSource);
     const onChange = React.useCallback(
         ({target: {value}}) => updateSelectedSource(value),
         []
     );
 
-    React.useEffect(() => {
-        resourcePromise.then(updateSourceTypes);
-    }, []);
+    React.useEffect(
+        () => resourcePromise.then(updateSourceTypes),
+        [selectedBook]
+    );
 
-    return {sourceTypes, selectedSource, onChange};
+    return {sourceTypes: filteredSourceTypes, selectedSource, onChange};
 }
 
 export default function ErrorSourceSelector() {

@@ -48,11 +48,6 @@ function NotDefaultValue({defaultValue}) {
     );
 }
 
-// selectedBook={selectedBook}
-// defaultValue={location}
-// readOnly={location && source}
-// title={selectedTitle}
-
 export default function ErrorLocationSelector() {
     const {searchParams} = useErrataFormContext();
     const defaultValue = searchParams.get('location');

@@ -20,7 +20,9 @@ export function useDataFromSlug(slug, preserveWrapping=false) {
     const [data, setData] = useState();
 
     useEffect(() => {
-        fetchFromCMS(slug, preserveWrapping).then(setData);
+        if (slug) {
+            fetchFromCMS(slug, preserveWrapping).then(setData);
+        }
     }, [slug, preserveWrapping]);
 
     return data;
