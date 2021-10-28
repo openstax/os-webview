@@ -7,7 +7,6 @@ import AdoptionForm from '~/pages/adoption/adoption';
 test('creates with role selector', (done) => {
     render(<AdoptionForm />);
     setTimeout(() => {
-        expect(screen.getByRole('combobox')).toBeTruthy();
         expect(screen.queryAllByRole('textbox')).toHaveLength(0);
         done();
     }, 0);

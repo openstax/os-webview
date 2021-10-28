@@ -1,0 +1,94 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.info-request-form {
+    margin-top: -3rem;
+    padding-top: 0;
+
+    @include width-up-to($phone-max) {
+        padding: $normal-margin;
+    }
+
+    @include wider-than($phone-max) {
+        padding: 3rem;
+    }
+
+    .form-page {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        @include wider-than($phone-max) {
+            width: 48rem;
+        }
+
+        .grid {
+            align-items: end;
+            column-gap: 3rem;
+            display: grid;
+            margin-bottom: 1rem;
+            row-gap: 1rem;
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: 1fr;
+            }
+
+            @include wider-than($phone-max) {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .suggestion-list {
+            border: thin solid ui-color(form-border);
+            border-top: 0;
+            max-height: 25rem;
+            overflow: auto;
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+
+            [role="option"] {
+                padding: 0 1rem;
+            }
+        }
+    }
+
+    .headline {
+        @include set-font(body-regular);
+
+        font-weight: bold;
+    }
+
+    p {
+        @include set-font(helper-label);
+
+        margin: 0;
+    }
+
+    .instruction,
+    .form-group label {
+        @include set-font(helper-label);
+
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-count {
+        @include set-font(helper-label);
+
+        @include width-up-to($phone-max) {
+            text-align: right;
+        }
+
+        @include wider-than($phone-max) {
+            float: left;
+        }
+    }
+
+    .button-row {
+        justify-content: end;
+
+        .secondary {
+            @include button-type-specific(default);
+        }
+    }
+}

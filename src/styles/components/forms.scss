@@ -148,6 +148,7 @@ form {
     }
 
     [type="text"],
+    [type="tel"],
     [type="url"],
     [type="number"],
     [type="email"],
@@ -175,6 +176,7 @@ form {
 
     // All but textarea (separated so it didn't get overridden)
     [type="text"],
+    [type="tel"],
     [type="url"],
     [type="number"],
     [type="email"],

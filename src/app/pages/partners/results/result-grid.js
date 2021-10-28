@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Dialog from '~/components/dialog/dialog';
+import useDialogContext, {DialogContextProvider} from './dialog-context';
 import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -82,6 +83,14 @@ function usePartnerFromLocation(entries) {
     return [partner, setPartner, closePartner];
 }
 
+function DialogInContext(dialogProps) {
+    const {title} = useDialogContext();
+
+    return (
+        <Dialog title={title} {...dialogProps} />
+    );
+}
+
 export default function ResultGrid({entries, linkTexts}) {
     const [partner, setPartner, closePartner] = usePartnerFromLocation(entries);
     const detailData = {...partner, ...linkTexts};
@@ -97,12 +106,14 @@ export default function ResultGrid({entries, linkTexts}) {
                     />
                 )
             }
-            <Dialog isOpen={Boolean(partner)} onPutAway={closePartner}>
-                {
-                    Boolean(partner) &&
-                        <PartnerDetails detailData={detailData} />
-                }
-            </Dialog>
+            <DialogContextProvider contextValueParameters={partner}>
+                <DialogInContext isOpen={Boolean(partner)} onPutAway={closePartner}>
+                    {
+                        Boolean(partner) &&
+                            <PartnerDetails detailData={detailData} />
+                    }
+                </DialogInContext>
+            </DialogContextProvider>
         </div>
     );
 }

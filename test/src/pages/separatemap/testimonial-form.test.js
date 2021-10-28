@@ -21,7 +21,6 @@ test('initially hides textarea and submit', (done) => {
         expect(screen.queryAllByRole('textbox')).toHaveLength(0);
         expect(screen.queryAllByRole('submit')).toHaveLength(0);
         userEvent.click(screen.getByRole('listbox'));
-        userEvent.click(screen.getAllByRole('option')[2]);
         // At this point, there should be textbox and submit, but they
         // are not showing up in the test. :(
         done();

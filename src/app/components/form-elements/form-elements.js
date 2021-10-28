@@ -56,37 +56,64 @@ export function ClickForwardingLabel({childRef, children}) {
     );
 }
 
+function Option({text, active, onClick}) {
+    const ref = React.useRef();
+
+    React.useLayoutEffect(() => {
+        if (active) {
+            ref.current.scrollIntoView({block: 'nearest'});
+        }
+    }, [active]);
+
+    return (
+        <div
+            className={cn({active})}
+            role="option"
+            onClick={onClick}
+            ref={ref}
+        >
+            {text}
+        </div>
+    );
+}
+
 function SuggestionList({options, activeIndex, accept}) {
     return (
         <div className="suggestion-list" role="listbox">
             {
                 options.map((opt, i) =>
-                    <div
-                        key={opt.value}
-                        className={cn({active: activeIndex === i})}
-                        role="option"
+                    <Option
+                        key={opt.value} active={activeIndex === i}
                         onClick={() => accept(opt)}
-                    >
-                        {opt.label}
-                    </div>
+                        text={opt.label}
+                    />
                 )
             }
         </div>
     );
 }
 
-export function FilteringSelect({options, inputProps, onChange}) {
-    const [activeIndex, handleKeyDown] = useSelectList({
+export function FilteringSelect({options, inputProps, accept, accepted}) {
+    const [activeIndex, handleKeyDown, setActiveIndex] = useSelectList({
         getItems() {
             return options;
         },
-        accept: onChange
+        accept
     });
+
+    React.useEffect(() => {
+        if (accepted) {
+            setActiveIndex(-1);
+        }
+    }, [accepted, setActiveIndex]);
 
     return (
         <div className="input-with-suggestions">
             <input type="text" {...inputProps} onKeyDown={handleKeyDown} />
-            <SuggestionList options={options} activeIndex={activeIndex} accept={onChange} />
+            {
+                !accepted &&
+                <SuggestionList options={options} activeIndex={activeIndex} accept={accept} />
+            }
         </div>
     );
 }
