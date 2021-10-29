@@ -8,7 +8,7 @@ import orderBy from 'lodash/orderBy';
 import './results.scss';
 
 export const costOptions = [
-    'Free - $10',
+    '$0 - $10',
     '$11 - $25',
     '$26 - $40',
     '> $40'
