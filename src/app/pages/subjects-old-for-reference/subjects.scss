@@ -1,28 +1,69 @@
+@import 'mixins/coming-soon';
 @import 'pattern-library/core/pattern-library/headers';
 
+#main.subjects-main {
+    z-index: 1;
+}
+
 .subjects-page {
-    padding-bottom: 3rem;
 
-    section .content {
-        @extend %content;
+    .hero {
+        @include scale-feature(padding-top, 2rem, 6rem);
 
-        margin: 0;
-        padding: $normal-margin;
+        h2 {
+            @include scale-set-font(h3, h1);
 
-        @include wider-than($media-content-max) {
-            margin: 0 auto;
-            max-width: $content-max - 2 * $normal-margin;
-            padding: 3rem 0;
+            margin: 0;
         }
     }
 
-    .strips {
-        display: block;
-        position: static;
+    .subject {
+        margin-bottom: 0;
+        margin-top: 2rem;
     }
 
-    .language-selector-section {
-        background-color: ui-color(white);
+    .feature-block {
+        display: block;
+
+        @include wider-than($tablet-max) {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+    .filter {
+        padding: 0.2rem 0;
+
+        &.sticky {
+            position: fixed;
+            top: 5.2rem;
+
+            @include wider-than($tablet-max) {
+                position: absolute;
+                top: inherit;
+            }
+        }
+    }
+
+    .blurb {
+        flex: 1 28%;
+        padding: 0 1.5rem;
+
+        @include wider-than($tablet-max) {
+            text-align: center;
+        }
+
+        .title {
+            margin-bottom: 0;
+
+            @include wider-than($tablet-max) {
+                text-align: center;
+            }
+        }
+
+        span[id] {
+            font-weight: bold;
+        }
     }
 
     .language-selector {
@@ -78,17 +119,13 @@
             }
         }
 
-        @at-root .lang:not(.es) .subjects-page .books .cover.coming-soon::before {
-            @include coming-soon;
-        }
-
-        @at-root .lang.es .subjects-page .books .cover.coming-soon::before {
-            @include coming-soon(coming-soon-es);
-        }
-
         .cover {
             cursor: pointer;
             position: relative;
+
+            &.coming-soon::before {
+                @include coming-soon;
+            }
 
             &.coming-soon.polish::before {
                 background-image: url('/images/subjects/coming-soon-polish.svg');

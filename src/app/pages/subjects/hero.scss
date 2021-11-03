@@ -1,0 +1,64 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subjects-page .hero {
+    background-color: ui-color(page-bg);
+    padding-left: 0;
+    position: relative;
+    text-align: left;
+
+    .background-images {
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+
+        .bg1,
+        .bg2 {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+        .bg1 {
+            height: 100%;
+        }
+
+        .bg2 {
+            width: 130%;
+        }
+    }
+
+    .content {
+        position: relative;
+        z-index: 1;
+
+        .text-content {
+            align-items: flex-start;
+            background-color: rgba(ui-color(page-bg), 0.25);
+            backdrop-filter: blur(0.2rem);
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            max-width: 60rem;
+            padding: 0;
+            row-gap: 2rem;
+
+            > * {
+                margin: 0;
+            }
+        }
+    }
+
+    h2 {
+        @include set-font(h1);
+
+        margin-top: 0;
+    }
+
+    .overlapping {
+        position: absolute;
+        right: 1rem;
+        bottom: -15rem;
+    }
+}

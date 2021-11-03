@@ -4,27 +4,6 @@ import usePageData from '~/components/jsx-helpers/page-loader';
 import useLanguageContext from '~/contexts/language';
 
 const preserveWrapping = true;
-const icons = [
-    '/images/subjects/author-icon.svg',
-    '/images/subjects/scope-icon.svg',
-    '/images/subjects/review-icon.svg'
-];
-
-function aboutBlurbs(model) {
-    const textData = Reflect.ownKeys(model)
-        .filter((k) => (/^devStandard\d/).test(k))
-        .reduce((a, b) => {
-            const [_, num, textId] = b.match(/(\d+)(\w+)/);
-            const index = num - 1;
-
-            a[index] = a[index] || {};
-            a[index][textId.toLowerCase()] = model[b];
-            a[index].iconUrl = icons[index];
-            return a;
-        }, []);
-
-    return textData;
-}
 
 function useContextValue() {
     const [slug, setSlug] = React.useState('subjects');
@@ -42,11 +21,6 @@ function useContextValue() {
             setSlug(thisTranslation.slug);
         }
     }, [data, language]);
-
-    React.useEffect(() => {
-        if (!data) {return;}
-        data.aboutBlurbs = aboutBlurbs(data);
-    }, [data]);
 
     if (data?.books) {
         data.books = data.books.filter((b) => b.bookState !== 'retired');

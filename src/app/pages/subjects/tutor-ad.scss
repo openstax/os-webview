@@ -1,0 +1,118 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.tutor-ad {
+    background: linear-gradient(to top, ui-color(page-bg) 50%, ui-color(white) 50%);
+    padding: 3rem 0;
+
+    .content {
+        @extend %content;
+    }
+
+    .unclipped {
+        position: relative;
+
+        .box-with-edge,
+        .box-contents {
+            border-radius: 0.5rem
+        }
+
+        .box-with-edge {
+            border: thin solid ui-color(form-border);
+            box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+            height: 100%;
+            left: 0;
+            overflow: hidden;
+            position: absolute;
+            padding: 0;
+            top: 0;
+            width: 100%;
+
+            .rainbow-edge {
+                background-image: linear-gradient(0deg, #F36B32 0%, #002469 26.38%, #C02336 50.65%, #FABC4D 74.61%, #25C0DA 100%);
+                height: 100%;
+                width: 1rem;
+
+                @include width-up-to($phone-max) {
+                    display: none;
+                }
+            }
+        }
+
+        .box-contents {
+            align-items: center;
+            background-color: ui-color(white);
+            display: grid;
+            gap: 3rem;
+            min-height: 19rem;
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: 100%;
+                padding: 3rem $normal-margin 0;
+                text-align: center;
+
+                .overlapping-image {
+                    align-items: flex-end;
+                    display: flex;
+                    flex-direction: column;
+                    order: 3;
+
+                    img {
+                        bottom: 0;
+                        height: 100%;
+                    }
+                }
+            }
+
+            @include width-between($phone-max, $tablet-max) {
+                grid-template-columns: minmax(auto, 50%) 1fr;
+                padding: 3rem;
+
+                .overlapping-image {
+                    grid-row-start: 1;
+                    grid-row-end: 3;
+                }
+            }
+
+            @include wider-than($tablet-max) {
+                grid-template-columns: auto 1fr auto;
+                padding: 0 3rem;
+
+                .overlapping-image {
+                    height: 100%;
+                    position: relative;
+                    width: 38rem;
+
+                    img {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                    }
+                }
+
+                .block-of-text {
+                    padding: 3rem 0;
+                }
+            }
+
+            .block-of-text {
+                @include title-font(2.4rem);
+
+                font-family: 'Libre Baskerville', serif;
+                line-height: 4rem;
+            }
+
+            .overlapping-image,
+            .overlapping-image img {
+                max-width: 100%;
+            }
+        }
+
+        .btn {
+            @include button();
+            @extend %primary;
+
+            justify-self: center;
+        }
+    }
+}
