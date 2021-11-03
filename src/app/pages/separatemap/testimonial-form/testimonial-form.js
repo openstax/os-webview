@@ -62,11 +62,9 @@ export default function TestimonialForm({email, school, firstName, lastName, aft
                     <FormSelect
                         name="00NU00000053nzR"
                         selectAttributes={{
-                            placeholder: 'Please select one',
-                            onChange() {
-                                setBookIsSelected(true);
-                            }
+                            placeholder: 'Please select one'
                         }}
+                        onValueUpdate={(value) => setBookIsSelected(Boolean(value))}
                         label="Book title" options={options} />
                 </div>
                 {bookIsSelected && <Controls />}
