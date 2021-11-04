@@ -24,12 +24,14 @@ function useLastBlurb(data) {
 export default function PhilanthropicSupport() {
     const eventName = 'Microdonation subjects page bottom sentence impact link';
     const {aboutBlurbs} = useSubjectsContext();
-    const savingsBlurb = useLastBlurb(aboutBlurbs ? aboutBlurbs[3] : '');
+    const savingsBlurb = useLastBlurb(aboutBlurbs ? aboutBlurbs[3] : {});
 
     return (
         <section className="philanthropic-support">
-            <div className="text-content" onClick={linkClickTracker(eventName)}>
-                <RawHTML Tag="p" className="savings-blurb" html={savingsBlurb} />
+            <div className="content">
+                <div className="text-content" onClick={linkClickTracker(eventName)}>
+                    <RawHTML Tag="p" className="savings-blurb" html={savingsBlurb} />
+                </div>
             </div>
         </section>
     );

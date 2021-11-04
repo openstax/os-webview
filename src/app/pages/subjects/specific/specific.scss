@@ -1,0 +1,107 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$half-content-max: $content-max / 2;
+
+@mixin color-stripe($color) {
+    &.#{$color}-stripe {
+        border-color: os-color($color);
+    }
+}
+
+.subject-specific {
+    > .content {
+        @extend %content;
+
+        @include wider-than($tablet-max) {
+            display: grid;
+            grid-template-columns: 25rem 1fr;
+        }
+
+        @include wider-than($media-content-max) {
+            max-width: calc(#{$half-content-max} + 50vw);
+            margin-left: calc(50vw - #{$half-content-max});
+
+            .targets > section > * {
+                width: calc(100% - 50vw + #{$half-content-max} - #{$normal-margin});
+            }
+        }
+
+        h1 {
+            @include set-font(h2);
+
+            margin: 0;
+        }
+    }
+
+    .navigator {
+        @include width-up-to($tablet-max) {
+            display: none;
+        }
+    }
+
+    .targets {
+        @include wider-than($tablet-max) {
+            border-left: $normal-margin solid os-color(gray);
+
+            @include color-stripe(red);
+            @include color-stripe(green);
+            @include color-stripe(blue);
+            @include color-stripe(orange);
+            @include color-stripe(light-blue);
+            @include color-stripe(gold);
+            @include color-stripe(deep-green);
+        }
+
+        > section {
+            width: 100%;
+
+            > .content,
+            > .text-content {
+                padding: 3rem 0 3rem 3rem;
+            }
+        }
+
+        padding-bottom: 3rem;
+    }
+
+    .tutor-ad {
+        background: linear-gradient(to top, ui-color(white) 50%, ui-color(page-bg) 50%);
+
+        .content {
+            margin: 0;
+        }
+
+        .unclipped .box-contents {
+            .block-of-text {
+                @include title-font(1.8rem);
+            }
+
+            .overlapping-image {
+                max-width: 28vw;
+            }
+        }
+    }
+
+    .carousel {
+        margin: 0 6rem;
+
+        .items {
+            gap: 3rem;
+            width: 100%;
+        }
+
+        .frame-changer {
+            background-color: ui-color(secondary);
+
+            &.right {
+                border-radius: 0 0.5rem 0.5rem 0;
+                right: -7rem;
+            }
+
+            &.left {
+                border-radius: 0.5rem 0 0 0.5rem;
+                left: -7rem;
+            }
+        }
+    }
+}

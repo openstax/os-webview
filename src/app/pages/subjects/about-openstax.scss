@@ -1,6 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.subjects-page .about-openstax {
+.subjects-page .about-openstax,
+.subject-specific .about-openstax {
     .content {
         display: grid;
         gap: 2rem 3rem;

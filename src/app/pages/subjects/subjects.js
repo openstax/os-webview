@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {
-    BrowserRouter as Router, Switch, Route,
+    Switch, Route,
     Redirect
 } from 'react-router-dom';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
@@ -13,6 +13,7 @@ import TutorAd from './tutor-ad';
 import AboutOpenStax from './about-openstax';
 import InfoBoxes from './info-boxes';
 import PhilanthropicSupport from './philanthropic-support';
+import LoadSubject from './specific/specific';
 // import useSubjectCategoryContext from '~/contexts/subject-category';
 // import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 // import LanguageSelector from '~/components/language-selector/language-selector';
@@ -61,20 +62,12 @@ function SubjectsPage() {
     );
 }
 
-function LoadSubject() {
-    return (
-        <h1>Load subject...</h1>
-    );
-}
-
 export default function SubjectsRouter() {
     return (
-        <Router>
+        <SubjectsContextProvider>
             <Switch>
                 <Route exact path="/subjects">
-                    <SubjectsContextProvider>
-                        <SubjectsPage />
-                    </SubjectsContextProvider>
+                    <SubjectsPage />
                 </Route>
                 <Route exact path="/subjects/view-all">
                     <Redirect to="/subjects" />
@@ -83,6 +76,6 @@ export default function SubjectsRouter() {
                     <LoadSubject />
                 </Route>
             </Switch>
-        </Router>
+        </SubjectsContextProvider>
     );
 }

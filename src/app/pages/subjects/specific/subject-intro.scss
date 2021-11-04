@@ -1,0 +1,21 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subject-specific .subject-intro {
+    > .content {
+        align-items: top;
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto 1fr;
+        gap: 0 6rem;
+
+        > * {
+            margin: 0;
+        }
+
+        .paragraph-html {
+            grid-row-start: 1;
+            grid-row-end: 3;
+            grid-column-start: 2;
+        }
+    }
+}

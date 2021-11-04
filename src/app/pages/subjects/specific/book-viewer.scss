@@ -1,0 +1,49 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subject-specific .book-viewer {
+
+    .category {
+        .books {
+            display: grid;
+            grid-gap: 4rem 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+            margin: $normal-margin 0;
+            width: 100%;
+
+            // @include wider-than($media-content-max - 15em) {
+            //     grid-template-columns: repeat(2, 1fr);
+            // }
+            //
+            // @include wider-than($media-content-max) {
+            //     grid-template-columns: repeat(3, 1fr);
+            // }
+            //
+            // @include wider-than($media-content-max + 15em) {
+            //     grid-template-columns: repeat(4, 1fr);
+            // }
+        }
+
+        .book-tile {
+            background-color: ui-color(white);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+            overflow: hidden;
+
+            img {
+                max-width: 100%;
+            }
+
+            .text-block {
+                padding: 1rem;
+
+                a {
+                    @include set-font(helper-label);
+
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+}

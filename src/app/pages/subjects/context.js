@@ -43,13 +43,12 @@ function useContextValue() {
         }
     }, [data, language]);
 
-    React.useEffect(() => {
-        if (!data) {return;}
-        data.aboutBlurbs = aboutBlurbs(data);
-    }, [data]);
-
     if (data?.books) {
         data.books = data.books.filter((b) => b.bookState !== 'retired');
+    }
+
+    if (data) {
+        data.aboutBlurbs = aboutBlurbs(data);
     }
 
     return data;
