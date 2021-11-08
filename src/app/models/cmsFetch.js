@@ -14,7 +14,12 @@ export function urlFromSlug(initialSlug) {
 export default async function cmsFetch(path) {
     const url = path.replace(/[^?]+/, urlFromSlug);
 
-    return (await retry(() => fetch(url))).json();
+    try {
+        return (await retry(() => fetch(url))).json();
+    } catch (err) {
+        console.warn('Failed to fetch', path);
+        return Promise.reject();
+    }
 }
 
 export async function cmsPost(path, payload, method='POST') {
