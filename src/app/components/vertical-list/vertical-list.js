@@ -42,7 +42,7 @@ function RenderInContext({items, RenderItem, vListRef, onSelect, onCancel}) {
             {
                 items.map((item, i) =>
                     <RenderItem
-                        key={item.value} item={item}
+                        key={item.label} item={item}
                         current={index === i}
                         onMouseEnter={() => setIndex(i)}
                         onClick={() => onSelect(item)}
