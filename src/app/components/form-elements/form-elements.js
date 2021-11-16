@@ -100,6 +100,16 @@ export function FilteringSelect({options, inputProps, accept, accepted}) {
         },
         accept
     });
+    const wrappedKeyDown = React.useCallback(
+        // Leave space alone
+        (event) => {
+            if (event.key === ' ') {
+                return;
+            }
+            handleKeyDown(event);
+        },
+        [handleKeyDown]
+    );
 
     React.useEffect(() => {
         if (accepted) {
@@ -109,7 +119,7 @@ export function FilteringSelect({options, inputProps, accept, accepted}) {
 
     return (
         <div className="input-with-suggestions">
-            <input type="text" {...inputProps} onKeyDown={handleKeyDown} />
+            <input type="text" {...inputProps} onKeyDown={wrappedKeyDown} />
             {
                 !accepted &&
                 <SuggestionList options={options} activeIndex={activeIndex} accept={accept} />
