@@ -13,10 +13,9 @@ import linkHelper from '~/helpers/link';
 import retry from '~/helpers/retry';
 import analytics from '~/helpers/analytics';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
-import useFlagContext from './flag-context';
 import $ from '~/helpers/$';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {fetchUser} from '~/pages/my-openstax/store/user';
+import {useMyOpenStaxUser} from '~/pages/my-openstax/store/user';
 import useRouterContext, {RouterContextProvider} from './router-context';
 
 const FOOTER_PAGES = [
@@ -138,19 +137,9 @@ function ImportedPage({name, fallback}) {
 }
 
 function useHomeOrMyOpenStax() {
-    const [user, setUser] = React.useState({error: 'not loaded'});
-    const isEnabled = useFlagContext();
+    const user = useMyOpenStaxUser();
 
-    useEffect(
-        () => {
-            if (isEnabled) {
-                fetchUser().then(setUser);
-            }
-        },
-        [isEnabled]
-    );
-
-    return (user.error) ? 'home' : 'my-openstax';
+    return user.error ? 'home' : 'my-openstax';
 }
 
 function FallbackToGeneralPage({name}) {
