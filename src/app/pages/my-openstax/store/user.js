@@ -1,6 +1,6 @@
 import React from 'react';
 import sfApiFetch from './sfapi';
-import useFlagContext from '~/components/shell/flag-context';
+import useFlagContext, {flagPromise} from '~/components/shell/flag-context';
 import $ from '~/helpers/$';
 
 async function fetchUser() {
@@ -42,7 +42,12 @@ export default function (store) {
     };
 
     store.on('@init', () => {
-        store.dispatch('user/fetch');
+        // can't use hooks
+        flagPromise.then((enabled) => {
+            if (enabled) {
+                store.dispatch('user/fetch');
+            }
+        });
         return INITIAL_STATE;
     });
 
