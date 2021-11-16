@@ -94,12 +94,7 @@ function SchoolSelector() {
     );
 }
 
-export default function ContactInfo({validatorRef}) {
-    if (validatorRef) {
-        validatorRef.current = () => true;
-    }
-
-
+export default function ContactInfo() {
     return (
         <div className="contact-info">
             <FormInput

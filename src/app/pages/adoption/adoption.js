@@ -40,16 +40,13 @@ function BookSelectorPage({selectedBooksRef}) {
 }
 
 function FacultyForm({position, onPageChange}) {
-    const contactValidatorRef = useRef();
     const selectedBooksRef = useRef();
     const afterSubmit = useAfterSubmit(selectedBooksRef);
     const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const {adoptionUrl} = useSalesforceContext();
 
     function validatePage(page) {
-        const validateContactInfo = contactValidatorRef.current;
-
-        if (page === 1 && !validateContactInfo()) {
+        if (page === 1 && position === 'Student') {
             return false;
         }
         if (page === 2 && selectedBooksRef.current.length < 1) {
@@ -77,7 +74,7 @@ function FacultyForm({position, onPageChange}) {
                     <input type="hidden" name="role" value="Instructor" />
                     <input type="hidden" name="lead_source" value="Adoption Form" />
                     <input type="hidden" name="process_adoptions" value={true} />
-                    <ContactInfo validatorRef={contactValidatorRef} />
+                    <ContactInfo />
                 </React.Fragment>
                 <BookSelectorPage selectedBooksRef={selectedBooksRef} />
             </MultiPageForm>
