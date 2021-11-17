@@ -89,7 +89,7 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
     const [value, setValue] = useState('');
     const {onChange: otherOnChange, ...otherProps} = inputProps;
     const [matches, exactMatch] = useMatches(value.toLowerCase(), suggestions);
-    const [accepted, setAccepted] = useState(false);
+    const [accepted, setAccepted] = useState(!suggestions?.length);
 
     function accept(item='') {
         setValue(item);
