@@ -3,4 +3,4 @@ cd "$(dirname "$0")/.." || exit 111
 source ./script/bootstrap || exit 111
 rm -rf dev
 
-yarn webpack serve
+yarn run webpack serve

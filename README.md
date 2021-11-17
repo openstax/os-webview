@@ -31,6 +31,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | b
 ```bash
 git clone git@github.com:openstax/os-webview.git
 cd os-webview
+cp src/settings-example.js src/settings.js
 script/setup
 ```
 
