@@ -5,7 +5,7 @@ node_modules/
 coverage/
 /local-storage-scratch/
 yarn-error.log
-
+.idea
 # rbenv directories
 /vendor/
 .bundle/config

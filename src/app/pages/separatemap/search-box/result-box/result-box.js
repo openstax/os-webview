@@ -50,6 +50,7 @@ function useFormParameters(hideDialog) {
         school: info.self_reported_school,
         firstName: info.first_name,
         lastName: info.last_name,
+        uuid: info.uuid,
         afterSubmit: hideDialog
     };
 }
