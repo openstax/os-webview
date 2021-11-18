@@ -17,7 +17,7 @@ function Controls() {
     );
 }
 
-export default function TestimonialForm({email, school, firstName, lastName, afterSubmit}) {
+export default function TestimonialForm({email, school, company, firstName, lastName, uuid, afterSubmit}) {
     const [bookIsSelected, setBookIsSelected] = useState(false);
     const options = useDataFromPromise(booksPromise, [])
         .map((i) => ({
@@ -56,8 +56,10 @@ export default function TestimonialForm({email, school, firstName, lastName, aft
                 <input type="hidden" name="lead_source" value="Testimonial" />
                 <input type="hidden" name="first_name" value={firstName} />
                 <input type="hidden" name="last_name" value={lastName} />
+                <input type="hidden" name="00N6f00000FqlPu" value={uuid} />
                 <input type="hidden" name="email" value={email} />
                 <input type="hidden" name="00NU0000005VkYv" value={school} />
+                <input type="hidden" name="company" value={company} />
                 <div className="book-selector">
                     <FormSelect
                         name="00NU00000053nzR"
