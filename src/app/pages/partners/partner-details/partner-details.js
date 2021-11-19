@@ -37,21 +37,35 @@ function useRealTitles(books) {
     return titles;
 }
 
-function RequestInfoButton({infoText='Request info', partnerName}) {
-    const {toggleForm} = usePartnerContext();
+// -- RESTORE this to use the new form
+// function RequestInfoButton({infoText='Request info', partnerName}) {
+//     const {toggleForm} = usePartnerContext();
+//
+//     function gotoForm() {
+//         analyticsEvents.requestInfo(partnerName);
+//         toggleForm();
+//     }
+//
+//     return (
+//         <section>
+//             <button
+//                 type="button" className="primary"
+//                 onClick={gotoForm}
+//             >{infoText}</button>
+//         </section>
+//     );
+// }
 
-    function gotoForm() {
+function RequestInfoButton({infoUrl, infoText, partnerName}) {
+    function trackInfoRequest() {
         analyticsEvents.requestInfo(partnerName);
-        toggleForm();
     }
 
     return (
-        <section>
-            <button
-                type="button" className="primary"
-                onClick={gotoForm}
-            >{infoText}</button>
-        </section>
+        infoUrl && infoText &&
+            <section>
+                <a className="btn primary" href={infoUrl} onClick={trackInfoRequest}>{infoText}</a>
+            </section>
     );
 }
 
