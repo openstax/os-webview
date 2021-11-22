@@ -3,10 +3,9 @@ import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {salesforceTitles, afterFormSubmit} from '~/models/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useHistory, useLocation} from 'react-router-dom';
-import cn from 'classnames';
 import './book-selector.scss';
 
-function Subject({subject, books, name, selectedBooks, toggleBook}) {
+function Subject({subject, books, name, selectedBooks, toggleBook, limitReached}) {
     return (
         <div>
             <label className="field-label">{subject}</label>
@@ -16,6 +15,7 @@ function Subject({subject, books, name, selectedBooks, toggleBook}) {
                         <BookCheckbox
                             key={book} book={book} name={name}
                             checked={selectedBooks.includes(book)} toggle={toggleBook}
+                            disabled={limitReached && !selectedBooks.includes(book)}
                         />)
                 }
             </div>
@@ -44,14 +44,6 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
         .reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
     const booksBySubject = (subject) => books.filter((b) => b.subjects.includes(subject));
     const validationMessage = selectedBooks.length > 0 ? '' : 'Please select at least one book';
-    const checkLimitAndToggle = React.useCallback(
-        (value) => {
-            if (selectedBooks.length < limit || selectedBooks.includes(value)) {
-                toggleBook(value);
-            }
-        },
-        [selectedBooks, toggleBook, limit]
-    );
     const limitReached = selectedBooks.length >= limit;
 
     useLayoutEffect(() => {
@@ -59,7 +51,7 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
     }, [preselectedTitle, books]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div className={cn('book-selector', {'limit-reached': limitReached})}>
+        <div className="book-selector">
             <div>
                 <h2 className="prompt">{prompt}</h2>
                 <div className="hint">{hintText(selectedBooks.length, limit)}</div>
@@ -69,7 +61,8 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
                     <Subject
                         key={subject}
                         subject={subject} books={booksBySubject(subject)} name={name}
-                        selectedBooks={selectedBooks} toggleBook={checkLimitAndToggle}
+                        selectedBooks={selectedBooks} toggleBook={toggleBook}
+                        limitReached={limitReached}
                     />
                 )
             }

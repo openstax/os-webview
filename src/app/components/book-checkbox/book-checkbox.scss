@@ -17,6 +17,10 @@
         padding: 0.3rem;
     }
 
+    &.disabled {
+        cursor: not-allowed;
+    }
+
     > img {
         width: 100%;
     }
