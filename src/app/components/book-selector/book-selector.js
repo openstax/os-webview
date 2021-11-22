@@ -3,6 +3,7 @@ import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {salesforceTitles, afterFormSubmit} from '~/models/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useHistory, useLocation} from 'react-router-dom';
+import cn from 'classnames';
 import './book-selector.scss';
 
 function Subject({subject, books, name, selectedBooks, toggleBook}) {
@@ -22,7 +23,20 @@ function Subject({subject, books, name, selectedBooks, toggleBook}) {
     );
 }
 
-function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselectedTitle}) {
+function hintText(selectedCount, limit) {
+    if (!limit) {
+        return 'Select all that apply';
+    }
+    if (selectedCount === 0) {
+        return `Select up to ${limit}`;
+    }
+    if (selectedCount < limit) {
+        return `Select up to ${limit - selectedCount} more`;
+    }
+    return `Maximum ${limit} selected`;
+}
+
+function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselectedTitle, limit}) {
     // Use a ref so it doesn't recalculate this every render
     const sfTitlesRef = useRef(salesforceTitles(data.books));
     const books = sfTitlesRef.current;
@@ -30,23 +44,32 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
         .reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
     const booksBySubject = (subject) => books.filter((b) => b.subjects.includes(subject));
     const validationMessage = selectedBooks.length > 0 ? '' : 'Please select at least one book';
+    const checkLimitAndToggle = React.useCallback(
+        (value) => {
+            if (selectedBooks.length < limit || selectedBooks.includes(value)) {
+                toggleBook(value);
+            }
+        },
+        [selectedBooks, toggleBook, limit]
+    );
+    const limitReached = selectedBooks.length >= limit;
 
     useLayoutEffect(() => {
         books.filter((book) => preselectedTitle === book.value).forEach(toggleBook);
     }, [preselectedTitle, books]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div className="book-selector">
+        <div className={cn('book-selector', {'limit-reached': limitReached})}>
             <div>
                 <h2 className="prompt">{prompt}</h2>
-                <div className="hint">Select all that apply</div>
+                <div className="hint">{hintText(selectedBooks.length, limit)}</div>
             </div>
             {
                 subjects.map((subject) =>
                     <Subject
                         key={subject}
                         subject={subject} books={booksBySubject(subject)} name={name}
-                        selectedBooks={selectedBooks} toggleBook={toggleBook}
+                        selectedBooks={selectedBooks} toggleBook={checkLimitAndToggle}
                     />
                 )
             }

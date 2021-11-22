@@ -26,6 +26,10 @@
         }
     }
 
+    &.limit-reached .book-checkbox:not(.checked) {
+        cursor: not-allowed;
+    }
+
     .field-label {
         margin-bottom: 1rem;
     }

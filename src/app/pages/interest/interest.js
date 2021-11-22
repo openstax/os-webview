@@ -71,6 +71,7 @@ function BookSelectorPage({selectedBooksRef}) {
                 selectedBooks={selectedBooks}
                 preselectedTitle={preselectedTitle}
                 toggleBook={toggleBook}
+                limit="5"
             />
             <FormInput
                 longLabel="How many students do you teach each semester?"
