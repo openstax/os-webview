@@ -72,7 +72,7 @@ function isCloudFront(href) {
 function loginOrOutLink(loginOrLogout) {
     const encodedLocation = encodeURIComponent(decodeURIComponent(window.location.href));
 
-    return `${settings.accountHref}/accounts/i/${loginOrLogout}/?r=${encodedLocation}`;
+    return `${settings.accountHref}/i/${loginOrLogout}/?r=${encodedLocation}`;
 }
 
 function loginLink() {
