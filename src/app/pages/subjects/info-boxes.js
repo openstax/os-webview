@@ -4,9 +4,9 @@ import {linkClickTracker} from '~/helpers/savings-blurb';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './info-boxes.scss';
 
-function AboutBlurb({blurb: {iconUrl, heading, description}}) {
-    const eventName = 'Microdonation subjects page donor supported blurb impact link';
+const eventName = 'Microdonation subjects page donor supported blurb impact link';
 
+function AboutBlurb({blurb: {iconUrl, heading, description}}) {
     return (
         <div className="container">
             <div className="blurb" onClick={linkClickTracker(eventName)}>

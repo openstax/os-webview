@@ -11,6 +11,7 @@ $half-content-max: $content-max / 2;
 .subject-specific {
     > .content {
         @extend %content;
+        padding: 0;
 
         @include wider-than($tablet-max) {
             display: grid;
@@ -30,6 +31,16 @@ $half-content-max: $content-max / 2;
             @include set-font(h2);
 
             margin: 0;
+        }
+    }
+
+    .btn {
+        @include button();
+
+        justify-self: left;
+
+        &.primary {
+            @extend %primary;
         }
     }
 
@@ -57,29 +68,16 @@ $half-content-max: $content-max / 2;
 
             > .content,
             > .text-content {
-                padding: 3rem 0 3rem 3rem;
+                @include width-up-to($phone-max) {
+                    padding: $normal-margin;
+                }
+                @include wider-than($phone-max) {
+                    padding: 3rem;
+                }
             }
         }
 
         padding-bottom: 3rem;
-    }
-
-    .tutor-ad {
-        background: linear-gradient(to top, ui-color(white) 50%, ui-color(page-bg) 50%);
-
-        .content {
-            margin: 0;
-        }
-
-        .unclipped .box-contents {
-            .block-of-text {
-                @include title-font(1.8rem);
-            }
-
-            .overlapping-image {
-                max-width: 28vw;
-            }
-        }
     }
 
     .carousel {
@@ -101,6 +99,37 @@ $half-content-max: $content-max / 2;
             &.left {
                 border-radius: 0.5rem 0 0 0.5rem;
                 left: -7rem;
+            }
+        }
+    }
+
+    .about-openstax .content {
+        @include wider-than($phone-max) {
+            .btn {
+                align-self: end;
+                grid-column-start: 2;
+                grid-row-start: 2;
+                grid-row-end: 4;
+                justify-self: center;
+                z-index: 1;
+            }
+        }
+    }
+
+    section.tutor-ad {
+        background: linear-gradient(to top, ui-color(white) 50%, ui-color(page-bg) 50%);
+
+        .content {
+            margin: 0;
+        }
+
+        .unclipped .box-contents {
+            .block-of-text {
+                @include title-font(1.8rem);
+            }
+
+            .overlapping-image {
+                max-width: 28vw;
             }
         }
     }

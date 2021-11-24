@@ -16,6 +16,16 @@
         }
     }
 
+    .btn {
+        @include button();
+
+        justify-self: left;
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+
     .strips {
         display: block;
         position: static;

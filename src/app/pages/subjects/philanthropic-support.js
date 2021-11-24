@@ -5,6 +5,8 @@ import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './philanthropic-support.scss';
 
+const eventName = 'Microdonation subjects page bottom sentence impact link';
+
 function useLastBlurb(data) {
     const {adoptions_count: adoptions, savings} = useDataFromPromise(savingsPromise, {});
     const description = useSavingsDataIn(data.description, adoptions, savings);
@@ -22,7 +24,6 @@ function useLastBlurb(data) {
 }
 
 export default function PhilanthropicSupport() {
-    const eventName = 'Microdonation subjects page bottom sentence impact link';
     const {aboutBlurbs} = useSubjectsContext();
     const savingsBlurb = useLastBlurb(aboutBlurbs ? aboutBlurbs[3] : {});
 

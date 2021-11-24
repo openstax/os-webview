@@ -1,5 +1,4 @@
 import React from 'react';
-import {useParams} from 'react-router-dom';
 import Carousel from '~/components/carousel/carousel';
 import './blog-posts.scss';
 
@@ -35,14 +34,12 @@ function Card({image, linkText, link}) {
     );
 }
 
-export default function BlogPosts() {
-    const {subject} = useParams();
-
+export default function BlogPosts({subjectName}) {
     return (
         <section id="blog-posts" className="blog-posts">
             <div className="content">
                 <div className="top">
-                    <h1>Blog posts about OpenStax {subject} textbooks</h1>
+                    <h1>Blog posts about OpenStax {subjectName} textbooks</h1>
                     <div>{sectionDescription}</div>
                 </div>
                 <a className="btn primary" href={viewAllUrl}>

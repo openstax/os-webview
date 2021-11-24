@@ -31,9 +31,6 @@
         }
 
         .btn {
-            @include button();
-            @extend %primary;
-
             justify-self: left;
             margin: 0.5rem 0 1rem;
         }

@@ -3,7 +3,6 @@ import Carousel from '~/components/carousel/carousel';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
-import {useParams} from 'react-router-dom';
 import './webinars.scss';
 
 const sectionDescription = `Learn how our free textbooks are made straight from the
@@ -60,14 +59,12 @@ function Card({title='*No title given', description, link: url}) {
     );
 }
 
-export default function Webinars() {
-    const {subject} = useParams();
-
+export default function Webinars({subjectName}) {
     return (
         <section id="webinars" className="webinars">
             <div className="content">
                 <div className="top">
-                    <h1>Webinars about OpenStax {subject} textbooks</h1>
+                    <h1>Webinars about OpenStax {subjectName} textbooks</h1>
                     <div>{sectionDescription}</div>
                 </div>
                 <a className="btn primary" href={viewAllUrl}>

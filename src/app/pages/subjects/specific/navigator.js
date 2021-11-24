@@ -8,7 +8,7 @@ const LEARN_MORE_IDS = ['blog-posts', 'webinars', 'learn'];
 
 function useCurrentSection() {
     const {innerHeight} = useWindowContext();
-    const cats = useSpecificSubjectContext();
+    const {subcategories: cats} = useSpecificSubjectContext();
     const ids = cats.map((c) => c.id).concat(LEARN_MORE_IDS);
     const midY = innerHeight/2;
 
@@ -73,7 +73,7 @@ function CategoryLink({category}) {
 }
 
 export default function Navigator({subject}) {
-    const cats = useSpecificSubjectContext();
+    const {subcategories: cats} = useSpecificSubjectContext();
 
     return (
         <nav className="navigator">

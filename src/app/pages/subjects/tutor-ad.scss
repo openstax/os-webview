@@ -1,118 +1,59 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.tutor-ad {
-    background: linear-gradient(to top, ui-color(page-bg) 50%, ui-color(white) 50%);
-    padding: 3rem 0;
+.subjects-page,
+.subject-specific {
+    .targets > section.tutor-ad {
+        background: linear-gradient(to top, ui-color(page-bg) 50%, ui-color(white) 50%);
+        padding: 3rem;
 
-    .content {
-        @extend %content;
-    }
-
-    .unclipped {
-        position: relative;
-
-        .box-with-edge,
-        .box-contents {
-            border-radius: 0.5rem
+        @include width-up-to($phone-max) {
+            padding: $normal-margin;
         }
 
-        .box-with-edge {
-            border: thin solid ui-color(form-border);
-            box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
-            height: 100%;
-            left: 0;
-            overflow: hidden;
-            position: absolute;
-            padding: 0;
-            top: 0;
-            width: 100%;
+        > .content {
+            @extend %card;
 
-            .rainbow-edge {
-                background-image: linear-gradient(0deg, #F36B32 0%, #002469 26.38%, #C02336 50.65%, #FABC4D 74.61%, #25C0DA 100%);
-                height: 100%;
-                width: 1rem;
-
-                @include width-up-to($phone-max) {
-                    display: none;
-                }
-            }
-        }
-
-        .box-contents {
-            align-items: center;
             background-color: ui-color(white);
             display: grid;
-            gap: 3rem;
-            min-height: 19rem;
+            max-width: 93rem;
 
             @include width-up-to($phone-max) {
-                grid-template-columns: 100%;
-                padding: 3rem $normal-margin 0;
+                gap: 3rem;
+                grid-template-rows: auto auto auto;
+                padding: 2rem;
                 text-align: center;
 
-                .overlapping-image {
-                    align-items: flex-end;
-                    display: flex;
-                    flex-direction: column;
-                    order: 3;
-
-                    img {
-                        bottom: 0;
-                        height: 100%;
-                    }
+                img,
+                .btn {
+                    align-self: center;
+                    grid-column-start: 1;
+                    grid-row-start: 3;
+                    justify-self: center;
                 }
             }
 
-            @include width-between($phone-max, $tablet-max) {
-                grid-template-columns: minmax(auto, 50%) 1fr;
+            @include wider-than($phone-max) {
+                gap: 3rem 8rem;
+                grid-template: 'heading img'
+                'html img';
                 padding: 3rem;
 
-                .overlapping-image {
-                    grid-row-start: 1;
-                    grid-row-end: 3;
+                img,
+                .btn {
+                    align-self: center;
+                    grid-area: img;
+                    justify-self: center;
+                }
+
+                .btn {
+                    margin-bottom: 1rem;
                 }
             }
 
-            @include wider-than($tablet-max) {
-                grid-template-columns: auto 1fr auto;
-                padding: 0 3rem;
-
-                .overlapping-image {
-                    height: 100%;
-                    position: relative;
-                    width: 38rem;
-
-                    img {
-                        position: absolute;
-                        bottom: 0;
-                        left: 0;
-                        width: 100%;
-                    }
-                }
-
-                .block-of-text {
-                    padding: 3rem 0;
-                }
+            h1 {
+                @include set-font(h3);
+                margin: 0;
             }
-
-            .block-of-text {
-                @include title-font(2.4rem);
-
-                font-family: 'Libre Baskerville', serif;
-                line-height: 4rem;
-            }
-
-            .overlapping-image,
-            .overlapping-image img {
-                max-width: 100%;
-            }
-        }
-
-        .btn {
-            @include button();
-            @extend %primary;
-
-            justify-self: center;
         }
     }
 }

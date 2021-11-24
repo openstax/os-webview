@@ -15,11 +15,6 @@
         text-align: center;
     }
 
-    .btn {
-        @include button();
-        @extend %primary;
-    }
-
     .card {
         @extend %card;
 

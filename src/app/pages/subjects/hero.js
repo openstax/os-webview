@@ -5,10 +5,9 @@ import './hero.scss';
 
 const linesUrl = '/images/subjects/graphic-lines.svg';
 const waveUrl = '/images/subjects/wave-bg.png';
-const studentUrl = 'https://via.placeholder.com/328x323/?text="student sitting"';
 
 export default function Hero() {
-    const {pageDescription} = useSubjectsContext();
+    const {pageDescription, heroImage} = useSubjectsContext();
 
     return (
         <section className="hero">
@@ -17,7 +16,7 @@ export default function Hero() {
                 <img className="bg1" role="presentation" src={linesUrl} />
             </div>
             <div className="content">
-                <img className="overlapping" src={studentUrl} role="presentation" />
+                <img className="overlapping" src={heroImage} role="presentation" />
                 <RawHTML className="text-content" html={pageDescription} />
             </div>
         </section>

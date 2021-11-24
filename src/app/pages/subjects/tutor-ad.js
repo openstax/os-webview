@@ -1,25 +1,18 @@
 import React from 'react';
+import useSubjectsContext from './context';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './tutor-ad.scss';
 
 export default function TutorAd() {
+    const {tutorAd: {image, heading, html, ctaLink, ctaText}} = useSubjectsContext();
+
     return (
         <section className="tutor-ad">
             <div className="content">
-                <div className="unclipped">
-                    <div className="box-with-edge">
-                        <div className="rainbow-edge" />
-                    </div>
-                    <div className="box-contents">
-                        <div className="overlapping-image">
-                            <img role="presentation" src="/images/subjects/tutor-computer.png" />
-                        </div>
-                        <div className="block-of-text">
-                            Improve student engagement with immersive digital readings
-                            and online assignments for your students.
-                        </div>
-                        <a className="btn primary">Learn more</a>
-                    </div>
-                </div>
+                <h1>{heading}</h1>
+                <img role="presentation" src={image} />
+                <RawHTML html={html} />
+                <a className="btn primary" href={ctaLink}>{ctaText}</a>
             </div>
         </section>
     );

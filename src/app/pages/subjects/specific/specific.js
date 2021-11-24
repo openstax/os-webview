@@ -41,13 +41,16 @@ function SubjectInContext({subject}) {
                     </WindowContextProvider>
                     <div className={cn('targets', `${subject?.color}-stripe`)}>
                         <LanguageSelectorSection />
-                        <BookViewer />
                         <SubjectIntro subjectName={subject.html} />
+                        <BookViewer />
                         <TutorAd />
-                        <BlogPosts />
-                        <Webinars />
-                        <LearnMore />
-                        <AboutOpenStax />
+                        <BlogPosts subjectName={subject.html} />
+                        <Webinars subjectName={subject.html} />
+                        <LearnMore subjectName={subject.html} />
+                        <AboutOpenStax
+                            forceButtonUrl="/subjects"
+                            forceButtonText="View all sujects"
+                        />
                         <InfoBoxes />
                         <PhilanthropicSupport />
                     </div>

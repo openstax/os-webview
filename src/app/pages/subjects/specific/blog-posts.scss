@@ -1,6 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .subject-specific .blog-posts {
+    background-color: ui-color(white);
+    padding-bottom: 8rem;
+
     .content {
         align-items: center;
         display: flex;
@@ -13,11 +16,6 @@
         gap: 3rem;
         flex-direction: column;
         text-align: center;
-    }
-
-    .btn {
-        @include button();
-        @extend %primary;
     }
 
     .card {
