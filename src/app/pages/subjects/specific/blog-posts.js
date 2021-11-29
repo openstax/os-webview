@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from '~/components/carousel/carousel';
+import CarouselSection from './components/carousel-section';
 import './blog-posts.scss';
 
 const sectionDescription = `Read up on best practices for using our free
@@ -36,19 +36,13 @@ function Card({image, linkText, link}) {
 
 export default function BlogPosts({subjectName}) {
     return (
-        <section id="blog-posts" className="blog-posts">
-            <div className="content">
-                <div className="top">
-                    <h1>Blog posts about OpenStax {subjectName} textbooks</h1>
-                    <div>{sectionDescription}</div>
-                </div>
-                <a className="btn primary" href={viewAllUrl}>
-                    {viewAllText}
-                </a>
-                <Carousel mobileSlider>
-                    {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
-                </Carousel>
-            </div>
-        </section>
+        <CarouselSection
+            id="blog-posts" className="blog-posts"
+            heading={`Blog posts about OpenStax ${subjectName} textbooks`}
+            description={sectionDescription}
+            linkUrl={viewAllUrl} linkText={viewAllText}
+        >
+            {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
+        </CarouselSection>
     );
 }

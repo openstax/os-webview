@@ -1,6 +1,11 @@
 import React from 'react';
 import useSpecificSubjectContext from './context';
 import useWindowContext from '~/contexts/window';
+import useToggleContext from '~/components/toggle/toggle-context.js';
+import {IfToggleIsOpen} from '~/components/toggle/toggle';
+import ToggleControlBar from '~/components/toggle/toggle-control-bar';
+import ArrowToggle from '~/components/toggle/arrow-toggle';
+import AccordionGroup from '~/components/accordion-group/accordion-group';
 import $ from '~/helpers/$';
 import './navigator.scss';
 
@@ -49,12 +54,20 @@ function useElFor(id) {
 
 function SectionLink({id, text}) {
     const el = useElFor(id); // Forces update when element exists
+    const {toggle} = useToggleContext();
     const onClick = React.useCallback(
         (event) => {
             event.preventDefault();
             el?.scrollIntoView({block: 'center', behavior: 'smooth'});
+            const io = new window.IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    window.setTimeout(toggle, 100);
+                }
+            });
+
+            io.observe(el);
         },
-        [el]
+        [el, toggle]
     );
     const currentId = useCurrentSection();
 
@@ -69,6 +82,42 @@ function SectionLink({id, text}) {
 function CategoryLink({category}) {
     return (
         <SectionLink id={category.id} text={category.name} />
+    );
+}
+
+function useAccordionItems(subjectName) {
+    const {subcategories: cats} = useSpecificSubjectContext();
+
+    return [
+        {
+            title: `${subjectName} Book Categories`,
+            contentComponent:
+    <React.Fragment>
+        {cats.map((c) => <CategoryLink category={c} key={c.html} />)}
+    </React.Fragment>
+        },
+        {
+            title: 'Learn more',
+            contentComponent:
+    <React.Fragment>
+        <SectionLink id='blog-posts' text={`${subjectName} blog posts`} />
+        <SectionLink id='webinars' text={`${subjectName} webinars`} />
+        <SectionLink id='learn' text="Learn about our books" />
+    </React.Fragment>
+        }
+    ];
+}
+
+export function JumpToSection({subjectName}) {
+    return (
+        <div className="jump-to-section">
+            <ToggleControlBar Indicator={ArrowToggle}>
+                <div>Jump to section</div>
+            </ToggleControlBar>
+            <IfToggleIsOpen>
+                <AccordionGroup items={useAccordionItems(subjectName)} noScroll />
+            </IfToggleIsOpen>
+        </div>
     );
 }
 

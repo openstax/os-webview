@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from '~/components/carousel/carousel';
+import CarouselSection from './components/carousel-section';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
@@ -61,19 +61,13 @@ function Card({title='*No title given', description, link: url}) {
 
 export default function Webinars({subjectName}) {
     return (
-        <section id="webinars" className="webinars">
-            <div className="content">
-                <div className="top">
-                    <h1>Webinars about OpenStax {subjectName} textbooks</h1>
-                    <div>{sectionDescription}</div>
-                </div>
-                <a className="btn primary" href={viewAllUrl}>
-                    {viewAllText}
-                </a>
-                <Carousel atATime="3" mobileSlider>
-                    {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
-                </Carousel>
-            </div>
-        </section>
+        <CarouselSection
+            id="webinars" className="webinars"
+            heading={`Webinars about OpenStax ${subjectName} textbooks`}
+            description={sectionDescription}
+            linkUrl={viewAllUrl} linkText={viewAllText}
+        >
+            {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
+        </CarouselSection>
     );
 }

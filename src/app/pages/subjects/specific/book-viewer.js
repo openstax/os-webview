@@ -28,7 +28,6 @@ function Category({category}) {
 export default function BookViewer() {
     const {subcategories: cats} = useSpecificSubjectContext();
 
-    console.info('Others?', cats);
     return (
         <section className="book-viewer">
             <div className="content">

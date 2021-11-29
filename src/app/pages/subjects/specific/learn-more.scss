@@ -3,6 +3,18 @@
 .subject-specific .learn-more {
     background-color: ui-color(white);
 
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .paragraph-html {
+        @include wider-than($phone-max) {
+            display: none;
+        }
+    }
+
     .accordion-group {
         grid-gap: 0;
 

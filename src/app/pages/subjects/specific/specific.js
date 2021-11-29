@@ -35,26 +35,26 @@ function SubjectInContext({subject}) {
     return (
         <SpecificSubjectContextProvider contextValueParameters={booksInSubject}>
             <div className="subject-specific">
-                <div className="content">
-                    <WindowContextProvider>
+                <WindowContextProvider>
+                    <div className="content">
                         <Navigator subject={subject} />
-                    </WindowContextProvider>
-                    <div className={cn('targets', `${subject?.color}-stripe`)}>
-                        <LanguageSelectorSection />
-                        <SubjectIntro subjectName={subject.html} />
-                        <BookViewer />
-                        <TutorAd />
-                        <BlogPosts subjectName={subject.html} />
-                        <Webinars subjectName={subject.html} />
-                        <LearnMore subjectName={subject.html} />
-                        <AboutOpenStax
-                            forceButtonUrl="/subjects"
-                            forceButtonText="View all sujects"
-                        />
-                        <InfoBoxes />
-                        <PhilanthropicSupport />
+                        <div className={cn('targets', `${subject?.color}-stripe`)}>
+                            <LanguageSelectorSection />
+                            <SubjectIntro subjectName={subject.html} />
+                            <BookViewer />
+                            <TutorAd />
+                            <BlogPosts subjectName={subject.html} />
+                            <Webinars subjectName={subject.html} />
+                            <LearnMore subjectName={subject.html} />
+                            <AboutOpenStax
+                                forceButtonUrl="/subjects"
+                                forceButtonText="View all sujects"
+                            />
+                            <InfoBoxes />
+                            <PhilanthropicSupport />
+                        </div>
                     </div>
-                </div>
+                </WindowContextProvider>
             </div>
         </SpecificSubjectContextProvider>
     );

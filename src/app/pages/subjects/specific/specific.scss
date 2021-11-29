@@ -28,9 +28,15 @@ $half-content-max: $content-max / 2;
         }
 
         h1 {
-            @include set-font(h2);
+            @include scale-set-font(h3, h2);
 
             margin: 0;
+        }
+
+        > .navigator {
+            @include width-up-to($tablet-max) {
+                display: none;
+            }
         }
     }
 
@@ -41,12 +47,6 @@ $half-content-max: $content-max / 2;
 
         &.primary {
             @extend %primary;
-        }
-    }
-
-    .navigator {
-        @include width-up-to($tablet-max) {
-            display: none;
         }
     }
 
@@ -78,29 +78,6 @@ $half-content-max: $content-max / 2;
         }
 
         padding-bottom: 3rem;
-    }
-
-    .carousel {
-        margin: 0 6rem;
-
-        .items {
-            gap: 3rem;
-            width: 100%;
-        }
-
-        .frame-changer {
-            background-color: ui-color(secondary);
-
-            &.right {
-                border-radius: 0 0.5rem 0.5rem 0;
-                right: -7rem;
-            }
-
-            &.left {
-                border-radius: 0.5rem 0 0 0.5rem;
-                left: -7rem;
-            }
-        }
     }
 
     .about-openstax .content {

@@ -1,7 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .subject-specific .book-viewer {
-
     .category {
         .books {
             display: grid;
@@ -9,18 +8,6 @@
             grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
             margin: $normal-margin 0;
             width: 100%;
-
-            // @include wider-than($media-content-max - 15em) {
-            //     grid-template-columns: repeat(2, 1fr);
-            // }
-            //
-            // @include wider-than($media-content-max) {
-            //     grid-template-columns: repeat(3, 1fr);
-            // }
-            //
-            // @include wider-than($media-content-max + 15em) {
-            //     grid-template-columns: repeat(4, 1fr);
-            // }
         }
 
         .book-tile {
