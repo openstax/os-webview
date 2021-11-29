@@ -61,10 +61,17 @@ function RequestInfoButton({infoUrl, infoText, partnerName}) {
         analyticsEvents.requestInfo(partnerName);
     }
 
+    // NOTE: click is not propagating up to router. For external form, target is _blank
+    // For custom local form, remove that.
     return (
         infoUrl && infoText &&
             <section>
-                <a className="btn primary" href={infoUrl} onClick={trackInfoRequest}>{infoText}</a>
+                <a
+                    className="btn primary" href={infoUrl} onClick={trackInfoRequest}
+                    target="_blank" rel="noreferrer"
+                >
+                    {infoText}
+                </a>
             </section>
     );
 }
