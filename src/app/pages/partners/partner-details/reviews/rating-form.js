@@ -56,7 +56,7 @@ function Stars({rating, setRating}) {
 export function useMyReview() {
     const {reviews} = usePartnerContext();
     const {uuid} = useUserContext();
-    const myReview = reviews.find((r) => r.submittedByAccountUUID === uuid);
+    const myReview = reviews.find((r) => r.submittedByAccountUuid === uuid);
 
     return myReview;
 }
