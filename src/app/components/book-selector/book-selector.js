@@ -5,7 +5,7 @@ import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useHistory, useLocation} from 'react-router-dom';
 import './book-selector.scss';
 
-function Subject({subject, books, name, selectedBooks, toggleBook}) {
+function Subject({subject, books, name, selectedBooks, toggleBook, limitReached}) {
     return (
         <div>
             <label className="field-label">{subject}</label>
@@ -15,6 +15,7 @@ function Subject({subject, books, name, selectedBooks, toggleBook}) {
                         <BookCheckbox
                             key={book} book={book} name={name}
                             checked={selectedBooks.includes(book)} toggle={toggleBook}
+                            disabled={limitReached && !selectedBooks.includes(book)}
                         />)
                 }
             </div>
@@ -22,7 +23,20 @@ function Subject({subject, books, name, selectedBooks, toggleBook}) {
     );
 }
 
-function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselectedTitle}) {
+function hintText(selectedCount, limit) {
+    if (!limit) {
+        return 'Select all that apply';
+    }
+    if (selectedCount === 0) {
+        return `Select up to ${limit}`;
+    }
+    if (selectedCount < limit) {
+        return `Select up to ${limit - selectedCount} more`;
+    }
+    return `Maximum ${limit} selected`;
+}
+
+function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselectedTitle, limit}) {
     // Use a ref so it doesn't recalculate this every render
     const sfTitlesRef = useRef(salesforceTitles(data.books));
     const books = sfTitlesRef.current;
@@ -30,6 +44,7 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
         .reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
     const booksBySubject = (subject) => books.filter((b) => b.subjects.includes(subject));
     const validationMessage = selectedBooks.length > 0 ? '' : 'Please select at least one book';
+    const limitReached = selectedBooks.length >= limit;
 
     useLayoutEffect(() => {
         books.filter((book) => preselectedTitle === book.value).forEach(toggleBook);
@@ -39,7 +54,7 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
         <div className="book-selector">
             <div>
                 <h2 className="prompt">{prompt}</h2>
-                <div className="hint">Select all that apply</div>
+                <div className="hint">{hintText(selectedBooks.length, limit)}</div>
             </div>
             {
                 subjects.map((subject) =>
@@ -47,6 +62,7 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
                         key={subject}
                         subject={subject} books={booksBySubject(subject)} name={name}
                         selectedBooks={selectedBooks} toggleBook={toggleBook}
+                        limitReached={limitReached}
                     />
                 )
             }

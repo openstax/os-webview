@@ -26,6 +26,7 @@ function BookSelectorPage({selectedBooksRef}) {
                 selectedBooks={selectedBooks}
                 preselectedTitle={preselectedTitle}
                 toggleBook={toggleBook}
+                limit="5"
             />
             <label>
                 <div className="control-group">
