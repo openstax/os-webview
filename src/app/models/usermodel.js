@@ -34,7 +34,6 @@ const accountsModel = {
         //     uuid: '53cdf5b7-6dd9-45a5-bad7-e1f5532180e2',
         //     support_identifier: 'cs_5bcab9be',
         //     is_not_gdpr_location: true,
-        //     is_test: false,
         //     opt_out_of_cookies: false,
         //     using_openstax: false,
         //     salesforce_contact_id: '0037h00000SEXNqAAP',

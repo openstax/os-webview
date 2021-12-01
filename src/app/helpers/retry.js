@@ -1,13 +1,12 @@
 // From: https://dev.to/goenning/how-to-retry-when-react-lazy-fails-mb5
-export default function retry(fn, retriesLeft = 3, interval = 400) {
+export default function retry(fn, retriesLeft = 3, interval = 1400) {
     return new Promise((resolve, reject) => {
         fn()
             .then(resolve)
             .catch((error) => {
                 window.setTimeout(() => {
                     if (retriesLeft === 1) {
-                        // reject('maximum retries exceeded');
-                        reject(error);
+                        reject(new Error(`Maximum retries exceeded: ${error}`));
                         return;
                     }
 

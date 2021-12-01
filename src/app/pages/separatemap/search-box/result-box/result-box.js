@@ -47,9 +47,9 @@ function useFormParameters(hideDialog) {
             .filter((i) => i.is_verified)
             .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
             .value,
-        school: info.self_reported_school,
         firstName: info.first_name,
         lastName: info.last_name,
+        uuid: info.uuid,
         afterSubmit: hideDialog
     };
 }
@@ -64,6 +64,8 @@ function SchoolDetails({model}) {
     ];
     const [isOpen, toggle] = useToggle();
     const formParameters = useFormParameters(toggle);
+    const school = model.fields.salesforce_id;
+    const company = model.fields.name;
 
     function showTestimonialForm(event) {
         event.preventDefault();
@@ -88,7 +90,7 @@ function SchoolDetails({model}) {
                 isOpen={isOpen} onPutAway={toggle}
                 title="Submit your testimonial"
             >
-                <TestimonialForm {...formParameters} />
+                <TestimonialForm {...{...formParameters, school, company}} />
             </Dialog>
         </div>
     );

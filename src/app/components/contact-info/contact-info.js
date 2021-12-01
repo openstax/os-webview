@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select.jsx';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
@@ -62,17 +62,34 @@ function SchoolInfo({schools}) {
     );
 }
 
+function useSchoolNames() {
+    const schools = useDataFromPromise(schoolPromise, []);
+    const schoolNames = useMemo(() => schools.map((s) => s.name).sort(), [schools]);
+    const schoolSet = useMemo(() => new window.Set(schoolNames.map((s) => s.toLowerCase())), [schoolNames]);
+
+    return {schools, schoolNames, schoolSet};
+}
+
 function SchoolSelector() {
-    const schools = useDataFromPromise(schoolPromise, []).sort();
-    const schoolNames = schools.map((s) => s.name);
-    const schoolSet = new window.Set(schoolNames.map((s) => s.toLowerCase()));
     const [value, setValue] = useState('');
+    const {schools, schoolNames, schoolSet} = useSchoolNames();
     const schoolIsOk = schoolSet.has(value.toLowerCase());
     const selectedEntry = schoolIsOk && schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
+    const showSchoolInfo = !schoolIsOk && value.length > 3;
 
     function onChange({target}) {
         setValue(target.value);
     }
+
+    React.useLayoutEffect(() => {
+        if (showSchoolInfo) {
+            const putFocusBack = document.activeElement;
+
+            window.setTimeout(() => {
+                putFocusBack.focus();
+            }, 40);
+        }
+    }, [showSchoolInfo]);
 
     return (
         <React.Fragment>
@@ -89,17 +106,12 @@ function SchoolSelector() {
                 }}
             />
             <SchoolHiddenInfo school={selectedEntry} />
-            {!schoolIsOk && value.length > 3 && <SchoolInfo schools={schools} />}
+            {showSchoolInfo && <SchoolInfo schools={schools} />}
         </React.Fragment>
     );
 }
 
-export default function ContactInfo({validatorRef}) {
-    if (validatorRef) {
-        validatorRef.current = () => true;
-    }
-
-
+export default function ContactInfo() {
     return (
         <div className="contact-info">
             <FormInput

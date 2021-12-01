@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/react';
 import {Integrations} from '@sentry/tracing';
+import $ from '~/helpers/$';
 
 const packageVersion = require('../../package.json').version;
 
@@ -20,7 +21,19 @@ const ignoreUrls = [
 function beforeSend(event, hint) {
     const error = hint.originalException;
 
+    if (!$.isSupported()) {
+        return null;
+    }
+    if (window.location.pathname.startsWith('/l/') || window.location.pathname.startsWith('/rex/')) {
+        return null;
+    }
     if (error?.message?.match(/mce-visual-caret/i)) {
+        return null;
+    }
+    if (error?.message?.includes('g.readyState')) {
+        return null;
+    }
+    if (error?.message?.includes('PulseInsightsObject.survey')) {
         return null;
     }
     if (error?.message?.match(/unexpected token/i)) {
@@ -34,6 +47,9 @@ function beforeSend(event, hint) {
     }
     if (error?.message?.match(/loading chunk/i)) {
         event.fingerprint = ['loading chunk'];
+    }
+    if (error?.message?.match(/localStorage/)) {
+        event.fingerprint = ['localStorage'];
     }
     return event;
 }

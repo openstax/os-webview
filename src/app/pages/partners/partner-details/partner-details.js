@@ -37,21 +37,42 @@ function useRealTitles(books) {
     return titles;
 }
 
-function RequestInfoButton({infoText='Request info', partnerName}) {
-    const {toggleForm} = usePartnerContext();
+// -- RESTORE this to use the new form
+// function RequestInfoButton({infoText='Request info', partnerName}) {
+//     const {toggleForm} = usePartnerContext();
+//
+//     function gotoForm() {
+//         analyticsEvents.requestInfo(partnerName);
+//         toggleForm();
+//     }
+//
+//     return (
+//         <section>
+//             <button
+//                 type="button" className="primary"
+//                 onClick={gotoForm}
+//             >{infoText}</button>
+//         </section>
+//     );
+// }
 
-    function gotoForm() {
+function RequestInfoButton({infoUrl, infoText, partnerName}) {
+    function trackInfoRequest() {
         analyticsEvents.requestInfo(partnerName);
-        toggleForm();
     }
 
+    // NOTE: click is not propagating up to router. For external form, target is _blank
+    // For custom local form, remove that.
     return (
-        <section>
-            <button
-                type="button" className="primary"
-                onClick={gotoForm}
-            >{infoText}</button>
-        </section>
+        infoUrl && infoText &&
+            <section>
+                <a
+                    className="btn primary" href={infoUrl} onClick={trackInfoRequest}
+                    target="_blank" rel="noreferrer"
+                >
+                    {infoText}
+                </a>
+            </section>
     );
 }
 

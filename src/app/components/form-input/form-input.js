@@ -4,6 +4,8 @@ import shellBus from '~/components/shell/shell-bus';
 import cn from 'classnames';
 import './form-input.scss';
 
+const LIMIT_SUGGESTIONS = 400;
+
 function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
     const ref = useRef();
     const active = index === activeIndex;
@@ -47,12 +49,16 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
         <div className="suggestions">
             <div className="suggestion-box">
                 {
-                    !exactMatch && !accepted && matches.map((match, i) =>
+                    !exactMatch && !accepted && matches.slice(0, LIMIT_SUGGESTIONS).map((match, i) =>
                         <SuggestionItem
                             value={match} accept={accept} index={i}
                             activeIndex={activeIndex} setActiveIndex={setActiveIndex}
                             key={match}
                         />)
+                }
+                {
+                    matches.length > LIMIT_SUGGESTIONS &&
+                    <div className="suggestion"><i>List truncated</i></div>
                 }
             </div>
         </div>
@@ -83,7 +89,7 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
     const [value, setValue] = useState('');
     const {onChange: otherOnChange, ...otherProps} = inputProps;
     const [matches, exactMatch] = useMatches(value.toLowerCase(), suggestions);
-    const [accepted, setAccepted] = useState(false);
+    const [accepted, setAccepted] = useState(!suggestions?.length);
 
     function accept(item='') {
         setValue(item);
@@ -109,6 +115,10 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
         setAccepted(!suggestions);
     }
     function onKeyDown(event) {
+        // Don't use space to accept
+        if (event.key === ' ') {
+            return;
+        }
         if (handleKeyDown(event)) {
             event.preventDefault();
             event.stopPropagation();

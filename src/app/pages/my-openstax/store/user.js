@@ -1,9 +1,9 @@
 import React from 'react';
 import sfApiFetch from './sfapi';
-import useFlagContext from '~/components/shell/flag-context';
+import useFlagContext, {flagPromise} from '~/components/shell/flag-context';
 import $ from '~/helpers/$';
 
-export async function fetchUser() {
+async function fetchUser() {
     const user = await sfApiFetch('users');
 
     if (user && !user.contact) {
@@ -12,7 +12,7 @@ export async function fetchUser() {
     return $.camelCaseKeys(user || {});
 }
 
-export function useMyOpenStaxIsAvailable() {
+export function useMyOpenStaxUser() {
     const [user, setUser] = React.useState({error: 'not loaded'});
     const isEnabled = useFlagContext();
 
@@ -22,7 +22,13 @@ export function useMyOpenStaxIsAvailable() {
         }
     }, [isEnabled]);
 
-    return isEnabled && !user.error;
+    return user;
+}
+
+export function useMyOpenStaxIsAvailable() {
+    const user = useMyOpenStaxUser();
+
+    return !user.error;
 }
 
 export default function (store) {
@@ -36,7 +42,12 @@ export default function (store) {
     };
 
     store.on('@init', () => {
-        store.dispatch('user/fetch');
+        // can't use hooks
+        flagPromise.then((enabled) => {
+            if (enabled) {
+                store.dispatch('user/fetch');
+            }
+        });
         return INITIAL_STATE;
     });
 

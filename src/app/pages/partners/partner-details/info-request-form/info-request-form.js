@@ -1,6 +1,7 @@
 import React from 'react';
 import usePartnerContext from '../partner-context';
-import useSchoolSuggestionList from '~/models/use-school-suggestion-list';
+import useSchoolSuggestionList, {useCountrySuggestionList, useCountryFromSchool}
+    from '~/models/use-school-suggestion-list';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
@@ -14,11 +15,6 @@ import FormInput from '~/components/form-input/form-input';
 import useFormTarget from '~/components/form-target/form-target';
 import {useContextValue as useSalesforceContextValue} from '~/contexts/salesforce';
 import './info-request-form.scss';
-
-const countryOptions = [
-    {label: 'United States', value: 'Domestic'},
-    {label: 'Non-US', value: 'Foreign'}
-];
 
 function AdoptedQuestion() {
     const {adoption} = useSalesforceContextValue();
@@ -99,8 +95,8 @@ function Page1() {
     );
 }
 
-function SchoolSelector() {
-    const {value, setValue, schoolIsOk, schoolOptions} = useSchoolSuggestionList();
+function SchoolSelector({value, setValue}) {
+    const {schoolIsOk, schoolOptions} = useSchoolSuggestionList(value);
 
     function accept(option) {
         setValue(option.value);
@@ -116,6 +112,7 @@ function SchoolSelector() {
                     placeholder: 'School where you work',
                     required: true,
                     value,
+                    autocomplete: 'off',
                     onChange({target}) {setValue(target.value);}
                 }}
                 accept={accept}
@@ -125,22 +122,76 @@ function SchoolSelector() {
     );
 }
 
-function Page2({roleOptions}) {
-    const {userModel, userStatus} = useUserContext();
-    const schoolCountries = React.useMemo(() => {
-        const schoolLocation = userModel?.accountsModel?.school_location;
-
-        if (schoolLocation) {
-            const schoolCountrySelection = countryOptions
-                .find((opt) => schoolLocation.startsWith(opt.value.toLowerCase()));
-
-            if (schoolCountrySelection) {
-                schoolCountrySelection.selected = true;
-                return ([...countryOptions]);
+function RoleSelector() {
+    const roles = useDataFromSlug('snippets/roles');
+    const options = React.useMemo(
+        () => roles?.map((r) => ({label: r.display_name, value: r.salesforce_name})),
+        [roles]
+    );
+    const {userModel} = useUserContext();
+    const optionsWithSelection = React.useMemo(
+        () => {
+            if (!options || !userModel) {
+                return options;
             }
+            return options.map((opt) =>
+                opt.label.toLowerCase() === userModel?.self_reported_role ?
+                    {...opt, selected: true} : opt
+            );
+        },
+        [options, userModel]
+    );
+
+    return (
+        <FormSelect
+            selectAttributes={{
+                name: 'role',
+                placeholder: 'Select your role',
+                required: true
+            }}
+            label="Role" options={optionsWithSelection}
+        />
+    );
+}
+
+function CountrySelector({value, setValue}) {
+    const {countryOptions, isOk} = useCountrySuggestionList(value);
+
+    function accept(option) {
+        setValue(option.value);
+    }
+
+    return (
+        <div className="control-group">
+            <label className="field-label">Country</label>
+            <FilteringSelect
+                options={countryOptions}
+                inputProps={{
+                    name: 'country',
+                    placeholder: 'Select your country',
+                    required: true,
+                    value,
+                    autocomplete: 'off',
+                    onChange({target}) {setValue(target.value);}
+                }}
+                accept={accept}
+                accepted={isOk}
+            />
+        </div>
+    );
+}
+
+function Page2() {
+    const {userModel, userStatus} = useUserContext();
+    const [school, setSchool] = React.useState(userModel?.self_reported_school);
+    const cfs = useCountryFromSchool(school);
+    const [country, setCountry] = React.useState(cfs);
+
+    React.useEffect(() => {
+        if (cfs) {
+            setCountry(cfs);
         }
-        return countryOptions;
-    }, [userModel]);
+    }, [cfs]);
 
     return (
         <div className="form-page">
@@ -152,15 +203,8 @@ function Page2({roleOptions}) {
                 All fields are required
             </p>
             <div className="grid">
-                <FormSelect
-                    selectAttributes={{
-                        name: 'role',
-                        placeholder: 'Select your role',
-                        required: true
-                    }}
-                    label="Role" options={roleOptions}
-                />
-                <SchoolSelector />
+                <RoleSelector />
+                <SchoolSelector value={school} setValue={setSchool} />
                 <FormInput
                     label="Number of students you're teaching this year"
                     inputProps={{
@@ -185,16 +229,9 @@ function Page2({roleOptions}) {
                 />
                 <FormInput
                     label="Phone number"
-                    inputProps={{...inputProps.phone}}
+                    inputProps={{...inputProps.phone, required: true}}
                 />
-                <FormSelect
-                    selectAttributes={{
-                        name: 'country',
-                        placeholder: 'Select your country',
-                        required: true
-                    }}
-                    label="Country" options={schoolCountries}
-                />
+                <CountrySelector value={country} setValue={setCountry} />
             </div>
         </div>
     );
@@ -202,8 +239,6 @@ function Page2({roleOptions}) {
 
 export default function InfoRequestForm() {
     const {toggleForm} = usePartnerContext();
-    const roles = useDataFromSlug('snippets/roles');
-    const roleOptions = roles?.map((r) => ({label: r.display_name, value: r.salesforce_name}));
     const {onSubmit, submitting, FormTarget} = useFormTarget(toggleForm);
     const {techScoutUrl} = useSalesforceContextValue();
 
@@ -221,7 +256,7 @@ export default function InfoRequestForm() {
                 target="form-target"
             >
                 <Page1 />
-                <Page2 roleOptions={roleOptions} />
+                <Page2 />
             </MultiPageForm>
         </React.Fragment>
     );

@@ -53,7 +53,7 @@ export function ArticleLoader({slug}) {
     const {fail} = useRouterContext();
 
     if (data?.error) {
-        fail(`Could not load ${slug}`);
+        fail(`Could not load article ${slug}`);
         return null;
     }
     return (statusPage ? statusPage : <Article data={data} />);
