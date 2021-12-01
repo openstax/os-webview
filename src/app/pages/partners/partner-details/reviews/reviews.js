@@ -116,7 +116,7 @@ function ReviewsPage() {
             userName: r.submittedByName,
             rating: r.rating,
             review: r.review || '',
-            allowEdit: r.submittedByAccountUUID === uuid,
+            allowEdit: r.submittedByAccountUuid === uuid,
             updated: new Date(`${r.created}T00:00:00`).toLocaleDateString('en-us'),
             response: r.partnerResponse,
             userFacultyStatus: r.userFacultyStatus,
