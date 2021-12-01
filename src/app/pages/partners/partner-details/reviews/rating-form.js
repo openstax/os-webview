@@ -55,8 +55,8 @@ function Stars({rating, setRating}) {
 
 export function useMyReview() {
     const {reviews} = usePartnerContext();
-    const {accountUUID} = useUserContext();
-    const myReview = reviews.find((r) => r.submittedByAccountUUID === accountUUID);
+    const {uuid} = useUserContext();
+    const myReview = reviews.find((r) => r.submittedByAccountUUID === uuid);
 
     return myReview;
 }
@@ -85,7 +85,7 @@ function InfoButton({info}) {
 
 export default function RatingForm() {
     const {togglePage} = usePageContext();
-    const {accountUUID, userName} = useUserContext();
+    const {uuid, userName} = useUserContext();
     const {postRating, partnerId, partnerName} = usePartnerContext();
     const [rating, setRating, myReview] = useRating();
     const textAreaRef = useRef();
@@ -127,7 +127,7 @@ export default function RatingForm() {
             [
                 {
                     submitted_by_name: userName, // eslint-disable-line camelcase
-                    submitted_by_account_uuid: accountUUID, // eslint-disable-line camelcase
+                    submitted_by_account_uuid: uuid, // eslint-disable-line camelcase
                     ...commonPayload
                 },
                 'POST'
