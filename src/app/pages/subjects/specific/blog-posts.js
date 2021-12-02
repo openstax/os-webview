@@ -1,29 +1,7 @@
 import React from 'react';
 import CarouselSection from './components/carousel-section';
+import useSpecificSubjectContext from './context';
 import './blog-posts.scss';
-
-const sectionDescription = `Read up on best practices for using our free
-business textbooks and instructor resources in your course in these blog
-posts.`;
-const viewAllText = 'View all blog posts';
-const viewAllUrl = '/blog';
-const blurbs = [
-    {
-        image: 'https://assets.openstax.org/oscms-prodcms/media/documents/calculus-v2.svg',
-        linkText: 'Curated community resources for OpenStax business books',
-        link: 'google1.com'
-    },
-    {
-        image: 'https://assets.openstax.org/oscms-prodcms/media/documents/college_algebra.svg',
-        linkText: 'What makes OpenStax Principles of Accounting unique',
-        link: 'google2.com'
-    },
-    {
-        image: 'https://assets.openstax.org/oscms-prodcms/media/original_images/AdobeStock_382934760.png',
-        linkText: 'Answering your FAQs about OpenStax (Business) textbooks',
-        link: 'google3.com'
-    }
-];
 
 function Card({image, linkText, link}) {
     return (
@@ -35,6 +13,13 @@ function Card({image, linkText, link}) {
 }
 
 export default function BlogPosts({subjectName}) {
+    const {
+        blogSectionDescription: sectionDescription,
+        blogSectionViewAllUrl: viewAllUrl,
+        blogSectionViewAllText: viewAllText,
+        blogSectionBlurbs: blurbs
+    } = useSpecificSubjectContext();
+
     return (
         <CarouselSection
             id="blog-posts" className="blog-posts"
