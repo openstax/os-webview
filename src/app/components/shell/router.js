@@ -127,21 +127,20 @@ function useAnalyticsPageView() {
 // in one chunk. Not as dynamic as one might hope.
 function useImportedComponent(name) {
     const importFn = React.useCallback(() => import(`~/pages/${name}/${name}`), [name]);
-    const [loadState, setLoadState] = React.useState('');
+    const [loadState, setLoadState] = React.useState({});
+    const loadError = React.useMemo(
+        () => loadState.name === name ? loadState.error : null,
+        [loadState, name]
+    );
     const Component = React.useMemo(
         () => React.lazy(() => importFn()
-            .then((r) => {
-                console.info('THIS IS SUCCEEDING!!!!!!');
-                return r;
-            })
-            .catch((err) => {
-                console.info('THIS IS FAILING');
-                setLoadState(`error: ${err}`);
+            .catch((error) => {
+                setLoadState({ name, error });
             })),
-        [importFn]
+        [importFn, name]
     );
 
-    return {Component, loadState};
+    return {Component, loadError};
 }
 
 function FallbackToGeneralPage({name}) {
@@ -156,11 +155,11 @@ function FallbackToGeneralPage({name}) {
 }
 
 function ImportedPage({name}) {
-    const {Component, loadState} = useImportedComponent(name);
+    const {Component, loadError} = useImportedComponent(name);
 
     useAnalyticsPageView();
 
-    if (loadState.startsWith('error')) {
+    if (loadError) {
         return (<FallbackToGeneralPage name={name} />);
     }
 

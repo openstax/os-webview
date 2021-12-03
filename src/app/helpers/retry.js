@@ -10,7 +10,6 @@ export default function retry(fn, retriesLeft = 3, interval = 1400) {
                         return;
                     }
 
-                    console.warn(`Retrying after ${error}`);
                     // Passing on "reject" is the important part
                     retry(fn, retriesLeft - 1, interval).then(resolve, reject);
                 }, interval);

@@ -51,7 +51,6 @@ export default function GeneralPageLoader() {
     const location = useLocation();
     const slug = location.pathname.substr(1).replace('general', 'spike');
 
-    console.info('Pulling slug', slug);
     return (
         <GeneralPageFromSlug slug={slug} />
     );
