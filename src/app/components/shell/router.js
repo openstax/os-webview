@@ -109,25 +109,60 @@ function useLinkHandler() {
     return linkHandler;
 }
 
-function ImportedPage({name, fallback}) {
+function useAnalyticsPageView() {
     const history = useHistory();
     const isRedirect = history.location.state?.redirect;
-    const {fail} = useRouterContext();
-    const Component = React.useMemo(
-        () => {
-            const importFn = () => import(`~/pages/${name}/${name}`);
-
-            return React.lazy(() => retry(importFn).catch(fallback || fail));
-        },
-        [name, fallback, fail]
-    );
 
     useEffect(() => {
         window.scrollTo(0, 0);
         if (!isRedirect) {
             analytics.sendPageview();
         }
-    }, [name, isRedirect]);
+    }, [isRedirect]);
+}
+
+// Dynamic import is persnickety about building paths; you can't just pass it
+// a string with a path, it needs to know it's building a string
+// Then webpack chunks everything that matches that string (in this case, all pages)
+// in one chunk. Not as dynamic as one might hope.
+function useImportedComponent(name) {
+    const importFn = React.useCallback(() => import(`~/pages/${name}/${name}`), [name]);
+    const [loadState, setLoadState] = React.useState('');
+    const Component = React.useMemo(
+        () => React.lazy(() => importFn()
+            .then((r) => {
+                console.info('THIS IS SUCCEEDING!!!!!!');
+                return r;
+            })
+            .catch((err) => {
+                console.info('THIS IS FAILING');
+                setLoadState(`error: ${err}`);
+            })),
+        [importFn]
+    );
+
+    return {Component, loadState};
+}
+
+function FallbackToGeneralPage({name}) {
+    const [fallback, setFallback] = useToggle(false);
+
+    if (fallback) {
+        return (<Error404 />);
+    }
+    return (
+        <GeneralPageFromSlug slug={`spike/${name}`} fallback={setFallback} />
+    );
+}
+
+function ImportedPage({name}) {
+    const {Component, loadState} = useImportedComponent(name);
+
+    useAnalyticsPageView();
+
+    if (loadState.startsWith('error')) {
+        return (<FallbackToGeneralPage name={name} />);
+    }
 
     return (
         <Suspense fallback={<LoadingPlaceholder />}>
@@ -140,17 +175,6 @@ function useHomeOrMyOpenStax() {
     const user = useMyOpenStaxUser();
 
     return user.error ? 'home' : 'my-openstax';
-}
-
-function FallbackToGeneralPage({name}) {
-    const [fallback, setFallback] = useToggle(false);
-
-    if (fallback) {
-        return (<Error404 />);
-    }
-    return (
-        <GeneralPageFromSlug slug={`spike/${name}`} fallback={setFallback} />
-    );
 }
 
 function TopLevelPage() {
