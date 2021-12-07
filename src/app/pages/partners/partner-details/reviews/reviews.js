@@ -95,8 +95,8 @@ function YouLeftAReview({status, updated}) {
     );
 }
 
-function ReviewPrompt({accountId, hasWrittenReview, status, updated}) {
-    if (!accountId) {
+function ReviewPrompt({uuid, hasWrittenReview, status, updated}) {
+    if (!uuid) {
         return (<LoginToReview />);
     }
     if (!hasWrittenReview) {
@@ -108,7 +108,7 @@ function ReviewPrompt({accountId, hasWrittenReview, status, updated}) {
 }
 
 function ReviewsPage() {
-    const {accountId} = useUserContext();
+    const {uuid} = useUserContext();
     const {reviews} = usePartnerContext();
     const reviewModels = reviews
         .map((r) => ({
@@ -116,7 +116,7 @@ function ReviewsPage() {
             userName: r.submittedByName,
             rating: r.rating,
             review: r.review || '',
-            allowEdit: r.submittedByAccountId === accountId,
+            allowEdit: r.submittedByAccountUuid === uuid,
             updated: new Date(`${r.created}T00:00:00`).toLocaleDateString('en-us'),
             response: r.partnerResponse,
             userFacultyStatus: r.userFacultyStatus,
@@ -139,7 +139,7 @@ function ReviewsPage() {
             <Synopsis />
             <DistributionBars />
             <ReviewPrompt
-                accountId={accountId}
+                uuid={uuid}
                 hasWrittenReview={indexOfUserReview >= 0}
                 status={yourReviewModel.status}
                 updated={yourReviewModel.updated}

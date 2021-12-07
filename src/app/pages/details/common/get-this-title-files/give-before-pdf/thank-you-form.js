@@ -114,7 +114,7 @@ export default function ThankYou({link, close}) {
                 </label>
                 <label className="cb-group">
                     <input
-                        type="checkbox" name="consent_to_share_or_contact" value="True" required
+                        type="checkbox" name="consent_to_share_or_contact" value="True"
                     />
                     By clicking here I understand that OpenStax may include my story
                     in publications and distribution in printed, electronic, and digital
