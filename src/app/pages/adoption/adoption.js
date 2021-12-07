@@ -16,6 +16,7 @@ import './adoption.scss';
 function BookSelectorPage({selectedBooksRef}) {
     const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
+    const bookList = selectedBooks.map((b) => b.value).join('; ');
 
     selectedBooksRef.current = selectedBooks;
     return (
@@ -28,6 +29,7 @@ function BookSelectorPage({selectedBooksRef}) {
                 toggleBook={toggleBook}
                 limit="5"
             />
+            <input type="hidden" name="subject" value={bookList} />
             <label>
                 <div className="control-group">
                     <HowUsing selectedBooks={selectedBooks} />
