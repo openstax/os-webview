@@ -21,6 +21,9 @@ const ignoreUrls = [
 function beforeSend(event, hint) {
     const error = hint.originalException;
 
+    if (window.location.hostname !== 'openstax.org') {
+        return null;
+    }
     if (!$.isSupported()) {
         return null;
     }
