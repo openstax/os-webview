@@ -1,19 +1,19 @@
 import React from 'react';
 import sfApiFetch from './sfapi';
+import useUserContext from '~/contexts/user';
 import useFlagContext, {flagPromise} from '~/components/shell/flag-context';
 import $ from '~/helpers/$';
 
 async function fetchUser() {
     const user = await sfApiFetch('users');
 
-    if (user && !user.contact) {
-        user.error = 'no contact';
-    }
     return $.camelCaseKeys(user || {});
 }
 
 export function useMyOpenStaxUser() {
     const [user, setUser] = React.useState({error: 'not loaded'});
+    const {userModel} = useUserContext();
+    const isVerified = userModel?.accountsModel?.faculty_status === 'confirmed_faculty';
     const isEnabled = useFlagContext();
 
     React.useEffect(() => {
@@ -22,7 +22,7 @@ export function useMyOpenStaxUser() {
         }
     }, [isEnabled]);
 
-    return user;
+    return isVerified ? user : {error: 'Not faculty verified'};
 }
 
 export function useMyOpenStaxIsAvailable() {
