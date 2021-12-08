@@ -11,6 +11,8 @@ module.exports = {
         'property-no-unknown' : [
             true,
             {ignoreAtRules: ['supports']}
-        ]
+        ],
+        'scss/no-global-function-names': null,
+        'no-invalid-position-at-import-rule': null
     }
 };
