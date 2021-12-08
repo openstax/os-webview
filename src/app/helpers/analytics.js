@@ -17,7 +17,7 @@ const waitForAnalytics = new Promise((resolve, reject) => {
         } else {
             window.clearInterval(tryInterval);
             window.ga = () => null;
-            reject('Failed to load Google Analytics');
+            reject(new Error('Failed to load Google Analytics'));
         }
     }, 500);
 });

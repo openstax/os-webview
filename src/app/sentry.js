@@ -10,7 +10,10 @@ const ignoreErrors = [
     'TypeError: cancelled',
     'TypeError: Cancelled',
     'message: cancelled',
-    'cancelled'
+    'cancelled',
+    'Error: Different window already linked for window: _blank',
+    'NS_ERROR_FAILURE: No error message',
+    'URIError: URI malformed'
 ];
 
 const ignoreUrls = [
@@ -37,6 +40,18 @@ function beforeSend(event, hint) {
         return null;
     }
     if (error?.message?.includes('PulseInsightsObject.survey')) {
+        return null;
+    }
+    if (error?.message?.includes('//zamant.ru/')) {
+        return null;
+    }
+    if (error?.message?.includes('Cross-origin redirection')) {
+        return null;
+    }
+    if (error?.message?.includes('QuotaExceededError')) {
+        return null;
+    }
+    if (error?.message?.includes('window.webkit.messageHandlers')) {
         return null;
     }
     if (error?.message?.match(/unexpected token/i)) {

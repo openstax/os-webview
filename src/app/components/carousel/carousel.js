@@ -63,20 +63,17 @@ function Carousel({
     const firstTimeRef = useRef(true);
     const wcx = useWindowContext();
 
-    React.useEffect(() => {
-        // On initial draw, need to wait for render.
-        window.setTimeout(() => {
-            const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
-            const {left: viewportLeft} = ref.current.getBoundingClientRect();
-            const {left: targetLeft} = targetItem.getBoundingClientRect();
-            const left = targetLeft - viewportLeft + ref.current.scrollLeft;
+    React.useLayoutEffect(() => {
+        const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
+        const {left: viewportLeft} = ref.current.getBoundingClientRect();
+        const {left: targetLeft} = targetItem.getBoundingClientRect();
+        const left = targetLeft - viewportLeft + ref.current.scrollLeft;
 
-            ref.current.scrollTo({
-                left,
-                behavior: firstTimeRef.current ? 'auto' : 'smooth'
-            });
-            firstTimeRef.current = false;
-        }, 10);
+        ref.current.scrollTo({
+            left,
+            behavior: firstTimeRef.current ? 'auto' : 'smooth'
+        });
+        firstTimeRef.current = false;
     }, [frameNumber, wcx.innerWidth]);
 
     return (
