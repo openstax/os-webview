@@ -9,11 +9,26 @@ const ignoreErrors = [
     'TypeError: NetworkError when attempting to fetch resource.',
     'TypeError: cancelled',
     'TypeError: Cancelled',
+    'TypeError: Cannot read properties of undefined (reading \'default\')',
+    'UnhandledRejection: Non-Error promise rejection captured with value: Failed to load Google Analytics',
+    'TypeError: Cannot read properties of null (reading \'render\')',
+    `TypeError: h is not a function. (In 'h("Could not load ".concat(e))', 'h' is undefined)`,
+    'SyntaxError: Unexpected token \'<\'',
     'message: cancelled',
     'cancelled',
     'Error: Different window already linked for window: _blank',
     'NS_ERROR_FAILURE: No error message',
     'URIError: URI malformed'
+];
+
+const ignoreMessages = [
+    'g.readyState',
+    'PulseInsightsObject.survey',
+    '//zamant.ru/',
+    'Cross-origin redirection',
+    'QuotaExceededError',
+    'window.webkit.messageHandlers',
+    `Failed to read the 'localStorage' property from 'Window'`
 ];
 
 const ignoreUrls = [
@@ -33,25 +48,10 @@ function beforeSend(event, hint) {
     if (window.location.pathname.startsWith('/l/') || window.location.pathname.startsWith('/rex/')) {
         return null;
     }
+    if (ignoreMessages.find((fragment) => error?.message?.includes(fragment))) {
+        return null;
+    }
     if (error?.message?.match(/mce-visual-caret/i)) {
-        return null;
-    }
-    if (error?.message?.includes('g.readyState')) {
-        return null;
-    }
-    if (error?.message?.includes('PulseInsightsObject.survey')) {
-        return null;
-    }
-    if (error?.message?.includes('//zamant.ru/')) {
-        return null;
-    }
-    if (error?.message?.includes('Cross-origin redirection')) {
-        return null;
-    }
-    if (error?.message?.includes('QuotaExceededError')) {
-        return null;
-    }
-    if (error?.message?.includes('window.webkit.messageHandlers')) {
         return null;
     }
     if (error?.message?.match(/unexpected token/i)) {
