@@ -88,10 +88,13 @@ const config = {
       poll: 1000,
     },
     devServer: {
-      clientLogLevel: 'warning',
-      contentBase: path.join(__dirname, './src'),
-      contentBasePublicPath: '/',
-      filename: '[name].js',
+      client: {
+          logging: 'warn',
+      },
+      devMiddleware: {
+          publicPath,
+          stats: 'errors-only',
+      },
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
@@ -99,14 +102,13 @@ const config = {
       },
       historyApiFallback: true,
       hot: true,
-      inline: true,
       liveReload: true,
-      noInfo: false,
       open: true,
       port: devServerPort,
-      publicPath,
-      quiet: false,
-      stats: 'errors-only',
+      static: {
+          directory: path.resolve(__dirname, './src'),
+          publicPath: '/'
+      }
     },
 }
 
@@ -123,7 +125,6 @@ module.exports = (env, argv) => {
         config.output.filename = '[name].js',
         config.devtool = 'inline-source-map',
         config.optimization.splitChunks.maxInitialRequests = 1;
-        config.plugins.push(new webpack.HotModuleReplacementPlugin())
     }
 
     return config;

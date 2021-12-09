@@ -4,4 +4,4 @@ source ./script/bootstrap || exit 111
 
 rm -rf dist
 MODE=${1:-development}
-webpack --mode "$MODE"
+yarn webpack --mode "$MODE"

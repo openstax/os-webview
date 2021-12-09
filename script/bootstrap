@@ -121,7 +121,7 @@ if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
       if [[ ! -f "${HOME}/.nvm/nvm.sh" ]]; then
         die "Install nvm by going to https://github.com/creationix/nvm"
       fi
-      # shellcheck disable=SC1090
+      # shellcheck disable=SC1090,SC1091
       source "${HOME}/.nvm/nvm.sh" --no-use
       do_progress_quiet "Setting correct node version (see ./.nvmrc)" \
         nvm install "$(< ./.nvmrc)"

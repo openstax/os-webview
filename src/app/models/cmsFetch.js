@@ -17,8 +17,7 @@ export default async function cmsFetch(path) {
     try {
         return (await retry(() => fetch(url))).json();
     } catch (err) {
-        console.warn('Failed to fetch', path);
-        return Promise.reject();
+        return Promise.reject(new Error(`Failed to fetch ${path}: ${err}`));
     }
 }
 

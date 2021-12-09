@@ -52,7 +52,7 @@
         $direction: to-lower-case($direction);
 
         @if map-has-key($direction-map, $direction) {
-            $opposite-directions: append($opposite-directions, unquote(map-get($direction-map, $direction)));
+            $opposite-directions: append($opposite-directions, map-get($direction-map, $direction));
         } @else {
             @warn 'No opposite direction can be found for `#{$direction}`. Direction omitted.';
         }

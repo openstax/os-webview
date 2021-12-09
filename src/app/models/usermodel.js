@@ -68,14 +68,20 @@ const accountsModel = {
         return fetch(accountsUrl, {credentials: 'include'})
             .then(
                 (response) => {
-                    return response.json().then((result) => {
-                        if (window.dataLayer) {
-                            window.dataLayer.push({
-                                faculty_status: result.faculty_status
-                            });
+                    return response.json().then(
+                        (result) => {
+                            if (window.dataLayer) {
+                                window.dataLayer.push({
+                                    faculty_status: result.faculty_status
+                                });
+                            }
+                            return result;
+                        },
+                        (err) => {
+                            console.warn('No JSON in Accounts response');
+                            return {err};
                         }
-                        return result;
-                    });
+                    );
                 },
                 (err) => {
                     console.warn('"Error fetching user info"');
