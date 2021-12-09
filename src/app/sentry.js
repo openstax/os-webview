@@ -12,7 +12,7 @@ const ignoreErrors = [
     'TypeError: Cannot read properties of undefined (reading \'default\')',
     'UnhandledRejection: Non-Error promise rejection captured with value: Failed to load Google Analytics',
     'TypeError: Cannot read properties of null (reading \'render\')',
-    `TypeError: h is not a function. (In 'h("Could not load ".concat(e))', 'h' is undefined)`,
+    'TypeError: h is not a function. (In \'h("Could not load ".concat(e))\', \'h\' is undefined)',
     'SyntaxError: Unexpected token \'<\'',
     'message: cancelled',
     'cancelled',
@@ -28,7 +28,7 @@ const ignoreMessages = [
     'Cross-origin redirection',
     'QuotaExceededError',
     'window.webkit.messageHandlers',
-    `Failed to read the 'localStorage' property from 'Window'`
+    'Failed to read the \'localStorage\' property from \'Window\''
 ];
 
 const ignoreUrls = [

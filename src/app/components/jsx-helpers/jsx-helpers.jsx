@@ -1,7 +1,6 @@
-import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import $ from '~/helpers/$';
 import {usePageData, fetchFromCMS} from '~/helpers/controller/cms-mixin';
-import throttle from 'lodash/throttle';
 import useRouterContext from '~/components/shell/router-context';
 
 export function useDataFromPromise(promise, defaultValue) {

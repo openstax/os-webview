@@ -6,7 +6,7 @@ import './shared.scss';
 // Shim for incognito windows that disable localStorage
 if (!window.localStorage) {
     window.localStorage = {
-        getItem(key) { return window.localStorage[key]; }
+        getItem(key) {return window.localStorage[key];}
     };
 }
 
