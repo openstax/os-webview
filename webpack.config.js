@@ -5,6 +5,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const devServerPort = 3000;
 const publicPath = '/';
@@ -64,6 +65,12 @@ const config = {
         }),
         new StylelintPlugin({
             files: './src/**/*.scss'
+        }),
+        new CompressionPlugin({
+          test: /\.jsx?(\?.*)?$/i,
+          threshold: 4096,
+          minRatio: 0.85,
+          deleteOriginalAssets: 'keep-source-map'
         })
     ],
     performance: {
