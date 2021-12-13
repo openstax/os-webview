@@ -9,7 +9,7 @@ export default function Banner({model}) {
     const [
         src, altText
     ] = [
-        '/images/openstax-tutor/student@3x.jpg',
+        '/images/openstax-tutor/student@3x.webp',
         'student at a desk'
     ];
 

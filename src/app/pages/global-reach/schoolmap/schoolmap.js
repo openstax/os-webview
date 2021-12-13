@@ -17,7 +17,7 @@ export default function SchoolMap({heading, blurb, link: linkUrl, cta: linkText}
                         </span>
                     </div>
                 </div>
-                <div><img className="map-img" src="/images/home/map2.png" /></div>
+                <div><img className="map-img" src="/images/home/map2.webp" /></div>
             </div>
         </div>
     );
