@@ -13,7 +13,7 @@ export default function UpdateBox() {
             <span className="button-row">
                 <a className="btn cta" href="http://www2.openstax.org/l/218812/2016-10-04/lvk">Sign Up</a>
                 or RSS
-                <a className="rss-link" href={rssUrl}>
+                <a className="rss-link" href={rssUrl} aria-label="rss">
                     <FontAwesomeIcon icon={faRssSquare} />
                 </a>
             </span>

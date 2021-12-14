@@ -18,7 +18,7 @@ export default function RecommendedCallout({title, blurb, onPutAway}) {
         <div className="triangle-attachment">
             <div className="container">
                 <span className="callout-title">{titleToUse}</span>
-                <button type="button" className="put-away" onClick={onPutAway}>
+                <button type="button" className="put-away" onClick={onPutAway} aria-label="close-popup">
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
                 {

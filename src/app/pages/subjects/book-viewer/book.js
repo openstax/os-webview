@@ -112,7 +112,7 @@ function ThreeDotMenu({slug, details}) {
     return (
         <div
             className={classList.join(' ')}
-            role="button" tabIndex="0" ref={ref}
+            role="button" aria-label="open-menu" tabIndex="0" ref={ref}
         >
             <FontAwesomeIcon icon={faEllipsisV} />
             <Dropdown urlBase={`/details/${slug}`} details={details} />

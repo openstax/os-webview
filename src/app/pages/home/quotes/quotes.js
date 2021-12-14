@@ -22,8 +22,8 @@ export default function ComponentTemplate({data}) {
                 <h2>{data.headline}</h2>
             </div>
             <div className="images">
-                <img className="left-bg" src={data.studentImage} alt />
-                <img className="right-bg" src={data.instructorImage} alt />
+                <img className="left-bg" src={data.studentImage} alt width="400" height="400" />
+                <img className="right-bg" src={data.instructorImage} alt width="400" height="400" />
             </div>
             <div className="boxed">
                 <div className="side-by-side">
