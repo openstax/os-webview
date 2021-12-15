@@ -32,9 +32,11 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
               ? archiveOverride.replace(/^\/apps\/archive\//, '')
               : rexInfo.config.REACT_APP_ARCHIVE
             ;
-            const bookVersion = rexInfo.release.books[cnxId].defaultVersion;
 
-            return fetch(`${window.SETTINGS.apiOrigin}/apps/archive/${archiveVersion}/contents/${cnxId}@${bookVersion}.json`);
+            const bookVersion = rexInfo.release.books[cnxId].defaultVersion;
+            const archivePath = `apps/archive/${archiveVersion}`;
+
+            return fetch(`${window.SETTINGS.apiOrigin}/${archivePath}/contents/${cnxId}@${bookVersion}.json`);
         })
         .then((response) => response.json());
 });
