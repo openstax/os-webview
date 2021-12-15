@@ -13,7 +13,7 @@ function Quote({className, quote, attribution}) {
     );
 }
 
-export default function ComponentTemplate({data}) {
+export default function QuotesSection({data}) {
     const quotes = data.quotes[0];
 
     return (

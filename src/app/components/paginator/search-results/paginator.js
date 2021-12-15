@@ -1,19 +1,6 @@
 import React from 'react';
+import usePaginatorContext from '../paginator-context';
 import './paginator.scss';
-
-const RESULTS_PER_PAGE = 10;
-
-export function PaginatedResults({currentPage, children}) {
-    const firstOnPage = (currentPage - 1) * RESULTS_PER_PAGE;
-
-    return (
-        <div className="cards boxed">
-            {
-                children.slice(firstOnPage, firstOnPage + RESULTS_PER_PAGE)
-            }
-        </div>
-    );
-}
 
 function getPageIndicators(pages, currentPage) {
     const indicatorCount = Math.min(pages, 5);
@@ -36,7 +23,8 @@ function getPageIndicators(pages, currentPage) {
     return result.map(propsFor);
 }
 
-function PageButtonBar({currentPage, pages, setCurrentPage}) {
+function PageButtonBar({pages}) {
+    const {currentPage, setCurrentPage} = usePaginatorContext();
     const disablePrevious = currentPage === 1;
     const disableNext = currentPage === pages;
     const pageIndicators = getPageIndicators(pages, currentPage);
@@ -68,22 +56,17 @@ function PageButtonBar({currentPage, pages, setCurrentPage}) {
     );
 }
 
-export function PaginatorControls({items, currentPage, setCurrentPage}) {
-    const pages = Math.ceil(items / RESULTS_PER_PAGE);
-    const firstIndex = (currentPage - 1) * RESULTS_PER_PAGE;
-    const endBefore = Math.min(firstIndex + RESULTS_PER_PAGE, items);
+export function PaginatorControls({items}) {
+    const {currentPage, resultsPerPage} = usePaginatorContext();
+    const pages = Math.ceil(items / resultsPerPage);
+    const firstIndex = (currentPage - 1) * resultsPerPage;
+    const endBefore = Math.min(firstIndex + resultsPerPage, items);
     const resultRange = `${firstIndex + 1}-${endBefore}`;
     const searchTerm = decodeURIComponent(window.location.search.substr(1));
 
     return (
         <div className="paginator">
-            {
-                pages > 1 &&
-                    <PageButtonBar
-                        pages={pages}
-                        currentPage={currentPage} setCurrentPage={setCurrentPage}
-                    />
-            }
+            {pages > 1 && <PageButtonBar pages={pages} />}
             <div className="summary">{resultRange} of {items} for <b>&apos;{searchTerm}&apos;</b></div>
         </div>
     );

@@ -5,7 +5,8 @@ import useBlogContext from '../blog-context';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
-import {PaginatedResults, PaginatorControls} from '~/components/paginator/paginator.js';
+import usePaginatorContext, {PaginatorContextProvider} from '~/components/paginator/paginator-context';
+import {PaginatorControls} from '~/components/paginator/search-results/paginator.js';
 import './search-results.scss';
 
 function useAllArticles(location) {
@@ -33,30 +34,34 @@ function useAllArticles(location) {
     return allArticles;
 }
 
+function VisibleArticles({articles}) {
+    const {setCurrentPage, visibleChildren} = usePaginatorContext();
+    const {location, setPath} = useBlogContext();
+
+    useEffect(() => setCurrentPage(1), [location, setCurrentPage]);
+
+    return visibleChildren(
+        articles.map(
+            (article) =>
+                <div className="card" key={article.articleSlug}>
+                    <ArticleSummary {...{...article, setPath}} key={article.slug} />
+                </div>
+        )
+    );
+}
 
 export default function SearchResults() {
-    const {location, setPath} = useBlogContext();
+    const {location} = useBlogContext();
     const allArticles = useAllArticles(location);
-    const [currentPage, setCurrentPage] = useState(1);
-
-    useEffect(() => setCurrentPage(1), [location]);
 
     return (
         <div className="search-results">
-            <PaginatedResults currentPage={currentPage}>
-                {
-                    allArticles.map((article) =>
-                        <div className="card" key={article.articleSlug}>
-                            <ArticleSummary {...{...article, setPath}} key={article.slug} />
-                        </div>
-                    )
-                }
-            </PaginatedResults>
-            <PaginatorControls
-                items={allArticles.length}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />
+            <PaginatorContextProvider contextValueParameters={{resultsPerPage: 10}}>
+                <div className="boxed cards">
+                    <VisibleArticles articles={allArticles} />
+                </div>
+                <PaginatorControls items={allArticles.length} />
+            </PaginatorContextProvider>
         </div>
     );
 }
