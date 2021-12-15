@@ -27,16 +27,16 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
     }
     return fetchRexInfo(rexOrigin)
         .then((rexInfo) => {
-            const archiveVersion = rexInfo.release.books[cnxId].archiveOverride || rexInfo.config.REACT_APP_ARCHIVE;
+            const archiveOverride = rexInfo.release.books[cnxId].archiveOverride;
+            const archiveVersion = archiveOverride
+              ? archiveOverride.replace(/^\/apps\/archive\//, '')
+              : rexInfo.config.REACT_APP_ARCHIVE
+            ;
+
             const bookVersion = rexInfo.release.books[cnxId].defaultVersion;
+            const archivePath = `apps/archive/${archiveVersion}`;
 
-            // this line is only necessary to support rex releases without the REACT_APP_ARCHIVE parameter,
-            // remove after 9/22/21 release is on production
-            const archivePath = archiveVersion ?
-                `/apps/archive/${archiveVersion}` :
-                rexInfo.config.REACT_APP_ARCHIVE_URL;
-
-            return fetch(`${window.SETTINGS.apiOrigin}${archivePath}/contents/${cnxId}@${bookVersion}.json`);
+            return fetch(`${window.SETTINGS.apiOrigin}/${archivePath}/contents/${cnxId}@${bookVersion}.json`);
         })
         .then((response) => response.json());
 });
