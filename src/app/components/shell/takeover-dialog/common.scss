@@ -1,0 +1,28 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.modal.takeover-dialog dialog .takeover-content {
+    .countdown-numbers {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        width: 100%;
+
+        > div {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .amount-box {
+        align-items: center;
+        background-color: #d8f3f8;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+
+        .message {
+            text-transform: uppercase;
+        }
+    }
+
+}

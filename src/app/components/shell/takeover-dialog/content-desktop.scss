@@ -1,0 +1,90 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.modal.takeover-dialog dialog .takeover-content.desktop-only {
+    @include width-up-to($phone-max) {
+        display: none;
+    }
+
+    @include wider-than($phone-max) {
+        display: grid;
+        grid-template-columns: 1fr minmax(30%, 50rem);
+    }
+
+    .text-side {
+        padding: 4rem;
+    }
+
+    h1 {
+        @include set-font(hero-h1);
+    }
+
+    .btn {
+        height: 7.5rem;
+        margin-bottom: 1.5rem;
+        padding: 0 4.5rem;
+    }
+
+    .text-side,
+    .text-content {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .message-box {
+        position: relative;
+        width: 130%;
+
+        .color-fill {
+            background-color: #dbf3f8;
+            height: 100%;
+            opacity: 0.8;
+            position: absolute;
+            width: 100%;
+        }
+
+        .text-content {
+            max-width: none;
+            padding: 6rem 4rem;
+            position: relative;
+        }
+
+        h2 {
+            margin: 0;
+        }
+    }
+
+    .goal-box {
+        border: thin solid ui-color(form-border);
+        box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        .amount {
+            @include set-font(hero-h1);
+        }
+
+        .timer-side {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 4rem 2rem;
+        }
+
+        .message {
+            @include set-font(body-large);
+
+            text-transform: uppercase;
+        }
+
+        .countdown-numbers {
+            @include set-font(body-large);
+
+            .number {
+                @include title-font(3.6rem);
+            }
+        }
+    }
+}
