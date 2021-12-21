@@ -164,6 +164,12 @@ sup {
 #header {
     z-index: 5;
 
+    @include width-up-to($phone-max) {
+        &.over-mobile-dialog {
+            z-index: 7;
+        }
+    }
+
     @include width-up-to($tablet-max) {
         position: fixed;
         top: 0;

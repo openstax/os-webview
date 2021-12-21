@@ -52,6 +52,12 @@ function Box({data}) {
 }
 
 export default function MobileContent({data}) {
+    React.useEffect(() => {
+        document.getElementById('header').classList.add('over-mobile-dialog');
+
+        return () => document.getElementById('header').classList.remove('over-mobile-dialog');
+    }, []);
+
     return (
         <div className="takeover-content mobile-only">
             <HeadlineImage headline={data.headline} image={data.image} />
