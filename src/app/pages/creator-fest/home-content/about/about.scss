@@ -10,6 +10,8 @@
         background-color: ui-color(white);
         display: grid;
         grid-auto-flow: column;
+        justify-items: center;
+        padding: 4rem 2rem;
 
         > * {
             border-right: thin solid ui-color(form-border);
@@ -19,11 +21,6 @@
                 border-right: 0;
             }
         }
-    }
-
-    .cards {
-        justify-items: center;
-        padding: 4rem 2rem;
 
         @include width-up-to($phone-max) {
             overflow: auto;
