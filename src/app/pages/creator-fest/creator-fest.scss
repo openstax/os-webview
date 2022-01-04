@@ -1,7 +1,74 @@
+@import './shared';
+
 .creator-fest.page {
     background-color: ui-color(white);
 
-    h1 {
-        text-align: center;
+    ::selection {
+        background-color: $text-highlight;
+    }
+
+    .super-headline {
+        @extend %super-headline;
+    }
+
+    .boxed {
+        align-items: flex-start;
+    }
+
+    .btn {
+        @extend %cf-button;
+    }
+
+    .text-block-left {
+        align-items: center;
+        display: grid;
+        margin-top: 3rem;
+
+        @include width-up-to($tablet-max) {
+            grid-row-gap: 3rem;
+            grid-template-columns: 100%;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-column-gap: 12.5%;
+            grid-template-columns: minmax(30rem, 27.5%) auto;
+        }
+    }
+
+    .blue-line {
+        @extend %blue-line;
+    }
+
+    [data-html] {
+        > p:first-child {
+            margin: 0;
+        }
+    }
+
+    > section {
+        position: relative;
+
+        @include wider-than($tablet-max) {
+            &:first-child::after {
+                border-bottom: 14rem solid transparent;
+                border-left: 8.1rem solid #242424;
+                border-top: 14rem solid transparent;
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                transform: translateY(50%);
+                z-index: 1;
+            }
+        }
+    }
+
+    #page-content {
+        min-height: 14rem;
+        padding-top: 2rem;
+
+        @include wider-than($phone-max) {
+            padding-bottom: 4rem;
+        }
     }
 }
