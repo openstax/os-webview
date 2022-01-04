@@ -1,0 +1,87 @@
+@import '../shared';
+
+.creator-fest.page .home {
+    > :nth-child(2) {
+        @extend %light-on-dark;
+
+        background-blend-mode: normal, color;
+        background-image:
+        linear-gradient(to right, rgba($cf-navy, 0.75), $cf-navy),
+        linear-gradient(to right, $cf-navy, $cf-navy);
+        color: text-color(white);
+
+        .text-block-left {
+            @include width-between($phone-max, $tablet-max) {
+                grid-row-gap: 3rem;
+                grid-template-columns: 100%;
+            }
+        }
+
+        .stack {
+            display: grid;
+            grid-template-columns: min-content;
+            justify-self: left;
+            position: relative;
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: minmax(100%, min-content);
+            }
+
+            .possibly-decorated {
+                background-color: #213469;
+                border: 0.3rem solid os-color(light-blue);
+                border-radius: 0.3rem;
+                box-shadow: 0 0 0 0.3rem $cf-navy;
+                overflow: auto;
+                position: relative;
+            }
+
+            .possible-decoration {
+                background-color: os-color(light-blue);
+                border-radius: 0.3rem;
+                height: 100%;
+                left: 0.7rem;
+                position: absolute;
+                top: 0.7rem;
+                width: 100%;
+            }
+
+            [data-html="htmlBlock"] {
+                @include width-up-to($phone-max) {
+                    > * {
+                        max-height: 54vw;
+                    }
+                }
+            }
+        }
+    }
+
+    @include wider-than($tablet-max) {
+        > :nth-child(odd)::after {
+            border-bottom: 14rem solid transparent;
+            border-right: 8.1rem solid #242424;
+            border-top: 14rem solid transparent;
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            transform: translateY(50%);
+            z-index: 1;
+        }
+        > :nth-child(even)::after {
+            border-bottom: 14rem solid transparent;
+            border-left: 8.1rem solid #242424;
+            border-top: 14rem solid transparent;
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            transform: translateY(50%);
+            z-index: 1;
+        }
+        > :last-child::after {
+            content: none;
+        }
+    }
+
+}
