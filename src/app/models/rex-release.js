@@ -28,9 +28,9 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
     return fetchRexInfo(rexOrigin)
         .then((rexInfo) => {
             const archiveOverride = rexInfo.release.books[cnxId].archiveOverride;
-            const archiveVersion = archiveOverride
-              ? archiveOverride.replace(/^\/apps\/archive\//, '')
-              : rexInfo.config.REACT_APP_ARCHIVE
+            const archiveVersion = archiveOverride ?
+                archiveOverride.replace(/^\/apps\/archive\//, '') :
+                rexInfo.config.REACT_APP_ARCHIVE
             ;
 
             const bookVersion = rexInfo.release.books[cnxId].defaultVersion;
