@@ -14,21 +14,21 @@
         background-repeat: no-repeat;
 
         @include width-up-to($phone-max) {
-            background-image: url(/images/campaign/ost-header-mobile.jpg);
+            background-image: url(/images/campaign/ost-header-mobile.webp);
             background-size: 106%;
             padding-bottom: 80vw;
             padding-top: 4rem;
         }
 
         @include width-between($phone-max, $tablet-max) {
-            background-image: url(/images/campaign/ost-header.jpg);
+            background-image: url(/images/campaign/ost-header.webp);
             background-size: auto 55vw;
             padding-bottom: 30vw;
         }
 
         @include wider-than($tablet-max) {
             background-size: calc(100% - 36rem) auto;
-            background-image: url(/images/campaign/ost-header.jpg);
+            background-image: url(/images/campaign/ost-header.webp);
         }
 
         .boxed {

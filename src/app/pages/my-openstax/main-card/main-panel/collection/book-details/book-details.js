@@ -197,7 +197,7 @@ export default function BookDetails({book}) {
                             </div>
                             <a href="/partners" className="btn" onClick={goToPartners}>Explore options</a>
                         </div>
-                        <ClippedImage src="/images/my-openstax/partners-bg.png" alt="" />
+                        <ClippedImage src="/images/my-openstax/partners-bg.webp" alt="" />
                     </div>
                 </div>
             </div>
