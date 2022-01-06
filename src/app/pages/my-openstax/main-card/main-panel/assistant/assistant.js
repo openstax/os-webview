@@ -45,7 +45,7 @@ const cards = [
     },
     {
         headline: 'Getting Connected',
-        img: '/images/my-openstax/getting-connected.png',
+        img: '/images/my-openstax/getting-connected.webp',
         title: 'Webinars about our books, resources, and more',
         url: '/webinars',
         linkText: 'Browse',
@@ -58,7 +58,7 @@ const cards = [
     },
     {
         headline: 'Support',
-        img: '/images/my-openstax/support.png',
+        img: '/images/my-openstax/support.webp',
         title: 'OpenStax Support',
         url: '/help',
         linkText: 'Visit',
