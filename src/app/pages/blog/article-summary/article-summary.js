@@ -33,7 +33,7 @@ export default function ArticleSummary({
             <a
                 className="link-image" href={`/blog/${articleSlug}`}
                 ref={forwardRef}
-                aria-label={altText}
+                aria-label={altText || headline}
                 style={`background-image: url("${image}")`}></a>
             <div className="text-block">
                 <h2 className="article-headline">

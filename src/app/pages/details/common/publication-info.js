@@ -108,7 +108,7 @@ function LicenseIcon({name}) {
         '/images/details/by-nc-sa.svg' : '/images/details/by.svg';
 
     return (
-        <img src={icon} alt="" />
+        <img src={icon} alt="" height="42" width="120" />
     );
 }
 

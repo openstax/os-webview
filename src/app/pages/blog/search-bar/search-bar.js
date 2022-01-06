@@ -56,7 +56,9 @@ function SearchButton() {
 
     return (
         <button
-            className="btn primary" type="button" onClick={doSearch}>
+            className="btn primary" type="button" onClick={doSearch}
+            aria-label="search"
+        >
             <FontAwesomeIcon icon={faSearch} />
         </button>
     );

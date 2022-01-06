@@ -2,13 +2,13 @@ import React from 'react';
 import useDetailsContext from '~/pages/details/context';
 import groupBy from 'lodash/groupBy';
 
-function Authors({heading, className, authors=[], CustomTag='div'}) {
+function Authors({heading, className, authors=[]}) {
     if (authors.length === 0) {
         return null;
     }
     return (
         <div>
-            <CustomTag className="author-heading" role="heading">{heading}</CustomTag>
+            <h3 className="author-heading">{heading}</h3>
             {
                 authors.map((author) =>
                     <div className={className} key={author.name}>

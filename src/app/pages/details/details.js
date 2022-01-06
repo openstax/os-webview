@@ -61,7 +61,7 @@ function setJsonLd(data) {
 function TitleImage({titleImage, bookTitle, titleLogo}) {
     return (
         <h1 className="image-heading">
-            <img className="title-image" src={titleImage} alt={bookTitle} />
+            <img className="title-image" src={titleImage} alt={bookTitle} height="130" width="392" />
             {titleLogo && <img className="title-logo" src={titleLogo} alt="" />}
         </h1>
     );
