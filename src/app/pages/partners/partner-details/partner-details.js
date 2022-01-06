@@ -56,7 +56,10 @@ function useRealTitles(books) {
 //     );
 // }
 
-function RequestInfoButton({infoUrl, infoText, partnerName}) {
+function RequestInfoButton({infoUrl, infoText='Request info', partnerName}) {
+    const {books} = usePartnerContext();
+    const validTitle = books.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
+
     function trackInfoRequest() {
         analyticsEvents.requestInfo(partnerName);
     }
@@ -64,7 +67,7 @@ function RequestInfoButton({infoUrl, infoText, partnerName}) {
     // NOTE: click is not propagating up to router. For external form, target is _blank
     // For custom local form, remove that.
     return (
-        infoUrl && infoText &&
+        infoUrl && validTitle && (
             <section>
                 <a
                     className="btn primary" href={infoUrl} onClick={trackInfoRequest}
@@ -73,6 +76,7 @@ function RequestInfoButton({infoUrl, infoText, partnerName}) {
                     {infoText}
                 </a>
             </section>
+        )
     );
 }
 
