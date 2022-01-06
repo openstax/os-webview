@@ -38,24 +38,26 @@ function useRealTitles(books) {
 }
 
 // -- RESTORE this to use the new form
-// function RequestInfoButton({infoText='Request info', partnerName}) {
-//     const {toggleForm} = usePartnerContext();
-//
-//     function gotoForm() {
-//         analyticsEvents.requestInfo(partnerName);
-//         toggleForm();
-//     }
-//
-//     return (
-//         <section>
-//             <button
-//                 type="button" className="primary"
-//                 onClick={gotoForm}
-//             >{infoText}</button>
-//         </section>
-//     );
-// }
+function RequestInfoButton({infoText='Request info', partnerName}) {
+    const {toggleForm} = usePartnerContext();
 
+    function gotoForm() {
+        analyticsEvents.requestInfo(partnerName);
+        toggleForm();
+    }
+
+    return (
+        <section>
+            <button
+                type="button" className="primary"
+                onClick={gotoForm}
+            >{infoText}</button>
+        </section>
+    );
+}
+
+// -- This uses the old form
+/*
 function RequestInfoButton({infoUrl, infoText='Request info', partnerName}) {
     const {books} = usePartnerContext();
     const validTitle = books.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
@@ -79,6 +81,7 @@ function RequestInfoButton({infoUrl, infoText='Request info', partnerName}) {
         )
     );
 }
+*/
 
 function Overview({model, icon}) {
     const {
