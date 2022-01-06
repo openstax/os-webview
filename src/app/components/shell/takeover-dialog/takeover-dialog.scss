@@ -1,18 +1,11 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-@mixin takeover-scheme($color) {
-    @at-root .modal.takeover-dialog.#{$color} {
-        border: 1rem solid os-color($color);
-
-        .btn.primary {
-            background-color: os-color($color);
-        }
-
-        .color {
-            color: os-color($color);
-        }
-    }
-}
+$scheme-colors: (
+    green: os-color(green),
+    orange: ui-color(primary),
+    deep-green: os-color(deep-green),
+    red: os-color(red)
+);
 
 .modal-overlay .modal.takeover-dialog {
     border-radius: 0;
@@ -47,17 +40,38 @@
         }
     }
 
+    @each $color, $value in $scheme-colors {
+        &.#{$color} {
+            @include wider-than($phone-max) {
+                border: 1rem solid $value;
+
+                .color {
+                    color: $value;
+                }
+
+            }
+
+            .btn.primary {
+                background-color: $value;
+            }
+        }
+    }
+
     @include wider-than($phone-max) {
-        @include takeover-scheme(orange);
-        @include takeover-scheme(green);
-        @include takeover-scheme(blue);
-        @include takeover-scheme(red);
-
         > dialog {
-            @include body-font(2.4rem);
-
-            line-height: 4rem;
             position: static;
+
+            @include width-between($phone-max, $tablet-max) {
+                @include body-font(1.8rem);
+
+                line-height: 3rem;
+            }
+
+            @include wider-than($tablet-max) {
+                @include body-font(2.4rem);
+
+                line-height: 4rem;
+            }
 
             .logo-color {
                 height: 4.4rem;
