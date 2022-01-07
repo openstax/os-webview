@@ -8,10 +8,8 @@ import HomeContent from './home-content/home-content';
 import './creator-fest.scss';
 
 function PageContent({data, navLinks}) {
-    // Gives reactivity on window.location.pathname
-    useLocation();
-    const linkEntry = navLinks
-        .find((obj) => `/creator-fest/${obj.url}` === window.location.pathname);
+    const loc = useLocation();
+    const linkEntry = navLinks.find((obj) => `/creator-fest/${obj.url}` === loc.pathname);
 
     return (
         <div id="page-content">
