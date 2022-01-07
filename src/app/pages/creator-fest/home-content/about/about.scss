@@ -1,0 +1,115 @@
+@import '../../shared';
+
+.creator-fest .about {
+    background-color: ui-color(white);
+    position: relative;
+
+    .cards {
+        @extend %bordered-box;
+
+        background-color: ui-color(white);
+        display: grid;
+        grid-auto-flow: column;
+        justify-items: center;
+        padding: 4rem 2rem;
+
+        > * {
+            border-right: thin solid ui-color(form-border);
+            padding: 0 $normal-margin;
+
+            &:last-child {
+                border-right: 0;
+            }
+        }
+
+        @include width-up-to($phone-max) {
+            overflow: auto;
+
+            .card {
+                width: 66vw;
+            }
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-rows: repeat(3, 1fr);
+            padding: 2rem;
+
+            > * {
+                border-right: 0;
+                border-bottom: thin solid ui-color(form-border);
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .card {
+            display: grid;
+            grid-row-gap: 2rem;
+            grid-template-rows: auto auto 1fr;
+            justify-items: center;
+            margin-bottom: 1rem;
+            padding: 0 1.4rem;
+            text-align: center;
+
+            @include width-between($phone-max, $tablet-max) {
+                padding: $normal-margin 0;
+            }
+
+            img {
+                max-width: 6rem;
+            }
+
+            h3 {
+                @extend %pink-headline;
+            }
+        }
+    }
+
+    .location-box {
+        @extend %bordered-box;
+
+        background-color: ui-color(white);
+        display: grid;
+        grid-row-gap: 2rem;
+        justify-items: left;
+        padding: #{2 * $normal-margin};
+
+        @include width-up-to($phone-max) {
+            margin: $normal-margin 0;
+            width: 100%;
+        }
+
+        @include wider-than($phone-max) {
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translateY(-50%);
+        }
+
+        @include wider-than($media-content-max) {
+            padding-right: calc(50vw - 57rem);
+        }
+
+        h2 {
+            @extend %pink-headline;
+        }
+    }
+
+    .text-block-left {
+        @include width-between($phone-max, $tablet-max) {
+            grid-column-gap: 8%;
+            grid-template-columns: auto auto;
+        }
+    }
+}
+
+.info-box {
+    padding: 3rem;
+}
