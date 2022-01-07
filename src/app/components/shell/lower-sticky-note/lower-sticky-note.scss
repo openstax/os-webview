@@ -1,38 +1,54 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.lower-sticky-note-content {
-    background-color: #049676;
-    box-shadow: 0 0.2rem 0.4rem 0 rgba(ui-color(black), 0.5);
-    color: text-color(white);
-    padding: $normal-margin;
+#lower-sticky-note .lower-sticky-note-content {
+    background-color: #dbf3f8;
+    box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
+    padding: 2rem $normal-margin;
+
+    .put-away {
+        background-color: transparent;
+        color: inherit;
+        font-size: 2.4rem;
+        font-weight: bold;
+        height: 3rem;
+        width: 3rem;
+    }
 
     .content {
         @extend %content;
 
         display: grid;
-        grid-row-gap: 0.6rem;
+        row-gap: 0.6rem;
         grid-template-columns: 100%;
-        justify-items: left;
+        justify-items: center;
         max-width: $content-max;
-        padding: 3rem 0;
+        padding: 0 3rem 0 0;
+        text-align: center;
+
+        @include width-up-to($phone-max) {
+            row-gap: 2rem;
+        }
 
         h1 {
-            @include scale-set-font(h3, h2);
-
-            margin: 0;
+            display: none;
         }
 
-        .blurb {
-            @include scale-feature(font-size, 1.6rem, 1.8rem);
-        }
-
-        a {
+        a:not(.cta) {
             color: inherit;
         }
     }
 
-    .btn.primary {
-        @extend %button;
-        @extend %primary;
+    .cta {
+        align-items: center;
+        display: flex;
+        font-weight: bold;
+        gap: 0.5rem;
+        text-decoration: none;
+    }
+
+    .red-heart {
+        color: #c22032;
+        font-size: 2rem;
+        margin-right: 0.5rem;
     }
 }

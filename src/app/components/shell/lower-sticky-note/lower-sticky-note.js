@@ -1,6 +1,9 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePutAway, useStickyData} from '../shared.jsx';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
+import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import analytics from '~/helpers/analytics';
 import './lower-sticky-note.scss';
 
@@ -47,8 +50,10 @@ export default function LowerStickyNote() {
             <div className="content">
                 <h1>{stickyData.header}</h1>
                 <RawHTML className="blurb" html={stickyData.body} />
-                <a className="btn primary" href={stickyData.link}>
+                <a className="cta" href={stickyData.link}>
+                    <FontAwesomeIcon icon={faHeart} className="red-heart" />
                     {stickyData.link_text}
+                    <FontAwesomeIcon icon={faChevronRight} />
                 </a>
             </div>
         </div>
