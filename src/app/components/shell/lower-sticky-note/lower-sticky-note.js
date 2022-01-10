@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import analytics from '~/helpers/analytics';
+import cn from 'classnames';
 import './lower-sticky-note.scss';
 
 function trackClickFor(el, target, eventArgs) {
@@ -39,7 +40,34 @@ function trackClick(event) {
     }
 }
 
-// eXslint-disable-next-line complexity
+function NoteWithImage({stickyData}) {
+    return (
+        <div className="content with-image">
+            <img src={stickyData.image} alt="" />
+            <div className="text-side">
+                <RawHTML className="blurb" html={stickyData.body} />
+                <a className="cta" href={stickyData.link}>
+                    {stickyData.link_text}
+                    <FontAwesomeIcon icon={faChevronRight} />
+                </a>
+            </div>
+        </div>
+    );
+}
+
+function NoteWithoutImage({stickyData}) {
+    return (
+        <div className="content">
+            <RawHTML className="blurb" html={stickyData.body} />
+            <a className="cta" href={stickyData.link}>
+                <FontAwesomeIcon icon={faHeart} className="red-heart" />
+                {stickyData.link_text}
+                <FontAwesomeIcon icon={faChevronRight} />
+            </a>
+        </div>
+    );
+}
+
 export default function LowerStickyNote() {
     const stickyData = useStickyData();
     const [closed, PutAway] = usePutAway();
@@ -50,18 +78,18 @@ export default function LowerStickyNote() {
         return null;
     }
 
+    // STUBBING!!
+    // stickyData.image = 'https://via.placeholder.com/140x100';
+
+
     return (
-        <div className="lower-sticky-note-content" onClick={trackClick}>
+        <div className={cn('lower-sticky-note-content', {'with-image': stickyData.image})} onClick={trackClick}>
             <PutAway />
-            <div className="content">
-                <h1>{stickyData.header}</h1>
-                <RawHTML className="blurb" html={stickyData.body} />
-                <a className="cta" href={stickyData.link}>
-                    <FontAwesomeIcon icon={faHeart} className="red-heart" />
-                    {stickyData.link_text}
-                    <FontAwesomeIcon icon={faChevronRight} />
-                </a>
-            </div>
+            {
+                stickyData.image ?
+                    <NoteWithImage stickyData={stickyData} /> :
+                    <NoteWithoutImage stickyData={stickyData} />
+            }
         </div>
     );
 }
