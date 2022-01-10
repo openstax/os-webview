@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {Countdown, Amount} from './common';
+import {Countdown, Amount, GiveButton} from './common';
 import './content-desktop.scss';
 
 function Logo() {
@@ -29,7 +29,7 @@ function Basic({headline, message, image, children}) {
 function MessageBox({buttonText, buttonUrl, headline, html}) {
     return (
         <React.Fragment>
-            <a className="btn primary" href={buttonUrl}>{buttonText}</a>
+            <GiveButton text={buttonText} url={buttonUrl} />
             <div className="message-box">
                 <div className="color-fill" />
                 <div className="text-content">
