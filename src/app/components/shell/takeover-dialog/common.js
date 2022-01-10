@@ -1,4 +1,5 @@
 import React from 'react';
+import useTakeoverContext from './takeover-context';
 import './common.scss';
 
 const msPerSec = 1000;
@@ -56,7 +57,9 @@ export function Amount({amount}) {
 }
 
 export function GiveButton({text, url}) {
+    const {close} = useTakeoverContext();
+
     return (
-        <a className="btn primary" href={url}>{text}</a>
+        <a className="btn primary" href={url} onClick={close}>{text}</a>
     );
 }
