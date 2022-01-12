@@ -4,53 +4,49 @@ import {ActiveElementContextProvider} from '~/contexts/active-element';
 import useSubjectsContext from '../context';
 import BookCover from './book';
 import useSubjectCategoryContext from '~/contexts/subject-category';
+import cn from 'classnames';
 
 function useCategorizedBooks() {
     const {books} = useSubjectsContext();
     const categories = useSubjectCategoryContext();
-    const result = {};
-    const addLabels = () => {
-        for (const category of categories) {
-            if (result[category.cms]) {
-                result[category.cms].label = category.html;
-            }
-        }
-    };
 
-    for (const book of books) {
-        book.subjects.forEach((cmsCategory) => {
-            if (!(cmsCategory in result)) {
-                result[cmsCategory] = [];
-            }
-            if (!result[cmsCategory].includes(book)) {
-                result[cmsCategory].push(book);
-            }
-        });
-    }
+    return React.useMemo(
+        () => {
+            const result = {};
 
-    addLabels();
+            for (const book of books) {
+                book.subjects.forEach((cmsCategory) => {
+                    if (!(cmsCategory in result)) {
+                        result[cmsCategory] = [];
+                    }
+                    if (!result[cmsCategory].includes(book)) {
+                        result[cmsCategory].push(book);
+                    }
+                });
+            }
 
-    return result;
+            for (const category of categories) {
+                if (category.cms in result && typeof result[category.cms] === 'object') {
+                    result[category.cms].label = category.html;
+                }
+            }
+
+            return result;
+        },
+        [books, categories]
+    );
 }
 
 function CategorySection({categoryData, categorizedBooks, category}) {
-    const classList = ['book-category'];
+    const hidden = !['view-all', categoryData.value].includes(category);
     const subjectHtml = categoryData.html;
     const books = categorizedBooks[categoryData.cms] || [];
 
-    if (!['view-all', categoryData.value].includes(category)) {
-        classList.push('hidden');
-    }
-
     return (
-        <div className={classList.join(' ')}>
+        <div className={cn('book-category', {hidden})}>
             <RawHTML Tag="h2" html={subjectHtml} className="subject" />
             <div className="row">
-                {
-                    books.map((book) =>
-                        <BookCover {...book} key={book.slug} />
-                    )
-                }
+                {books.map((book) => <BookCover {...book} key={book.slug} />)}
             </div>
         </div>
     );
