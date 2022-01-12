@@ -26,7 +26,7 @@ function useCategorizedBooks() {
             }
 
             for (const category of categories) {
-                if (result[category.cms]) {
+                if (category.cms in result && typeof result[category.cms] === 'object') {
                     result[category.cms].label = category.html;
                 }
             }
@@ -46,11 +46,7 @@ function CategorySection({categoryData, categorizedBooks, category}) {
         <div className={cn('book-category', {hidden})}>
             <RawHTML Tag="h2" html={subjectHtml} className="subject" />
             <div className="row">
-                {
-                    books.map((book) =>
-                        <BookCover {...book} key={book.slug} />
-                    )
-                }
+                {books.map((book) => <BookCover {...book} key={book.slug} />)}
             </div>
         </div>
     );
