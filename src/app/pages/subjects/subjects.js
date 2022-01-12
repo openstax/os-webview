@@ -14,15 +14,15 @@ import $ from '~/helpers/$';
 
 const pagePath = '/subjects';
 
-function categoryFromPath() {
-    return window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
+function categoryFromPath(pathname) {
+    return pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
 }
 
 function useCategoryTiedToPath() {
-    const [category, setCategory] = useState(categoryFromPath());
+    const {pathname} = useLocation();
+    const [category, setCategory] = useState(categoryFromPath(pathname));
     const categories = useSubjectCategoryContext();
     const {title} = useSubjectsContext();
-    const {pathname} = useLocation();
     const history = useHistory();
 
     useEffect(() => {
@@ -48,9 +48,7 @@ function useCategoryTiedToPath() {
         }
     }, [category, categories, title]);
 
-    useEffect(() => {
-        setCategory(categoryFromPath());
-    }, [pathname]);
+    useEffect(() => setCategory(categoryFromPath(pathname)), [pathname]);
 
     return {category, setCategory, categories};
 }
