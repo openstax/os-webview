@@ -1,31 +1,19 @@
-import {useReducer, useCallback, useEffect, useRef} from 'react';
+import {useReducer, useCallback} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-
-// When you need to look at data but don't need to react to changes
-// The ref is your dependency instead of the data
-function useDataRef(data) {
-    const ref = useRef(data);
-
-    useEffect(
-        () => {ref.current = data;},
-        [data]
-    );
-
-    return ref;
-}
 
 function useContextValue() {
     const [data, dispatch] = useReducer((state, [action, item]) => {
+        const itemsOtherThanItem = state.filter((i) => i !== item);
+
         switch (action) {
-        case 'add': return [...state, item];
-        case 'remove': return state.filter((i) => i !== item);
+        case 'add': return [...itemsOtherThanItem, item];
+        case 'remove': return itemsOtherThanItem;
         default: return state;
         }
     }, []);
-    const selectedItemsRef = useDataRef(data);
     const select = useCallback((item) => dispatch(['add', item]), []);
     const deselect = useCallback((item) => dispatch(['remove', item]), []);
-    const isSelected = useCallback((item) => selectedItemsRef.current.includes(item), [selectedItemsRef]);
+    const isSelected = useCallback((item) => data.includes(item), [data]);
 
     return {
         select,
