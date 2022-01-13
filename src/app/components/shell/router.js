@@ -159,6 +159,8 @@ function ImportedPage({name}) {
 
     useAnalyticsPageView();
 
+    useEffect(() => window.scrollTo(0, 0), [name]);
+
     if (loadError) {
         return (<FallbackToGeneralPage name={name} />);
     }
