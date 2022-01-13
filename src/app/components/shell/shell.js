@@ -9,6 +9,7 @@ import retry from '~/helpers/retry';
 import ReactModal from 'react-modal';
 import {FlagContextProvider} from './flag-context';
 import Welcome from './welcome/welcome';
+import TakeoverDialog from './takeover-dialog/takeover-dialog';
 import bus from './shell-bus';
 
 let stickyCount = 0;
@@ -56,9 +57,10 @@ const Footer = () => <ImportedComponent name="footer" />;
 function App() {
     const ref = React.useRef();
 
+    ReactModal.setAppElement(ref.current);
+
     React.useEffect(() => {
         setUpBus(ref.current);
-        ReactModal.setAppElement(ref.current);
     }, []);
 
     // BrowserRouter has to include everything that uses useLocation
@@ -80,6 +82,7 @@ function App() {
                             <SalesforceContextProvider>
                                 <div id="main" ref={ref}>
                                     <Welcome />
+                                    <TakeoverDialog />
                                     <Router />
                                 </div>
                             </SalesforceContextProvider>

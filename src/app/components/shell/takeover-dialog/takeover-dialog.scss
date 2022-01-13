@@ -1,0 +1,82 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$scheme-colors: (
+    green: os-color(green),
+    orange: ui-color(primary),
+    deep-green: os-color(deep-green),
+    red: os-color(red)
+);
+
+.modal-overlay .modal.takeover-dialog {
+    border-radius: 0;
+
+    .main-region {
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .btn {
+        @include button();
+        @extend %primary;
+        font-size: inherit;
+    }
+
+    > dialog {
+        > .put-away {
+            border-radius: 0;
+            font-size: 2.4rem;
+            top: 0;
+            right: 0;
+            height: 4rem;
+            width: 5rem;
+        }
+
+        .takeover-content {
+            background-size: cover;
+            background-position: center;
+        }
+    }
+
+    @each $color, $value in $scheme-colors {
+        &.#{$color} {
+            @include wider-than($phone-max) {
+                border: 1rem solid $value;
+
+                .color {
+                    color: $value;
+                }
+
+            }
+
+            .btn.primary {
+                background-color: $value;
+            }
+        }
+    }
+
+    @include wider-than($phone-max) {
+        > dialog {
+            position: static;
+
+            @include width-between($phone-max, $tablet-max) {
+                @include body-font(1.8rem);
+
+                line-height: 3rem;
+            }
+
+            @include wider-than($tablet-max) {
+                @include body-font(2.4rem);
+
+                line-height: 4rem;
+            }
+
+            .logo-color {
+                height: 4.4rem;
+            }
+        }
+    }
+
+}
