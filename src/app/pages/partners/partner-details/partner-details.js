@@ -39,11 +39,16 @@ function useRealTitles(books) {
 
 // -- RESTORE this to use the new form
 function RequestInfoButton({infoText='Request info', partnerName}) {
-    const {toggleForm} = usePartnerContext();
+    const {toggleForm, books} = usePartnerContext();
+    const validTitle = books.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
 
     function gotoForm() {
         analyticsEvents.requestInfo(partnerName);
         toggleForm();
+    }
+
+    if (!validTitle) {
+        return null;
     }
 
     return (
