@@ -12,8 +12,16 @@ import './takeover-dialog.scss';
 const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours
 const LS_KEY = 'takeoverLastDisplay';
 
+function deserialize(key) {
+    try {
+        return JSON.parse(window.localStorage.getItem(key));
+    } catch {
+        return null;
+    }
+}
+
 function useLocalStorage(key, defaultValue='') {
-    const storedValue = JSON.parse(window.localStorage.getItem(key));
+    const storedValue = deserialize(key);
     const initialValue = storedValue === null ? defaultValue : storedValue;
     const [value, setValue] = React.useState(initialValue);
 
