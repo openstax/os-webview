@@ -9,8 +9,44 @@ import DesktopContent from './content-desktop';
 import MobileContent from './content-mobile';
 import './takeover-dialog.scss';
 
+const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours
+const LS_KEY = 'takeoverLastDisplay';
+
+function deserialize(key) {
+    try {
+        return JSON.parse(window.localStorage.getItem(key));
+    } catch {
+        return null;
+    }
+}
+
+function useLocalStorage(key, defaultValue='') {
+    const storedValue = deserialize(key);
+    const initialValue = storedValue === null ? defaultValue : storedValue;
+    const [value, setValue] = React.useState(initialValue);
+
+    React.useEffect(
+        () => window.localStorage.setItem(key, JSON.stringify(value)),
+        [key, value]
+    );
+
+    return [value, setValue];
+}
+
+function useDisplayedRecently() {
+    const [lastDisplay, setLastDisplay] = useLocalStorage(LS_KEY, 0);
+    const msSince = Date.now() - lastDisplay;
+    const setDisplayed = React.useCallback(
+        () => setLastDisplay(Date.now()),
+        [setLastDisplay]
+    );
+
+    return [msSince < RECENT_DELTA_MS, setDisplayed];
+}
+
 export default function TakeoverBanner() {
-    const [Dialog, _, close] = useDialog(true);
+    const [Dialog, _, close, isOpen] = useDialog(true);
+    const [displayedRecently, setDisplayed] = useDisplayedRecently();
     const [data] = [].concat($.camelCaseKeys(useDataFromSlug('donations/fundraiser')));
     const location = useLocation();
     const initialLoc = React.useRef(location);
@@ -21,9 +57,19 @@ export default function TakeoverBanner() {
         }
     }, [location, initialLoc, close]);
 
-    if (!data) {
+    React.useEffect(
+        () => {
+            if (!isOpen) {
+                setDisplayed();
+            }
+        },
+        [isOpen, setDisplayed]
+    );
+
+    if (!data || displayedRecently) {
         return null;
     }
+
 
     data.image = data.fundraiserImage;
     return (
