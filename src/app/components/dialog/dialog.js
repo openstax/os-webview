@@ -106,6 +106,6 @@ export function useDialog(initiallyOpen=false) {
             );
         }
 
-        return [BoundDialog, open, close];
+        return [BoundDialog, open, close, showDialog];
     }, [showDialog]);
 }
