@@ -1,81 +1,57 @@
-import React, {useEffect} from 'react';
-import {
-    Switch, Route,
-    Redirect
-} from 'react-router-dom';
-import useSubjectsContext, {SubjectsContextProvider} from './context';
-import $ from '~/helpers/$';
-import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import Hero from './hero';
-import LanguageSelector from '~/components/language-selector/language-selector';
-import SubjectsListing from './subjects-listing';
-import TutorAd from './tutor-ad';
-import AboutOpenStax from './about-openstax';
-import InfoBoxes from './info-boxes';
-import PhilanthropicSupport from './philanthropic-support';
-import LoadSubject from './specific/specific';
-// import useSubjectCategoryContext from '~/contexts/subject-category';
-// import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
-// import LanguageSelector from '~/components/language-selector/language-selector';
-import './subjects.scss';
+import React, {lazy, Suspense} from 'react';
+import sample from 'lodash/sample';
 
-function SEOSetup() {
-    const {title, pageDescription} = useSubjectsContext();
+function useFeatureFlag() {
+    const [flag, setFlag] = React.useState(null);
 
-    useCanonicalLink();
-    useEffect(
-        () => $.setPageTitleAndDescription(title, $.htmlToText(pageDescription)),
-        [title, pageDescription]
-    );
-
-    return null;
-}
-
-const leadInText = {
-    en: 'We have textbooks in',
-    es: 'Tenemos libros de texto en'
-};
-
-function SubjectsPage() {
-    const {translations} = useSubjectsContext();
-    const otherLocales = translations.length ?
-        translations[0].value.map((t) => t.locale) :
+    React.useEffect(
+        () => {
+            console.info('Should be calling setflag real soon');
+            window.setTimeout(
+                setFlag(sample([true, false])),
+                300
+            );
+        },
         []
-    ;
+    );
+
+    return flag;
+}
+
+function useSelectedVersion(featureFlag) {
+    const importFn = React.useCallback(
+        () => {
+            if (featureFlag === true) {
+                return import('./new/subjects.js');
+            }
+            return import('./old/subjects.js');
+        },
+        [featureFlag]
+    );
+    const Component = React.useMemo(
+        () => lazy(() => importFn()),
+        [importFn]
+    );
+
+    return Component;
+}
+
+function SelectedComponent({featureFlag}) {
+    const Component = useSelectedVersion(featureFlag);
 
     return (
-        <main className="subjects-page">
-            <SEOSetup />
-            <Hero />
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="separator" />
-            <section className="language-selector-section">
-                <div className="content">
-                    <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />
-                </div>
-            </section>
-            <SubjectsListing />
-            <TutorAd />
-            <AboutOpenStax />
-            <InfoBoxes />
-            <PhilanthropicSupport />
-        </main>
+        <Suspense fallback={<h1>Loading...</h1>}>
+            <Component />
+        </Suspense>
     );
 }
 
-export default function SubjectsRouter() {
-    return (
-        <SubjectsContextProvider>
-            <Switch>
-                <Route exact path="/subjects">
-                    <SubjectsPage />
-                </Route>
-                <Route exact path="/subjects/view-all">
-                    <Redirect to="/subjects" />
-                </Route>
-                <Route path="/subjects/:subject">
-                    <LoadSubject />
-                </Route>
-            </Switch>
-        </SubjectsContextProvider>
-    );
+export default function PickVersion() {
+    const featureFlag = useFeatureFlag();
+
+    if (featureFlag === null) {
+        return null;
+    }
+
+    return (<SelectedComponent featureFlag={featureFlag} />);
 }
