@@ -156,8 +156,18 @@ function FallbackToGeneralPage({name}) {
 
 function ImportedPage({name}) {
     const {Component, loadError} = useImportedComponent(name);
+    const history = useHistory();
 
     useAnalyticsPageView();
+
+    useEffect(
+        () => {
+            if (history.action === 'PUSH') {
+                window.scrollTo(0, 0);
+            }
+        },
+        [name, history.action]
+    );
 
     if (loadError) {
         return (<FallbackToGeneralPage name={name} />);
