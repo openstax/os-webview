@@ -1,0 +1,135 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.foundation-page {
+    @include width-up-to($phone-max) {
+        padding-bottom: 2rem;
+    }
+
+    @include wider-than($phone-max) {
+        padding-bottom: 7rem;
+    }
+
+    .banner {
+        display: grid;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+            margin-bottom: 3.5rem;
+            padding: 0;
+
+            .clipped-image {
+                max-width: 100%;
+                min-height: 50vw;
+                order: 2;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr minmax(50rem, 50%);
+            margin-bottom: 5rem;
+        }
+
+        .text-block {
+            background-color: os-color(deep-green);
+            color: text-color(white);
+
+            @include width-up-to($phone-max) {
+                padding: $normal-margin;
+            }
+
+            @include wider-than($phone-max) {
+                padding: 3rem;
+            }
+
+            .text-content {
+                align-items: start;
+                margin: 0;
+                max-width: #{$content-max / 2};
+                padding: 0;
+            }
+        }
+    }
+
+    .description,
+    .disclaimer {
+        align-self: center;
+        max-width: 100%;
+        text-align: center;
+        width: 70rem;
+
+        @include width-up-to($phone-max) {
+            padding: 0 2rem;
+        }
+    }
+
+    .funder-group {
+        @extend %content;
+
+        border-bottom: thin solid ui-color(form-border);
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        @include width-up-to($phone-max) {
+            gap: 2rem;
+            margin-bottom: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        @include wider-than($phone-max) {
+            gap: 4rem;
+            margin-bottom: 5rem;
+            padding-bottom: 5rem;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        .description {
+            @include set-font(body-large);
+
+            @include width-up-to($phone-max) {
+                display: none;
+            }
+        }
+
+        .funders-with-image {
+            display: grid;
+            gap: 2rem;
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: 100%;
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            @include wider-than($phone-max) {
+                grid-template-columns: 1fr minmax(40%, 50rem);
+            }
+        }
+
+        .funders {
+            @include set-font(h4);
+
+            display: grid;
+            text-align: left;
+
+            @include width-up-to($phone-max) {
+                gap: 1rem;
+                grid-template-columns: 100%;
+            }
+
+            @include wider-than($phone-max) {
+                gap: 4rem 3rem;
+                grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+            }
+
+            a {
+                text-decoration: none;
+            }
+        }
+    }
+}
