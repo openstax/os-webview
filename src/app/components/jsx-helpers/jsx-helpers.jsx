@@ -50,8 +50,9 @@ export function LoaderPage({
         if (!statusPage && doDocumentSetup) {
             $.setPageTitleAndDescriptionFromBookData(data);
         }
-    });
-    if (data?.error) {
+    }, [data, statusPage, doDocumentSetup]);
+
+    if (data?.error && fail) {
         fail(`Could not load ${slug}`);
     }
     if (statusPage) {

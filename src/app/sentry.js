@@ -6,6 +6,7 @@ const packageVersion = require('../../package.json').version;
 
 const ignoreErrors = [
     'TypeError: Failed to fetch',
+    'TypeError: Load failed',
     'TypeError: NetworkError when attempting to fetch resource.',
     'TypeError: cancelled',
     'TypeError: Cancelled',
@@ -17,7 +18,9 @@ const ignoreErrors = [
     'message: cancelled',
     'cancelled',
     'Error: Different window already linked for window: _blank',
+    'Error: Failed to load Google Analytics',
     'NS_ERROR_FAILURE: No error message',
+    'SecurityError: The operation is insecure.', // Safari with disabled localStorage
     'URIError: URI malformed'
 ];
 
@@ -28,11 +31,16 @@ const ignoreMessages = [
     'Cross-origin redirection',
     'QuotaExceededError',
     'window.webkit.messageHandlers',
-    'Failed to read the \'localStorage\' property from \'Window\''
+    'Failed to read the \'localStorage\' property from \'Window\'',
+    'b is not a function.',
+    'evaluating \'e.default\'',
+    'Failed to load Google Analytics',
+    'operation was aborted'
 ];
 
 const ignoreUrls = [
-    'https://www.google-analytics.com/analytics.js'
+    'https://www.google-analytics.com/analytics.js',
+    'https://js.pulseinsights.com'
 ];
 
 // eslint-disable-next-line complexity
@@ -52,12 +60,6 @@ function beforeSend(event, hint) {
         return null;
     }
     if (error?.message?.match(/mce-visual-caret/i)) {
-        return null;
-    }
-    if (error?.message?.includes('g.readyState')) {
-        return null;
-    }
-    if (error?.message?.includes('PulseInsightsObject.survey')) {
         return null;
     }
     if (error?.message?.match(/unexpected token/i)) {
