@@ -13,12 +13,16 @@ function trackClickFor(el, target, eventArgs) {
     }
 }
 
+function matchesOrContains(el, selector) {
+    return el.matches(selector) ? el : el?.querySelector(selector);
+}
+
 function trackClick(event) {
     const div = event.currentTarget;
     const target = event.target;
     const putAwayEl = div.querySelector('.put-away');
-    const linkEl = div.querySelector('.blurb a');
-    const buttonEl = div.querySelector('a.primary');
+    const linkEl = matchesOrContains(div, '.blurb a');
+    const buttonEl = matchesOrContains(div, 'a.primary');
 
     trackClickFor(putAwayEl, target,
         ['Microdonation header X', 'close', 'Microdonation header']
@@ -28,9 +32,11 @@ function trackClick(event) {
             ['Microdonation header learn more link', 'open', linkEl.href]
         );
     }
-    trackClickFor(buttonEl, target,
-        ['Microdonation header give button', 'open', buttonEl.href]
-    );
+    if (buttonEl) {
+        trackClickFor(buttonEl, target,
+            ['Microdonation header give button', 'open', buttonEl.href]
+        );
+    }
 }
 
 // eXslint-disable-next-line complexity

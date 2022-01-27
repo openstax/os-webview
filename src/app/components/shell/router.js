@@ -224,6 +224,11 @@ function Routes() {
             <Route path="/errata/">
                 <ImportedPage name="errata-detail" />
             </Route>
+            <Route path="/textbooks/:title">
+                <Switch>
+                    <Redirect exact from="/textbooks/:title" to="/details/books/:title" />
+                </Switch>
+            </Route>
             <Route path="/books/:title">
                 <Switch>
                     <Redirect exact from="/books/:title" to="/details/books/:title" />

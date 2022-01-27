@@ -4,10 +4,10 @@ import buildContext from '~/components/jsx-helpers/build-context';
 function useContextValue() {
     const [language, setLanguage] = useReducer(
         (_, newValue) => {
-            window.localStorage.oswebLanguage = newValue;
+            window.localStorage.setItem('oswebLanguage', newValue);
             return newValue;
         }
-        , window.localStorage.oswebLanguage || 'en'
+        , window.localStorage.getItem('oswebLanguage') || 'en'
     );
 
     return {language, setLanguage};
