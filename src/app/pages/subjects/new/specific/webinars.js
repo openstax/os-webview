@@ -24,19 +24,19 @@ function Card({title='*No title given', description, link: url}) {
 
 export default function Webinars({subjectName}) {
     const {
-        webinarSectionDescription: sectionDescription,
-        webinarSectionViewAllUrl: viewAllUrl,
-        webinarSectionViewAllText: viewAllText,
-        webinarSectionBlurbs: blurbs
+        webinarHeader: {content: {webinarDescription, linkHref, linkText}}
     } = useSpecificSubjectContext();
+    const blurbs = []; // TODO
 
+    console.info('Desc', webinarDescription);
     return (
         <CarouselSection
             id="webinars" className="webinars"
             heading={`Webinars about OpenStax ${subjectName} textbooks`}
-            description={sectionDescription}
-            linkUrl={viewAllUrl} linkText={viewAllText}
+            description={webinarDescription}
+            linkUrl={linkHref} linkText={linkText}
         >
+            <a><h2>Blurbs should be queried here</h2></a>
             {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
         </CarouselSection>
     );

@@ -3,9 +3,10 @@ import useSubjectsContext from './context';
 import './about-openstax.scss';
 
 export default function AboutOpenStax({forceButtonUrl, forceButtonText}) {
-    const {aboutOpenstax: {
-        heading, paragraph, buttonText, buttonUrl, imgSrc
-    }} = useSubjectsContext();
+    const {aboutOs} = useSubjectsContext();
+    const {value: {
+        heading, osText: paragraph, linkText: buttonText, linkHref: buttonUrl, image: imgSrc
+    }} = aboutOs[0];
     const url = forceButtonUrl || buttonUrl;
     const text = forceButtonText || buttonText;
 

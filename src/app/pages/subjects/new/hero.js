@@ -7,7 +7,7 @@ const linesUrl = '/images/subjects/graphic-lines.svg';
 const waveUrl = '/images/subjects/wave-bg.png';
 
 export default function Hero() {
-    const {pageDescription, heroImage} = useSubjectsContext();
+    const {heading, description, headingImage} = useSubjectsContext();
 
     return (
         <section className="hero">
@@ -16,8 +16,9 @@ export default function Hero() {
                 <img className="bg1" role="presentation" src={linesUrl} />
             </div>
             <div className="content">
-                <img className="overlapping" src={heroImage} role="presentation" />
-                <RawHTML className="text-content" html={pageDescription} />
+                <h1>{heading}</h1>
+                <img className="overlapping" src={headingImage.meta.downloadUrl} role="presentation" />
+                <RawHTML className="text-content" html={description} />
             </div>
         </section>
     );

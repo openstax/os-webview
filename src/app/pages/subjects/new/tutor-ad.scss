@@ -2,7 +2,7 @@
 
 .subjects-page,
 .subject-specific {
-    .targets > section.tutor-ad {
+    section.tutor-ad {
         background: linear-gradient(to top, ui-color(page-bg) 50%, ui-color(white) 50%);
         padding: 3rem;
 
@@ -33,7 +33,9 @@
             }
 
             @include wider-than($phone-max) {
-                gap: 3rem 8rem;
+                @include set-font(h3);
+
+                gap: 2rem 8rem;
                 grid-template: 'heading img'
                 'html img';
                 padding: 3rem;
@@ -51,8 +53,11 @@
             }
 
             h1 {
-                @include set-font(h3);
+                @include set-font(body-regular);
+
+                color: text-color(helper);
                 margin: 0;
+                text-transform: uppercase;
             }
         }
     }

@@ -13,7 +13,7 @@ const LEARN_MORE_IDS = ['blog-posts', 'webinars', 'learn'];
 
 function useCurrentSection() {
     const {innerHeight} = useWindowContext();
-    const {subcategories: cats} = useSpecificSubjectContext();
+    const {osTextbookCategories: cats} = useSpecificSubjectContext();
     const ids = cats.map((c) => c.id).concat(LEARN_MORE_IDS);
     const midY = innerHeight/2;
 
@@ -86,7 +86,7 @@ function CategoryLink({category}) {
 }
 
 function useAccordionItems(subjectName) {
-    const {subcategories: cats} = useSpecificSubjectContext();
+    const {osTextbookCategories: cats} = useSpecificSubjectContext();
 
     return [
         {
@@ -122,7 +122,7 @@ export function JumpToSection({subjectName}) {
 }
 
 export default function Navigator({subject}) {
-    const {subcategories: cats} = useSpecificSubjectContext();
+    const {osTextbookCategories: cats} = useSpecificSubjectContext();
 
     return (
         <nav className="navigator">

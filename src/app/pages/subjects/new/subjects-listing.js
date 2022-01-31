@@ -1,32 +1,28 @@
 import React from 'react';
-import useSubjectCategoryContext from '~/contexts/subject-category';
-import useCategorizedBooks from './use-categorized-books';
+import useSubjectsContext from './context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import './subjects-listing.scss';
 
-function BookLink({book}) {
+function CategoryLink({subject, category}) {
     return (
-        <a href={`/details/${book.slug}`}>{book.title}</a>
+        <a href={`/subjects/${subject}/${category}`}>{category}</a>
     );
 }
 
-function BookList({subject}) {
-    const categorizedBooks = useCategorizedBooks();
-    const bookList = categorizedBooks[subject.cms];
-    const labelId = `${subject.value}-nav`;
-
-    if (!bookList) {
+function BookList({name, data}) {
+    if (data.categories.length === 0) {
         return null;
     }
+    const labelId = `${name}-nav`;
 
     return (
         <nav className="book-list" aria-labelled-by={labelId}>
-            <img className="subject-icon" src={subject.icon} role="presentation" />
-            <h2 id={labelId}>{subject.html}</h2>
-            {bookList?.map((b) => <BookLink key={b.slug} book={b} />)}
-            <a href={`/subjects/${subject.value}`}>
-                {`View all ${subject.html} books `}
+            <img className="subject-icon" src={data.icon} role="presentation" />
+            <h2 id={labelId}>{name}</h2>
+            {data.categories.map((c) => <CategoryLink key={c} subject={name} category={c} />)}
+            <a href={`/subjects/${name}`}>
+                {`View all ${name} books `}
                 <FontAwesomeIcon icon={faArrowRight} />
             </a>
         </nav>
@@ -34,12 +30,13 @@ function BookList({subject}) {
 }
 
 export default function SubjectsListing() {
-    const subjects = useSubjectCategoryContext();
+    const {subjects} = useSubjectsContext();
+    const names = Reflect.ownKeys(subjects);
 
     return (
         <section className="subjects-listing">
             <div className="content">
-                {subjects.map((s) => <BookList subject={s} key={s.cms} />)}
+                {names.map((name) => <BookList name={name} data={subjects[name]} key={name} />)}
             </div>
         </section>
     );

@@ -14,19 +14,18 @@ function Card({image, linkText, link}) {
 
 export default function BlogPosts({subjectName}) {
     const {
-        blogSectionDescription: sectionDescription,
-        blogSectionViewAllUrl: viewAllUrl,
-        blogSectionViewAllText: viewAllText,
-        blogSectionBlurbs: blurbs
+        blogHeader: {content: {blogDescription, linkText, linkHref}}
     } = useSpecificSubjectContext();
+    const blurbs = [];
 
     return (
         <CarouselSection
             id="blog-posts" className="blog-posts"
             heading={`Blog posts about OpenStax ${subjectName} textbooks`}
-            description={sectionDescription}
-            linkUrl={viewAllUrl} linkText={viewAllText}
+            description={blogDescription}
+            linkUrl={linkHref} linkText={linkText}
         >
+            <a><h2>Blurbs should be queried here</h2></a>
             {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
         </CarouselSection>
     );

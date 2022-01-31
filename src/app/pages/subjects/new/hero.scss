@@ -6,6 +6,13 @@
     position: relative;
     text-align: left;
 
+    h1 {
+        @include set-font(h1);
+
+        margin: 0;
+        margin-bottom: 2rem;
+    }
+
     .background-images {
         height: 100%;
         position: absolute;

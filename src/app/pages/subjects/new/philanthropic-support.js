@@ -1,12 +1,12 @@
 import React from 'react';
 import useSubjectsContext from './context';
-import savingsPromise from '~/models/savings';
-import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
-import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {linkClickTracker} from '~/helpers/savings-blurb';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './philanthropic-support.scss';
 
 const eventName = 'Microdonation subjects page bottom sentence impact link';
 
+/*
 function useLastBlurb(data) {
     const {adoptions_count: adoptions, savings} = useDataFromPromise(savingsPromise, {});
     const description = useSavingsDataIn(data.description, adoptions, savings);
@@ -22,10 +22,10 @@ function useLastBlurb(data) {
     }
     return description;
 }
+*/
 
 export default function PhilanthropicSupport() {
-    const {aboutBlurbs} = useSubjectsContext();
-    const savingsBlurb = useLastBlurb(aboutBlurbs ? aboutBlurbs[3] : {});
+    const {philanthropicSupport: savingsBlurb} = useSubjectsContext();
 
     return (
         <section className="philanthropic-support">

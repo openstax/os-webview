@@ -2,7 +2,6 @@ import React from 'react';
 import {useParams} from 'react-router-dom';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useRouterContext from '~/components/shell/router-context';
-import useCategorizedBooks from '../use-categorized-books';
 import {SpecificSubjectContextProvider} from './context';
 import {WindowContextProvider} from '~/contexts/window';
 import Navigator from './navigator';
@@ -11,7 +10,7 @@ import BookViewer from './book-viewer';
 import TutorAd from '../tutor-ad';
 import BlogPosts from './blog-posts';
 import Webinars from './webinars';
-import LearnMore from './learn-more';
+// import LearnMore from './learn-more';
 import AboutOpenStax from '../about-openstax';
 import InfoBoxes from '../info-boxes';
 import PhilanthropicSupport from '../philanthropic-support';
@@ -29,11 +28,9 @@ function LanguageSelectorSection() {
 }
 
 function SubjectInContext({subject}) {
-    const books = useCategorizedBooks();
-    const booksInSubject = books[subject.cms];
-
+    // <LearnMore subjectName={subject.html} />
     return (
-        <SpecificSubjectContextProvider contextValueParameters={booksInSubject}>
+        <SpecificSubjectContextProvider>
             <div className="subject-specific">
                 <WindowContextProvider>
                     <div className="content">
@@ -45,7 +42,7 @@ function SubjectInContext({subject}) {
                             <TutorAd />
                             <BlogPosts subjectName={subject.html} />
                             <Webinars subjectName={subject.html} />
-                            <LearnMore subjectName={subject.html} />
+
                             <AboutOpenStax
                                 forceButtonUrl="/subjects"
                                 forceButtonText="View all sujects"

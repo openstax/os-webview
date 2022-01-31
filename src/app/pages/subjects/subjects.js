@@ -8,7 +8,7 @@ function useFeatureFlag() {
         () => {
             console.info('Should be calling setflag real soon');
             window.setTimeout(
-                setFlag(sample([true, false])),
+                setFlag(sample([true, false, true, true, true])),
                 300
             );
         },
