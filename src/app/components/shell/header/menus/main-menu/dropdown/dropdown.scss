@@ -42,4 +42,18 @@
     a:hover {
         color: text-color(link-hover);
     }
+
+    .language-selector {
+        justify-content: flex-start;
+
+        > span {
+            a {
+                color: text-color(link);
+                display: inline;
+                text-decoration: underline;
+            }
+        }
+    }
+
+
 }

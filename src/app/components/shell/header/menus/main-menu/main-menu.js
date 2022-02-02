@@ -1,12 +1,22 @@
 import React from 'react';
 import useSubjectCategoryContext from '~/contexts/subject-category';
+import useLanguageContext from '~/contexts/language';
+import {LanguageSelectorWrapper, LanguageLink} from '~/components/language-selector/language-selector';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu';
 import GiveButton from '../give-button/give-button';
 import './main-menu.scss';
 
+const leadInText = {
+    en: 'View',
+    es: 'Ver'
+};
+
 function SubjectsMenu() {
     const categories = useSubjectCategoryContext();
+    const {language} = useLanguageContext();
+    // This will have to be revisited if/when we implement more languages
+    const otherLocale = ['en', 'es'].filter((la) => la !== language)[0];
 
     if (!categories.length) {
         return (<li>Loading...</li>);
@@ -23,6 +33,10 @@ function SubjectsMenu() {
                     />
                 )
             }
+            <LanguageSelectorWrapper>
+                {leadInText[language]}{' '}
+                <LanguageLink locale={otherLocale} />
+            </LanguageSelectorWrapper>
         </Dropdown>
     );
 }
