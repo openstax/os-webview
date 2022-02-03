@@ -6,6 +6,7 @@ import Features from './features/features';
 import Quotes from './quotes/quotes';
 import Tutor from './tutor/tutor';
 import WhatsOpenStax from './whats-openstax/whats-openstax';
+import Map from './map/map';
 import './home.scss';
 
 const slug = 'pages/openstax-homepage';
@@ -44,6 +45,9 @@ function Homepage({data: ungroupedData}) {
             </LazyLoad>
             <LazyLoad once offset={100} height={400}>
                 <WhatsOpenStax data={data.whatsOpenstax} />
+            </LazyLoad>
+            <LazyLoad once offset={100} height={400}>
+                <Map />
             </LazyLoad>
         </React.Fragment>
     );

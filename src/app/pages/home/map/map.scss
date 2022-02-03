@@ -1,0 +1,59 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.home.page .the-map {
+    align-items: center;
+    background-color: os-color(blue);
+    color: text-color(white);
+    padding: 0;
+
+    h1 {
+        @include set-font(h3);
+
+        margin: 0;
+    }
+
+    .content {
+        @extend %content;
+
+        align-items: flex-end;
+        background: \
+         linear-gradient(270deg, os-color(blue) 34.19%, rgba(os-color(blue), 0) 64.48%), \
+         url('/images/home/dot-world.svg') no-repeat left center,
+        ;
+        background-size: contain;
+        display: flex;
+        flex-direction: column;
+        padding: 17rem 0 24rem;
+        position: relative;
+
+        .floating-box {
+            @include set-font(body-large);
+
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 40rem;
+            text-align: center;
+        }
+    }
+
+    .btn {
+        @include button();
+        @extend %primary;
+    }
+
+    a:not(.btn) {
+        @include set-font(helper-label);
+
+        color: inherit;
+    }
+
+    .credit {
+      @include body-font(1.2rem);
+
+      bottom: 1rem;
+      left: 0;
+      position: absolute;
+    }
+}
