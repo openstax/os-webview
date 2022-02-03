@@ -12,29 +12,29 @@
         display: grid;
         grid-row-gap: 4rem;
     }
+}
 
-    .headline-paginator {
-        display: grid;
-        grid-row-gap: 4rem;
+.headline-paginator {
+    display: grid;
+    grid-row-gap: 4rem;
 
-        .excerpt {
-            display: none;
+    .excerpt {
+        display: none;
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+
+        > div {
+            align-items: center;
+            display: grid;
+            grid-gap: 0.8rem;
+            grid-template-columns: auto 1fr;
         }
 
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-
-            > div {
-                align-items: center;
-                display: grid;
-                grid-gap: 0.8rem;
-                grid-template-columns: auto 1fr;
-            }
-
-            [role="presentation"] {
-                opacity: 0.5;
-            }
+        [role="presentation"] {
+            opacity: 0.5;
         }
     }
 }
