@@ -2,8 +2,8 @@ import {useState, useEffect} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/models/cmsFetch';
 
-export const flagPromise = cmsFetch('flags?flag=enable_my_openstax')
-    .then(([obj]) => (/true|on/i).test(obj.conditions[0]?.value));
+export const flagPromise = cmsFetch('flags?flag=my_openstax')
+    .then((obj) => obj.feature_active);
 
 function useContextValue() {
     const [value, setValue] = useState(false);
