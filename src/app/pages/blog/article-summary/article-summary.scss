@@ -3,12 +3,8 @@
 %article-summary {
     display: grid;
 
-    .go-to {
-        @include set-font(helper-label);
-
-        display: block;
+    .read-more {
         text-decoration: none;
-        text-transform: uppercase;
     }
 
     .link-image {

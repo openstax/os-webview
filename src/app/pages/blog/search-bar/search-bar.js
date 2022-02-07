@@ -20,7 +20,7 @@ function SearchInput() {
 
     return (
         <input
-            type="text" placeholder="Search" name="search-input"
+            type="text" placeholder="Search all blog posts" name="search-input"
             value={searchString} onChange={onChange} onKeyPress={searchOnEnter}
         />
     );

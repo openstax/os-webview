@@ -44,7 +44,7 @@ export default function ArticleSummary({
                         <h3>{subheading}</h3>
                 }
                 <RawHTML className="article-blurb" html={body} />
-                <a className="go-to" href={`/blog/${articleSlug}`} onClick={onClick}>read more</a>
+                <a className="read-more" href={`/blog/${articleSlug}`} onClick={onClick}>Read more</a>
                 <Byline date={date} author={author} />
             </div>
         </React.Fragment>

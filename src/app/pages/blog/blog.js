@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import useBlogContext, {BlogContextProvider} from './blog-context';
+import {Switch, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import PinnedArticle from './pinned-article/pinned-article';
 import UpdateBox from './update-box/update-box';
@@ -11,18 +12,6 @@ import {ArticleFromSlug} from './article/article';
 import timers from './timers';
 import './blog.scss';
 
-export function DefaultPage() {
-    const {pinnedStory} = useBlogContext();
-
-    return (
-        <WindowContextProvider>
-            <PinnedArticle />
-            <UpdateBox />
-            <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
-        </WindowContextProvider>
-    );
-}
-
 export function SearchResultsPage() {
     return (
         <React.Fragment>
@@ -32,7 +21,25 @@ export function SearchResultsPage() {
     );
 }
 
-export function ArticlePage({slug}) {
+export function DefaultPage() {
+    const {pinnedStory} = useBlogContext();
+    const {search} = useLocation();
+
+    if (search) {
+        return (<SearchResultsPage />);
+    }
+    return (
+        <WindowContextProvider>
+            <PinnedArticle />
+            <UpdateBox />
+            <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
+        </WindowContextProvider>
+    );
+}
+
+export function ArticlePage() {
+    const {slug} = useParams();
+
     return (
         <WindowContextProvider>
             <ArticleFromSlug slug={`news/${slug}`} />
@@ -43,8 +50,8 @@ export function ArticlePage({slug}) {
     );
 }
 
-function ContentBasedOnLocation() {
-    const {location} = useBlogContext();
+export default function LoadBlog() {
+    const location = useLocation();
 
     useEffect(() => {
         timers.start();
@@ -52,30 +59,17 @@ function ContentBasedOnLocation() {
         return () => timers.clear();
     }, [location]);
 
-    const slugMatch = location.pathname.match(/\/blog\/(.+)/);
-
-    if (slugMatch) {
-        return (
-            <ArticlePage slug={slugMatch[1]} />
-        );
-    }
-
-    if (location.search) {
-        return (
-            <SearchResultsPage />
-        );
-    }
-
-    return (
-        <DefaultPage />
-    );
-}
-
-export default function LoadBlog() {
     return (
         <main className="blog page">
             <BlogContextProvider>
-                <ContentBasedOnLocation />
+                <Switch>
+                    <Route exact path="/blog">
+                        <DefaultPage />
+                    </Route>
+                    <Route path="/blog/:slug">
+                        <ArticlePage />
+                    </Route>
+                </Switch>
             </BlogContextProvider>
         </main>
     );

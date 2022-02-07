@@ -45,7 +45,10 @@ export default function MoreStories({exceptSlug}) {
 
     return (
         <div className="more-stories">
-            <SearchBar setPath={setPath} />
+            <div className="heading-and-searchbar">
+                <h1>More blog posts</h1>
+                <SearchBar setPath={setPath} />
+            </div>
             <div className="cards boxed">
                 {
                     articles.map((article) =>

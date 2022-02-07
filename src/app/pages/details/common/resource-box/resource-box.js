@@ -15,7 +15,7 @@ const localizedText = {
 };
 
 /*
-    I am sorry for this hack. I needed to be able to use a hook and the chain
+    I needed to be able to use a hook and the chain
     of hooks became unworkable. So I made a component that returns text.
 */
 function LocalizedText() {
