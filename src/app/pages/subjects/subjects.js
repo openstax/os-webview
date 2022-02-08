@@ -1,20 +1,10 @@
 import React, {lazy, Suspense} from 'react';
-import sample from 'lodash/sample';
+import useFlagContext from '~/components/shell/flag-context';
 
 function useFeatureFlag() {
-    const [flag, setFlag] = React.useState(null);
+    const {new_subjects: flag} = useFlagContext();
 
-    React.useEffect(
-        () => {
-            console.info('Should be calling setflag real soon');
-            window.setTimeout(
-                setFlag(sample([true, false, true, true, true])),
-                300
-            );
-        },
-        []
-    );
-
+    console.info('Subjects Flag', flag);
     return flag;
 }
 
