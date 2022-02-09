@@ -8,20 +8,20 @@
 
         @include width-up-to($phone-max) {
             grid-template-columns: 100%;
-
-            img {
-                margin-top: 1rem;
-            }
         }
 
         @include wider-than($phone-max) {
-            grid-template-columns: 1fr auto;
+            grid-template-columns: 7fr 3fr;
 
             img {
                 grid-column-start: 2;
                 grid-row-start: 1;
                 grid-row-end: 4;
             }
+        }
+
+        img {
+            max-width: 100%;
         }
 
         h2 {

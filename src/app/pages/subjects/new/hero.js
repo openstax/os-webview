@@ -1,6 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useSubjectsContext from './context';
+import ClippedImage from '~/components/clipped-image/clipped-image';
 import './hero.scss';
 
 const linesUrl = '/images/subjects/graphic-lines.svg';
@@ -15,9 +16,11 @@ export default function Hero() {
                 <img className="bg2" role="presentation" src={waveUrl} />
                 <img className="bg1" role="presentation" src={linesUrl} />
             </div>
+            <ClippedImage
+                className="overlapping" src={headingImage.meta.downloadUrl} alt=""
+            />
             <div className="content">
                 <h1>{heading}</h1>
-                <img className="overlapping" src={headingImage.meta.downloadUrl} role="presentation" />
                 <RawHTML className="text-content" html={description} />
             </div>
         </section>

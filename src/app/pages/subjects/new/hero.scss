@@ -6,15 +6,13 @@
     position: relative;
     text-align: left;
 
-    h1 {
-        @include set-font(h1);
-
-        margin: 0;
-        margin-bottom: 2rem;
+    @include width-up-to($phone-max) {
+        padding: 2rem $normal-margin;
     }
 
     .background-images {
         height: 100%;
+        overflow: hidden;
         position: absolute;
         right: 0;
         top: 0;
@@ -28,17 +26,41 @@
         }
 
         .bg1 {
-            height: 100%;
+            @include width-up-to($phone-max) {
+                left: 8rem;
+                bottom: auto;
+                transform: rotate(90deg) scale(0.8);
+            }
+
+            @include wider-than($phone-max) {
+                height: 100%;
+            }
         }
 
         .bg2 {
-            width: 130%;
+            @include width-up-to($phone-max) {
+                height: 60%;
+                width: 100%;
+            }
+
+            @include wider-than($phone-max) {
+                width: 130%;
+            }
         }
     }
 
     .content {
+        // Keep it above images
         position: relative;
-        z-index: 1;
+        z-index: 2;
+
+        h1 {
+            @include set-font(h1);
+
+            max-width: 70%;
+            margin: 0;
+            margin-bottom: 2rem;
+        }
 
         .text-content {
             align-items: flex-start;
@@ -50,6 +72,11 @@
             max-width: 60rem;
             padding: 0;
             row-gap: 2rem;
+
+            @include width-up-to($phone-max) {
+                margin-bottom: 5rem;
+                max-width: 55%;
+            }
 
             > * {
                 margin: 0;
@@ -64,9 +91,25 @@
     }
 
     .overlapping {
-        max-width: 50%;
+        max-width: 64rem;
         position: absolute;
-        right: 1rem;
-        bottom: -15rem;
+        right: 0;
+        width: 50%;
+        z-index: 1;
+
+        @include width-up-to($phone-max) {
+            background-position: left center;
+            background-size: cover;
+            bottom: -1rem;
+            height: calc(30vw + 10rem);
+            overflow: hidden;
+        }
+
+        @include wider-than($phone-max) {
+            background-position: center bottom;
+            background-size: contain;
+            bottom: -20%;
+            height: calc(80% + 12rem);
+        }
     }
 }

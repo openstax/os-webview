@@ -17,6 +17,10 @@
             display: grid;
             max-width: 93rem;
 
+            img {
+                max-height: 20rem;
+            }
+
             @include width-up-to($phone-max) {
                 gap: 3rem;
                 grid-template-rows: auto auto auto;

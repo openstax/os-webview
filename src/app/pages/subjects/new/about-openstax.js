@@ -5,11 +5,12 @@ import './about-openstax.scss';
 export default function AboutOpenStax({forceButtonUrl, forceButtonText}) {
     const {aboutOs} = useSubjectsContext();
     const {value: {
-        heading, osText: paragraph, linkText: buttonText, linkHref: buttonUrl, image: imgSrc
+        heading, osText: paragraph, linkText: buttonText, linkHref: buttonUrl, image: {file: imgSrc}
     }} = aboutOs[0];
     const url = forceButtonUrl || buttonUrl;
     const text = forceButtonText || buttonText;
 
+    console.info('IMG', imgSrc);
     return (
         <section className="about-openstax">
             <div className="content">
