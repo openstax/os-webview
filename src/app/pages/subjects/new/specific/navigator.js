@@ -1,87 +1,35 @@
 import React from 'react';
 import useSpecificSubjectContext from './context';
-import useWindowContext from '~/contexts/window';
-import useToggleContext from '~/components/toggle/toggle-context.js';
 import {IfToggleIsOpen} from '~/components/toggle/toggle';
 import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import $ from '~/helpers/$';
+import {useLocation, Link} from 'react-router-dom';
 import './navigator.scss';
 
 const LEARN_MORE_IDS = ['blog-posts', 'webinars', 'learn'];
 
 function useCurrentSection() {
-    const {innerHeight} = useWindowContext();
-    const {osTextbookCategories: cats} = useSpecificSubjectContext();
-    const ids = cats.map((c) => c.id).concat(LEARN_MORE_IDS);
-    const midY = innerHeight/2;
+    const {hash} = useLocation();
 
-    return ids.find((id) => {
-        const el = window.document.getElementById(id);
-
-        if (!el) {
-            return null;
-        }
-        const {bottom} = el.getBoundingClientRect();
-
-        return bottom >= midY || id === ids[ids.length - 1];
-    });
-}
-
-// Poll for element to exist
-function useElFor(id) {
-    const [el, setEl] = React.useState();
-
-    React.useEffect(() => {
-        const i = window.setInterval(
-            () => {
-                const foundEl = window.document.getElementById(id);
-
-                if (foundEl) {
-                    setEl(foundEl);
-                    window.clearInterval(i);
-                }
-            },
-            60
-        );
-
-        return () => window.clearInterval(i);
-    });
-
-    return el;
+    return window.decodeURIComponent(hash.substr(1));
 }
 
 function SectionLink({id, text}) {
-    const el = useElFor(id); // Forces update when element exists
-    const {toggle} = useToggleContext();
-    const onClick = React.useCallback(
-        (event) => {
-            event.preventDefault();
-            el?.scrollIntoView({block: 'center', behavior: 'smooth'});
-            const io = new window.IntersectionObserver(([entry]) => {
-                if (entry.isIntersecting) {
-                    window.setTimeout(toggle, 100);
-                }
-            });
-
-            io.observe(el);
-        },
-        [el, toggle]
-    );
     const currentId = useCurrentSection();
 
     return (
-        <a
-            href={id} onClick={onClick} onKeyDown={$.treatSpaceOrEnterAsClick}
+        <Link
+            to={{hash: `#${id}`}}
+            replace={true}
             aria-current={id === currentId}
-        >{text}</a>
+        >{text}</Link>
     );
 }
 
 function CategoryLink({category}) {
     return (
-        <SectionLink id={category.id} text={category.name} />
+        <SectionLink id={category.heading} text={category.heading} />
     );
 }
 
@@ -123,13 +71,30 @@ export function JumpToSection({subjectName}) {
 
 export default function Navigator({subject}) {
     const {osTextbookCategories: cats} = useSpecificSubjectContext();
+    const currentId = useCurrentSection();
+
+    React.useLayoutEffect(
+        () => {
+            const target = document.getElementById(currentId);
+
+            if (target) {
+                // Some update nonsense to avoid
+                window.setTimeout(() => {
+                    target.scrollIntoView({block: 'center', behavior: 'smooth'});
+                }, 20);
+            } else {
+                console.warn('Target not found', currentId);
+            }
+        },
+        [currentId]
+    );
 
     return (
         <nav className="navigator">
             <div style="position: sticky; top: 9rem;">
                 <img src={subject.icon} role="presentation" />
                 <div className="heading">{`${subject.html} Book Categories`}</div>
-                {cats.map((c) => <CategoryLink category={c} key={c.html} />)}
+                {cats[0].map((c) => <CategoryLink category={c} key={c.html} />)}
                 <div className="heading">Learn more</div>
                 <SectionLink id='blog-posts' text={`${subject.html} blog posts`} />
                 <SectionLink id='webinars' text={`${subject.html} webinars`} />

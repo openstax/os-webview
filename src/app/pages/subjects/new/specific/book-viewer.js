@@ -2,25 +2,29 @@ import React from 'react';
 import useSpecificSubjectContext from './context';
 import './book-viewer.scss';
 
-// function Book({book: {coverUrl, title, slug}}) {
-//     return (
-//         <div className="book-tile">
-//             <img src={coverUrl} role="presentation" />
-//             <div className="text-block">
-//                 <a href={`/details/${slug}`}>{title}</a>
-//             </div>
-//         </div>
-//     );
-// }
+function Book({book: [{coverUrl, title, slug}]}) {
+    return (
+        <div className="book-tile">
+            <img src={coverUrl} role="presentation" />
+            <div className="text-block">
+                <a href={`/details/${slug}`}>{title}</a>
+            </div>
+        </div>
+    );
+}
 
 function Category({category: {heading, text}}) {
-    // {category.books.map((b) => <Book key={b.slug} book={b} />)}
+    const {title, subjects} = useSpecificSubjectContext();
+    const booksObj = subjects[title]?.categories[heading]?.books;
+    const books = Object.values(booksObj);
+
+    console.info('BOOKS', books);
     return (
         <div id={heading} className="category">
             <h2>{heading}</h2>
             <div>{text}</div>
             <div className="books">
-                <div>do books go here?</div>
+                {books.map((b) => <Book key={b.id} book={b} />)}
             </div>
         </div>
     );
@@ -29,7 +33,6 @@ function Category({category: {heading, text}}) {
 export default function BookViewer() {
     const {osTextbookCategories: cats} = useSpecificSubjectContext();
 
-    console.info('Categories?', cats[0]);
     return (
         <section className="book-viewer">
             <div className="content">

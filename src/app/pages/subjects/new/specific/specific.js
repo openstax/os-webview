@@ -3,7 +3,6 @@ import {useParams} from 'react-router-dom';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useRouterContext from '~/components/shell/router-context';
 import {SpecificSubjectContextProvider} from './context';
-import {WindowContextProvider} from '~/contexts/window';
 import Navigator from './navigator';
 import SubjectIntro from './subject-intro';
 import BookViewer from './book-viewer';
@@ -30,28 +29,26 @@ function LanguageSelectorSection() {
 function SubjectInContext({subject}) {
     // <LearnMore subjectName={subject.html} />
     return (
-        <SpecificSubjectContextProvider>
+        <SpecificSubjectContextProvider contextValueParameters={subject.value}>
             <div className="subject-specific">
-                <WindowContextProvider>
-                    <div className="content">
-                        <Navigator subject={subject} />
-                        <div className={cn('targets', `${subject?.color}-stripe`)}>
-                            <LanguageSelectorSection />
-                            <SubjectIntro subjectName={subject.html} />
-                            <BookViewer />
-                            <TutorAd />
-                            <BlogPosts subjectName={subject.html} />
-                            <Webinars subjectName={subject.html} />
+                <div className="content">
+                    <Navigator subject={subject} />
+                    <div className={cn('targets', `${subject?.color}-stripe`)}>
+                        <LanguageSelectorSection />
+                        <SubjectIntro subjectName={subject.html} />
+                        <BookViewer />
+                        <TutorAd />
+                        <BlogPosts subjectName={subject.html} />
+                        <Webinars subjectName={subject.html} />
 
-                            <AboutOpenStax
-                                forceButtonUrl="/subjects"
-                                forceButtonText="View all sujects"
-                            />
-                            <InfoBoxes />
-                            <PhilanthropicSupport />
-                        </div>
+                        <AboutOpenStax
+                            forceButtonUrl="/subjects"
+                            forceButtonText="View all sujects"
+                        />
+                        <InfoBoxes />
+                        <PhilanthropicSupport />
                     </div>
-                </WindowContextProvider>
+                </div>
             </div>
         </SpecificSubjectContextProvider>
     );

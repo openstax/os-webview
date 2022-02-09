@@ -1,16 +1,20 @@
 import React from 'react';
 import useSubjectsContext from './context';
+import useSubjectCategoryContext from '~/contexts/subject-category';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import './subjects-listing.scss';
 
 function CategoryLink({subject, category}) {
     return (
-        <a href={`/subjects/${subject}/${category}`}>{category}</a>
+        <a href={`/subjects/${subject}#${category}`}>{category}</a>
     );
 }
 
 function BookList({name, data}) {
+    const categories = useSubjectCategoryContext();
+    const subdir = categories.find((c) => c.html === name)?.value;
+
     if (data.categories.length === 0) {
         return null;
     }
@@ -20,8 +24,8 @@ function BookList({name, data}) {
         <nav className="book-list" aria-labelled-by={labelId}>
             <img className="subject-icon" src={data.icon} role="presentation" />
             <h2 id={labelId}>{name}</h2>
-            {data.categories.map((c) => <CategoryLink key={c} subject={name} category={c} />)}
-            <a href={`/subjects/${name}`}>
+            {data.categories.map((c) => <CategoryLink key={c} subject={subdir} category={c} />)}
+            <a href={`/subjects/${subdir}/`}>
                 {`View all ${name} books `}
                 <FontAwesomeIcon icon={faArrowRight} />
             </a>

@@ -51,7 +51,6 @@ function useContextValue() {
         data.aboutBlurbs = aboutBlurbs(data);
     }
 
-    console.info('RETURNING', data);
     return data;
 }
 

@@ -10,9 +10,8 @@ export default function AboutOpenStax({forceButtonUrl, forceButtonText}) {
     const url = forceButtonUrl || buttonUrl;
     const text = forceButtonText || buttonText;
 
-    console.info('IMG', imgSrc);
     return (
-        <section className="about-openstax">
+        <section className="about-openstax" id="learn">
             <div className="content">
                 <h2>{heading}</h2>
                 <div>{paragraph}</div>
