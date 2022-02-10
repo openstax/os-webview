@@ -14,7 +14,7 @@ export function useMyOpenStaxUser() {
     const [user, setUser] = React.useState({error: 'not loaded'});
     const {userModel} = useUserContext();
     const isVerified = userModel?.accountsModel?.faculty_status === 'confirmed_faculty';
-    const isEnabled = useFlagContext();
+    const {my_openstax: isEnabled} = useFlagContext();
 
     React.useEffect(() => {
         if (isEnabled) {
@@ -43,7 +43,7 @@ export default function (store) {
 
     store.on('@init', () => {
         // can't use hooks
-        flagPromise.then((enabled) => {
+        flagPromise.then(({my_openstax: enabled}) => {
             if (enabled) {
                 store.dispatch('user/fetch');
             }
