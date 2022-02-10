@@ -1,12 +1,12 @@
-export default [
+export default {
+all_flags: [
 {
-name: "enable_my_openstax",
-conditions: [
+name: "my_openstax",
+feature_active: true
+},
 {
-required: false,
-type: "boolean",
-value: "false"
+name: "new_subjects",
+feature_active: true
 }
 ]
-}
-];
+};
