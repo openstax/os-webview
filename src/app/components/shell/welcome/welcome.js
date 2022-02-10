@@ -133,7 +133,7 @@ function Welcome() {
 
 export default function WelcomeStoreWrapper() {
     const store = createStoreon([user]);
-    const isEnabled = useFlagContext();
+    const {my_openstax: isEnabled} = useFlagContext();
 
     if (!isEnabled) {
         return null;

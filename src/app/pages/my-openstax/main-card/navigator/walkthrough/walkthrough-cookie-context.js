@@ -6,12 +6,15 @@ import cookie from '~/helpers/cookie';
 // If the cookie is not set, returns true
 // Dispatch by default sets the cookie, but if called with false just refreshes state
 function useWalkthroughCookie() {
-    return React.useReducer((_, doUpdate=true) => {
-        if (doUpdate) {
-            cookie.setKey('walkthroughDone');
-        }
-        return !cookie.hash.walkthroughDone;
-    }, window.localStorage.showMyOpenStaxWalkthrough && !cookie.hash.walkthroughDone);
+    return React.useReducer(
+        (_, doUpdate=true) => {
+            if (doUpdate) {
+                cookie.setKey('walkthroughDone');
+            }
+            return !cookie.hash.walkthroughDone;
+        },
+        window.localStorage.showMyOpenStaxWalkthrough && !cookie.hash.walkthroughDone
+    );
 }
 
 function useContextValue() {
