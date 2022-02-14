@@ -143,6 +143,25 @@
         h4 {
             clear: both;
         }
+
+        .quote {
+            border-bottom: thin solid ui-color(form-border);
+            border-top: thin solid ui-color(form-border);
+            margin: 4rem 0;
+
+            blockquote {
+                @include set-font(h3);
+
+                display: inline-block;
+                margin: 0;
+                padding: 4rem 0;
+            }
+
+            .attribution {
+                margin-top: 1rem;
+                text-align: right;
+            }
+        }
     }
 
     /* stylelint-disable-next-line no-descending-specificity */

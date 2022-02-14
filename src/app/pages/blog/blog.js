@@ -40,6 +40,11 @@ export function DefaultPage() {
 export function ArticlePage() {
     const {slug} = useParams();
 
+    useEffect(
+        () => window.scrollTo(0, 0),
+        [slug]
+    );
+
     return (
         <WindowContextProvider>
             <ArticleFromSlug slug={`news/${slug}`} />
