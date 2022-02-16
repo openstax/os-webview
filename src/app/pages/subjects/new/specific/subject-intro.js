@@ -7,7 +7,8 @@ import cn from 'classnames';
 import './subject-intro.scss';
 
 function IntroContent({subjectName}) {
-    const {introText, introHtml} = useSpecificSubjectContext();
+    const introText = 'Open textbooks';
+    const {pageDescription: introHtml} = useSpecificSubjectContext();
     const {isOpen} = useToggleContext();
 
     return (

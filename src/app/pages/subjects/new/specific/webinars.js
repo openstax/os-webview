@@ -26,9 +26,8 @@ export default function Webinars({subjectName}) {
     const {
         webinarHeader: {content: {webinarDescription, linkHref, linkText}}
     } = useSpecificSubjectContext();
-    const blurbs = []; // TODO
+    const blurbs = [];
 
-    console.info('Desc', webinarDescription);
     return (
         <CarouselSection
             id="webinars" className="webinars"

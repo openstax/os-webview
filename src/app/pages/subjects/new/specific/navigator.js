@@ -3,6 +3,7 @@ import useSpecificSubjectContext from './context';
 import {IfToggleIsOpen} from '~/components/toggle/toggle';
 import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
+import useToggleContext from '~/components/toggle/toggle-context';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import {useLocation, Link} from 'react-router-dom';
 import './navigator.scss';
@@ -33,30 +34,66 @@ function CategoryLink({category}) {
     );
 }
 
-function useAccordionItems(subjectName) {
+function CategorySectionLinks() {
     const {osTextbookCategories: cats} = useSpecificSubjectContext();
 
+    return (
+        <React.Fragment>
+            {cats[0].map((c) => <CategoryLink category={c} key={c.html} />)}
+        </React.Fragment>
+    );
+}
+
+function OtherSectionLinks({subjectName}) {
+    return (
+        <React.Fragment>
+            <SectionLink id='blog-posts' text={`${subjectName} blog posts`} />
+            <SectionLink id='webinars' text={`${subjectName} webinars`} />
+            <SectionLink id='learn' text="Learn about our books" />
+        </React.Fragment>
+    );
+}
+
+function useAccordionItems(subjectName) {
     return [
         {
             title: `${subjectName} Book Categories`,
-            contentComponent:
-    <React.Fragment>
-        {cats.map((c) => <CategoryLink category={c} key={c.html} />)}
-    </React.Fragment>
+            contentComponent: <CategorySectionLinks />
         },
         {
             title: 'Learn more',
-            contentComponent:
-    <React.Fragment>
-        <SectionLink id='blog-posts' text={`${subjectName} blog posts`} />
-        <SectionLink id='webinars' text={`${subjectName} webinars`} />
-        <SectionLink id='learn' text="Learn about our books" />
-    </React.Fragment>
+            contentComponent: <OtherSectionLinks subjectName={subjectName} />
         }
     ];
 }
 
 export function JumpToSection({subjectName}) {
+    const currentId = useCurrentSection();
+    const previousIdRef = React.useRef(currentId);
+    const {isOpen, toggle} = useToggleContext();
+
+    // Coordinate closing the Jump-To dropdown with scrolling (which happens
+    // even if using the Navigator instead of the Jump-To)
+    React.useEffect(
+        () => {
+            if (currentId !== previousIdRef.current) {
+                if (isOpen) {
+                    toggle();
+                } else {
+                    const target = document.getElementById(currentId);
+
+                    if (target) {
+                        target.scrollIntoView({block: 'center', behavior: 'smooth'});
+                    } else {
+                        console.warn('Target not found', currentId);
+                    }
+                    previousIdRef.current = currentId;
+                }
+            }
+        },
+        [currentId, isOpen, toggle]
+    );
+
     return (
         <div className="jump-to-section">
             <ToggleControlBar Indicator={ArrowToggle}>
@@ -70,35 +107,14 @@ export function JumpToSection({subjectName}) {
 }
 
 export default function Navigator({subject}) {
-    const {osTextbookCategories: cats} = useSpecificSubjectContext();
-    const currentId = useCurrentSection();
-
-    React.useLayoutEffect(
-        () => {
-            const target = document.getElementById(currentId);
-
-            if (target) {
-                // Some update nonsense to avoid
-                window.setTimeout(() => {
-                    target.scrollIntoView({block: 'center', behavior: 'smooth'});
-                }, 20);
-            } else {
-                console.warn('Target not found', currentId);
-            }
-        },
-        [currentId]
-    );
-
     return (
         <nav className="navigator">
             <div style="position: sticky; top: 9rem;">
                 <img src={subject.icon} role="presentation" />
                 <div className="heading">{`${subject.html} Book Categories`}</div>
-                {cats[0].map((c) => <CategoryLink category={c} key={c.html} />)}
+                <CategorySectionLinks />
                 <div className="heading">Learn more</div>
-                <SectionLink id='blog-posts' text={`${subject.html} blog posts`} />
-                <SectionLink id='webinars' text={`${subject.html} webinars`} />
-                <SectionLink id='learn' text="Learn about our books" />
+                <OtherSectionLinks subjectName={subject.html} />
             </div>
         </nav>
     );

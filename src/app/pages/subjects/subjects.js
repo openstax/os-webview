@@ -4,7 +4,6 @@ import useFlagContext from '~/components/shell/flag-context';
 function useFeatureFlag() {
     const {new_subjects: flag} = useFlagContext();
 
-    console.info('Subjects Flag', flag);
     return flag;
 }
 

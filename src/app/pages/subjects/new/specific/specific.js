@@ -9,7 +9,7 @@ import BookViewer from './book-viewer';
 import TutorAd from '../tutor-ad';
 import BlogPosts from './blog-posts';
 import Webinars from './webinars';
-// import LearnMore from './learn-more';
+import LearnMore from './learn-more';
 import AboutOpenStax from '../about-openstax';
 import InfoBoxes from '../info-boxes';
 import PhilanthropicSupport from '../philanthropic-support';
@@ -27,7 +27,6 @@ function LanguageSelectorSection() {
 }
 
 function SubjectInContext({subject}) {
-    // <LearnMore subjectName={subject.html} />
     return (
         <SpecificSubjectContextProvider contextValueParameters={subject.value}>
             <div className="subject-specific">
@@ -40,7 +39,7 @@ function SubjectInContext({subject}) {
                         <TutorAd />
                         <BlogPosts subjectName={subject.html} />
                         <Webinars subjectName={subject.html} />
-
+                        <LearnMore />
                         <AboutOpenStax
                             forceButtonUrl="/subjects"
                             forceButtonText="View all sujects"
