@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select.jsx';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
-import useMatchingSchools from '~/models/use-school-suggestion-list';
+import schoolPromise from '~/models/schools';
+import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './contact-info.scss';
 
 function SchoolHiddenInfo({school}) {
@@ -22,17 +23,16 @@ function SchoolHiddenInfo({school}) {
     );
 }
 
-const schoolTypeOptions = [
-    'College/University (4)',
-    'Technical/Community College (2)',
-    'Career School/For-Profit (2)',
-    'High School',
-    'K-12 School',
-    'Home School',
-    'Other'
-].map((name) => ({label: name, value: name}));
-
-function SchoolInfo() {
+function SchoolInfo({schools}) {
+    const schoolTypeOptions = React.useMemo(
+        () => schools.reduce((a, b) => {
+            if (b.type && !a.includes(b.type)) {
+                a.unshift(b.type);
+            }
+            return a;
+        }, ['Other']).map((text) => ({label: text, value: text})),
+        [schools]
+    );
     const [schoolLocation, setSchoolLocation] = useState();
 
     return (
@@ -62,9 +62,19 @@ function SchoolInfo() {
     );
 }
 
+function useSchoolNames() {
+    const schools = useDataFromPromise(schoolPromise, []);
+    const schoolNames = useMemo(() => schools.map((s) => s.name).sort(), [schools]);
+    const schoolSet = useMemo(() => new window.Set(schoolNames.map((s) => s.toLowerCase())), [schoolNames]);
+
+    return {schools, schoolNames, schoolSet};
+}
+
 function SchoolSelector() {
     const [value, setValue] = useState('');
-    const {schoolNames, schoolIsOk, selectedSchool} = useMatchingSchools(value);
+    const {schools, schoolNames, schoolSet} = useSchoolNames();
+    const schoolIsOk = schoolSet.has(value.toLowerCase());
+    const selectedEntry = schoolIsOk && schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
     const showSchoolInfo = !schoolIsOk && value.length > 3;
 
     function onChange({target}) {
@@ -95,8 +105,8 @@ function SchoolSelector() {
                     onChange
                 }}
             />
-            <SchoolHiddenInfo school={selectedSchool} />
-            {showSchoolInfo && <SchoolInfo />}
+            <SchoolHiddenInfo school={selectedEntry} />
+            {showSchoolInfo && <SchoolInfo schools={schools} />}
         </React.Fragment>
     );
 }

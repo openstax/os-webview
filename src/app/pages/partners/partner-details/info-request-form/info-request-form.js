@@ -1,6 +1,7 @@
 import React from 'react';
 import usePartnerContext from '../partner-context';
-import useMatchingSchools from '~/models/use-school-suggestion-list';
+import useSchoolSuggestionList, {useCountrySuggestionList, useCountryFromSchool}
+    from '~/models/use-school-suggestion-list';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
@@ -95,7 +96,7 @@ function Page1() {
 }
 
 function SchoolSelector({value, setValue}) {
-    const {schoolIsOk, schoolOptions} = useMatchingSchools(value);
+    const {schoolIsOk, schoolOptions} = useSchoolSuggestionList(value);
 
     function accept(option) {
         setValue(option.value);
@@ -153,10 +154,8 @@ function RoleSelector() {
     );
 }
 
-// This is all kind of broken; just accepts anything
 function CountrySelector({value, setValue}) {
-    const countryOptions = [];
-    const isOk = true;
+    const {countryOptions, isOk} = useCountrySuggestionList(value);
 
     function accept(option) {
         setValue(option.value);
@@ -185,11 +184,14 @@ function CountrySelector({value, setValue}) {
 function Page2() {
     const {userModel, userStatus} = useUserContext();
     const [school, setSchool] = React.useState(userModel?.self_reported_school);
-    const [country, setCountry] = React.useState();
+    const cfs = useCountryFromSchool(school);
+    const [country, setCountry] = React.useState(cfs);
 
     React.useEffect(() => {
-        console.info('Should be setting country from', school);
-    }, [school]);
+        if (cfs) {
+            setCountry(cfs);
+        }
+    }, [cfs]);
 
     return (
         <div className="form-page">
