@@ -107,21 +107,28 @@ export function Article({data}) {
     } = data;
 
     return (
-        <div className="text-content" ref={ref}>
+        <div className="content">
             <FloatingSideBar readTime={readTime} progress={progress} />
-            {image && <img src={image} alt={imageAlt} />}
-            <h1>{title}</h1>
-            {
-                Boolean(subheading) &&
-                    <h2>{subheading}</h2>
-            }
-            <Byline date={data.date} author={data.author} />
-            <ArticleBody
-                bodyData={data.body}
-                setReadTime={setReadTime}
-                bodyRef={bodyRef}
-            />
-            <Tags tagData={tags} />
+            <div className="image-and-title">
+                <div className="floater-spacer" />
+                {image && <img src={image} alt={imageAlt} />}
+                <div className="title-block">
+                    <h1>{title}</h1>
+                    {
+                        Boolean(subheading) &&
+                        <h2>{subheading}</h2>
+                    }
+                    <Byline date={data.date} author={data.author} />
+                </div>
+            </div>
+            <div className="text-content" ref={ref}>
+                <ArticleBody
+                    bodyData={data.body}
+                    setReadTime={setReadTime}
+                    bodyRef={bodyRef}
+                />
+                <Tags tagData={tags} />
+            </div>
         </div>
     );
 }

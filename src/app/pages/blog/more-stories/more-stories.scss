@@ -4,29 +4,48 @@
 $image-height: 24rem;
 
 .blog.page .more-stories {
-    background-color: ui-color(page-bg);
     padding-bottom: 4rem;
     padding-top: 2rem;
     width: 100%;
 
+    .heading-and-searchbar {
+        display: flex;
+        margin: 0 auto 4rem auto;
+        padding: 0 $normal-margin;
+        max-width: $content-max;
+        width: 100%;
+
+        @include width-up-to($tablet-max) {
+            align-items: flex-start;
+            flex-direction: column;
+            row-gap: 2rem;
+        }
+
+        @include wider-than($tablet-max) {
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
     .cards {
         display: grid;
-        grid-gap: 3rem;
         grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
         justify-items: center;
 
         @include width-up-to($tablet-max) {
-            max-width: calc(100% - 4rem);
+            grid-gap: 6rem 4rem;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-gap: 6rem 9rem;
         }
     }
 
     .card {
-        @extend %card;
         @extend %article-summary;
 
         background-color: ui-color(white);
         height: 100%;
-        max-width: 50rem;
 
         .link-image {
             height: $image-height;
@@ -35,10 +54,9 @@ $image-height: 24rem;
 
         .text-block {
             display: grid;
-            grid-row-gap: $normal-margin;
-            grid-template-rows: auto 1fr auto auto;
+            grid-template-rows: auto auto 1fr;
             height: 100%;
-            padding: $normal-margin;
+            padding: 1rem 0;
 
             > *,
             .article-blurb > * {
@@ -47,12 +65,27 @@ $image-height: 24rem;
 
             .article-blurb {
                 height: 12rem;
+                margin-top: 1rem;
+            }
+
+            .byline {
+                display: none;
             }
         }
     }
 
+    h1 {
+        @include set-font(h2);
+
+        margin: 0;
+    }
+
     h2 {
-        @include title-font(2.4rem);
+        @include set-font(h3);
+    }
+
+    h3 {
+        @include set-font(h4);
     }
 
     @media print {

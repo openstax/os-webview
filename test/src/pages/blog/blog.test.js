@@ -28,7 +28,7 @@ test('blog default page', (done) => {
         </BrowserRouter>
     );
     setTimeout(() => {
-        expect(screen.queryAllByText('read more')).toHaveLength(13);
+        expect(screen.queryAllByText('Read more')).toHaveLength(7);
         expect(screen.queryAllByRole('textbox')).toHaveLength(1);
         done();
     }, 200);

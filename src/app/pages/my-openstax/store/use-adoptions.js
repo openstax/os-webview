@@ -3,7 +3,7 @@ import {sfApiPost} from './sfapi';
 import useAccount from '~/pages/my-openstax/store/use-account';
 
 /*
-    TODO: iron out correct values for stage_name for adoption vs. interest
+    iron out correct values for stage_name for adoption vs. interest
     Back end should handle close_date, which should be the date that either
     the adoption is made or dropped.
 */

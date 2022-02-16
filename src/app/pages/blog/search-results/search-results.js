@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import uniqBy from 'lodash/uniqBy';
 import useBlogContext from '../blog-context';
@@ -9,9 +10,10 @@ import usePaginatorContext, {PaginatorContextProvider} from '~/components/pagina
 import {PaginatorControls} from '~/components/paginator/search-results/paginator.js';
 import './search-results.scss';
 
-function useAllArticles(location) {
+function useAllArticles() {
+    const {search} = useLocation();
     const [allArticles, setAllArticles] = useState([]);
-    const searchParam = location.search.substr(1);
+    const searchParam = search.substr(1);
 
     analytics.sendPageEvent('Blog search', decodeURIComponent(searchParam));
     useEffect(() => {
@@ -36,7 +38,8 @@ function useAllArticles(location) {
 
 function VisibleArticles({articles}) {
     const {setCurrentPage, visibleChildren} = usePaginatorContext();
-    const {location, setPath} = useBlogContext();
+    const {setPath} = useBlogContext();
+    const location = useLocation();
 
     useEffect(() => setCurrentPage(1), [location, setCurrentPage]);
 
@@ -51,8 +54,7 @@ function VisibleArticles({articles}) {
 }
 
 export default function SearchResults() {
-    const {location} = useBlogContext();
-    const allArticles = useAllArticles(location);
+    const allArticles = useAllArticles();
 
     return (
         <div className="search-results">

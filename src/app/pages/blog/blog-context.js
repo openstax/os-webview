@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory, useLocation} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
@@ -9,7 +9,7 @@ const fields = [
     'title', 'id', 'article_image', 'featured_image_alt_text', 'heading',
     'subheading', 'body_blurb', 'date', 'author'
 ].join(',');
-const pageSize = 12;
+const pageSize = 6;
 
 function useLimit() {
     const [limit, dispatchLimit] = React.useReducer((state, action) => {
@@ -37,7 +37,6 @@ function useLimit() {
 }
 
 function useContextValue() {
-    const location = useLocation();
     const history = useHistory();
     const {limit, moreStories, fewerStories} = useLimit();
     const lsData = useDataFromSlug(
@@ -52,14 +51,14 @@ function useContextValue() {
     const pinnedStory = pinnedData && $.camelCaseKeys(pinnedData.items[0]);
 
     function setPath(href) {
-        const {pathname, search, hash} = new window.URL(href, window.location);
+        const {pathname, search, hash} = new window.URL(href, window.location.href);
 
         history.push(`${pathname}${search}${hash}`, stayHere);
         window.scrollTo(0, 0);
     }
 
     return {
-        location, setPath, latestStories, pinnedStory,
+        setPath, latestStories, pinnedStory,
         limit, pageSize, moreStories, fewerStories
     };
 }

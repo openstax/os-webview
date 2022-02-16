@@ -5,19 +5,16 @@
  {
     background-color: ui-color(white);
     max-width: 100vw;
+    position: relative;
     width: 100%;
 
-    .text-content {
-        @extend %text-content;
+    .content {
+        @extend %content;
 
-        $floater-width: 9rem;
-        $floater-margin: 8rem;
-
-        align-items: flex-start;
-        max-width: 72rem; // Non-standard, but...
-        padding: 0 $normal-margin;
         position: relative;
 
+        $floater-width: 9rem;
+        $floater-margin: 2rem;
         @include width-up-to($phone-max) {
             width: 100%;
 
@@ -25,7 +22,7 @@
                 background-color: ui-color(white);
                 border-bottom: thin solid ui-color(form-border);
                 padding: 1rem 0;
-                position: sticky;
+                position: fixed;
                 top: 5rem;
                 width: 100%;
             }
@@ -45,7 +42,6 @@
             .floater {
                 height: 100%;
                 position: absolute;
-                left: -#{$floater-width + $floater-margin};
             }
 
             .sticky-bit {
@@ -56,34 +52,121 @@
         }
 
         @include width-between($phone-max, $tablet-max) {
-            margin-right: 0;
-            width: calc(100% - #{$floater-width + $floater-margin + $normal-margin});
-
-            // .floater {
-            //     left: -#{$floater-width + $floater-margin / 2};
-            // }
+            .floater {
+                left: -#{$floater-width + $floater-margin};
+            }
         }
 
-        @include wider-than($tablet-max) {
-            width: calc(100% - #{2 * ($floater-width + $floater-margin + $normal-margin)});
+        @include width-between($phone-max, $tablet-max) {
+            margin-right: 0;
+            width: calc(100% - #{$floater-width + $floater-margin + $normal-margin});
+        }
+
+        .image-and-title {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 2rem;
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: 1fr;
+            }
+
+            /* line it up with the text content */
+            @include width-between($phone-max, $tablet-max) {
+                grid-template-columns: 1fr;
+                margin: 0 auto;
+                max-width: 72rem;
+                padding: 0 $normal-margin;
+            }
+
+            @include wider-than($tablet-max) {
+                grid-template-columns: auto 5fr 4fr;
+            }
+        }
+
+        .floater-spacer {
+            width: $floater-width;
+
+            @include width-up-to($phone-max) {
+                height: #{$floater-width + 2rem};
+            }
+
+            @include width-between($phone-max, $tablet-max) {
+                display: none;
+            }
+        }
+
+        .title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            h1 {
+                @include set-font(h2);
+
+                margin: 0;
+            }
+        }
+    }
+
+    .text-content {
+        @extend %text-content;
+
+        align-items: flex-start;
+        max-width: 72rem; // Non-standard, but...
+        padding: 0;
+
+        @include wider-than($phone-max) {
+            padding: 0 $normal-margin;
         }
     }
 
     .body {
         img {
             margin-top: $normal-margin;
-            max-width: 100%;
         }
 
         figcaption {
             @include set-font(helper-label);
 
             color: text-color(helper);
+            font-style: italic;
 
             :first-child {
-                margin-top: 0;
+                margin-top: 0.5rem;
             }
         }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            clear: both;
+        }
+
+        .quote {
+            border-bottom: thin solid ui-color(form-border);
+            border-top: thin solid ui-color(form-border);
+            margin: 4rem 0;
+
+            blockquote {
+                @include set-font(h3);
+
+                display: inline-block;
+                margin: 0;
+                padding: 4rem 0;
+            }
+
+            .attribution {
+                margin-top: 1rem;
+                text-align: right;
+            }
+        }
+    }
+
+    /* stylelint-disable-next-line no-descending-specificity */
+    img {
+        max-width: 100%;
     }
 
     figure {
@@ -94,16 +177,22 @@
         @include wider-than($phone-max) {
             &.left,
             &.right {
-                margin-right: $normal-margin;
-                max-width: 50%;
+                max-width: 33%;
             }
 
             &.right {
                 float: right;
+                margin-left: $normal-margin;
             }
 
             &.left {
                 float: left;
+                margin-right: $normal-margin;
+            }
+
+            &.mid {
+                float: right;
+                max-width: 50%;
             }
         }
     }

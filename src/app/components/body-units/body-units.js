@@ -13,10 +13,9 @@ function AlignedImage({data}) {
         caption,
         image: {original: {src, alt}}
     } = data;
-    const alignmentClass = ['left', 'right'].includes(data.alignment) ? data.alignment : '';
 
     return (
-        <figure className={alignmentClass}>
+        <figure className={data.alignment}>
             <img src={src} alt={alt} />
             <RawHTML Tag="figcaption" html={caption} />
         </figure>
