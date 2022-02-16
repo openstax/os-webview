@@ -23,8 +23,10 @@ export default async function cmsFetch(path) {
 
 export async function cmsPost(path, payload, method='POST') {
     const url = path.replace(/[^?]+/, urlFromSlug);
+    const params = new window.URLSearchParams(payload);
+    const qs = method.toLowerCase() === 'delete' ? `?${params}` : '';
 
-    return (await fetch(url, {
+    return (await fetch(`${url}${qs}`, {
         method,
         headers: {
             'Accept': 'application/json',
