@@ -27,8 +27,10 @@ const schoolTypeOptions = [
     'Technical/Community College (2)',
     'Career School/For-Profit (2)',
     'High School',
-    'K-12 School'
-];
+    'K-12 School',
+    'Home School',
+    'Other'
+].map((name) => ({label: name, value: name}));
 
 function SchoolInfo() {
     const [schoolLocation, setSchoolLocation] = useState();
