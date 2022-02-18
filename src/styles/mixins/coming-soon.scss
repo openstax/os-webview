@@ -1,5 +1,5 @@
-@mixin coming-soon() {
-    background: url('/images/subjects/coming-soon.svg') 0 0 no-repeat;
+@mixin coming-soon($fn: coming-soon) {
+    background: url('/images/subjects/#{$fn}.svg') 0 0 no-repeat;
     content: '';
     height: calc(13.25% + 1rem);
     position: absolute;

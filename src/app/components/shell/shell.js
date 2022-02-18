@@ -1,5 +1,5 @@
 import React, {Suspense} from 'react';
-import {LanguageContextProvider} from '~/contexts/language';
+import useLanguageContext, {LanguageContextProvider} from '~/contexts/language';
 import {SubjectCategoryContextProvider} from '~/contexts/subject-category';
 import {UserContextProvider} from '~/contexts/user';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
@@ -11,6 +11,7 @@ import {FlagContextProvider} from './flag-context';
 import Welcome from './welcome/welcome';
 import TakeoverDialog from './takeover-dialog/takeover-dialog';
 import bus from './shell-bus';
+import cn from 'classnames';
 
 let stickyCount = 0;
 
@@ -54,15 +55,25 @@ const Header = () => <ImportedComponent name="header" />;
 const LowerStickyNote = () => <ImportedComponent name="lower-sticky-note" />;
 const Footer = () => <ImportedComponent name="footer" />;
 
-function App() {
+function Main() {
+    const {language} = useLanguageContext();
     const ref = React.useRef();
-
-    ReactModal.setAppElement(ref.current);
 
     React.useEffect(() => {
         setUpBus(ref.current);
+        ReactModal.setAppElement(ref.current);
     }, []);
 
+    return (
+        <div id="main" className={cn('lang', language)} ref={ref}>
+            <Welcome />
+            <TakeoverDialog />
+            <Router />
+        </div>
+    );
+}
+
+function App() {
     // BrowserRouter has to include everything that uses useLocation
     return (
         <UserContextProvider>
@@ -80,11 +91,7 @@ function App() {
                                 <LowerStickyNote />
                             </div>
                             <SalesforceContextProvider>
-                                <div id="main" ref={ref}>
-                                    <Welcome />
-                                    <TakeoverDialog />
-                                    <Router />
-                                </div>
+                                <Main />
                             </SalesforceContextProvider>
                             <footer id="footer">
                                 <Footer />
