@@ -114,10 +114,14 @@ function LinksToTranslations() {
     const {translations: [translations=[]], meta: {locale='en'}} = useDetailsContext();
     const localLanguage = languageTranslations[locale][locale];
     const {language, setLanguage} = useLanguageContext();
+    const lastLocaleRef = React.useRef(locale);
 
     useEffect(() => {
-        if (language !== locale) {
-            setLanguage(locale);
+        if (lastLocaleRef.current !== locale) {
+            if (language !== locale) {
+                setLanguage(locale);
+            }
+            lastLocaleRef.current = locale;
         }
     }, [locale, language, setLanguage]);
 
