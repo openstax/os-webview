@@ -169,7 +169,6 @@ function CountrySelector({value, setValue}) {
                 options={countryOptions}
                 inputProps={{
                     name: 'country',
-                    placeholder: 'Select your country',
                     required: true,
                     value,
                     autocomplete: 'off',
