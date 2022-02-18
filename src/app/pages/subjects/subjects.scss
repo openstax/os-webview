@@ -119,13 +119,17 @@
             }
         }
 
+        @at-root .lang:not(.es) .subjects-page .books .cover.coming-soon::before {
+            @include coming-soon;
+        }
+
+        @at-root .lang.es .subjects-page .books .cover.coming-soon::before {
+            @include coming-soon(coming-soon-es);
+        }
+
         .cover {
             cursor: pointer;
             position: relative;
-
-            &.coming-soon::before {
-                @include coming-soon;
-            }
 
             &.coming-soon.polish::before {
                 background-image: url('/images/subjects/coming-soon-polish.svg');

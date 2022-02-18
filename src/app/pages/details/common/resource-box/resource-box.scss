@@ -28,9 +28,15 @@
         }
     }
 
-    &.coming-soon::before {
+    @at-root .lang:not(.es) .resource-box.coming-soon::before {
         @include coming-soon;
+    }
 
+    @at-root .lang.es .resource-box.coming-soon::before {
+        @include coming-soon;
+    }
+
+    &.coming-soon::before {
         background-color: ui-color(white);
         border-radius: 2rem 0 0 2rem;
         bottom: 2rem;
