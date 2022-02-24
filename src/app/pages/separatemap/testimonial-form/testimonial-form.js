@@ -24,7 +24,7 @@ export default function TestimonialForm({email, school, company, firstName, last
             label: i.title,
             value: i.salesforce_abbreviation
         }));
-    const {oid, webtoleadUrl} = useSalesforceContext();
+    const {oid, webtoleadUrl, debug, debugEmail} = useSalesforceContext();
 
     if (!webtoleadUrl) {
         return null;
@@ -52,6 +52,14 @@ export default function TestimonialForm({email, school, company, firstName, last
                 action={webtoleadUrl} method="post"
                 onSubmit={onSubmit}
             >
+                {
+                    debug &&
+                        <React.Fragment>
+                            <h1>DEBUG!</h1>
+                            <input type="hidden" name="debug" value="1" />
+                            <input type="hidden" name="debugEmail" value={debugEmail} />
+                        </React.Fragment>
+                }
                 <input type="hidden" name="oid" value={oid} />
                 <input type="hidden" name="lead_source" value="Testimonial" />
                 <input type="hidden" name="first_name" value={firstName} />
