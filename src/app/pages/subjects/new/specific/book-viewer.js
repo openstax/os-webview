@@ -14,8 +14,6 @@ function PrintOption({bookInfo}) {
     const text = 'Order a print copy';
     const amazonDataLink = useAmazonAssociatesLink(bookInfo.slug);
 
-    console.info('Rendering PO');
-
     return (
         <a role="menuitem" href="open a dialog" onClick={onClick}>
             {text}

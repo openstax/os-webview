@@ -7,6 +7,7 @@ import useSubjectsContext, {SubjectsContextProvider} from './context';
 import $ from '~/helpers/$';
 import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Hero from './hero';
+import useLanguageContext from '~/contexts/language';
 import LanguageSelector from '~/components/language-selector/language-selector';
 import SubjectsListing from './subjects-listing';
 import TutorAd from './tutor-ad';
@@ -36,12 +37,30 @@ const leadInText = {
     es: 'Tenemos libros de texto en'
 };
 
+function useConsistentLanguage() {
+    const {language, setLanguage} = useLanguageContext();
+    const {translations, meta: {locale}} = useSubjectsContext();
+
+    useEffect(
+        () => {
+            if (language !== locale) {
+                if ((translations.length === 0 || !translations[0].find((t) => locale === t))) {
+                    setLanguage(locale);
+                }
+            }
+        },
+        [language, locale, setLanguage, translations]
+    );
+}
+
 function SubjectsPage() {
     const {translations} = useSubjectsContext();
     const otherLocales = translations.length ?
         translations[0].value.map((t) => t.locale) :
         []
     ;
+
+    useConsistentLanguage();
 
     return (
         <main className="subjects-page">

@@ -2,11 +2,13 @@ import React from 'react';
 import {useParams} from 'react-router-dom';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useRouterContext from '~/components/shell/router-context';
-import {SpecificSubjectContextProvider} from './context';
+import useSpecificSubjectContext, {SpecificSubjectContextProvider} from './context';
 import Navigator from './navigator';
+import {NavigatorContextProvider} from './navigator-context';
+import {WindowContextProvider} from '~/contexts/window';
 import SubjectIntro from './subject-intro';
 import BookViewer from './book-viewer';
-import TutorAd from '../tutor-ad';
+import {TutorAdThatTakesData} from '../tutor-ad';
 import BlogPosts from './blog-posts';
 import Webinars from './webinars';
 import LearnMore from './learn-more';
@@ -26,29 +28,48 @@ function LanguageSelectorSection() {
     );
 }
 
+function TutorAd() {
+    const {tutorAd} = useSpecificSubjectContext();
+
+    if (!tutorAd.content) {
+        return null;
+    }
+    const {
+        content: {image, heading, adHtml: html, linkHref: ctaLink, linkText: ctaText}
+    } = tutorAd;
+
+    return (
+        <TutorAdThatTakesData {...{heading, image, html, ctaLink, ctaText}} />
+    );
+}
+
 function SubjectInContext({subject}) {
     return (
         <SpecificSubjectContextProvider contextValueParameters={subject.value}>
-            <div className="subject-specific">
-                <div className="content">
-                    <Navigator subject={subject} />
-                    <div className={cn('targets', `${subject?.color}-stripe`)}>
-                        <LanguageSelectorSection />
-                        <SubjectIntro subjectName={subject.html} />
-                        <BookViewer />
-                        <TutorAd />
-                        <BlogPosts subjectName={subject.html} />
-                        <Webinars subjectName={subject.html} />
-                        <LearnMore />
-                        <AboutOpenStax
-                            forceButtonUrl="/subjects"
-                            forceButtonText="View all sujects"
-                        />
-                        <InfoBoxes />
-                        <PhilanthropicSupport />
+            <WindowContextProvider>
+                <NavigatorContextProvider>
+                    <div className="subject-specific">
+                        <div className="content">
+                            <Navigator subject={subject} />
+                            <div className={cn('targets', `${subject?.color}-stripe`)}>
+                                <LanguageSelectorSection />
+                                <SubjectIntro subjectName={subject.html} />
+                                <BookViewer />
+                                <TutorAd />
+                                <BlogPosts subjectName={subject.html} />
+                                <Webinars subjectName={subject.html} />
+                                <LearnMore />
+                                <AboutOpenStax
+                                    forceButtonUrl="/subjects"
+                                    forceButtonText="View all sujects"
+                                />
+                                <InfoBoxes />
+                                <PhilanthropicSupport />
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </NavigatorContextProvider>
+            </WindowContextProvider>
         </SpecificSubjectContextProvider>
     );
 }

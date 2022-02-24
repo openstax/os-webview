@@ -6,8 +6,7 @@ function useContextValue() {
     const [value, setValue] = useState(window);
 
     useLayoutEffect(() => {
-        const update = () => setValue({...window});
-        const handleScroll = throttle(update, 40);
+        const handleScroll = throttle(() => setValue({...window}), 40);
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);

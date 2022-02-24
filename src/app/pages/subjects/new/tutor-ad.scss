@@ -17,6 +17,10 @@
             display: grid;
             max-width: 93rem;
 
+            > * {
+              max-width: 100%;
+            }
+
             img {
                 max-height: 20rem;
             }

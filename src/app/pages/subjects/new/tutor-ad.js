@@ -3,10 +3,7 @@ import useSubjectsContext from './context';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './tutor-ad.scss';
 
-export default function TutorAd() {
-    const {tutorAd} = useSubjectsContext();
-    const {image, heading, adHtml: html, linkHref: ctaLink, linkText: ctaText} = tutorAd[0].value;
-
+export function TutorAdThatTakesData({heading, image, html, ctaLink, ctaText}) {
     return (
         <section className="tutor-ad">
             <div className="content">
@@ -16,5 +13,14 @@ export default function TutorAd() {
                 <a className="btn primary" href={ctaLink}>{ctaText}</a>
             </div>
         </section>
+    );
+}
+
+export default function TutorAd() {
+    const {tutorAd} = useSubjectsContext();
+    const {image, heading, adHtml: html, linkHref: ctaLink, linkText: ctaText} = tutorAd[0].value;
+
+    return (
+        <TutorAdThatTakesData {...{heading, image, html, ctaLink, ctaText}} />
     );
 }
