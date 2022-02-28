@@ -1,56 +1,71 @@
-import React, {lazy, Suspense} from 'react';
-import sample from 'lodash/sample';
+import React from 'react';
+import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import ClippedImage from '~/components/clipped-image/clipped-image';
+import './foundation.scss';
 
-function useFeatureFlag() {
-    const [flag, setFlag] = React.useState(null);
+const slug = 'pages/supporters';
 
-    React.useEffect(
-        () => {
-            window.setTimeout(
-                setFlag(sample([true, false, true, true])),
-                300
-            );
-        },
-        []
-    );
-
-    return flag;
-}
-
-function useSelectedVersion(featureFlag) {
-    const importFn = React.useCallback(
-        () => {
-            if (featureFlag === true) {
-                return import('./new/foundation.js');
-            }
-            return import('./old/foundation.js');
-        },
-        [featureFlag]
-    );
-    const Component = React.useMemo(
-        () => lazy(() => importFn()),
-        [importFn]
-    );
-
-    return Component;
-}
-
-function SelectedComponent({featureFlag}) {
-    const Component = useSelectedVersion(featureFlag);
-
+function Funder({data}) {
     return (
-        <Suspense fallback={<h1>Loading...</h1>}>
-            <Component />
-        </Suspense>
+        data.url ?
+            <a href={data.url}>{data.funderName}</a> :
+            <span>{data.funderName}</span>
     );
 }
 
-export default function PickVersion() {
-    const featureFlag = useFeatureFlag();
+function Funders({data}) {
+    return (
+        <div className="funders">
+            {data.map((f, i) => <Funder key={i} data={f} />)}
+        </div>
+    );
+}
 
-    if (featureFlag === null) {
-        return null;
-    }
+function FundersWithImage({data, image}) {
+    return (
+        <div className="funders-with-image">
+            <Funders data={data} />
+            <img src={image} alt="" />
+        </div>
+    );
+}
 
-    return (<SelectedComponent featureFlag={featureFlag} />);
+function FoundationGroup({data}) {
+    return (
+        <div className="funder-group">
+            <h2>{data.groupTitle}</h2>
+            <div className="description">{data.description}</div>
+            {
+                data.image ?
+                    <FundersWithImage data={data.funders} image={data.image} /> :
+                    <Funders data={data.funders} />
+            }
+        </div>
+    );
+}
+
+function FoundationPage({data: model}) {
+    return (
+        <React.Fragment>
+            <div className="banner">
+                <ClippedImage src={model.bannerImage.meta.downloadUrl} alt="" />
+                <div className="text-block">
+                    <div className="text-content">
+                        <h1>{model.bannerHeading}</h1>
+                        <RawHTML html={model.bannerDescription} />
+                    </div>
+                </div>
+            </div>
+            {model.funderGroups.map((g, i) => <FoundationGroup key={i} data={g} />)}
+            <div className="disclaimer">{model.disclaimer}</div>
+        </React.Fragment>
+    );
+}
+
+export default function FoundationLoader() {
+    return (
+        <main className="foundation-page page">
+            <LoaderPage slug={slug} Child={FoundationPage} doDocumentSetup />
+        </main>
+    );
 }
