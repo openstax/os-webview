@@ -33,7 +33,7 @@
     }
 
     @at-root .lang.es .resource-box.coming-soon::before {
-        @include coming-soon;
+        @include coming-soon(coming-soon-es);
     }
 
     &.coming-soon::before {
