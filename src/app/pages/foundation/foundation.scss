@@ -100,14 +100,14 @@
 
             @include width-up-to($phone-max) {
                 grid-template-columns: 100%;
-
-                img {
-                    width: 100%;
-                }
             }
 
             @include wider-than($phone-max) {
                 grid-template-columns: 1fr minmax(40%, 50rem);
+            }
+
+            img {
+                width: 100%;
             }
         }
 

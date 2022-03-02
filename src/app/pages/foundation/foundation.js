@@ -25,7 +25,7 @@ function FundersWithImage({data, image}) {
     return (
         <div className="funders-with-image">
             <Funders data={data} />
-            <img src={image} alt="" />
+            <img src={image.file} alt="" />
         </div>
     );
 }
