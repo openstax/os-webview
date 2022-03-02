@@ -56,7 +56,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
     const isErrataResources = (/errata-fields\?field/).test(args[0]);
     const isErrataSummary = args[0] === 'https://cms-dev.openstax.org/apps/cms/api/pages/errata?format=json';
-    const isFlags = args[0].endsWith('enable_my_openstax');
+    const isFlags = args[0].endsWith('flags/');
     const isFooter = (/api\/footer/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isHomepage = (/openstax-homepage/).test(args[0]);

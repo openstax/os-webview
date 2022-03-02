@@ -47,7 +47,8 @@
             z-index: 1;
 
             [role="option"] {
-                padding: 0 1rem;
+                padding: 0 1rem 0 2rem;
+                text-indent: -1rem;
             }
         }
     }
