@@ -1,33 +1,63 @@
 import React from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import ClippedImage from '~/components/clipped-image/clipped-image';
 import './foundation.scss';
 
-const slug = 'pages/foundation';
+const slug = 'pages/supporters';
+
+function Funder({data}) {
+    return (
+        data.url ?
+            <a href={data.url}>{data.funderName}</a> :
+            <span>{data.funderName}</span>
+    );
+}
+
+function Funders({data}) {
+    return (
+        <div className="funders">
+            {data.map((f, i) => <Funder key={i} data={f} />)}
+        </div>
+    );
+}
+
+function FundersWithImage({data, image}) {
+    return (
+        <div className="funders-with-image">
+            <Funders data={data} />
+            <img src={image} alt="" />
+        </div>
+    );
+}
+
+function FoundationGroup({data}) {
+    return (
+        <div className="funder-group">
+            <h2>{data.groupTitle}</h2>
+            <div className="description">{data.description}</div>
+            {
+                data.image ?
+                    <FundersWithImage data={data.funders} image={data.image} /> :
+                    <Funders data={data.funders} />
+            }
+        </div>
+    );
+}
 
 function FoundationPage({data: model}) {
     return (
         <React.Fragment>
-            <div className="hero">
-                <div className="text-content">
-                    <h1>{model.title}</h1>
-                    <p>{model.pageDescription}</p>
+            <div className="banner">
+                <ClippedImage src={model.bannerImage.meta.downloadUrl} alt="" />
+                <div className="text-block">
+                    <div className="text-content">
+                        <h1>{model.bannerHeading}</h1>
+                        <RawHTML html={model.bannerDescription} />
+                    </div>
                 </div>
             </div>
-            <div className="blurbs">
-                <img
-                    className="strips" src="/images/components/strips.svg"
-                    height="10" alt="" role="presentation"
-                />
-                <div className="boxed">
-                    {
-                        model.funders.map((funder) => (
-                            <div className="funder" key={funder}>
-                                {funder.title}
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>
+            {model.funderGroups.map((g, i) => <FoundationGroup key={i} data={g} />)}
+            <div className="disclaimer">{model.disclaimer}</div>
         </React.Fragment>
     );
 }
