@@ -115,6 +115,7 @@
             @include set-font(h4);
 
             display: grid;
+            height: min-content;
             text-align: left;
 
             @include width-up-to($phone-max) {
