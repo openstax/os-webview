@@ -1,7 +1,6 @@
 import React from 'react';
 import usePartnerContext from '../partner-context';
-import useSchoolSuggestionList, {useCountrySuggestionList, useCountryFromSchool}
-    from '~/models/use-school-suggestion-list';
+import useMatchingSchools from '~/models/use-school-suggestion-list';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
@@ -96,7 +95,7 @@ function Page1() {
 }
 
 function SchoolSelector({value, setValue}) {
-    const {schoolIsOk, schoolOptions} = useSchoolSuggestionList(value);
+    const {schoolIsOk, schoolOptions} = useMatchingSchools(value);
 
     function accept(option) {
         setValue(option.value);
@@ -154,8 +153,10 @@ function RoleSelector() {
     );
 }
 
+// This is all kind of broken; just accepts anything
 function CountrySelector({value, setValue}) {
-    const {countryOptions, isOk} = useCountrySuggestionList(value);
+    const countryOptions = [];
+    const isOk = true;
 
     function accept(option) {
         setValue(option.value);
@@ -168,7 +169,6 @@ function CountrySelector({value, setValue}) {
                 options={countryOptions}
                 inputProps={{
                     name: 'country',
-                    placeholder: 'Select your country',
                     required: true,
                     value,
                     autocomplete: 'off',
@@ -184,14 +184,11 @@ function CountrySelector({value, setValue}) {
 function Page2() {
     const {userModel, userStatus} = useUserContext();
     const [school, setSchool] = React.useState(userModel?.self_reported_school);
-    const cfs = useCountryFromSchool(school);
-    const [country, setCountry] = React.useState(cfs);
+    const [country, setCountry] = React.useState();
 
     React.useEffect(() => {
-        if (cfs) {
-            setCountry(cfs);
-        }
-    }, [cfs]);
+        console.info('Should be setting country from', school);
+    }, [school]);
 
     return (
         <div className="form-page">
