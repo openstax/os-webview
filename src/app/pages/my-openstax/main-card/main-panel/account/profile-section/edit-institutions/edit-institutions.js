@@ -73,16 +73,19 @@ function InstitutionInput({dispatch}) {
     const [isOpen, toggle] = useToggle();
     const [schools, onChange] = useSchoolSuggestions();
     const inputRef = React.useRef();
-    const accept = (newValue) => {
-        const asInstitution = {
-            id: newValue.value,
-            name: newValue.label
-        };
+    const accept = React.useCallback(
+        (newValue) => {
+            const asInstitution = {
+                id: newValue.value,
+                name: newValue.label
+            };
 
-        dispatch(['add', asInstitution]);
-        inputRef.current.value = '';
-        onChange({target: inputRef.current});
-    };
+            dispatch(['add', asInstitution]);
+            inputRef.current.value = '';
+            onChange({target: inputRef.current});
+        },
+        [onChange, dispatch]
+    );
 
     useEffect(() => {
         if (inputRef.current) {
@@ -96,7 +99,7 @@ function InstitutionInput({dispatch}) {
                 <FilteringSelect
                     inputProps={{onChange, ref: inputRef}}
                     options={schools}
-                    onChange={accept}
+                    accept={accept}
                 />
             </LabeledElement>
         </form>
