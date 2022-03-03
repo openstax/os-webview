@@ -26,14 +26,18 @@ export async function cmsPost(path, payload, method='POST') {
     const params = new window.URLSearchParams(payload);
     const qs = method.toLowerCase() === 'delete' ? `?${params}` : '';
 
-    return (await fetch(`${url}${qs}`, {
-        method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    })).json();
+    try {
+        return (await fetch(`${url}${qs}`, {
+            method,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })).json();
+    } catch (e) {
+        return Promise.reject(new Error(`Failed to ${method} ${url}${qs}`));
+    }
 }
 
 /**
