@@ -40,14 +40,14 @@ function trackClick(event) {
     }
 }
 
-function NoteWithImage({stickyData}) {
+function NoteWithImage({bannerInfo}) {
     return (
         <div className="content with-image">
-            <img src={stickyData.image} alt="" />
+            <img src={bannerInfo.banner_thumbnail} alt="" />
             <div className="text-side">
-                <RawHTML className="blurb" html={stickyData.body} />
-                <a className="cta" href={stickyData.link}>
-                    {stickyData.link_text}
+                <RawHTML className="blurb" html={bannerInfo.html_message} />
+                <a className="cta" href={bannerInfo.link_url}>
+                    {bannerInfo.link_text}
                     <FontAwesomeIcon icon={faChevronRight} />
                 </a>
             </div>
@@ -55,13 +55,13 @@ function NoteWithImage({stickyData}) {
     );
 }
 
-function NoteWithoutImage({stickyData}) {
+function NoteWithoutImage({bannerInfo}) {
     return (
         <div className="content">
-            <RawHTML className="blurb" html={stickyData.body} />
-            <a className="cta" href={stickyData.link}>
+            <RawHTML className="blurb" html={bannerInfo.html_message} />
+            <a className="cta" href={bannerInfo.link_url}>
                 <FontAwesomeIcon icon={faHeart} className="red-heart" />
-                {stickyData.link_text}
+                {bannerInfo.link_text}
                 <FontAwesomeIcon icon={faChevronRight} />
             </a>
         </div>
@@ -78,17 +78,21 @@ export default function LowerStickyNote() {
         return null;
     }
 
-    // STUBBING!!
-    // stickyData.image = 'https://via.placeholder.com/140x100';
-
-
     return (
-        <div className={cn('lower-sticky-note-content', {'with-image': stickyData.image})} onClick={trackClick}>
+        <div
+            className={
+                cn(
+                    'lower-sticky-note-content',
+                    {'with-image': stickyData.bannerInfo.banner_thumbnail}
+                )
+            }
+            onClick={trackClick}
+        >
             <PutAway />
             {
-                stickyData.image ?
-                    <NoteWithImage stickyData={stickyData} /> :
-                    <NoteWithoutImage stickyData={stickyData} />
+                stickyData.bannerInfo.banner_thumbnail ?
+                    <NoteWithImage bannerInfo={stickyData.bannerInfo} /> :
+                    <NoteWithoutImage bannerInfo={stickyData.bannerInfo} />
             }
         </div>
     );
