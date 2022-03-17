@@ -60,51 +60,55 @@ function handleExternalLink(href, el) {
 
 function useLinkHandler() {
     const history = useHistory();
+    const navigateTo = React.useCallback(
+        (path, state = {x: 0, y: 0}) => {
+            history.push(linkHelper.stripOpenStaxDomain(path), state);
+        },
+        [history]
+    );
+    const linkHandler = React.useCallback(
+        // eslint-disable-next-line complexity
+        (e) => {
+            // Only handle left-clicks on links
+            const el = linkHelper.validUrlClick(e);
 
-    function navigateTo(path, state = {x: 0, y: 0}) {
-        history.push(linkHelper.stripOpenStaxDomain(path), state);
-    }
+            if (!el || e.button !== 0) {
+                return;
+            }
+            e.preventDefault();
 
-    // eslint-disable-next-line complexity
-    function linkHandler(e) {
-        // Only handle left-clicks on links
-        const el = linkHelper.validUrlClick(e);
+            const fullyQualifiedHref = el.href;
+            const followLink = (el.target || linkHelper.isExternal(fullyQualifiedHref)) ?
+                () => handleExternalLink(fullyQualifiedHref, el) :
+                () => navigateTo(fullyQualifiedHref);
 
-        if (!el || e.button !== 0) {
-            return;
-        }
-        e.preventDefault();
+            // Pardot tracking
+            if ('piTracker' in window) {
+                piTracker(fullyQualifiedHref.split('#')[0]);
+            }
 
-        const fullyQualifiedHref = el.href;
-        const followLink = (el.target || linkHelper.isExternal(fullyQualifiedHref)) ?
-            () => handleExternalLink(fullyQualifiedHref, el) :
-            () => navigateTo(fullyQualifiedHref);
-
-        // Pardot tracking
-        if ('piTracker' in window) {
-            piTracker(fullyQualifiedHref.split('#')[0]);
-        }
-
-        if (e.trackingInfo) {
-            retry(
-                () => fetch(
-                    `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
-                    {
-                        method: 'POST',
-                        mode: 'cors',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(e.trackingInfo)
-                    }
+            if (e.trackingInfo) {
+                retry(
+                    () => fetch(
+                        `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
+                        {
+                            method: 'POST',
+                            mode: 'cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(e.trackingInfo)
+                        }
+                    )
                 )
-            )
-                .catch((err) => {throw new Error(`Unable to download-track: ${err}`);})
-                .finally(followLink);
-        } else {
-            followLink();
-        }
-    }
+                    .catch((err) => {throw new Error(`Unable to download-track: ${err}`);})
+                    .finally(followLink);
+            } else {
+                followLink();
+            }
+        },
+        [navigateTo]
+    );
 
     return linkHandler;
 }
