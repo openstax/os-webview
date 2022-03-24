@@ -1,27 +1,24 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import TabGroup from '~/components/tab-group/tab-group.jsx';
-import ContentGroup from '~/components/content-group/content-group.jsx';
+import sample from 'lodash/sample';
 import './institutional-partnership-application.scss';
 
-const labels = ['Program details', 'Application'];
-
-function TestimonialBlock({selectedLabel, data}) {
-    const testimonials = {
-        'Program details': {
+function TestimonialBlock({data}) {
+    const testimonials = [
+        {
             block: data.quote,
             name: data.quoteAuthor,
             address1: data.quoteTitle,
             address2: data.quoteSchool
         },
-        'Application': {
+        {
             block: data.applicationQuote,
             name: data.applicationQuoteAuthor,
             address1: data.applicationQuoteTitle,
             address2: data.applicationQuoteSchool
         }
-    };
-    const testimonial = testimonials[selectedLabel];
+    ];
+    const testimonial = sample(testimonials);
 
     return (
         <div className="testimonial">
@@ -41,17 +38,6 @@ function TestimonialBlock({selectedLabel, data}) {
     );
 }
 
-function Application() {
-    return (
-        <div className="application">
-            <iframe
-                className="form-iframe"
-                src="https://docs.google.com/forms/d/e/1FAIpQLSfI0XpCC-4ag0u9vHizT5w2JLkwcv39HVTZnvQHEtmQj8PJwQ/viewform"
-            />
-        </div>
-    );
-}
-
 function ProgramDetails({model}) {
     return (
         model[0].map((section) =>
@@ -60,26 +46,6 @@ function ProgramDetails({model}) {
                 <RawHTML html={section.description} />
             </div>
         )
-    );
-}
-
-function Tabs({model}) {
-    const TabTag = 'label';
-    const [selectedLabel, setSelectedLabel] = useState(labels[0]);
-    const activeIndex = labels.indexOf(selectedLabel);
-
-    return (
-        <div className="boxed">
-            <div className="tab-controller">
-                <TabGroup {...{TabTag, labels, selectedLabel, setSelectedLabel}} />
-            </div>
-            <div className="tab-content">
-                <ContentGroup activeIndex={activeIndex}>
-                    <ProgramDetails model={model.programTabContent} />
-                    <Application />
-                </ContentGroup>
-            </div>
-        </div>
     );
 }
 
@@ -92,7 +58,9 @@ function ApplicationPage({data}) {
                     <RawHTML Tag="h1" html={data.heading} />
                 </div>
             </div>
-            <Tabs model={data} />
+            <div className="text-content">
+                <ProgramDetails model={data.programTabContent} />
+            </div>
             <TestimonialBlock selectedLabel="Application" data={data} />
         </React.Fragment>
     );

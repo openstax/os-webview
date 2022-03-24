@@ -1,11 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .institutional-page {
-    .tab-controller,
-    .tab-content {
-        width: 100%;
-    }
-
     .boxed {
         align-items: left;
 
@@ -20,38 +15,6 @@
         order: 99;
         padding: 0 0 6rem;
         width: 100%;
-    }
-
-    .tab-content {
-        max-width: $text-content-max;
-
-        h3 {
-            @include body-font(1.4rem);
-
-            color: text-color(normal);
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-
-        p {
-            margin-top: 1rem;
-        }
-
-        ul {
-            margin-bottom: 3rem;
-
-            li {
-                span {
-                    color: #4b4b4b;
-                    display: block;
-                    font-size: 1.4rem;
-                }
-            }
-        }
-
-        .strike {
-            text-decoration: line-through;
-        }
     }
 
     .hero {
@@ -95,6 +58,10 @@
                 line-height: 1;
             }
         }
+    }
+
+    .text-content {
+      padding-bottom: 4rem;
     }
 
     .testimonial {
