@@ -26,7 +26,7 @@ export default function useMatchingSchools(value) {
     const [schools, setSchools] = useState([]);
     const schoolNames = useMemo(() => schools.map((s) => s.name).sort(), [schools]);
     const schoolSet = useMemo(() => new window.Set(schoolNames.map((s) => s.toLowerCase())), [schoolNames]);
-    const schoolIsOk = schoolSet.has(value.toLowerCase());
+    const schoolIsOk = schoolSet.has(value?.toLowerCase());
     const selectedSchool = schoolIsOk && schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
     const schoolOptions = useMemo(() => schoolNames.map((n) => ({label: n, value: n})), [schoolNames]);
 
