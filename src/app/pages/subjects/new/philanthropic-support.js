@@ -6,24 +6,6 @@ import './philanthropic-support.scss';
 
 const eventName = 'Microdonation subjects page bottom sentence impact link';
 
-/*
-function useLastBlurb(data) {
-    const {adoptions_count: adoptions, savings} = useDataFromPromise(savingsPromise, {});
-    const description = useSavingsDataIn(data.description, adoptions, savings);
-
-    if (!data) {
-        return false;
-    }
-    if (data.heading) {
-        return {
-            heading: data.heading,
-            description
-        };
-    }
-    return description;
-}
-*/
-
 export default function PhilanthropicSupport() {
     const {philanthropicSupport: savingsBlurb} = useSubjectsContext();
 

@@ -15,9 +15,6 @@ import AboutOpenStax from './about-openstax';
 import InfoBoxes from './info-boxes';
 import PhilanthropicSupport from './philanthropic-support';
 import LoadSubject from './specific/specific';
-// import useSubjectCategoryContext from '~/contexts/subject-category';
-// import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
-// import LanguageSelector from '~/components/language-selector/language-selector';
 import './subjects.scss';
 
 function SEOSetup() {
