@@ -117,7 +117,7 @@ module.exports = (env, argv) => {
     console.log('Building', config.mode);
 
     if (config.mode === 'production') {
-        config.output.filename = '[name]-[hash].min.js';
+        config.output.filename = '[name]-[contenthash].min.js';
         config.devtool = 'source-map';
         config.optimization.splitChunks.maxInitialRequests = 5;
         config.output.chunkFilename = 'chunk-[chunkhash].js';
