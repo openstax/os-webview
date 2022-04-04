@@ -1,75 +1,105 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-#lower-sticky-note {
-    max-width: 100vw;
-    position: sticky;
-    z-index: 4;
+#lower-sticky-note .lower-sticky-note-content {
+    background-color: #dbf3f8;
+    box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
+    padding: 2rem $normal-margin;
+    position: relative;
+    width: 100%;
 
-    @include width-up-to($phone-max) {
-        height: 0;
-        overflow: visible;
-        top: 100%;
+    .put-away {
+        background-color: transparent;
+        color: inherit;
+        font-size: 2.4rem;
+        font-weight: bold;
+        height: 3rem;
+        width: 3rem;
     }
 
     @include wider-than($phone-max) {
-        top: 5rem;
+        top: 0;
     }
 
-    .lower-sticky-note-content {
-        background-color: #dbf3f8;
-        box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
-        padding: 2rem $normal-margin;
+    .content {
+        @extend %content;
+
+        display: grid;
+        row-gap: 0.6rem;
+        grid-template-columns: 100%;
+        justify-items: center;
+        max-width: $content-max;
+        padding: 0 3rem 0 0;
+        text-align: center;
 
         @include width-up-to($phone-max) {
-            position: relative;
-            transform: translateY(-100%);
+            row-gap: 2rem;
         }
 
-        .put-away {
-            background-color: transparent;
-            color: inherit;
-            font-size: 2.4rem;
-            font-weight: bold;
-            height: 3rem;
-            width: 3rem;
+        h1 {
+            display: none;
         }
+
+        a:not(.cta) {
+            color: inherit;
+        }
+    }
+
+    &.with-image {
+        background-color: ui-color(white);
+        max-width: #{$content-max - 2 * $normal-margin};
+        margin: $normal-margin;
 
         .content {
-            @extend %content;
+            @include width-up-to($phone-max) {
+                grid-template-columns: 100%;
 
-            display: grid;
-            row-gap: 0.6rem;
+                img {
+                    display: none;
+                }
+
+                .text-side {
+                    align-items: center;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.6rem;
+                }
+            }
+
+            @include wider-than($phone-max) {
+                grid-template-columns: 7rem auto;
+                gap: 2rem;
+
+                .text-side {
+                    justify-self: left;
+                }
+
+                img {
+                    max-height: 7rem;
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+
+    &:not(.with-image) {
+        .content {
             grid-template-columns: 100%;
             justify-items: center;
-            max-width: $content-max;
-            padding: 0 3rem 0 0;
             text-align: center;
-
-            @include width-up-to($phone-max) {
-                row-gap: 2rem;
-            }
-
-            h1 {
-                display: none;
-            }
-
-            a:not(.cta) {
-                color: inherit;
-            }
         }
+    }
 
-        .cta {
-            align-items: center;
-            display: flex;
-            font-weight: bold;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
+    .cta {
+        align-items: center;
+        display: flex;
+        font-weight: bold;
+        gap: 0.5rem;
+        text-decoration: none;
+    }
 
-        .red-heart {
-            color: #c22032;
-            font-size: 2rem;
-            margin-right: 0.5rem;
-        }
+    .red-heart {
+        color: #c22032;
+        font-size: 2rem;
+        margin-right: 0.5rem;
     }
 }
