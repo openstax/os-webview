@@ -5,20 +5,21 @@ import useUserContext from '~/contexts/user';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import './student-resource-tab.scss';
 
-function resourceBoxModel(resourceData, userStatus) {
+function resourceBoxModel(resourceData, userStatus, bookModel) {
     return Object.assign({
         heading: resourceData.resourceHeading,
         description: resourceData.resourceDescription,
         comingSoon: Boolean(resourceData.comingSoonText),
         comingSoonText: resourceData.comingSoonText,
-        printLink: resourceData.printLink
+        printLink: resourceData.printLink,
+        bookModel
     }, studentResourceBoxPermissions(resourceData, userStatus, 'Student resources'));
 }
 
 function StudentResourceTab({model, userStatus}) {
     const fss = model.freeStuffStudent.content;
     const models = model.bookStudentResources.map((resourceData) =>
-        resourceBoxModel(resourceData, userStatus)
+        resourceBoxModel(resourceData, userStatus, model)
     );
 
     return (
