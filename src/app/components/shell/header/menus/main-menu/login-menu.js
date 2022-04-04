@@ -13,12 +13,20 @@ const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`
 function LoginLink() {
     // It's not used directly, but loginLink changes when it does
     useLocation();
+    const addressHinkyQAIssue = React.useCallback(
+        (e) => {
+            if (e.defaultPrevented) {
+                e.defaultPrevented = false;
+            }
+        },
+        []
+    );
 
     return (
         <li className="login-menu nav-menu-item rightmost" role="presentation">
             <a
                 href={linkHelper.loginLink()} className="pardotTrackClick"
-                data-local="true" role="menuitem"
+                data-local="true" role="menuitem" onClick={addressHinkyQAIssue}
             >
                 Log in
             </a>
