@@ -16,7 +16,6 @@ function LoginLink() {
     const addressHinkyQAIssue = React.useCallback(
         (e) => {
             if (e.defaultPrevented) {
-                console.info('Default was prevented. Trying to undo.');
                 e.defaultPrevented = false;
             }
         },
