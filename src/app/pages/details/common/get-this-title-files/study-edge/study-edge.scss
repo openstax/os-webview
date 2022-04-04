@@ -9,7 +9,7 @@
         background-repeat: no-repeat;
 
         @include width-up-to($tablet-max) {
-            background-image: url('/images/study-edge/graphic-1.svg');
+            background-image: url('/dist/images/study-edge/graphic-1.svg');
             background-size: calc(10vw + 5rem);
             margin-bottom: -0.1rem; // because image has a little edge
             margin-left: -0.1rem;
@@ -21,7 +21,7 @@
         }
 
         @include wider-than($tablet-max) {
-            background-image: url('/images/study-edge/graphic-large.svg');
+            background-image: url('/dist/images/study-edge/graphic-large.svg');
             background-size: contain;
             display: flex;
             justify-content: flex-end;

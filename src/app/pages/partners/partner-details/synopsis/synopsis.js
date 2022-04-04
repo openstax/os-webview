@@ -8,7 +8,7 @@ import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import './synopsis.scss';
 
 function VerifiedBadge({verifiedFeatures}) {
-    const badgeImage = '/images/partners/verified-badge.svg';
+    const badgeImage = '/dist/images/partners/verified-badge.svg';
 
     return (
         verifiedFeatures &&

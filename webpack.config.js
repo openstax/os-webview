@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 
 const devServerPort = 3000;
-const publicPath = '/';
+const publicPath = '/dist/';
 
 const config = {
     entry: './src/app/main.js',

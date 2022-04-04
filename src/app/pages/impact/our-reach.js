@@ -24,7 +24,7 @@ export default function OurReach({
 }) {
     return (
         <section className="our-reach off-white">
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
             <Hero src={imageSrc} alt={imageAlt} reverse>
                 <h2>{heading}</h2>
                 <RawHTML html={description} />

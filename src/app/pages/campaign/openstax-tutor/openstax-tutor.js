@@ -44,7 +44,7 @@ function TutorPage({data}) {
                 </div>
             </section>
             <div className="color-bar-divider">
-                <img className="strips" src="/images/components/strips.svg" height="13" alt="" role="presentation" />
+                <img className="strips" src="/dist/images/components/strips.svg" height="13" alt="" role="presentation" />
             </div>
             <section className="features">
                 <div className="boxed">

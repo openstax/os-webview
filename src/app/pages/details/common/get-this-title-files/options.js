@@ -350,7 +350,7 @@ export function CheggOption({model}) {
             <a
                 href={model.cheggLink} data-track="Chegg Reader"
             >
-                <img className="logo-img" src="/images/icons/Chegglogo.svg" alt="" />
+                <img className="logo-img" src="/dist/images/icons/Chegglogo.svg" alt="" />
                 <span className="text">
                     {model.cheggLinkText}
                 </span>

@@ -15,7 +15,7 @@ export default function Disruption({
                 </div>
                 <img src={image} alt={imageAlt} />
             </div>
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
         </section>
     );
 }

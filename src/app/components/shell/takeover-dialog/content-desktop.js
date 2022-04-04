@@ -6,7 +6,7 @@ import './content-desktop.scss';
 function Logo() {
     return (
         <img
-            className="logo-color" src="/images/logo.svg" alt="OpenStax logo"
+            className="logo-color" src="/dist/images/logo.svg" alt="OpenStax logo"
             width="354" height="81"
         />
     );

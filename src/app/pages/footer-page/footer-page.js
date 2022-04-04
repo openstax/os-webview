@@ -22,7 +22,7 @@ export default function FooterPage() {
     window.scrollTo(0, 0);
     return (
         <div className="footer-page page">
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
             <main id="maincontent" className="text-content left-justified">
                 <RawHTML Tag="h1" html={heading} />
                 <RawHTML html={content} />

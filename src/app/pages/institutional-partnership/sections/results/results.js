@@ -4,8 +4,8 @@ import './results.scss';
 
 export default function Results({heading, description, cards: [cards]}) {
     const images = [
-        '/images/institutional-partnership/first-result-icon.svg',
-        '/images/institutional-partnership/second-result-icon.svg'
+        '/dist/images/institutional-partnership/first-result-icon.svg',
+        '/dist/images/institutional-partnership/second-result-icon.svg'
     ];
 
     return (
