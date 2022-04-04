@@ -11,7 +11,9 @@ function dataToEntry(item) {
         value,
         cms: name,
         html: name,
-        title: item.seo_title
+        title: item.seo_title,
+        icon: item.subject_icon,
+        color: item.subject_color
     };
 }
 

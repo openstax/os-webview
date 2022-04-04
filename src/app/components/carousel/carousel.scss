@@ -1,6 +1,9 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .carousel {
+    display: grid;
+    position: relative;
+
     &.mobile-slider {
         @include width-up-to($phone-max) {
             .frame-changer {
@@ -19,10 +22,11 @@
         background-color: rgba(ui-color(black), 0.4);
         display: flex;
         height: 7rem;
-        justify-content: space-between;
+        justify-content: center;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
+        width: 4rem;
 
         .hover-text {
             display: none;
@@ -104,6 +108,7 @@
 
     .viewport {
         overflow-x: hidden;
+        width: 100%;
     }
 
     .items {

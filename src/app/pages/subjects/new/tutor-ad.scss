@@ -1,0 +1,72 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subjects-page,
+.subject-specific {
+    section.tutor-ad {
+        background: linear-gradient(to top, ui-color(page-bg) 50%, ui-color(white) 50%);
+        padding: 3rem;
+
+        @include width-up-to($phone-max) {
+            padding: $normal-margin;
+        }
+
+        > .content {
+            @extend %card;
+
+            background-color: ui-color(white);
+            display: grid;
+            max-width: 93rem;
+
+            > * {
+              max-width: 100%;
+            }
+
+            img {
+                max-height: 20rem;
+            }
+
+            @include width-up-to($phone-max) {
+                gap: 3rem;
+                grid-template-rows: auto auto auto;
+                padding: 2rem;
+                text-align: center;
+
+                img,
+                .btn {
+                    align-self: center;
+                    grid-column-start: 1;
+                    grid-row-start: 3;
+                    justify-self: center;
+                }
+            }
+
+            @include wider-than($phone-max) {
+                @include set-font(h3);
+
+                gap: 2rem 8rem;
+                grid-template: 'heading img'
+                'html img';
+                padding: 3rem;
+
+                img,
+                .btn {
+                    align-self: center;
+                    grid-area: img;
+                    justify-self: center;
+                }
+
+                .btn {
+                    margin-bottom: 1rem;
+                }
+            }
+
+            h1 {
+                @include set-font(body-regular);
+
+                color: text-color(helper);
+                margin: 0;
+                text-transform: uppercase;
+            }
+        }
+    }
+}

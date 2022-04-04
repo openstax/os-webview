@@ -1,0 +1,58 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subject-specific .subject-intro {
+    @include width-up-to($phone-max) {
+        background-color: ui-color(page-bg);
+        position: sticky;
+        top: 5rem;
+        z-index: 1;
+    }
+
+    > .content {
+        align-items: top;
+        display: grid;
+        gap: 0 6rem;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto 1fr;
+
+        @include width-up-to($phone-max) {
+            gap: 0 3rem;
+            position: sticky;
+            top: 9rem;
+        }
+
+        &.open {
+            display: block;
+
+            > :first-child,
+            > h1 {
+                display: none;
+            }
+        }
+
+        > * {
+            margin: 0;
+        }
+
+        .paragraph-html,
+        .jump-to-section {
+            grid-row-start: 1;
+            grid-row-end: 3;
+            grid-column-start: 2;
+            position: sticky;
+            top: 9rem;
+        }
+
+        @include width-up-to($phone-max) {
+            .paragraph-html {
+                display: none;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            .navigator {
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subjects-page .subjects-listing {
+    background-color: ui-color(white);
+
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5rem 3rem;
+        justify-content: space-between;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        line-height: 2.2rem;
+        max-width: 28rem;
+        row-gap: 1rem;
+
+        h2 {
+            @include title-font(2.4rem);
+
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .subject-icon {
+            height: 5rem;
+            align-self: start;
+        }
+    }
+}

@@ -1,193 +1,46 @@
-import React, {useState, useEffect} from 'react';
-import useSubjectsContext, {SubjectsContextProvider} from './context';
-import useSubjectCategoryContext from '~/contexts/subject-category';
-import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import BookViewer from './book-viewer/book-viewer';
-import savingsPromise from '~/models/savings';
-import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
-import {RadioPanel} from '~/components/radio-panel/radio-panel';
-import {forceCheck} from 'react-lazyload';
-import LanguageSelector from '~/components/language-selector/language-selector';
-import {useLocation, useHistory} from 'react-router-dom';
-import './subjects.scss';
-import $ from '~/helpers/$';
+import React, {lazy, Suspense} from 'react';
+import useFlagContext from '~/components/shell/flag-context';
 
-const pagePath = '/subjects';
+function useFeatureFlag() {
+    const {new_subjects: flag} = useFlagContext();
 
-function categoryFromPath(pathname) {
-    return pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
+    return flag;
 }
 
-function useCategoryTiedToPath() {
-    const {pathname} = useLocation();
-    const [category, setCategory] = useState(categoryFromPath(pathname));
-    const categories = useSubjectCategoryContext();
-    const {title} = useSubjectsContext();
-    const history = useHistory();
-
-    useEffect(() => {
-        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
-
-        history.push(path, {
-            filter: category,
-            path: pagePath
-        });
-        window.requestAnimationFrame(forceCheck);
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
-    }, [category, history]);
-
-    useEffect(() => {
-        const categoryEntry = categories.find((e) => e.value === category);
-
-        if (!categoryEntry && categories.length > 0) {
-            setCategory(categories[0].value);
-        } else {
-            document.title = (categoryEntry?.title) || title;
-        }
-    }, [category, categories, title]);
-
-    useEffect(() => setCategory(categoryFromPath(pathname)), [pathname]);
-
-    return {category, setCategory, categories};
-}
-
-function AboutBlurb({heading, description}) {
-    const eventName = 'Microdonation subjects page donor supported blurb impact link';
-
-    return (
-        <div className="blurb" onClick={linkClickTracker(eventName)}>
-            <h3 className="title">{heading}</h3>
-            <RawHTML Tag="p" className="text" html={description} />
-        </div>
-    );
-}
-
-function SavingsBlurb({description}) {
-    const eventName = 'Microdonation subjects page bottom sentence impact link';
-
-    return (
-        <React.Fragment>
-            <hr />
-            <div className="text-content" onClick={linkClickTracker(eventName)}>
-                <RawHTML Tag="p" className="savings-blurb" html={description} />
-            </div>
-        </React.Fragment>
-    );
-}
-
-function useLastBlurb(data) {
-    const {adoptions_count: adoptions, savings} = useDataFromPromise(savingsPromise, {});
-    const description = useSavingsDataIn(data.description, adoptions, savings);
-
-    if (!data) {
-        return false;
-    }
-    if (data.heading) {
-        return {
-            heading: data.heading,
-            description
-        };
-    }
-    return description;
-}
-
-function AboutOurTextBooks() {
-    const model = useSubjectsContext();
-    const textData = Reflect.ownKeys(model)
-        .filter((k) => (/^devStandard\d/).test(k))
-        .reduce((a, b) => {
-            const [_, num, textId] = b.match(/(\d+)(\w+)/);
-            const index = num - 1;
-
-            a[index] = a[index] || {};
-            a[index][textId.toLowerCase()] = model[b];
-            return a;
-        }, []);
-
-    const lastBlurb = useLastBlurb(textData[3]);
-
-    return (
-        <div>
-            <h2 className="text-content">{model.devStandardsHeading}</h2>
-            <div className="boxed-row feature-block">
-                {
-                    textData.slice(0, 3).map((data) =>
-                        <AboutBlurb {...data} key={data.description} />)
-                }
-                {lastBlurb.heading && <AboutBlurb {...lastBlurb} />}
-            </div>
-            {
-                !lastBlurb.heading &&
-                    <SavingsBlurb description={lastBlurb} />
+function useSelectedVersion(featureFlag) {
+    const importFn = React.useCallback(
+        () => {
+            if (featureFlag === true) {
+                return import('./new/subjects.js');
             }
-        </div>
+            return import('./old/subjects.js');
+        },
+        [featureFlag]
+    );
+    const Component = React.useMemo(
+        () => lazy(() => importFn()),
+        [importFn]
+    );
+
+    return Component;
+}
+
+function SelectedComponent({featureFlag}) {
+    const Component = useSelectedVersion(featureFlag);
+
+    return (
+        <Suspense fallback={<h1>Loading...</h1>}>
+            <Component />
+        </Suspense>
     );
 }
 
+export default function PickVersion() {
+    const featureFlag = useFeatureFlag();
 
-function StripsAndFilter({category, setCategory}) {
-    const categories = useSubjectCategoryContext();
-    const {filterIsSticky} = useSubjectsContext();
+    if (featureFlag === null) {
+        return null;
+    }
 
-    return (
-        <div className="strips-and-filter">
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
-            <div className={`filter ${filterIsSticky ? 'sticky': ''}`}>
-                <RadioPanel selectedItem={category} items={categories} onChange={setCategory} />
-            </div>
-        </div>
-    );
-}
-
-function Books({category}) {
-    return (
-        <div className="books">
-            <div className="boxed container">
-                <BookViewer category={category} />
-            </div>
-            <AboutOurTextBooks />
-        </div>
-    );
-}
-
-const leadInText = {
-    en: 'We have textbooks in',
-    es: 'Tenemos libros de texto en'
-};
-
-function Subjects() {
-    const {pageDescription, translations} = useSubjectsContext();
-    const {category, setCategory} = useCategoryTiedToPath();
-    const otherLocales = translations.length ?
-        translations[0].value.map((t) => t.locale) :
-        []
-    ;
-
-    useEffect(
-        () => $.setPageDescription($.htmlToText(pageDescription)),
-        [pageDescription]
-    );
-
-    return (
-        <React.Fragment>
-            <div className="hero">
-                <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />
-                <RawHTML html={pageDescription} />
-            </div>
-            <StripsAndFilter {...{category, setCategory}} />
-            <Books category={category} />
-        </React.Fragment>
-    );
-}
-
-export default function SubjectsLoader() {
-    return (
-        <SubjectsContextProvider>
-            <main className="subjects-page">
-                <Subjects />
-            </main>
-        </SubjectsContextProvider>
-    );
+    return (<SelectedComponent featureFlag={featureFlag} />);
 }

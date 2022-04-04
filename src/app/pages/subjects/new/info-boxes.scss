@@ -1,0 +1,61 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subjects-page .info-boxes,
+.subject-specific .info-boxes {
+    .content {
+        display: grid;
+        gap: $normal-margin;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr 1fr;
+            justify-items: center;
+
+            :first-child {
+                justify-self: left;
+            }
+
+            :last-child {
+                justify-self: right;
+            }
+        }
+    }
+
+    .container {
+        background-color: ui-color(white);
+        border: thin solid ui-color(form-border);
+        border-radius: 0.2rem;
+        box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+        max-width: 33rem;
+        overflow: hidden;
+
+        .blurb {
+            border-left: solid 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 3rem;
+            row-gap: 3rem;
+
+            * {
+                margin: 0;
+            }
+        }
+
+        &:first-child > .blurb {
+            border-color: os-color(orange);
+        }
+
+        &:nth-child(2) > .blurb {
+            border-color: os-color(green);
+        }
+
+        &:last-child > .blurb {
+            border-color: os-color(blue);
+        }
+    }
+}

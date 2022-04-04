@@ -1,0 +1,102 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subject-specific {
+
+    .navigator {
+        padding-top: 3rem;
+
+        .heading {
+            @include set-font(h4);
+
+            margin-bottom: 1rem;
+        }
+
+        a {
+            display: block;
+            border-left: 0.2rem solid ui-color(form-border);
+            margin-left: 0.1rem;
+            padding-left: 2.4rem;
+            text-decoration: none;
+
+            &[aria-current="true"] {
+                border-left-color: os-color(green);
+                border-left-width: 0.4rem;
+                color: text-color(normal);
+                cursor: default;
+                font-weight: bold;
+                margin-left: 0;
+                padding-left: 2.3rem
+            }
+        }
+    }
+
+    .jump-to-section {
+        @include set-font(helper-label);
+
+        @include wider-than($phone-max) {
+            display: none;
+        }
+
+        .toggle-control-bar {
+            align-items: center;
+            background-color: ui-color(white);
+            border: thin solid ui-color(form-border);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.2rem 0.4rem rgba(ui-color(black), 0.2);
+
+            > * {
+                padding: 0 1rem;
+            }
+
+            &.open {
+                border-radius: 0.5rem 0.5rem 0 0;
+                width: 100%;
+
+                + * {
+                    position: absolute;
+                    width: 100%;
+                }
+            }
+
+            .arrow-toggle {
+                border: 0;
+                border-radius: inherit;
+                min-height: 4rem;
+
+                &::before {
+                    background-color: transparent;
+                    border-radius: inherit;
+                }
+            }
+        }
+
+        .accordion-group {
+            border-radius: 0 0 0.5rem 0.5rem;
+            box-shadow: 0 0.2rem 0.4rem rgba(ui-color(black), 0.2);
+            grid-gap: 0;
+
+            .accordion-button {
+                border-top: 0;
+                font-weight: bold;
+                height: auto;
+                padding: 0.5rem 1rem;
+            }
+
+            .content-pane:not([hidden]) {
+                display: flex;
+                flex-direction: column;
+
+                > a {
+                    padding: 0.5rem 1rem;
+                    text-decoration: none;
+
+                    &[aria-current="true"] {
+                        color: text-color(normal);
+                        cursor: default;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}

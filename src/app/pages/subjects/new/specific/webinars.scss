@@ -1,0 +1,29 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subject-specific .webinars {
+    .content {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 6rem;
+    }
+
+    .top {
+        display: flex;
+        gap: 3rem;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .card {
+        @extend %card;
+
+        h2 {
+            @include set-font(h4);
+        }
+
+        background-color: ui-color(white);
+        min-width: 25rem;
+        padding: 2rem;
+    }
+}
