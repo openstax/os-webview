@@ -1,0 +1,85 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.subject-specific .book-viewer {
+    .category {
+        .books {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+            margin: $normal-margin 0;
+            width: 100%;
+
+            @include width-up-to($phone-max) {
+                grid-gap: 1rem;
+            }
+
+            @include wider-than($phone-max) {
+                grid-gap: 4rem 2rem;
+            }
+        }
+
+        .navmenu {
+            padding: 0 1rem 1rem;
+            position: relative;
+
+            button {
+                @include button();
+
+                justify-content: space-between;
+                padding: 0 $normal-margin;
+                width: 100%;
+            }
+
+            [role="menu"] {
+                display: none;
+            }
+
+            [aria-isexpanded="true"] {
+                border-radius: 0.5rem 0.5rem 0 0;
+
+                + [role="menu"] {
+                    background-color: ui-color(white);
+                    border: thin solid ui-color(form-border);
+                    border-radius: 0 0 0.5rem 0.5rem;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1rem 0;
+                    position: absolute;
+                    width: calc(100% - 2rem);
+
+                    [role="menuitem"] {
+                        padding: 0.3rem 1rem;
+                        text-decoration: none;
+                    }
+
+                    hr {
+                        border-top: thin solid ui-color(form-border);
+                        pointer-events: none;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .book-tile {
+            background-color: ui-color(white);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+
+            img {
+                max-width: 100%;
+            }
+
+            .text-block {
+                padding: 1rem;
+
+                a {
+                    @include set-font(helper-label);
+
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+}

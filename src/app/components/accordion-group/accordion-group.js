@@ -7,7 +7,7 @@ import {
     AccordionItemPanel
 } from 'react-accessible-accordion';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
+import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import './accordion-group.scss';
 import $ from '~/helpers/$';
@@ -16,7 +16,7 @@ function useChevronDirection(forwardOnChange, preExpanded) {
     const [openTabs, updateOpenTabs] = useState([...preExpanded]);
 
     function chevronDirection(uuid) {
-        return openTabs.includes(uuid) ? 'down' : 'right';
+        return openTabs.includes(uuid) ? 'up' : 'down';
     }
 
     function onChange(newOpenTabs) {
@@ -32,7 +32,7 @@ function useChevronDirection(forwardOnChange, preExpanded) {
 function TitleBar({title, titleTag, chevronDirection}) {
     const icon = ({
         down: faChevronDown,
-        right: faChevronRight
+        up: faChevronUp
     })[chevronDirection];
 
     return (

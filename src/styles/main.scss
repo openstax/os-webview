@@ -186,6 +186,23 @@ sup {
     }
 }
 
+#lower-sticky-note {
+    max-width: 100vw;
+    z-index: 4;
+
+    @include width-up-to($phone-max) {
+        bottom: 0;
+        position: fixed;
+    }
+
+    @include wider-than($phone-max) {
+        display: flex;
+        justify-content: center;
+        position: sticky;
+        top: 5rem;
+    }
+}
+
 #microsurvey {
     background-color: ui-color(white);
     border-radius: 0.3rem;

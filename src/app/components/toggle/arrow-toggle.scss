@@ -24,6 +24,7 @@
     }
 
     &::after {
+        background-color: transparent;
         color: text-color(normal);
         position: absolute;
         right: 1.3rem;

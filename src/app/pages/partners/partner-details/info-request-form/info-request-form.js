@@ -183,7 +183,7 @@ function CountrySelector({value, setValue}) {
 
 function Page2() {
     const {userModel, userStatus} = useUserContext();
-    const [school, setSchool] = React.useState(userModel?.self_reported_school);
+    const [school, setSchool] = React.useState(userModel?.school_name);
     const [country, setCountry] = React.useState();
 
     React.useEffect(() => {

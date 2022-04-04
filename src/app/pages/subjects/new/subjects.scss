@@ -1,69 +1,39 @@
-@import 'mixins/coming-soon';
 @import 'pattern-library/core/pattern-library/headers';
-
-#main.subjects-main {
-    z-index: 1;
-}
+@import 'mixins/coming-soon';
 
 .subjects-page {
+    padding-bottom: 3rem;
 
-    .hero {
-        @include scale-feature(padding-top, 2rem, 6rem);
+    section .content {
+        @extend %content;
 
-        h2 {
-            @include scale-set-font(h3, h1);
+        margin: 0;
+        padding: $normal-margin;
 
-            margin: 0;
+        @include wider-than($media-content-max) {
+            margin: 0 auto;
+            max-width: $content-max - 2 * $normal-margin;
+            padding: 3rem 0;
         }
     }
 
-    .subject {
-        margin-bottom: 0;
-        margin-top: 2rem;
+    .btn {
+        @include button();
+
+        justify-self: left;
+
+        &.primary {
+            @extend %primary;
+        }
     }
 
-    .feature-block {
+    .strips {
         display: block;
-
-        @include wider-than($tablet-max) {
-            display: flex;
-            flex-direction: row;
-        }
+        position: static;
     }
 
-    .filter {
-        padding: 0.2rem 0;
-
-        &.sticky {
-            position: fixed;
-            top: 5.2rem;
-
-            @include wider-than($tablet-max) {
-                position: absolute;
-                top: inherit;
-            }
-        }
-    }
-
-    .blurb {
-        flex: 1 28%;
-        padding: 0 1.5rem;
-
-        @include wider-than($tablet-max) {
-            text-align: center;
-        }
-
-        .title {
-            margin-bottom: 0;
-
-            @include wider-than($tablet-max) {
-                text-align: center;
-            }
-        }
-
-        span[id] {
-            font-weight: bold;
-        }
+    .language-selector-section {
+        background-color: ui-color(white);
     }
 
     .language-selector {

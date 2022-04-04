@@ -244,27 +244,42 @@ function isRealPrintLink(url) {
     return typeof url === 'string' && !url.includes('stores/page');
 }
 
-export function PrintOption({model}) {
-    const slug = (model.slug || '').replace('books/', '');
-    const amazonDataLink = useAmazonAssociatesLink(slug);
-    const {language} = useDetailsContext();
-    const printText = localizedTexts[language].print;
-    const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : printText;
+export function usePrintCopyDialog() {
     const [Dialog, open, close] = useDialog();
-
-    function onClick(event) {
-        event.preventDefault();
-        open();
-    }
-
-    return (
-        <SimpleLinkOption
-            link={isRealPrintLink(amazonDataLink.url)} icon={faBook} text={text}
-            onClick={onClick}
-        >
+    const PCDialog = React.useCallback(
+        ({text, amazonDataLink}) => (
             <Dialog title={text} >
                 <OrderPrintCopy amazonDataLink={amazonDataLink} hideDialog={() => close()} />
             </Dialog>
+        ),
+        [close]
+    );
+    const onClick = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            open();
+        },
+        [open]
+    );
+
+    return ({onClick, PCDialog});
+}
+
+export function PrintOption({model, icon=faBook}) {
+    const slug = (model.slug || '').replace('books/', '');
+    const amazonDataLink = useAmazonAssociatesLink(slug);
+    const {language} = useDetailsContext() || {language: 'en'};
+    const printText = localizedTexts[language].print;
+    const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : printText;
+    const {onClick, PCDialog} = usePrintCopyDialog({});
+
+    console.info('Using data link', amazonDataLink);
+    return (
+        <SimpleLinkOption
+            link={isRealPrintLink(amazonDataLink.url)} icon={icon} text={text}
+            onClick={onClick}
+        >
+            <PCDialog text={text} amazonDataLink={amazonDataLink} />
         </SimpleLinkOption>
     );
 }
