@@ -114,7 +114,9 @@ function Partners({data}) {
                     <RawHTML html={description} />
                     <Controls {...{advancedFilterOptions, typeOptions}} />
                 </div>
-                <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
+                <img
+                    className="strips" src="/dist/images/components/strips.svg"
+                    height="10" alt="" role="presentation" />
             </section>
             <MobileControlRow {...{advancedFilterOptions, typeOptions}} />
             <div className="padding">
