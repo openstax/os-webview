@@ -69,7 +69,7 @@ do_progress_quiet() {
   fi
 }
 
-# This provides a > 10% speedup because we do not have to reinitialize node and ruby
+# This provides a speedup because we do not have to reinitialize node
 if [[ ! ${BOOTSTRAP_ALREADY_RAN} ]]; then
 
   # Install homebrew packages if running on macOS
