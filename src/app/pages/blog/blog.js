@@ -9,6 +9,7 @@ import SearchBar, {HeadingAndSearchBar} from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import LatestBlogPosts from './latest-blog-posts/latest-blog-posts';
 import {ArticleFromSlug} from './article/article';
+import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
 import timers from './timers';
 import './blog.scss';
 
@@ -62,6 +63,7 @@ function ArticlePage() {
             <ArticleFromSlug slug={`news/${slug}`} />
             <DisqusForm />
             <MoreStories exceptSlug={slug} />
+            <GatedContentDialog />
         </WindowContextProvider>
     );
 }

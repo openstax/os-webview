@@ -1,0 +1,69 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.modal-overlay-gated-content {
+    backdrop-filter: blur(8px);
+}
+
+.gated-content {
+    dialog {
+        width: 69rem;
+    }
+
+    .title-bar {
+        @include title-font(2.4rem);
+
+        height: 7rem;
+        justify-content: center;
+
+        .put-away {
+            display: none;
+        }
+    }
+
+    .dialog-body {
+        display: grid;
+        grid-template-columns: 100%;
+        justify-items: center;
+        padding: 3rem 3rem 2rem;
+        row-gap: 2rem;
+        text-align: center;
+
+        form {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 100%;
+            justify-items: center;
+            width: 100%;
+
+            .invalid-message {
+                display: none;
+            }
+        }
+
+        .btn {
+            width: min-content;
+        }
+
+        .instructions {
+            font-weight: bold;
+        }
+    }
+
+    .contact-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem 3rem;
+        text-align: left;
+        width: 100%;
+    }
+
+    button,
+    .btn {
+        @include button();
+
+        &.primary {
+            @extend %primary;
+        }
+    }
+
+}
