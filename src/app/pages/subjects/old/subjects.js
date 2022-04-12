@@ -135,7 +135,7 @@ function StripsAndFilter({category, setCategory}) {
 
     return (
         <div className="strips-and-filter">
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
             <div className={`filter ${filterIsSticky ? 'sticky': ''}`}>
                 <RadioPanel selectedItem={category} items={categories} onChange={setCategory} />
             </div>

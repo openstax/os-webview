@@ -28,7 +28,7 @@ function Card({data}) {
 const cards = [
     {
         headline: 'Getting Started',
-        img: '/images/my-openstax/getting-started.png',
+        img: '/dist/images/my-openstax/getting-started.png',
         title: 'Instructor Getting Started Guide',
         url: 'https://assets.openstax.org/oscms-dev/media/documents/instructor_getting_started_guide_1.pdf',
         linkText: 'Download',
@@ -45,7 +45,7 @@ const cards = [
     },
     {
         headline: 'Getting Connected',
-        img: '/images/my-openstax/getting-connected.webp',
+        img: '/dist/images/my-openstax/getting-connected.webp',
         title: 'Webinars about our books, resources, and more',
         url: '/webinars',
         linkText: 'Browse',
@@ -58,7 +58,7 @@ const cards = [
     },
     {
         headline: 'Support',
-        img: '/images/my-openstax/support.webp',
+        img: '/dist/images/my-openstax/support.webp',
         title: 'OpenStax Support',
         url: '/help',
         linkText: 'Visit',
@@ -78,7 +78,7 @@ export default function Assistant({id, hidden}) {
         <section id={id} hidden={hidden}>
             <h2>My Assistant</h2>
             <div className="welcome">
-                <img src="/images/my-openstax/assistant-avatar.svg" height="44" width="44" />
+                <img src="/dist/images/my-openstax/assistant-avatar.svg" height="44" width="44" />
                 <div>
                     <b>Welcome, {firstName}!</b><br />
                     I’ve collected some of the most useful resources here for you,

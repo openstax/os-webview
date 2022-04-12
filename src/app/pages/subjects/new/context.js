@@ -5,9 +5,9 @@ import useLanguageContext from '~/contexts/language';
 
 const preserveWrapping = true;
 const icons = [
-    '/images/subjects/author-icon.svg',
-    '/images/subjects/scope-icon.svg',
-    '/images/subjects/review-icon.svg'
+    '/dist/images/subjects/author-icon.svg',
+    '/dist/images/subjects/scope-icon.svg',
+    '/dist/images/subjects/review-icon.svg'
 ];
 
 function aboutBlurbs(model) {

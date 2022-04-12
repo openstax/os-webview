@@ -10,7 +10,7 @@ function Hero({coverUrl}) {
     return (
         <div className="hero" style={`background-image: url(${coverUrl})`}>
             <img
-                className="strips" src="/images/components/strips.svg"
+                className="strips" src="/dist/images/components/strips.svg"
                 height="10" alt="" role="presentation" />
         </div>
     );

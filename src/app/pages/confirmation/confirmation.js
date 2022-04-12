@@ -151,7 +151,7 @@ export default function Confirmation() {
                     </div>
                 </div>
             </div>
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
             {
                 isErrata ?
                     <ErrataButtonsAndDetail errataId={errataId} text={belowHeaderText} /> :

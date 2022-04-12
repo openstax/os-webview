@@ -12,7 +12,7 @@ import './rating-form.scss';
 const nameInfo = 'Your name as it is displayed here will be shown publicly when you leave a rating.';
 
 function Star({starValue, full, setRating}) {
-    const imgUrl = full ? '/images/partners/full-star.svg' : '/images/partners/empty-star.svg';
+    const imgUrl = full ? '/dist/images/partners/full-star.svg' : '/dist/images/partners/empty-star.svg';
 
     function saveRating() {
         setRating(starValue);
