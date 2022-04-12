@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 
 const devServerPort = 3000;
-const publicPath = '/';
+const publicPath = '/dist/';
 
 const config = {
     entry: './src/app/main.js',
@@ -117,7 +117,7 @@ module.exports = (env, argv) => {
     console.log('Building', config.mode);
 
     if (config.mode === 'production') {
-        config.output.filename = '[name]-[hash].min.js';
+        config.output.filename = '[name]-[contenthash].min.js';
         config.devtool = 'source-map';
         config.optimization.splitChunks.maxInitialRequests = 5;
         config.output.chunkFilename = 'chunk-[chunkhash].js';

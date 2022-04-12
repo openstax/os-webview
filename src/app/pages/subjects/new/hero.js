@@ -4,8 +4,8 @@ import useSubjectsContext from './context';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import './hero.scss';
 
-const linesUrl = '/images/subjects/graphic-lines.svg';
-const waveUrl = '/images/subjects/wave-bg.png';
+const linesUrl = '/dist/images/subjects/graphic-lines.svg';
+const waveUrl = '/dist/images/subjects/wave-bg.png';
 
 export default function Hero() {
     const {heading, description, headingImage} = useSubjectsContext();

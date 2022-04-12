@@ -4,7 +4,7 @@ export default function Page() {
     return (
         <main className="not-found no-style page">
             <img
-                className="strips" src="/images/components/strips.svg"
+                className="strips" src="/dist/images/components/strips.svg"
                 height="10" alt="" role="presentation"
             />
             <div className="boxed">

@@ -68,7 +68,7 @@ export function BookstorePage({data}) {
                 <div className="images">
                     <img
                         className="desktop-bg"
-                        src="/images/bookstore-suppliers/hero-bookstore-print-desktop.png"
+                        src="/dist/images/bookstore-suppliers/hero-bookstore-print-desktop.png"
                         alt=""
                     />
                 </div>

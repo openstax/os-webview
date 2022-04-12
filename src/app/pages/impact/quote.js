@@ -31,7 +31,7 @@ export default function Quote({
             {
                 !noStrips &&
                     <img
-                        className="strips" src="/images/components/strips.svg"
+                        className="strips" src="/dist/images/components/strips.svg"
                         height="10" alt="" role="presentation" />
             }
         </section>

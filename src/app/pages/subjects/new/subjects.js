@@ -63,7 +63,7 @@ function SubjectsPage() {
         <main className="subjects-page">
             <SEOSetup />
             <Hero />
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="separator" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="separator" />
             <section className="language-selector-section">
                 <div className="content">
                     <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />

@@ -105,7 +105,7 @@ function IsbnInfo({model, label, tag}) {
 
 function LicenseIcon({name}) {
     const icon = name.match(/share/i) ?
-        '/images/details/by-nc-sa.svg' : '/images/details/by.svg';
+        '/dist/images/details/by-nc-sa.svg' : '/dist/images/details/by.svg';
 
     return (
         <img src={icon} alt="" height="42" width="120" />

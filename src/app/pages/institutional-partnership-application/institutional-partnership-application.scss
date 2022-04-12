@@ -57,7 +57,7 @@
     .hero {
         align-items: center;
         background-color: os-color(light-blue);
-        background-image: url('/images/institutional/banner-institutional.webp');
+        background-image: url('/dist/images/institutional/banner-institutional.webp');
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -126,7 +126,7 @@
                 position: relative;
 
                 &::before {
-                    content: url('/images/institutional/icon-quote.svg');
+                    content: url('/dist/images/institutional/icon-quote.svg');
                     left: 0;
                     position: absolute;
                 }

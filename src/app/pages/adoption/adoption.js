@@ -103,7 +103,7 @@ export default function AdoptionForm() {
     return (
         <main className="adoption-form-v2">
             <FormHeader slug="pages/adoption-form" />
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
             <div className="text-content" ref={ref}>
                 <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
                     <StudentForm />

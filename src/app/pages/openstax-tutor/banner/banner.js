@@ -4,12 +4,12 @@ import ClippedImage from '~/components/clipped-image/clipped-image';
 import './banner.scss';
 
 export default function Banner({model}) {
-    const tutorLogo = '/images/openstax-tutor/tutor-logo.svg';
+    const tutorLogo = '/dist/images/openstax-tutor/tutor-logo.svg';
     const {header, description} = model;
     const [
         src, altText
     ] = [
-        '/images/openstax-tutor/student@3x.webp',
+        '/dist/images/openstax-tutor/student@3x.webp',
         'student at a desk'
     ];
 

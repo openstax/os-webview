@@ -52,7 +52,7 @@ function InstructorResources({detailData}) {
     return (
         <div className="resource-panel">
             <div className="left-side">
-                <img src="/images/my-openstax/toolbox.svg" alt="" />
+                <img src="/dist/images/my-openstax/toolbox.svg" alt="" />
                 <div>
                     <div><b>OpenStax {detailData.title} Resources</b></div>
                     <div><i>Always free, included</i></div>
@@ -81,7 +81,7 @@ function TutorResources({detailData}) {
             <div className="left-side">
                 <img
                     className="tutor-logo"
-                    src="/images/openstax-tutor/tutor-logo.svg" alt=""
+                    src="/dist/images/openstax-tutor/tutor-logo.svg" alt=""
                 />
                 <div>
                     <div><b>OpenStax Tutor Courseware</b></div>
@@ -197,7 +197,7 @@ export default function BookDetails({book}) {
                             </div>
                             <a href="/partners" className="btn" onClick={goToPartners}>Explore options</a>
                         </div>
-                        <ClippedImage src="/images/my-openstax/partners-bg.webp" alt="" />
+                        <ClippedImage src="/dist/images/my-openstax/partners-bg.webp" alt="" />
                     </div>
                 </div>
             </div>

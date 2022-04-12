@@ -110,7 +110,7 @@ function InstructorResourceTab({model, userStatus}) {
         title: partnerListLabel,
         seeMoreText,
         blurbs,
-        badgeImage: '/images/partners/verified-badge.svg'
+        badgeImage: '/dist/images/partners/verified-badge.svg'
     };
     const freeStuffContent = model.freeStuffInstructor.content;
 

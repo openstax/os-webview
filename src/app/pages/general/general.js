@@ -11,7 +11,7 @@ function GeneralPage({html}) {
     const newDoc = parser.parseFromString(html, 'text/html');
     const strips = parser
         .parseFromString(
-            '<img class="strips" src="/images/components/strips.svg" height="10" alt="">',
+            '<img class="strips" src="/dist/images/components/strips.svg" height="10" alt="">',
             'text/html'
         )
         .querySelector('img');

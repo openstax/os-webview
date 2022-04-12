@@ -70,7 +70,7 @@ function FAQ({data: {
                     <RawHTML className="text-content" html={subhead} />
                 </div>
             </div>
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
             <div className="desktop-row boxed">
                 <div className="faq-list">
                     {questions.map((qa) => <QuestionAndAnswer key={qa.slug} qa={qa} />)}
