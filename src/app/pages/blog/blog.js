@@ -27,7 +27,8 @@ export function SearchResultsPage() {
     );
 }
 
-function MainBlogPage() {
+// Exported so it can be tested
+export function MainBlogPage() {
     const {pinnedStory} = useBlogContext();
 
     useEffect(
