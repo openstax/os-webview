@@ -1,0 +1,40 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.latest-blog-posts {
+    .boxed {
+        align-items: flex-start;
+        padding-bottom: 11rem;
+        row-gap: 3rem;
+
+        > * {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    > .boxed:first-child {
+        padding-top: 3rem;
+    }
+
+    .breadcrumb {
+        align-items: center;
+        font-weight: bold;
+        display: flex;
+        gap: 1rem;
+        text-decoration: none;
+    }
+
+    .whats-showing {
+        @include title-font(1.8rem);
+    }
+
+    h1 {
+        @include set-font(h2);
+
+        margin: 0;
+    }
+
+    .simple-paginator {
+        align-self: flex-end;
+    }
+}

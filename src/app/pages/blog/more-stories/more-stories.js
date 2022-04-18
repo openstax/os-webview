@@ -1,64 +1,49 @@
 import React from 'react';
-import SearchBar from '../search-bar/search-bar';
+import {HeadingAndSearchBar} from '../search-bar/search-bar';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
+import useLatestBlogEntries from '~/models/blog-entries';
 import useBlogContext from '../blog-context';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCaretLeft} from '@fortawesome/free-solid-svg-icons/faCaretLeft';
-import {faCaretRight} from '@fortawesome/free-solid-svg-icons/faCaretRight';
-import $ from '~/helpers/$';
 import './more-stories.scss';
 
-function LimitController() {
-    const {limit, pageSize, moreStories, fewerStories} = useBlogContext();
-
-    return (
-        <div className="button-row">
-            {
-                limit > pageSize ?
-                    <button type="button" onClick={fewerStories} onKeyDown={$.treatSpaceOrEnterAsClick}>
-                        <FontAwesomeIcon icon={faCaretLeft} />
-                        {' '}Newer stories
-                    </button> :
-                    <div />
-            }
-            <button type="button" onClick={moreStories} onKeyDown={$.treatSpaceOrEnterAsClick}>
-                Older stories{' '}
-                <FontAwesomeIcon icon={faCaretRight} />
-            </button>
-        </div>
-    );
-}
-
-export default function MoreStories({exceptSlug}) {
-    const {
-        pinnedStory, latestStories, setPath, pageSize
-    } = useBlogContext();
+export function LatestBlurbs({page, pageSize, exceptSlug}) {
+    const numberNeeded = page * pageSize + 1;
+    const latestStories = useLatestBlogEntries(numberNeeded);
+    const {setPath} = useBlogContext();
 
     if (!latestStories) {
         return null;
     }
 
-    const articles = [pinnedStory, ...latestStories]
+    const articles = latestStories
         .map(blurbModel)
         .filter((article) => exceptSlug !== article.articleSlug)
         .slice(-pageSize);
 
     return (
+        <div className="latest-blurbs cards boxed">
+            {
+                articles.map((article) =>
+                    <div className="card" key={article.articleSlug}>
+                        <ArticleSummary {...{...article, setPath}} />
+                    </div>
+                )
+            }
+        </div>
+    );
+}
+
+export default function MoreStories({exceptSlug}) {
+    return (
         <div className="more-stories">
-            <div className="heading-and-searchbar">
-                <h1>More blog posts</h1>
-                <SearchBar setPath={setPath} />
+            <div className="boxed">
+                <HeadingAndSearchBar>
+                    <h1>More blog posts</h1>
+                </HeadingAndSearchBar>
             </div>
-            <div className="cards boxed">
-                {
-                    articles.map((article) =>
-                        <div className="card" key={article.articleSlug}>
-                            <ArticleSummary {...{...article, setPath}} />
-                        </div>
-                    )
-                }
+            <LatestBlurbs page={1} pageSize={3} exceptSlug={exceptSlug} />
+            <div className="button-row">
+                <a className="btn primary" href="/blog/latest">View more of the latest</a>
             </div>
-            <LimitController />
         </div>
     );
 }

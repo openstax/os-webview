@@ -1,0 +1,33 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.simple-paginator {
+    @include set-font(body-large);
+
+    align-items: baseline;
+    display: flex;
+    gap: 2rem;
+
+    button {
+        @include button();
+
+        width: 4rem;
+        height: 4rem;
+        border-radius: 0;
+        padding: 0;
+
+        &[disabled] {
+            color: ui-color(form-border);
+            pointer-events: none;
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .current-page {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+}

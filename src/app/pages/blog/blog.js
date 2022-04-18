@@ -8,11 +8,17 @@ import DisqusForm from './disqus-form/disqus-form';
 import MoreStories from './more-stories/more-stories';
 import SearchBar from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
+import LatestBlogPosts from './latest-blog-posts/latest-blog-posts';
 import {ArticleFromSlug} from './article/article';
 import timers from './timers';
 import './blog.scss';
 
 export function SearchResultsPage() {
+    useEffect(
+        () => {document.title = 'OpenStax Blog Search';},
+        []
+    );
+
     return (
         <React.Fragment>
             <SearchBar />
@@ -21,13 +27,14 @@ export function SearchResultsPage() {
     );
 }
 
-export function DefaultPage() {
+function MainBlogPage() {
     const {pinnedStory} = useBlogContext();
-    const {search} = useLocation();
 
-    if (search) {
-        return (<SearchResultsPage />);
-    }
+    useEffect(
+        () => {document.title = 'OpenStax News';},
+        []
+    );
+
     return (
         <WindowContextProvider>
             <PinnedArticle />
@@ -69,7 +76,12 @@ export default function LoadBlog() {
             <BlogContextProvider>
                 <Switch>
                     <Route exact path="/blog">
-                        <DefaultPage />
+                        {
+                            location.search ? <SearchResultsPage /> : <MainBlogPage />
+                        }
+                    </Route>
+                    <Route path="/blog/latest">
+                        <LatestBlogPosts />
                     </Route>
                     <Route path="/blog/:slug">
                         <ArticlePage />
