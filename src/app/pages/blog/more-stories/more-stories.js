@@ -5,7 +5,7 @@ import useLatestBlogEntries from '~/models/blog-entries';
 import useBlogContext from '../blog-context';
 import './more-stories.scss';
 
-export function LatestBlurbs({page, pageSize, exceptSlug}) {
+export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
     const numberNeeded = page * pageSize + 1;
     const latestStories = useLatestBlogEntries(numberNeeded);
     const {setPath} = useBlogContext();
@@ -24,7 +24,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug}) {
             {
                 articles.map((article) =>
                     <div className="card" key={article.articleSlug}>
-                        <ArticleSummary {...{...article, setPath}} />
+                        <ArticleSummary {...{...article, setPath, openInNewWindow}} />
                     </div>
                 )
             }

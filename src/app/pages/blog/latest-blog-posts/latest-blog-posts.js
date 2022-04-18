@@ -42,7 +42,7 @@ export default function LatestBlogPosts() {
                     <h1>Latest blog posts</h1>
                 </HeadingAndSearchBar>
                 <Showing page={page} />
-                <LatestBlurbs page={page} pageSize={perPage} />
+                <LatestBlurbs page={page} pageSize={perPage} openInNewWindow />
                 <SimplePaginator currentPage={page} setPage={setPage} totalPages={totalPages} />
             </div>
         </div>

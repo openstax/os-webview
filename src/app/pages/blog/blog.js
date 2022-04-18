@@ -44,7 +44,7 @@ function MainBlogPage() {
     );
 }
 
-export function ArticlePage() {
+function ArticlePage() {
     const {slug} = useParams();
 
     useEffect(
