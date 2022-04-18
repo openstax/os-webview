@@ -83,7 +83,7 @@ function BookSelectorPage({selectedBooksRef}) {
                     required: true
                 }}
             />
-            <input type="hidden" name="subject" value={bookList} />
+            <input type="hidden" name="subject_interest" value={bookList} />
             <HowDidYouHear />
         </div>
     );
