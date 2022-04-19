@@ -21,8 +21,10 @@ export function blurbModel(data) {
 
 export default function ArticleSummary({
     articleSlug, altText, image, headline, subheading, body, date, author,
-    forwardRef={}, setPath, openInNewWindow
+    forwardRef={}, setPath, openInNewWindow, HeadTag='h2'
 }) {
+    const tabTarget = openInNewWindow ? '_blank' : null;
+
     function onClick(event) {
         event.preventDefault();
         setPath(event.target.href);
@@ -35,19 +37,24 @@ export default function ArticleSummary({
                 ref={forwardRef}
                 aria-label={altText || headline}
                 style={`background-image: url("${image}")`}
-                target={openInNewWindow ? '_blank' : null} rel="noreferrer"
+                target={tabTarget} rel="noreferrer"
             />
             <div className="text-block">
-                <h2 className="article-headline">
+                <HeadTag className="article-headline">
                     <a href={`/blog/${articleSlug}`} onClick={onClick}>{headline}</a>
-                </h2>
+                </HeadTag>
                 {
                     subheading &&
                         <h3>{subheading}</h3>
                 }
-                <RawHTML className="article-blurb" html={body} />
-                <a className="read-more" href={`/blog/${articleSlug}`} onClick={onClick}>Read more</a>
                 <Byline date={date} author={author} />
+                <RawHTML className="article-blurb" html={body} />
+                <a
+                  className="read-more" href={`/blog/${articleSlug}`} onClick={onClick}
+                  target={tabTarget}
+                >
+                  Read more
+                </a>
             </div>
         </React.Fragment>
     );
