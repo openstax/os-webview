@@ -144,8 +144,8 @@ function RoleSelector() {
     return (
         <FormSelect
             selectAttributes={{
-                name: 'role',
-                placeholder: 'Select your role',
+                name: 'position',
+                placeholder: 'Select your position',
                 required: true
             }}
             label="Role" options={optionsWithSelection}

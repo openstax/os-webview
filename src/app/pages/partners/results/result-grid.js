@@ -15,7 +15,7 @@ function modelFromEntry(entry) {
         description: entry.blurb,
         tags: entry.tags,
         verifiedFeatures: entry.verifiedFeatures,
-        badgeImage: '/images/partners/verified-badge.svg',
+        badgeImage: '/dist/images/partners/verified-badge.svg',
         rating: entry.rating,
         ratingCount: entry.ratingCount
     };

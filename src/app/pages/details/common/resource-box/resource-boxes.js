@@ -77,7 +77,7 @@ function Top({isNew, model}) {
             {isNew && <NewLabel />}
             {
                 model.k12 &&
-                <img className="badge" src="/images/details/k-12-icon@3x.png" alt="K12 resource" />
+                <img className="badge" src="/dist/images/details/k-12-icon@3x.png" alt="K12 resource" />
             }
             <div className="top-line">
                 <h3 className={model.k12 ? 'space-for-badge' : ''}>{model.heading}</h3>
@@ -85,7 +85,7 @@ function Top({isNew, model}) {
                     model.creatorFest &&
                         <img
                             title="This resource was created by instructors at Creator Fest"
-                            src="/images/details/cf-badge.svg"
+                            src="/dist/images/details/cf-badge.svg"
                         />
                 }
             </div>

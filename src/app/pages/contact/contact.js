@@ -28,7 +28,7 @@ export default function ContactPage() {
                     <p>{tagline}</p>
                 </div>
             </div>
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
             <div className="boxed left-justified">
                 <div className="col form-container">
                     <Form />

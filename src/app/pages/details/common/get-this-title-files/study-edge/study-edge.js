@@ -3,9 +3,9 @@ import './study-edge.scss';
 
 export default function StudyEdge({model}) {
     const shortName = model.slug.replace('books/', '');
-    const googleBadge = '/images/study-edge/google-store-badge.webp';
+    const googleBadge = '/dist/images/study-edge/google-store-badge.webp';
     const googleLink = `https://openstax.studyedge.com/mobile-redirect/android?book=${shortName}`;
-    const appleBadge = '/images/study-edge/apple-store-badge.svg';
+    const appleBadge = '/dist/images/study-edge/apple-store-badge.svg';
     const appleLink = `https://openstax.studyedge.com/mobile-redirect/ios?book=${shortName}`;
 
     return (

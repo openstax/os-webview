@@ -12,10 +12,10 @@ export default function HeroSection({data: {missionBody, missionHeader}}) {
             </div>
             <div className="images" role="presentation">
                 <div className="globe-clipping">
-                    <img src="/images/research/hero-research-earth@1x.webp" alt="" />
+                    <img src="/dist/images/research/hero-research-earth@1x.webp" alt="" />
                 </div>
                 <div className="clipping">
-                    <img src="/images/research/hero-research-curves.svg" alt="" />
+                    <img src="/dist/images/research/hero-research-curves.svg" alt="" />
                 </div>
             </div>
         </section>

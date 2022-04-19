@@ -17,9 +17,9 @@ function LLPH({data}) {
     } = data;
     const heroBackground = data.heroBackground.meta.downloadUrl;
     const ostLink = '/openstax-tutor';
-    const ostLogo = '/images/llph/tutor-logo.svg';
+    const ostLogo = '/dist/images/llph/tutor-logo.svg';
     const briLink = 'https://billofrightsinstitute.org/';
-    const briLogo = '/images/llph/bri-logo.png';
+    const briLogo = '/dist/images/llph/bri-logo.png';
     const loginLocation = new window.URL(linkHelper.loginLink());
 
     loginLocation.search = `?r=${encodeURIComponent(signupLinkHref)}&bri_book=LLPH`;

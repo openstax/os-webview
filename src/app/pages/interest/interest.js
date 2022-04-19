@@ -143,7 +143,7 @@ export default function InterestForm() {
     return (
         <main className="interest-form-v2">
             <FormHeader slug="pages/interest-form" />
-            <img className="strips" src="/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
             <div className="text-content" ref={ref}>
                 <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
                     <StudentForm />

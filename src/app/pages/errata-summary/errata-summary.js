@@ -30,7 +30,7 @@ function ErrataSummary({data, book}) {
             <Hero book={book} />
             <div className="strips-and-filter">
                 <img
-                    className="strips" src="/images/components/strips2.png"
+                    className="strips" src="/dist/images/components/strips2.png"
                     height="10" alt="" role="presentation"
                 />
                 <div className="filter">
