@@ -13,14 +13,19 @@ import {ArticleFromSlug} from './article/article';
 import timers from './timers';
 import './blog.scss';
 
-export function SearchResultsPage() {
-    useEffect(
-        () => {document.title = 'OpenStax Blog Search';},
-        []
-    );
+function Document({title}) {
+  useEffect(
+    () => {document.title = title;},
+    [title]
+  )
 
+  return null;
+}
+
+export function SearchResultsPage() {
     return (
         <React.Fragment>
+            <Document title="OpenStax Blog Search" />
             <SearchBar />
             <SearchResults />
         </React.Fragment>
@@ -31,13 +36,9 @@ export function SearchResultsPage() {
 export function MainBlogPage() {
     const {pinnedStory} = useBlogContext();
 
-    useEffect(
-        () => {document.title = 'OpenStax News';},
-        []
-    );
-
     return (
         <WindowContextProvider>
+            <Document title="OpenStax News" />
             <PinnedArticle />
             <UpdateBox />
             <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
