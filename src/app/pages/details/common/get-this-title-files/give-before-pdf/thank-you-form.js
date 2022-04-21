@@ -54,7 +54,7 @@ export default function ThankYou({link, close}) {
 
     return (
         <FormWithAfterSubmit
-            action={`${window.SETTINGS.apiOrigin}/apps/cms/api/donations/thankyounote/`}
+            action={`${process.env.API_ORIGIN}/apps/cms/api/donations/thankyounote/`}
             method="post"
             className="thank-you-form"
             afterSubmit={afterSubmit}

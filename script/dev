@@ -3,4 +3,4 @@ cd "$(dirname "$0")/.." || exit 111
 source ./script/bootstrap || exit 111
 rm -rf dev
 
-yarn webpack serve
+API_ORIGIN=${API_ORIGIN-https://dev.openstax.org} yarn webpack serve
