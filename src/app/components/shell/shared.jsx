@@ -84,11 +84,11 @@ function useCampaign(stickyData) {
     }, [start, mode]);
 }
 
-const stickyDataPromise = Promise.all([cmsFetch('sticky/'), cmsFetch('snippets/givebanner')]).
-  then(([sd, bd]) => {
-    sd.bannerInfo = bd[0];
-    return sd;
-  });
+const stickyDataPromise = Promise.all([cmsFetch('sticky/'), cmsFetch('snippets/givebanner')])
+    .then(([sd, bd]) => {
+        sd.bannerInfo = bd[0];
+        return sd;
+    });
 
 // eslint-disable-next-line complexity
 export function useStickyData() {

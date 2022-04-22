@@ -1,5 +1,6 @@
 import React from 'react';
 import useSearchContext, {SearchContextProvider} from './search-context';
+import useBlogContext from '../blog-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
@@ -75,5 +76,16 @@ export default function SearchBar() {
                 <SearchButton />
             </div>
         </SearchContextProvider>
+    );
+}
+
+export function HeadingAndSearchBar({children}) {
+    const {setPath} = useBlogContext();
+
+    return (
+        <div className="heading-and-searchbar">
+            {children}
+            <SearchBar setPath={setPath} />
+        </div>
     );
 }

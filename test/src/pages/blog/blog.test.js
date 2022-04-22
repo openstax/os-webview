@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
-import {BlogPage, DefaultPage, ArticlePage} from '~/pages/blog/blog';
+import {BlogPage, MainBlogPage, ArticlePage} from '~/pages/blog/blog';
 
 test('blog default page', (done) => {
     window.location = {
@@ -22,13 +22,13 @@ test('blog default page', (done) => {
         <BrowserRouter>
             <Route>
                 <BlogContextProvider>
-                    <DefaultPage />
+                    <MainBlogPage />
                 </BlogContextProvider>
             </Route>
         </BrowserRouter>
     );
     setTimeout(() => {
-        expect(screen.queryAllByText('Read more')).toHaveLength(7);
+        expect(screen.queryAllByText('Read more')).toHaveLength(4);
         expect(screen.queryAllByRole('textbox')).toHaveLength(1);
         done();
     }, 200);
