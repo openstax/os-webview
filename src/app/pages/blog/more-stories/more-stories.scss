@@ -3,42 +3,17 @@
 
 $image-height: 24rem;
 
-.blog.page .more-stories {
-    padding-bottom: 4rem;
-    padding-top: 2rem;
-    width: 100%;
+.latest-blurbs.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    justify-items: center;
 
-    .heading-and-searchbar {
-        display: flex;
-        margin: 0 auto 4rem auto;
-        padding: 0 $normal-margin;
-        max-width: $content-max;
-        width: 100%;
-
-        @include width-up-to($tablet-max) {
-            align-items: flex-start;
-            flex-direction: column;
-            row-gap: 2rem;
-        }
-
-        @include wider-than($tablet-max) {
-            align-items: center;
-            justify-content: space-between;
-        }
+    @include width-up-to($tablet-max) {
+        grid-gap: 6rem 4rem;
     }
 
-    .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-        justify-items: center;
-
-        @include width-up-to($tablet-max) {
-            grid-gap: 6rem 4rem;
-        }
-
-        @include wider-than($tablet-max) {
-            grid-gap: 6rem 9rem;
-        }
+    @include wider-than($tablet-max) {
+        grid-gap: 6rem 9rem;
     }
 
     .card {
@@ -50,6 +25,10 @@ $image-height: 24rem;
         .link-image {
             height: $image-height;
             width: 100%;
+        }
+
+        .article-headline {
+            @include set-font(h3);
         }
 
         .text-block {
@@ -74,6 +53,18 @@ $image-height: 24rem;
         }
     }
 
+
+}
+
+.blog.page .more-stories {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+    padding-bottom: 12rem;
+    padding-top: 2rem;
+    width: 100%;
+
     h1 {
         @include set-font(h2);
 
@@ -92,15 +83,8 @@ $image-height: 24rem;
         display: none;
     }
 
-    .button-row {
-        display: flex;
-        justify-content: space-between;
-        margin: 2rem auto 0;
-        max-width: $content-max;
-
-        button {
-            background-color: transparent;
-            color: inherit;
-        }
+    .btn.primary {
+        @include button();
+        @extend %primary;
     }
 }

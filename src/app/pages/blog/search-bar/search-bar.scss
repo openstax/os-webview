@@ -1,62 +1,81 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.blog.page .search-bar {
-    display: grid;
-    grid-column-gap: 1rem;
-    grid-row-gap: 1rem;
-    grid-template: 'input button' / 1fr min-content;
-    justify-items: left;
-
-    @include width-up-to($phone-max) {
-        width: 100%;
-    }
-
-    @include wider-than($phone-max) {
-        width: 50%;
-    }
-
-    .input-with-clear-button {
-        align-items: center;
+.blog.page {
+    .search-bar {
         display: grid;
-        grid-area: input;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
-        width: 100%;
+        grid-column-gap: 1rem;
+        grid-row-gap: 1rem;
+        grid-template: 'input button' / 1fr min-content;
+        justify-items: left;
 
-        input {
-            @extend %non-button-input;
-
-            grid-column: 1;
-            grid-row: 1;
-            height: 100%;
+        @include width-up-to($phone-max) {
+            width: 100%;
         }
 
         @include wider-than($phone-max) {
-            min-width: 40rem;
+            width: 50%;
         }
 
-        .clear-search {
-            grid-column: 1;
-            grid-row: 1;
-            justify-self: end;
-            margin-right: 1rem;
-            padding: 0 0.5rem;
+        .input-with-clear-button {
+            align-items: center;
+            display: grid;
+            grid-area: input;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            width: 100%;
 
-            &[hidden] {
-                display: none;
+            input {
+                @extend %non-button-input;
+
+                grid-column: 1;
+                grid-row: 1;
+                height: 100%;
+            }
+
+            @include wider-than($phone-max) {
+                min-width: 40rem;
+            }
+
+            .clear-search {
+                grid-column: 1;
+                grid-row: 1;
+                justify-self: end;
+                margin-right: 1rem;
+                padding: 0 0.5rem;
+
+                &[hidden] {
+                    display: none;
+                }
+            }
+        }
+
+        button {
+            @extend %button;
+
+            grid-area: button;
+            padding: 0;
+            width: 7.5rem;
+
+            &.primary {
+                @extend %primary;
             }
         }
     }
 
-    button {
-        @extend %button;
+    .heading-and-searchbar {
+        display: flex;
+        max-width: $content-max;
+        width: 100%;
 
-        grid-area: button;
-        padding: 0;
-        width: 7.5rem;
+        @include width-up-to($tablet-max) {
+            align-items: flex-start;
+            flex-direction: column;
+            row-gap: 2rem;
+        }
 
-        &.primary {
-            @extend %primary;
+        @include wider-than($tablet-max) {
+            align-items: center;
+            justify-content: space-between;
         }
     }
 }
