@@ -23,6 +23,7 @@ module.exports = {
         'history': 'readonly',
         'piTracker': 'readonly',
         'pi': 'readonly',
+        'process': 'readonly',
         'Promise': 'readonly',
         'Reflect': 'readonly',
         'require': 'readonly',
@@ -33,9 +34,10 @@ module.exports = {
             'files': ['src/**/*.js', 'src/**/*.jsx']
         }
     ],
+    'ignorePatterns': ['src/vendor/**/*.js'],
     'settings': {
         'react': {
-            'version': 'latest'
+            'version': 'detect'
         }
     },
     'rules': {

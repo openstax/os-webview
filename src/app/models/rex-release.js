@@ -22,7 +22,7 @@ const fetchRexInfo = memoize((rexOrigin) => {
 // REMEMBER: The first parameter is the memo key
 const fetchContents = memoize((cnxId, rexOrigin) => {
     if (rexOrigin.includes('tutor')) {
-        return retry(() => fetch(`${window.SETTINGS.apiOrigin}/contents/${cnxId}`))
+        return retry(() => fetch(`${process.env.API_ORIGIN}/contents/${cnxId}`))
             .then((r) => r.json());
     }
     return fetchRexInfo(rexOrigin)
@@ -36,7 +36,7 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
             const bookVersion = rexInfo.release.books[cnxId].defaultVersion;
             const archivePath = `apps/archive/${archiveVersion}`;
 
-            return fetch(`${window.SETTINGS.apiOrigin}/${archivePath}/contents/${cnxId}@${bookVersion}.json`);
+            return fetch(`${process.env.API_ORIGIN}/${archivePath}/contents/${cnxId}@${bookVersion}.json`);
         })
         .then((response) => response.json());
 });

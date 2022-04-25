@@ -6,6 +6,8 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 
+const API_ORIGIN = process.env.API_ORIGIN || '';
+
 const devServerPort = 3000;
 const publicPath = '/dist/';
 
@@ -57,6 +59,7 @@ const config = {
         new CopyWebpackPlugin({
             patterns: [{from: 'src/images', to:'images'}]
         }),
+        new webpack.EnvironmentPlugin({ API_ORIGIN }),
         new ESLintPlugin({fix: true}),
         new FaviconsWebpackPlugin('./src/images/favicon.svg'),
         new HtmlWebpackPlugin({
@@ -92,6 +95,7 @@ const config = {
           logging: 'warn',
       },
       devMiddleware: {
+          index: false,
           publicPath,
           stats: 'errors-only',
       },
@@ -105,9 +109,19 @@ const config = {
       liveReload: true,
       open: true,
       port: devServerPort,
+      proxy: {
+          context: (pathname) => true,
+          target: `http://localhost:${devServerPort}`,
+          pathRewrite: (path) => path === '/' ? '/dist/index.html' : path,
+          router: {
+            '/apps/cms/api': API_ORIGIN,
+            '/cms/assets': API_ORIGIN,
+          },
+          changeOrigin: true
+      },
       static: {
           directory: path.resolve(__dirname, './src'),
-          publicPath: '/'
+          publicPath: publicPath
       }
     },
 }

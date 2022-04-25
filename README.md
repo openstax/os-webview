@@ -31,7 +31,6 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | b
 ```bash
 git clone git@github.com:openstax/os-webview.git
 cd os-webview
-cp src/settings-example.js src/settings.js
 script/setup
 ```
 
@@ -64,15 +63,16 @@ You can also just run the linters (`$(npm bin)/gulp lint`) individually without 
 ## Build for Production
 
 ```bash
-./script/build
+./script/build production
 ```
 
 You must configure your web server to host the files in the `dist` directory that gets created.  No special configuration is required, although it is highly recommended to serve the site using HTTP/2.
 
 ## Configuration
 
-The `settings.js` file can be used to modify a number of site-wide configurations. To edit settings for the development server (for example, to use a local copy of the [CMS](https://github.com/openstax/openstax-cms)), make a copy of `settings-example.js` and rename to `settings.js` at the root level.
-
+The API_ORIGIN environment variable can be used to specify which [CMS](https://github.com/openstax/openstax-cms) instance is used by os-webview.
+os-webview settings are loaded from the specified CMS instance's webview-settings API.
+The default API_ORIGIN for script/dev is https://dev.openstax.org
 
 ## Upgrading Dependencies
 

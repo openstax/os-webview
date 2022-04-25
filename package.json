@@ -73,7 +73,7 @@
         "moduleNameMapper": {
             "\\.scss$": "<rootDir>/__mocks__/styleMock.js",
             "^~/(.*)": "<rootDir>/src/app/$1",
-            "settings": "<rootDir>/src/settings-example.js",
+            "settings": "<rootDir>/src/test-settings.js",
             "^react$": "preact/compat",
             "^react-dom/test-utils$": "preact/test-utils",
             "^react-dom$": "preact/compat"

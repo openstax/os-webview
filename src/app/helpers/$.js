@@ -1,4 +1,3 @@
-const settings = window.SETTINGS;
 const $ = {};
 
 $.isPhoneDisplay = () => {
@@ -15,7 +14,7 @@ $.focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex
 
 $.booleanAttribute = (whether) => whether ? '' : null;
 
-$.apiOriginAndPrefix = `${settings.apiOrigin}/apps/cms/api/v2`;
+$.apiOriginAndPrefix = `${process.env.API_ORIGIN}/apps/cms/api/v2`;
 $.apiOriginAndOldPrefix = $.apiOriginAndPrefix.replace('/v2', '');
 
 $.treatKeydownAsClick = (event, keyList) => {
