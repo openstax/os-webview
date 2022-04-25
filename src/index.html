@@ -17,10 +17,10 @@
         <meta name="twitter:description" content="OpenStax offers free college textbooks for all types of students, making education accessible &amp; affordable for everyone. Browse our list of available subjects!">
         <meta name="twitter:image" content="https://assets.openstax.org/oscms-prodcms/media/images/Turning_textbook_highlighting_into_time_well-sp.original.jpg">
         <meta name="twitter:image:alt" content="OpenStax">
-        <link rel="preload" href="<%= process.env.API_ORIGIN %>/apps/cms/api/webview-settings/" as="fetch" <%= process.env.API_ORIGIN ? 'crossorigin' : '' %>>
-        <link rel="preload" as="font" type="font/woff2" crossorigin
+        <link rel="preload" href="<%= process.env.API_ORIGIN %>/apps/cms/api/webview-settings/" as="fetch" <%= process.env.API_ORIGIN ? 'crossorigin="anonymous"' : '' %>>
+        <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous"
             href="<%= process.env.API_ORIGIN %>/cms/assets/fonts/5b1fbd62-45dc-4433-a7df-a2b24a146411.woff2">
-        <link rel="preconnect" href="https://pi.pardot.com" crossorigin>
+        <link rel="preconnect" href="https://pi.pardot.com" crossorigin="anonymous">
         <!-- Anti-flicker snippet (recommended)  -->
         <style>.async-hide { opacity: 0 !important} </style>
         <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
