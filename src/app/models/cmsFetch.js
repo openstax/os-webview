@@ -13,10 +13,9 @@ export function urlFromSlug(initialSlug) {
 
 export default async function cmsFetch(path) {
     const url = path.replace(/[^?]+/, urlFromSlug);
-    const mode = process.env.API_ORIGIN ? 'cors' : 'no-cors';
 
     try {
-        return (await retry(() => fetch(url, {mode}))).json();
+        return (await retry(() => fetch(url))).json();
     } catch (err) {
         return Promise.reject(new Error(`Failed to fetch ${path}: ${err}`));
     }
