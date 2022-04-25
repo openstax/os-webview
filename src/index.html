@@ -17,8 +17,9 @@
         <meta name="twitter:description" content="OpenStax offers free college textbooks for all types of students, making education accessible &amp; affordable for everyone. Browse our list of available subjects!">
         <meta name="twitter:image" content="https://assets.openstax.org/oscms-prodcms/media/images/Turning_textbook_highlighting_into_time_well-sp.original.jpg">
         <meta name="twitter:image:alt" content="OpenStax">
+        <link rel="preload" href="<%= process.env.API_ORIGIN %>/apps/cms/api/webview-settings/" as="fetch" <%= process.env.API_ORIGIN ? 'crossorigin' : '' %>>
         <link rel="preload" as="font" type="font/woff2" crossorigin
-            href="/cms/assets/fonts/5b1fbd62-45dc-4433-a7df-a2b24a146411.woff2">
+            href="<%= process.env.API_ORIGIN %>/cms/assets/fonts/5b1fbd62-45dc-4433-a7df-a2b24a146411.woff2">
         <link rel="preconnect" href="https://pi.pardot.com" crossorigin>
         <!-- Anti-flicker snippet (recommended)  -->
         <style>.async-hide { opacity: 0 !important} </style>
@@ -30,50 +31,9 @@
         <script src="https://www.google-analytics.com/analytics.js"></script>
         <script async src="https://www.googleoptimize.com/optimize.js?id=GTM-KW9STW6"></script>
         <script type="text/javascript" src="//script.crazyegg.com/pages/scripts/0084/9271.js" async="async"></script>
-        <script src="/settings.js?20211201" type="module"></script>
-        <script>
-            // Expect required variables to be set in settings.js above
-            (function() {
-                function async_load(){
-                    var s = document.createElement('script'); s.type = 'text/javascript';
-                    s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
-                    var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
-                }
-                if(window.attachEvent) { window.attachEvent('onload', async_load); }
-                else { window.addEventListener('load', async_load, false); }
-            })();
-        </script>
-        <link rel="prefetch" href="/apps/cms/api/books/?format=json">
-        <link rel="prefetch" href="/apps/cms/api/footer/?format=json">
-        <link rel="prefetch" href="/apps/cms/api/v2/pages/openstax-homepage/?format=json">
-        <script>
-        (function() {
-            var w = window, d = document;
-            w['pi']=function() {
-                w['pi'].commands = w['pi'].commands || [];
-                w['pi'].commands.push(arguments);
-            };
-            var s = d.createElement('script'); s.async = 1;
-            s.src = '//js.pulseinsights.com/surveys.js';
-            var f = d.getElementsByTagName('script')[0];
-            f.parentNode.insertBefore(s, f);
-
-            pi('identify', 'PI-16384954');
-            pi('get', 'surveys');
-        })();
-        </script>
-        <script>
-          !function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '560465674310764');
-          fbq('track', 'PageView');
-        </script>
+        <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/books/?format=json">
+        <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/footer/?format=json">
+        <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/v2/pages/openstax-homepage/?format=json">
     </head>
     <body class="page-loading">
         <noscript>

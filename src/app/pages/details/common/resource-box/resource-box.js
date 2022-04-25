@@ -69,7 +69,7 @@ export function instructorResourceBoxPermissions(resourceData, userStatus, searc
     const encodedLocation = encodeLocation(search);
     const loginUrl = userStatus.userInfo?.id ?
         `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
-        `${settings.apiOrigin}/oxauth/login/?next=${encodedLocation}`;
+        `${process.env.API_ORIGIN}/oxauth/login/?next=${encodedLocation}`;
 
     return resourceBoxPermissions({
         resourceData,
@@ -86,7 +86,7 @@ export function studentResourceBoxPermissions(resourceData, userStatus, search) 
         }
         return 'locked';
     };
-    const loginUrl = `${settings.apiOrigin}/oxauth/login/?next=${encodeLocation(search)}`;
+    const loginUrl = `${process.env.API_ORIGIN}/oxauth/login/?next=${encodeLocation(search)}`;
 
     return resourceBoxPermissions({
         resourceData,

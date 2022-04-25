@@ -4,7 +4,7 @@ export function cnxFetch({isRex, cnxId, webviewLink}) {
     if (isRex) {
         return fetchRexRelease(webviewLink, cnxId);
     }
-    return fetch(`${window.SETTINGS.apiOrigin}/contents/${cnxId}.json`)
+    return fetch(`${process.env.API_ORIGIN}/contents/${cnxId}.json`)
         .then((r) => r.json());
 }
 
