@@ -21,7 +21,7 @@ export function blurbModel(data) {
 
 export default function ArticleSummary({
     articleSlug, altText, image, headline, subheading, body, date, author,
-    forwardRef={}, setPath
+    forwardRef={}, setPath, openInNewWindow
 }) {
     function onClick(event) {
         event.preventDefault();
@@ -34,7 +34,9 @@ export default function ArticleSummary({
                 className="link-image" href={`/blog/${articleSlug}`}
                 ref={forwardRef}
                 aria-label={altText || headline}
-                style={`background-image: url("${image}")`}></a>
+                style={`background-image: url("${image}")`}
+                target={openInNewWindow ? '_blank' : null} rel="noreferrer"
+            />
             <div className="text-block">
                 <h2 className="article-headline">
                     <a href={`/blog/${articleSlug}`} onClick={onClick}>{headline}</a>
