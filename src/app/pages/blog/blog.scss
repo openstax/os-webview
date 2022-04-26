@@ -5,8 +5,27 @@
     justify-items: center;
     width: 100%;
 
-    .strips {
-        bottom: 0;
+    .heading-and-searchbar,
+    h2 {
+        margin: 2.5rem 0 2rem;
+        padding-bottom: $normal-margin;
+        width: 100%;
+
+        @include wider-than($media-content-max) {
+            max-width: $content-max;
+        }
+    }
+
+    h1 {
+        @include set-font(h2);
+
+        margin: 0;
+    }
+
+    h2 {
+        @include set-font(h4);
+
+        border-bottom: thin solid ui-color(form-border);
     }
 
     .disqus {
