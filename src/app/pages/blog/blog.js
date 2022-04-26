@@ -14,12 +14,12 @@ import timers from './timers';
 import './blog.scss';
 
 function Document({title}) {
-  useEffect(
-    () => {document.title = title;},
-    [title]
-  )
+    useEffect(
+        () => {document.title = title;},
+        [title]
+    );
 
-  return null;
+    return null;
 }
 
 export function SearchResultsPage() {
