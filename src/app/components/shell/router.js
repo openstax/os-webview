@@ -19,7 +19,7 @@ import {useMyOpenStaxUser} from '~/pages/my-openstax/store/user';
 import useRouterContext, {RouterContextProvider} from './router-context';
 
 const FOOTER_PAGES = [
-    'license', 'tos', 'privacy-policy', 'accessibility-statement', 'careers'
+    'license', 'tos', 'privacy', 'privacy-policy', 'accessibility-statement', 'careers'
 ].map((s) => `/${s}/`);
 
 function instructorResourceNodeContaining(el) {
