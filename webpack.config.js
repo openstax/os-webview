@@ -70,8 +70,8 @@ const config = {
         })
     ],
     performance: {
-      maxEntrypointSize: 2.5 * 1000000, // 1MB
-      maxAssetSize: 2.1 * 1000000,
+        maxEntrypointSize: 2.5 * 1000000, // 1MB
+        maxAssetSize: 2.1 * 1000000,
     },
     resolve: {
         alias: {
@@ -87,8 +87,8 @@ const config = {
         extensions: ['.js', '.jsx']
     },
     watchOptions: {
-      aggregateTimeout: 500,
-      poll: 1000,
+        aggregateTimeout: 500,
+        poll: 1000,
     },
     devServer: {
       client: {
@@ -100,9 +100,9 @@ const config = {
           stats: 'errors-only',
       },
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+          'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
       },
       historyApiFallback: true,
       hot: true,
@@ -110,13 +110,11 @@ const config = {
       open: true,
       port: devServerPort,
       proxy: {
-          context: (pathname) => true,
+          context: (path) => path === '/' || path.startsWith('/cms/assets/fonts'),
           target: `http://localhost:${devServerPort}`,
           pathRewrite: (path) => path === '/' ? '/dist/index.html' : path,
-          router: {
-            '/apps/cms/api': API_ORIGIN,
-            '/cms/assets': API_ORIGIN,
-          },
+          // fonts are always loaded with CORS but the CMS doesn't set CORS headers so we proxy them
+          router: { '/cms/assets/fonts': API_ORIGIN },
           changeOrigin: true
       },
       static: {
