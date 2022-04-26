@@ -26,6 +26,9 @@ export default function ArticleSummary({
     const tabTarget = openInNewWindow ? '_blank' : null;
 
     function onClick(event) {
+        if (event.target.getAttribute('target') === '_blank') {
+            return;
+        }
         event.preventDefault();
         setPath(event.target.href);
     }
@@ -50,10 +53,10 @@ export default function ArticleSummary({
                 <Byline date={date} author={author} />
                 <RawHTML className="article-blurb" html={body} />
                 <a
-                  className="read-more" href={`/blog/${articleSlug}`} onClick={onClick}
-                  target={tabTarget}
+                    className="read-more" href={`/blog/${articleSlug}`} onClick={onClick}
+                    target={tabTarget}
                 >
-                  Read more
+                    Read more
                 </a>
             </div>
         </React.Fragment>
