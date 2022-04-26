@@ -3,10 +3,9 @@ import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Switch, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import PinnedArticle from './pinned-article/pinned-article';
-import UpdateBox from './update-box/update-box';
 import DisqusForm from './disqus-form/disqus-form';
 import MoreStories from './more-stories/more-stories';
-import SearchBar from './search-bar/search-bar';
+import SearchBar, {HeadingAndSearchBar} from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import LatestBlogPosts from './latest-blog-posts/latest-blog-posts';
 import {ArticleFromSlug} from './article/article';
@@ -14,12 +13,12 @@ import timers from './timers';
 import './blog.scss';
 
 function Document({title}) {
-  useEffect(
-    () => {document.title = title;},
-    [title]
-  )
+    useEffect(
+        () => {document.title = title;},
+        [title]
+    );
 
-  return null;
+    return null;
 }
 
 export function SearchResultsPage() {
@@ -39,9 +38,13 @@ export function MainBlogPage() {
     return (
         <WindowContextProvider>
             <Document title="OpenStax News" />
-            <PinnedArticle />
-            <UpdateBox />
-            <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
+            <div className="boxed">
+                <HeadingAndSearchBar>
+                    <h1>OpenStax Blog</h1>
+                </HeadingAndSearchBar>
+                <PinnedArticle />
+                <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
+            </div>
         </WindowContextProvider>
     );
 }
@@ -58,7 +61,6 @@ function ArticlePage() {
         <WindowContextProvider>
             <ArticleFromSlug slug={`news/${slug}`} />
             <DisqusForm />
-            <UpdateBox />
             <MoreStories exceptSlug={slug} />
         </WindowContextProvider>
     );

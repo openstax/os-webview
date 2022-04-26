@@ -59,28 +59,21 @@ $image-height: 24rem;
 .blog.page .more-stories {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
     align-items: center;
     padding-bottom: 12rem;
     padding-top: 2rem;
     width: 100%;
 
-    h1 {
-        @include set-font(h2);
-
-        margin: 0;
-    }
-
-    h2 {
-        @include set-font(h3);
-    }
-
     h3 {
-        @include set-font(h4);
+        @include set-font(h3);
     }
 
     @media print {
         display: none;
+    }
+
+    .button-row {
+        padding-top: 2rem;
     }
 
     .btn.primary {

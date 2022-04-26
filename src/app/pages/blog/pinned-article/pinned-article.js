@@ -12,8 +12,11 @@ export default function PinnedArticle() {
     const model = {...blurbModel(pinnedStory), setPath};
 
     return (
-        <div className="pinned-article boxed">
-            <ArticleSummary {...model} />
-        </div>
+        <React.Fragment>
+            <h2>Featured blog post</h2>
+            <div className="pinned-article">
+                <ArticleSummary {...model} HeadTag='h3' />
+            </div>
+        </React.Fragment>
     );
 }
