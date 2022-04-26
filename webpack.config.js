@@ -104,17 +104,16 @@ const config = {
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
           'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
       },
-      historyApiFallback: true,
+      historyApiFallback: { index: `${publicPath}/index.html` },
       hot: true,
       liveReload: true,
       open: true,
       port: devServerPort,
+      // fonts are always loaded with CORS but the CMS doesn't set CORS headers for them
+      // to get around this, we proxy them instead
       proxy: {
-          context: (path) => path === '/' || path.startsWith('/cms/assets/fonts'),
-          target: `http://localhost:${devServerPort}`,
-          pathRewrite: (path) => path === '/' ? '/dist/index.html' : path,
-          // fonts are always loaded with CORS but the CMS doesn't set CORS headers so we proxy them
-          router: { '/cms/assets/fonts': API_ORIGIN },
+          context: (path) => path.startsWith('/cms/assets/fonts'),
+          target: API_ORIGIN,
           changeOrigin: true
       },
       static: {
