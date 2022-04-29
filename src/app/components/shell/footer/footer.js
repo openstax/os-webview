@@ -37,7 +37,7 @@ function Footer({
                         <a href="/accessibility-statement">Accessibility Statement</a>
                         <a href="/tos">Terms of Use</a>
                         <a href="/license">Licensing</a>
-                        <a href="/privacy-policy">Privacy Policy</a>
+                        <a href="/privacy">Privacy Notice</a>
                         <a href="https://openstax.secure.force.com/help/articles/FAQ/OpenStax-Tutor-Student-Refund-Policy">
                             Tutor pricing and refund policy
                         </a>
