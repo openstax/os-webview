@@ -13,7 +13,7 @@ import BlogPosts from './blog-posts';
 import Webinars from './webinars';
 import LearnMore from './learn-more';
 import AboutOpenStax from '../about-openstax';
-import InfoBoxes from '../info-boxes';
+import {InfoBoxes} from '../info-boxes';
 import PhilanthropicSupport from '../philanthropic-support';
 import cn from 'classnames';
 import './specific.scss';
@@ -43,6 +43,12 @@ function TutorAd() {
     );
 }
 
+function InfoBoxesUsingContext() {
+    const {infoBoxes} = useSpecificSubjectContext();
+
+    return (<InfoBoxes infoBoxes={infoBoxes[0]} />);
+}
+
 function SubjectInContext({subject}) {
     return (
         <SpecificSubjectContextProvider contextValueParameters={subject.value}>
@@ -63,7 +69,7 @@ function SubjectInContext({subject}) {
                                     forceButtonUrl="/subjects"
                                     forceButtonText="View all sujects"
                                 />
-                                <InfoBoxes />
+                                <InfoBoxesUsingContext />
                                 <PhilanthropicSupport />
                             </div>
                         </div>

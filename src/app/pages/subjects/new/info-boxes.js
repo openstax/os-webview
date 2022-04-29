@@ -20,14 +20,18 @@ function AboutBlurb({blurb: {image, heading, text: description}}) {
     );
 }
 
-export default function InfoBoxes() {
-    const {infoBoxes} = useSubjectsContext();
-
+export function InfoBoxes({infoBoxes}) {
     return (
         <section className="info-boxes">
             <div className="content">
-                {infoBoxes[0].value.map((b, i) => <AboutBlurb blurb={b} key={i} />)}
+                {infoBoxes.map((b, i) => <AboutBlurb blurb={b} key={i} />)}
             </div>
         </section>
     );
+}
+
+export default function InfoBoxesUsingContext() {
+    const {infoBoxes} = useSubjectsContext();
+
+    return (<InfoBoxes infoBoxes={infoBoxes[0].value} />);
 }
