@@ -4,9 +4,14 @@ import {usePageData} from '~/helpers/controller/cms-mixin';
 import {useLocation} from 'react-router-dom';
 import './footer-page.scss';
 
+const specialSlugFromPath = {
+    '/privacy': '/privacy-policy'
+};
+
 export default function FooterPage() {
-    useLocation();
-    const slug = `pages${window.location.pathname}`;
+    const {pathname} = useLocation();
+    const slugEnd = specialSlugFromPath[pathname] || pathname;
+    const slug = `pages${slugEnd}`;
     const [data, statusPage] = usePageData({slug});
 
     if (statusPage) {
