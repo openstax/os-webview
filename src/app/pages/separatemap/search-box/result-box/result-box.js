@@ -3,10 +3,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import {faQuoteLeft} from '@fortawesome/free-solid-svg-icons/faQuoteLeft';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import useUserContext from '~/contexts/user';
-import TestimonialForm from '../../testimonial-form/testimonial-form';
-import Dialog from '~/components/dialog/dialog';
 import './result-box.scss';
 
 const format = new window.Intl.NumberFormat('en-US', {
@@ -32,28 +28,6 @@ function Testimonial({testimonial}) {
     );
 }
 
-function useFormParameters(hideDialog) {
-    const {userModel} = useUserContext();
-
-    if (!(userModel?.accountsModel)) {
-        return null;
-    }
-
-    const {accountsModel: info} = userModel;
-
-    return {
-        role: info.self_reported_role,
-        email: (info.contact_infos || [])
-            .filter((i) => i.is_verified)
-            .reduce((a, b) => (a.is_guessed_preferred ? a : b), {})
-            .value,
-        firstName: info.first_name,
-        lastName: info.last_name,
-        uuid: info.uuid,
-        afterSubmit: hideDialog
-    };
-}
-
 function SchoolDetails({model}) {
     const [
         savingsTotal, savingsThisYear, testimonial
@@ -62,15 +36,6 @@ function SchoolDetails({model}) {
         format(model.fields.current_year_savings),
         model.testimonial
     ];
-    const [isOpen, toggle] = useToggle();
-    const formParameters = useFormParameters(toggle);
-    const school = model.fields.salesforce_id;
-    const company = model.fields.name;
-
-    function showTestimonialForm(event) {
-        event.preventDefault();
-        toggle();
-    }
 
     return (
         <div className="school-details">
@@ -80,18 +45,6 @@ function SchoolDetails({model}) {
                 <div className="cumulative">Cumulative: {savingsTotal}</div>
             </div>
             {testimonial && <Testimonial testimonial={testimonial} />}
-            {
-                formParameters &&
-                    <a href="/" className="submit-testimonial go-to" onClick={showTestimonialForm}>
-                        Submit your testimonial
-                    </a>
-            }
-            <Dialog
-                isOpen={isOpen} onPutAway={toggle}
-                title="Submit your testimonial"
-            >
-                <TestimonialForm {...{...formParameters, school, company}} />
-            </Dialog>
         </div>
     );
 }
