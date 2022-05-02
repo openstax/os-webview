@@ -21,15 +21,6 @@ if [[ -f "./requirements.txt" || -f "./setup.py" ]]; then
   fi
 fi
 
-# Ruby stuff
-if [[ -f "./Gemfile" ]]; then
-  bundle check --path ./vendor/gems >/dev/null 2>&1  || {
-    do_progress_quiet "Installing ruby gems" \
-      bundle install --path ./vendor/gems --quiet --without production
-  }
-fi
-
-
 # Load anything that is repo-specific
 if [[ -f "./script/_setup.sh" ]]; then
   # shellcheck disable=SC1091
