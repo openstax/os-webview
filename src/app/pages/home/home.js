@@ -20,7 +20,7 @@ function Homepage({data: ungroupedData}) {
     const data = {};
 
     // Group the data by section prefixes
-    ['banner', 'features', 'quotes', 'tutor', 'whatsOpenstax'].forEach((sectionName) => {
+    ['banner', 'features', 'quotes', 'tutor', 'whatsOpenstax', 'map'].forEach((sectionName) => {
         const sectionKeys = keys.filter((k) => k.startsWith(sectionName));
 
         data[sectionName] = sectionKeys.reduce((a, b) => {
@@ -47,7 +47,7 @@ function Homepage({data: ungroupedData}) {
                 <WhatsOpenStax data={data.whatsOpenstax} />
             </LazyLoad>
             <LazyLoad once offset={100} height={400}>
-                <Map />
+                <Map data={data.map} />
             </LazyLoad>
         </React.Fragment>
     );
