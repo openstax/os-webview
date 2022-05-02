@@ -4,7 +4,9 @@ import buildContext from '~/components/jsx-helpers/build-context';
 const preserveWrapping = false;
 
 function useContextValue(slug) {
-    return usePageData(`pages/${slug}`, preserveWrapping);
+    const data = usePageData(`pages/${slug}?type=pages.Subject`, preserveWrapping);
+
+    return data;
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
