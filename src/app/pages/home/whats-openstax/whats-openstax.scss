@@ -9,6 +9,14 @@
 
     h2 {
         @include title-font(2.4rem);
+
+        margin: 0;
+    }
+
+    h3 {
+        @include set-font(h4);
+
+        margin-bottom: 1rem;
     }
 
     .half-boxed {
@@ -35,21 +43,16 @@
             }
         }
 
-        .buttons {
-            align-items: center;
+        .closer-grouping {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
 
-            .btn {
-                justify-self: left;
-                width: auto;
-
-                .fa-heart {
-                    color: os-color(red);
-                }
-            }
-
-            a:not(.btn) {
-                text-decoration-line: none;
-            }
+        .btn {
+            @include button();
+            @extend %secondary;
         }
     }
 
