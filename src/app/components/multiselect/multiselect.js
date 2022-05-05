@@ -37,12 +37,22 @@ function MSValidationMessage({elementRef}) {
     );
 }
 
-export default function Multiselect({name, required, children, oneField}) {
+function OnChangeHandler({onChange}) {
+    const {selectedItems} = useMultiselectContext();
+
+    React.useEffect(
+        () => onChange(selectedItems),
+        [selectedItems, onChange]
+    );
+}
+
+export default function Multiselect({name, required, children, oneField, onChange}) {
     const elementRef = React.useRef();
     const HiddenField = oneField ? HiddenSingleField : HiddenSelect;
 
     return (
         <MultiselectContextProvider>
+            {onChange && <OnChangeHandler onChange={onChange} />}
             <div className="multiselect">
                 {name && <HiddenField {...{name, required, elementRef}} />}
                 {children}

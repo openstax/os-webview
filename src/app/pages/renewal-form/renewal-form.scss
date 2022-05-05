@@ -1,0 +1,46 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.renewal-form.page {
+    padding-bottom: 12rem;
+
+    form {
+        background-color: ui-color(white);
+        border: thin solid ui-color(form-border);
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        max-width: 75rem;
+        padding: 3rem $normal-margin;
+        width: 100%;
+
+        [type="submit"] {
+            @include button();
+            @extend %primary;
+            align-self: flex-start;
+        }
+    }
+
+    .fixed-fields {
+        label {
+            @include set-font(body-regular);
+        }
+    }
+
+    .books-and-counts {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        label {
+            @include set-font(h4);
+        }
+    }
+
+    .student-counts {
+        align-items: baseline;
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: auto 1fr;
+        width: max-content;
+    }
+}
