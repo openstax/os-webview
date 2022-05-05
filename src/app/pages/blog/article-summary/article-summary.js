@@ -24,6 +24,7 @@ export default function ArticleSummary({
     forwardRef={}, setPath, openInNewWindow, HeadTag='h2'
 }) {
     const tabTarget = openInNewWindow ? '_blank' : null;
+    const SubTag = HeadTag.replace(/\d/, (n) => +n + 1);
 
     function onClick(event) {
         if (event.target.getAttribute('target') === '_blank') {
@@ -48,7 +49,7 @@ export default function ArticleSummary({
                 </HeadTag>
                 {
                     subheading &&
-                        <h3>{subheading}</h3>
+                        <SubTag className="article-subhead">{subheading}</SubTag>
                 }
                 <Byline date={date} author={author} />
                 <RawHTML className="article-blurb" html={body} />

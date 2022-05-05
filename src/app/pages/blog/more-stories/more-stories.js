@@ -34,7 +34,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
 export default function MoreStories({exceptSlug}) {
     return (
         <div className="more-stories">
-            <h2>Latest blog posts</h2>
+            <h2 className="section-header">Latest blog posts</h2>
             <LatestBlurbs page={1} pageSize={3} exceptSlug={exceptSlug} />
             <div className="button-row">
                 <a className="btn primary" href="/blog/latest">View more of the latest</a>
