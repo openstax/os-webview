@@ -22,6 +22,10 @@
         }
     }
 
+    .text-block .article-subhead {
+        margin-top: 0.5em;
+    }
+
     .article-blurb {
         column-width: $text-content-max;
         overflow: hidden;
