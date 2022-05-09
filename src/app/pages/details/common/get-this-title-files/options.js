@@ -273,7 +273,6 @@ export function PrintOption({model, icon=faBook}) {
     const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : printText;
     const {onClick, PCDialog} = usePrintCopyDialog({});
 
-    console.info('Using data link', amazonDataLink);
     return (
         <SimpleLinkOption
             link={isRealPrintLink(amazonDataLink.url)} icon={icon} text={text}
