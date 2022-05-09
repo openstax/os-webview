@@ -3,7 +3,7 @@ import useSubjectCategoryContext from '~/contexts/subject-category';
 import useLanguageContext from '~/contexts/language';
 import {LanguageSelectorWrapper, LanguageLink} from '~/components/language-selector/language-selector';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
-import LoginMenu from './login-menu';
+import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
 import './main-menu.scss';
 

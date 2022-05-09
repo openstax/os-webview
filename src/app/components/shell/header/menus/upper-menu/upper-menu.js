@@ -19,10 +19,20 @@ function BlogItem() {
     );
 }
 
+function GiveItem() {
+    return (
+        <a
+            className="nav-menu" target="_blank" rel="noreferrer"
+            href="https://riceconnect.rice.edu/donation/support-openstax-header"
+        >
+            Give
+        </a>
+    );
+}
+
 export default function UpperMenu() {
     const {showButton} = useGiveToday();
     const importGiveButton = React.useCallback(() => import('../give-button/give-button'), []);
-    const importGiveItem = React.useCallback(() => import('./give-item'), []);
 
     return (
         <div className="container">
@@ -30,12 +40,12 @@ export default function UpperMenu() {
             <a className="nav-menu" href="/impact">Our Impact</a>
             <a className="nav-menu" href="/foundation">Supporters</a>
             <BlogItem />
-            {showButton && <JITLoad importFn={importGiveItem} />}
+            {showButton ? null : <GiveItem />}
             <a className="nav-menu" href="https://openstax.secure.force.com/help">Help</a>
             <a className="logo rice-logo logo-wrapper" href="http://www.rice.edu">
                 <img src="/dist/images/rice.webp" alt="Rice University logo" height="30" width="79" />
             </a>
-            {showButton && <JITLoad importFn={importGiveButton} />}
+            {showButton ? <JITLoad importFn={importGiveButton} /> : null}
         </div>
     );
 }
