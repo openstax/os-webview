@@ -11,7 +11,7 @@ import useLanguageContext from '~/contexts/language';
 import LanguageSelector from '~/components/language-selector/language-selector';
 import SubjectsListing from './subjects-listing';
 import TutorAd from './tutor-ad';
-import AboutOpenStax from './about-openstax';
+import {AllSubjectsAboutOpenStax} from './about-openstax';
 import InfoBoxes from './info-boxes';
 import PhilanthropicSupport from './philanthropic-support';
 import LoadSubject from './specific/specific';
@@ -71,7 +71,7 @@ function SubjectsPage() {
             </section>
             <SubjectsListing />
             <TutorAd />
-            <AboutOpenStax />
+            <AllSubjectsAboutOpenStax />
             <InfoBoxes />
             <PhilanthropicSupport />
         </main>

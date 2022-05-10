@@ -43,6 +43,18 @@ function TutorAd() {
     );
 }
 
+function SpecificSubjectAboutOpenStax() {
+    const {aboutOs} = useSpecificSubjectContext();
+
+    return (
+        <AboutOpenStax
+            forceButtonUrl="/subjects"
+            forceButtonText="View all sujects"
+            aboutOs={aboutOs.content}
+        />
+    );
+}
+
 function SubjectInContext({subject}) {
     return (
         <SpecificSubjectContextProvider contextValueParameters={subject.value}>
@@ -59,10 +71,7 @@ function SubjectInContext({subject}) {
                                 <BlogPosts subjectName={subject.html} />
                                 <Webinars subjectName={subject.html} />
                                 <LearnMore />
-                                <AboutOpenStax
-                                    forceButtonUrl="/subjects"
-                                    forceButtonText="View all sujects"
-                                />
+                                <SpecificSubjectAboutOpenStax />
                                 <InfoBoxes />
                                 <PhilanthropicSupport />
                             </div>
