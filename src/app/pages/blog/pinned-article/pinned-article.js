@@ -13,7 +13,7 @@ export default function PinnedArticle() {
 
     return (
         <React.Fragment>
-            <h2>Featured blog post</h2>
+            <h2 className="section-header">Featured blog post</h2>
             <div className="pinned-article">
                 <ArticleSummary {...model} HeadTag='h3' />
             </div>
