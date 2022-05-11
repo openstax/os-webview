@@ -1,10 +1,9 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {usePutAway, useStickyData} from '../../shared.jsx';
+import {usePutAway} from '../../shared.jsx';
 import './sticky-note.scss';
 
-export default function StickyNote() {
-    const stickyData = useStickyData();
+export default function StickyNote({stickyData}) {
     const [closed, PutAway] = usePutAway();
 
     if (!stickyData || closed || stickyData.mode !== 'emergency') {

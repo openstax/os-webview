@@ -1,4 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
+import $ from '~/helpers/$';
 import {
     Accordion,
     AccordionItem,
@@ -10,7 +11,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import './accordion-group.scss';
-import $ from '~/helpers/$';
 
 function useChevronDirection(forwardOnChange, preExpanded) {
     const [openTabs, updateOpenTabs] = useState([...preExpanded]);
@@ -81,21 +81,28 @@ export default function AccordionGroup({
     const root = useRef();
     const preExpandedUuids = preExpanded.map(toUuid);
     const [chevronDirection, onChange] = useChevronDirection(forwardOnChange, preExpandedUuids);
-    const openItem = root.current && root.current.querySelector('[aria-expanded="true"]');
+    const scrollAndChangeChevronPlus = React.useCallback(
+        (...args) => {
+            if (!noScroll) {
+                window.setTimeout(
+                    () => {
+                        const openItem = root.current?.querySelector('[aria-expanded="true"]');
 
-    useEffect(() => {
-        if (!noScroll) {
-            if (openItem) {
-                $.scrollTo(openItem);
+                        $.scrollTo(openItem);
+                    },
+                    20
+                );
             }
-        }
-    }, [openItem, noScroll]);
+            onChange(...args);
+        },
+        [onChange, noScroll]
+    );
 
     return (
         <div ref={root}>
             <Accordion
                 {...accordionProps}
-                onChange={onChange}
+                onChange={scrollAndChangeChevronPlus}
                 className="accordion-group"
                 preExpanded={preExpandedUuids}
             >

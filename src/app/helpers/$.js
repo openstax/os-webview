@@ -81,10 +81,7 @@ $.isSupported = () => {
     );
 };
 
-const tick = 1000 / 40;
 const spaceForMenu = 59;
-const targetStep = 100;
-const targetTicks = 20;
 
 $.scrollTo = (el, offset = 0) => {
     const getOffsetTop = () => {
@@ -92,40 +89,11 @@ $.scrollTo = (el, offset = 0) => {
 
         return rect.top - spaceForMenu - offset;
     };
-    const offsetTop = getOffsetTop();
-    const direction = Math.sign(offsetTop);
-    let magnitude = Math.abs(offsetTop);
-    const chosenStep = (targetStep + magnitude / targetTicks) / 2;
 
-    return new Promise((resolve) => {
-        const i = window.setInterval(() => {
-            const step = (magnitude > chosenStep) ? chosenStep : magnitude;
-            const scrollBody = document.documentElement.scrollTop || document.body.scrollTop;
-
-            window.scrollTo(0, scrollBody + direction * step);
-            magnitude -= step;
-            if (magnitude <= 0) {
-                // Just ensure that we are there
-                const finalScrollBody = document.documentElement.scrollTop || document.body.scrollTop;
-                const finalPosition = getOffsetTop() + finalScrollBody;
-
-                window.scrollTo(0, finalPosition);
-                window.clearInterval(i);
-                resolve();
-            }
-        }, tick);
+    window.scrollBy({
+        top: getOffsetTop(),
+        behavior: 'smooth'
     });
-};
-
-$.scrollToHash = () => {
-    if (window.location.hash) {
-        const id = window.location.hash.substr(1);
-        const target = document.getElementById(id);
-
-        if (target) {
-            window.requestAnimationFrame(() => $.scrollTo(target, -59)); // Don't need space for menu
-        }
-    }
 };
 
 $.setPageDescription = (description) => {
@@ -186,45 +154,15 @@ $.htmlToText = (html) => {
     return temp.textContent;
 };
 
-// Making scripts work, per https://stackoverflow.com/a/47614491/392102
-$.activateScripts = function (el) {
-    const scripts = Array.from(el.querySelectorAll('script'));
-    const processOne = (() => {
-        if (scripts.length === 0) {
-            return;
-        }
-        const s = scripts.shift();
-        const newScript = document.createElement('script');
-        const p = (s.src) ? new Promise((resolve) => {
-            newScript.onload = resolve;
-        }) : Promise.resolve();
-
-        Array.from(s.attributes)
-            .forEach((a) => newScript.setAttribute(a.name, a.value));
-        newScript.appendChild(document.createTextNode(s.textContent));
-        newScript.async = false;
-        s.parentNode?.replaceChild(newScript, s);
-
-        p.then(processOne);
-    });
-
-    processOne();
-};
-
-function splitSearchString() {
-    return window.location.search.substr(1).split('&')
-        .filter((piece) => piece.length > 0);
-}
-
 $.findSelectedTab = (labels) => {
-    const possibleTabs = splitSearchString().map(decodeURIComponent);
+    const possibleTabs = Array.from(new window.URLSearchParams(window.location.search).keys());
 
     return labels.find((label) => possibleTabs.includes(label)) || labels[0];
 };
 
 $.replaceSearchTerm = (labels, selectedTab, newValue) => {
-    const possibleTabs = splitSearchString();
-    const index = possibleTabs.findIndex((t) => labels.includes(decodeURIComponent(t)));
+    const possibleTabs = Array.from(new window.URLSearchParams(window.location.search).keys());
+    const index = possibleTabs.findIndex((t) => labels.includes(t));
 
     if (index < 0) {
         possibleTabs.unshift(encodeURIComponent(newValue));
@@ -232,18 +170,6 @@ $.replaceSearchTerm = (labels, selectedTab, newValue) => {
         possibleTabs[index] = encodeURIComponent(newValue);
     }
     return `?${possibleTabs.join('&')}`;
-};
-
-
-$.parseSearchString = (searchString) => {
-    const result = {};
-
-    searchString.substr(1).split('&').forEach((item) => {
-        const [k, v] = item.split('=');
-
-        (k in result) ? result[k].push(decodeURIComponent(v)) : result[k] = [decodeURIComponent(v)];
-    });
-    return result;
 };
 
 function camelCase(underscored) {
