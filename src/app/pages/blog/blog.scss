@@ -6,7 +6,7 @@
     width: 100%;
 
     .heading-and-searchbar,
-    h2 {
+    .section-header {
         margin: 2.5rem 0 2rem;
         padding-bottom: $normal-margin;
         width: 100%;
@@ -23,9 +23,17 @@
     }
 
     h2 {
-        @include set-font(h4);
+        &:not(.section-header) {
+            @include set-font(h3);
 
-        border-bottom: thin solid ui-color(form-border);
+            margin: 0;
+        }
+
+        &.section-header {
+            @include set-font(h4);
+
+            border-bottom: thin solid ui-color(form-border);
+        }
     }
 
     .disqus {
