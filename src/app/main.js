@@ -15,11 +15,12 @@ window.SETTINGS = {};
         }
     }
 
-    await import('./sentry');
-
-    await import('../vendor/pardot');
-    await import('../vendor/pulseinsights');
-    await import('../vendor/facebook');
+    import('./sentry');
+    await Promise.all([
+        import('../vendor/pardot'),
+        import('../vendor/pulseinsights'),
+        import('../vendor/facebook')
+    ]);
 
     const $ = (await import('./helpers/$')).default;
     const appElement = (await import('/src/app/components/shell/shell')).default;
