@@ -186,10 +186,6 @@ function Page2() {
     const [school, setSchool] = React.useState(userModel?.school_name);
     const [country, setCountry] = React.useState();
 
-    React.useEffect(() => {
-        console.info('Should be setting country from', school);
-    }, [school]);
-
     return (
         <div className="form-page">
             <p className="headline">
