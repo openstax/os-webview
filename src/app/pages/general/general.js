@@ -17,6 +17,7 @@ function GeneralPage({html}) {
         .querySelector('img');
     const innerHTML = Array.from(newDoc.body.children).reduce((arr, el) => {
         if (el.classList.contains('block-heading')) {
+            el.innerHTML = `<h1>${el.innerHTML.trim()}</h1>`;
             el.appendChild(strips);
         }
         arr.push(el.outerHTML);
