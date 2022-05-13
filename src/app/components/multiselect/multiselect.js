@@ -46,18 +46,22 @@ function OnChangeHandler({onChange}) {
     );
 }
 
+// Multiselect instances must be wrapped in a context provider
+// Exporting here for convenience
+export {MultiselectContextProvider, useMultiselectContext};
+
 export default function Multiselect({name, required, children, oneField, onChange}) {
     const elementRef = React.useRef();
     const HiddenField = oneField ? HiddenSingleField : HiddenSelect;
 
     return (
-        <MultiselectContextProvider>
+        <React.Fragment>
             {onChange && <OnChangeHandler onChange={onChange} />}
             <div className="multiselect">
                 {name && <HiddenField {...{name, required, elementRef}} />}
                 {children}
             </div>
             <MSValidationMessage elementRef={elementRef} />
-        </MultiselectContextProvider>
+        </React.Fragment>
     );
 }

@@ -1,17 +1,26 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
 import useUserContext from '~/contexts/user';
-import fetchBooks, {salesforceTitles} from '~/models/books';
-import BookTagsMultiselect from '~/components/multiselect/book-tags/book-tags';
+import useAdoptions from '~/models/renewals';
+import BookTagsMultiselect, {BookTagsContextProvider, useBookTagsContext}
+    from '~/components/multiselect/book-tags/book-tags';
+
 import './renewal-form.scss';
 
 // Bundle it up like a Context, but just pass it so I don't have to actually
 // make a Context.
-function useFormData() {
-    const [selectedBooks, setSelectedBooks] = React.useState([]);
-    const defaultCount = React.useMemo(
-        () => 10, // TODO get right default;
-        []
+function useFormData(adoptions) {
+    const defaultCount = React.useCallback(
+        (bookValue) => {
+            if (adoptions.Books) {
+                const oldValue = adoptions.Books.find((b) => b.name === bookValue).students;
+                const maxValue = Math.max(...adoptions.Books.map((b) => b.students));
+
+                return oldValue || maxValue;
+            }
+            return 10;
+        },
+        [adoptions]
     );
     const [counts, setCounts] = React.useState({});
     const updateCount = React.useCallback(
@@ -21,41 +30,23 @@ function useFormData() {
         },
         [counts]
     );
-    const json = React.useMemo(
-        () => JSON.stringify({
-            'Books': selectedBooks.map(
-                ({value: name}) => ({name, students: +counts[name]})
-            )
-        }),
-        [selectedBooks, counts]
-    );
 
-    React.useEffect(
-        () => {
-            selectedBooks.forEach(
-                (b) => {
-                    if (!(b.value in counts)) {
-                        updateCount(b.value, defaultCount);
-                    }
-                }
-            );
-        },
-        [selectedBooks, defaultCount, counts, updateCount]
-    );
-
-    return {
-        selectedBooks,
-        setSelectedBooks,
-        counts,
-        updateCount,
-        json
-    };
+    return {counts, updateCount, defaultCount};
 }
 
-function HiddenFields({email, uuid, formData: {json}}) {
+function HiddenFields({email, uuid, counts}) {
     const {search} = useLocation();
     const fromValue = new window.URLSearchParams(search).get('from');
     const source = fromValue || 'email';
+    const {selectedItems} = useBookTagsContext();
+    const json = React.useMemo(
+        () => JSON.stringify({
+            'Books': selectedItems.map(
+                ({value: name}) => ({name, students: +counts[name]})
+            )
+        }),
+        [selectedItems, counts]
+    );
 
     return (
         <React.Fragment>
@@ -78,24 +69,15 @@ function FixedField({label, name, value}) {
     );
 }
 
-function useSFBooks() {
-    const [sfTitles, setSfTitles] = React.useState([]);
+function Counts({counts, updateCount}) {
+    const {selectedItems} = useBookTagsContext();
 
-    React.useMemo(
-        () => fetchBooks.then(salesforceTitles).then(setSfTitles),
-        []
-    );
-
-    return sfTitles;
-}
-
-function Counts({formData: {selectedBooks, counts, updateCount}}) {
     return (
         <React.Fragment>
             <label>How many students use these books each semester?</label>
             <div className="student-counts">
                 {
-                    selectedBooks.map((b) =>
+                    selectedItems.map((b) =>
                         <React.Fragment key={b.value}>
                             {b.text}{': '}
                             <input
@@ -109,49 +91,72 @@ function Counts({formData: {selectedBooks, counts, updateCount}}) {
     );
 }
 
-function BooksAndStudentCounts({formData}) {
-    const {
-        selectedBooks: sv,
-        setSelectedBooks: setSv
-    } = formData;
-    const sfBooks = useSFBooks();
+function BooksAndStudentCounts({counts, updateCount}) {
+    const {selectedItems} = useBookTagsContext();
 
     return (
         <div className="books-and-counts">
             <label>What books are you using?</label>
-            <BookTagsMultiselect
-                required
-                selected={sv} oneField
-                booksAllowed={sfBooks.map((b) => b.value)}
-                onChange={setSv}
-            />
+            <BookTagsMultiselect required oneField />
             {
-                sv.length ? <Counts formData={formData} /> : null
+                selectedItems.length ? <Counts counts={counts} updateCount={updateCount} /> : null
             }
         </div>
     );
 }
 
-export default function RenewalForm() {
-    const {userStatus, ...other} = useUserContext();
+function TheForm() {
+    const {userStatus} = useUserContext();
     const {firstName, lastName, email, school, uuid} = userStatus || {};
-    const formData = useFormData();
+    const adoptions = useAdoptions(uuid);
+    const {counts, updateCount, defaultCount} = useFormData(adoptions);
+    const {allBooks, select} = useBookTagsContext();
+    const selectAndSetDefaultCount = React.useCallback(
+        (item) => {
+            select(item);
+            if (!(item.value in counts)) {
+                updateCount(item.value, defaultCount(item.value));
+            }
+        },
+        [select, counts, updateCount, defaultCount]
+    );
 
-    console.info('Other info (contact/renewal_eligible?)', other);
+    // Initialize selections from adoptions
+    React.useEffect(
+        () => {
+            if (adoptions.Books) {
+                for (const b of adoptions.Books) {
+                    const item = allBooks.find((i) => i.value === b.name);
+
+                    selectAndSetDefaultCount(item);
+                }
+            }
+        },
+        [adoptions, selectAndSetDefaultCount, allBooks]
+    );
+
+    return (
+        <form action={window.SETTINGS.renewalEndpoint} method="post">
+            <HiddenFields email={email} uuid={uuid} counts={counts} />
+            <div className="fixed-fields">
+                <FixedField label="First name" name="first_name" value={firstName} />
+                <FixedField label="Last name" name="last_name" value={lastName} />
+                <FixedField label="School name" name="school_name" value={school} />
+            </div>
+            <BooksAndStudentCounts counts={counts} updateCount={updateCount} />
+            <input type="submit" />
+        </form>
+    );
+}
+
+export default function RenewalForm() {
     return (
         <div className="renewal-form page">
             <div className="boxed">
                 <h1>Renew this</h1>
-                <form>
-                    <HiddenFields email={email} uuid={uuid} formData={formData} />
-                    <div className="fixed-fields">
-                        <FixedField label="First name" name="first_name" value={firstName} />
-                        <FixedField label="Last name" name="last_name" value={lastName} />
-                        <FixedField label="School name" name="school_name" value={school} />
-                    </div>
-                    <BooksAndStudentCounts formData={formData} />
-                    <input type="submit" />
-                </form>
+                <BookTagsContextProvider>
+                    <TheForm />
+                </BookTagsContextProvider>
             </div>
         </div>
     );
