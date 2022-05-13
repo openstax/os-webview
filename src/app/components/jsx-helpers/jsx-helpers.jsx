@@ -89,7 +89,7 @@ function activateScripts(el) {
     });
 
     processOne();
-};
+}
 
 export function RawHTML({Tag='div', html, embed=false, ...otherProps}) {
     const ref=useRef();
