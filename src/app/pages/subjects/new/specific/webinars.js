@@ -22,16 +22,16 @@ function Card({title='*No title given', description, link: url}) {
     );
 }
 
-export default function Webinars({subjectName}) {
+export default function Webinars() {
     const {
-        webinarHeader: {content: {webinarDescription, linkHref, linkText}}
+        webinarHeader: {content: {heading, webinarDescription, linkHref, linkText}}
     } = useSpecificSubjectContext();
     const blurbs = [];
 
     return (
         <CarouselSection
             id="webinars" className="webinars"
-            heading={`Webinars about OpenStax ${subjectName} textbooks`}
+            heading={heading}
             description={webinarDescription}
             linkUrl={linkHref} linkText={linkText}
         >

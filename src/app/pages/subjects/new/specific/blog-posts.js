@@ -12,16 +12,16 @@ function Card({image, linkText, link}) {
     );
 }
 
-export default function BlogPosts({subjectName}) {
+export default function BlogPosts() {
     const {
-        blogHeader: {content: {blogDescription, linkText, linkHref}}
+        blogHeader: {content: {heading, blogDescription, linkText, linkHref}}
     } = useSpecificSubjectContext();
     const blurbs = [];
 
     return (
         <CarouselSection
             id="blog-posts" className="blog-posts"
-            heading={`Blog posts about OpenStax ${subjectName} textbooks`}
+            heading={heading}
             description={blogDescription}
             linkUrl={linkHref} linkText={linkText}
         >
