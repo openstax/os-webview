@@ -25,7 +25,9 @@ export function SearchResultsPage() {
     return (
         <React.Fragment>
             <Document title="OpenStax Blog Search" />
-            <SearchBar />
+            <div className="boxed left">
+                <SearchBar />
+            </div>
             <SearchResults />
         </React.Fragment>
     );

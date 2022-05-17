@@ -11,7 +11,7 @@ const perPage = 9;
 
 function Showing({page}) {
     const {totalCount} = useBlogContext();
-    const end = page * perPage;
+    const end = Math.min(totalCount, page * perPage);
     const start = end - perPage + 1;
 
     return (

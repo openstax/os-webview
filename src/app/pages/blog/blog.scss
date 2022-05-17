@@ -16,6 +16,11 @@
         }
     }
 
+    .boxed.left {
+        align-items: flex-start;
+        margin: 3rem auto;
+    }
+
     h1 {
         @include set-font(h2);
 
