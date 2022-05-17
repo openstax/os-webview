@@ -47,7 +47,7 @@ export default function MainMenu() {
             <SubjectsMenu />
             <Dropdown className="technology-dropdown" label="Technology">
                 <MenuItem url="/openstax-tutor" label="OpenStax Tutor" />
-                <MenuItem url="/partners" label="OpenStax Tech Scout" />
+                <MenuItem url="/partners" label="Partner learning platforms" />
             </Dropdown>
             <Dropdown className="what-we-do-dropdown" label="What we do">
                 <MenuItem url="/about" label="About Us" />
