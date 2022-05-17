@@ -62,8 +62,8 @@ function SubjectInContext({subject}) {
                                 <SubjectIntro subjectName={subject.html} />
                                 <BookViewer />
                                 <TutorAd />
-                                <BlogPosts subjectName={subject.html} />
-                                <Webinars subjectName={subject.html} />
+                                <BlogPosts />
+                                <Webinars />
                                 <LearnMore />
                                 <AboutOpenStax
                                     forceButtonUrl="/subjects"
