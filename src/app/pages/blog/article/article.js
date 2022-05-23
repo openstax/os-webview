@@ -34,7 +34,7 @@ function ArticleBody({bodyData, setReadTime, bodyRef}) {
         const WORDS_PER_MINUTE = 225;
 
         setReadTime(Math.round(words.length / WORDS_PER_MINUTE));
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [bodyRef, setReadTime]);
 
     return (
         <div className="body" ref={bodyRef}>
@@ -51,16 +51,22 @@ function Tags({tagData=[]}) {
     ;
 }
 
+function ShareButtons() {
+    return (
+        <ShareJsx
+            pageUrl={encodeURIComponent(window.location.href)}
+            message={encodeURIComponent('Check out this OpenStax blog article!')}
+            minimal={true}
+        />
+    );
+}
+
 function FloatingSideBar({readTime, progress}) {
     return (
         <div className="floater">
             <div className="sticky-bit">
                 <ProgressRing radius="45" progress={progress} stroke="4" message={readTime} />
-                <ShareJsx
-                    pageUrl={encodeURIComponent(window.location.href)}
-                    message={encodeURIComponent('Check out this OpenStax blog article!')}
-                    minimal={true}
-                />
+                <ShareButtons />
             </div>
         </div>
     );
@@ -94,15 +100,35 @@ function useScrollProgress(ref) {
     return [progress, bodyRef];
 }
 
-export function Article({data}) {
+function TitleBlock({data}) {
+    const {
+        heading: title,
+        subheading,
+        date,
+        author
+    } = data;
+
+    return (
+        <div className="title-block">
+            <h1>{title}</h1>
+            <div>
+                {
+                    Boolean(subheading) &&
+                    <h2>{subheading}</h2>
+                }
+                <Byline date={date} author={author} />
+            </div>
+        </div>
+    );
+}
+
+function NormalArticle({data}) {
     const [readTime, setReadTime] = useState();
     const ref = useRef();
     const [progress, bodyRef] = useScrollProgress(ref);
     const {
         article_image: image,
         featured_image_alt_text: imageAlt,
-        heading: title,
-        subheading,
         tags
     } = data;
 
@@ -112,14 +138,7 @@ export function Article({data}) {
             <div className="image-and-title">
                 <div className="floater-spacer" />
                 {image && <img src={image} alt={imageAlt} />}
-                <div className="title-block">
-                    <h1>{title}</h1>
-                    {
-                        Boolean(subheading) &&
-                        <h2>{subheading}</h2>
-                    }
-                    <Byline date={data.date} author={data.author} />
-                </div>
+                <TitleBlock data={data} />
             </div>
             <div className="text-content" ref={ref}>
                 <ArticleBody
@@ -131,6 +150,33 @@ export function Article({data}) {
             </div>
         </div>
     );
+}
+
+function PdfArticle({data}) {
+    return (
+        <div className="content">
+            <div className="pdf-title-block">
+                <ShareButtons />
+                <TitleBlock data={data} />
+            </div>
+            <div className="body">
+                {data.body.map((unit) => <BodyUnit unit={unit} key={unit} />)}
+            </div>
+        </div>
+    );
+}
+
+export function Article({data}) {
+    const isPdf = React.useMemo(
+        () => data.body.some((block) => block.type === 'document'),
+        [data.body]
+    );
+    const ArticleContent = React.useMemo(
+        () => isPdf ? PdfArticle : NormalArticle,
+        [isPdf]
+    );
+
+    return (<ArticleContent data={data} />);
 }
 
 function ArticleLoader({slug, onLoad}) {

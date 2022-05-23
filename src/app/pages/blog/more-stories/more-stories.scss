@@ -57,12 +57,19 @@ $image-height: 24rem;
 }
 
 .blog.page .more-stories {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin: 0 auto;
+    max-width: calc(#{$content-max} - 3rem);
     padding-bottom: 12rem;
     padding-top: 2rem;
     width: 100%;
+
+    @include width-up-to($phone-max) {
+        padding-left: $normal-margin;
+        padding-right: $normal-margin;
+    }
 
     h3 {
         @include set-font(h3);

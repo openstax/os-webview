@@ -96,15 +96,28 @@
             }
         }
 
+        .pdf-title-block {
+            display: flex;
+            gap: 4rem;
+        }
+
         .title-block {
             display: flex;
             flex-direction: column;
             gap: 2rem;
 
+            @include width-up-to($phone-max) {
+                gap: 1rem;
+            }
+
             h1 {
                 @include set-font(h2);
 
                 margin: 0;
+            }
+
+            h2 {
+                @include set-font(h4);
             }
         }
     }
