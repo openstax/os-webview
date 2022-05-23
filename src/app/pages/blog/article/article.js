@@ -133,21 +133,29 @@ export function Article({data}) {
     );
 }
 
-function ArticleLoader({slug}) {
+function ArticleLoader({slug, onLoad}) {
     const [data, statusPage] = usePageData({slug, preserveWrapping: true});
     const {fail} = useRouterContext();
 
-    if (data && data.error) {
-        fail(`Could not load ${slug}`);
-        return null;
-    }
+    React.useEffect(
+        () => {
+            if (data && data.error) {
+                fail(`Could not load ${slug}`);
+            }
+            if (onLoad && data) {
+                onLoad(data);
+            }
+        },
+        [data, onLoad, fail, slug]
+    );
+
     return (statusPage ? statusPage : <Article data={data} />);
 }
 
-export function ArticleFromSlug({slug}) {
+export function ArticleFromSlug({slug, onLoad}) {
     return (
         <div className="article">
-            <ArticleLoader slug={slug} />
+            <ArticleLoader slug={slug} onLoad={onLoad} />
         </div>
     );
 }

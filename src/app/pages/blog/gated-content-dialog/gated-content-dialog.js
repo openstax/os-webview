@@ -62,7 +62,6 @@ function GatedContentForm() {
     const [submitted, setSubmitted] = React.useState(false);
     const [selectedRole, setSelectedRole] = React.useState();
 
-    console.info('Selected Role', selectedRole);
     return (
         <form className={cn({submitted})}>
             <ContactInfo>
@@ -104,7 +103,7 @@ function GatedContentBody() {
     );
 }
 
-export default function GatedContentDialog() {
+function GatedContentDialog() {
     const [Dialog, open, close] = useDialog();
     const {userModel} = useUserContext();
 
@@ -121,4 +120,8 @@ export default function GatedContentDialog() {
             <GatedContentBody />
         </Dialog>
     );
+}
+
+export default function WaitForData({articleData}) {
+    return (articleData?.gated_content ? <GatedContentDialog /> : null);
 }

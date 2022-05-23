@@ -52,6 +52,7 @@ export function MainBlogPage() {
 
 function ArticlePage() {
     const {slug} = useParams();
+    const [articleData, setArticleData] = React.useState();
 
     useEffect(
         () => window.scrollTo(0, 0),
@@ -60,10 +61,10 @@ function ArticlePage() {
 
     return (
         <WindowContextProvider>
-            <ArticleFromSlug slug={`news/${slug}`} />
+            <ArticleFromSlug slug={`news/${slug}`} onLoad={setArticleData} />
             <DisqusForm />
             <MoreStories exceptSlug={slug} />
-            <GatedContentDialog />
+            <GatedContentDialog articleData={articleData} />
         </WindowContextProvider>
     );
 }
