@@ -32,7 +32,9 @@ function getUserStatus(user={}) {
         firstName: user.first_name,
         lastName: user.last_name,
         email: user.email,
-        userInfo: user
+        userInfo: user,
+        school: user.accountsModel?.school_name,
+        uuid: user.uuid
     };
 }
 

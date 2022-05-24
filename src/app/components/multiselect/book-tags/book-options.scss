@@ -11,11 +11,17 @@
         gap: 1rem;
     }
 
-    .group-header {
-        @include set-font(h4);
-
+    [role="group"] {
         margin-bottom: 0.5rem;
         margin-top: 2.5rem;
+
+        &:first-child {
+            margin-top: $normal-margin;
+        }
+
+        .group-header {
+            @include set-font(h4);
+        }
     }
 
     .book-option {

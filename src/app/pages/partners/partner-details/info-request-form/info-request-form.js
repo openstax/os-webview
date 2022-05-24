@@ -4,7 +4,7 @@ import useMatchingSchools from '~/models/use-school-suggestion-list';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import BookTagsMultiselect from '~/components/multiselect/book-tags/book-tags';
+import BookTagsMultiselect, {BookTagsContextProvider} from '~/components/multiselect/book-tags/book-tags';
 import {books} from '../../store';
 import FormRadiogroup from '~/components/form-radiogroup/form-radiogroup';
 import FormSelect from '~/components/form-select/form-select.jsx';
@@ -82,11 +82,9 @@ function Page1() {
             </p>
             <div className="form-group">
                 <label>Book of interest</label>
-                <BookTagsMultiselect
-                    name="subjects_of_interest" required
-                    selected={books.value} oneField
-                    booksAllowed={booksAllowed}
-                />
+                <BookTagsContextProvider selected={books.value} booksAllowed={booksAllowed}>
+                    <BookTagsMultiselect name="subjects_of_interest" required oneField />
+                </BookTagsContextProvider>
             </div>
             <PartnerTypeQuestion />
             <AdoptedQuestion />

@@ -1,5 +1,5 @@
 import React from 'react';
-import Multiselect from '../multiselect';
+import Multiselect, {MultiselectContextProvider} from '../multiselect';
 import useSFBookContext, {SFBookContextProvider} from './sf-book-context';
 import useMultiselectContext from '../multiselect-context';
 import useToggleContext, {ToggleContextProvider} from '~/components/toggle/toggle-context';
@@ -65,19 +65,34 @@ function TagList() {
     );
 }
 
-export default function BookTagsMultiselect({selected, booksAllowed, ...passThruProps}) {
+// BookTagsMultiselect must be wrapped in a SFBookContextProvider,
+// which must itself be wrapped in a MultiselectContextProvider.
+// This is a convenience wrapper so you just need one tag
+export function BookTagsContextProvider({selected, booksAllowed, children}) {
+    return (
+        <MultiselectContextProvider>
+            <SFBookContextProvider contextValueParameters={{selected, booksAllowed}}>
+                {children}
+            </SFBookContextProvider>
+        </MultiselectContextProvider>
+    );
+}
+
+export function useBookTagsContext() {
+    return {...useMultiselectContext(), ...useSFBookContext()};
+}
+
+export default function BookTagsMultiselect(passThruProps) {
     return (
         <Multiselect {...passThruProps}>
-            <SFBookContextProvider contextValueParameters={{selected, booksAllowed}}>
-                <ToggleContextProvider>
-                    <ToggleControlBar Indicator={ArrowToggle}>
-                        <TagList />
-                    </ToggleControlBar>
-                    <IfToggleIsOpen>
-                        <BookOptions />
-                    </IfToggleIsOpen>
-                </ToggleContextProvider>
-            </SFBookContextProvider>
+            <ToggleContextProvider>
+                <ToggleControlBar Indicator={ArrowToggle}>
+                    <TagList />
+                </ToggleControlBar>
+                <IfToggleIsOpen>
+                    <BookOptions />
+                </IfToggleIsOpen>
+            </ToggleContextProvider>
         </Multiselect>
     );
 }
