@@ -21,8 +21,6 @@ function SubjectSelector() {
     const [value, setValue] = React.useState();
     const message = value ? '' : 'Please select one';
 
-    console.info('role data', data);
-    console.info('role options', options);
     return (
         <div className="form-input">
             <div className="control-group">
@@ -95,7 +93,7 @@ function GatedContentBody() {
                 This post is exclusive. Please login or fill out the form to
                 access the article.
             </div>
-            <a className="btn secondary" href={loginLocation.href}>
+            <a className="btn secondary" href={loginLocation.href} data-local="true">
                 Login to my account
             </a>
             <GatedContentForm />
@@ -116,7 +114,10 @@ function GatedContentDialog() {
     }, [userModel, open, close]);
 
     return (
-        <Dialog title="Thanks for reading the OpenStax blog." className="gated-content">
+        <Dialog
+            title="Thanks for reading the OpenStax blog."
+            className="gated-content"
+        >
             <GatedContentBody />
         </Dialog>
     );

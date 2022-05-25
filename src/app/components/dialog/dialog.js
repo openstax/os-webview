@@ -41,7 +41,7 @@ export function FooterDialog({
 }
 
 export default function Dialog({
-    isOpen, title, onPutAway, children, className, closeOnOutsideClick
+    isOpen, title, onPutAway, children, className, closeOnOutsideClick=false
 }) {
     const overlayClassName = className ? `modal-overlay-${className}` : '';
 
