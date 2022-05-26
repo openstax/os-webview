@@ -150,7 +150,6 @@ test('understands external links', (done) => {
     setTimeout(() => {
         const link = screen.getByRole('link');
         expect(link.textContent).toBe(resourceData.linkText);
-        expect(link.querySelector('.fa-external-link-alt')).toBeTruthy();
         done();
     }, 0);
 });
