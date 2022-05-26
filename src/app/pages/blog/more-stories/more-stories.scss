@@ -20,6 +20,7 @@ $image-height: 24rem;
         @extend %article-summary;
 
         background-color: ui-color(white);
+        grid-template-rows: auto 1fr;
         height: 100%;
 
         .link-image {
@@ -33,6 +34,7 @@ $image-height: 24rem;
 
         .text-block {
             display: grid;
+            gap: 0.5rem;
             grid-template-rows: auto auto 1fr;
             height: 100%;
             padding: 1rem 0;
@@ -43,7 +45,7 @@ $image-height: 24rem;
             }
 
             .article-blurb {
-                height: 12rem;
+                max-height: 12rem;
                 margin-top: 1rem;
             }
 

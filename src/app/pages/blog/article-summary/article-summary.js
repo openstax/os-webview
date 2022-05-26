@@ -45,7 +45,9 @@ export default function ArticleSummary({
             />
             <div className="text-block">
                 <HeadTag className="article-headline">
-                    <a href={`/blog/${articleSlug}`} onClick={onClick}>{headline}</a>
+                    <a href={`/blog/${articleSlug}`} onClick={onClick} target={tabTarget}>
+                        {headline}
+                    </a>
                 </HeadTag>
                 {
                     subheading &&
