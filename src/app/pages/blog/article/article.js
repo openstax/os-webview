@@ -6,6 +6,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import useWindowContext from '~/contexts/window';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import useRouterContext from '~/components/shell/router-context';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './article.scss';
 
 function getProgress(el) {
@@ -73,29 +74,24 @@ function FloatingSideBar({readTime, progress}) {
 }
 
 function useScrollProgress(ref) {
-    const [progress, setProgress] = useState(0);
     const bodyRef = useRef();
+    const [progress, updateProgress] = React.useReducer(
+        (state) => bodyRef ? getProgress(bodyRef.current) : state,
+        0
+    );
     const windowCx = useWindowContext();
 
-    useEffect(() => {
-        if (typeof bodyRef === 'undefined') {
-            return;
-        }
+    useEffect(
+        () => {
+            Array.from(ref.current.querySelectorAll('img'))
+                .forEach((img) => {
+                    img.onload = updateProgress;
+                });
+        },
+        [ref]
+    );
 
-        Array.from(ref.current.querySelectorAll('img'))
-            .forEach((img) => {
-                img.onload = () => setProgress(getProgress(bodyRef.current));
-            });
-    }, [ref, bodyRef]);
-
-    useEffect(() => {
-        if (typeof bodyRef === 'undefined') {
-            return;
-        }
-        const handleScroll = () => setProgress(getProgress(bodyRef.current));
-
-        handleScroll();
-    }, [bodyRef, windowCx]);
+    useEffect(updateProgress, [windowCx, updateProgress]);
 
     return [progress, bodyRef];
 }
@@ -166,14 +162,46 @@ function PdfArticle({data}) {
     );
 }
 
-export function Article({data}) {
-    const isPdf = React.useMemo(
-        () => data.body.some((block) => block.type === 'document'),
-        [data.body]
+function VideoArticle({data}) {
+    const [readTime, setReadTime] = useState();
+    const ref = useRef();
+    const [progress, bodyRef] = useScrollProgress(ref);
+    const {featured_video: [{value: videoEmbed}], body, tags} = data;
+
+    return (
+        <div className="content">
+            <FloatingSideBar readTime={readTime} progress={progress} />
+            <div className="title-and-video">
+                <div className="floater-spacer" />
+                <TitleBlock data={data} />
+                <RawHTML embed html={videoEmbed} className="video-block" />
+            </div>
+            <div className="text-content" ref={ref}>
+                <ArticleBody
+                    bodyData={body}
+                    setReadTime={setReadTime}
+                    bodyRef={bodyRef}
+                />
+                <Tags tagData={tags} />
+            </div>
+        </div>
     );
+}
+
+export function Article({data}) {
     const ArticleContent = React.useMemo(
-        () => isPdf ? PdfArticle : NormalArticle,
-        [isPdf]
+        () => {
+            const isPdf = data.body.some((block) => block.type === 'document');
+
+            if (isPdf) {
+                return PdfArticle;
+            } else if (data.featured_video?.length) {
+                console.info('Using Video article');
+                return VideoArticle;
+            }
+            return NormalArticle;
+        },
+        [data]
     );
 
     return (<ArticleContent data={data} />);
