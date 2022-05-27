@@ -159,7 +159,7 @@ const throttledLoginCheck = throttle((setData) => {
             }
         });
     });
-}, 30000);
+}, 20000);
 
 function useUserModel() {
     const [data, setData] = useState();

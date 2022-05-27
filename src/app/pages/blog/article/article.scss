@@ -62,18 +62,34 @@
             width: calc(100% - #{$floater-width + $floater-margin + $normal-margin});
         }
 
+        .title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            @include width-up-to($phone-max) {
+                gap: 1rem;
+            }
+
+            h1 {
+                @include set-font(h2);
+
+                margin: 0;
+            }
+
+            h2 {
+                @include set-font(h4);
+            }
+        }
+
         .image-and-title {
             display: grid;
             gap: 3rem;
+            grid-template-columns: 1fr;
             margin-bottom: 2rem;
-
-            @include width-up-to($phone-max) {
-                grid-template-columns: 1fr;
-            }
 
             /* line it up with the text content */
             @include width-between($phone-max, $tablet-max) {
-                grid-template-columns: 1fr;
                 margin: 0 auto;
                 max-width: 72rem;
                 padding: 0 $normal-margin;
@@ -84,7 +100,41 @@
             }
         }
 
+        .title-and-video {
+            display: grid;
+            gap: 3rem;
+            grid-template-columns: 1fr;
+            margin-bottom: 2rem;
+
+            .video-block iframe {
+                height: calc(900vw / 16);
+                width: 100%;
+            }
+
+            @include wider-than($tablet-max) {
+                grid-template-columns: auto 1fr;
+
+                // stylelint-disable-next-line no-descending-specificity
+                .title-block {
+                    grid-column: 2;
+                    grid-row: 1;
+                }
+
+                .video-block {
+                    grid-column: 2;
+                    grid-row: 2;
+                }
+            }
+
+            @include wider-than($media-content-max) {
+                .video-block iframe {
+                    height: 68rem;
+                }
+            }
+        }
+
         .floater-spacer {
+            grid-column: 1;
             width: $floater-width;
 
             @include width-up-to($phone-max) {
@@ -96,16 +146,9 @@
             }
         }
 
-        .title-block {
+        .pdf-title-block {
             display: flex;
-            flex-direction: column;
-            gap: 2rem;
-
-            h1 {
-                @include set-font(h2);
-
-                margin: 0;
-            }
+            gap: 4rem;
         }
     }
 

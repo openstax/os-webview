@@ -1,7 +1,7 @@
 const settings = window.SETTINGS;
 const EXTERNAL = /^([a-z]+:)/;
 const ABSOLUTE_OPENSTAX = new RegExp(
-    `(?:https?://openstax.org|${window.location.origin})(?!/(?:books|accounts|oxauth|blog-feed)/)`
+    `(?:https?://openstax.org|${window.location.origin})(?!/(?:books|accounts|oxauth|blog-feed|documents)/)`
 );
 const MAILTO = /^mailto:(.+)/;
 const CNX = /cnx.org/;
@@ -72,7 +72,7 @@ function isCloudFront(href) {
 function loginOrOutLink(loginOrLogout) {
     const encodedLocation = encodeURIComponent(decodeURIComponent(window.location.href));
 
-    return `${settings.accountHref}/i/${loginOrLogout}/?r=${encodedLocation}`;
+    return `${settings.accountHref}/${loginOrLogout}/?r=${encodedLocation}`;
 }
 
 function loginLink() {

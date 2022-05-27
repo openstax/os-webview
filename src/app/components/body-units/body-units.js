@@ -1,6 +1,7 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Quote from '~/components/quote/quote.jsx';
+import JITLoad from '~/helpers/jit-load';
 
 function Paragraph({data}) {
     return (
@@ -34,12 +35,18 @@ function PullQuote({data}) {
     );
 }
 
+function Document({data}) {
+    return (<JITLoad importFn={() => import('./pdf-unit.js')} data={data} />);
+}
+
+
 // Using CMS tags, which are not camel-case
 /* eslint camelcase: 0 */
 const bodyUnits = {
     paragraph: Paragraph,
     aligned_image: AlignedImage,
-    pullquote: PullQuote
+    pullquote: PullQuote,
+    document: Document
 };
 
 export default function BodyUnit({unit}) {

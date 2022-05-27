@@ -15,9 +15,9 @@ export default {
     banner_headline: "Free and flexible textbooks and resources.",
     banner_description: "<b>Create a free account</b> for full access to our free textbooks and resources.",
     banner_get_started_text: "Get started now",
-    banner_get_started_link: "https://accounts.openstax.org/accounts/i/login/?r=https://openstax.org/",
+    banner_get_started_link: "https://accounts.openstax.org/accounts/login/?r=https://openstax.org/",
     banner_login_text: "Login",
-    banner_login_link: "https://accounts.openstax.org/accounts/i/login/?r=https://openstax.org/",
+    banner_login_link: "https://accounts.openstax.org/accounts/login/?r=https://openstax.org/",
     banner_logged_in_text: "Explore Now",
     banner_logged_in_link: "https://openstax.org/subjects",
     banner_left_image: {

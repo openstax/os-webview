@@ -20,7 +20,7 @@ function AccountSection() {
     return (
         <section>
             <h2>Account</h2>
-            <a className='edit-link' href={`${window.SETTINGS.accountHref}/i/profile`}>Edit account details</a>
+            <a className='edit-link' href={`${window.SETTINGS.accountHref}/profile`}>Edit account details</a>
             <section>
                 <h3>General</h3>
                 <div className='fields general-fields'>

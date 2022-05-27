@@ -41,13 +41,15 @@ export function FooterDialog({
 }
 
 export default function Dialog({
-    isOpen, title, onPutAway, children, className, closeOnOutsideClick
+    isOpen, title, onPutAway, children, className, closeOnOutsideClick=false
 }) {
+    const overlayClassName = className ? `modal-overlay-${className}` : '';
+
     return (
         <ReactModal
             isOpen={isOpen}
             className={cn('modal', className)}
-            overlayClassName="modal-overlay"
+            overlayClassName={cn('modal-overlay', overlayClassName)}
             bodyOpenClassName="no-scroll-dialog"
             onRequestClose={onPutAway}
             shouldCloseOnOverlayClick={closeOnOutsideClick}

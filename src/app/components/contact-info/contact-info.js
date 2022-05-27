@@ -101,7 +101,7 @@ function SchoolSelector() {
     );
 }
 
-export default function ContactInfo() {
+export default function ContactInfo({children}) {
     return (
         <div className="contact-info">
             <FormInput
@@ -122,7 +122,6 @@ export default function ContactInfo() {
                     required: true,
                     autocomplete: 'family-name',
                     maxlength: 35
-
                 }}
             />
             <FormInput
@@ -148,6 +147,7 @@ export default function ContactInfo() {
                 }}
             />
             <SchoolSelector />
+            {children}
         </div>
     );
 }

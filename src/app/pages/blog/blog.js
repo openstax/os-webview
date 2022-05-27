@@ -9,6 +9,7 @@ import SearchBar, {HeadingAndSearchBar} from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import LatestBlogPosts from './latest-blog-posts/latest-blog-posts';
 import {ArticleFromSlug} from './article/article';
+import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
 import timers from './timers';
 import './blog.scss';
 
@@ -51,6 +52,7 @@ export function MainBlogPage() {
 
 function ArticlePage() {
     const {slug} = useParams();
+    const [articleData, setArticleData] = React.useState();
 
     useEffect(
         () => window.scrollTo(0, 0),
@@ -59,9 +61,10 @@ function ArticlePage() {
 
     return (
         <WindowContextProvider>
-            <ArticleFromSlug slug={`news/${slug}`} />
+            <ArticleFromSlug slug={`news/${slug}`} onLoad={setArticleData} />
             <DisqusForm />
             <MoreStories exceptSlug={slug} />
+            <GatedContentDialog articleData={articleData} />
         </WindowContextProvider>
     );
 }
