@@ -32,6 +32,7 @@
         box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
         max-width: 33rem;
         overflow: hidden;
+        text-align: left;
 
         .blurb {
             border-left: solid 1rem;
@@ -40,6 +41,13 @@
             height: 100%;
             padding: 3rem;
             row-gap: 3rem;
+
+            > :first-child {
+                align-items: flex-start;
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+            }
 
             * {
                 margin: 0;
