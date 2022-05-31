@@ -9,7 +9,7 @@ export default function CarouselSection({
         <section id={id} className={className}>
             <div className="content">
                 <div className="top">
-                    <h1>{heading}</h1>
+                    <h2>{heading}</h2>
                     <div>{description}</div>
                 </div>
                 <a className="btn primary" href={linkUrl}>
