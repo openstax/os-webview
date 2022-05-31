@@ -47,14 +47,17 @@ function HiddenFields({email, uuid, counts}) {
         }),
         [selectedItems, counts]
     );
+    const firstBook = selectedItems ? selectedItems[0]?.value : '';
 
     return (
         <React.Fragment>
             <input type="hidden" name="email" value={email} />
             <input type="hidden" name="renewal_date" value={new Date(Date.now()).toLocaleDateString()} />
             <input type="hidden" name="accounts_uuid" value={uuid} />
-            <input type="hidden" name="appplication_source" value={source} />
+            <input type="hidden" name="application_source" value={source} />
             <input type="hidden" name="adoption_json" value={json} />
+            <input type="hidden" name="subject" value={firstBook} />
+            <input type="hidden" name="subject_interest" value={firstBook} />
         </React.Fragment>
     );
 }
@@ -141,7 +144,7 @@ function TheForm() {
             <div className="fixed-fields">
                 <FixedField label="First name" name="first_name" value={firstName} />
                 <FixedField label="Last name" name="last_name" value={lastName} />
-                <FixedField label="School name" name="school_name" value={school} />
+                <FixedField label="School name" name="school" value={school} />
             </div>
             <BooksAndStudentCounts counts={counts} updateCount={updateCount} />
             <input type="submit" />
