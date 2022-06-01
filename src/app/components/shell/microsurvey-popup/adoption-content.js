@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import useUserContext from '~/contexts/user';
+import {useLocation} from 'react-router-dom';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 export default function useAdoptionMicrosurveyContent() {
@@ -11,6 +12,16 @@ export default function useAdoptionMicrosurveyContent() {
         [clicked, userModel]
     );
     const ref = useRef();
+    const {pathname} = useLocation();
+
+    React.useEffect(
+        () => {
+            if (!clicked && pathname === '/renewal-form') {
+                disable();
+            }
+        },
+        [pathname, clicked, disable]
+    );
 
     function AdoptionContent() {
         return (
