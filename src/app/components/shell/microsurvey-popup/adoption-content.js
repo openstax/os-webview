@@ -2,11 +2,30 @@ import React, {useRef} from 'react';
 import useUserContext from '~/contexts/user';
 import {useLocation} from 'react-router-dom';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import cookie from '~/helpers/cookie';
+
+const DISMISSED_KEY = 'renewal_dialog_dismissed';
+const YESTERDAY = Date.now() - 60 * 60 * 24 * 1000;
+
+function useCookieKey(key) {
+    return React.useReducer(
+        (_, value) => {
+            cookie.setKey(key, value);
+            return value ? value : '0';
+        },
+        cookie.hash[key]
+    );
+}
 
 export default function useAdoptionMicrosurveyContent() {
     const {userModel} = useUserContext();
     const {first_name: name} = userModel || {};
-    const [clicked, disable] = useToggle(false);
+    const [cookieValue, setCookieValue] = useCookieKey(DISMISSED_KEY);
+    const recentlyDismissed = React.useMemo(
+        () => +cookieValue > YESTERDAY,
+        [cookieValue]
+    );
+    const [clicked, disable] = useToggle(recentlyDismissed);
     const ready = React.useMemo(
         () => !clicked && userModel?.renewal_eligible,
         [clicked, userModel]
@@ -14,6 +33,7 @@ export default function useAdoptionMicrosurveyContent() {
     const ref = useRef();
     const {pathname} = useLocation();
 
+    // Dismiss upon navigation
     React.useEffect(
         () => {
             if (!clicked && pathname === '/renewal-form') {
@@ -21,6 +41,16 @@ export default function useAdoptionMicrosurveyContent() {
             }
         },
         [pathname, clicked, disable]
+    );
+
+    // On dismiss, write cookie entry
+    React.useEffect(
+        () => {
+            if (!recentlyDismissed && clicked) {
+                setCookieValue(Date.now().toString());
+            }
+        },
+        [clicked, recentlyDismissed, setCookieValue]
     );
 
     function AdoptionContent() {
