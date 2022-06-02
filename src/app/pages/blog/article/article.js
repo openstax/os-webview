@@ -28,6 +28,9 @@ function getProgress(el) {
     return Math.round(100 * visibleHeight / totalHeight);
 }
 
+function normalUnits(unit) {return unit.value.alignment !== 'bottom';}
+function bottomUnits(unit) {return unit.value.alignment === 'bottom';}
+
 function ArticleBody({bodyData, setReadTime, bodyRef}) {
     useEffect(() => {
         const div = bodyRef.current;
@@ -39,7 +42,14 @@ function ArticleBody({bodyData, setReadTime, bodyRef}) {
 
     return (
         <div className="body" ref={bodyRef}>
-            {bodyData.map((unit) => <BodyUnit unit={unit} key={unit} />)}
+            {
+                bodyData.filter(normalUnits)
+                    .map((unit) => <BodyUnit unit={unit} key={unit} />)
+            }
+            {
+                bodyData.filter(bottomUnits)
+                    .map((unit) => <BodyUnit unit={unit} key={unit} />)
+            }
         </div>
     );
 }

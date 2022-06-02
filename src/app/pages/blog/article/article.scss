@@ -8,6 +8,14 @@
     position: relative;
     width: 100%;
 
+    img {
+        max-width: 100%;
+    }
+
+    br {
+        display: none;
+    }
+
     .content {
         @extend %content;
 
@@ -71,13 +79,13 @@
                 gap: 1rem;
             }
 
-            h1 {
+            > h1 {
                 @include set-font(h2);
 
                 margin: 0;
             }
 
-            h2 {
+            > div > h2 {
                 @include set-font(h4);
             }
         }
@@ -165,6 +173,7 @@
     }
 
     .body {
+        // stylelint-disable-next-line no-descending-specificity
         img {
             margin-top: $normal-margin;
         }
@@ -205,42 +214,73 @@
                 text-align: right;
             }
         }
-    }
 
-    /* stylelint-disable-next-line no-descending-specificity */
-    img {
-        max-width: 100%;
-    }
+        figure,
+        .blog-cta {
+            @include wider-than($phone-max) {
+                &.right {
+                    float: right;
+                    margin-left: $normal-margin;
+                }
 
-    figure {
-        display: grid;
-        justify-content: center;
-        margin: 0;
+                &.left {
+                    float: left;
+                    margin-right: $normal-margin;
+                }
 
-        @include wider-than($phone-max) {
-            &.left,
-            &.right {
-                max-width: 33%;
-            }
+                &.mid {
+                    float: right;
+                    max-width: 50%;
+                }
 
-            &.right {
-                float: right;
-                margin-left: $normal-margin;
-            }
+                &.half {
+                    width: 50%;
+                }
 
-            &.left {
-                float: left;
-                margin-right: $normal-margin;
-            }
+                &.third {
+                    width: 33.3%;
+                }
 
-            &.mid {
-                float: right;
-                max-width: 50%;
+                &.full {
+                    clear: both;
+                    width: 100%;
+                }
+
+                &.bottom {
+                    align-items: center;
+                }
             }
         }
-    }
 
-    br {
-        display: none;
+        figure {
+            display: grid;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .blog-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: $normal-margin;
+            text-align: center;
+
+            // stylelint-disable-next-line no-descending-specificity
+            h2 {
+                @include set-font(h4);
+
+                margin: 0;
+            }
+
+            .btn {
+                @include button();
+
+                margin-top: 1rem;
+
+                &.primary {
+                    @extend %primary;
+                }
+            }
+        }
     }
 }
