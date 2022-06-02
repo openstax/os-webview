@@ -1,5 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 @import 'mixins/placeholder-selectors';
+@import 'mixins/triangle';
 
 .accordion-group {
     display: grid;
@@ -17,6 +18,12 @@
         justify-content: space-between;
         padding: 0 2rem;
 
+        .label {
+            display: flex;
+            gap: $normal-margin;
+            position: relative;
+        }
+
         .chevron {
             font-size: 80%;
         }
@@ -29,9 +36,42 @@
             border-radius: 0.3rem;
             color: text-color(white);
             font-weight: bold;
-            margin-left: 3rem;
             padding: 0.5rem;
             text-transform: uppercase;
+        }
+
+        .info-trigger{
+            &:not(:focus-within) [role="tooltip"] {
+                display: none;
+            }
+
+            &:focus-within [role="tooltip"] {
+                @include set-font(body-regular);
+
+                background-color: ui-color(white);
+                border: thin solid ui-color(form-border);
+                box-shadow: 0 0.4rem 0.4rem rgba(ui-color(black), 0.25);
+                left: 0;
+                max-width: 50rem;
+                padding: 2rem;
+                position: absolute;
+                text-align: left;
+                top: calc(100% + 0.8rem);
+                width: 50vw;
+                z-index: 1;
+
+                &::after {
+                    $triangle-size: 1rem;
+                    @include triangle(
+                        $direction: top,
+                        $position: left 12rem bottom 100%,
+                        $color: ui-color(white),
+                        $size: $triangle-size
+                    );
+
+                    transform: none;
+                }
+            }
         }
     }
 
