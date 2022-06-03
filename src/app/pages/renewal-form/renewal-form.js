@@ -1,5 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
+import linkHelper from '~/helpers/link';
 import useUserContext from '~/contexts/user';
 import useAdoptions from '~/models/renewals';
 import BookTagsMultiselect, {BookTagsContextProvider, useBookTagsContext}
@@ -47,7 +48,10 @@ function HiddenFields({email, uuid, counts}) {
         }),
         [selectedItems, counts]
     );
-    const firstBook = selectedItems ? selectedItems[0]?.value : '';
+    const subjects = React.useMemo(
+        () => selectedItems ? selectedItems.map((i) => i.value).join(';') : '',
+        [selectedItems]
+    );
 
     return (
         <React.Fragment>
@@ -56,8 +60,8 @@ function HiddenFields({email, uuid, counts}) {
             <input type="hidden" name="accounts_uuid" value={uuid} />
             <input type="hidden" name="application_source" value={source} />
             <input type="hidden" name="adoption_json" value={json} />
-            <input type="hidden" name="subject" value={firstBook} />
-            <input type="hidden" name="subject_interest" value={firstBook} />
+            <input type="hidden" name="subject" value={subjects} />
+            <input type="hidden" name="subject_interest" value={subjects} />
         </React.Fragment>
     );
 }
@@ -110,7 +114,7 @@ function BooksAndStudentCounts({counts, updateCount}) {
 
 function TheForm() {
     const {userStatus} = useUserContext();
-    const {firstName, lastName, email, school, uuid} = userStatus || {};
+    const {firstName, lastName, email, school, uuid} = userStatus;
     const adoptions = useAdoptions(uuid);
     const {counts, updateCount, defaultCount} = useFormData(adoptions);
     const {allBooks, select} = useBookTagsContext();
@@ -152,14 +156,26 @@ function TheForm() {
     );
 }
 
+function EnsureLoggedIn() {
+    const {userStatus: {uuid}} = useUserContext();
+
+    if (!uuid) {
+        window.location = linkHelper.loginLink();
+    }
+
+    return (
+        <BookTagsContextProvider>
+            <TheForm />
+        </BookTagsContextProvider>
+    );
+}
+
 export default function RenewalForm() {
     return (
         <div className="renewal-form page">
             <div className="boxed">
-                <h1>Renew this</h1>
-                <BookTagsContextProvider>
-                    <TheForm />
-                </BookTagsContextProvider>
+                <h1>Adoption renewal</h1>
+                <EnsureLoggedIn />
             </div>
         </div>
     );

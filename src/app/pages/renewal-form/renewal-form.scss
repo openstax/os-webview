@@ -2,6 +2,11 @@
 
 .renewal-form.page {
     padding-bottom: 12rem;
+    padding-top: 4rem;
+
+    h1 {
+        @include set-font(h2);
+    }
 
     form {
         background-color: ui-color(white);
