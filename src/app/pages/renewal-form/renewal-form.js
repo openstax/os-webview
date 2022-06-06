@@ -159,8 +159,25 @@ function TheForm() {
 function EnsureLoggedIn() {
     const {userStatus: {uuid}} = useUserContext();
 
+    React.useEffect(
+        () => {
+            if (!uuid) {
+                const t = window.setTimeout(
+                    () => {window.location = linkHelper.loginLink();},
+                    1000
+                );
+
+                return () => window.clearTimeout(t);
+            }
+            return null;
+        },
+        [uuid]
+    );
+
     if (!uuid) {
-        window.location = linkHelper.loginLink();
+        return (
+            <div>You need to be logged in. Redirecting...</div>
+        );
     }
 
     return (
