@@ -18,8 +18,6 @@ global.document.createRange = () => ({
 });
 global.document.getSelection = () => {};
 
-window.MutationObserver = function () {};
-window.MutationObserver.prototype.observe = function () {};
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 (function() {
