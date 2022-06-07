@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import ResultGrid from './result-grid';
 import {books, types, advanced, sort, resultCount} from '../store';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
@@ -19,42 +19,75 @@ export const costOptions = [
 
 const costOptionValues = costOptions.map((entry) => entry.value);
 
+const equityKey = 'equity_rating'; // eslint-disable-line
+
+export const equityOptions = [
+    'Best',
+    'Good',
+    'Needs Improvement'
+].map((label) => ({
+    label,
+    value: label
+}));
+
+const equityOptionValues = equityOptions.map((entry) => entry.value);
+
+function filterByBooks(candidates) {
+    if (books.value.length <= 0) {
+        return candidates;
+    }
+    return candidates.filter((entry) => {
+        return entry.books.find((title) => books.includes(title));
+    });
+}
+
+function filterByType(candidates) {
+    if (! types.value) {
+        return candidates;
+    }
+    return candidates.filter((entry) => {
+        return types.value.localeCompare(
+            entry.type, 'en', {sensitivity: 'base'}
+        ) === 0;
+    });
+}
+
+// Custom advanced filter handling
+function filterBy(values, candidates, candidateField) {
+    const features = advanced.value
+        .filter((f) => values.includes(f));
+
+    if (!features.length) {
+        return candidates;
+    }
+    return candidates.filter(
+        (entry) => {
+            const v = entry[candidateField] || '';
+
+            // Includes because for costs, the value is a semicolon-separated list
+            return features.some((f) => v.includes(f));
+        }
+    );
+}
+
 // eslint-disable-next-line complexity
 function filterEntries(entries) {
     let result = shuffle(entries);
 
-    if (books.value.length > 0) {
-        result = result.filter((entry) => {
-            return entry.books.find((title) => books.includes(title));
-        });
-    }
-
-    if (types.value) {
-        result = result.filter((entry) => {
-            return types.value.localeCompare(
-                entry.type, 'en', {sensitivity: 'base'}
-            ) === 0;
-        });
-    }
+    result = filterByBooks(result);
+    result = filterByType(result);
 
     if (advanced.value.length > 0) {
         result = result.filter((entry) => {
             return advanced.value
                 .filter((feature) => !costOptionValues.includes(feature))
-                .every((requiredFeature) => {
-                    return entry.advancedFeatures.includes(requiredFeature);
-                });
+                .filter((feature) => !equityOptionValues.includes(feature))
+                .every((requiredFeature) =>
+                    entry.advancedFeatures.includes(requiredFeature)
+                );
         });
-        const costFeatures = advanced.value
-            .filter((feature) => costOptionValues.includes(feature));
-
-        if (costFeatures.length) {
-            result = result.filter((entry) => {
-                const costs = entry.cost || '';
-
-                return costFeatures.some((costPossibility) => costs.includes(costPossibility));
-            });
-        }
+        result = filterBy(costOptionValues, result, 'cost');
+        result = filterBy(equityOptionValues, result, 'equityRating');
     }
 
     resultCount.value = result.length;
@@ -95,6 +128,10 @@ function resultEntry(pd) {
             {
                 label: 'cost',
                 value: pd.affordability_cost
+            },
+            {
+                label: 'equity',
+                value: pd.equity_rating
             }
         ].filter((v) => Boolean(v.value)),
         richDescription: pd.rich_description ||
@@ -110,6 +147,7 @@ function resultEntry(pd) {
             .filter((vid) => Boolean(vid)),
         type: pd.partner_type,
         cost: pd.affordability_cost,
+        equityRating: pd.equity_rating,
         infoUrl: pd.formstack_url,
         verifiedFeatures: pd.verified_by_instructor ? tooltipText : false,
         rating: pd.average_rating.rating__avg,
@@ -153,14 +191,17 @@ const isAlly = (level) => level.localeCompare(allyPartnershipLevel, 'en', {sensi
 
 function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
     const entries = partnerData.map(resultEntry);
-    const [filteredEntries, setFilteredEntries] = useState(filterEntries(entries));
+    const [filteredEntries, refreshFilters] = React.useReducer(
+        () => filterEntries(entries),
+        filterEntries(entries)
+    );
     const filteredPartners = filteredEntries.filter((e) => !isAlly(e.partnershipLevel || ''));
     const filteredAllies = filteredEntries.filter((e) => isAlly(e.partnershipLevel || ''));
     const defaultAlliesOpen = filteredPartners.length === 0;
 
-    useEffect(() => {
+    React.useEffect(() => {
         function handleNotifyFor(store) {
-            return store.on('notify', () => setFilteredEntries(filterEntries(entries)));
+            return store.on('notify', refreshFilters);
         }
 
         const cleanup = [books, types, advanced, sort].map(handleNotifyFor);

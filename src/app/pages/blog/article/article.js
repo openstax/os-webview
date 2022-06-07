@@ -206,7 +206,6 @@ export function Article({data}) {
             if (isPdf) {
                 return PdfArticle;
             } else if (data.featured_video?.length) {
-                console.info('Using Video article');
                 return VideoArticle;
             }
             return NormalArticle;
