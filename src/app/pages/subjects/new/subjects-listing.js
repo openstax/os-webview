@@ -25,10 +25,13 @@ function BookList({name, data}) {
             <img className="subject-icon" src={data.icon} role="presentation" />
             <h2 id={labelId}>{name}</h2>
             {data.categories.map((c) => <CategoryLink key={c} subject={subdir} category={c} />)}
-            <a href={`/subjects/${subdir}/`}>
-                {`View all ${name} books `}
-                <FontAwesomeIcon icon={faArrowRight} />
-            </a>
+            {
+                data.categories.length > 1 ?
+                    <a href={`/subjects/${subdir}/`} className="all-link">
+                        {`View all ${name} books `}
+                        <FontAwesomeIcon icon={faArrowRight} />
+                    </a> : null
+            }
         </nav>
     );
 }

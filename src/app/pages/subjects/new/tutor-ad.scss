@@ -46,7 +46,7 @@
                 gap: 2rem 8rem;
                 grid-template: 'heading img'
                 'html img';
-                padding: 3rem;
+                padding: 3.5rem 4rem;
 
                 img,
                 .btn {
@@ -63,6 +63,7 @@
             h1 {
                 @include set-font(body-regular);
 
+                align-self: end;
                 color: text-color(helper);
                 margin: 0;
                 text-transform: uppercase;

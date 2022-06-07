@@ -107,8 +107,8 @@
 
         @include wider-than($phone-max) {
             background-position: center bottom;
-            background-size: contain;
-            bottom: -20%;
+            background-size: 100%;
+            bottom: -10rem;
             height: calc(80% + 12rem);
         }
     }
