@@ -1,38 +1,19 @@
 import BodyUnit from '~/components/body-units/body-units';
 import Byline from '~/components/byline/byline';
 import ProgressRing from '~/components/progress-ring/progress-ring';
+import useScrollProgress from './use-progress';
 import {ShareJsx} from '~/components/share/share';
-import React, {useState, useEffect, useRef} from 'react';
-import useWindowContext from '~/contexts/window';
+import React, {useState, useRef} from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import useRouterContext from '~/components/shell/router-context';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './article.scss';
 
-function getProgress(el) {
-    if (!el) {
-        return 0;
-    }
-    const divRect = el.getBoundingClientRect();
-    const viewportBottom = window.innerHeight;
-    const visibleHeight = viewportBottom - divRect.top;
-    const totalHeight = divRect.height;
-
-    if (visibleHeight <= 0) {
-        return 0;
-    }
-    if (viewportBottom >= divRect.bottom) {
-        return 100;
-    }
-
-    return Math.round(100 * visibleHeight / totalHeight);
-}
-
 function normalUnits(unit) {return unit.value.alignment !== 'bottom';}
 function bottomUnits(unit) {return unit.value.alignment === 'bottom';}
 
 function ArticleBody({bodyData, setReadTime, bodyRef}) {
-    useEffect(() => {
+    React.useEffect(() => {
         const div = bodyRef.current;
         const words = div.textContent.split(/\W+/);
         const WORDS_PER_MINUTE = 225;
@@ -81,29 +62,6 @@ function FloatingSideBar({readTime, progress}) {
             </div>
         </div>
     );
-}
-
-function useScrollProgress(ref) {
-    const bodyRef = useRef();
-    const [progress, updateProgress] = React.useReducer(
-        (state) => bodyRef ? getProgress(bodyRef.current) : state,
-        0
-    );
-    const windowCx = useWindowContext();
-
-    useEffect(
-        () => {
-            Array.from(ref.current.querySelectorAll('img'))
-                .forEach((img) => {
-                    img.onload = updateProgress;
-                });
-        },
-        [ref]
-    );
-
-    useEffect(updateProgress, [windowCx, updateProgress]);
-
-    return [progress, bodyRef];
 }
 
 function TitleBlock({data}) {
