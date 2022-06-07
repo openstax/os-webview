@@ -4,6 +4,7 @@ import {FrameChanger} from '~/components/carousel/carousel';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMaximize} from '@fortawesome/free-solid-svg-icons/faMaximize';
 import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
+import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
 import './pdf-unit.scss';
 
@@ -57,18 +58,15 @@ function toggleFullscreen(elem) {
 }
 
 function useIsFullscreen() {
-    const [isFullScreen, updateIsFullScreen] = React.useReducer(
-        () => document.fullscreenElement,
-        document.fullscreenElement
-    );
+    const [isFullScreen, refresh] = useRefreshable(() => document.fullscreenElement);
 
     React.useEffect(
         () => {
-            window.addEventListener('fullscreenchange', updateIsFullScreen);
+            window.addEventListener('fullscreenchange', refresh);
 
-            return () => window.removeEventListener('fullscreenchange', updateIsFullScreen);
+            return () => window.removeEventListener('fullscreenchange', refresh);
         },
-        []
+        [refresh]
     );
 
     return isFullScreen;

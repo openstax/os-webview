@@ -1,4 +1,5 @@
 import React from 'react';
+import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useWindowContext from '~/contexts/window';
 
 function getProgress(divRect, viewportBottom) {
@@ -19,11 +20,7 @@ function getProgress(divRect, viewportBottom) {
 
 export default function useScrollProgress(ref) {
     const bodyRef = React.useRef();
-    const el = bodyRef.current;
-    const [rect, refresh] = React.useReducer(
-        () => el?.getBoundingClientRect(),
-        el?.getBoundingClientRect()
-    );
+    const [rect, refresh] = useRefreshable(() => bodyRef.current?.getBoundingClientRect());
     const {innerHeight, scrollY} = useWindowContext();
     const progress = React.useMemo(
         () => getProgress(rect, innerHeight),
@@ -37,7 +34,7 @@ export default function useScrollProgress(ref) {
                     img.onload = refresh;
                 });
         },
-        [ref]
+        [ref, refresh]
     );
 
     // Wait a tick so the bodyRef assignment happens
