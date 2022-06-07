@@ -21,7 +21,7 @@ export default function LearnMore() {
     return (
         <section id="learn" className="learn-more">
             <div className="content">
-                <h1>{osTextbookHeading}</h1>
+                <h2>{osTextbookHeading}</h2>
                 <AccordionGroup items={accordionItems} noScroll />
             </div>
         </section>
