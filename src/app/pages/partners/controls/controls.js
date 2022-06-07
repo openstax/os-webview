@@ -131,7 +131,8 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
                 {openButton === 'Books' && <BookOptions store={books} />}
                 {openButton === 'Advanced Filters' &&
                     <AdvancedOptions
-                        store={advanced} options={advancedFilterOptions}
+                        store={advanced}
+                        options={advancedFilterOptions}
                         onTabIndex={setOpenTab}
                     />}
             </div>

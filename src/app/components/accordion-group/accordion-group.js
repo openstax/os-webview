@@ -10,6 +10,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
+import {faCircleInfo} from '@fortawesome/free-solid-svg-icons/faCircleInfo';
 import './accordion-group.scss';
 
 function useChevronDirection(forwardOnChange, preExpanded) {
@@ -29,7 +30,33 @@ function useChevronDirection(forwardOnChange, preExpanded) {
     return [chevronDirection, onChange];
 }
 
-function TitleBar({title, titleTag, chevronDirection}) {
+function TooltipButton({content}) {
+    const ref = React.useRef();
+    const focus = React.useCallback(
+        (e) => {
+            ref.current.focus();
+            e.stopPropagation();
+        },
+        []
+    );
+
+    return (
+        <span
+            className="info-trigger" tabIndex="0" ref={ref}
+            href="tooltip"
+            onMouseEnter={() => ref.current.focus()}
+            onMouseLeave={() => ref.current.blur()}
+            onClick={focus}
+        >
+            <FontAwesomeIcon icon={faCircleInfo} />
+            <div role="tooltip">
+                {content}
+            </div>
+        </span>
+    );
+}
+
+function TitleBar({title, titleTag, chevronDirection, tooltipContent}) {
     const icon = ({
         down: faChevronDown,
         up: faChevronUp
@@ -44,6 +71,7 @@ function TitleBar({title, titleTag, chevronDirection}) {
                         titleTag &&
                             <span className="title-tag">{titleTag}</span>
                     }
+                    {tooltipContent && <TooltipButton content={tooltipContent} />}
                 </div>
                 <div className="chevron">
                     <FontAwesomeIcon icon={icon} />
@@ -57,13 +85,13 @@ function toUuid(name) {
     return name.replace(/\W+/g, '_');
 }
 
-function Item({title, titleTag, checkChevronDirection, contentComponent}) {
+function Item({title, titleTag, tooltipContent, checkChevronDirection, contentComponent}) {
     const uuid = toUuid(title);
     const chevronDirection = checkChevronDirection(uuid);
 
     return (
         <AccordionItem uuid={uuid} className="accordion-item">
-            <TitleBar {...{title, titleTag, chevronDirection}} />
+            <TitleBar {...{title, titleTag, tooltipContent, chevronDirection}} />
             <AccordionItemPanel className="content-pane">
                 {contentComponent}
             </AccordionItemPanel>
