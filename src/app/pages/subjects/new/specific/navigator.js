@@ -5,6 +5,7 @@ import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import useNavigatorContext from './navigator-context';
+import useLanguageContext from '~/contexts/language';
 import {useLocation, Link} from 'react-router-dom';
 import './navigator.scss';
 
@@ -75,14 +76,33 @@ function OtherSectionLinks({subjectName}) {
     );
 }
 
+const localizedTexts = {
+    'en': {
+        categoryTitle: (subjectName) => `${subjectName} Book Categories`,
+        learnMoreTitle: 'Learn more'
+    },
+    'es': {
+        categoryTitle: (subjectName) => `Categorías de libros de ${subjectName}`,
+        learnMoreTitle: 'Aprende más'
+    }
+};
+
+function useTranslation() {
+    const {language} = useLanguageContext();
+
+    return localizedTexts[language];
+}
+
 function useAccordionItems(subjectName) {
+    const tr = useTranslation();
+
     return [
         {
-            title: `${subjectName} Book Categories`,
+            title: tr.categoryTitle(subjectName),
             contentComponent: <CategorySectionLinks />
         },
         {
-            title: 'Learn more',
+            title: tr.learnMoreTitle,
             contentComponent: <OtherSectionLinks subjectName={subjectName} />
         }
     ];
@@ -102,13 +122,15 @@ export function JumpToSection({subjectName}) {
 }
 
 export default function Navigator({subject}) {
+    const tr = useTranslation();
+
     return (
         <nav className="navigator">
             <div style="position: sticky; top: 9rem;">
                 <img src={subject.icon} role="presentation" />
-                <div className="heading">{`${subject.html} Book Categories`}</div>
+                <div className="heading">{tr.categoryTitle(subject.html)}</div>
                 <CategorySectionLinks />
-                <div className="heading">Learn more</div>
+                <div className="heading">{tr.learnMoreTitle}</div>
                 <OtherSectionLinks subjectName={subject.html} />
             </div>
         </nav>
