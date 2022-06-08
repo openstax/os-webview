@@ -19,7 +19,7 @@ export const languageTranslations = {
     }
 };
 
-function useTranslations() {
+export function useTranslations() {
     const {language} = useLanguageContext();
 
     return languageTranslations[language];
@@ -38,13 +38,13 @@ export function LanguageLink({locale}) {
     );
 }
 
-function AnotherLanguage({locale}) {
+function AnotherLanguage({locale, LinkPresentation}) {
     const tr = useTranslations();
 
     return (
         <React.Fragment>
             {' '}{tr.and}{' '}
-            <LanguageLink locale={locale} />
+            <LinkPresentation locale={locale} />
         </React.Fragment>
     );
 }
@@ -58,7 +58,7 @@ export function LanguageSelectorWrapper({children}) {
     );
 }
 
-export default function LanguageSelector({leadInText, otherLocales}) {
+export default function LanguageSelector({leadInText, otherLocales, LinkPresentation=LanguageLink}) {
     const {language} = useLanguageContext();
     const tr = useTranslations();
     const localLanguage = tr[language];
@@ -71,7 +71,11 @@ export default function LanguageSelector({leadInText, otherLocales}) {
         <LanguageSelectorWrapper>
             {leadInText[language] || leadInText.en}{' '}
             {localLanguage}
-            {otherLocales.map((lo) => <AnotherLanguage key={lo} locale={lo} />)}
+            {
+                otherLocales.map(
+                    (lo) => <AnotherLanguage key={lo} locale={lo} LinkPresentation={LinkPresentation} />
+                )
+            }
         </LanguageSelectorWrapper>
     );
 }
