@@ -129,19 +129,21 @@ function TheForm() {
         },
         [select, counts, updateCount, defaultCount]
     );
+    const [initialized, setInitialized] = React.useState(false);
 
     // Initialize selections from adoptions
     React.useEffect(
         () => {
-            if (adoptions.Books) {
+            if (!initialized && adoptions.Books) {
                 for (const b of adoptions.Books) {
                     const item = allBooks.find((i) => i.value === b.name);
 
                     selectAndSetDefaultCount(item);
                 }
+                setInitialized(true);
             }
         },
-        [adoptions, selectAndSetDefaultCount, allBooks]
+        [adoptions, selectAndSetDefaultCount, allBooks, initialized]
     );
 
     return (
