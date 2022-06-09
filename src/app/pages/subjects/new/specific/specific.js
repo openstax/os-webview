@@ -12,6 +12,7 @@ import {TutorAdThatTakesData} from '../tutor-ad';
 import BlogPosts from './blog-posts';
 import Webinars from './webinars';
 import LearnMore from './learn-more';
+import LazyLoad from 'react-lazyload';
 import AboutOpenStax from '../about-openstax';
 import InfoBoxes from '../info-boxes';
 import PhilanthropicSupport from '../philanthropic-support';
@@ -67,14 +68,30 @@ function SubjectInContext({subject}) {
                             <div className={cn('targets', `${subject?.color}-stripe`)}>
                                 <Translations />
                                 <SubjectIntro subjectName={subject.html} />
-                                <BookViewer />
-                                <TutorAd />
-                                <BlogPosts />
-                                <Webinars />
-                                <LearnMore />
-                                <SpecificSubjectAboutOpenStax />
-                                <InfoBoxes />
-                                <PhilanthropicSupport />
+                                <LazyLoad once offset={100} height={400}>
+                                    <BookViewer />
+                                </LazyLoad>
+                                <LazyLoad once offset={100} height={400}>
+                                    <TutorAd />
+                                </LazyLoad>
+                                <LazyLoad once offset={100} height={400}>
+                                    <BlogPosts />
+                                </LazyLoad>
+                                <LazyLoad once offset={100} height={400}>
+                                    <Webinars />
+                                </LazyLoad>
+                                <LazyLoad once offset={100} height={400}>
+                                    <LearnMore />
+                                </LazyLoad>
+                                <LazyLoad once offset={100} height={400}>
+                                    <SpecificSubjectAboutOpenStax />
+                                </LazyLoad>
+                                <LazyLoad once offset={100} height={400}>
+                                    <InfoBoxes />
+                                </LazyLoad>
+                                <LazyLoad once offset={100} height={400}>
+                                    <PhilanthropicSupport />
+                                </LazyLoad>
                             </div>
                         </div>
                     </div>
