@@ -89,7 +89,9 @@ function Counts({counts, updateCount}) {
                             {b.text}{': '}
                             <input
                                 type="number" value={counts[b.value]}
-                                onChange={({target}) => updateCount(b.value, target.value)} />
+                                onChange={({target}) => updateCount(b.value, target.value)}
+                                min="1" max="999"
+                            />
                         </React.Fragment>
                     )
                 }
