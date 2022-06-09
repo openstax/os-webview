@@ -1,6 +1,6 @@
 {
     "name": "@openstax/os-webview",
-    "version": "2.94.0",
+    "version": "2.92.0",
     "description": "OpenStax webview",
     "scripts": {
         "test": "jest ./test/src",
@@ -15,16 +15,17 @@
     },
     "license": "AGPL-3.0",
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.36",
-        "@fortawesome/free-brands-svg-icons": "^5.15.4",
-        "@fortawesome/free-regular-svg-icons": "^5.15.4",
-        "@fortawesome/free-solid-svg-icons": "^5.15.4",
-        "@fortawesome/react-fontawesome": "^0.1.17",
-        "@sentry/react": "^6.17.3",
-        "@sentry/tracing": "^6.17.3",
+        "@fortawesome/fontawesome-svg-core": "^6.1.1",
+        "@fortawesome/free-brands-svg-icons": "^6.1.1",
+        "@fortawesome/free-regular-svg-icons": "^6.1.1",
+        "@fortawesome/free-solid-svg-icons": "^6.1.1",
+        "@fortawesome/react-fontawesome": "^0.1.18",
+        "@sentry/react": "^6.19.7",
+        "@sentry/tracing": "^6.19.7",
         "classnames": "^2.3.1",
         "react-accessible-accordion": "^4.0.0",
         "react-lazyload": "^3.2.0",
+        "react-pdf": "^5.7.2",
         "react-router-dom": "5",
         "storeon": "^3.1.4"
     },
