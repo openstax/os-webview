@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 
 const debouncedFetch = debounce(
     (schoolFetch, value, setSchools) => {
-        if (value.length > 1) {
+        if (value?.length > 1) {
             schoolFetch(value).then((list) => list.map(
                 (entry) => ({
                     name: entry.name,
