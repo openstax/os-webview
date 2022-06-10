@@ -1,13 +1,13 @@
-import {useReducer} from 'react';
+import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 
 function useContextValue() {
-    const [language, setLanguage] = useReducer(
-        (_, newValue) => {
-            window.localStorage.setItem('oswebLanguage', newValue);
-            return newValue;
-        }
-        , window.localStorage.getItem('oswebLanguage') || 'en'
+    const [language, setLanguage] = React.useState(window.localStorage.getItem('oswebLanguage') || 'en');
+
+    // Copy it to localStorage for later defaulting
+    React.useEffect(
+        () => window.localStorage.setItem('oswebLanguage', language),
+        [language]
     );
 
     return {language, setLanguage};

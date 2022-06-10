@@ -5,7 +5,7 @@ import cmsFetch from '~/models/cmsFetch';
 
 function dataToEntry(item) {
     const name = item.name || '';
-    const value = name.toLowerCase().replace(' ', '-');
+    const value = name.toLowerCase().replace(' ', '-').normalize('NFD').replace(/\p{Diacritic}/gu, '');
 
     return {
         value,

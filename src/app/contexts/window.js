@@ -1,12 +1,15 @@
-import {useState, useLayoutEffect} from 'react';
+import {useReducer, useLayoutEffect} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import throttle from 'lodash/throttle';
 
 function useContextValue() {
-    const [value, setValue] = useState(window);
+    const [value, refresh] = useReducer(
+        () => ({...window}),
+        window
+    );
 
     useLayoutEffect(() => {
-        const handleScroll = throttle(() => setValue({...window}), 40);
+        const handleScroll = throttle(refresh, 40);
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);

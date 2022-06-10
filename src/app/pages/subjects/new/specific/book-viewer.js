@@ -7,17 +7,44 @@ import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import {usePrintCopyDialog} from '~/pages/details/common/get-this-title-files/options';
 import useActiveElementContext, {ActiveElementContextProvider} from '~/contexts/active-element';
+import useLanguageContext from '~/contexts/language';
 import './book-viewer.scss';
+
+const localizedTexts = {
+    'en': {
+        orderPrint: 'Order a print copy',
+        getBook: 'Get the book',
+        viewOnline: 'View online',
+        downloadPdf: 'Download a PDF',
+        instructorResources: 'Instructor resources',
+        studentResources: 'Student resources'
+
+    },
+    'es': {
+        orderPrint: 'Solicite una copia impresa',
+        getBook: 'Consigue el libro',
+        viewOnline: 'Ver en línea',
+        downloadPdf: 'Descargar un PDF',
+        instructorResources: 'Recursos del instructor',
+        studentResources: 'Recursos para estudiantes'
+    }
+};
+
+function useTranslation() {
+    const {language} = useLanguageContext();
+
+    return localizedTexts[language];
+}
 
 function PrintOption({bookInfo}) {
     const {onClick, PCDialog} = usePrintCopyDialog();
-    const text = 'Order a print copy';
+    const tr = useTranslation();
     const amazonDataLink = useAmazonAssociatesLink(bookInfo.slug);
 
     return (
         <a role="menuitem" href="open a dialog" onClick={onClick}>
-            {text}
-            <PCDialog text={text} amazonDataLink={amazonDataLink} />
+            {tr.orderPrint}
+            <PCDialog text={tr.orderPrint} amazonDataLink={amazonDataLink} />
         </a>
     );
 }
@@ -31,6 +58,7 @@ function GetTheBookDropdown({bookInfo}) {
     const menuId = `${slug}-ddm`;
     const webviewLink = bookInfo.webviewRexLink || bookInfo.webviewLink;
     const pdfLink = (bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl);
+    const tr = useTranslation();
 
     React.useLayoutEffect(
         () => {
@@ -47,16 +75,16 @@ function GetTheBookDropdown({bookInfo}) {
                 id={buttonId} type="button" aria-haspopup="true" aria-controls={menuId}
                 aria-isexpanded={isOpen} onClick={() => toggle()}
             >
-                Get the book
+                {tr.getBook}
                 <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
             </button>
             <div id={menuId} role="menu" aria-labelledby={buttonId}>
-                <a role="menuitem" href={webviewLink}>View online</a>
-                <a role="menuitem" href={pdfLink}>Download a PDF</a>
+                <a role="menuitem" href={webviewLink}>{tr.viewOnline}</a>
+                <a role="menuitem" href={pdfLink}>{tr.downloadPdf}</a>
                 <PrintOption bookInfo={bookInfo} />
                 <hr />
-                <a role="menuitem" href={`/details/${slug}?Instructor resources`}>Instructor resources</a>
-                <a role="menuitem" href={`/details/${slug}?Student resources`}>Student resource</a>
+                <a role="menuitem" href={`/details/${slug}?Instructor resources`}>{tr.instructorResources}</a>
+                <a role="menuitem" href={`/details/${slug}?Student resources`}>{tr.studentResources}</a>
             </div>
         </div>
     );

@@ -63,7 +63,8 @@ $half-content-max: $content-max / 2;
             @include color-stripe(deep-green);
         }
 
-        > section {
+        > section,
+        > .lazyload-wrapper > section {
             width: 100%;
 
             > .content,
