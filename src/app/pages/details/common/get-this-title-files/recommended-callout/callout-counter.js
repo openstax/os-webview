@@ -22,7 +22,7 @@ export class Implementation {
     }
 
     get lastReset() {
-        const savedValue = Number(window.localStorage.getItem(this.resetIndex)) ||
+        const savedValue = Number(window.localStorage?.getItem(this.resetIndex)) ||
             Number(this.resetDate) - 100;
 
         return new Date(savedValue);
@@ -40,7 +40,7 @@ export class Implementation {
     }
 
     get count() {
-        return Number(window.localStorage.getItem(this.index));
+        return Number(window.localStorage?.getItem(this.index));
     }
 
     set count(newValue) {

@@ -42,5 +42,9 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
 });
 
 export default function (webviewLink, cnxId) {
-    return fetchContents(cnxId, rexOriginFromWebview(webviewLink));
+    try {
+        return fetchContents(cnxId, rexOriginFromWebview(webviewLink));
+    } catch (err) {
+        return Promise.reject(new Error(`Failed to fetch Rex data for ${webviewLink}: ${err}`));
+    }
 }

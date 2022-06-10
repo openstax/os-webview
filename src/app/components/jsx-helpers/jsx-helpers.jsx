@@ -166,7 +166,7 @@ export function useSelectList({
             setActiveIndex(Math.max(activeIndex - 1, minActiveIndex));
             break;
         default:
-            if (searchable && event.key.length === 1) {
+            if (searchable && event.key?.length === 1) {
                 const letter = event.key.toLowerCase();
                 const values = Array.from(items)
                     .map((opt) => opt.label.toLowerCase());

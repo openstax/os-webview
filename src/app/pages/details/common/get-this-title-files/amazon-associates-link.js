@@ -12,7 +12,8 @@ export default function useAmazonAssociatesLink(slug) {
                 if (urls.length > 0) {
                     setData(urls[0]);
                 }
-            });
+            })
+            .catch((err) => console.error(`Fetching buyprint: ${err}`));
     }, [slug]);
 
     return data;

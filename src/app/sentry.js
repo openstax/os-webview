@@ -35,7 +35,10 @@ const ignoreMessages = [
     'b is not a function.',
     'evaluating \'e.default\'',
     'Failed to load Google Analytics',
-    'operation was aborted'
+    'operation was aborted',
+    'Object Not Found Matching Id',
+    'The string did not match the expected pattern.',
+    'chrome is not defined'
 ];
 
 const ignoreUrls = [
