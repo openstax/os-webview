@@ -6,12 +6,11 @@ import analytics from '~/helpers/analytics';
 import cn from 'classnames';
 import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
-import {languageTranslations} from '~/components/language-selector/language-selector';
+import {FormattedMessage} from 'react-intl';
+import LanguageSelector, {useLanguageText} from '~/components/language-selector/language-selector';
 import {useTableOfContents} from './common/hooks';
 import useLanguageContext from '~/contexts/language';
 import useDetailsContext, {DetailsContextProvider} from './context';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
 import './details.scss';
 import './table-of-contents.scss';
 
@@ -89,32 +88,32 @@ function TocSlideoutAndContent({children}) {
     );
 }
 
-const leadInText = {
-    en: 'This textbook is available in',
-    es: 'Este libro de texto está disponible en'
-};
-
-const andText = {
-    en: 'and',
-    es: 'y'
-};
-
-function AnotherLanguage({locale, translation}) {
-    const tr = languageTranslations[locale];
+function AnotherLanguage({locale, translations}) {
+    const LanguageText = useLanguageText(locale);
+    const translation = React.useMemo(
+        () => translations.find((t) => t.locale === locale),
+        [translations, locale]
+    );
 
     return (
-        <React.Fragment>
-            {' '}{andText[locale]}{' '}
-            <a href={`/details/books/${translation.slug}`}>{tr[translation.locale]}</a>
-        </React.Fragment>
+        <a href={`/details/books/${translation.slug}`}>
+            <LanguageText />
+        </a>
     );
 }
 
 function LinksToTranslations() {
     const {translations: [translations=[]], meta: {locale='en'}} = useDetailsContext();
-    const localLanguage = languageTranslations[locale][locale];
     const {language, setLanguage} = useLanguageContext();
     const lastLocaleRef = React.useRef(locale);
+    const LeadIn = React.useCallback(
+        () => <FormattedMessage id="bookAvailableIn" defaultMessage="This book available in" />,
+        []
+    );
+    const LinkPresentation = React.useCallback(
+        ({locale: loc}) => <AnotherLanguage locale={loc} translations={translations} />,
+        [translations]
+    );
 
     useEffect(() => {
         if (lastLocaleRef.current !== locale) {
@@ -130,22 +129,11 @@ function LinksToTranslations() {
     }
 
     return (
-        <div className="language-selector">
-            <FontAwesomeIcon icon={faGlobe} />
-            <span>
-                {leadInText[locale]}{' '}
-                {localLanguage}
-                {
-                    translations.map((t) =>
-                        <AnotherLanguage
-                            key={t.locale}
-                            locale={locale}
-                            translation={t}
-                        />
-                    )
-                }
-            </span>
-        </div>
+        <LanguageSelector
+            LeadIn={LeadIn}
+            otherLocales={translations.map((t) => t.locale)}
+            LinkPresentation={LinkPresentation}
+        />
     );
 }
 

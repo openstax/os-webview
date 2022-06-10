@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
+import {useIntl} from 'react-intl';
 import DetailsTab from './details-tab/details-tab';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';
 import StudentResourceTab from './student-resource-tab/student-resource-tab';
@@ -11,35 +12,27 @@ import {useHistory} from 'react-router-dom';
 import $ from '~/helpers/$';
 import './desktop-view.scss';
 
-const tabsByLanguage = {
-    en: [
-        'Book details',
-        'Instructor resources',
-        'Student resources',
-        'Videos'
-    ],
-    es: [
-        'Detalles del libro',
-        'Recursos del instructor',
-        'Recursos para estudiantes',
-        'Videos'
-    ]
-};
-
 // eslint-disable-next-line complexity
 function useLabelsFromModel(model, polish) {
-    const {language} = useDetailsContext();
-    const labelSet = tabsByLanguage[language];
-    const tabLabels = [polish ? 'Szczegóły książki' : labelSet[0]];
+    const intl = useIntl();
+    const tabLabels = [polish ? 'Szczegóły książki' : intl.formatMessage({
+        id: 'tabs.bookDetails'
+    })];
 
     if (!polish && model.freeStuffInstructor.content) {
-        tabLabels.push(labelSet[1]);
+        tabLabels.push(intl.formatMessage({
+            id: 'tabs.instructorResources'
+        }));
     }
     if (!polish && model.freeStuffStudent.content) {
-        tabLabels.push(labelSet[2]);
+        tabLabels.push(intl.formatMessage({
+            id: 'tabs.studentResources'
+        }));
     }
     if (model.videos.length) {
-        tabLabels.push(labelSet[3]);
+        tabLabels.push(intl.formatMessage({
+            id: 'tabs.videos'
+        }));
     }
 
     return tabLabels;

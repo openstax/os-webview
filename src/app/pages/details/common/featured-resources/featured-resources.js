@@ -1,6 +1,6 @@
 import React from 'react';
 import ResourceBoxes from '../resource-box/resource-boxes';
-import useDetailsContext from '~/pages/details/context';
+import {useIntl} from 'react-intl';
 import './featured-resources.scss';
 
 function FeaturedResources({headline, resources}) {
@@ -32,13 +32,8 @@ function FeaturedResources({headline, resources}) {
     );
 }
 
-const localizedText = {
-    'en': 'see additional resources below',
-    'es': 'ver los recursos adicionales a continuación'
-};
-
 export default function FeaturedResourcesSection({header, models}) {
-    const {language} = useDetailsContext();
+    const intl = useIntl();
 
     return (
         <div>
@@ -47,7 +42,7 @@ export default function FeaturedResourcesSection({header, models}) {
             </div>
             <div className="divider">
                 <div className="line"></div>
-                {localizedText[language]}
+                {intl.formatMessage({id: 'resources.additional'})}
                 <div className="line"></div>
             </div>
         </div>

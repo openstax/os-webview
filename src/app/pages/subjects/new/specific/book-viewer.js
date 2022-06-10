@@ -4,47 +4,34 @@ import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
+import {useIntl} from 'react-intl';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import {usePrintCopyDialog} from '~/pages/details/common/get-this-title-files/options';
 import useActiveElementContext, {ActiveElementContextProvider} from '~/contexts/active-element';
-import useLanguageContext from '~/contexts/language';
 import './book-viewer.scss';
 
-const localizedTexts = {
-    'en': {
-        orderPrint: 'Order a print copy',
-        getBook: 'Get the book',
-        viewOnline: 'View online',
-        downloadPdf: 'Download a PDF',
-        instructorResources: 'Instructor resources',
-        studentResources: 'Student resources'
-
-    },
-    'es': {
-        orderPrint: 'Solicite una copia impresa',
-        getBook: 'Consigue el libro',
-        viewOnline: 'Ver en línea',
-        downloadPdf: 'Descargar un PDF',
-        instructorResources: 'Recursos del instructor',
-        studentResources: 'Recursos para estudiantes'
-    }
-};
-
 function useTranslation() {
-    const {language} = useLanguageContext();
+    const intl = useIntl();
 
-    return localizedTexts[language];
+    return {
+        orderPrint: intl.formatMessage({id: 'getit.print'}),
+        getBook: intl.formatMessage({id: 'getTheBook'}),
+        viewOnline: intl.formatMessage({id: 'getit.webview.link'}),
+        downloadPdf: intl.formatMessage({id: 'getit.pdf.download'}),
+        instructorResources: intl.formatMessage({id: 'tabs.instructorResources'}),
+        studentResources: intl.formatMessage({id: 'tabs.studentResources'})
+    };
 }
 
 function PrintOption({bookInfo}) {
     const {onClick, PCDialog} = usePrintCopyDialog();
-    const tr = useTranslation();
+    const {orderPrint} = useTranslation();
     const amazonDataLink = useAmazonAssociatesLink(bookInfo.slug);
 
     return (
         <a role="menuitem" href="open a dialog" onClick={onClick}>
-            {tr.orderPrint}
-            <PCDialog text={tr.orderPrint} amazonDataLink={amazonDataLink} />
+            {orderPrint}
+            <PCDialog text={orderPrint} amazonDataLink={amazonDataLink} />
         </a>
     );
 }
@@ -58,7 +45,9 @@ function GetTheBookDropdown({bookInfo}) {
     const menuId = `${slug}-ddm`;
     const webviewLink = bookInfo.webviewRexLink || bookInfo.webviewLink;
     const pdfLink = (bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl);
-    const tr = useTranslation();
+    const {
+        getBook, viewOnline, downloadPdf, instructorResources, studentResources
+    } = useTranslation();
 
     React.useLayoutEffect(
         () => {
@@ -75,16 +64,16 @@ function GetTheBookDropdown({bookInfo}) {
                 id={buttonId} type="button" aria-haspopup="true" aria-controls={menuId}
                 aria-isexpanded={isOpen} onClick={() => toggle()}
             >
-                {tr.getBook}
+                {getBook}
                 <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
             </button>
             <div id={menuId} role="menu" aria-labelledby={buttonId}>
-                <a role="menuitem" href={webviewLink}>{tr.viewOnline}</a>
-                <a role="menuitem" href={pdfLink}>{tr.downloadPdf}</a>
+                <a role="menuitem" href={webviewLink}>{viewOnline}</a>
+                <a role="menuitem" href={pdfLink}>{downloadPdf}</a>
                 <PrintOption bookInfo={bookInfo} />
                 <hr />
-                <a role="menuitem" href={`/details/${slug}?Instructor resources`}>{tr.instructorResources}</a>
-                <a role="menuitem" href={`/details/${slug}?Student resources`}>{tr.studentResources}</a>
+                <a role="menuitem" href={`/details/${slug}?Instructor resources`}>{instructorResources}</a>
+                <a role="menuitem" href={`/details/${slug}?Student resources`}>{studentResources}</a>
             </div>
         </div>
     );

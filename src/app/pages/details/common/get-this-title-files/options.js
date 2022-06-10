@@ -10,8 +10,8 @@ import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
+import {useIntl} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
-import useDetailsContext from '~/pages/details/context';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
 import useTOCContext from '../toc-slideout/context';
@@ -53,56 +53,11 @@ export function SimpleLinkOption({link, icon, text, children, ...linkOptions}) {
     );
 }
 
-const localizedTexts = {
-    en: {
-        toc: 'Table of contents',
-        webview: {
-            link: 'View online',
-            tutor: 'Go to OpenStax Tutor'
-        },
-        app: 'Download the app',
-        pdf: {
-            download: ' Download a PDF',
-            sample: ' sample'
-        },
-        print: 'Order a print copy',
-        ibooks: {
-            download: 'Download on iBooks',
-            part: 'Part'
-        },
-        kindle: {
-            header: 'Download for Kindle',
-            disclaimer: 'As an Amazon Associate we earn from qualifying purchases'
-        }
-    },
-    es: {
-        toc: 'Tabla de contenido',
-        webview: {
-            link: 'Ver en línea',
-            tutor: 'Ir al OpenStax Tutor'
-        },
-        app: 'Descargar la aplicación',
-        pdf: {
-            download: ' Descargar un PDF',
-            sample: ' muestra'
-        },
-        print: 'Solicitar una copia impresa',
-        ibooks: {
-            download: 'Descargar en iBooks',
-            part: 'Parte'
-        },
-        kindle: {
-            header: 'Descargar para Kindle',
-            disclaimer: 'Como Asociado de Amazon, ganamos con las compras que califican'
-        }
-    }
-};
-
 export function TocOption({model}) {
     const {toggle, isOpen} = useTOCContext();
     const includeTOC = ['live', 'deprecated', 'new_edition_available'].includes(model.bookState);
-    const {language} = useDetailsContext();
-    const text = $.isPolish(model.title) ? 'Spis treści' : localizedTexts[language].toc;
+    const intl = useIntl();
+    const text = $.isPolish(model.title) ? 'Spis treści' : intl.formatMessage({id: 'getit.toc'});
 
     if (!includeTOC) {
         return null;
@@ -152,8 +107,11 @@ function useCalloutCounter(slug) {
 // eslint-disable-next-line complexity
 export function WebviewOption({model}) {
     const [showCallout, hideForever] = useCalloutCounter(model.slug);
-    const {language} = useDetailsContext();
-    const texts = localizedTexts[language].webview;
+    const intl = useIntl();
+    const texts = {
+        link: intl.formatMessage({id: 'getit.webview.link'}),
+        tutor: intl.formatMessage({id: 'getit.webview.tutor'})
+    };
     const isTutor = model.webviewRexLink?.includes('tutor');
     const isRex = !isTutor && Boolean(model.webviewRexLink);
     const webviewLink = model.webviewRexLink || model.webviewLink;
@@ -191,8 +149,8 @@ export function WebviewOption({model}) {
 
 export function StudyEdgeOption({model}) {
     const [Dialog, open] = useDialog();
-    const {language} = useDetailsContext();
-    const text = localizedTexts[language].app;
+    const intl = useIntl();
+    const text = intl.formatMessage({id: 'getit.app'});
 
     function onClick(event) {
         event.preventDefault();
@@ -213,10 +171,9 @@ export function StudyEdgeOption({model}) {
 
 export function PdfOption({model}) {
     const polish = $.isPolish(model.title);
-    const {language} = useDetailsContext();
-    const texts = localizedTexts[language].pdf;
-    const pdfText = polish ? ' Pobierz PDF' : texts.download;
-    const sampleText = polish ? ' przykład' : texts.sample;
+    const intl = useIntl();
+    const pdfText = polish ? ' Pobierz PDF' : intl.formatMessage({id: 'getit.pdf.download'});
+    const sampleText = polish ? ' przykład' : intl.formatMessage({id: 'getit.pdf.sample'});
     const text = pdfText + (model.comingSoon ? sampleText : '');
     const pdfLink = (model.highResolutionPdfUrl || model.lowResolutionPdfUrl);
     const {GiveDialog, open, enabled} = useGiveDialog();
@@ -268,8 +225,8 @@ export function usePrintCopyDialog() {
 export function PrintOption({model, icon=faBook}) {
     const slug = (model.slug || '').replace('books/', '');
     const amazonDataLink = useAmazonAssociatesLink(slug);
-    const {language} = useDetailsContext() || {language: 'en'};
-    const printText = localizedTexts[language].print;
+    const intl = useIntl();
+    const printText = intl.formatMessage({id: 'getit.print'});
     const text = $.isPolish(model.title) ? 'Zamów egzemplarz drukowany' : printText;
     const {onClick, PCDialog} = usePrintCopyDialog({});
 
@@ -293,27 +250,28 @@ export function BookshareOption({model}) {
 }
 
 export function Ibooks2Volumes({model}) {
-    const {language} = useDetailsContext();
-    const texts = localizedTexts[language].ibooks;
+    const intl = useIntl();
+    const download = intl.formatMessage({id: 'getit.ibooks.download'});
+    const part = intl.formatMessage({id: 'getit.ibooks.part'});
 
     return (
         <React.Fragment>
             <span className="option-header">
-                <IconAndText icon={faApple} text={texts.download} />
+                <IconAndText icon={faApple} text={download} />
             </span>
             <a href={model.ibookLink} data-track="iBooks">
-                {`${texts.part} 1`}
+                {`${part} 1`}
             </a>
             <a href={model.ibookLink2} data-track="iBooks">
-                {`${texts.part} 2`}
+                {`${part} 2`}
             </a>
         </React.Fragment>
     );
 }
 
 export function IbooksOption({model}) {
-    const {language} = useDetailsContext();
-    const texts = localizedTexts[language].ibooks;
+    const intl = useIntl();
+    const download = intl.formatMessage({id: 'getit.ibooks.download'});
 
     return (
         <Option condition={model.ibookLink}>
@@ -321,7 +279,7 @@ export function IbooksOption({model}) {
                 model.ibookLink2 ?
                     <Ibooks2Volumes model={model} /> :
                     <a href={model.ibookLink} data-track="iBooks">
-                        <IconAndText icon={faApple} text={texts.download} />
+                        <IconAndText icon={faApple} text={download} />
                     </a>
 
             }
@@ -330,15 +288,16 @@ export function IbooksOption({model}) {
 }
 
 export function KindleOption({model}) {
-    const {language} = useDetailsContext();
-    const texts = localizedTexts[language].kindle;
+    const intl = useIntl();
+    const header = intl.formatMessage({id: 'getit.kindle.header'});
+    const disclaimer = intl.formatMessage({id: 'getit.kindle.disclaimer'});
 
     return (
         <SimpleLinkOption
-            link={model.kindleLink} icon={faAmazon} text={texts.header}
+            link={model.kindleLink} icon={faAmazon} text={header}
             data-track="Kindle"
         >
-            <div className="disclaimer">{texts.disclaimer}</div>
+            <div className="disclaimer">{disclaimer}</div>
         </SimpleLinkOption>
     );
 }
@@ -359,30 +318,21 @@ export function CheggOption({model}) {
 }
 
 function useExpanderText(optionCount) {
-    const {language} = useDetailsContext();
-    const optionOptions = {
-        en: {
-            option: 'option',
-            options: 'options'
-        },
-        es: {
-            option: 'opción',
-            options: 'opciones'
-        }
-    };
-    const options = optionOptions[language][optionCount > 1 ? 'options' : 'option'];
-    const localizedExpanderTexts = {
-        en: {
-            fewer: `See ${optionCount} fewer ${options}`,
-            more: `+ ${optionCount} more ${options}...`
-        },
-        es: {
-            fewer: `ver ${optionCount} ${options} menos`,
-            more: `+ ${optionCount} más ${options}...`
-        }
-    };
+    const intl = useIntl();
+    const options = optionCount > 1 ?
+        intl.formatMessage({id: 'options'}) :
+        intl.formatMessage({id: 'option'});
 
-    return localizedExpanderTexts[language];
+    return {
+        fewer: intl.formatMessage(
+            {id: 'expander.fewer'},
+            {optionCount, options}
+        ),
+        more: intl.formatMessage(
+            {id: 'expander.more'},
+            {optionCount, options}
+        )
+    };
 }
 
 export function OptionExpander({expanded, additionalOptions, toggle}) {

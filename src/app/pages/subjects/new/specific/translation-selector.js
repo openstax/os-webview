@@ -1,17 +1,27 @@
 import React from 'react';
-import LanguageSelector, {useTranslations} from '~/components/language-selector/language-selector';
+import LanguageSelector, {useLanguageText} from '~/components/language-selector/language-selector';
+import {FormattedMessage} from 'react-intl';
 
-// Rather than changing the Language setting, offer links to the page with the
-// desired translation, because the URL overrides the language on the specific
-// subject page
-const leadInText = {
-    en: 'This page is available in',
-    es: 'Esta página está disponible en'
-};
+function TranslationLink({locale, slug}) {
+    const LanguageText = useLanguageText(locale);
+
+    return (
+        <a href={`/subjects/${slug}/`}>
+            <LanguageText />
+        </a>
+    );
+}
 
 export default function TranslationSelector({translations}) {
-    const tr = useTranslations();
-    const TranslationLink = React.useCallback(
+    const otherLocales = translations.length ?
+        translations.map((t) => t.locale) :
+        []
+    ;
+    const LeadIn = React.useCallback(
+        () => <FormattedMessage id="pageAvailableIn" defaultMessage="This page is available in" />,
+        []
+    );
+    const LinkPresentation = React.useCallback(
         ({locale}) => {
             const {slug} = translations.find((t) => t.locale === locale) || {};
 
@@ -20,22 +30,18 @@ export default function TranslationSelector({translations}) {
             }
 
             return (
-                <a href={`/subjects/${slug}/`}>{tr[locale]}</a>
+                <TranslationLink locale={locale} slug={slug} />
             );
         },
-        [translations, tr]
+        [translations]
     );
-    const otherLocales = translations.length ?
-        translations.map((t) => t.locale) :
-        []
-    ;
 
     return (
         <section className="language-selector-section">
             <div className="content">
                 <LanguageSelector
-                    leadInText={leadInText} otherLocales={otherLocales}
-                    LinkPresentation={TranslationLink}
+                    LeadIn={LeadIn} otherLocales={otherLocales}
+                    LinkPresentation={LinkPresentation}
                 />
             </div>
         </section>

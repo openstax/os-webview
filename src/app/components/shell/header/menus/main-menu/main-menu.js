@@ -2,19 +2,16 @@ import React from 'react';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useLanguageContext from '~/contexts/language';
 import {LanguageSelectorWrapper, LanguageLink} from '~/components/language-selector/language-selector';
+import {useIntl} from 'react-intl';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
 import './main-menu.scss';
 
-const leadInText = {
-    en: 'View',
-    es: 'Ver'
-};
-
 function SubjectsMenu() {
     const categories = useSubjectCategoryContext();
     const {language} = useLanguageContext();
+    const intl = useIntl();
     // This will have to be revisited if/when we implement more languages
     const otherLocale = ['en', 'es'].filter((la) => la !== language)[0];
 
@@ -28,13 +25,13 @@ function SubjectsMenu() {
                 categories.map((obj) =>
                     <MenuItem
                         key={obj.value}
-                        label={obj.html?.replace('View ', '')}
+                        label={obj.html}
                         url={`/subjects/${obj.value}`}
                     />
                 )
             }
             <LanguageSelectorWrapper>
-                {leadInText[language]}{' '}
+                {intl.formatMessage({id: 'view'})}{' '}
                 <LanguageLink locale={otherLocale} />
             </LanguageSelectorWrapper>
         </Dropdown>

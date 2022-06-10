@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import useDetailsContext from '~/pages/details/context';
+import {useIntl} from 'react-intl';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
@@ -32,25 +32,18 @@ function PolishTab({model}) {
     );
 }
 
-const localizedTexts = {
-    getTheBook: {
-        en: 'Get the book',
-        es: 'Obtener el libro'
-    },
-    summary: {
-        en: 'Summary',
-        es: 'Resumen'
-    }
-};
-
 function EnglishTab({model}) {
-    const {language} = useDetailsContext();
+    const intl = useIntl();
+    const [getTheBook, summary] = [
+        intl.formatMessage({id: 'getTheBook'}),
+        intl.formatMessage({id: 'summary'})
+    ];
 
     return (
         <div className="details-tab">
             <div className="sidebar">
                 <div>
-                    <h3>{localizedTexts.getTheBook[language]}</h3>
+                    <h3>{getTheBook}</h3>
                     <GetThisTitle model={model} />
                 </div>
                 <div className="let-us-know-region">
@@ -59,7 +52,7 @@ function EnglishTab({model}) {
             </div>
             <div className="main">
                 <div className="loc-summary-text">
-                    <h3>{localizedTexts.summary[language]}</h3>
+                    <h3>{summary}</h3>
                     <RawHTML html={model.description} />
                 </div>
                 <Authors model={model} />

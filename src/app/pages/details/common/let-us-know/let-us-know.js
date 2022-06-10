@@ -2,23 +2,18 @@ import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
 import useDetailsContext from '~/pages/details/context';
+import {useIntl} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import './let-us-know.scss';
 
-const localizedTexts = {
-    'en': {
-        text1: 'Sign up to<br>learn more',
-        text2: 'Using this book? Let us know.'
-    },
-    'es': {
-        text1: 'Suscríbase<br>para más información',
-        text2: '¿Utiliza este libro? Háganoslo saber.'
-    }
-};
 
 function useDataStuffFor(title) {
-    const {language} = useDetailsContext();
+    const intl = useIntl();
+    const [text1, text2] = [
+        intl.formatMessage({id: 'letusknow.text1'}),
+        intl.formatMessage({id: 'letusknow.text2'})
+    ];
 
     if ($.isPolish(title)) {
         return {
@@ -32,7 +27,7 @@ function useDataStuffFor(title) {
     return {
         url1: `/interest?${encodeURIComponent(title)}`,
         url2: `/adoption?${encodeURIComponent(title)}`,
-        ...localizedTexts[language]
+        text1, text2
     };
 }
 
