@@ -121,7 +121,7 @@ export function useSettable(getter, setter) {
             return getter();
         },
         getter()
-    )
+    );
 }
 
 export function useSet(initialValue=[]) {
