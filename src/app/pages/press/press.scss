@@ -113,4 +113,16 @@
     .text-content > h1 {
         width: 100%;
     }
+
+    .article {
+        figure {
+            @include width-up-to($phone-max) {
+                margin-inline: 2rem;
+            }
+
+            img {
+                max-width: 100%;
+            }
+        }
+    }
 }
