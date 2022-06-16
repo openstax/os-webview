@@ -3,20 +3,20 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useSpecificSubjectContext from './context';
 import {JumpToSection} from './navigator';
 import useToggleContext, {ToggleContextProvider} from '~/components/toggle/toggle-context';
-import {useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import cn from 'classnames';
 import './subject-intro.scss';
 
 
 function IntroContent({subjectName}) {
-    const intl = useIntl();
-    const introText = intl.formatMessage({id: 'subject.introText'});
     const {pageDescription: introHtml} = useSpecificSubjectContext();
     const {isOpen} = useToggleContext();
 
     return (
         <div className={cn('content', {open: isOpen})}>
-            <div>{introText}</div>
+            <div>
+                <FormattedMessage id="subject.introText" defaultMessage="Open textbooks" />
+            </div>
             <h1>{subjectName}</h1>
             <RawHTML className="paragraph-html" html={introHtml} />
             <JumpToSection subjectName={subjectName} />

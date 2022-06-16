@@ -154,5 +154,5 @@ test('understands external links', (done) => {
         const link = screen.getByRole('link');
         expect(link.textContent).toBe(resourceData.linkText);
         done();
-    }, 20);
+    }, 0);
 });

@@ -1,7 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import $ from '~/helpers/$';
-import useDetailsContext from '~/pages/details/context';
 import {useIntl} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
@@ -33,9 +32,9 @@ function useDataStuffFor(title) {
 
 export default function LetUsKnow({title}) {
     const {url1, url2, text1, text2} = useDataStuffFor(title);
-    const {language} = useDetailsContext();
+    const {locale} = useIntl();
 
-    if (language !== 'en') {
+    if (locale !== 'en') {
         return null;
     }
     return (

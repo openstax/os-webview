@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
@@ -33,17 +33,13 @@ function PolishTab({model}) {
 }
 
 function EnglishTab({model}) {
-    const intl = useIntl();
-    const [getTheBook, summary] = [
-        intl.formatMessage({id: 'getTheBook'}),
-        intl.formatMessage({id: 'summary'})
-    ];
-
     return (
         <div className="details-tab">
             <div className="sidebar">
                 <div>
-                    <h3>{getTheBook}</h3>
+                    <h3>
+                        <FormattedMessage id="getTheBook" defaultMessage="Get the book" />
+                    </h3>
                     <GetThisTitle model={model} />
                 </div>
                 <div className="let-us-know-region">
@@ -52,7 +48,9 @@ function EnglishTab({model}) {
             </div>
             <div className="main">
                 <div className="loc-summary-text">
-                    <h3>{summary}</h3>
+                    <h3>
+                        <FormattedMessage id="summary" defaultMessage="Summary" />
+                    </h3>
                     <RawHTML html={model.description} />
                 </div>
                 <Authors model={model} />

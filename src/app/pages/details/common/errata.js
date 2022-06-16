@@ -1,23 +1,21 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 function EnglishButtonGroup({title}) {
-    const intl = useIntl();
-
     return (
         <div className="button-group">
             <a
                 href={`/errata/form?book=${encodeURIComponent(title)}`}
                 className="btn secondary medium"
             >
-                {intl.formatMessage({id: 'errata.suggest'})}
+                <FormattedMessage id="errata.suggest" defaultMessage="Suggest a correction" />
             </a>
             <a
                 href={`/errata/?book=${encodeURIComponent(title)}`}
                 className="btn default medium"
             >
-                {intl.formatMessage({id: 'errata.list'})}
+                <FormattedMessage id="errata.list" defaultMessage="Errata list" />
             </a>
         </div>
     );
@@ -63,7 +61,9 @@ export default function ErrataSection({model, polish=false}) {
 
     return (
         <div className="loc-errata">
-            <h3>{intl.formatMessage({id: 'errata.header'})}</h3>
+            <h3>
+                <FormattedMessage id="errata.header" defaultMessage="Errata" />
+            </h3>
             <ErrataContents model={model} polish={polish} />
         </div>
     );

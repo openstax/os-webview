@@ -1,6 +1,6 @@
 import React from 'react';
 import ResourceBoxes from '../resource-box/resource-boxes';
-import {useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import './featured-resources.scss';
 
 function FeaturedResources({headline, resources}) {
@@ -33,8 +33,6 @@ function FeaturedResources({headline, resources}) {
 }
 
 export default function FeaturedResourcesSection({header, models}) {
-    const intl = useIntl();
-
     return (
         <div>
             <div className="featured-resources">
@@ -42,7 +40,7 @@ export default function FeaturedResourcesSection({header, models}) {
             </div>
             <div className="divider">
                 <div className="line"></div>
-                {intl.formatMessage({id: 'resources.additional'})}
+                <FormattedMessage id="resources.additional" defaultMessage="see additional resources below" />
                 <div className="line"></div>
             </div>
         </div>

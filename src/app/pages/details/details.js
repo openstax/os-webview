@@ -95,6 +95,8 @@ function AnotherLanguage({locale, translations}) {
         [translations, locale]
     );
 
+    // translation is guaranteed to have a valid value, because the locale
+    // is pulled from translations
     return (
         <a href={`/details/books/${translation.slug}`}>
             <LanguageText />

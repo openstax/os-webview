@@ -155,6 +155,12 @@ function Books({category}) {
     );
 }
 
+function LeadIn() {
+    return (
+        <FormattedMessage id="weHaveBooksIn" defaultMessage="We have textbooks in" />
+    );
+}
+
 function Subjects() {
     const {pageDescription, translations} = useSubjectsContext();
     const {category, setCategory} = useCategoryTiedToPath();
@@ -162,10 +168,6 @@ function Subjects() {
         translations[0].value.map((t) => t.locale) :
         []
     ;
-    const LeadIn = React.useCallback(
-        () => <FormattedMessage id="weHaveBooksIn" defaultMessage="We have textbooks in" />,
-        []
-    );
 
     useEffect(
         () => $.setPageDescription($.htmlToText(pageDescription)),

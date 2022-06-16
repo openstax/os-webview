@@ -5,7 +5,7 @@ import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import useNavigatorContext from './navigator-context';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, Link} from 'react-router-dom';
 import './navigator.scss';
 
@@ -108,19 +108,21 @@ export function JumpToSection({subjectName}) {
 }
 
 export default function Navigator({subject}) {
-    const intl = useIntl();
-    const [categoryTitle, learnMoreTitle] = [
-        intl.formatMessage({id: 'subject.categoryTitle'}, {subjectName: subject.html}),
-        intl.formatMessage({id: 'subject.learnMoreTitle'})
-    ];
-
     return (
         <nav className="navigator">
             <div style="position: sticky; top: 9rem;">
                 <img src={subject.icon} role="presentation" />
-                <div className="heading">{categoryTitle}</div>
+                <div className="heading">
+                    <FormattedMessage
+                        id="subject.categoryTitle"
+                        defaultMessage="{subjectName} Book Categories"
+                        values={{subjectName: subject.html}}
+                    />
+                </div>
                 <CategorySectionLinks />
-                <div className="heading">{learnMoreTitle}</div>
+                <div className="heading">
+                    <FormattedMessage id="subject.learnMoreTitle" defaultMessage="Learn more" />
+                </div>
                 <OtherSectionLinks subjectName={subject.html} />
             </div>
         </nav>

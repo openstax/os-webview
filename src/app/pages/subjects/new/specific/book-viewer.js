@@ -4,34 +4,22 @@ import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import {usePrintCopyDialog} from '~/pages/details/common/get-this-title-files/options';
 import useActiveElementContext, {ActiveElementContextProvider} from '~/contexts/active-element';
 import './book-viewer.scss';
 
-function useTranslation() {
-    const intl = useIntl();
-
-    return {
-        orderPrint: intl.formatMessage({id: 'getit.print'}),
-        getBook: intl.formatMessage({id: 'getTheBook'}),
-        viewOnline: intl.formatMessage({id: 'getit.webview.link'}),
-        downloadPdf: intl.formatMessage({id: 'getit.pdf.download'}),
-        instructorResources: intl.formatMessage({id: 'tabs.instructorResources'}),
-        studentResources: intl.formatMessage({id: 'tabs.studentResources'})
-    };
-}
-
 function PrintOption({bookInfo}) {
     const {onClick, PCDialog} = usePrintCopyDialog();
-    const {orderPrint} = useTranslation();
     const amazonDataLink = useAmazonAssociatesLink(bookInfo.slug);
+    const {formatMessage} = useIntl();
+    const text = formatMessage({id: 'getit.print', defaultMessage: 'Order a print copy'});
 
     return (
         <a role="menuitem" href="open a dialog" onClick={onClick}>
-            {orderPrint}
-            <PCDialog text={orderPrint} amazonDataLink={amazonDataLink} />
+            {text}
+            <PCDialog text={text} amazonDataLink={amazonDataLink} />
         </a>
     );
 }
@@ -45,9 +33,6 @@ function GetTheBookDropdown({bookInfo}) {
     const menuId = `${slug}-ddm`;
     const webviewLink = bookInfo.webviewRexLink || bookInfo.webviewLink;
     const pdfLink = (bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl);
-    const {
-        getBook, viewOnline, downloadPdf, instructorResources, studentResources
-    } = useTranslation();
 
     React.useLayoutEffect(
         () => {
@@ -64,16 +49,24 @@ function GetTheBookDropdown({bookInfo}) {
                 id={buttonId} type="button" aria-haspopup="true" aria-controls={menuId}
                 aria-isexpanded={isOpen} onClick={() => toggle()}
             >
-                {getBook}
+                <FormattedMessage id="getTheBook" defaultMessage="Get the book" />
                 <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
             </button>
             <div id={menuId} role="menu" aria-labelledby={buttonId}>
-                <a role="menuitem" href={webviewLink}>{viewOnline}</a>
-                <a role="menuitem" href={pdfLink}>{downloadPdf}</a>
+                <a role="menuitem" href={webviewLink}>
+                    <FormattedMessage id="getit.webview.link" defaultMessage="View online" />
+                </a>
+                <a role="menuitem" href={pdfLink}>
+                    <FormattedMessage id="getit.pdf.download" defaultMessage="Download a PDF" />
+                </a>
                 <PrintOption bookInfo={bookInfo} />
                 <hr />
-                <a role="menuitem" href={`/details/${slug}?Instructor resources`}>{instructorResources}</a>
-                <a role="menuitem" href={`/details/${slug}?Student resources`}>{studentResources}</a>
+                <a role="menuitem" href={`/details/${slug}?Instructor resources`}>
+                    <FormattedMessage id="tabs.instructorResources" defaultMessage="Instructor resources" />
+                </a>
+                <a role="menuitem" href={`/details/${slug}?Student resources`}>
+                    <FormattedMessage id="tabs.studentResources" defaultMessage="Student resources" />
+                </a>
             </div>
         </div>
     );

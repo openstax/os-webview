@@ -2,16 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import fetchRexRelease from '~/models/rex-release';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 function PdfUpdateInfo({updateDate, url}) {
-    const intl = useIntl();
-    const [heading, see, notes] = [
-        intl.formatMessage({id: 'pubinfo.pdf.heading'}),
-        intl.formatMessage({id: 'pubinfo.pdf.see'}),
-        intl.formatMessage({id: 'pubinfo.pdf.notes'})
-    ];
-
     if (!updateDate) {
         return null;
     }
@@ -19,14 +12,28 @@ function PdfUpdateInfo({updateDate, url}) {
     return (
         <div className="loc-pdf-update-date">
             <div className="callout-container">
-                <h4>{heading}</h4>
+                <h4>
+                    <FormattedMessage
+                        id="pubinfo.pdf.heading"
+                        defaultMessage="PDF Version Last Updated:"
+                    />
+                </h4>
                 {formatDate(updateDate)}
                 {
                     url &&
                         <div className="callout">
                             <div>
-                                {see}{' '}
-                                <a href={url}>{notes}</a>.
+                                <FormattedMessage
+                                    id="pubinfo.pdf.see"
+                                    defaultMessage="See changes in the"
+                                />
+                                {' '}
+                                <a href={url}>
+                                    <FormattedMessage
+                                        id="pubinfo.pdf.notes"
+                                        defaultMessage="Revision Notes"
+                                    />
+                                </a>.
                             </div>
                         </div>
                 }
@@ -74,30 +81,28 @@ function LicenseIcon({name}) {
 }
 
 function LicenseInfo({name, text, title, version}) {
-    const intl = useIntl();
-    const [heading, beforeTitle, byline] = [
-        intl.formatMessage({id: 'pubInfo.license.heading'}),
-        intl.formatMessage({id: 'pubInfo.license.beforeTitle'}),
-        intl.formatMessage({id: 'pubInfo.license.byline'})
-    ];
-
     if (!name) {
         return null;
     }
 
     return (
         <div className="loc-license">
-            <h4>{heading}:</h4>
+            <h4>
+                <FormattedMessage
+                    id="pubInfo.license.heading"
+                    defaultMessage="License"
+                />:
+            </h4>
             <LicenseIcon name={name} />
             <div>
                 {
                     text ?
                         <RawHTML html={text} /> :
                         <div>
-                            {beforeTitle}{beforeTitle ? ' ' : ''}
-                            <RawHTML Tag="span" html={title} />
-                            {byline}{' '}
-                            <span className="text">{name} v{version}</span>
+                            <FormattedMessage
+                                id="pubInfo.license"
+                                values={{title, name, version}}
+                            />
                         </div>
                 }
             </div>

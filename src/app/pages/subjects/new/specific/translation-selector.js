@@ -12,14 +12,16 @@ function TranslationLink({locale, slug}) {
     );
 }
 
+function LeadIn() {
+    return (
+        <FormattedMessage id="pageAvailableIn" defaultMessage="This page is available in" />
+    );
+}
+
 export default function TranslationSelector({translations}) {
-    const otherLocales = translations.length ?
-        translations.map((t) => t.locale) :
-        []
-    ;
-    const LeadIn = React.useCallback(
-        () => <FormattedMessage id="pageAvailableIn" defaultMessage="This page is available in" />,
-        []
+    const otherLocales = React.useMemo(
+        () => translations.length ? translations.map((t) => t.locale) : [],
+        [translations]
     );
     const LinkPresentation = React.useCallback(
         ({locale}) => {

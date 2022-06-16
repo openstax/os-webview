@@ -2,7 +2,7 @@ import React from 'react';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useLanguageContext from '~/contexts/language';
 import {LanguageSelectorWrapper, LanguageLink} from '~/components/language-selector/language-selector';
-import {useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
@@ -11,7 +11,6 @@ import './main-menu.scss';
 function SubjectsMenu() {
     const categories = useSubjectCategoryContext();
     const {language} = useLanguageContext();
-    const intl = useIntl();
     // This will have to be revisited if/when we implement more languages
     const otherLocale = ['en', 'es'].filter((la) => la !== language)[0];
 
@@ -31,7 +30,8 @@ function SubjectsMenu() {
                 )
             }
             <LanguageSelectorWrapper>
-                {intl.formatMessage({id: 'view'})}{' '}
+                <FormattedMessage id="view" defaultMessage="View" />
+                {' '}
                 <LanguageLink locale={otherLocale} />
             </LanguageSelectorWrapper>
         </Dropdown>
