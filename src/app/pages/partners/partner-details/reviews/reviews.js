@@ -48,7 +48,7 @@ function Synopsis() {
                 count === 0 ?
                     <h2>No ratings yet</h2> :
                     <React.Fragment>
-                        <h2>User Reviews</h2>
+                        <h2>User Ratings</h2>
                         <div className="giant-number">{roundedRating(rating)}</div>
                         <StarsAndCount rating={rating} count={reviewCount} />
                     </React.Fragment>
