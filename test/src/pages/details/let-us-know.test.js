@@ -1,6 +1,7 @@
 import React from 'react';
 import {MemoryRouter} from 'react-router-dom';
 import {DetailsContextProvider} from '~/pages/details/context';
+import {LanguageContextProvider} from '~/contexts/language';
 import LetUsKnow from '~/pages/details/common/let-us-know/let-us-know';
 import {render, screen} from '@testing-library/preact';
 
@@ -10,9 +11,11 @@ const polishTitle = 'Fizyka dla szkół wyższych. Tom 1';
 function WrapComponent({children}) {
     return (
         <MemoryRouter initialEntries={["/details/books/college-algebra"]}>
-            <DetailsContextProvider>
-                {children}
-            </DetailsContextProvider>
+            <LanguageContextProvider>
+                <DetailsContextProvider>
+                    {children}
+                </DetailsContextProvider>
+            </LanguageContextProvider>
         </MemoryRouter>
     );
 }
