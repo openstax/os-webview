@@ -8,6 +8,8 @@ import BookTagsMultiselect, {BookTagsContextProvider, useBookTagsContext}
 
 import './renewal-form.scss';
 
+const MAX_SELECTIONS = 5;
+
 // Bundle it up like a Context, but just pass it so I don't have to actually
 // make a Context.
 function useFormData(adoptions) {
@@ -107,6 +109,7 @@ function BooksAndStudentCounts({counts, updateCount}) {
         <div className="books-and-counts">
             <label>What books are you using?</label>
             <BookTagsMultiselect required oneField />
+            <small>You may select up to {MAX_SELECTIONS}</small>
             {
                 selectedItems.length ? <Counts counts={counts} updateCount={updateCount} /> : null
             }
@@ -185,7 +188,7 @@ function EnsureLoggedIn() {
     }
 
     return (
-        <BookTagsContextProvider>
+        <BookTagsContextProvider maxSelections={MAX_SELECTIONS}>
             <TheForm />
         </BookTagsContextProvider>
     );

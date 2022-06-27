@@ -68,9 +68,9 @@ function TagList() {
 // BookTagsMultiselect must be wrapped in a SFBookContextProvider,
 // which must itself be wrapped in a MultiselectContextProvider.
 // This is a convenience wrapper so you just need one tag
-export function BookTagsContextProvider({selected, booksAllowed, children}) {
+export function BookTagsContextProvider({selected, booksAllowed, children, maxSelections}) {
     return (
-        <MultiselectContextProvider>
+        <MultiselectContextProvider contextValueParameters={{maxSelections}}>
             <SFBookContextProvider contextValueParameters={{selected, booksAllowed}}>
                 {children}
             </SFBookContextProvider>
