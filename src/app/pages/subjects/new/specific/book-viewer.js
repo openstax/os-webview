@@ -4,47 +4,22 @@ import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
+import {FormattedMessage, useIntl} from 'react-intl';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import {usePrintCopyDialog} from '~/pages/details/common/get-this-title-files/options';
 import useActiveElementContext, {ActiveElementContextProvider} from '~/contexts/active-element';
-import useLanguageContext from '~/contexts/language';
 import './book-viewer.scss';
-
-const localizedTexts = {
-    'en': {
-        orderPrint: 'Order a print copy',
-        getBook: 'Get the book',
-        viewOnline: 'View online',
-        downloadPdf: 'Download a PDF',
-        instructorResources: 'Instructor resources',
-        studentResources: 'Student resources'
-
-    },
-    'es': {
-        orderPrint: 'Solicite una copia impresa',
-        getBook: 'Consigue el libro',
-        viewOnline: 'Ver en línea',
-        downloadPdf: 'Descargar un PDF',
-        instructorResources: 'Recursos del instructor',
-        studentResources: 'Recursos para estudiantes'
-    }
-};
-
-function useTranslation() {
-    const {language} = useLanguageContext();
-
-    return localizedTexts[language];
-}
 
 function PrintOption({bookInfo}) {
     const {onClick, PCDialog} = usePrintCopyDialog();
-    const tr = useTranslation();
     const amazonDataLink = useAmazonAssociatesLink(bookInfo.slug);
+    const {formatMessage} = useIntl();
+    const text = formatMessage({id: 'getit.print', defaultMessage: 'Order a print copy'});
 
     return (
         <a role="menuitem" href="open a dialog" onClick={onClick}>
-            {tr.orderPrint}
-            <PCDialog text={tr.orderPrint} amazonDataLink={amazonDataLink} />
+            {text}
+            <PCDialog text={text} amazonDataLink={amazonDataLink} />
         </a>
     );
 }
@@ -58,7 +33,6 @@ function GetTheBookDropdown({bookInfo}) {
     const menuId = `${slug}-ddm`;
     const webviewLink = bookInfo.webviewRexLink || bookInfo.webviewLink;
     const pdfLink = (bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl);
-    const tr = useTranslation();
 
     React.useLayoutEffect(
         () => {
@@ -75,16 +49,24 @@ function GetTheBookDropdown({bookInfo}) {
                 id={buttonId} type="button" aria-haspopup="true" aria-controls={menuId}
                 aria-isexpanded={isOpen} onClick={() => toggle()}
             >
-                {tr.getBook}
+                <FormattedMessage id="getTheBook" defaultMessage="Get the book" />
                 <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
             </button>
             <div id={menuId} role="menu" aria-labelledby={buttonId}>
-                <a role="menuitem" href={webviewLink}>{tr.viewOnline}</a>
-                <a role="menuitem" href={pdfLink}>{tr.downloadPdf}</a>
+                <a role="menuitem" href={webviewLink}>
+                    <FormattedMessage id="getit.webview.link" defaultMessage="View online" />
+                </a>
+                <a role="menuitem" href={pdfLink}>
+                    <FormattedMessage id="getit.pdf.download" defaultMessage="Download a PDF" />
+                </a>
                 <PrintOption bookInfo={bookInfo} />
                 <hr />
-                <a role="menuitem" href={`/details/${slug}?Instructor resources`}>{tr.instructorResources}</a>
-                <a role="menuitem" href={`/details/${slug}?Student resources`}>{tr.studentResources}</a>
+                <a role="menuitem" href={`/details/${slug}?Instructor resources`}>
+                    <FormattedMessage id="tabs.instructorResources" defaultMessage="Instructor resources" />
+                </a>
+                <a role="menuitem" href={`/details/${slug}?Student resources`}>
+                    <FormattedMessage id="tabs.studentResources" defaultMessage="Student resources" />
+                </a>
             </div>
         </div>
     );

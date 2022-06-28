@@ -29,26 +29,28 @@ export default function GetThisTitle({model}) {
         'bookshareLink', 'ibookLink', 'kindleLink'
     ].filter((key) => model[key]).length;
     const [expanded, toggleExpanded] = useToggle(additionalOptions < 1);
+    const interceptLinkClicks = React.useCallback(
+        (event) => {
+            const el = linkhelper.validUrlClick(event);
 
-    function interceptLinkClicks(event) {
-        const el = linkhelper.validUrlClick(event);
+            if (!el) {
+                return;
+            }
+            const trackThis = userInfo?.accounts_id && el.dataset.track;
 
-        if (!el) {
-            return;
-        }
-        const trackThis = userInfo?.accounts_id && el.dataset.track;
-
-        if (trackThis) {
-            /* eslint-disable camelcase */
-            event.trackingInfo = {
-                book: model.id,
-                account_uuid: userInfo.uuid,
-                book_format: el.dataset.track,
-                contact_id: userInfo.salesforce_contact_id
-            };
-            /* eslint-enable camelcase */
-        }
-    }
+            if (trackThis) {
+                /* eslint-disable camelcase */
+                event.trackingInfo = {
+                    book: model.id,
+                    account_uuid: userInfo.uuid,
+                    book_format: el.dataset.track,
+                    contact_id: userInfo.salesforce_contact_id
+                };
+                /* eslint-enable camelcase */
+            }
+        },
+        [model.id]
+    );
 
     return (
         <div className="get-the-book">

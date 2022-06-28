@@ -9,7 +9,8 @@ module.exports = {
     },
     'plugins': [
         'react',
-        'react-hooks'
+        'react-hooks',
+        'formatjs'
     ],
     'extends': [
         'eslint:recommended',

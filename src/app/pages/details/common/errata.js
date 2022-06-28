@@ -1,32 +1,22 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import useDetailsContext from '~/pages/details/context';
-
-const localizedTexts = {
-    'en': {
-        header: 'Errata',
-        suggest: 'Suggest a correction',
-        list: 'Errata list'
-    },
-    'es': {
-        header: 'Fe de errata',
-        suggest: 'Sugerir una corrección',
-        list: 'Listado de erratas'
-    }
-};
+import {FormattedMessage, useIntl} from 'react-intl';
 
 function EnglishButtonGroup({title}) {
-    const {language} = useDetailsContext();
-    const texts = localizedTexts[language];
-
     return (
         <div className="button-group">
             <a
                 href={`/errata/form?book=${encodeURIComponent(title)}`}
-                className="btn secondary medium">{texts.suggest}</a>
+                className="btn secondary medium"
+            >
+                <FormattedMessage id="errata.suggest" defaultMessage="Suggest a correction" />
+            </a>
             <a
                 href={`/errata/?book=${encodeURIComponent(title)}`}
-                className="btn default medium">{texts.list}</a>
+                className="btn default medium"
+            >
+                <FormattedMessage id="errata.list" defaultMessage="Errata list" />
+            </a>
         </div>
     );
 }
@@ -59,19 +49,21 @@ export function ErrataContents({model, polish}) {
 }
 
 export default function ErrataSection({model, polish=false}) {
-    const {language} = useDetailsContext();
+    const intl = useIntl();
 
     if (!['live', 'new_edition_available', 'deprecated'].includes(model.bookState)) {
         return null;
     }
 
-    if (language === 'es') {
+    if (intl.locale === 'es') {
         return null;
     }
 
     return (
         <div className="loc-errata">
-            <h3>{localizedTexts[language].header}</h3>
+            <h3>
+                <FormattedMessage id="errata.header" defaultMessage="Errata" />
+            </h3>
             <ErrataContents model={model} polish={polish} />
         </div>
     );

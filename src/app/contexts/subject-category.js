@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useLanguageContext from '~/contexts/language';
+import {useIntl} from 'react-intl';
 import cmsFetch from '~/models/cmsFetch';
 
 function dataToEntry(item) {
@@ -17,23 +18,19 @@ function dataToEntry(item) {
     };
 }
 
-const viewAllHtmls = {
-    'en': 'View All',
-    'es': 'Ver Todo'
-};
-
 function useContextValue() {
     const {language} = useLanguageContext();
     const [value, setValue] = useState([]);
+    const intl = useIntl();
 
     useEffect(() => {
-        const viewAllEntry = {value: 'view-all', cms: '', html: viewAllHtmls[language]};
+        const viewAllEntry = {value: 'view-all', cms: '', html: intl.formatMessage({id: 'viewAll'})};
 
         cmsFetch(`snippets/subjects?format=json&locale=${language}`)
             .then((data) => data.map(dataToEntry))
             .then((data) => [viewAllEntry, ...data])
             .then(setValue);
-    }, [language]);
+    }, [language, intl]);
 
     return value;
 }

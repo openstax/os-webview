@@ -5,7 +5,7 @@ import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import useNavigatorContext from './navigator-context';
-import useLanguageContext from '~/contexts/language';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, Link} from 'react-router-dom';
 import './navigator.scss';
 
@@ -76,33 +76,19 @@ function OtherSectionLinks({subjectName}) {
     );
 }
 
-const localizedTexts = {
-    'en': {
-        categoryTitle: (subjectName) => `${subjectName} Book Categories`,
-        learnMoreTitle: 'Learn more'
-    },
-    'es': {
-        categoryTitle: (subjectName) => `Categorías de libros de ${subjectName}`,
-        learnMoreTitle: 'Aprende más'
-    }
-};
-
-function useTranslation() {
-    const {language} = useLanguageContext();
-
-    return localizedTexts[language];
-}
-
 function useAccordionItems(subjectName) {
-    const tr = useTranslation();
+    const intl = useIntl();
 
     return [
         {
-            title: tr.categoryTitle(subjectName),
+            title: intl.formatMessage(
+                {id: 'subject.categoryTitle'},
+                {subjectName}
+            ),
             contentComponent: <CategorySectionLinks />
         },
         {
-            title: tr.learnMoreTitle,
+            title: intl.formatMessage({id: 'subject.learnMoreTitle'}),
             contentComponent: <OtherSectionLinks subjectName={subjectName} />
         }
     ];
@@ -122,15 +108,21 @@ export function JumpToSection({subjectName}) {
 }
 
 export default function Navigator({subject}) {
-    const tr = useTranslation();
-
     return (
         <nav className="navigator">
             <div style="position: sticky; top: 9rem;">
                 <img src={subject.icon} role="presentation" />
-                <div className="heading">{tr.categoryTitle(subject.html)}</div>
+                <div className="heading">
+                    <FormattedMessage
+                        id="subject.categoryTitle"
+                        defaultMessage="{subjectName} Book Categories"
+                        values={{subjectName: subject.html}}
+                    />
+                </div>
                 <CategorySectionLinks />
-                <div className="heading">{tr.learnMoreTitle}</div>
+                <div className="heading">
+                    <FormattedMessage id="subject.learnMoreTitle" defaultMessage="Learn more" />
+                </div>
                 <OtherSectionLinks subjectName={subject.html} />
             </div>
         </nav>
