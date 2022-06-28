@@ -43,6 +43,7 @@ export default function MainMenu() {
         <ul className="nav-menu main-menu no-bullets" role="menubar">
             <SubjectsMenu />
             <Dropdown className="technology-dropdown" label="Technology">
+                <MenuItem url="/kinetic" label="OpenStax Kinetic" />
                 <MenuItem url="/openstax-tutor" label="OpenStax Tutor" />
                 <MenuItem url="/partners" label="Partner learning platforms" />
             </Dropdown>
