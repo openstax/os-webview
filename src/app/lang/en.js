@@ -33,7 +33,8 @@ export default {
     'getit.pdf.sample': ' sample',
     'getit.print': 'Order a print copy',
     'getit.ibooks.download': 'Download on iBooks',
-    'getit.ibooks.part': 'Part',
+    'getit.ibooks.part1': 'iBooks part 1',
+    'getit.ibooks.part2': 'iBooks part 2',
     'getit.kindle.header': 'Download for Kindle',
     'getit.kindle.disclaimer': 'As an Amazon Associate we earn from qualifying purchases',
     'expander.fewer': 'See {optionCount} fewer {options}',
@@ -50,7 +51,6 @@ export default {
     'pubInfo.pub.hard': 'Hardcover',
     'pubInfo.pub.paper': 'Paperback',
     'pubInfo.pub.dig': 'Digital',
-    'pubInfo.pub.part': 'Part',
     'subject.categoryTitle': '{subjectName} Book Categories',
     'subject.learnMoreTitle': 'Learn more',
     'subject.introText': 'Open textbooks'

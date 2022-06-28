@@ -184,14 +184,16 @@ function LabeledDate({label, date, className}) {
 export default function PublicationInfo({model, url, polish}) {
     const [webUpdate, setWebUpdate] = useState(model.lastUpdatedWeb);
     const intl = useIntl();
-    const [pub, web, hard, paper, dig, part] = [
+    const [pub, web, hard, paper, dig] = [
         intl.formatMessage({id: 'pubInfo.pub.pub'}),
         intl.formatMessage({id: 'pubInfo.pub.web'}),
         intl.formatMessage({id: 'pubInfo.pub.hard'}),
         intl.formatMessage({id: 'pubInfo.pub.paper'}),
-        intl.formatMessage({id: 'pubInfo.pub.dig'}),
-        intl.formatMessage({id: 'pubInfo.pub.part'})
+        intl.formatMessage({id: 'pubInfo.pub.dig'})
     ];
+    const iBooksLabel = model.ibookVolume2Isbn10 || model.ibookVolume2isbn13 ?
+        intl.formatMesssage({id: 'getit.ibooks.part1'}) : 'iBooks';
+    const labelPart2 = intl.formatMessage({id: 'getit.ibooks.part2'});
 
     useEffect(() => {
         const isTutor = model.webviewRexLink?.includes('tutor');
@@ -228,10 +230,10 @@ export default function PublicationInfo({model, url, polish}) {
             <IsbnInfo model={model} label={dig} tag="digital" />
             <IsbnInfo
                 model={model}
-                label={model.ibookVolume2Isbn10 || model.ibookVolume2isbn13 ? `iBooks ${part} 1` : 'iBooks'}
+                label={iBooksLabel}
                 tag="ibook"
             />
-            <IsbnInfo model={model} label={`iBooks ${part} 2`} tag="ibook" />
+            <IsbnInfo model={model} label={labelPart2} tag="ibook" />
             <LicenseInfo
                 name={model.licenseName}
                 text={model.licenseText}

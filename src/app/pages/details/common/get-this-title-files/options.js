@@ -10,7 +10,7 @@ import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
-import {useIntl} from 'react-intl';
+import {useIntl, FormattedMessage} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import StudyEdge from './study-edge/study-edge';
@@ -252,7 +252,6 @@ export function BookshareOption({model}) {
 export function Ibooks2Volumes({model}) {
     const intl = useIntl();
     const download = intl.formatMessage({id: 'getit.ibooks.download'});
-    const part = intl.formatMessage({id: 'getit.ibooks.part'});
 
     return (
         <React.Fragment>
@@ -260,10 +259,16 @@ export function Ibooks2Volumes({model}) {
                 <IconAndText icon={faApple} text={download} />
             </span>
             <a href={model.ibookLink} data-track="iBooks">
-                {`${part} 1`}
+                <FormattedMessage
+                    id="getit.ibooks.part1"
+                    defaultMessage="iBooks part 1"
+                />
             </a>
             <a href={model.ibookLink2} data-track="iBooks">
-                {`${part} 2`}
+                <FormattedMessage
+                    id="getit.ibooks.part2"
+                    defaultMessage="iBooks part 2"
+                />
             </a>
         </React.Fragment>
     );
@@ -290,14 +295,19 @@ export function IbooksOption({model}) {
 export function KindleOption({model}) {
     const intl = useIntl();
     const header = intl.formatMessage({id: 'getit.kindle.header'});
-    const disclaimer = intl.formatMessage({id: 'getit.kindle.disclaimer'});
+    const defaultDisclaimer = 'As an Amazon Associate we earn from qualifying purchases';
 
     return (
         <SimpleLinkOption
             link={model.kindleLink} icon={faAmazon} text={header}
             data-track="Kindle"
         >
-            <div className="disclaimer">{disclaimer}</div>
+            <div className="disclaimer">
+                <FormattedMessage
+                    id="getit.kindle.disclaimer"
+                    defaultMessage={defaultDisclaimer}
+                />
+            </div>
         </SimpleLinkOption>
     );
 }

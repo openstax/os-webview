@@ -33,7 +33,8 @@ export default {
     'getit.pdf.sample': ' muestra',
     'getit.print': 'Solicitar una copia impresa',
     'getit.ibooks.download': 'Descargar en iBooks',
-    'getit.ibooks.part': 'Parte',
+    'getit.ibooks.part1': 'iBooks parte 1',
+    'getit.ibooks.part2': 'iBooks parte 2',
     'getit.kindle.header': 'Descargar para Kindle',
     'getit.kindle.disclaimer': 'Como Asociado de Amazon, ganamos con las compras que califican',
     'expander.fewer': 'ver {optionCount} {options} menos',
@@ -50,7 +51,6 @@ export default {
     'pubInfo.pub.hard': 'Tapa dura',
     'pubInfo.pub.paper': 'Edición de bolsillo',
     'pubInfo.pub.dig': 'Edición digital',
-    'pubInfo.pub.part': 'Parte',
     'subject.categoryTitle': 'Categorías de libros de {subjectName}',
     'subject.learnMoreTitle': 'Aprende más',
     'subject.introText': 'Libros de texto abiertos'
