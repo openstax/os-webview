@@ -63,7 +63,9 @@ function ArticlePage() {
         <WindowContextProvider>
             <ArticleFromSlug slug={`news/${slug}`} />
             <DisqusForm />
-            <MoreStories exceptSlug={slug} />
+            <div className="boxed">
+                <MoreStories exceptSlug={slug} />
+            </div>
         </WindowContextProvider>
     );
 }

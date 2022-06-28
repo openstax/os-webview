@@ -7,6 +7,7 @@ $image-height: 24rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     justify-items: center;
+    width: 100%;
 
     @include width-up-to($tablet-max) {
         grid-gap: 6rem 4rem;
@@ -20,7 +21,6 @@ $image-height: 24rem;
         @extend %article-summary;
 
         background-color: ui-color(white);
-        grid-template-rows: auto 1fr;
         height: 100%;
 
         .link-image {
@@ -34,7 +34,6 @@ $image-height: 24rem;
 
         .text-block {
             display: grid;
-            gap: 0.5rem;
             grid-template-rows: auto auto 1fr;
             height: 100%;
             padding: 1rem 0;
@@ -45,7 +44,7 @@ $image-height: 24rem;
             }
 
             .article-blurb {
-                max-height: 12rem;
+                height: 12rem;
                 margin-top: 1rem;
             }
 
@@ -59,12 +58,19 @@ $image-height: 24rem;
 }
 
 .blog.page .more-stories {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin: 0 auto;
+    max-width: calc(#{$content-max} - 3rem);
     padding-bottom: 12rem;
     padding-top: 2rem;
     width: 100%;
+
+    @include width-up-to($phone-max) {
+        padding-left: $normal-margin;
+        padding-right: $normal-margin;
+    }
 
     h3 {
         @include set-font(h3);
