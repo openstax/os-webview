@@ -14,6 +14,7 @@ import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import useDetailsContext from '../../context';
 import useUserContext from '~/contexts/user';
+import {FormattedMessage} from 'react-intl';
 import linkhelper from '~/helpers/link';
 import cn from 'classnames';
 
@@ -249,7 +250,10 @@ function LeftContent({model}) {
         return (
             <div className="left-no-button">
                 <FontAwesomeIcon icon={faLock} />
-                <span>Only available for verified instructors.</span>
+                <FormattedMessage
+                    id="resources.available"
+                    defaultMessage="Only available for verified instructors."
+                />
             </div>
         );
     }

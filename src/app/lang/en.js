@@ -53,5 +53,6 @@ export default {
     'pubInfo.pub.dig': 'Digital',
     'subject.categoryTitle': '{subjectName} Book Categories',
     'subject.learnMoreTitle': 'Learn more',
-    'subject.introText': 'Open textbooks'
+    'subject.introText': 'Open textbooks',
+    'resources.available': 'Only available for verified instructors.'
 };
