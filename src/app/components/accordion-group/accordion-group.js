@@ -116,7 +116,9 @@ export default function AccordionGroup({
                     () => {
                         const openItem = root.current?.querySelector('[aria-expanded="true"]');
 
-                        $.scrollTo(openItem);
+                        if (openItem) {
+                            $.scrollTo(openItem);
+                        }
                     },
                     20
                 );
