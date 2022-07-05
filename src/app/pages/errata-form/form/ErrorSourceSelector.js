@@ -97,7 +97,7 @@ function filterForBook(bookInfo, tutorBookList) {
 function useTutorBookList() {
     const tutorPageData = useDataFromSlug('pages/openstax-tutor');
     const list = useMemo(
-        () => tutorPageData?.tutor_books.map((b) => b.title) || [],
+        () => tutorPageData?.tutor_books?.map((b) => b.title) || [],
         [tutorPageData]
     );
 
