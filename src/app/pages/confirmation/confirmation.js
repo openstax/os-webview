@@ -116,7 +116,7 @@ export default function Confirmation() {
     const referringPage = getReferringPage();
     const isErrata = referringPage === 'errata';
     const id = new window.URLSearchParams(window.location.search).get('id');
-    const errataId = isErrata ? id[0] : null;
+    const errataId = isErrata ? id : null;
     const {
         headline,
         adoptionQuestion,
