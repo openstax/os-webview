@@ -1,10 +1,21 @@
+import {useEffect} from 'react';
 import usePageData from '~/components/jsx-helpers/page-loader';
 import buildContext from '~/components/jsx-helpers/build-context';
+import $ from '~/helpers/$';
 
 const preserveWrapping = false;
 
 function useContextValue(slug) {
     const data = usePageData(`pages/${slug}?type=pages.Subject`, preserveWrapping);
+
+    useEffect(
+        () => {
+            if (data) {
+                $.setPageTitleAndDescriptionFromBookData(data);
+            }
+        },
+        [data]
+    );
 
     return data;
 }

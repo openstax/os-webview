@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import GetThisTitle from '~/pages/details/common/get-this-title';
 import {TOCContextProvider} from '~/pages/details/common/toc-slideout/context';
 import {DetailsContextProvider} from '~/pages/details/context';
+import {LanguageContextProvider} from '~/contexts/language';
 // College algebra book details
 import details from '../../../data/details-college-algebra';
 import {transformData} from '~/helpers/controller/cms-mixin';
@@ -15,11 +16,13 @@ const model = $.camelCaseKeys(transformData(details));
 function GTTinContext() {
     return (
         <MemoryRouter initialEntries={["/details/books/college-algebra"]}>
-            <DetailsContextProvider>
-                <TOCContextProvider>
-                    <GetThisTitle model={model} />
-                </TOCContextProvider>
-            </DetailsContextProvider>
+            <LanguageContextProvider>
+                <DetailsContextProvider>
+                    <TOCContextProvider>
+                        <GetThisTitle model={model} />
+                    </TOCContextProvider>
+                </DetailsContextProvider>
+            </LanguageContextProvider>
         </MemoryRouter>
     );
 }

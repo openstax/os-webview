@@ -1,0 +1,114 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.article .content .pdf-title-block {
+    margin-top: 2rem;
+
+    .share-buttons .buttons.minimal {
+        grid-auto-flow: row;
+    }
+}
+
+.body {
+    .pdf-container {
+        margin-top: 4rem;
+        margin-bottom: 9rem;
+        max-height: 100vh;
+
+        @include width-up-to($phone-max) {
+            margin-bottom: 4rem;
+        }
+
+        @include wider-than($media-content-max) {
+            position: relative;
+            left: calc(50% - 60rem);
+            width: 120rem;
+        }
+
+        .react-pdf__Document {
+            background-color: ui-color(page-bg);
+            border-radius: 0.5rem;
+            max-height: calc(100vh - 10rem);
+            padding: 5rem 1rem 0;
+        }
+
+        .react-pdf__Page {
+            max-width: 100%;
+        }
+
+        .react-pdf__Page__canvas {
+            max-height: calc(100vh - 10rem);
+            max-width: 100%;
+            width: auto !important;
+            height: auto !important;
+        }
+
+        &.fullscreen {
+            height: 100%;
+
+            .react-pdf__Page__canvas {
+                height: calc(100vh - 10rem) !important;
+            }
+        }
+    }
+
+    .frame-changer {
+        align-items: center;
+        background-color: ui-color(white);
+        border-radius: 0.5rem;
+        border: thin solid ui-color(page-bg);
+        box-shadow: 0 0.2rem 0.4rem rgba(ui-color(black), 0.2);
+        color: inherit;
+        display: flex;
+        font-size: 2rem;
+        height: 5rem;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: tranlateY(-50%);
+        width: 3rem;
+
+        &.left {
+            left: 1rem;
+        }
+
+        &.right {
+            right: 1rem;
+        }
+
+        &[disabled] {
+            cursor: not-allowed;
+            opacity: 0.3;
+        }
+    }
+
+    .control-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 5rem;
+
+        a {
+            align-items: center;
+            font-weight: bold;
+            display: flex;
+            gap: 1rem;
+            text-decoration: none;
+        }
+    }
+
+    .pages-side-by-side {
+
+        @include width-up-to($phone-max) {
+            > :first-child {
+                display: none;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            display: grid;
+            grid-template-columns: auto auto;
+            margin: auto;
+            width: max-content;
+        }
+    }
+}

@@ -108,6 +108,22 @@ export function useToggle(initialState) {
     return React.useReducer((state, newValue=!state) => newValue, initialState);
 }
 
+// Returns [value, refresh]
+export function useRefreshable(getter) {
+    return React.useReducer(getter, getter());
+}
+
+// Returns [value, updateValue]
+export function useSettable(getter, setter) {
+    return React.useReducer(
+        (_, payload) => {
+            setter(payload);
+            return getter();
+        },
+        getter()
+    );
+}
+
 export function useSet(initialValue=[]) {
     const setRef = useRef(new window.Set(initialValue));
     const set = setRef.current;

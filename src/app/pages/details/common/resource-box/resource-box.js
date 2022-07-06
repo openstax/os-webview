@@ -1,5 +1,5 @@
 import React from 'react';
-import useDetailsContext from '~/pages/details/context';
+import {FormattedMessage} from 'react-intl';
 
 const settings = window.SETTINGS;
 
@@ -7,23 +7,6 @@ function encodeLocation(search) {
     const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
 
     return encodeURIComponent(`${pathWithoutSearch}?${search}`);
-}
-
-const localizedText = {
-    'en': 'Login to unlock',
-    'es': 'Inicie sesión para desbloquear'
-};
-
-/*
-    I needed to be able to use a hook and the chain
-    of hooks became unworkable. So I made a component that returns text.
-*/
-function LocalizedText() {
-    const {language} = useDetailsContext();
-
-    return (
-        localizedText[language]
-    );
 }
 
 function resourceBoxPermissions({
@@ -45,7 +28,7 @@ function resourceBoxPermissions({
         locked: {
             iconType: 'lock',
             link: {
-                text: <LocalizedText />,
+                text: <FormattedMessage id="resources.loginToUnlock" />,
                 url: loginUrl
             }
         }

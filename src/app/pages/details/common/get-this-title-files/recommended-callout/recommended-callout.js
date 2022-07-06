@@ -1,18 +1,13 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import useDetailsContext from '~/pages/details/context';
+import {useIntl} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import './recommended-callout.scss';
 
-const localizedText = {
-    'en': 'Recommended',
-    'es': 'Recomendado'
-};
-
 export default function RecommendedCallout({title, blurb, onPutAway}) {
-    const {language} = useDetailsContext();
-    const titleToUse = title || localizedText[language];
+    const intl = useIntl();
+    const titleToUse = title || intl.formatMessage({id: 'recommended'});
 
     return (
         <div className="triangle-attachment">

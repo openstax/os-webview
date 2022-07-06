@@ -6,7 +6,7 @@ import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import cn from 'classnames';
 import './carousel.scss';
 
-function FrameChanger({chevronDirection, onClick, hoverText}) {
+export function FrameChanger({chevronDirection, onClick, hoverText, disable=false}) {
     const icon = ({
         'left': faChevronLeft,
         'right': faChevronRight
@@ -15,7 +15,7 @@ function FrameChanger({chevronDirection, onClick, hoverText}) {
     return (
         <button
             type="button" className={`frame-changer ${chevronDirection}`}
-            onClick={onClick}
+            onClick={onClick} disabled={disable}
         >
             <FontAwesomeIcon icon={icon} />
             {

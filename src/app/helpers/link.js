@@ -1,7 +1,7 @@
 const settings = window.SETTINGS;
 const EXTERNAL = /^([a-z]+:)/;
 const ABSOLUTE_OPENSTAX = new RegExp(
-    `(?:https?://openstax.org|${window.location.origin})(?!/(?:books|accounts|oxauth|blog-feed)/)`
+    `(?:https?://openstax.org|${window.location.origin})(?!/(?:books|accounts|oxauth|blog-feed|documents)/)`
 );
 const MAILTO = /^mailto:(.+)/;
 const CNX = /cnx.org/;

@@ -7,11 +7,10 @@ import useSubjectsContext, {SubjectsContextProvider} from './context';
 import $ from '~/helpers/$';
 import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Hero from './hero';
-import useLanguageContext from '~/contexts/language';
-import LanguageSelector from '~/components/language-selector/language-selector';
+import LanguageSelectorSection from './language-selector-section';
 import SubjectsListing from './subjects-listing';
 import TutorAd from './tutor-ad';
-import AboutOpenStax from './about-openstax';
+import {AllSubjectsAboutOpenStax} from './about-openstax';
 import InfoBoxes from './info-boxes';
 import PhilanthropicSupport from './philanthropic-support';
 import LoadSubject from './specific/specific';
@@ -29,27 +28,6 @@ function SEOSetup() {
     return null;
 }
 
-const leadInText = {
-    en: 'We have textbooks in',
-    es: 'Tenemos libros de texto en'
-};
-
-function useConsistentLanguage() {
-    const {language, setLanguage} = useLanguageContext();
-    const {translations, meta: {locale}} = useSubjectsContext();
-
-    useEffect(
-        () => {
-            if (language !== locale) {
-                if ((translations.length === 0 || !translations[0].find((t) => locale === t))) {
-                    setLanguage(locale);
-                }
-            }
-        },
-        [language, locale, setLanguage, translations]
-    );
-}
-
 function SubjectsPage() {
     const {translations} = useSubjectsContext();
     const otherLocales = translations.length ?
@@ -57,21 +35,15 @@ function SubjectsPage() {
         []
     ;
 
-    useConsistentLanguage();
-
     return (
         <main className="subjects-page">
             <SEOSetup />
             <Hero />
             <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="separator" />
-            <section className="language-selector-section">
-                <div className="content">
-                    <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />
-                </div>
-            </section>
+            <LanguageSelectorSection otherLocales={otherLocales} />
             <SubjectsListing />
             <TutorAd />
-            <AboutOpenStax />
+            <AllSubjectsAboutOpenStax />
             <InfoBoxes />
             <PhilanthropicSupport />
         </main>

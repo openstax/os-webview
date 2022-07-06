@@ -39,7 +39,6 @@ const {
 
 function useContextValue(data) {
     data.comingSoon = data.bookState === 'coming_soon';
-    data.language = data.meta.locale;
 
     return data;
 }

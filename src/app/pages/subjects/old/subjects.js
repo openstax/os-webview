@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {FormattedMessage} from 'react-intl';
 import BookViewer from './book-viewer/book-viewer';
 import savingsPromise from '~/models/savings';
 import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
@@ -154,10 +155,11 @@ function Books({category}) {
     );
 }
 
-const leadInText = {
-    en: 'We have textbooks in',
-    es: 'Tenemos libros de texto en'
-};
+function LeadIn() {
+    return (
+        <FormattedMessage id="weHaveBooksIn" defaultMessage="We have textbooks in" />
+    );
+}
 
 function Subjects() {
     const {pageDescription, translations} = useSubjectsContext();
@@ -175,7 +177,7 @@ function Subjects() {
     return (
         <React.Fragment>
             <div className="hero">
-                <LanguageSelector leadInText={leadInText} otherLocales={otherLocales} />
+                <LanguageSelector LeadIn={LeadIn} otherLocales={otherLocales} />
                 <RawHTML html={pageDescription} />
             </div>
             <StripsAndFilter {...{category, setCategory}} />

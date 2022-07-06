@@ -1,18 +1,16 @@
 import React, {useEffect} from 'react';
 import $ from '~/helpers/$';
+import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './options-list.scss';
 
 function Item({label, value, selected}) {
-    const [isSelected, dispatch] = React.useReducer(
-        () => selected.includes(value),
-        selected.includes(value)
-    );
+    const [isSelected, refresh] = useRefreshable(() => selected.includes(value));
 
     useEffect(() => {
-        const cleanup = selected.on('notify', dispatch);
+        const cleanup = selected.on('notify', refresh);
 
         return cleanup;
-    }, [selected, value]);
+    }, [selected, value, refresh]);
 
     function toggleSelected() {
         if ('toggle' in selected) {

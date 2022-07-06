@@ -1,6 +1,6 @@
 import React, {useRef, useEffect} from 'react';
 import useActiveElementContext from '~/contexts/active-element';
-import useLanguageContext from '~/contexts/language';
+import {useIntl} from 'react-intl';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -19,23 +19,13 @@ function QuickLink({url, icon, text}) {
     );
 }
 
-// Ideally, we would fetch these from the CMS
-const qlLabelsByLanguage = {
-    en: [
-        'Get this book',
-        'Instructor resources',
-        'Student resources'
-    ],
-    es: [
-        'Consigue este libro',
-        'Recursos del instructor',
-        'Recursos para estudiantes'
-    ]
-};
-
 function Dropdown({urlBase, details}) {
-    const {language} = useLanguageContext();
-    const labels = qlLabelsByLanguage[language];
+    const intl = useIntl();
+    const labels = [
+        intl.formatMessage({id: 'getTheBook'}),
+        intl.formatMessage({id: 'tabs.instructorResources'}),
+        intl.formatMessage({id: 'tabs.studentResources'})
+    ];
 
     function stopClickPropagation(event) {
         event.stopPropagation();

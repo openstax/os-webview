@@ -7,7 +7,7 @@ export function TutorAdThatTakesData({heading, image, html, ctaLink, ctaText}) {
     return (
         <section className="tutor-ad">
             <div className="content">
-                <h1>{heading}</h1>
+                <h2>{heading}</h2>
                 <img role="presentation" src={image?.file} />
                 <RawHTML html={html} />
                 <a className="btn primary" href={ctaLink}>{ctaText}</a>

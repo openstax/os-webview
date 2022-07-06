@@ -5,6 +5,7 @@ import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import useNavigatorContext from './navigator-context';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useLocation, Link} from 'react-router-dom';
 import './navigator.scss';
 
@@ -76,13 +77,18 @@ function OtherSectionLinks({subjectName}) {
 }
 
 function useAccordionItems(subjectName) {
+    const intl = useIntl();
+
     return [
         {
-            title: `${subjectName} Book Categories`,
+            title: intl.formatMessage(
+                {id: 'subject.categoryTitle'},
+                {subjectName}
+            ),
             contentComponent: <CategorySectionLinks />
         },
         {
-            title: 'Learn more',
+            title: intl.formatMessage({id: 'subject.learnMoreTitle'}),
             contentComponent: <OtherSectionLinks subjectName={subjectName} />
         }
     ];
@@ -106,9 +112,17 @@ export default function Navigator({subject}) {
         <nav className="navigator">
             <div style="position: sticky; top: 9rem;">
                 <img src={subject.icon} role="presentation" />
-                <div className="heading">{`${subject.html} Book Categories`}</div>
+                <div className="heading">
+                    <FormattedMessage
+                        id="subject.categoryTitle"
+                        defaultMessage="{subjectName} Book Categories"
+                        values={{subjectName: subject.html}}
+                    />
+                </div>
                 <CategorySectionLinks />
-                <div className="heading">Learn more</div>
+                <div className="heading">
+                    <FormattedMessage id="subject.learnMoreTitle" defaultMessage="Learn more" />
+                </div>
                 <OtherSectionLinks subjectName={subject.html} />
             </div>
         </nav>

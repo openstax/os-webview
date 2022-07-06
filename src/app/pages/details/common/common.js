@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import useGiveToday from '~/models/give-today';
 import analytics from '~/helpers/analytics';
-import useDetailsContext from '../context';
+import {useIntl} from 'react-intl';
 
 export {default as Authors} from './authors';
 export {default as PublicationInfo} from './publication-info';
@@ -19,9 +19,9 @@ function trackLinkClick(event) {
 
 export function GiveLink() {
     const giveData = useGiveToday();
-    const {language} = useDetailsContext();
+    const {locale} = useIntl();
 
-    if (!(giveData.showLink && language === 'en')) {
+    if (!(giveData.showLink && locale === 'en')) {
         return null;
     }
 

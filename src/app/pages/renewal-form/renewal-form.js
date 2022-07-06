@@ -119,7 +119,7 @@ function BooksAndStudentCounts({counts, updateCount}) {
 
 function TheForm() {
     const {userStatus} = useUserContext();
-    const {firstName, lastName, email, school, uuid} = userStatus;
+    const {firstName, lastName, email, school, uuid} = userStatus || {};
     const adoptions = useAdoptions(uuid);
     const {counts, updateCount, defaultCount} = useFormData(adoptions);
     const {allBooks, select} = useBookTagsContext();

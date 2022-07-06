@@ -1,50 +1,48 @@
 import React from 'react';
 import useLanguageContext from '~/contexts/language';
+import {FormattedMessage} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
 import './language-selector.scss';
 
-// This should be in the CMS
-// Translates locales into language names
-export const languageTranslations = {
-    en: {
-        en: 'English',
-        es: 'Spanish',
-        and: 'and'
-    },
-    es: {
-        en: 'inglés',
-        es: 'español',
-        and: 'y'
-    }
+// You can't use a variable for id
+const languageFromLocale = {
+    en: () => <FormattedMessage id="en" defaultMessage="English" />,
+    es: () => <FormattedMessage id="es" defaultMessage="Spanish" />
 };
 
-function useTranslations() {
-    const {language} = useLanguageContext();
-
-    return languageTranslations[language];
+export function useLanguageText(locale) {
+    return React.useMemo(
+        () => languageFromLocale[locale],
+        [locale]
+    );
 }
 
 export function LanguageLink({locale}) {
     const {setLanguage} = useLanguageContext();
-    const tr = useTranslations();
     const onClick = React.useCallback((event) => {
         event.preventDefault();
         setLanguage(locale);
     }, [locale, setLanguage]);
+    const LanguageText = useLanguageText(locale);
 
     return (
-        <a href={locale} onClick={onClick}>{tr[locale]}</a>
+        <a href={locale} onClick={onClick}>
+            <LanguageText />
+        </a>
     );
 }
 
-function AnotherLanguage({locale}) {
-    const tr = useTranslations();
-
+function AnotherLanguage({locale, LinkPresentation}) {
     return (
         <React.Fragment>
-            {' '}{tr.and}{' '}
-            <LanguageLink locale={locale} />
+            {' '}
+            <FormattedMessage
+                id="and"
+                defaultMessage="and"
+            />
+            {' '}
+            <LinkPresentation locale={locale} />
         </React.Fragment>
     );
 }
@@ -58,10 +56,9 @@ export function LanguageSelectorWrapper({children}) {
     );
 }
 
-export default function LanguageSelector({leadInText, otherLocales}) {
+export default function LanguageSelector({LeadIn, otherLocales, LinkPresentation=LanguageLink}) {
     const {language} = useLanguageContext();
-    const tr = useTranslations();
-    const localLanguage = tr[language];
+    const LanguageText = useLanguageText(language);
 
     if (!otherLocales || otherLocales.length < 1) {
         return null;
@@ -69,9 +66,14 @@ export default function LanguageSelector({leadInText, otherLocales}) {
 
     return (
         <LanguageSelectorWrapper>
-            {leadInText[language] || leadInText.en}{' '}
-            {localLanguage}
-            {otherLocales.map((lo) => <AnotherLanguage key={lo} locale={lo} />)}
+            <LeadIn />
+            {' '}
+            <LanguageText />
+            {
+                otherLocales.map(
+                    (lo) => <AnotherLanguage key={lo} locale={lo} LinkPresentation={LinkPresentation} />
+                )
+            }
         </LanguageSelectorWrapper>
     );
 }
