@@ -68,6 +68,7 @@ function ArticlePage() {
             <div className="boxed">
                 <MoreStories exceptSlug={slug} />
             </div>
+            <GatedContentDialog articleData={articleData} />
         </WindowContextProvider>
     );
 }
