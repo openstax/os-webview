@@ -9,6 +9,7 @@ import Dropdown, {MenuItem} from '../dropdown/dropdown';
 const settings = window.SETTINGS;
 const facultySignupStep4 = `${settings.accountHref}/signup/educator/profile_form`;
 const reqFacultyAccessLink = `${settings.accountHref}/signup/educator/cs_form`;
+const profileLink = `${settings.accountHref}/profile`;
 
 function TutorMenuItem() {
     const tutorPageData = useDataFromSlug('pages/openstax-tutor');
@@ -47,10 +48,12 @@ export default function LoginMenuWithDropdown() {
     // updates logoutLink
     useLocation();
     const label = `Hi ${userModel.first_name || userModel.username}`;
-    const incomplete = !((userModel.groups || []).includes('Student') ||
-        !userModel.needs_profile_completed ||
-        !userModel.is_newflow ||
-        userModel.stale_verification);
+    const incomplete = (
+        !(userModel.groups || []).includes('Student') &&
+        userModel.needsProfileCompleted &&
+        userModel.is_newflow &&
+        !userModel.stale_verification
+    );
     const instructorEligible = !((userModel.groups || []).includes('Faculty') ||
         (!userModel.stale_verification && userModel.pending_verification));
 
@@ -62,6 +65,14 @@ export default function LoginMenuWithDropdown() {
             {
                 instructorEligible &&
                     <MenuItem label="Request instructor access" url={reqFacultyAccessLink} />
+            }
+            {
+                userModel.pendingInstructorAccess &&
+                    <MenuItem label="Pending instructor access" url={profileLink} />
+            }
+            {
+                userModel.emailUnverified &&
+                    <MenuItem label="Verify your email address" url={profileLink} />
             }
             <MenuItem label="Log out" url={linkHelper.logoutLink()} local="true" />
         </Dropdown>

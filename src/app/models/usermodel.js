@@ -37,7 +37,8 @@ const accountsModel = {
         //     opt_out_of_cookies: false,
         //     using_openstax: false,
         //     salesforce_contact_id: '0037h00000SEXNqAAP',
-        //     faculty_status: 'confirmed_faculty',
+        //     // May be confirmed_faculty, rejected_by_sheerid, incomplete_signup
+        //     faculty_status: 'incomplete_signup',
         //     is_newflow: true,
         //     is_instructor_verification_stale: false,
         //     needs_complete_edu_profile: false,
@@ -107,7 +108,8 @@ function oldUserModel(sfUserModel) {
     const isStudent = ['student', 'unknown_role'].includes(sfUserModel.self_reported_role);
     const isVerificationStale = !isStudent && sfUserModel.is_instructor_verification_stale;
     const isVerificationPending = !isStudent &&
-        ['pending_faculty'].includes(sfUserModel.faculty_status) && !isVerificationStale;
+        ['pending_faculty'].includes(sfUserModel.faculty_status) &&
+        !isVerificationStale;
     const groups = (function () {
         const result = (sfUserModel.applications || [])
             .map((obj) => obj.name)
@@ -121,6 +123,10 @@ function oldUserModel(sfUserModel) {
         }
         return result;
     })();
+    // // May be confirmed_faculty, rejected_by_sheerid, incomplete_signup
+    // faculty_status: 'rejected_by_sheerid',
+    const pendingInstructorAccess = sfUserModel.faculty_status === 'rejected_by_sheerid';
+    const emailUnverified = sfUserModel.faculty_status === 'incomplete_signup';
 
     /* eslint camelcase: 0 */
     return {
@@ -133,7 +139,9 @@ function oldUserModel(sfUserModel) {
         last_name: sfUserModel.last_name,
         pending_verification: isVerificationPending,
         stale_verification: isVerificationStale,
-        needs_profile_completed: sfUserModel.needs_complete_edu_profile,
+        needsProfileCompleted: sfUserModel.needs_complete_edu_profile,
+        pendingInstructorAccess,
+        emailUnverified,
         is_newflow: sfUserModel.is_newflow,
         username: sfUserModel.id,
         renewal_eligible: sfUserModel.renewal_eligible,
