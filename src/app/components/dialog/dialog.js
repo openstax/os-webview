@@ -19,14 +19,21 @@ function PutAway({noTitle, onClick}) {
 export function FooterDialog({
     isOpen, title, children, className
 }) {
-    const footerEl = document.getElementById('footer');
+    React.useLayoutEffect(
+        () => {
+            const footerEl = document.getElementById('footer');
+
+            footerEl?.style.setProperty('z-index', 1);
+
+            return () => footerEl?.style.removeProperty('z-index');
+        },
+        []
+    );
 
     if (!isOpen) {
-        footerEl?.style.removeProperty('z-index');
         return null;
     }
 
-    footerEl?.style.setProperty('z-index', 1);
     return (
         <dialog className={cn('footer-dialog', className)}>
             {
