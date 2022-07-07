@@ -2,6 +2,8 @@ import React from 'react';
 import Form from './form/form';
 import FormSelect from '~/components/form-select/form-select.jsx';
 import useErrataFormContext, {ErrataFormContextProvider} from './errata-form-context';
+import useUserContext from '~/contexts/user';
+import linkHelper from '~/helpers/link';
 import './errata-form.scss';
 
 function ErrataForm() {
@@ -56,7 +58,20 @@ function TitleSelectorOrForm() {
     );
 }
 
-export default function ContextWrapper() {
+export default function EnsureLoggedIn() {
+    const {uuid} = useUserContext();
+
+    console.info('Uuid', uuid);
+    if (!uuid) {
+        return (
+            <main className="errata-form page">
+                <div className="boxed">
+                    <div>You need to be logged in to submit errata</div>
+                    <a className="btn primary" href={linkHelper.loginLink()} data-local="true">Log in</a>
+                </div>
+            </main>
+        );
+    }
     return (
         <ErrataFormContextProvider>
             <TitleSelectorOrForm />
