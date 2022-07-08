@@ -9,7 +9,7 @@ function useContextValue() {
 
     // Copy it to localStorage for later defaulting
     React.useEffect(
-        () => window.localStorage.setItem('oswebLanguage', language),
+        () => window.localStorage?.setItem('oswebLanguage', language),
         [language]
     );
 

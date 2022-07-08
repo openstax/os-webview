@@ -29,7 +29,7 @@ export class Implementation {
     }
 
     set lastReset(now) {
-        window.localStorage.setItem(this.resetIndex, Number(now).toString());
+        window.localStorage?.setItem(this.resetIndex, Number(now).toString());
     }
 
     get index() {
@@ -44,7 +44,7 @@ export class Implementation {
     }
 
     set count(newValue) {
-        window.localStorage.setItem(this.index, newValue);
+        window.localStorage?.setItem(this.index, newValue);
     }
 
     increment() {
