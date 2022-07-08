@@ -27,6 +27,7 @@ const ignoreErrors = [
 const ignoreMessages = [
     'g.readyState',
     'PulseInsightsObject.survey',
+    'script.crazyegg.com',
     '//zamant.ru/',
     'Cross-origin redirection',
     'QuotaExceededError',
