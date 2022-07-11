@@ -22,7 +22,7 @@ export default function useAdoptionMicrosurveyContent() {
     const {first_name: name} = userModel || {};
     const [cookieValue, setCookieValue] = useCookieKey(DISMISSED_KEY);
     const recentlyDismissed = React.useMemo(
-        () => +cookieValue > YESTERDAY,
+        () => +Number(cookieValue) > YESTERDAY,
         [cookieValue]
     );
     const [clicked, disable] = useToggle(recentlyDismissed);
