@@ -16,7 +16,7 @@ function TutorPage({data}) {
     const {
         header: headline, description,
         availableBooksHeader,
-        tutorBooks,
+        tutorBooks = [],
         caseStudyFileUrl: buttonUrl, caseStudyCta: buttonText,
         featuresHeader: sectionTitle,
         featuresCards: blurbs,

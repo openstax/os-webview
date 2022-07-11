@@ -1,5 +1,4 @@
 import $ from '~/helpers/$';
-import memoize from 'lodash/memoize';
 import retry from '~/helpers/retry';
 
 export function urlFromSlug(initialSlug) {
@@ -39,8 +38,3 @@ export async function cmsPost(path, payload, method='POST') {
         return Promise.reject(new Error(`Failed to ${method} ${url}${qs}`));
     }
 }
-
-/**
- * For CMS data that will not change within a session
- */
-export const fetchOnce = memoize(cmsFetch);

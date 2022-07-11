@@ -6,7 +6,7 @@ import $ from '~/helpers/$';
 const preserveWrapping = false;
 
 function useContextValue(slug) {
-    const data = usePageData(`pages/${slug}`, preserveWrapping);
+    const data = usePageData(`pages/${slug}?type=pages.Subject`, preserveWrapping);
 
     useEffect(
         () => {

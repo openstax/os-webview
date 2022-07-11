@@ -6,11 +6,11 @@ import debounce from 'lodash/debounce';
 
 const debouncedFetch = debounce(
     (schoolFetch, value, setSchools) => {
-        if (value.length > 1) {
+        if (value?.length > 1) {
             schoolFetch(value).then((list) => list.map(
                 (entry) => ({
                     name: entry.name,
-                    type: entry.school_type,
+                    type: entry.school_type || entry.type, // different names in sfapi and old cms?
                     location: entry.location,
                     total_school_enrollment: entry.total_school_enrollment // eslint-disable-line camelcase
                 })

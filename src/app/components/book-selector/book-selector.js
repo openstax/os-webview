@@ -1,4 +1,4 @@
-import React, {useState, useRef, useLayoutEffect} from 'react';
+import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {salesforceTitles, afterFormSubmit} from '~/models/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
@@ -37,16 +37,14 @@ function hintText(selectedCount, limit) {
 }
 
 function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselectedTitle, limit}) {
-    // Use a ref so it doesn't recalculate this every render
-    const sfTitlesRef = useRef(salesforceTitles(data.books));
-    const books = sfTitlesRef.current;
+    const books = React.useMemo(() => salesforceTitles(data.books), [data.books]);
     const subjects = books.reduce((a, b) => a.concat(b.subjects), [])
         .reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
     const booksBySubject = (subject) => books.filter((b) => b.subjects.includes(subject));
     const validationMessage = selectedBooks.length > 0 ? '' : 'Please select at least one book';
     const limitReached = selectedBooks.length >= limit;
 
-    useLayoutEffect(() => {
+    React.useLayoutEffect(() => {
         books.filter((book) => preselectedTitle === book.value).forEach(toggleBook);
     }, [preselectedTitle, books]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -72,7 +70,7 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
 }
 
 export function useSelectedBooks() {
-    const [selectedBooks, setSelectedBooks] = useState([]);
+    const [selectedBooks, setSelectedBooks] = React.useState([]);
 
     function toggleBook(value) {
         if (selectedBooks.includes(value)) {

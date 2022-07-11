@@ -14,7 +14,7 @@ import Webinars from './webinars';
 import LearnMore from './learn-more';
 import LazyLoad from 'react-lazyload';
 import AboutOpenStax from '../about-openstax';
-import InfoBoxes from '../info-boxes';
+import {InfoBoxes} from '../info-boxes';
 import PhilanthropicSupport from '../philanthropic-support';
 import usePageData from '~/components/jsx-helpers/page-loader';
 import useLanguageContext from '~/contexts/language';

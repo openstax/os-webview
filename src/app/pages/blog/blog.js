@@ -26,7 +26,9 @@ export function SearchResultsPage() {
     return (
         <React.Fragment>
             <Document title="OpenStax Blog Search" />
-            <SearchBar />
+            <div className="boxed left">
+                <SearchBar />
+            </div>
             <SearchResults />
         </React.Fragment>
     );
@@ -63,7 +65,9 @@ function ArticlePage() {
         <WindowContextProvider>
             <ArticleFromSlug slug={`news/${slug}`} onLoad={setArticleData} />
             <DisqusForm />
-            <MoreStories exceptSlug={slug} />
+            <div className="boxed">
+                <MoreStories exceptSlug={slug} />
+            </div>
             <GatedContentDialog articleData={articleData} />
         </WindowContextProvider>
     );

@@ -16,7 +16,24 @@
         }
     }
 
+    .boxed.left {
+        align-items: flex-start;
+        margin: 3rem auto;
+    }
+
+    h1 {
+        @include set-font(h2);
+
+        margin: 0;
+    }
+
     h2 {
+        &:not(.section-header) {
+            @include set-font(h3);
+
+            margin: 0;
+        }
+
         &.section-header {
             @include set-font(h4);
 

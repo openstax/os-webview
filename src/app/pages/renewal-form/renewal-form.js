@@ -1,11 +1,14 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
+import linkHelper from '~/helpers/link';
 import useUserContext from '~/contexts/user';
 import useAdoptions from '~/models/renewals';
 import BookTagsMultiselect, {BookTagsContextProvider, useBookTagsContext}
     from '~/components/multiselect/book-tags/book-tags';
 
 import './renewal-form.scss';
+
+const MAX_SELECTIONS = 5;
 
 // Bundle it up like a Context, but just pass it so I don't have to actually
 // make a Context.
@@ -47,14 +50,20 @@ function HiddenFields({email, uuid, counts}) {
         }),
         [selectedItems, counts]
     );
+    const subjects = React.useMemo(
+        () => selectedItems ? selectedItems.map((i) => i.value).join(';') : '',
+        [selectedItems]
+    );
 
     return (
         <React.Fragment>
             <input type="hidden" name="email" value={email} />
             <input type="hidden" name="renewal_date" value={new Date(Date.now()).toLocaleDateString()} />
             <input type="hidden" name="accounts_uuid" value={uuid} />
-            <input type="hidden" name="appplication_source" value={source} />
+            <input type="hidden" name="application_source" value={source} />
             <input type="hidden" name="adoption_json" value={json} />
+            <input type="hidden" name="subject" value={subjects} />
+            <input type="hidden" name="subject_interest" value={subjects} />
         </React.Fragment>
     );
 }
@@ -82,7 +91,9 @@ function Counts({counts, updateCount}) {
                             {b.text}{': '}
                             <input
                                 type="number" value={counts[b.value]}
-                                onChange={({target}) => updateCount(b.value, target.value)} />
+                                onChange={({target}) => updateCount(b.value, target.value)}
+                                min="1" max="999"
+                            />
                         </React.Fragment>
                     )
                 }
@@ -98,6 +109,7 @@ function BooksAndStudentCounts({counts, updateCount}) {
         <div className="books-and-counts">
             <label>What books are you using?</label>
             <BookTagsMultiselect required oneField />
+            <small>You may select up to {MAX_SELECTIONS}</small>
             {
                 selectedItems.length ? <Counts counts={counts} updateCount={updateCount} /> : null
             }
@@ -120,19 +132,21 @@ function TheForm() {
         },
         [select, counts, updateCount, defaultCount]
     );
+    const [initialized, setInitialized] = React.useState(false);
 
     // Initialize selections from adoptions
     React.useEffect(
         () => {
-            if (adoptions.Books) {
+            if (!initialized && adoptions.Books) {
                 for (const b of adoptions.Books) {
                     const item = allBooks.find((i) => i.value === b.name);
 
                     selectAndSetDefaultCount(item);
                 }
+                setInitialized(true);
             }
         },
-        [adoptions, selectAndSetDefaultCount, allBooks]
+        [adoptions, selectAndSetDefaultCount, allBooks, initialized]
     );
 
     return (
@@ -141,7 +155,7 @@ function TheForm() {
             <div className="fixed-fields">
                 <FixedField label="First name" name="first_name" value={firstName} />
                 <FixedField label="Last name" name="last_name" value={lastName} />
-                <FixedField label="School name" name="school_name" value={school} />
+                <FixedField label="School name" name="school" value={school} />
             </div>
             <BooksAndStudentCounts counts={counts} updateCount={updateCount} />
             <input type="submit" />
@@ -149,14 +163,43 @@ function TheForm() {
     );
 }
 
+function EnsureLoggedIn() {
+    const {userStatus: {uuid}} = useUserContext();
+
+    React.useEffect(
+        () => {
+            if (!uuid) {
+                const t = window.setTimeout(
+                    () => {window.location = linkHelper.loginLink();},
+                    1000
+                );
+
+                return () => window.clearTimeout(t);
+            }
+            return null;
+        },
+        [uuid]
+    );
+
+    if (!uuid) {
+        return (
+            <div>You need to be logged in. Redirecting...</div>
+        );
+    }
+
+    return (
+        <BookTagsContextProvider maxSelections={MAX_SELECTIONS}>
+            <TheForm />
+        </BookTagsContextProvider>
+    );
+}
+
 export default function RenewalForm() {
     return (
         <div className="renewal-form page">
             <div className="boxed">
-                <h1>Renew this</h1>
-                <BookTagsContextProvider>
-                    <TheForm />
-                </BookTagsContextProvider>
+                <h1>Adoption renewal</h1>
+                <EnsureLoggedIn />
             </div>
         </div>
     );

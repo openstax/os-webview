@@ -7,6 +7,7 @@ $image-height: 24rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     justify-items: center;
+    width: 100%;
 
     @include width-up-to($tablet-max) {
         grid-gap: 6rem 4rem;

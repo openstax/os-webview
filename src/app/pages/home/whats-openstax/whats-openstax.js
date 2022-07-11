@@ -13,7 +13,7 @@ export default function WhatsOpenStax({data}) {
                     <div className="closer-grouping">
                         <div>
                             <h3>Interested in using OpenStax?</h3>
-                            <div>{data.donateText}</div>
+                            <div>{data.interestText}</div>
                         </div>
                         <a href="/interest" className="btn secondary">I’m interested!</a>
                     </div>

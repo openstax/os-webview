@@ -136,6 +136,7 @@ function oldUserModel(sfUserModel) {
         needs_profile_completed: sfUserModel.needs_complete_edu_profile,
         is_newflow: sfUserModel.is_newflow,
         username: sfUserModel.id,
+        renewal_eligible: sfUserModel.renewal_eligible,
         self_reported_role: sfUserModel.self_reported_role,
         self_reported_school: sfUserModel.self_reported_school,
         is_not_gdpr_location: sfUserModel.is_not_gdpr_location,

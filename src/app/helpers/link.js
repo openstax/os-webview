@@ -80,7 +80,7 @@ function loginLink() {
 }
 
 function logoutLink() {
-    return loginOrOutLink('signout');
+    return loginOrOutLink('logout');
 }
 
 export default {
