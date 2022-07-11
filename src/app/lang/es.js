@@ -53,5 +53,6 @@ export default {
     'pubInfo.pub.dig': 'Edición digital',
     'subject.categoryTitle': 'Categorías de libros de {subjectName}',
     'subject.learnMoreTitle': 'Aprende más',
-    'subject.introText': 'Libros de texto abiertos'
+    'subject.introText': 'Libros de texto abiertos',
+    'resources.available': 'Solo está disponible para instructores verificados.'
 };
