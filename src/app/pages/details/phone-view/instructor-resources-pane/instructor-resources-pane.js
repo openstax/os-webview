@@ -6,6 +6,7 @@ import {instructorResourceBoxPermissions} from '../../common/resource-box/resour
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
 import useUserContext from '~/contexts/user';
+import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import './instructor-resources-pane.scss';
 
 function resourceBoxModel(resourceData, userStatus, bookId) {
@@ -54,7 +55,7 @@ export function InstructorResourcesPane({model, userStatus}) {
     }
 
     return (
-        <div className="instructor-resources-pane">
+        <React.Fragment>
             {
                 featuredModels.length > 0 &&
                     <FeaturedResourcesSection header={model.featuredResourcesHeader} models={featuredModels} />
@@ -67,6 +68,27 @@ export function InstructorResourcesPane({model, userStatus}) {
                 <VideoResourceBoxes models={model.bookVideoFacultyResources} referenceModels={referenceModels} />
                 <ResourceBoxes models={otherModels} includeCommonsHub />
             </div>
+        </React.Fragment>
+    );
+}
+
+function StubUnlessDisplayed({model, userStatus}) {
+    const ref = React.useRef();
+    const [y, setY] = React.useState(null);
+    const {scrollY} = useWindowContext();
+
+    React.useEffect(
+        () => setY(ref.current?.getBoundingClientRect().y),
+        [scrollY]
+    );
+
+    return (
+        <div className="instructor-resources-pane" ref={ref}>
+            {
+                y ?
+                    <InstructorResourcesPane model={model} userStatus={userStatus} /> :
+                    null
+            }
         </div>
     );
 }
@@ -78,6 +100,8 @@ export default function LoadUserStatusThenInstructorPane({model}) {
         return null;
     }
     return (
-        <InstructorResourcesPane model={model} userStatus={userStatus} />
+        <WindowContextProvider>
+            <StubUnlessDisplayed model={model} userStatus={userStatus} />
+        </WindowContextProvider>
     );
 }

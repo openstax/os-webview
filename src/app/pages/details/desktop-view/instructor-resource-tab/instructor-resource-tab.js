@@ -115,7 +115,7 @@ function InstructorResourceTab({model, userStatus}) {
     const freeStuffContent = model.freeStuffInstructor.content;
 
     return (
-        <div className="instructor-resources">
+        <React.Fragment>
             <div>
                 <FreeStuff {...{freeStuffContent, userStatus}} />
                 {
@@ -141,6 +141,26 @@ function InstructorResourceTab({model, userStatus}) {
                 </div>
             </div>
             <Webinar />
+        </React.Fragment>
+    );
+}
+
+function StubUnlessDisplayed({model, userStatus}) {
+    const ref = React.useRef();
+    const [y, setY] = React.useState(null);
+
+    React.useLayoutEffect(
+        () => setY(ref.current?.getBoundingClientRect().y),
+        []
+    );
+
+    return (
+        <div className="instructor-resources" ref={ref}>
+            {
+                y ?
+                    <InstructorResourceTab model={model} userStatus={userStatus} /> :
+                    null
+            }
         </div>
     );
 }
@@ -152,6 +172,6 @@ export default function LoadUserStatusThenInstructorTab({model}) {
         return null;
     }
     return (
-        <InstructorResourceTab model={model} userStatus={userStatus} />
+        <StubUnlessDisplayed model={model} userStatus={userStatus} />
     );
 }
