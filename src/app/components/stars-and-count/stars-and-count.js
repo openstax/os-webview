@@ -5,7 +5,7 @@ import {faStarHalf} from '@fortawesome/free-solid-svg-icons/faStarHalf';
 import './stars-and-count.scss';
 
 export function roundedRating(rating) {
-    return Math.round(rating * 10) / 10;
+    return rating.toFixed(1);
 }
 
 export function FullStar() {
@@ -50,11 +50,13 @@ export function Stars({stars}) {
 }
 
 export default function StarsAndCount({rating, count=0, showNumber=false}) {
+    const s = count !== 1 ? 's' : '';
+
     return (
         <div className="stars-and-count">
             <Stars stars={rating} />
             {showNumber && (count > 0) && roundedRating(rating)}
-            <span>({count || 'no reviews'})</span>
+            <span>({`${count || 'no'} review${s}`})</span>
         </div>
     );
 }
