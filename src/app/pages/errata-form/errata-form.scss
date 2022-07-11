@@ -29,4 +29,16 @@
         align-items: initial;
         padding: 4rem 0 30rem;
     }
+
+    .boxed {
+        @include set-font(body-large);
+        padding: 4rem 0;
+
+        .btn.primary {
+            @include button();
+            @extend %primary;
+
+            margin-top: 2rem;
+        }
+    }
 }
