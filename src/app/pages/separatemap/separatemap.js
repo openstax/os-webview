@@ -83,7 +83,7 @@ function PopupMessage() {
     const [popupVisible, togglePopup] = useToggle(true);
 
     function sendAdoptionEvent() {
-        analytics.sendPage('map', 'adoption', '');
+        analytics.sendPageEvent('map', 'adoption', '');
     }
 
     return popupVisible && (
