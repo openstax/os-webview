@@ -31,7 +31,7 @@ export default function ComponentTemplate({data}) {
                 <div className="icon-block">
                     {
                         data.features[0].map((f, key) =>
-                            <IconGroup key={key} icon={f.image.file} text={f.title} />
+                            <IconGroup key={key} icon={f.image?.file} text={f.title} />
                         )
                     }
                 </div>

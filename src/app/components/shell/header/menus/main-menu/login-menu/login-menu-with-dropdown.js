@@ -54,8 +54,12 @@ export default function LoginMenuWithDropdown() {
         userModel.is_newflow &&
         !userModel.stale_verification
     );
-    const instructorEligible = !((userModel.groups || []).includes('Faculty') ||
-        (!userModel.stale_verification && userModel.pending_verification));
+    const instructorEligible = !(
+        (userModel.groups || []).includes('Faculty') ||
+        (!userModel.stale_verification && userModel.pending_verification) ||
+        userModel.pendingInstructorAccess ||
+        userModel.emailUnverified
+    );
 
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>
