@@ -165,7 +165,7 @@ function Subjects() {
     const {pageDescription, translations} = useSubjectsContext();
     const {category, setCategory} = useCategoryTiedToPath();
     const otherLocales = translations.length ?
-        translations[0].value.map((t) => t.locale) :
+        translations[0].value.map((t) => t.locale).filter((l) => Boolean(l)) :
         []
     ;
 
