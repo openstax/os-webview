@@ -2,11 +2,9 @@ import React from 'react';
 import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './form-header.scss';
 
-function FormHeader({data}) {
-    const {
-        introHeading: heading,
-        introDescription: description
-    } = data;
+function FormHeader({data, prefix}) {
+    const heading = data[`${prefix}IntroHeading`];
+    const description = data[`${prefix}IntroDescription`];
 
     return (
         <div className="form-header">
@@ -18,8 +16,10 @@ function FormHeader({data}) {
     );
 }
 
-export default function FormHeaderLoader({slug}) {
+const slug = 'pages/form-headings';
+
+export default function FormHeaderLoader({prefix}) {
     return (
-        <LoaderPage slug={slug} Child={FormHeader} />
+        <LoaderPage slug={slug} Child={FormHeader} props={{prefix}} />
     );
 }
