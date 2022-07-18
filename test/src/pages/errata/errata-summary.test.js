@@ -22,7 +22,7 @@ test('shows all items in table', (done) => {
 
         expect(within(table).getAllByRole('row')).toHaveLength(54);
         done();
-    }, 0);
+    }, 20);
 });
 test('filters', (done) => {
     render(<ErrataSummaryLoader />)
@@ -34,6 +34,6 @@ test('filters', (done) => {
 
         expect(within(table).getAllByRole('row')).toHaveLength(19);
         done();
-    }, 0);
+    }, 20);
 
 });

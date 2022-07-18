@@ -17,5 +17,5 @@ it ('lists the books', (done) => {
     setTimeout(() => {
         expect(screen.getAllByRole('checkbox')).toHaveLength(24);
         done();
-    }, 10);
+    }, 20);
 });

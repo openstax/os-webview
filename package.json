@@ -60,7 +60,7 @@
         "node-sass": "^7.0.1",
         "particles.js": "^2.0.0",
         "pattern-library": "openstax/pattern-library",
-        "preact": "^10.6.5",
+        "preact": "^10.10.0",
         "react-modal": "^3.14.3",
         "require-dir": "^1.2.0",
         "style-loader": "^3.3.1",

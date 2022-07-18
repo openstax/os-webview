@@ -36,7 +36,7 @@ test('handles Print Copy dialog', (done) => {
         expect(options).toHaveLength(3);
         expect(printOption).toHaveLength(0);
         done();
-    }, 0);
+    }, 20);
 });
 // TODO The rest of this :(
 // test('handles hiding and expanding non-preferred formats', (done) => {
