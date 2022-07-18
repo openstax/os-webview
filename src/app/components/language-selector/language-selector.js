@@ -11,9 +11,11 @@ const languageFromLocale = {
     es: () => <FormattedMessage id="es" defaultMessage="Spanish" />
 };
 
+const NoLanguage = () => null;
+
 export function useLanguageText(locale) {
     return React.useMemo(
-        () => languageFromLocale[locale],
+        () => languageFromLocale[locale] || NoLanguage,
         [locale]
     );
 }

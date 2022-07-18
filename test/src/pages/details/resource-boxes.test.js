@@ -68,7 +68,7 @@ test('handles unlocked instructor resources', (done) => {
         expect(screen.getAllByText('a description')).toHaveLength(1);
         expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
         done();
-    }, 0);
+    }, 20);
 });
 
 test('handles locked instructor resources', (done) => {
@@ -77,7 +77,7 @@ test('handles locked instructor resources', (done) => {
     setTimeout(() => {
         expect(screen.getByRole('link').textContent).toBe('Login to unlock');
         done();
-    }, 0);
+    }, 20);
 });
 
 test('allows instructors access to locked resources', (done) => {
@@ -90,7 +90,7 @@ test('allows instructors access to locked resources', (done) => {
     setTimeout(() => {
         expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
         done();
-    }, 0);
+    }, 20);
 });
 
 test('handles locked student resources', (done) => {
@@ -103,7 +103,7 @@ test('handles locked student resources', (done) => {
     setTimeout(() => {
         expect(screen.getByRole('link').textContent).toBe('Login to unlock');
         done();
-    }, 0);
+    }, 20);
 });
 
 test('allows students access to locked resources', (done) => {
@@ -119,7 +119,7 @@ test('allows students access to locked resources', (done) => {
     setTimeout(() => {
         expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
         done();
-    }, 0);
+    }, 20);
 });
 
 test('allows instructors access to locked student resources', (done) => {
@@ -136,7 +136,7 @@ test('allows instructors access to locked student resources', (done) => {
         expect(link.textContent).toBe(resourceData.linkText);
         expect(link.querySelector('.fa-download')).toBeTruthy();
         done();
-    }, 0);
+    }, 20);
 });
 
 test('understands external links', (done) => {
@@ -154,5 +154,5 @@ test('understands external links', (done) => {
         const link = screen.getByRole('link');
         expect(link.textContent).toBe(resourceData.linkText);
         done();
-    }, 0);
+    }, 20);
 });

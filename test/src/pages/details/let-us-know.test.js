@@ -25,7 +25,7 @@ test('handles English title', (done) => {
     setTimeout(() => {
         expect(screen.getByText('Using this book? Let us know.'));
         done();
-    }, 0);
+    }, 20);
 });
 test('handles Polish title', (done) => {
     render(<WrapComponent><LetUsKnow title={polishTitle} /></WrapComponent>);
@@ -33,5 +33,5 @@ test('handles Polish title', (done) => {
     setTimeout(() => {
         expect(screen.getByText('Korzystasz z tej książki? Daj nam znać.'));
         done();
-    }, 0);
+    }, 20);
 });

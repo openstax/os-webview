@@ -8,5 +8,5 @@ it('creates with a big chunk of data', (done) => {
         expect(screen.getByRole('navigation'));
         expect(screen.queryAllByRole('heading').length).toBeGreaterThan(3);
         done();
-    }, 0);
+    }, 40);
 });

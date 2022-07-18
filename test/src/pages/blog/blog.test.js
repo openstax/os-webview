@@ -31,7 +31,7 @@ test('blog default page', (done) => {
         expect(screen.queryAllByText('Read more')).toHaveLength(4);
         expect(screen.queryAllByRole('textbox')).toHaveLength(1);
         done();
-    }, 200);
+    }, 400);
 });
 
 test('blog Article page', () => {
@@ -61,5 +61,5 @@ test('blog Article page', () => {
         expect(screen.queryAllByText('read more')).toHaveLength(12);
         expect(screen.queryAllByRole('textbox')).toHaveLength(1);
         done();
-    }, 10);
+    }, 20);
 });

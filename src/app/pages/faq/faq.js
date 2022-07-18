@@ -14,10 +14,12 @@ function useDocModel(docId) {
 
         fetch(url, {credentials: 'include'})
             .then((r) => r.json())
+            .catch((err) => {throw new Error(`Fetching ${url}: ${err}`);})
             .then((r) => setDocData({
                 title: r.title,
                 file: r.meta.download_url
-            }));
+            }))
+        ;
     }, [docId]);
 
     return docData;
