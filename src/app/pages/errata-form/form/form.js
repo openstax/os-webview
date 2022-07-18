@@ -178,6 +178,7 @@ export default function ErrataForm() {
                 }
             )
                 .then((r) => r.json())
+                .catch((err) => {throw new Error(`Posting errata form data: ${err}`);})
                 .then(
                     handleSubmissionResponse,
                     (fetchError) => {
@@ -185,7 +186,6 @@ export default function ErrataForm() {
                         putFileWidgetsBack();
                     }
                 )
-                .catch((err) => {throw new Error(`Posting errata form data: ${err}`);})
             ;
         }
     }, [submitting, setHasError, handleSubmissionResponse]);
