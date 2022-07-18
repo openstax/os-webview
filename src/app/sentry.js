@@ -15,6 +15,7 @@ const ignoreErrors = [
     'TypeError: Cannot read properties of null (reading \'render\')',
     'TypeError: h is not a function. (In \'h("Could not load ".concat(e))\', \'h\' is undefined)',
     'SyntaxError: Unexpected token \'<\'',
+    'SyntaxError: expected expression, got \'<\'',
     'message: cancelled',
     'cancelled',
     'Error: Different window already linked for window: _blank',

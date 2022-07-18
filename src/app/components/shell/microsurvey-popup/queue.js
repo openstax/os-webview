@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import useStickyMicrosurveyContent from './sticky-content';
 import useAdoptionMicrosurveyContent from './adoption-content';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
@@ -6,6 +6,10 @@ import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 export default function useMSQueue() {
     const [queue, setQueue] = useState([]);
     const QueuedItem = queue.length > 0 ? queue[0] : null;
+    const nextItem = useCallback(
+        () => setQueue(queue.slice(1)),
+        [queue]
+    );
 
     function enqueue(Item) {
         setQueue([...queue, Item]);
@@ -27,5 +31,5 @@ export default function useMSQueue() {
     useEnqueueWhenReady(useStickyMicrosurveyContent);
     useEnqueueWhenReady(useAdoptionMicrosurveyContent);
 
-    return [QueuedItem, () => setQueue(queue.slice(1))];
+    return [QueuedItem, nextItem];
 }
