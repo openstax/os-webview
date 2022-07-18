@@ -88,7 +88,9 @@ const accountsModel = {
                     console.warn('"Error fetching user info"');
                     return {err};
                 }
-            );
+            )
+            .catch((err) => {throw new Error(`Unable to fetch user data: ${err}`);})
+        ;
     })
 };
 

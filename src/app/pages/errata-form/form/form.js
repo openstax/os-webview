@@ -170,17 +170,23 @@ export default function ErrataForm() {
             const formData = new window.FormData(formEl);
 
             // Programmatically post the form
-            fetch(postEndpoint, {
-                method: 'POST',
-                body: formData
-            }).then((r) => r.json())
+            fetch(
+                postEndpoint,
+                {
+                    method: 'POST',
+                    body: formData
+                }
+            )
+                .then((r) => r.json())
                 .then(
                     handleSubmissionResponse,
                     (fetchError) => {
                         setHasError(`Submit failed: ${fetchError}.`);
                         putFileWidgetsBack();
                     }
-                );
+                )
+                .catch((err) => {throw new Error(`Posting errata form data: ${err}`);})
+            ;
         }
     }, [submitting, setHasError, handleSubmissionResponse]);
 

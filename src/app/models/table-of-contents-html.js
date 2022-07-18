@@ -5,7 +5,9 @@ export function cnxFetch({isRex, cnxId, webviewLink}) {
         return fetchRexRelease(webviewLink, cnxId);
     }
     return fetch(`${process.env.API_ORIGIN}/contents/${cnxId}.json`)
-        .then((r) => r.json());
+        .then((r) => r.json())
+        .catch((err) => {throw new Error(`Fetching table of contents: ${err}`);})
+    ;
 }
 
 export default function ({isRex, cnxId, webviewLink, isTutor}) {

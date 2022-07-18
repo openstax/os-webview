@@ -16,6 +16,7 @@ const fetchRexInfo = memoize((rexOrigin) => {
                 .then((response) => response.json())
         ]))
         .then(([release, config]) => ({release, config}))
+        .catch((err) => {throw new Error(`Fetching Rex info: ${err}`);})
     ;
 });
 
@@ -38,7 +39,9 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
 
             return fetch(`${process.env.API_ORIGIN}/${archivePath}/contents/${cnxId}@${bookVersion}.json`);
         })
-        .then((response) => response.json());
+        .then((response) => response.json())
+        .catch((err) => {throw new Error(`Fetching Rex contents: ${err}`);})
+    ;
 });
 
 export default function (webviewLink, cnxId) {

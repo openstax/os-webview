@@ -17,7 +17,9 @@ function useDocModel(docId) {
             .then((r) => setDocData({
                 title: r.title,
                 file: r.meta.download_url
-            }));
+            }))
+            .catch((err) => {throw new Error(`Fetching ${url}: ${err}`);})
+        ;
     }, [docId]);
 
     return docData;

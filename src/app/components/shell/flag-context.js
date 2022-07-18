@@ -9,7 +9,9 @@ export const flagPromise = cmsFetch('flags?format=json')
             return a;
         },
         {}
-    ));
+    ))
+    .catch((err) => {throw new Error(`Unable to get flags: ${err}`);})
+;
 
 function useContextValue() {
     const [value, setValue] = useState(false);

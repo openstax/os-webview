@@ -89,7 +89,11 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
 async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDescription=true}) {
     const data = await fetchFromCMS(slug, preserveWrapping);
 
-    await loadImages(data);
+    try {
+        await loadImages(data);
+    } catch (err) {
+        throw new Error(`Loading images: ${err}`);
+    }
     if (setsPageTitleAndDescription) {
         $.setPageTitleAndDescriptionFromBookData(data);
     }
