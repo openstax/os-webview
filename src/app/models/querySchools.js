@@ -59,7 +59,7 @@ function doFetch(searchParameters) {
  * @param {object} selectedFilters - dictionary of filter settings
  * @return {Promise}
  */
-export default function (queryString, selectedFilters) {
+export default function querySchools(queryString, selectedFilters) {
     let searchParameters = `q=${queryString}`;
 
     if (!selectedFilters) {
