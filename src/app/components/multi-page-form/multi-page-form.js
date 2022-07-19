@@ -137,6 +137,7 @@ function MultiPageFormInContext({
             <form
                 acceptCharset="UTF-8" className="form"
                 method="post" ref={formRef} {...formParams}
+                aria-label="form"
             >
                 <PagesContextProvider
                     contextValueParameters={{

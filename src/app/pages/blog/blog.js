@@ -52,9 +52,13 @@ export function MainBlogPage() {
     );
 }
 
-function ArticlePage() {
-    const {slug} = useParams();
+// Export so it can be tested
+export function ArticlePage() {
+    const {slug, ...other} = useParams();
     const [articleData, setArticleData] = React.useState();
+
+    console.log('**** PARAMETERS', slug, other);
+    console.warn('**** PARAMETERS', slug, other);
 
     useEffect(
         () => window.scrollTo(0, 0),

@@ -9,31 +9,25 @@ const searchStr = '/errata/?book=Anatomy%20and%20Physiology';
 
 window.history.pushState('', '', searchStr);
 
-const getTableRows = () => screen.getAllByRole('row');
 // This is complicated by the fact that there are two versions that
 // display at once, but one is hidden depending on screen resolution
 // which testing knows nothing about.
 // The desktop version is the last table; there are multiple tables
 // (one for each row) in the mobile version
-test('shows all items in table', (done) => {
-    render(<ErrataSummaryLoader />)
-    setTimeout(() => {
-        const table = screen.queryAllByRole('table').pop();
+async function getTableRows() {
+    const tables = await screen.findAllByRole('table');
 
-        expect(within(table).getAllByRole('row')).toHaveLength(54);
-        done();
-    }, 20);
+    return within(tables.pop()).getAllByRole('row');
+}
+
+test('shows all items in table', async () => {
+    render(<ErrataSummaryLoader />)
+    expect(await getTableRows()).toHaveLength(54);
 });
-test('filters', (done) => {
+test('filters', async () => {
     render(<ErrataSummaryLoader />)
-    setTimeout(() => {
-        const filters = screen.queryByRole('radiogroup');
+    const filters = await screen.findByRole('radiogroup');
 
-        userEvent.click(within(filters).queryByText('In Review'));
-        const table = screen.queryAllByRole('table').pop();
-
-        expect(within(table).getAllByRole('row')).toHaveLength(19);
-        done();
-    }, 20);
-
+    userEvent.click(within(filters).queryByText('In Review'));
+    expect(await getTableRows()).toHaveLength(19);
 });

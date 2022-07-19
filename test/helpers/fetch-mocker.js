@@ -16,6 +16,7 @@ import errataSummary from '../src/data/errata-summary';
 import errataResources from '../src/data/errata-resources';
 import flags from '../src/data/flags';
 import footerData from '../src/data/footer';
+import formHeadings from '../src/data/form-headings';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
 import openstaxHomepageData from '../src/data/openstax-homepage';
 import osNewsData from '../src/data/openstax-news-detail';
@@ -58,6 +59,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isErrataSummary = args[0] === 'https://cms-dev.openstax.org/apps/cms/api/pages/errata?format=json';
     const isFlags = args[0].includes('/flags');
     const isFooter = (/api\/footer/).test(args[0]);
+    const isFormHeading = (/form-headings/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isHomepage = (/openstax-homepage/).test(args[0]);
     const isOsNews = (/openstax-news/).test(args[0]);
@@ -110,6 +112,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = flags;
             } else if (isFooter) {
                 payload = footerData;
+            } else if (isFormHeading) {
+                payload = formHeadings;
             } else if (isHomepage) {
                 payload = openstaxHomepageData;
             } else if (isInstitutionalPartnership) {

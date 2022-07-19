@@ -17,28 +17,19 @@ function LangWrapRecommendedCallout({...args}) {
     );
 }
 
-test('defaults to "Recommended" and no blurb', (done) => {
+test('defaults to "Recommended" and no blurb', async () => {
     render(<LangWrapRecommendedCallout />);
-    setTimeout(() => {
-        expect(screen.getByText('Recommended')).toBeTruthy();
-        expect(screen.getByRole('button').nextSibling).toBeNull();
-        done();
-    }, 40);
+    await screen.findByText('Recommended');
+    expect(screen.getByRole('button').nextSibling).toBeNull();
 });
-test('displays custom title', (done) => {
+test('displays custom title', async () => {
     render(<LangWrapRecommendedCallout title="custom title" />)
-    setTimeout(() => {
-        expect(screen.getByText('custom title')).toBeTruthy();
-        done();
-    }, 40);
+    await screen.findByText('custom title');
 });
-test('displays custom blurb', () => {
+test('displays custom blurb', async () => {
     const blurbHtml = '<b>some text</b>';
 
     render(<LangWrapRecommendedCallout blurb={blurbHtml} />)
-    setTimeout(() => {
-        expect(screen.getByRole('button').nextSibling).not.toBeNull();
-        expect(screen.getByText('some text')).toBeTruthy();
-        done();
-    }, 40);
+    await screen.findByText('some text');
+    expect(screen.getByRole('button').nextSibling).not.toBeNull();
 })

@@ -12,10 +12,9 @@ const props = {
     }
 };
 
-it ('lists the books', (done) => {
+it ('lists the books', async () => {
     render(<BookSelector {...props} />);
-    setTimeout(() => {
-        expect(screen.getAllByRole('checkbox')).toHaveLength(24);
-        done();
-    }, 20);
+    const checkboxes = await screen.findAllByRole('checkbox');
+
+    expect(checkboxes).toHaveLength(24);
 });
