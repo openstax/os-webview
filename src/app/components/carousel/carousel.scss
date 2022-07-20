@@ -17,16 +17,15 @@
     }
 
     .frame-changer {
-        // @include wider-than($phone-max) {
         align-items: center;
         background-color: rgba(ui-color(black), 0.4);
         display: flex;
         height: 7rem;
         justify-content: center;
+        min-width: 4rem;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: 4rem;
 
         .hover-text {
             display: none;
