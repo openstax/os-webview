@@ -2,11 +2,8 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import TeamLoader from '~/pages/team/team';
 
-it('creates with a big chunk of data', (done) => {
+it('creates with a big chunk of data', async () => {
     render(<TeamLoader />);
-    setTimeout(() => {
-        expect(screen.getByRole('navigation'));
-        expect(screen.queryAllByRole('heading').length).toBeGreaterThan(3);
-        done();
-    }, 40);
+    expect(await screen.findByRole('navigation'));
+    expect(screen.queryAllByRole('heading').length).toBeGreaterThan(3);
 });

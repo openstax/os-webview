@@ -52,7 +52,8 @@ export function MainBlogPage() {
     );
 }
 
-function ArticlePage() {
+// Export so it can be tested
+export function ArticlePage() {
     const {slug} = useParams();
     const [articleData, setArticleData] = React.useState();
 

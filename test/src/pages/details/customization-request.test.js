@@ -9,4 +9,6 @@ const data = transformData(rawData);
 test('shows the form', () => {
     render(<CustomizationForm model={data} />)
     expect(screen.getByRole('form')).not.toBeNull();
+    expect(screen.getAllByRole('textbox')).toHaveLength(2);
+    expect(screen.getAllByRole('button')).toHaveLength(1);
 });

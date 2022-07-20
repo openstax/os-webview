@@ -61,52 +61,43 @@ function studentModels(resDelta, userDelta={}) {
     ];
 }
 
-test('handles unlocked instructor resources', (done) => {
+async function getLinkTextContent() {
+
+}
+
+test('handles unlocked instructor resources', async () => {
     render(<LangWrapResourceBoxes models={instructorModels({})} />);
-    setTimeout(() => {
-        expect(screen.getByRole('heading').textContent).toBe(payload.heading);
-        expect(screen.getAllByText('a description')).toHaveLength(1);
-        expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
-        done();
-    }, 20);
+    expect((await screen.findByRole('heading')).textContent).toBe(payload.heading);
+    expect(screen.getAllByText('a description')).toHaveLength(1);
+    expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
 });
 
-test('handles locked instructor resources', (done) => {
+test('handles locked instructor resources', async () => {
     render(<LangWrapResourceBoxes models={instructorModels({resourceUnlocked: false})} />);
-
-    setTimeout(() => {
-        expect(screen.getByRole('link').textContent).toBe('Login to unlock');
-        done();
-    }, 20);
+    expect((await screen.findByRole('link')).textContent).toBe('Login to unlock');
 });
 
-test('allows instructors access to locked resources', (done) => {
+test('allows instructors access to locked resources', async () => {
     const models = instructorModels(
         {resourceUnlocked: false},
         {isInstructor: true}
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    setTimeout(() => {
-        expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
-        done();
-    }, 20);
+    expect((await screen.findByRole('link')).textContent).toBe(resourceData.linkText);
 });
 
-test('handles locked student resources', (done) => {
+test('handles locked student resources', async () => {
     const models = studentModels(
         {resourceUnlocked: false},
         {isStudent: false, isInstructor: false}
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    setTimeout(() => {
-        expect(screen.getByRole('link').textContent).toBe('Login to unlock');
-        done();
-    }, 20);
+    expect((await screen.findByRole('link')).textContent).toBe('Login to unlock');
 });
 
-test('allows students access to locked resources', (done) => {
+test('allows students access to locked resources', async () => {
     const models = studentModels(
         {},
         {
@@ -116,13 +107,10 @@ test('allows students access to locked resources', (done) => {
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    setTimeout(() => {
-        expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
-        done();
-    }, 20);
+    expect((await screen.findByRole('link')).textContent).toBe(resourceData.linkText);
 });
 
-test('allows instructors access to locked student resources', (done) => {
+test('allows instructors access to locked student resources', async () => {
     const models = studentModels({
     },
     {
@@ -131,15 +119,13 @@ test('allows instructors access to locked student resources', (done) => {
     });
 
     render(<LangWrapResourceBoxes models={models} />);
-    setTimeout(() => {
-        const link = screen.getByRole('link');
-        expect(link.textContent).toBe(resourceData.linkText);
-        expect(link.querySelector('.fa-download')).toBeTruthy();
-        done();
-    }, 20);
+    const link = await screen.findByRole('link');
+
+    expect(link.textContent).toBe(resourceData.linkText);
+    expect(link.href).toMatch('/download');
 });
 
-test('understands external links', (done) => {
+test('understands external links', async () => {
     const models = studentModels({
         linkDocumentUrl: null,
         linkExternal: 'http://example.com/external_link'
@@ -150,9 +136,5 @@ test('understands external links', (done) => {
     });
 
     render(<LangWrapResourceBoxes models={models} />);
-    setTimeout(() => {
-        const link = screen.getByRole('link');
-        expect(link.textContent).toBe(resourceData.linkText);
-        done();
-    }, 20);
+    expect((await screen.findByRole('link')).textContent).toBe(resourceData.linkText);
 });

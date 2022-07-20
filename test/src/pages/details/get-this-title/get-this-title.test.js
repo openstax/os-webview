@@ -27,47 +27,43 @@ function GTTinContext() {
     );
 }
 
-test('handles Print Copy dialog', (done) => {
+test('handles Print Copy dialog', async () => {
     render(<GTTinContext />);
-    setTimeout(() => {
-        const options = screen.getAllByRole('link');
-        const printOption = options.filter((opt) => opt.textContent === 'Order a print copy');
-
-        expect(options).toHaveLength(3);
-        expect(printOption).toHaveLength(0);
-        done();
-    }, 20);
+    await screen.findByText('Order a print copy');
 });
-// TODO The rest of this :(
-// test('handles hiding and expanding non-preferred formats', (done) => {
-//     render(<GetThisTitle model={model} tocState={false} />);
-//     setTimeout(() => {
-//         const options = screen.getAllByRole('link');
-//         const expandLink = options[options.length - 1];
-//
-//         expect(options).toHaveLength(4);
-//         userEvent.click(expandLink);
-//         expect(options).toHaveLength(5);
-//         userEvent.click(expandLink);
-//         expect(options).toHaveLength(4);
-//         done();
-//     }, 0);
-// });
-// test('respects enable_study_edge flag', () => {
-//     const modelWithStudyEdge = Object.assign({}, model, {enableStudyEdge: true});
-//     const seWrapper = makeMountRender(GetThisTitle, {
-//         model: modelWithStudyEdge,
-//         tocState: false
-//     })();
-//     const findStudyEdgeOption = (w) =>
-//         w.find('.option').filterWhere((opt) => opt.text() === 'Download the app');
-//
-//     expect(findStudyEdgeOption(wrapper)).toHaveLength(0);
-//     expect(findStudyEdgeOption(seWrapper)).toHaveLength(1);
-// });
-// test('does the callout for Rex book', () => {
-//     const callout = wrapper.find('.callout');
-//
-//     expect(callout).toHaveLength(1);
-//     expect(callout.text()).toMatch('Recommended');
-// });
+
+async function expectOptions(value) {
+    const options = await screen.findAllByRole('link');
+    const expandLink = options[options.length - 1];
+
+    expect(options).toHaveLength(value);
+    userEvent.click(expandLink);
+}
+
+test('handles hiding and expanding non-preferred formats', async () => {
+    render(<GTTinContext />);
+
+    await screen.findByText('Order a print copy');
+    let options = screen.queryAllByRole('link');
+    let toggleLink = options.pop();
+
+    expect(options).toHaveLength(3);
+
+    userEvent.click(toggleLink);
+    await screen.findByText('See 1 fewer option');
+    options = screen.queryAllByRole('link');
+    toggleLink = options.pop();
+    expect(options).toHaveLength(4);
+
+    userEvent.click(toggleLink);
+    await screen.findByText('+ 1 more option...');
+    options = screen.queryAllByRole('link');
+    toggleLink = options.pop();
+    expect(options).toHaveLength(3);
+});
+
+test('does the callout for Rex book', async () => {
+    render(<GTTinContext />);
+
+    await screen.queryAllByText('Recommended');
+});

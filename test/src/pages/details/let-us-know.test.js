@@ -20,18 +20,11 @@ function WrapComponent({children}) {
     );
 }
 
-test('handles English title', (done) => {
+test('handles English title', async () => {
     render(<WrapComponent><LetUsKnow title={englishTitle} /></WrapComponent>);
-    setTimeout(() => {
-        expect(screen.getByText('Using this book? Let us know.'));
-        done();
-    }, 20);
+    await screen.findByText('Using this book? Let us know.');
 });
-test('handles Polish title', (done) => {
+test('handles Polish title', async () => {
     render(<WrapComponent><LetUsKnow title={polishTitle} /></WrapComponent>);
-
-    setTimeout(() => {
-        expect(screen.getByText('Korzystasz z tej książki? Daj nam znać.'));
-        done();
-    }, 20);
+    await screen.findByText('Korzystasz z tej książki? Daj nam znać.');
 });
