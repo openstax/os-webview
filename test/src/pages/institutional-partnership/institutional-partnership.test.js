@@ -1,10 +1,14 @@
+import React from 'react';
 import InstitutionalPartnership from '~/pages/institutional-partnership/institutional-partnership';
-import instanceReady from '../../../helpers/instance-ready';
+import {render, screen} from '@testing-library/preact';
 
 describe('InstitutionalPartnership', () => {
-    it('creates', () => {
-        const {instance, ready} = instanceReady(InstitutionalPartnership);
+    it('creates', async () => {
+        render(
+            <InstitutionalPartnership />
+        );
 
-        expect(instance).toBeTruthy();
+        await screen.findByText('About the program');
+        expect(screen.queryAllByRole('link')).toHaveLength(2);
     });
 });
