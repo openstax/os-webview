@@ -1,5 +1,4 @@
 import React, {useRef} from 'react';
-import usePartnerContext from '../partner-context';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import analyticsEvents from '../../analytics-events';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -37,9 +36,12 @@ function PartnerLink({partnerUrl, partnerLinkText}) {
 }
 
 export default function Synopsis({model, icon, partnerLinkProps}) {
-    const {verifiedFeatures, tags} = model;
+    const {verifiedFeatures, tags, title: partnerName, rating, ratingCount: reviewCount} = model;
     const ref = useRef();
-    const {partnerName, summary: {rating}, reviewCount} = usePartnerContext();
+
+    if (!partnerName) {
+        return null;
+    }
 
     return (
         <section className="synopsis" ref={ref}>

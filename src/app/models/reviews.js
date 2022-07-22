@@ -1,4 +1,4 @@
-import {useState, useLayoutEffect} from 'react';
+import {useState, useLayoutEffect, useCallback} from 'react';
 import cmsFetch, {cmsPost} from './cmsFetch';
 import $ from '~/helpers/$';
 import meanBy from 'lodash/meanBy';
@@ -18,27 +18,31 @@ function recalculateRatings(data) {
 
 function usePartnerData(id) {
     const [data, setData] = useState();
+    const update = useCallback(
+        (review) => {
+            const replaceIndex = data.reviews.findIndex((item) => item.id === review.id);
 
-    function refresh() {
-        cmsFetch(`salesforce/partners/${id}`)
-            .then($.camelCaseKeys)
-            .then(recalculateRatings)
-            .then(setData);
-    }
+            if (replaceIndex >= 0) {
+                data.reviews.splice(replaceIndex, 1, review);
+            } else {
+                data.reviews.push(review);
+            }
+            recalculateRatings(data);
+            setData({...data});
+        },
+        [data]
+    );
 
-    function update(review) {
-        const replaceIndex = data.reviews.findIndex((item) => item.id === review.id);
+    useLayoutEffect(
+        () => {
+            cmsFetch(`salesforce/partners/${id}`)
+                .then($.camelCaseKeys)
+                .then(recalculateRatings)
+                .then(setData);
+        },
+        [id]
+    );
 
-        if (replaceIndex >= 0) {
-            data.reviews.splice(replaceIndex, 1, review);
-        } else {
-            data.reviews.push(review);
-        }
-        recalculateRatings(data);
-        setData({...data});
-    }
-
-    useLayoutEffect(refresh, [id]);
     return [data, update];
 }
 

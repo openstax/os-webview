@@ -110,6 +110,10 @@ function ReviewPrompt({uuid, hasWrittenReview, status, updated}) {
 function ReviewsPage() {
     const {uuid} = useUserContext();
     const {reviews} = usePartnerContext();
+
+    if (!reviews) {
+        return null;
+    }
     const reviewModels = reviews
         .map((r) => ({
             initials: r.submittedByName.replace(/[^A-Z]/g, '').substr(0, 2),

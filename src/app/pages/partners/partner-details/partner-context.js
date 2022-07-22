@@ -5,21 +5,20 @@ import useDialogContext from '../results/dialog-context';
 // eslint-disable-next-line complexity
 function useContextValue({id: partnerId, model}) {
     const [ratings, postRating] = useReviews(partnerId);
-    const [partnerName, summary, reviews] = ratings ?
-        [
-            ratings.partnerName,
-            {
-                count: ratings.ratingCount,
-                rating: ratings.averageRating.ratingAvg
-            },
-            ratings.reviews
-        ] : [
-            null,
-            {},
-            []
-        ];
-    const reviewCount = reviews.reduce((a, b) => a + (b.status === 'Approved' ? 1 : 0), 0);
     const {title, setTitle} = useDialogContext();
+
+    if (!ratings) {
+        return {};
+    }
+    const [partnerName, summary, reviews] = [
+        ratings.partnerName,
+        {
+            count: ratings.ratingCount,
+            rating: ratings.averageRating.ratingAvg
+        },
+        ratings.reviews
+    ];
+    const reviewCount = reviews.reduce((a, b) => a + (b.status === 'Approved' ? 1 : 0), 0);
     const showInfoRequestForm = title !== '';
     const toggleForm = () => setTitle(title ? '' : 'Request information');
 
