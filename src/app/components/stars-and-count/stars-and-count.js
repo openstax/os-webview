@@ -49,7 +49,7 @@ export function Stars({stars}) {
     );
 }
 
-export default function StarsAndCount({rating, count=0, showNumber=false}) {
+export default function StarsAndCount({rating=0, count=0, showNumber=false}) {
     const s = count !== 1 ? 's' : '';
 
     return (
