@@ -76,10 +76,10 @@ function Main() {
 function App() {
     // BrowserRouter has to include everything that uses useLocation
     return (
-        <UserContextProvider>
-            <LanguageContextProvider>
-                <SubjectCategoryContextProvider>
-                    <FlagContextProvider>
+        <FlagContextProvider>
+            <UserContextProvider>
+                <LanguageContextProvider>
+                    <SubjectCategoryContextProvider>
                         <BrowserRouter>
                             <div id="microsurvey">
                                 <Microsurvey />
@@ -97,10 +97,10 @@ function App() {
                                 <Footer />
                             </footer>
                         </BrowserRouter>
-                    </FlagContextProvider>
-                </SubjectCategoryContextProvider>
-            </LanguageContextProvider>
-        </UserContextProvider>
+                    </SubjectCategoryContextProvider>
+                </LanguageContextProvider>
+            </UserContextProvider>
+        </FlagContextProvider>
     );
 }
 

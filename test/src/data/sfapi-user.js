@@ -1,5 +1,5 @@
 export default {
-    opportunity: [ ],
+    opportunities: [ ],
     contact: {
         id: 18009,
         salesforce_id: "0037h00000SEXNqAAP",

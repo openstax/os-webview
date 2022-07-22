@@ -1,7 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {useMyOpenStaxIsAvailable} from '~/pages/my-openstax/store/user';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from '../dropdown/dropdown';
@@ -32,7 +31,8 @@ function TutorMenuItemIfUser({userModel}) {
 }
 
 function AccountItem() {
-    const mosIsAvailable = useMyOpenStaxIsAvailable();
+    const {myOpenStaxUser} = useUserContext();
+    const mosIsAvailable = !myOpenStaxUser.error;
 
     return (
         mosIsAvailable ?

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import useDialog from '~/pages/my-openstax/dialog/dialog';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import useInstitutions from '~/pages/my-openstax/store/use-institutions';
-import sfApiFetch from '~/pages/my-openstax/store/sfapi';
+import sfApiFetch from '~/models/sfapi';
 import {LabeledElement, FilteringSelect} from '~/components/form-elements/form-elements';
 import { AddButton } from '../../../common';
 import './edit-institutions.scss';

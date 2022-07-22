@@ -1,11 +1,12 @@
-import { useStoreon } from 'storeon/preact';
+import useMyOpenStaxContext from './context';
+import useUserContext from '~/contexts/user';
 import {useState, useEffect} from 'react';
-import {sfApiPost} from './sfapi';
+import {sfApiPost} from '~/models/sfapi';
 import uniq from 'lodash/uniq';
 import orderBy from 'lodash/orderBy';
 
 function useUserSchoolIds() {
-    const {user} = useStoreon('user');
+    const {myOpenStaxUser: user} = useUserContext();
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -49,12 +50,12 @@ function updatePrimary(contactId, schoolId) {
 }
 
 function useLookedupSchools(ids) {
-    const {schools, dispatch} = useStoreon('schools');
+    const {schools, decode} = useMyOpenStaxContext();
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        dispatch('school-lookup/decode', ids);
-    }, [ids, dispatch]);
+        decode(ids);
+    }, [ids, decode]);
 
     useEffect(() => {
         setData(ids.map((id) => schools[id]).filter((x) => x));
@@ -70,15 +71,15 @@ function useLookedupSchools(ids) {
 export default function useInstitutions() {
     const {primarySchoolId, schoolIds=[]} = useUserSchoolIds();
     const institutions = useLookedupSchools(schoolIds);
-    const {user, dispatch} = useStoreon('user');
-    const contactId = user?.contact?.salesforceId;
+    const {myOpenStaxUser, updateMyOpenStaxUser} = useUserContext();
+    const contactId = myOpenStaxUser?.contact?.salesforceId;
 
     return {
         primarySchoolId,
         institutions,
         save(newSchoolIds) {
             return saveSchools(contactId, schoolIds, newSchoolIds)
-                .then(dispatch('user/fetch'));
+                .then(updateMyOpenStaxUser);
         },
         setPrimary(id) {
             if (id !== primarySchoolId) {

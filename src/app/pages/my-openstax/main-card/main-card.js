@@ -3,7 +3,7 @@ import Header from './header/header';
 import Navigator from './navigator/navigator';
 import {NavigationContextProvider} from './navigator/navigation-context';
 import MainPanel, {targetIds} from './main-panel/main-panel';
-import { useStoreon } from 'storeon/preact';
+import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
 import './main-card.scss';
 
@@ -20,7 +20,7 @@ function NotLoggedIn() {
 }
 
 export default function MainCard() {
-    const {user} = useStoreon('user');
+    const {myOpenStaxUser: user} = useUserContext();
 
     if (user.error) {
         return (<NotLoggedIn />);

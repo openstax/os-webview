@@ -1,5 +1,5 @@
-import { useStoreon } from 'storeon/preact';
-import {sfApiPost} from './sfapi';
+import useUserContext from '~/contexts/user';
+import {sfApiPost} from '~/models/sfapi';
 import useAccount from '~/pages/my-openstax/store/use-account';
 
 /*
@@ -38,7 +38,7 @@ function adoptionsFromOpportunities(opportunities) {
 }
 
 export default function useAdoptions() {
-    const {user, dispatch} = useStoreon('user');
+    const {myOpenStaxUser, updateMyOpenStaxUser} = useUserContext();
     const {accountsId, contactId} = useAccount();
 
     function add({book, students, schools, adoptionStatus}) {
@@ -60,7 +60,7 @@ export default function useAdoptions() {
             )
         );
 
-        Promise.all(promises).then(() => dispatch('user/fetch'));
+        Promise.all(promises).then(updateMyOpenStaxUser);
     }
 
     // An adoption can have multiple schools, and some of them may be new
@@ -88,11 +88,13 @@ export default function useAdoptions() {
                 add({book, students, schools, adoptionStatus});
         });
 
-        Promise.all(promises).then(() => dispatch('user/fetch'));
+        Promise.all(promises).then(updateMyOpenStaxUser);
     }
 
+    console.info('opportunity should be iterable in here', myOpenStaxUser);
+
     return {
-        adoptions: adoptionsFromOpportunities(user.opportunity),
+        adoptions: adoptionsFromOpportunities(myOpenStaxUser.opportunities),
         add,
         update
     };

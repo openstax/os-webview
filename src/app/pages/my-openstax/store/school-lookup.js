@@ -1,4 +1,4 @@
-import sfApiFetch from './sfapi';
+import sfApiFetch from '~/models/sfapi';
 import uniq from 'lodash/uniq';
 
 // Takes a school entry from sfapi, returns a standard school

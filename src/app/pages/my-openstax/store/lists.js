@@ -1,4 +1,4 @@
-import sfApiFetch from './sfapi';
+import sfApiFetch from '~/models/sfapi';
 import $ from '~/helpers/$';
 
 export default function (store) {
