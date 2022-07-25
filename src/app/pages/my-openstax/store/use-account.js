@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import { useStoreon } from 'storeon/preact';
 import useUserContext from '~/contexts/user';
 import orderBy from 'lodash/orderBy';
 
@@ -22,8 +21,7 @@ const facultyRoleLookup = {
     Info comes from user.contact
 */
 export default function useAccount() {
-    const {user} = useStoreon('user');
-    const {userModel} = useUserContext();
+    const {userModel, myOpenStaxUser: user} = useUserContext();
     const [value, setValue] = useState({});
 
     if (!user || user.error) {
@@ -31,7 +29,7 @@ export default function useAccount() {
     }
 
     useEffect(() => {
-        if (!userModel || !user) {
+        if (!userModel || !user?.contact) {
             return;
         }
         const {accountsModel} = userModel;

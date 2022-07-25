@@ -1,9 +1,6 @@
 import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import cookie from '~/helpers/cookie';
-import { createStoreon } from 'storeon';
-import { StoreContext } from 'storeon/preact';
-import user from '~/pages/my-openstax/store/user';
 import useAccount from '~/pages/my-openstax/store/use-account';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useHistory} from 'react-router-dom';
@@ -90,7 +87,7 @@ function CustomDialog({data, welcomeDone}) {
     );
 }
 
-function Welcome() {
+export default function Welcome() {
     const [showWelcome, welcomeDone] = React.useReducer(
         () => cookie.setKey('hasBeenWelcomed'),
         !cookie.hash.hasBeenWelcomed
@@ -108,15 +105,5 @@ function Welcome() {
 
     return (
         <CustomDialog data={data} welcomeDone={welcomeDone} />
-    );
-}
-
-export default function WelcomeStoreWrapper() {
-    const store = createStoreon([user]);
-
-    return (
-        <StoreContext.Provider value={store}>
-            <Welcome />
-        </StoreContext.Provider>
     );
 }

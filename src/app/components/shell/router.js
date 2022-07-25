@@ -15,7 +15,7 @@ import analytics from '~/helpers/analytics';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import $ from '~/helpers/$';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {useMyOpenStaxUser} from '~/pages/my-openstax/store/user';
+import useUserContext from '~/contexts/user';
 import useRouterContext, {RouterContextProvider} from './router-context';
 
 const FOOTER_PAGES = [
@@ -185,9 +185,9 @@ function ImportedPage({name}) {
 }
 
 function useHomeOrMyOpenStax() {
-    const user = useMyOpenStaxUser();
+    const {myOpenStaxUser} = useUserContext();
 
-    return user.error ? 'home' : 'my-openstax';
+    return myOpenStaxUser.error ? 'home' : 'my-openstax';
 }
 
 function TopLevelPage() {

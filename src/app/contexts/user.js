@@ -1,6 +1,7 @@
-import {useEffect, useMemo} from 'react';
+import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {useUserModel} from '~/models/usermodel';
+import useMyOpenStaxUser from '~/models/myopenstax-user';
 import debounce from 'lodash/debounce';
 
 const debouncedDebug = debounce((...args) => console.debug(...args), 100);
@@ -40,20 +41,32 @@ function getUserStatus(user={}) {
 
 function useContextValue() {
     const model = useUserModel();
-    const userStatus = getUserStatus(model);
-    const value = useMemo(
+    const userStatus = React.useMemo(
+        () => getUserStatus(model),
+        [model]
+    );
+    const isVerified = model?.accountsModel?.faculty_status === 'confirmed_faculty';
+    const [fetchTime, updateMyOpenStaxUser] = React.useReducer(
+        () => (Date.now()),
+        Date.now()
+    );
+    const myOpenStaxUser = useMyOpenStaxUser(isVerified, fetchTime);
+    const value = React.useMemo(
         () => model?.last_name ?
             {
                 accountId: model.id,
                 userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`,
                 userModel: model,
                 uuid: model.uuid,
-                userStatus
-            } : {userStatus},
-        [model, userStatus]
+                isVerified,
+                userStatus,
+                myOpenStaxUser,
+                updateMyOpenStaxUser
+            } : {userStatus, myOpenStaxUser},
+        [model, userStatus, isVerified, myOpenStaxUser]
     );
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (model && model.id) {
             pi('identify_client', model.id);
         }

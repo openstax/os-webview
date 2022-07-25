@@ -38,7 +38,7 @@ const accountsModel = {
         //     using_openstax: false,
         //     salesforce_contact_id: '0037h00000SEXNqAAP',
         //     // May be confirmed_faculty, rejected_by_sheerid, incomplete_signup
-        //     faculty_status: 'incomplete_signup',
+        //     faculty_status: 'confirmed_faculty',
         //     is_newflow: true,
         //     is_instructor_verification_stale: false,
         //     needs_complete_edu_profile: false,
