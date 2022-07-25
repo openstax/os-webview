@@ -49,7 +49,7 @@ export default function ErrataSummaryLoader() {
     const book = new window.URLSearchParams(window.location.search).get('book');
     const slug = `errata/?book_title=${book}` +
         '&is_assessment_errata__not=Yes&archived=False&status__not=New' +
-        '&status__not=Anthony%20Editorial%20Review';
+        '&status__not=OpenStax%20Editorial%20Review';
 
     return (
         <main className="errata-summary page">
