@@ -236,23 +236,30 @@ function matchesFilter(filter, item) {
 }
 
 export default function Table({data, filter}) {
-    const details = data.map((item) => {
-        const displayStatus = getDisplayStatus(item);
+    const details = React.useMemo(
+        () => data.map(
+            (item) => {
+                const displayStatus = getDisplayStatus(item);
 
-        return {
-            date: new Date(item.created).toLocaleDateString(),
-            source: item.resource === 'Other' ? item.resourceOther : item.resource,
-            displayStatus: displayStatus.status,
-            barStatus: displayStatus.barStatus,
-            errorType: item.errorType === 'Other' ? item.errorTypeOther : item.errorType,
-            id: item.id,
-            location: [item.location, item.additionalLocationInformation]
-                .filter((loc) => loc).join('; '),
-            detail: item.detail
-        };
-    })
-        .sort((a, b) => b.id - a.id);
-    const filteredDetails = details.filter((item) => matchesFilter(filter, item));
+                return {
+                    date: new Date(item.created).toLocaleDateString(),
+                    source: item.resource === 'Other' ? item.resourceOther : item.resource,
+                    displayStatus: displayStatus.status,
+                    barStatus: displayStatus.barStatus,
+                    errorType: item.errorType === 'Other' ? item.errorTypeOther : item.errorType,
+                    id: item.id,
+                    location: [item.location, item.additionalLocationInformation]
+                        .filter((loc) => loc).join('; '),
+                    detail: item.detail
+                };
+            }
+        ).sort((a, b) => b.id - a.id),
+        [data]
+    );
+    const filteredDetails = React.useMemo(
+        () => details.filter((item) => matchesFilter(filter, item)),
+        [details, filter]
+    );
 
     return (
         <div className="boxed">
