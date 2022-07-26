@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.section-header {
+    @include set-font(h4);
+
+    border-bottom: thin solid ui-color(form-border);
+
+    .section-subhead {
+        @include set-font(body-regular);
+
+        &::before {
+            content: '|';
+            margin: 0 1rem;
+        }
+    }
+}

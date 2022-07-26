@@ -1,0 +1,42 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#explore-collections {
+    margin-top: 2rem;
+    width: 100%;
+
+    .cards {
+        display: flex;
+        flex-shrink: 0;
+        gap: 3rem;
+        margin-top: 2rem;
+
+        .card {
+            @include card();
+
+            color: inherit;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            width: 25rem;
+
+            .centered-image {
+                display: flex;
+                justify-content: center;
+                padding-bottom: 1rem;
+                width: 100%;
+
+                img {
+                    max-height: 14rem;
+                    max-width: 100%;
+                }
+            }
+
+            .name {
+                @include set-font(body-large);
+
+                font-weight: bold;
+                text-align: center;
+            }
+        }
+
+    }
+}

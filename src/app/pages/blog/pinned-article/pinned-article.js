@@ -1,9 +1,10 @@
 import React from 'react';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import useBlogContext from '../blog-context';
+import SectionHeader from '../section-header/section-header';
 import './pinned-article.scss';
 
-export default function PinnedArticle() {
+export default function PinnedArticle({subhead}) {
     const {pinnedStory, setPath} = useBlogContext();
 
     if (!pinnedStory) {
@@ -13,7 +14,7 @@ export default function PinnedArticle() {
 
     return (
         <React.Fragment>
-            <h2 className="section-header">Featured blog post</h2>
+            <SectionHeader head="Featured blog post" subhead={subhead} />
             <div className="pinned-article">
                 <ArticleSummary {...model} HeadTag='h3' />
             </div>
