@@ -191,7 +191,7 @@ export default function PublicationInfo({model, url, polish}) {
         intl.formatMessage({id: 'pubInfo.pub.paper'}),
         intl.formatMessage({id: 'pubInfo.pub.dig'})
     ];
-    const iBooksLabel = model.ibookVolume2Isbn10 || model.ibookVolume2isbn13 ?
+    const iBooksLabel = model.ibookVolume2Isbn10 || model.ibookVolume2Isbn13 ?
         intl.formatMessage({id: 'getit.ibooks.part1'}) : 'iBooks';
     const labelPart2 = intl.formatMessage({id: 'getit.ibooks.part2'});
 
@@ -233,7 +233,7 @@ export default function PublicationInfo({model, url, polish}) {
                 label={iBooksLabel}
                 tag="ibook"
             />
-            <IsbnInfo model={model} label={labelPart2} tag="ibook" />
+            <IsbnInfo model={model} label={labelPart2} tag="ibookVolume2" />
             <LicenseInfo
                 name={model.licenseName}
                 text={model.licenseText}
