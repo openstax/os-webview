@@ -192,7 +192,7 @@ export default function PublicationInfo({model, url, polish}) {
         intl.formatMessage({id: 'pubInfo.pub.dig'})
     ];
     const iBooksLabel = model.ibookVolume2Isbn10 || model.ibookVolume2isbn13 ?
-        intl.formatMesssage({id: 'getit.ibooks.part1'}) : 'iBooks';
+        intl.formatMessage({id: 'getit.ibooks.part1'}) : 'iBooks';
     const labelPart2 = intl.formatMessage({id: 'getit.ibooks.part2'});
 
     useEffect(() => {
