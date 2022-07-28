@@ -18,6 +18,7 @@ import flags from '../src/data/flags';
 import footerData from '../src/data/footer';
 import formHeadings from '../src/data/form-headings';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
+import newSubjectsData from '../src/data/new-subjects';
 import openstaxHomepageData from '../src/data/openstax-homepage';
 import osNewsData from '../src/data/openstax-news-detail';
 import osTutorData from '../src/data/openstax-tutor';
@@ -62,6 +63,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isFormHeading = (/form-headings/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isHomepage = (/openstax-homepage/).test(args[0]);
+    const isNewSubjects = args[0].includes('new-subjects');
     const isOsNews = (/openstax-news/).test(args[0]);
     const isOsTutor = (/pages\/openstax-tutor/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
@@ -120,6 +122,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = institutionalPartnershipData;
             } else if (isSubjects) {
                 payload = subjectData;
+            } else if (isNewSubjects) {
+                payload = newSubjectsData;
             } else if (isAlgebra) {
                 payload = algebraData;
             } else if (isBiology) {
@@ -173,7 +177,11 @@ global.fetch = jest.fn().mockImplementation((...args) => {
             } else if (isImage) {
                 // ignore
             } else {
-                console.warn("rejecting", args);
+                console.warn(
+                    '*************\n' +
+                    `*** rejecting ${args[0]}\n` +
+                    '*************'
+                );
             }
             resolve({
                 ok: true,
