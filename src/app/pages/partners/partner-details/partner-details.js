@@ -95,6 +95,11 @@ function Overview({model, icon}) {
         books, images, videos, title: partnerName
     } = model;
     const titles = useRealTitles(books);
+    const {toggleForm} = usePartnerContext();
+
+    if (!toggleForm) {
+        return null;
+    }
 
     // For TESTING
     // if (images.length < 6) {
