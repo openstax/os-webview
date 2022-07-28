@@ -30,12 +30,14 @@ function GeneralPage({html}) {
 }
 
 export function GeneralPageFromSlug({slug, fallback}) {
-    const html = useTextFromSlug(slug);
+    const {head, text: html} = useTextFromSlug(slug);
     const {fail} = useRouterContext();
 
     React.useEffect(() => {
-        $.setPageTitleAndDescription();
-    }, []);
+        if (head) {
+            $.setPageTitleAndDescription(head.title, head.description);
+        }
+    }, [head]);
 
     if (html instanceof Error) {
         fallback ? fallback() : fail(`Could not load general page from ${slug}`);

@@ -118,9 +118,9 @@ $.setPageTitleAndDescriptionFromBookData = (data) => {
     );
 };
 
-$.setPageTitleAndDescription = (title, description) => {
+$.setPageTitleAndDescription = (title='OpenStax', description) => {
     $.setPageDescription(description);
-    document.title = title ? `${title} - OpenStax` : 'OpenStax';
+    document.title = title.includes('OpenStax') ? title : `${title} - OpenStax`;
 };
 
 const canonicalLinkHelpers = {

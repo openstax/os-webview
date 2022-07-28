@@ -123,6 +123,7 @@ export function usePageData(fpdParams) {
 
 export function useTextFromSlug(slug) {
     const [text, setText] = React.useState();
+    const [head, setHead] = React.useState();
 
     React.useEffect(() => {
         const url = urlFromSlug(slug);
@@ -135,6 +136,10 @@ export function useTextFromSlug(slug) {
                         const newDoc = parser.parseFromString(pageHtml, 'text/html');
 
                         setText(newDoc.body.innerHTML);
+                        setHead({
+                            title: newDoc.head.querySelector('title').textContent,
+                            description: newDoc.head.querySelector('[name="description"]').getAttribute('content')
+                        });
                     });
                 } else {
                     setText(new Error(r?.statusText || `Failed to load ${slug}`));
@@ -143,5 +148,5 @@ export function useTextFromSlug(slug) {
             .catch((err) => setText(err));
     }, [slug]);
 
-    return text;
+    return {head, text};
 }
