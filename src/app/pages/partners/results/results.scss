@@ -10,6 +10,10 @@
         padding: 0 $normal-margin 6rem;
     }
 
+    @include wider-than($phone-max) {
+        min-height: 60rem;
+    }
+
     h2 {
         margin: 0;
     }
