@@ -91,8 +91,6 @@ export default function useAdoptions() {
         Promise.all(promises).then(updateMyOpenStaxUser);
     }
 
-    console.info('opportunity should be iterable in here', myOpenStaxUser);
-
     return {
         adoptions: adoptionsFromOpportunities(myOpenStaxUser.opportunities),
         add,

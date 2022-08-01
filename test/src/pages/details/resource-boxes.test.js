@@ -1,9 +1,6 @@
 import React from 'react';
-import {MemoryRouter} from 'react-router-dom';
 import {render, screen} from '@testing-library/preact';
-import {UserContextProvider} from '~/contexts/user';
-import {DetailsContextProvider} from '~/pages/details/context';
-import {LanguageContextProvider} from '~/contexts/language';
+import BookDetailsContext from './book-details-context';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/common/resource-box/resource-box';
 
@@ -28,15 +25,9 @@ const payload = {
 
 function LangWrapResourceBoxes({models}) {
     return (
-        <MemoryRouter initialEntries={["/details/books/college-algebra"]}>
-            <UserContextProvider>
-                <LanguageContextProvider>
-                    <DetailsContextProvider>
-                        <ResourceBoxes models={models} />
-                    </DetailsContextProvider>
-                </LanguageContextProvider>
-            </UserContextProvider>
-        </MemoryRouter>
+        <BookDetailsContext>
+            <ResourceBoxes models={models} />
+        </BookDetailsContext>
     )
 }
 
