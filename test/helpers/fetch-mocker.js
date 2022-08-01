@@ -27,6 +27,7 @@ import polishData from '../src/data/details-polish';
 import pressData from '../src/data/press';
 import pressArticleData from '../src/data/press-article';
 import printOrderData from '../src/data/print-order';
+import renewalData from '../src/data/renewal';
 import researchData from '../src/data/research';
 import rolesData from '../src/data/roles';
 import salesforceData from '../src/data/salesforce';
@@ -71,6 +72,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isPress = (/api\/press\/?$/).test(args[0]);
     const isPressArticle = (/api\/press\/./).test(args[0]);
     const isPrintOrder = (/pages\/print-order/).test(args[0]);
+    const isRenewal = args[0].includes('renewal?account_uuid');
     const isResearch = (/pages\/research/).test(args[0]);
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
@@ -148,6 +150,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = osTutorData;
             } else if (isBooksForAnalytics) {
                 payload = booksForAnalyticsData;
+            } else if (isRenewal) {
+                payload = renewalData;
             } else if (isResearch) {
                 payload = researchData;
             } else if (isRoles) {
