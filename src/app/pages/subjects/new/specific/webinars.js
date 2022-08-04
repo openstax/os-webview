@@ -34,17 +34,12 @@ export default function Webinars() {
     return (
         blurbs.length ?
             <CarouselSection
-                id="webinars" className="webinars"
                 heading={heading}
                 description={webinarDescription}
                 linkUrl={linkHref} linkText={linkText}
             >
                 {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
             </CarouselSection> :
-            <section id="webinars" className="webinars">
-                <div className="content">
-                    <h2>No webinars found (yet)</h2>
-                </div>
-            </section>
+            <h2>No webinars found (yet)</h2>
     );
 }

@@ -19,11 +19,9 @@ export default function LearnMore() {
     );
 
     return (
-        <section id="learn" className="learn-more">
-            <div className="content">
-                <h2>{osTextbookHeading}</h2>
-                <AccordionGroup items={accordionItems} noScroll />
-            </div>
-        </section>
+        <React.Fragment>
+            <h2>{osTextbookHeading}</h2>
+            <AccordionGroup items={accordionItems} noScroll />
+        </React.Fragment>
     );
 }

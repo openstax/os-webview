@@ -13,6 +13,10 @@
         gap: 3rem;
         flex-direction: column;
         text-align: center;
+
+        > * {
+            margin: 0;
+        }
     }
 
     .card {

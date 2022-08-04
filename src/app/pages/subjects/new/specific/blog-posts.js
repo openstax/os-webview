@@ -32,10 +32,6 @@ export default function BlogPosts() {
             >
                 {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
             </CarouselSection> :
-            <section id="blog-posts" className="blog-posts">
-                <div className="content">
-                    <h2>No blog entries found (yet)</h2>
-                </div>
-            </section>
+            <h2>No blog entries found (yet)</h2>
     );
 }

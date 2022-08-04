@@ -3,22 +3,20 @@ import Carousel from '~/components/carousel/carousel';
 import './carousel-section.scss';
 
 export default function CarouselSection({
-    id, className, heading, description, linkUrl, linkText, children
+    heading, description, linkUrl, linkText, children
 }) {
     return (
-        <section id={id} className={className}>
-            <div className="content">
-                <div className="top">
-                    <h2>{heading}</h2>
-                    <div>{description}</div>
-                </div>
-                <a className="btn primary" href={linkUrl}>
-                    {linkText}
-                </a>
-                <Carousel mobileSlider>
-                    {children}
-                </Carousel>
+        <React.Fragment>
+            <div className="top">
+                <h2>{heading}</h2>
+                <div>{description}</div>
             </div>
-        </section>
+            <a className="btn primary" href={linkUrl}>
+                {linkText}
+            </a>
+            <Carousel mobileSlider>
+                {children}
+            </Carousel>
+        </React.Fragment>
     );
 }

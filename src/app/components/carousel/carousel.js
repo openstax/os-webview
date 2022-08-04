@@ -44,7 +44,7 @@ function RightFrameChanger({frameNumber, frameCount, setFrameNumber, step=1, hov
     const hoverText = hoverTextThing ? `Next ${hoverTextThing}` : null;
 
     return (
-        destFrame < frameCount &&
+        destFrame < frameCount - 1 &&
             <FrameChanger
                 chevronDirection="right"
                 onClick={() => setFrameNumber(destFrame)}
@@ -62,7 +62,8 @@ function Carousel({
     const firstTimeRef = useRef(true);
     const wcx = useWindowContext();
     // How many whole items are in the viewport?
-    const step = React.useMemo(
+    // Not useMemo because it has to update when children render
+    const step = (
         () => {
             if (!ref.current) {
                 return Number(atATime);
@@ -76,14 +77,13 @@ function Carousel({
                 (i) => {
                     const {right} = i.getBoundingClientRect();
 
-                    return right - left < vpWidth;
+                    return right - left <= vpWidth;
                 }
             );
 
             return Math.max(Number(atATime), wholeItems.length);
-        },
-        [frameNumber, wcx.innerWidth, atATime] // eslint-disable-line react-hooks/exhaustive-deps
-    );
+        }
+    )();
 
     React.useLayoutEffect(() => {
         const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
