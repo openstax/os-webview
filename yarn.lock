@@ -7695,8 +7695,8 @@ path-type@^4.0.0:
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
 pattern-library@openstax/pattern-library:
-  version "1.3.0"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/95b7968f2e67fe2c0f1f891b80ea8bf8acf4c39c"
+  version "1.3.2"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/6eaf6a54ba68bc1ff259a409e83f50222b2e8dd1"
 
 pbf@^3.2.1:
   version "3.2.1"
