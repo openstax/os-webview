@@ -1,15 +1,17 @@
 import React from 'react';
 import CarouselSection from './components/carousel-section';
 import useSpecificSubjectContext from './context';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import './webinars.scss';
 
-
-function Card({title='*No title given', description, link: url}) {
-    const {webinarSectionWatchText: watchText} = useSpecificSubjectContext();
-
+function Card({
+    title='*No title given',
+    description,
+    registration_url: url,
+    registration_link_text: watchText
+}) {
     return (
         <div className="card">
             <h2>{title}</h2>
@@ -24,19 +26,25 @@ function Card({title='*No title given', description, link: url}) {
 
 export default function Webinars() {
     const {
+        title,
         webinarHeader: {content: {heading, webinarDescription, linkHref, linkText}}
     } = useSpecificSubjectContext();
-    const blurbs = [];
+    const blurbs = useDataFromSlug(`webinars/?subjects=${title}`) || [];
 
     return (
-        <CarouselSection
-            id="webinars" className="webinars"
-            heading={heading}
-            description={webinarDescription}
-            linkUrl={linkHref} linkText={linkText}
-        >
-            <a><h2>Blurbs should be queried here</h2></a>
-            {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
-        </CarouselSection>
+        blurbs.length ?
+            <CarouselSection
+                id="webinars" className="webinars"
+                heading={heading}
+                description={webinarDescription}
+                linkUrl={linkHref} linkText={linkText}
+            >
+                {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
+            </CarouselSection> :
+            <section id="webinars" className="webinars">
+                <div className="content">
+                    <h2>No webinars found (yet)</h2>
+                </div>
+            </section>
     );
 }

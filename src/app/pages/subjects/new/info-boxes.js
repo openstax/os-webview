@@ -20,7 +20,7 @@ function AboutBlurb({blurb: {image, heading, text: description}}) {
     );
 }
 
-export function InfoBoxes({infoBoxes}) {
+export function InfoBoxes({infoBoxes=[]}) {
     return (
         <section className="info-boxes">
             <div className="content">

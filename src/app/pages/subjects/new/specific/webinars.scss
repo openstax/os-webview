@@ -18,12 +18,17 @@
     .card {
         @extend %card;
 
-        h2 {
-            @include set-font(h4);
-        }
-
         background-color: ui-color(white);
+        display: flex;
+        flex-direction: column;
         min-width: 25rem;
         padding: 2rem;
+        row-gap: 2rem;
+
+        h2 {
+            @include set-font(h4);
+
+            margin: 0;
+        }
     }
 }

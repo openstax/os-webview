@@ -59,9 +59,31 @@ function Carousel({
 }) {
     const [frameNumber, setFrameNumber] = useState(initialFrame);
     const ref = useRef();
-    const step = Number(atATime);
     const firstTimeRef = useRef(true);
     const wcx = useWindowContext();
+    // How many whole items are in the viewport?
+    const step = React.useMemo(
+        () => {
+            if (!ref.current) {
+                return Number(atATime);
+            }
+            const {width: vpWidth} = ref.current.getBoundingClientRect();
+            const itemsFromCurrent = Array.from(
+                ref.current.querySelectorAll('.items > *')
+            ).slice(frameNumber);
+            const {left} = itemsFromCurrent[0].getBoundingClientRect();
+            const wholeItems = itemsFromCurrent.filter(
+                (i) => {
+                    const {right} = i.getBoundingClientRect();
+
+                    return right - left < vpWidth;
+                }
+            );
+
+            return Math.max(Number(atATime), wholeItems.length);
+        },
+        [frameNumber, wcx.innerWidth, atATime] // eslint-disable-line react-hooks/exhaustive-deps
+    );
 
     React.useLayoutEffect(() => {
         const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];

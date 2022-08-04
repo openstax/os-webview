@@ -9,6 +9,10 @@
         display: flex;
         flex-direction: column;
         gap: 6rem;
+
+        h2 {
+            text-align: center;
+        }
     }
 
     .top {
