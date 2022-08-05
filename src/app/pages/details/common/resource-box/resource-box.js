@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import linkHelper from '~/helpers/link';
 
 const settings = window.SETTINGS;
 
@@ -52,7 +53,7 @@ export function instructorResourceBoxPermissions(resourceData, userStatus, searc
     const encodedLocation = encodeLocation(search);
     const loginUrl = userStatus.userInfo?.id ?
         `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
-        `${process.env.API_ORIGIN}/oxauth/login/?next=${encodedLocation}`;
+        linkHelper.loginLink();
 
     return resourceBoxPermissions({
         resourceData,
@@ -62,18 +63,17 @@ export function instructorResourceBoxPermissions(resourceData, userStatus, searc
 }
 
 // Utility function for student resources
-export function studentResourceBoxPermissions(resourceData, userStatus, search) {
+export function studentResourceBoxPermissions(resourceData, userStatus) {
     const resourceStatus = () => {
         if (resourceData.resourceUnlocked || userStatus.isStudent || userStatus.isInstructor) {
             return 'unlocked';
         }
         return 'locked';
     };
-    const loginUrl = `${process.env.API_ORIGIN}/oxauth/login/?next=${encodeLocation(search)}`;
 
     return resourceBoxPermissions({
         resourceData,
         resourceStatus,
-        loginUrl
+        loginUrl: linkHelper.loginLink()
     });
 }
