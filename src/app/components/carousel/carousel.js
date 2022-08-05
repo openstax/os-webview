@@ -53,6 +53,27 @@ function RightFrameChanger({frameNumber, frameCount, setFrameNumber, step=1, hov
     );
 }
 
+// How many whole items are in the viewport?
+function getStep(atATime, containerEl, frameNumber) {
+    if (!containerEl) {
+        return Number(atATime);
+    }
+    const {width: vpWidth} = containerEl.getBoundingClientRect();
+    const itemsFromCurrent = Array.from(
+        containerEl.querySelectorAll('.items > *')
+    ).slice(frameNumber);
+    const {left} = itemsFromCurrent[0].getBoundingClientRect();
+    const wholeItems = itemsFromCurrent.filter(
+        (i) => {
+            const {right} = i.getBoundingClientRect();
+
+            return right - left <= vpWidth;
+        }
+    );
+
+    return Math.max(Number(atATime), wholeItems.length);
+}
+
 function Carousel({
     children, atATime=1, mobileSlider=false, initialFrame=0, hoverTextThing,
     frameCount = React.Children.count(children)
@@ -61,29 +82,8 @@ function Carousel({
     const ref = useRef();
     const firstTimeRef = useRef(true);
     const wcx = useWindowContext();
-    // How many whole items are in the viewport?
     // Not useMemo because it has to update when children render
-    const step = (
-        () => {
-            if (!ref.current) {
-                return Number(atATime);
-            }
-            const {width: vpWidth} = ref.current.getBoundingClientRect();
-            const itemsFromCurrent = Array.from(
-                ref.current.querySelectorAll('.items > *')
-            ).slice(frameNumber);
-            const {left} = itemsFromCurrent[0].getBoundingClientRect();
-            const wholeItems = itemsFromCurrent.filter(
-                (i) => {
-                    const {right} = i.getBoundingClientRect();
-
-                    return right - left <= vpWidth;
-                }
-            );
-
-            return Math.max(Number(atATime), wholeItems.length);
-        }
-    )();
+    const step = getStep(atATime, ref.current, frameNumber);
 
     React.useLayoutEffect(() => {
         const targetItem = ref.current.querySelectorAll('.items > *')[frameNumber];
