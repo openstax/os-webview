@@ -2,6 +2,10 @@
 
 .subject-specific .book-viewer {
     .category {
+        h2 {
+            @include set-font(h3);
+        }
+
         .books {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));

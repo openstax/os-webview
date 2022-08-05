@@ -68,21 +68,25 @@ function SubjectInContext({subject}) {
                             <div className={cn('targets', `${subject?.color}-stripe`)}>
                                 <Translations />
                                 <SubjectIntro subjectName={subject.html} />
-                                <LazyLoad once offset={100} height={400}>
-                                    <BookViewer />
-                                </LazyLoad>
+                                <BookViewer />
                                 <LazyLoad once offset={100} height={400}>
                                     <TutorAd />
                                 </LazyLoad>
-                                <LazyLoad once offset={100} height={400}>
-                                    <BlogPosts />
-                                </LazyLoad>
-                                <LazyLoad once offset={100} height={400}>
-                                    <Webinars />
-                                </LazyLoad>
-                                <LazyLoad once offset={100} height={400}>
-                                    <LearnMore />
-                                </LazyLoad>
+                                <section id="blog-posts" className="blog-posts">
+                                    <LazyLoad once offset={100} height={400} className="content">
+                                        <BlogPosts />
+                                    </LazyLoad>
+                                </section>
+                                <section id="webinars" className="webinars">
+                                    <LazyLoad once offset={100} height={400} className="content">
+                                        <Webinars />
+                                    </LazyLoad>
+                                </section>
+                                <section id="learn" className="learn-more">
+                                    <LazyLoad once offset={100} height={400} className="content">
+                                        <LearnMore />
+                                    </LazyLoad>
+                                </section>
                                 <LazyLoad once offset={100} height={400}>
                                     <SpecificSubjectAboutOpenStax />
                                 </LazyLoad>

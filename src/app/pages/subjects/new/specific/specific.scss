@@ -21,10 +21,6 @@ $half-content-max: $content-max / 2;
         @include wider-than($media-content-max) {
             max-width: calc(#{$half-content-max} + 50vw);
             margin-left: calc(50vw - #{$half-content-max});
-
-            .targets > section > * {
-                width: calc(100% - 50vw + #{$half-content-max} - #{$normal-margin});
-            }
         }
 
         h1 {
@@ -63,6 +59,8 @@ $half-content-max: $content-max / 2;
             @include color-stripe(deep-green);
         }
 
+        padding-bottom: 3rem;
+
         > section,
         > .lazyload-wrapper > section {
             width: 100%;
@@ -73,12 +71,13 @@ $half-content-max: $content-max / 2;
                     padding: $normal-margin;
                 }
                 @include wider-than($phone-max) {
-                    padding: 3rem;
+                    padding: 4rem 3rem;
+                }
+                @include wider-than($media-content-max) {
+                    margin-right: calc(50vw - #{$half-content-max});
                 }
             }
         }
-
-        padding-bottom: 3rem;
     }
 
     .about-openstax .content {

@@ -52,16 +52,17 @@ function SectionLink({id, text}) {
 
 function CategoryLink({category}) {
     return (
-        <SectionLink id={category.heading} text={category.heading} />
+        <SectionLink id={category} text={category} />
     );
 }
 
 function CategorySectionLinks() {
-    const {osTextbookCategories: cats} = useSpecificSubjectContext();
+    const {subjects, title} = useSpecificSubjectContext();
+    const cats = Object.entries(subjects[title].categories);
 
     return (
         <React.Fragment>
-            {cats[0].map((c) => <CategoryLink category={c} key={c.html} />)}
+            {cats.map(([c]) => <CategoryLink category={c} key={c.html} />)}
         </React.Fragment>
     );
 }

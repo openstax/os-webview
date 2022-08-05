@@ -9,6 +9,10 @@
         display: flex;
         flex-direction: column;
         gap: 6rem;
+
+        h2 {
+            text-align: center;
+        }
     }
 
     .top {
@@ -16,6 +20,10 @@
         gap: 3rem;
         flex-direction: column;
         text-align: center;
+
+        > * {
+            margin: 0;
+        }
     }
 
     .card {
