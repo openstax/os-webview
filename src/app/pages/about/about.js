@@ -39,7 +39,7 @@ function About({data: {
                 <section className="what">
                     <div className="content">
                         <div className="text-content">
-                            <h1>{whatHeading}</h1>
+                            <h2>{whatHeading}</h2>
                             <div dangerouslySetInnerHTML={{__html: whatParagraph}} />
                         </div>
                         <div className="cards">
@@ -60,7 +60,7 @@ function About({data: {
             <LazyLoad>
                 <section className="where content">
                     <div className="text-content">
-                        <h1>{whereHeading}</h1>
+                        <h2>{whereHeading}</h2>
                         <div dangerouslySetInnerHTML={{__html: whereParagraph}} />
                     </div>
                 </section>
