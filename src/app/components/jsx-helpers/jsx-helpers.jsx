@@ -3,6 +3,30 @@ import $ from '~/helpers/$';
 import {usePageData, fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import useRouterContext from '~/components/shell/router-context';
 
+export function Document({title, noindex}) {
+    useEffect(
+        () => {document.title = title;},
+        [title]
+    );
+
+    useEffect(
+        () => {
+            if (noindex) {
+                const tag = document.createElement('meta');
+
+                tag.setAttribute('content', 'noindex');
+                tag.setAttribute('name', 'robots');
+                document.head.appendChild(tag);
+
+                return () => document.head.removeChild(tag);
+            }
+        },
+        [noindex]
+    )
+
+    return null;
+}
+
 export function useDataFromPromise(promise, defaultValue) {
     const [data, setData] = useState(defaultValue);
 
