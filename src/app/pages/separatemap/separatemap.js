@@ -110,6 +110,10 @@ function PopupMessage() {
 export default function SeparateMap() {
     useEffect(() => {
         shellBus.emit('with-modal');
+        $.setPageTitleAndDescription(
+            'Institution Map - OpenStax',
+            'Searchable map of institutions that have adopted OpenStax textbooks'
+        );
 
         return () => shellBus.emit('no-modal');
     }, []);
