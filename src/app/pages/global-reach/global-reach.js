@@ -30,6 +30,11 @@ function preprocessData(data) {
 function GlobalReachPage({data}) {
     const ppData = preprocessData(data);
 
+    React.useEffect(
+        () => $.setPageTitleAndDescriptionFromBookData(data),
+        [data]
+    );
+
     return (
         <React.Fragment>
             <Map title={ppData.title} buttonText={ppData.headerText} imageUrl={ppData.mapImageUrl} />
