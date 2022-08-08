@@ -211,7 +211,6 @@ function TopLevelPage() {
 function StripTrailingPathsExceptWhereAllowed() {
     const {name} = useParams();
 
-    console.info('Name is', name);
     if (['blog', 'subjects'].includes(name)) {
         return (<TopLevelPage />);
     }
