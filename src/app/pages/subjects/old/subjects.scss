@@ -10,6 +10,7 @@
     .hero {
         @include scale-feature(padding-top, 2rem, 6rem);
 
+        h1,
         h2 {
             @include scale-set-font(h3, h1);
 

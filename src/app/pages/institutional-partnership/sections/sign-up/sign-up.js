@@ -10,7 +10,7 @@ export default function SignUp({heading, contactHtml, submitUrl, buttonText}) {
         <section className="sign-up green">
             <div className="content">
                 <FontAwesomeIcon className="envelope-icon" icon={faEnvelopeOpen} />
-                <h1>{heading}</h1>
+                <h2>{heading}</h2>
                 <RawHTML className="contact" html={contactHtml} />
                 <a className="btn primary" href={submitUrl}>{buttonText}</a>
             </div>

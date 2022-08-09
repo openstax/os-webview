@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML, Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useTextFromSlug} from '~/helpers/controller/cms-mixin';
 import useRouterContext from '~/components/shell/router-context';
 import {useLocation} from 'react-router-dom';
@@ -35,7 +35,7 @@ export function GeneralPageFromSlug({slug, fallback}) {
 
     React.useEffect(() => {
         if (head) {
-            $.setPageTitleAndDescription(head.title, head.description);
+            $.setPageDescription(head.description);
         }
     }, [head]);
 
@@ -45,6 +45,7 @@ export function GeneralPageFromSlug({slug, fallback}) {
 
     return (
         <main>
+            <Document title={head?.title || 'OpenStax'} noindex />
             {html ? <GeneralPage html={html} /> : <h1>Loading...</h1>}
         </main>
     );

@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Switch, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
+import {Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import PinnedArticle from './pinned-article/pinned-article';
 import DisqusForm from './disqus-form/disqus-form';
 import MoreStories from './more-stories/more-stories';
@@ -12,15 +13,6 @@ import {ArticleFromSlug} from './article/article';
 import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
 import timers from './timers';
 import './blog.scss';
-
-function Document({title}) {
-    useEffect(
-        () => {document.title = title;},
-        [title]
-    );
-
-    return null;
-}
 
 export function SearchResultsPage() {
     return (

@@ -208,6 +208,19 @@ function TopLevelPage() {
     );
 }
 
+function StripTrailingPathsExceptWhereAllowed() {
+    const {name} = useParams();
+
+    if (['blog', 'subjects'].includes(name)) {
+        return (<TopLevelPage />);
+    }
+    return (
+        <Switch>
+            <Redirect to={`/${name}`} />
+        </Switch>
+    );
+}
+
 function Routes() {
     const homeOrMyOpenStax = useHomeOrMyOpenStax();
 
@@ -233,10 +246,16 @@ function Routes() {
                     <Redirect exact from="/textbooks/:title" to="/details/books/:title" />
                 </Switch>
             </Route>
-            <Route path="/books/:title">
+            <Route path="/details/books/:title">
+                <ImportedPage name="details" />
+            </Route>
+            <Route path={['/details/:title', '/books/:title']}>
                 <Switch>
-                    <Redirect exact from="/books/:title" to="/details/books/:title" />
+                    <Redirect to="/details/books/:title" />
                 </Switch>
+            </Route>
+            <Route path="/:name/:extra">
+                <StripTrailingPathsExceptWhereAllowed />
             </Route>
             <Route path="/:name">
                 <TopLevelPage />

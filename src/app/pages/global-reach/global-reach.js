@@ -45,7 +45,7 @@ const slug = 'pages/global-reach';
 export default function GlobalReachLoader() {
     return (
         <main className="global-reach page">
-            <LoaderPage slug={slug} Child={GlobalReachPage} noCamelCase />
+            <LoaderPage slug={slug} Child={GlobalReachPage} noCamelCase doDocumentSetup />
         </main>
     );
 }

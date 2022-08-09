@@ -61,7 +61,6 @@ function TitleSelectorOrForm() {
 export default function EnsureLoggedIn() {
     const {uuid} = useUserContext();
 
-    console.info('Uuid', uuid);
     if (!uuid) {
         return (
             <main className="errata-form page">
