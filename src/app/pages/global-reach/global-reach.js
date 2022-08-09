@@ -30,11 +30,6 @@ function preprocessData(data) {
 function GlobalReachPage({data}) {
     const ppData = preprocessData(data);
 
-    React.useEffect(
-        () => $.setPageTitleAndDescriptionFromBookData(data),
-        [data]
-    );
-
     return (
         <React.Fragment>
             <Map title={ppData.title} buttonText={ppData.headerText} imageUrl={ppData.mapImageUrl} />
@@ -50,7 +45,7 @@ const slug = 'pages/global-reach';
 export default function GlobalReachLoader() {
     return (
         <main className="global-reach page">
-            <LoaderPage slug={slug} Child={GlobalReachPage} noCamelCase />
+            <LoaderPage slug={slug} Child={GlobalReachPage} noCamelCase doDocumentSetup />
         </main>
     );
 }
