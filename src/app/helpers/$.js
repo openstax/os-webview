@@ -8,7 +8,7 @@ $.isMobileDisplay = () => {
     return window.innerWidth <= 960;
 };
 
-$.isPolish = (titleOrSlug) => (/fizyka|psychologia/i).test(titleOrSlug);
+$.isPolish = (titleOrSlug) => (/fizyka|psychologia|podstawy/i).test(titleOrSlug);
 
 $.focusable = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
