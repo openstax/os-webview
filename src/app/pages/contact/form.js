@@ -7,6 +7,7 @@ const options = [
     'General',
     'Adopting OpenStax Textbooks',
     'OpenStax Tutor Support',
+    'OpenStax Kinetic',
     'OpenStax CNX',
     'Donations',
     'College/University Partnerships',
