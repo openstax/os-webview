@@ -18,7 +18,7 @@ function LeadIn() {
     );
 }
 
-export default function TranslationSelector({translations}) {
+export default function TranslationSelector({translations=[]}) {
     const otherLocales = React.useMemo(
         () => translations.length ? translations.map((t) => t.locale) : [],
         [translations]
