@@ -2,6 +2,7 @@ import adoptionFormData from '../src/data/adoption-form';
 import algebraData from '../src/data/details-college-algebra';
 import biologyData from '../src/data/details-biology-2e';
 import blogArticleData from '../src/data/blog-article';
+import blogCollection from '../src/data/blogcollection';
 import blogMoreStories from '../src/data/blog-more';
 import blogPinned from '../src/data/blog-pinned';
 import booksData from '../src/data/books';
@@ -49,6 +50,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBlogPinned = (/pin_to_top=true/).test(args[0]);
     const isBlogMoreStories = (/pin_to_top=false/).test(args[0]);
     const isBlogArticle = (/blog-article/).test(args[0]);
+    const isBlogCollection = args[0].includes('blogcollection');
     const isBooks = (/api\/books/).test(args[0]);
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
     const isBookTitles = (/fields=title,id/).test(args[0]);
@@ -96,6 +98,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = adoptionFormData;
             } else if (isPartner) {
                 payload = pageData;
+            } else if (isBlogCollection) {
+                payload = blogCollection;
             } else if (isBlogMoreStories) {
                 payload = blogMoreStories;
             } else if (isBlogPinned) {
