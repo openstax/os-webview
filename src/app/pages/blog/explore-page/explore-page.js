@@ -4,22 +4,12 @@ import {useParams, Link, useHistory} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {WindowContextProvider} from '~/contexts/window';
+import {Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import PinnedArticle from '../pinned-article/pinned-article';
 import {HeadingAndSearchBar} from '../search-bar/search-bar';
 import MoreStories from '../more-stories/more-stories';
 import SectionHeader from '../section-header/section-header';
-
-function Document({title}) {
-    React.useLayoutEffect(
-        () => {
-            console.info('Setting title...');
-            document.title = title;
-        },
-        [title]
-    );
-
-    return null;
-}
+import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 
 // If it returns null, the topic is not a Subject
 function useSubjectSnippetForTopic(topic) {
@@ -46,9 +36,22 @@ function HeadingForExplorePage({subject, heading}) {
     );
 }
 
+function useParamsToSetTopic() {
+    const {exploreType, topic} = useParams();
+    const {setTypeAndTopic} = useBlogContext();
+
+    React.useEffect(
+        () => {
+            setTypeAndTopic(exploreType, topic);
+            return () => setTypeAndTopic();
+        },
+        [exploreType, topic, setTypeAndTopic]
+    );
+}
+
 export default function ExplorePage() {
-    const {topic} = useParams();
-    const {pinnedStory} = useBlogContext();
+    useParamsToSetTopic();
+    const {topic, pinnedStory, topicPopular, setPath} = useBlogContext();
     const history = useHistory();
     const goBack = React.useCallback(
         (e) => {
@@ -72,20 +75,22 @@ export default function ExplorePage() {
                     <HeadingForExplorePage {...{subject, heading}} />
                 </HeadingAndSearchBar>
                 <div className="explore-topic-blurb text-content">
-                    About this much text. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                    sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                    {subject?.pageContent}
                 </div>
                 <PinnedArticle subhead={heading} />
                 <div className="popular-posts">
                     <SectionHeader head="Popular blog posts" subhead={heading} />
+                    <div className="latest-blurbs cards">
+                        {
+                            topicPopular.map(blurbModel).map((article) =>
+                                <div className="card" key={article.articleSlug}>
+                                    <ArticleSummary {...{...article, setPath, HeadTag: 'h3'}} />
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
-                <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} subhead={heading} />
+                <MoreStories exceptSlug={pinnedStory?.slug} subhead={heading} />
             </div>
         </WindowContextProvider>
     );

@@ -91,7 +91,7 @@ export default function LoadBlog() {
                     <Route path="/blog/latest">
                         <LatestBlogPosts />
                     </Route>
-                    <Route path="/blog/explore/:topic">
+                    <Route path="/blog/explore/:exploreType/:topic">
                         <ExplorePage />
                     </Route>
                     <Route path="/blog/:slug">

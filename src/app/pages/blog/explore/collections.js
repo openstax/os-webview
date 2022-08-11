@@ -5,7 +5,7 @@ import './collections.scss';
 
 function CollectionLink({data}) {
     return (
-        <Link to={`/blog/explore/${data.name}`} className="card">
+        <Link to={`/blog/explore/collection/${data.name}`} className="card">
             <div className="centered-image">
                 <img src={data.collectionImage} alt="" />
             </div>

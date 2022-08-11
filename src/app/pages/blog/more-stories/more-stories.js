@@ -8,13 +8,13 @@ import SectionHeader from '../section-header/section-header';
 export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
     const numberNeeded = page * pageSize + 1;
     const latestStories = useLatestBlogEntries(numberNeeded);
-    const {setPath} = useBlogContext();
+    const {setPath, topicStories} = useBlogContext();
 
     if (!latestStories) {
         return null;
     }
 
-    const articles = latestStories
+    const articles = (topicStories || latestStories)
         .map(blurbModel)
         .filter((article) => exceptSlug !== article.articleSlug)
         .slice(-pageSize);

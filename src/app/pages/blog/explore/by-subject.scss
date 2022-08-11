@@ -32,6 +32,10 @@
                 &:not(:empty) {
                     padding: 0 0.5rem;
                 }
+
+                img {
+                    max-height: 100%;
+                }
             }
 
             .subject-name {

@@ -10,7 +10,7 @@ function SubjectLink({data}) {
                 {data.subjectIcon && <img src={data.subjectIcon} />}
             </div>
             <div className="subject-name">
-                <Link to={`/blog/explore/${data.name}`}>{data.name}</Link>
+                <Link to={`/blog/explore/subject/${data.name}`}>{data.name}</Link>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
+import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import useLatestBlogEntries from '~/models/blog-entries';
 import cmsFetch from '~/models/cmsFetch';
@@ -33,13 +34,61 @@ function useCollections() {
     return data;
 }
 
+function useTopicStories() {
+    const [topicType, setTopicType] = React.useState();
+    const [topic, setTopic] = React.useState();
+    const setTypeAndTopic = React.useCallback(
+        (typ, top) => {
+            setTopicType(typ);
+            setTopic(top);
+        },
+        []
+    );
+    const slug = React.useMemo(
+        () => {
+            if (!topicType) {
+                return null;
+            }
+            if (topicType === 'subject') {
+                return `search/?subjects=${topic}`;
+            }
+            return `search/?collection=${topic}`;
+        },
+        [topic, topicType]
+    );
+    const topicStories = $.camelCaseKeys(useDataFromSlug(slug) || []);
+    const topicFeatured = React.useMemo(
+        () => {
+            const fieldFromType = topicType === 'subject' ? 'articleSubjects' : 'collections';
+            const findFeatures = (story) =>
+                story[fieldFromType].some((s) => s.name === topic && s.featured);
+
+            return topicStories.find(findFeatures);
+        },
+        [topicStories, topic, topicType]
+    );
+    const topicPopular = React.useMemo(
+        () => topicStories.filter(
+            (story) => story.collections.some((c) => c.popular)
+        ),
+        [topicStories]
+    );
+
+    return ({topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular});
+}
+
 function useContextValue() {
     const history = useHistory();
+    const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} = useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
-    const pinnedStory = pinnedData && pinnedData[0];
+    const pinnedStory = topicFeatured || (pinnedData && pinnedData[0]);
     const totalCount = pinnedData?.totalCount;
     const subjectSnippet = useEnglishSubjects();
     const collectionSnippet = useCollections();
+
+    if (pinnedStory && !pinnedStory.slug) {
+        pinnedStory.slug = pinnedStory.meta.slug;
+    }
 
     function setPath(href) {
         const {pathname, search, hash} = new window.URL(href, window.location.href);
@@ -49,7 +98,8 @@ function useContextValue() {
     }
 
     return {
-        setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet
+        setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet,
+        topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular
     };
 }
 
