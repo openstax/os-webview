@@ -35,7 +35,7 @@ function DatedHeading({entry}) {
 function HoverTitle({entry}) {
     return (
         <div className="with-hovertitle">
-            <h3>{entry.title}</h3>
+            <h4>{entry.title}</h4>
             <div className="hovertitle">{entry.title}</div>
         </div>
     );
