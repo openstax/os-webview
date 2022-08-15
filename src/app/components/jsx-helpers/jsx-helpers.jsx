@@ -20,9 +20,10 @@ export function Document({title, noindex}) {
 
                 return () => document.head.removeChild(tag);
             }
+            return null;
         },
         [noindex]
-    )
+    );
 
     return null;
 }

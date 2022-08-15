@@ -14,7 +14,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
         return null;
     }
 
-    const articles = (topicStories || latestStories)
+    const articles = (topicStories.length ? topicStories : latestStories)
         .map(blurbModel)
         .filter((article) => exceptSlug !== article.articleSlug)
         .slice(-pageSize);
