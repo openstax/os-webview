@@ -3,6 +3,9 @@ import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Switch, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import {Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import ExploreBySubject from './explore/by-subject';
+import ExploreCollections from './explore/collections';
+import ExplorePage from './explore-page/explore-page';
 import PinnedArticle from './pinned-article/pinned-article';
 import DisqusForm from './disqus-form/disqus-form';
 import MoreStories from './more-stories/more-stories';
@@ -37,6 +40,8 @@ export function MainBlogPage() {
                 <HeadingAndSearchBar>
                     <h1>OpenStax Blog</h1>
                 </HeadingAndSearchBar>
+                <ExploreBySubject />
+                <ExploreCollections />
                 <PinnedArticle />
                 <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
             </div>
@@ -68,6 +73,7 @@ export function ArticlePage() {
 
 export default function LoadBlog() {
     const location = useLocation();
+    const TopLevelPage = location.search ? SearchResultsPage : MainBlogPage;
 
     useEffect(() => {
         timers.start();
@@ -80,12 +86,13 @@ export default function LoadBlog() {
             <BlogContextProvider>
                 <Switch>
                     <Route exact path="/blog">
-                        {
-                            location.search ? <SearchResultsPage /> : <MainBlogPage />
-                        }
+                        <TopLevelPage />
                     </Route>
                     <Route path="/blog/latest">
                         <LatestBlogPosts />
+                    </Route>
+                    <Route path="/blog/explore/:exploreType/:topic">
+                        <ExplorePage />
                     </Route>
                     <Route path="/blog/:slug">
                         <ArticlePage />

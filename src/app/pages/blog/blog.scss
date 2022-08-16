@@ -5,6 +5,17 @@
     justify-items: center;
     width: 100%;
 
+    .breadcrumb {
+        align-items: center;
+        font-weight: bold;
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        margin-top: 3rem;
+        text-decoration: none;
+        width: 100%;
+    }
+
     .heading-and-searchbar,
     .section-header {
         margin: 2.5rem 0 2rem;
@@ -21,10 +32,26 @@
         margin: 3rem auto;
     }
 
+    .text-content {
+        max-width: 71rem;
+    }
+
+    .popular-posts {
+        width: 100%;
+    }
+
     h1 {
         @include set-font(h2);
 
         margin: 0;
+
+        &.not-so-big {
+            @include set-font(h3);
+
+            align-items: center;
+            display: flex;
+            gap: 1rem;
+        }
     }
 
     h2 {
@@ -32,12 +59,6 @@
             @include set-font(h3);
 
             margin: 0;
-        }
-
-        &.section-header {
-            @include set-font(h4);
-
-            border-bottom: thin solid ui-color(form-border);
         }
     }
 

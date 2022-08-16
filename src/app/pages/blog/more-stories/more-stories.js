@@ -3,17 +3,18 @@ import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import useLatestBlogEntries from '~/models/blog-entries';
 import useBlogContext from '../blog-context';
 import './more-stories.scss';
+import SectionHeader from '../section-header/section-header';
 
 export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
     const numberNeeded = page * pageSize + 1;
     const latestStories = useLatestBlogEntries(numberNeeded);
-    const {setPath} = useBlogContext();
+    const {setPath, topicStories} = useBlogContext();
 
     if (!latestStories) {
         return null;
     }
 
-    const articles = latestStories
+    const articles = (topicStories.length ? topicStories : latestStories)
         .map(blurbModel)
         .filter((article) => exceptSlug !== article.articleSlug)
         .slice(-pageSize);
@@ -31,10 +32,10 @@ export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
     );
 }
 
-export default function MoreStories({exceptSlug}) {
+export default function MoreStories({exceptSlug, subhead}) {
     return (
         <div className="more-stories">
-            <h2 className="section-header">Latest blog posts</h2>
+            <SectionHeader head="Latest blog posts" subhead={subhead} />
             <LatestBlurbs page={1} pageSize={3} exceptSlug={exceptSlug} />
             <div className="button-row">
                 <a className="btn primary" href="/blog/latest">View more of the latest</a>

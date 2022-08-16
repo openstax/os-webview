@@ -1,0 +1,58 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#explore-by-subject {
+    margin-bottom: 3rem;
+    width: 100%;
+
+    .subject-links {
+        display: flex;
+        flex-direction: row;
+        flex-shrink: 0;
+        gap: 3rem;
+        margin-top: 5rem;
+
+        .card {
+            @extend %card;
+
+            padding-bottom: 1rem;
+            position: relative;
+            text-align: center;
+            width: 14.2rem;
+
+            .icon-holder {
+                background: ui-color(white);
+                height: 4.5rem;
+                position: relative;
+                top: 0;
+                left: 50%;
+                margin-bottom: -3rem;
+                transform: translate(-50%, -50%);
+                width: min-content;
+
+                &:not(:empty) {
+                    padding: 0 0.5rem;
+                }
+
+                img {
+                    max-height: 100%;
+                }
+            }
+
+            .subject-name {
+                @include set-font(body-large);
+
+                align-items: center;
+                display: flex;
+                font-weight: bold;
+                height: 100%;
+                justify-content: center;
+                line-height: 2.5rem;
+
+                a {
+                    color: inherit;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
