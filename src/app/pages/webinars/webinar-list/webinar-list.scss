@@ -32,7 +32,7 @@
         grid-auto-rows: min-content;
         padding: 2rem 3rem;
 
-        h3 {
+        h4 {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             display: -webkit-box;
@@ -93,7 +93,7 @@
 
             .title-and-time {
                 .day-and-time {
-                    color: os-color(light-gray);
+                    color: text-color(helper);
                 }
             }
         }

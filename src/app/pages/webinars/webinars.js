@@ -18,7 +18,7 @@ function byDate(a, b) {
     return da - db;
 }
 
-function Webinars({data: {headline, description, heroImage}}) {
+function Webinars({data: {heading: headline, description, heroImage}}) {
     const [selectedLabel, setSelectedLabel] = useState(tabLabels[0]);
     const webinarData = $.camelCaseKeys(
         (useDataFromSlug('webinars/?format=json') || []).sort(byDate)
@@ -53,13 +53,13 @@ function Webinars({data: {headline, description, heroImage}}) {
             </div>
             <main>
                 <div className="content">
-                    <h1>Webinars</h1>
+                    <h2>Webinars</h2>
                     <div className="phone-view">
                         <AccordionGroup items={accordionItems} />
                     </div>
                     <div className="bigger-view">
                         <TabGroup
-                            TabTag="h2" labels={tabLabels}
+                            TabTag="h3" labels={tabLabels}
                             selectedLabel={selectedLabel}
                             setSelectedLabel={setSelectedAndUpdateUrl}
                         />

@@ -10,7 +10,7 @@
         @extend %light-on-dark;
         @include set-font(body-large);
 
-        background-color: os-color(light-blue);
+        background-color: text-color(link);
         color: text-color(white);
         padding: 0;
         text-align: left;
@@ -63,13 +63,13 @@
             padding: 4rem 0;
         }
 
-        h1 {
+        h2 {
             @include set-font(h2);
 
             margin: 0 0 1rem;
         }
 
-        h2 {
+        h3 {
             @include body-font(1.8rem);
         }
 
