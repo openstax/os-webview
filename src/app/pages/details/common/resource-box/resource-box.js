@@ -1,6 +1,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import linkHelper from '~/helpers/link';
+import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import $ from '~/helpers/$';
+import useUserContext from '~/contexts/user';
 
 const settings = window.SETTINGS;
 
@@ -60,6 +63,50 @@ export function instructorResourceBoxPermissions(resourceData, userStatus, searc
         resourceStatus,
         loginUrl
     });
+}
+
+const emptyResources = {
+    bookVideoFacultyResources: [],
+    bookFacultyResources: []
+};
+
+export function useResources(slug) {
+    const {isVerified} = useUserContext();
+    const title = slug.replace('books/', '');
+    const rawResources = useDataFromSlug(
+        `books/resources/?slug=${title}&x=${isVerified ? 'x' : 'y'}`
+    );
+    const resources = React.useMemo(
+        () => $.camelCaseKeys(rawResources),
+        [rawResources]
+    );
+
+    return resources || emptyResources;
+}
+
+export function resourceBoxModel(resourceData, userStatus, bookModel) {
+    return Object.assign(
+        {
+            heading: resourceData.resource.heading,
+            description: resourceData.resource.description,
+            creatorFest: resourceData.resource.creatorFestResource,
+            comingSoon: Boolean(resourceData.comingSoonText),
+            comingSoonText: resourceData.comingSoonText,
+            k12: resourceData.k12,
+            videoReferenceNumber: resourceData.videoReferenceNumber,
+            trackResource: Boolean(userStatus.isInstructor) &&
+                {
+                    book: bookModel.id,
+                    // eslint-disable-next-line camelcase
+                    account_id: userStatus.userInfo.accounts_id,
+                    // eslint-disable-next-line camelcase
+                    resource_name: resourceData.resource.heading
+                },
+            printLink: resourceData.printLink,
+            bookModel
+        },
+        instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources')
+    );
 }
 
 // Utility function for student resources

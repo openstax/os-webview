@@ -1,6 +1,6 @@
 import React from 'react';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
-import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
+import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
 import Partners from './partners/partners';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {usePartnerFeatures} from '../../common/hooks';
 import useUserContext from '~/contexts/user';
 import useDetailsContext from '~/pages/details/context';
+import useWindowContext from '~/contexts/window';
 import './instructor-resource-tab.scss';
 
 function FreeStuff({freeStuffContent, userStatus}) {
@@ -59,44 +60,23 @@ function Webinar() {
     );
 }
 
-function resourceBoxModel(resourceData, userStatus, bookModel) {
-    return Object.assign(
-        {
-            heading: resourceData.resourceHeading,
-            description: resourceData.resourceDescription,
-            creatorFest: resourceData.creatorFestResource,
-            comingSoon: Boolean(resourceData.comingSoonText),
-            comingSoonText: resourceData.comingSoonText,
-            featured: resourceData.featured,
-            k12: resourceData.k12,
-            videoReferenceNumber: resourceData.videoReferenceNumber,
-            trackResource: Boolean(userStatus.isInstructor) &&
-                {
-                    book: bookModel.id,
-                    // eslint-disable-next-line camelcase
-                    account_id: userStatus.userInfo.accounts_id,
-                    // eslint-disable-next-line camelcase
-                    resource_name: resourceData.resourceHeading
-                },
-            printLink: resourceData.printLink,
-            bookModel
-        },
-        instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources')
-    );
-}
-
 function InstructorResourceTab({model, userStatus}) {
     const bookAbbreviation = model.salesforceAbbreviation;
-    const featuredModels = model.bookFacultyResources
+    const {
+        bookVideoFacultyResources,
+        bookFacultyResources
+    } = useResources(model.slug);
+
+    const featuredModels = bookFacultyResources
         .filter((r) => r.featured)
         .map((res) => resourceBoxModel(res, userStatus, model));
-    const blogLinkModels = model.bookFacultyResources
+    const blogLinkModels = bookFacultyResources
         .filter((r) => r.linkText === 'View resources')
         .map((res) => resourceBoxModel(res, userStatus, model));
-    const referenceModels = model.bookFacultyResources
+    const referenceModels = bookFacultyResources
         .filter((r) => r.videoReferenceNumber !== null)
         .map((res) => resourceBoxModel(res, userStatus, model));
-    const otherModels = model.bookFacultyResources
+    const otherModels = bookFacultyResources
         .filter((r) =>
             !r.featured && r.videoReferenceNumber === null &&
             r.linkText !== 'View resources'
@@ -128,7 +108,7 @@ function InstructorResourceTab({model, userStatus}) {
                 <div className={`cards ${includePartners}`}>
                     <div className="resources">
                         <VideoResourceBoxes
-                            models={model.bookVideoFacultyResources}
+                            models={bookVideoFacultyResources}
                             blogLinkModels={blogLinkModels}
                             referenceModels={referenceModels}
                         />
@@ -148,10 +128,11 @@ function InstructorResourceTab({model, userStatus}) {
 function StubUnlessDisplayed({model, userStatus}) {
     const ref = React.useRef();
     const [y, setY] = React.useState(null);
+    const {innerWidth} = useWindowContext();
 
     React.useLayoutEffect(
         () => setY(ref.current?.getBoundingClientRect().y),
-        []
+        [innerWidth]
     );
 
     return (

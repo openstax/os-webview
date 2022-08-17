@@ -11,6 +11,7 @@ import LanguageSelector, {useLanguageText} from '~/components/language-selector/
 import {useTableOfContents} from './common/hooks';
 import useLanguageContext from '~/contexts/language';
 import useDetailsContext, {DetailsContextProvider} from './context';
+import {WindowContextProvider} from '~/contexts/window';
 import './details.scss';
 import './table-of-contents.scss';
 
@@ -163,14 +164,16 @@ export function BookDetails() {
             </div>
             <TOCContextProvider>
                 <TocSlideoutAndContent>
-                    <div className="phone-view">
-                        <LinksToTranslations />
-                        <PhoneView />
-                    </div>
-                    <div className="bigger-view">
-                        <LinksToTranslations />
-                        <DesktopView onContentChange={setCardBackground} />
-                    </div>
+                    <WindowContextProvider>
+                        <div className="phone-view">
+                            <LinksToTranslations />
+                            <PhoneView />
+                        </div>
+                        <div className="bigger-view">
+                            <LinksToTranslations />
+                            <DesktopView onContentChange={setCardBackground} />
+                        </div>
+                    </WindowContextProvider>
                 </TocSlideoutAndContent>
             </TOCContextProvider>
         </React.Fragment>
