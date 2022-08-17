@@ -52,7 +52,7 @@ export default function MainMenu() {
                 <MenuItem url="/team" label="Team" />
                 <MenuItem url="/research" label="Research" />
                 <MenuItem url="/institutional-partnership" label="Institutional Partnerships" />
-                <MenuItem url="/general/openstax-ally-technology-partner-program" label="Technology Partnerships" />
+                <MenuItem url="/openstax-ally-technology-partner-program" label="Technology Partnerships" />
                 <MenuItem url="/webinars" label="Webinars" />
             </Dropdown>
             <LoginMenu />
