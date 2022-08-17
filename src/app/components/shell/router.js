@@ -209,6 +209,9 @@ function TopLevelPage() {
 function RedirectToCanonicalDetailsPage() {
     const {title} = useParams();
 
+    if (['blog', 'subjects', 'general'].includes(name)) {
+        return (<TopLevelPage />);
+    }
     return (
         <Navigate to={`/details/books/${title}`} replace />
     );
