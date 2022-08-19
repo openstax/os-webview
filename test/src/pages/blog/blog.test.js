@@ -1,17 +1,15 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {BrowserRouter, MemoryRouter, Route} from 'react-router-dom';
+import {BrowserRouter, MemoryRouter, Routes, Route} from 'react-router-dom';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
 import {BlogPage, MainBlogPage, ArticlePage} from '~/pages/blog/blog';
 
 test('blog default page', async () => {
     render(
         <BrowserRouter>
-            <Route>
-                <BlogContextProvider>
-                    <MainBlogPage />
-                </BlogContextProvider>
-            </Route>
+            <BlogContextProvider>
+                <MainBlogPage />
+            </BlogContextProvider>
         </BrowserRouter>
     );
     expect(await screen.findAllByText('Read more')).toHaveLength(4);
@@ -22,9 +20,9 @@ test('blog Article page', async () => {
     render(
         <MemoryRouter initialEntries={['/blog/blog-article']}>
             <BlogContextProvider>
-                <Route path="/blog/:slug">
-                    <ArticlePage />
-                </Route>
+                <Routes>
+                    <Route path="/blog/:slug" element={<ArticlePage />} />
+                </Routes>
             </BlogContextProvider>
         </MemoryRouter>
     );

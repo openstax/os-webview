@@ -7,7 +7,7 @@ import SubjectsRouter from '~/pages/subjects/new/subjects';
 test('main subjects page', async () => {
     render(
         <ShellContextProvider>
-            <MemoryRouter initialEntries={['/subjects']}>
+            <MemoryRouter initialEntries={['']}>
                 <SubjectsRouter />
             </MemoryRouter>
         </ShellContextProvider>
