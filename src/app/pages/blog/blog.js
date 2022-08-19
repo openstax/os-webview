@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import useBlogContext, {BlogContextProvider} from './blog-context';
-import {Switch, Route, useLocation, useParams} from 'react-router-dom';
+import {Routes, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import {Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import ExploreBySubject from './explore/by-subject';
@@ -84,20 +84,12 @@ export default function LoadBlog() {
     return (
         <main className="blog page">
             <BlogContextProvider>
-                <Switch>
-                    <Route exact path="/blog">
-                        <TopLevelPage />
-                    </Route>
-                    <Route path="/blog/latest">
-                        <LatestBlogPosts />
-                    </Route>
-                    <Route path="/blog/explore/:exploreType/:topic">
-                        <ExplorePage />
-                    </Route>
-                    <Route path="/blog/:slug">
-                        <ArticlePage />
-                    </Route>
-                </Switch>
+                <Routes>
+                    <Route path="" element={<TopLevelPage />} />
+                    <Route path="latest" element={<LatestBlogPosts />} />
+                    <Route path="explore/:exploreType/:topic" element={<ExplorePage />} />
+                    <Route path=":slug" element={<ArticlePage />} />
+                </Routes>
             </BlogContextProvider>
         </main>
     );

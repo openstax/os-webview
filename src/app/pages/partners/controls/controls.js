@@ -6,7 +6,7 @@ import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import {books, types, advanced, sort, clearStores} from '../store';
 import BookOptions from './book-options/book-options';
 import AdvancedOptions from './advanced-options/advanced-options';
-import {useHistory} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import cn from 'classnames';
 import './controls.scss';
 import './button-with-popover.scss';
@@ -56,9 +56,9 @@ export function BaseButton({label, openButton, setOpenButton, children, size, fu
     );
 }
 
-function preSelectBooks(history) {
-    if (history.location.state?.book) {
-        for (const book of [].concat(history.location.state.book)) {
+function preSelectBooks(state) {
+    if (state?.book) {
+        for (const book of [].concat(state.book)) {
             books.toggle(book);
         }
     }
@@ -85,7 +85,7 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
     const bookSize = useStoreSize(books);
     const typeSize = useStoreSize(types);
     const advancedSize = useStoreSize(advanced);
-    const history = useHistory();
+    const location = useLocation();
 
     function triangleClass() {
         if (openButton !== 'Advanced Filters') {
@@ -101,13 +101,13 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
         window.addEventListener('click', closeAnyOpenButton);
         shellBus.emit('with-sticky');
         clearStores();
-        preSelectBooks(history);
+        preSelectBooks(location.state);
 
         return () => {
             window.removeEventListener('click', closeAnyOpenButton);
             shellBus.emit('no-sticky');
         };
-    }, [history]);
+    }, [location.state]);
 
     function stopClickPropagation(event) {
         event.stopPropagation();

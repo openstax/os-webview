@@ -34,7 +34,7 @@ export function subjects(sfTitles) {
         .reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
 }
 
-export function afterFormSubmit(history, preselectedTitle, selectedBooks) {
+export function afterFormSubmit(navigate, preselectedTitle, selectedBooks) {
     fetchBooks.then((b) => {
         const liveBooks = b.filter((entry) => ['live', 'new_edition_available'].includes(entry.book_state));
         const backTo = liveBooks.find((entry) => entry.salesforce_abbreviation === preselectedTitle);
@@ -42,7 +42,7 @@ export function afterFormSubmit(history, preselectedTitle, selectedBooks) {
         /* Send to Tech Scout with books pre-selected */
         const scoutBooks = selectedBooks.map((sfBook) => sfBook.value);
 
-        history.push('/partners', {
+        navigate('/partners', {
             confirmation: true,
             book: scoutBooks,
             slug: backTo?.slug

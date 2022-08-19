@@ -3,12 +3,12 @@ import {RawHTML, LoaderPage, useToggle} from '~/components/jsx-helpers/jsx-helpe
 import Controls from './controls/controls';
 import MobileControlRow from './mobile-controls/mobile-controls';
 import Results, {costOptions, equityOptions} from './results/results';
-import {useHistory} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import './partners.scss';
 
 function Confirmation() {
-    const history = useHistory();
-    const bookSlug = history.location.state?.slug;
+    const location = useLocation();
+    const bookSlug = location.state?.slug;
     const [done, toggleDone] = useToggle();
 
     if (done) {
@@ -94,8 +94,8 @@ function textsFromData(data) {
 }
 
 function Partners({data}) {
-    const history = useHistory();
-    const {confirmation} = history.location.state || {};
+    const location = useLocation();
+    const {confirmation} = location.state || {};
     const advancedFilterOptions = React.useMemo(
         () => getFilterOptions(data),
         [data]

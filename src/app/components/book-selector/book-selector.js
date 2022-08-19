@@ -2,7 +2,7 @@ import React from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {salesforceTitles, afterFormSubmit} from '~/models/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
-import {useHistory, useLocation} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import './book-selector.scss';
 
 function Subject({subject, books, name, selectedBooks, toggleBook, limitReached}) {
@@ -90,12 +90,12 @@ export function useFirstSearchArgument() {
 }
 
 export function useAfterSubmit(selectedBooksRef) {
-    const history = useHistory();
+    const navigate = useNavigate();
     const preselectedTitle = useFirstSearchArgument();
 
     return React.useCallback(
-        () => afterFormSubmit(history, preselectedTitle, selectedBooksRef.current),
-        [history, selectedBooksRef, preselectedTitle]
+        () => afterFormSubmit(navigate, preselectedTitle, selectedBooksRef.current),
+        [navigate, selectedBooksRef, preselectedTitle]
     );
 }
 
