@@ -4,7 +4,6 @@ import ClippedImage from '~/components/clipped-image/clipped-image';
 import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
-import {useNavigate} from 'react-router-dom';
 import $ from '~/helpers/$';
 import WebinarList from './webinar-list/webinar-list';
 import './webinars.scss';
@@ -34,14 +33,7 @@ function Webinars({data: {heading: headline, description, heroImage}}) {
         title,
         contentComponent: tabContents[i]
     }));
-    const navigate = useNavigate();
 
-    function setSelectedAndUpdateUrl(newValue) {
-        const newSearchString = $.replaceSearchTerm(tabLabels, selectedLabel, newValue);
-
-        setSelectedLabel(newValue);
-        navigate(newSearchString, {replace: true});
-    }
     return (
         <React.Fragment>
             <div className="hero">
@@ -61,7 +53,7 @@ function Webinars({data: {heading: headline, description, heroImage}}) {
                         <TabGroup
                             TabTag="h3" labels={tabLabels}
                             selectedLabel={selectedLabel}
-                            setSelectedLabel={setSelectedAndUpdateUrl}
+                            setSelectedLabel={setSelectedLabel}
                         />
                         <ContentGroup activeIndex={tabLabels.indexOf(selectedLabel)}>
                             {tabContents}
