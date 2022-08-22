@@ -1,8 +1,5 @@
 import React, {useEffect} from 'react';
-import {
-    Switch, Route,
-    Redirect
-} from 'react-router-dom';
+import {Routes, Route, Navigate} from 'react-router-dom';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
 import $ from '~/helpers/$';
 import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
@@ -28,7 +25,7 @@ function SEOSetup() {
     return null;
 }
 
-function SubjectsPage() {
+export function SubjectsPage() {
     const {translations} = useSubjectsContext();
     const otherLocales = translations.length ?
         translations[0].value.map((t) => t.locale) :
@@ -53,17 +50,11 @@ function SubjectsPage() {
 export default function SubjectsRouter() {
     return (
         <SubjectsContextProvider>
-            <Switch>
-                <Route exact path="/subjects">
-                    <SubjectsPage />
-                </Route>
-                <Route exact path="/subjects/view-all">
-                    <Redirect to="/subjects" />
-                </Route>
-                <Route path="/subjects/:subject">
-                    <LoadSubject />
-                </Route>
-            </Switch>
+            <Routes>
+                <Route path="" element={<SubjectsPage />} />
+                <Route path="view-all" element={<Navigate to="/subjects" replace />} />
+                <Route path=":subject" element={<LoadSubject />} />
+            </Routes>
         </SubjectsContextProvider>
     );
 }

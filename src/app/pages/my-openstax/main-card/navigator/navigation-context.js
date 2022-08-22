@@ -1,18 +1,18 @@
 import {useState, useEffect} from 'react';
-import {useLocation, useHistory} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import buildContext from '~/components/jsx-helpers/build-context';
 
 function useContextValue(targetIds) {
     const [activeId, setActiveId] = useState(targetIds[0]);
     const {hash, pathname} = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (hash.length > 1) {
-            history.replace(pathname);
+            navigate(pathname, {replace: true});
             setActiveId(hash.substr(1));
         }
-    }, [hash, pathname, history]);
+    }, [hash, pathname, navigate]);
 
     return {
         activeId,

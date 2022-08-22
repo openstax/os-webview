@@ -9,7 +9,7 @@ import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {forceCheck} from 'react-lazyload';
 import LanguageSelector from '~/components/language-selector/language-selector';
-import {useLocation, useHistory} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import './subjects.scss';
 import $ from '~/helpers/$';
 
@@ -24,12 +24,12 @@ function useCategoryTiedToPath() {
     const categories = useSubjectCategoryContext();
     const {title} = useSubjectsContext();
     const {pathname} = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
 
-        history.push(path, {
+        navigate(path, {
             filter: category,
             path: pagePath
         });
@@ -37,7 +37,7 @@ function useCategoryTiedToPath() {
         const linkController = $.setCanonicalLink();
 
         return () => linkController.remove();
-    }, [category, history]);
+    }, [category, navigate]);
 
     useEffect(() => {
         const categoryEntry = categories.find((e) => e.value === category);

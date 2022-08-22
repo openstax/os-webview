@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import useLatestBlogEntries from '~/models/blog-entries';
@@ -78,7 +78,7 @@ function useTopicStories() {
 }
 
 function useContextValue() {
-    const history = useHistory();
+    const navigate = useNavigate();
     const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} = useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
     const pinnedStory = topicFeatured || (pinnedData && pinnedData[0]);
@@ -93,7 +93,7 @@ function useContextValue() {
     function setPath(href) {
         const {pathname, search, hash} = new window.URL(href, window.location.href);
 
-        history.push(`${pathname}${search}${hash}`, stayHere);
+        navigate(`${pathname}${search}${hash}`, stayHere);
         window.scrollTo(0, 0);
     }
 

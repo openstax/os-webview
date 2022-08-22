@@ -8,7 +8,7 @@ import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {faBookOpen} from '@fortawesome/free-solid-svg-icons/faBookOpen';
 import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import useDialog from '~/pages/my-openstax/dialog/dialog';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import $ from '~/helpers/$';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import './book-details.scss';
@@ -134,7 +134,7 @@ export default function BookDetails({book}) {
     const detailData = $.camelCaseKeys(useDataFromSlug(book.slug)) || {};
     const adoptionStatus = useAdoptionStatus(book);
     const summaryText = detailData.description;
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function goBack(e) {
         e.preventDefault();
@@ -148,7 +148,7 @@ export default function BookDetails({book}) {
 
     function goToPartners(e) {
         e.preventDefault();
-        history.push('/partners', {
+        navigate('/partners', {
             book: book.value,
             redirect: true
         });

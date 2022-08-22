@@ -27,7 +27,8 @@ test('shows all items in table', async () => {
 test('filters', async () => {
     render(<ErrataSummaryLoader />)
     const filters = await screen.findByRole('radiogroup');
+    const user = userEvent.setup();
 
-    userEvent.click(within(filters).queryByText('In Review'));
+    await user.click(within(filters).queryByText('In Review'));
     expect(await getTableRows()).toHaveLength(19);
 });

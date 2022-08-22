@@ -5,8 +5,6 @@ import TabGroup from '~/components/tab-group/tab-group.jsx';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import PeopleTab from './people-tab/people-tab';
-import {useHistory} from 'react-router-dom';
-import $ from '~/helpers/$';
 import './team.scss';
 
 function TeamPage({data: {
@@ -23,14 +21,7 @@ function TeamPage({data: {
     const tabLabels = accordionItems.map((i) => i.title);
     const tabContents = accordionItems.map((i) => i.contentComponent);
     const [selectedLabel, setSelectedLabel] = useState(tabLabels[0]);
-    const history = useHistory();
 
-    function setSelectedAndUpdateUrl(newValue) {
-        const newSearchString = $.replaceSearchTerm(tabLabels, selectedLabel, newValue);
-
-        setSelectedLabel(newValue);
-        history.replace(newSearchString);
-    }
     return (
         <React.Fragment>
             <Hero src={heroImage} alt="">
@@ -48,7 +39,7 @@ function TeamPage({data: {
                     <TabGroup
                         TabTag="h3" labels={tabLabels}
                         selectedLabel={selectedLabel}
-                        setSelectedLabel={setSelectedAndUpdateUrl}
+                        setSelectedLabel={setSelectedLabel}
                     />
                     <ContentGroup activeIndex={tabLabels.indexOf(selectedLabel)}>
                         {tabContents}

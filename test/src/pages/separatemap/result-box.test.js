@@ -30,9 +30,11 @@ function Wrapper() {
     );
 }
 
-it('opens on click of toggle', () => {
+it('opens on click of toggle', async () => {
+    const user = userEvent.setup();
+
     render(<Wrapper />);
     expect(screen.queryAllByText('savings', {exact: false})).toHaveLength(0);
-    userEvent.click(screen.getByRole('switch'));
+    await user.click(screen.getByRole('switch'));
     expect(screen.queryAllByText('savings', {exact: false})).toHaveLength(1);
 });

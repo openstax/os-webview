@@ -179,7 +179,7 @@ class Analytics {
         Reflect.ownKeys(resourceMarker).forEach((resourceBranch) => {
             const marker = resourceMarker[resourceBranch];
 
-            item[resourceBranch].forEach((resource) => {
+            item[resourceBranch]?.forEach((resource) => {
                 this.sourceByUrl[resource.linkDocumentUrl] = `${item.title} ${marker}`;
             });
         });

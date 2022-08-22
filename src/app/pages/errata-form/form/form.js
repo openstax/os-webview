@@ -8,7 +8,7 @@ import FileUploader from './FileUploader';
 import managedInvalidMessage from './InvalidMessage.js';
 import $ from '~/helpers/$';
 import Dialog from '~/components/dialog/dialog';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import cn from 'classnames';
 import './form.scss';
 
@@ -118,16 +118,16 @@ function removeEmptyFileWidgets(formEl) {
 
 function useBannedDialog() {
     const [bannedText, setBannedText] = useState();
-    const history = useHistory();
+    const navigate = useNavigate();
     const handleSubmissionResponse = React.useCallback(
         (json) => {
             if (json.id) {
-                history.push(`/confirmation/errata?id=${json.id}`);
+                navigate(`/confirmation/errata?id=${json.id}`);
             } else if (json.submitted_by_account_id) {
                 setBannedText(json.submitted_by_account_id[0]);
             }
         },
-        [history]
+        [navigate]
     );
 
     // TESTING

@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import MobileSelector from '~/pages/press/mobile-selector/mobile-selector';
 
-test('opens, changes values, and closes', () => {
+test('opens, changes values, and closes', async () => {
     let mobileSelection = 'Press releases';
     const values = [
         'Press releases',
@@ -23,10 +23,11 @@ test('opens, changes values, and closes', () => {
     expect(screen.queryByRole('menuitem')).toBeNull();
 
     const selectorButton = screen.getByRole('button');
+    const user = userEvent.setup();
 
-    userEvent.click(selectorButton);
+    await user.click(selectorButton);
     expect(screen.queryAllByRole('menuitem')).toHaveLength(values.length);
-    userEvent.click(screen.getByText(values[1]));
+    await user.click(screen.getByText(values[1]));
     expect(mobileSelection).toBe(values[1]);
     expect(screen.queryByRole('menuitem')).toBeNull();
 });

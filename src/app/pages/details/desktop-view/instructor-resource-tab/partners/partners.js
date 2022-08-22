@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
@@ -49,12 +49,12 @@ function Blurb({blurb, badgeImage, onClick}) {
 
 export default function Partners({bookAbbreviation, model}) {
     const {title, seeMoreText, blurbs, badgeImage} = model;
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function onClick(event) {
         const destUrl = event.target.getAttribute('href');
 
-        history.push(destUrl, {
+        navigate(destUrl, {
             book: bookAbbreviation,
             redirect: true
         });

@@ -5,7 +5,7 @@ import PartnerDetails from '../partner-details/partner-details';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
-import {useHistory} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import analyticsEvents from '../analytics-events';
 
 function modelFromEntry(entry) {
@@ -26,14 +26,14 @@ function ResultCard({entry, setPartner}) {
         title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
     } = modelFromEntry(entry);
     const summary = {count: ratingCount, rating};
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function onSelect(event) {
         event.preventDefault();
         event.stopPropagation();
         const href = event.currentTarget.getAttribute('href');
 
-        history.replace(href);
+        navigate(href, {replace: true});
         setPartner(entry);
     }
 
@@ -67,7 +67,8 @@ function ResultCard({entry, setPartner}) {
 function usePartnerFromLocation(entries) {
     const searchArgs = window.location.search.substr(1).split('&').map(decodeURIComponent);
     const [partner, setPartner] = useState(entries.find((e) => searchArgs.includes(e.title)));
-    const history = useHistory();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (partner) {
@@ -76,7 +77,7 @@ function usePartnerFromLocation(entries) {
     }, [partner]);
 
     function closePartner() {
-        history.replace(history.location.pathname);
+        navigate(location.pathname, {replace: true});
         setPartner();
     }
 

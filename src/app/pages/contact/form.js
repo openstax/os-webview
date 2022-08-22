@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const options = [
     'General',
@@ -50,7 +50,7 @@ function LabeledInputWithInvalidMessage({
 export default function ContactForm() {
     const [postTo, setPostTo] = useState();
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function onChangeSubject(value) {
         const isPolish = value === 'OpenStax Polska';
@@ -61,7 +61,7 @@ export default function ContactForm() {
         setShowInvalidMessages(true);
     }
     function afterSubmit() {
-        history.push('/confirmation/contact');
+        navigate('/confirmation/contact');
     }
 
     return (

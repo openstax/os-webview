@@ -3,16 +3,16 @@ import {useDialog} from '~/components/dialog/dialog';
 import cookie from '~/helpers/cookie';
 import useAccount from '~/pages/my-openstax/store/use-account';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import './welcome.scss';
 
 function WalkthroughButtons({welcomeDone}) {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function goToMyOpenStax() {
         welcomeDone();
         window.setTimeout(() => {
-            history.push('/');
+            navigate('/');
         }, 100);
     }
 

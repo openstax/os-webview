@@ -24,11 +24,12 @@ test(
     'form appears when role is selected',
     async () => {
         const listBox = screen.queryByRole('listbox');
+        const user = userEvent.setup();
 
-        userEvent.click(listBox);
+        await user.click(listBox);
         const options = await screen.findAllByRole('option', {hidden: true});
         const instructorOption = options.find((o) => o.textContent === 'Instructor');
-        userEvent.click(instructorOption);
+        await user.click(instructorOption);
         await screen.findByRole('form');
     }
 )

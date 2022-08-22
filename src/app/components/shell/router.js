@@ -1,10 +1,10 @@
 import React, {Suspense, useEffect} from 'react';
 import {
-    Switch,
+    Routes,
     Route,
-    Redirect,
+    Navigate,
     useLocation,
-    useHistory,
+    useNavigate,
     useParams
 } from 'react-router-dom';
 import Error404 from '~/pages/404/404';
@@ -59,12 +59,12 @@ function handleExternalLink(href, el) {
 }
 
 function useLinkHandler() {
-    const history = useHistory();
+    const navigate = useNavigate();
     const navigateTo = React.useCallback(
         (path, state = {x: 0, y: 0}) => {
-            history.push(linkHelper.stripOpenStaxDomain(path), state);
+            navigate(linkHelper.stripOpenStaxDomain(path), state);
         },
-        [history]
+        [navigate]
     );
     const linkHandler = React.useCallback(
         // eslint-disable-next-line complexity
@@ -114,8 +114,8 @@ function useLinkHandler() {
 }
 
 function useAnalyticsPageView() {
-    const history = useHistory();
-    const isRedirect = history.location.state?.redirect;
+    const location = useLocation();
+    const isRedirect = location.state?.redirect;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -160,17 +160,15 @@ function FallbackToGeneralPage({name}) {
 
 function ImportedPage({name}) {
     const {Component, loadError} = useImportedComponent(name);
-    const history = useHistory();
+    const {pathname} = useLocation();
 
     useAnalyticsPageView();
 
+    // Scroll to the top when the pathname changes
+    // (Avoids scrolling when going to a new tab)
     useEffect(
-        () => {
-            if (history.action === 'PUSH') {
-                window.scrollTo(0, 0);
-            }
-        },
-        [name, history.action]
+        () => window.scrollTo(0, 0),
+        [name, pathname]
     );
 
     if (loadError) {
@@ -208,59 +206,38 @@ function TopLevelPage() {
     );
 }
 
-function StripTrailingPathsExceptWhereAllowed() {
-    const {name} = useParams();
+function RedirectToCanonicalDetailsPage() {
+    const {title} = useParams();
 
-    if (['blog', 'subjects'].includes(name)) {
-        return (<TopLevelPage />);
-    }
     return (
-        <Switch>
-            <Redirect to={`/${name}`} />
-        </Switch>
+        <Navigate to={`/details/books/${title}`} replace />
     );
 }
 
-function Routes() {
+function MainRoutes() {
     const homeOrMyOpenStax = useHomeOrMyOpenStax();
 
     return (
-        <Switch>
-            <Route path="/" exact>
-                <ImportedPage name={homeOrMyOpenStax} />
-            </Route>
-            <Route path={FOOTER_PAGES} exact>
-                <ImportedPage name="footer-page" />
-            </Route>
-            <Route path="/errata/" exact>
-                <ImportedPage name="errata-summary" />
-            </Route>
-            <Route path="/errata/form/">
-                <ImportedPage name="errata-form" />
-            </Route>
-            <Route path="/errata/">
-                <ImportedPage name="errata-detail" />
-            </Route>
-            <Route path="/textbooks/:title">
-                <Switch>
-                    <Redirect exact from="/textbooks/:title" to="/details/books/:title" />
-                </Switch>
-            </Route>
-            <Route path="/details/books/:title">
-                <ImportedPage name="details" />
-            </Route>
-            <Route path={['/details/:title', '/books/:title']}>
-                <Switch>
-                    <Redirect to="/details/books/:title" />
-                </Switch>
-            </Route>
-            <Route path="/:name/:extra">
-                <StripTrailingPathsExceptWhereAllowed />
-            </Route>
-            <Route path="/:name">
-                <TopLevelPage />
-            </Route>
-        </Switch>
+        <Routes>
+            <Route path="/" element={<ImportedPage name={homeOrMyOpenStax} />} />
+            {
+                FOOTER_PAGES.map(
+                    (path) => <Route path={path} key={path} element={<ImportedPage name="footer-page" />} />
+                )
+            }
+            <Route path="/errata/" element={<ImportedPage name="errata-summary" />} />
+            <Route path="/errata/form/" element={<ImportedPage name="errata-form" />} />
+            <Route path="/errata/*" element={<ImportedPage name="errata-detail" />} />
+            <Route path="/details/books/:title" element={<ImportedPage name="details" />} />
+            <Route path="/details/:title" element={<RedirectToCanonicalDetailsPage />} />
+            <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
+            <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
+            <Route path="/subjects/*" element={<ImportedPage name="subjects" />} />
+            <Route path="/blog/*" element={<ImportedPage name="blog" />} />
+            <Route path="/general/*" element={<ImportedPage name="general" />} />
+            <Route path="/:name" element={<TopLevelPage />} />
+            <Route element={<h1>Fell through</h1>} />
+        </Routes>
     );
 }
 
@@ -284,7 +261,7 @@ export default function Router() {
 
     return (
         <RouterContextProvider>
-            <Routes />
+            <MainRoutes />
         </RouterContextProvider>
     );
 }

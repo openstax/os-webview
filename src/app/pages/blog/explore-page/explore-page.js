@@ -1,6 +1,6 @@
 import React from 'react';
 import useBlogContext from '../blog-context';
-import {useParams, Link, useHistory} from 'react-router-dom';
+import {useParams, Link, useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {WindowContextProvider} from '~/contexts/window';
@@ -52,13 +52,13 @@ function useParamsToSetTopic() {
 export default function ExplorePage() {
     useParamsToSetTopic();
     const {topic, pinnedStory, topicPopular, setPath} = useBlogContext();
-    const history = useHistory();
+    const navigate = useNavigate();
     const goBack = React.useCallback(
         (e) => {
-            history.goBack();
+            navigate(-1);
             e.preventDefault();
         },
-        [history]
+        [navigate]
     );
     const subject = useSubjectSnippetForTopic(topic);
     const heading = useTopicHeading(topic, subject);
