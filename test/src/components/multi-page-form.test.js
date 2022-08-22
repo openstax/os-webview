@@ -15,14 +15,16 @@ const props = {
     }
 };
 
-it('handles next and submit', () => {
+it('handles next and submit', async () => {
+    const user = userEvent.setup();
+
     render(<MultiPageForm {...props} />)
     expect(screen.queryByText('Back')).toHaveAttribute('hidden');
     expect(screen.queryAllByRole('button')).toHaveLength(1);
-    userEvent.click(screen.getByText('Next'));
+    await user.click(screen.getByText('Next'));
     expect(screen.queryByText('Submit')).toHaveAttribute('hidden');
-    userEvent.click(screen.getByText('Next'));
+    await user.click(screen.getByText('Next'));
     expect(screen.queryByText('Next')).toHaveAttribute('hidden');
-    userEvent.click(screen.getByText('Submit'));
+    await user.click(screen.getByText('Submit'));
     expect(submitted).toBe(true);
 });

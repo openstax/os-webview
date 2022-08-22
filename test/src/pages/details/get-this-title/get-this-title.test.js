@@ -29,9 +29,10 @@ test('handles Print Copy dialog', async () => {
 async function expectOptions(value) {
     const options = await screen.findAllByRole('link');
     const expandLink = options[options.length - 1];
+    const user = userEvent.setup();
 
     expect(options).toHaveLength(value);
-    userEvent.click(expandLink);
+    await user.click(expandLink);
 }
 
 test('handles hiding and expanding non-preferred formats', async () => {
@@ -42,14 +43,15 @@ test('handles hiding and expanding non-preferred formats', async () => {
     let toggleLink = options.pop();
 
     expect(options).toHaveLength(3);
+    const user = userEvent.setup();
 
-    userEvent.click(toggleLink);
+    await user.click(toggleLink);
     await screen.findByText('See 1 fewer option');
     options = screen.queryAllByRole('link');
     toggleLink = options.pop();
     expect(options).toHaveLength(4);
 
-    userEvent.click(toggleLink);
+    await user.click(toggleLink);
     await screen.findByText('+ 1 more option...');
     options = screen.queryAllByRole('link');
     toggleLink = options.pop();

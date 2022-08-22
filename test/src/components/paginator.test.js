@@ -10,16 +10,18 @@ function activePage() {
     return activeButton.textContent;
 }
 
-test('operates by button clicks', () => {
+test('operates by button clicks', async () => {
+    const user = userEvent.setup();
+
     render(
         <PaginatorContextProvider contextValueParameters={{initialPage: 2}}>
             <PaginatorControls items="33" />
         </PaginatorContextProvider>
     );
-    userEvent.click(screen.getByText('Next'));
+    await user.click(screen.getByText('Next'));
     expect(activePage()).toBe('3');
-    userEvent.click(screen.getByText('4'));
+    await user.click(screen.getByText('4'));
     expect(activePage()).toBe('4');
-    userEvent.click(screen.getByText('Previous'));
+    await user.click(screen.getByText('Previous'));
     expect(activePage()).toBe('3');
 });

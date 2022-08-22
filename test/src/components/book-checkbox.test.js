@@ -43,10 +43,13 @@ function checkedOnes() {
     return Array.from(cbs).filter((b) => b.getAttribute('aria-checked') === 'true');
 }
 
-test('handles click', () => {
+test('handles click', async () => {
     render(<Wrapped />);
     expect(checkedOnes()).toHaveLength(0);
-    userEvent.click(screen.queryByRole('checkbox'));
+
+    const user = userEvent.setup();
+
+    await user.click(screen.queryByRole('checkbox'));
     expect(checkedOnes()).toHaveLength(1);
 });
 test('handles enter keypress', () => {
