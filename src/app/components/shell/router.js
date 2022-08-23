@@ -209,7 +209,10 @@ function TopLevelPage() {
 function RedirectToCanonicalDetailsPage() {
     const {title} = useParams();
 
-    if (['blog', 'subjects', 'general'].includes(name)) {
+    if (
+        ['blog', 'subjects', 'general', 'confirmation', 'campaign', 'press']
+            .includes(name)
+    ) {
         return (<TopLevelPage />);
     }
     return (
