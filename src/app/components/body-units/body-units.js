@@ -69,6 +69,7 @@ function Document({data}) {
 /* eslint camelcase: 0 */
 const bodyUnits = {
     paragraph: Paragraph,
+    aligned_html: Paragraph,
     aligned_image: AlignedImage,
     pullquote: PullQuote,
     document: Document,
