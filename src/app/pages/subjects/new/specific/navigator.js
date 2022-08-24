@@ -67,12 +67,14 @@ function CategorySectionLinks() {
     );
 }
 
-function OtherSectionLinks({subjectName}) {
+function OtherSectionLinks() {
+    const {learnMoreAboutBooks, learnMoreBlogPosts, learnMoreWebinars} = useSpecificSubjectContext();
+
     return (
         <React.Fragment>
-            <SectionLink id='blog-posts' text={`${subjectName} blog posts`} />
-            <SectionLink id='webinars' text={`${subjectName} webinars`} />
-            <SectionLink id='learn' text="Learn about our books" />
+            <SectionLink id='blog-posts' text={learnMoreBlogPosts} />
+            <SectionLink id='webinars' text={learnMoreWebinars} />
+            <SectionLink id='learn' text={learnMoreAboutBooks} />
         </React.Fragment>
     );
 }
@@ -90,7 +92,7 @@ function useAccordionItems(subjectName) {
         },
         {
             title: intl.formatMessage({id: 'subject.learnMoreTitle'}),
-            contentComponent: <OtherSectionLinks subjectName={subjectName} />
+            contentComponent: <OtherSectionLinks />
         }
     ];
 }
@@ -124,7 +126,7 @@ export default function Navigator({subject}) {
                 <div className="heading">
                     <FormattedMessage id="subject.learnMoreTitle" defaultMessage="Learn more" />
                 </div>
-                <OtherSectionLinks subjectName={subject.html} />
+                <OtherSectionLinks />
             </div>
         </nav>
     );
