@@ -55,6 +55,14 @@ function SpecificSubjectAboutOpenStax() {
     );
 }
 
+function SpecificSubjectInfoBoxes() {
+    const {infoBoxes} = useSpecificSubjectContext();
+
+    return (
+        <InfoBoxes infoBoxes={infoBoxes[0]} />
+    );
+}
+
 function SubjectInContext({subject}) {
     return (
         <SpecificSubjectContextProvider contextValueParameters={subject.value}>
@@ -89,7 +97,7 @@ function SubjectInContext({subject}) {
                                     <SpecificSubjectAboutOpenStax />
                                 </LazyLoad>
                                 <LazyLoad once offset={100} height={400}>
-                                    <InfoBoxes />
+                                    <SpecificSubjectInfoBoxes />
                                 </LazyLoad>
                                 <LazyLoad once offset={100} height={400}>
                                     <PhilanthropicSupport />
