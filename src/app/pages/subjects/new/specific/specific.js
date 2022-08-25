@@ -50,8 +50,6 @@ function SpecificSubjectAboutOpenStax() {
 
     return (
         <AboutOpenStax
-            forceButtonUrl="/subjects"
-            forceButtonText="View all sujects"
             aboutOs={aboutOs.content}
         />
     );
