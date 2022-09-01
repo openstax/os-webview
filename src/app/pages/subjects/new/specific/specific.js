@@ -50,10 +50,16 @@ function SpecificSubjectAboutOpenStax() {
 
     return (
         <AboutOpenStax
-            forceButtonUrl="/subjects"
-            forceButtonText="View all sujects"
             aboutOs={aboutOs.content}
         />
+    );
+}
+
+function SpecificSubjectInfoBoxes() {
+    const {infoBoxes} = useSpecificSubjectContext();
+
+    return (
+        <InfoBoxes infoBoxes={infoBoxes[0]} />
     );
 }
 
@@ -91,7 +97,7 @@ function SubjectInContext({subject}) {
                                     <SpecificSubjectAboutOpenStax />
                                 </LazyLoad>
                                 <LazyLoad once offset={100} height={400}>
-                                    <InfoBoxes />
+                                    <SpecificSubjectInfoBoxes />
                                 </LazyLoad>
                                 <LazyLoad once offset={100} height={400}>
                                     <PhilanthropicSupport />

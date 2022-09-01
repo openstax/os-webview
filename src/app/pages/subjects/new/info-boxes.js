@@ -6,7 +6,7 @@ import './info-boxes.scss';
 
 const eventName = 'Microdonation subjects page donor supported blurb impact link';
 
-function AboutBlurb({blurb: {image, heading, text: description}}) {
+function AboutBlurb({image, heading, text: description}) {
     return (
         <div className="container">
             <div className="blurb" onClick={linkClickTracker(eventName)}>
@@ -24,7 +24,7 @@ export function InfoBoxes({infoBoxes=[]}) {
     return (
         <section className="info-boxes">
             <div className="content">
-                {infoBoxes.map((b, i) => <AboutBlurb blurb={b} key={i} />)}
+                {infoBoxes.map((b, i) => <AboutBlurb {...b} key={i} />)}
             </div>
         </section>
     );
@@ -32,6 +32,7 @@ export function InfoBoxes({infoBoxes=[]}) {
 
 export default function InfoBoxesUsingContext() {
     const {infoBoxes} = useSubjectsContext();
+    const unwrappedData = infoBoxes[0].value;
 
-    return (<InfoBoxes infoBoxes={infoBoxes[0].value} />);
+    return (<InfoBoxes infoBoxes={unwrappedData} />);
 }
