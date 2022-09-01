@@ -2,43 +2,31 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import {useNavigate} from 'react-router-dom';
-import {instructorResourceBoxPermissions} from '../../common/resource-box/resource-box';
+import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
 import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
 import useUserContext from '~/contexts/user';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import './instructor-resources-pane.scss';
 
-function resourceBoxModel(resourceData, userStatus, bookId) {
-    return Object.assign({
-        heading: resourceData.resourceHeading,
-        description: '',
-        creatorFest: resourceData.creatorFestResource,
-        comingSoon: Boolean(resourceData.comingSoonText),
-        comingSoonText: '',
-        k12: resourceData.k12,
-        videoReferenceNumber: resourceData.videoReferenceNumber,
-        trackResource: Boolean(userStatus.isInstructor) &&
-            {
-                book: bookId,
-                // eslint-disable-next-line camelcase
-                account_id: userStatus.userInfo.accounts_id,
-                // eslint-disable-next-line camelcase
-                resource_name: resourceData.resourceHeading
-            },
-        printLink: resourceData.printLink
-    }, instructorResourceBoxPermissions(resourceData, userStatus, 'Instructor resources'));
-}
-
 export function InstructorResourcesPane({model, userStatus}) {
+    const {
+        bookVideoFacultyResources,
+        bookFacultyResources
+    } = useResources(model.slug);
     const bookId = model.id;
-    const featuredResources = model.bookFacultyResources.filter((r) => r.featured);
+
+    for (const r of bookFacultyResources) {
+        r.resource.description = '';
+        r.resource.comingSoonText = '';
+    }
+    const featuredResources = bookFacultyResources.filter((r) => r.featured);
     const featuredModels = featuredResources
         .map((res) => resourceBoxModel(res, userStatus, bookId));
-    const referenceModels = model.bookFacultyResources
+    const referenceModels = bookFacultyResources
         .filter((r) => r.videoReferenceNumber !== null)
         .map((res) => resourceBoxModel(res, userStatus, bookId));
-    const otherModels = model.bookFacultyResources
+    const otherModels = bookFacultyResources
         .filter((r) =>
             !r.featured && r.videoReferenceNumber === null &&
             r.linkText !== 'View resources'
@@ -65,7 +53,7 @@ export function InstructorResourcesPane({model, userStatus}) {
                 <FontAwesomeIcon icon={faSignOutAlt} />
             </a>
             <div className="free-resources-region">
-                <VideoResourceBoxes models={model.bookVideoFacultyResources} referenceModels={referenceModels} />
+                <VideoResourceBoxes models={bookVideoFacultyResources} referenceModels={referenceModels} />
                 <ResourceBoxes models={otherModels} includeCommonsHub />
             </div>
         </React.Fragment>
@@ -75,11 +63,11 @@ export function InstructorResourcesPane({model, userStatus}) {
 function StubUnlessDisplayed({model, userStatus}) {
     const ref = React.useRef();
     const [y, setY] = React.useState(null);
-    const {scrollY} = useWindowContext();
+    const {innerWidth, scrollY} = useWindowContext();
 
     React.useEffect(
         () => setY(ref.current?.getBoundingClientRect().y),
-        [scrollY]
+        [innerWidth, scrollY]
     );
 
     return (
