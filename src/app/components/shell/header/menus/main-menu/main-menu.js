@@ -3,6 +3,7 @@ import useSubjectCategoryContext from '~/contexts/subject-category';
 import useLanguageContext from '~/contexts/language';
 import {LanguageSelectorWrapper, LanguageLink} from '~/components/language-selector/language-selector';
 import {FormattedMessage} from 'react-intl';
+import {useLocation} from 'react-router-dom';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
@@ -13,6 +14,7 @@ function SubjectsMenu() {
     const {language} = useLanguageContext();
     // This will have to be revisited if/when we implement more languages
     const otherLocale = ['en', 'es'].filter((la) => la !== language)[0];
+    const {pathname} = useLocation();
 
     if (!categories.length) {
         return (<li>Loading...</li>);
@@ -29,11 +31,15 @@ function SubjectsMenu() {
                     />
                 )
             }
-            <LanguageSelectorWrapper>
-                <FormattedMessage id="view" defaultMessage="View" />
-                {' '}
-                <LanguageLink locale={otherLocale} />
-            </LanguageSelectorWrapper>
+            {
+                pathname.startsWith('/details/books') ?
+                    null :
+                    <LanguageSelectorWrapper>
+                        <FormattedMessage id="view" defaultMessage="View" />
+                        {' '}
+                        <LanguageLink locale={otherLocale} />
+                    </LanguageSelectorWrapper>
+            }
         </Dropdown>
     );
 }
