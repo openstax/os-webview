@@ -3,10 +3,10 @@ import $ from '~/helpers/$';
 import {usePageData, fetchFromCMS} from '~/helpers/controller/cms-mixin';
 import useRouterContext from '~/components/shell/router-context';
 
-export function Document({title, noindex}) {
+export function Document({title, description, noindex}) {
     useEffect(
-        () => {document.title = title;},
-        [title]
+        () => $.setPageTitleAndDescription(title, description),
+        [title, description]
     );
 
     useEffect(

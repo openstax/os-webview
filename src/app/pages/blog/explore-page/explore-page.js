@@ -51,7 +51,7 @@ function useParamsToSetTopic() {
 
 export default function ExplorePage() {
     useParamsToSetTopic();
-    const {topic, pinnedStory, topicPopular, setPath} = useBlogContext();
+    const {topic, pinnedStory, topicPopular, setPath, pageDescription} = useBlogContext();
     const navigate = useNavigate();
     const goBack = React.useCallback(
         (e) => {
@@ -65,7 +65,7 @@ export default function ExplorePage() {
 
     return (
         <WindowContextProvider>
-            <Document title={`${topic} blog posts - OpenStax`} />
+            <Document title={`${topic} blog posts - OpenStax`} description={pageDescription} />
             <div className="boxed left">
                 <Link to="/blog" onClick={goBack} className="breadcrumb">
                     <FontAwesomeIcon icon={faChevronLeft} />

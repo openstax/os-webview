@@ -3,7 +3,6 @@ import {RawHTML, Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useTextFromSlug} from '~/helpers/controller/cms-mixin';
 import useRouterContext from '~/components/shell/router-context';
 import {useLocation} from 'react-router-dom';
-import $ from '~/helpers/$';
 import './general.scss';
 
 function GeneralPage({html}) {
@@ -33,19 +32,16 @@ export function GeneralPageFromSlug({slug, fallback}) {
     const {head, text: html} = useTextFromSlug(slug);
     const {fail} = useRouterContext();
 
-    React.useEffect(() => {
-        if (head) {
-            $.setPageDescription(head.description);
-        }
-    }, [head]);
-
     if (html instanceof Error) {
         fallback ? fallback() : fail(`Could not load general page from ${slug}`);
     }
 
     return (
         <main>
-            <Document title={head?.title || 'OpenStax'} noindex />
+            <Document
+                title={head?.title || 'OpenStax'} description={head?.description}
+                noindex
+            />
             {html ? <GeneralPage html={html} /> : <h1>Loading...</h1>}
         </main>
     );
