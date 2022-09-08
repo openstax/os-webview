@@ -18,9 +18,11 @@ import timers from './timers';
 import './blog.scss';
 
 export function SearchResultsPage() {
+    const {pageDescription} = useBlogContext();
+
     return (
         <React.Fragment>
-            <Document title="OpenStax Blog Search" />
+            <Document title="OpenStax Blog Search" description={pageDescription} />
             <div className="boxed left">
                 <SearchBar />
             </div>
@@ -31,11 +33,11 @@ export function SearchResultsPage() {
 
 // Exported so it can be tested
 export function MainBlogPage() {
-    const {pinnedStory} = useBlogContext();
+    const {pinnedStory, pageDescription} = useBlogContext();
 
     return (
         <WindowContextProvider>
-            <Document title="OpenStax News" />
+            <Document title="OpenStax News" description={pageDescription} />
             <div className="boxed">
                 <HeadingAndSearchBar>
                     <h1>OpenStax Blog</h1>
