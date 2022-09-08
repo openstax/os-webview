@@ -235,6 +235,9 @@ function MainRoutes() {
             <Route path="/subjects/*" element={<ImportedPage name="subjects" />} />
             <Route path="/blog/*" element={<ImportedPage name="blog" />} />
             <Route path="/general/*" element={<ImportedPage name="general" />} />
+            <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
+            <Route path="/campaign/*" element={<ImportedPage name="campaign" />} />
+            <Route path="/press/*" element={<ImportedPage name="press" />} />
             <Route path="/:name" element={<TopLevelPage />} />
             <Route element={<h1>Fell through</h1>} />
         </Routes>

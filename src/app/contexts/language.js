@@ -5,7 +5,7 @@ import English from '~/lang/en';
 import Spanish from '~/lang/es';
 
 function useContextValue() {
-    const [language, setLanguage] = React.useState(window.localStorage.getItem('oswebLanguage') || 'en');
+    const [language, setLanguage] = React.useState(window.localStorage?.getItem('oswebLanguage') || 'en');
 
     // Copy it to localStorage for later defaulting
     React.useEffect(
