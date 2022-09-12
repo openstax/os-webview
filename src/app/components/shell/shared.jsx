@@ -78,7 +78,7 @@ function useCampaign(stickyData) {
     const mode = getMode(stickyData);
 
     useEffect(() => {
-        if (mode) {
+        if (mode && window.localStorage) {
             const campaignId = `${mode}-${start}`;
             const savedId = window.localStorage.campaignId;
 
