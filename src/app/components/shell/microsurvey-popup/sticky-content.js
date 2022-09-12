@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {useStickyData, useSeenCounter} from '../shared.jsx';
 import analytics from '~/helpers/analytics';
@@ -29,35 +29,44 @@ function trackClick(event) {
     );
 }
 
-export default function useStickyMicrosurveyContent() {
-    const stickyData = useStickyData();
-    const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
-    const ready = Boolean(
-        stickyData && stickyData.mode === 'popup' && !hasBeenSeenEnough
-    );
+function StickyContent({stickyData}) {
+    const ref = React.useRef();
 
-    function StickyContent() {
-        const ref = useRef();
-
-        incrementSeenCount();
-
-        useEffect(() => {
+    React.useEffect(
+        () => {
             const div = ref.current.parentNode;
 
             div.addEventListener('click', trackClick, true);
 
             return () => div.removeEventListener('click', trackClick, true);
-        });
+        },
+        []
+    );
 
-        return (
-            <div className="microsurvey-content" ref={ref}>
-                <RawHTML className="blurb" html={stickyData.body} />
-                <a className="btn primary" href={stickyData.link}>
-                    {stickyData.link_text}
-                </a>
-            </div>
-        );
-    }
+    return (
+        <div className="microsurvey-content" ref={ref}>
+            <RawHTML className="blurb" html={stickyData.body} />
+            <a className="btn primary" href={stickyData.link}>
+                {stickyData.link_text}
+            </a>
+        </div>
+    );
+}
 
-    return [ready, StickyContent];
+export default function useStickyMicrosurveyContent() {
+    const stickyData = useStickyData();
+    const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
+    const BoundStickyContent = React.useCallback(
+        () => {
+            incrementSeenCount();
+            return (<StickyContent stickyData={stickyData} />);
+        },
+        [stickyData, incrementSeenCount]
+    );
+    const ready = Boolean(
+        stickyData?.mode === 'popup' && !hasBeenSeenEnough
+    );
+
+
+    return [ready, BoundStickyContent];
 }
