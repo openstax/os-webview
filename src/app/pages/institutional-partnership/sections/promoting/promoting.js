@@ -31,7 +31,7 @@ export default function Promoting({
                                 <RawHTML html={item.html} />
                                 <a
                                     href={item.link} className="btn primary"
-                                    _target="blank"
+                                    target="_blank" rel="noreferrer"
                                 >
                                     {item.linkText}
                                 </a>

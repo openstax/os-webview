@@ -128,7 +128,7 @@ export function WebviewOption({model}) {
             <div className="option-with-callout">
                 <a
                     href={webviewLink} data-local={isRex} data-track="Online"
-                    _target={isTutor ? '_blank' : ''}
+                    target={isTutor ? '_blank' : ''} rel="noreferrer"
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>

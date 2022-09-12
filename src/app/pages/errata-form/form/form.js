@@ -28,7 +28,7 @@ function ErrorExplanationBox() {
             </div>
             <InvalidMessage />
             <textarea
-                maxLength="4000" name="detail" skip="true"
+                maxLength="4000" name="detail"
                 ref={inputRef} onChange={updateInvalidMessage}
                 required></textarea>
         </React.Fragment>
