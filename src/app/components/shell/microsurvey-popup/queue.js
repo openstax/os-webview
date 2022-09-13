@@ -26,8 +26,8 @@ export default function useMSQueue() {
     );
     const QueuedItem = queue.length > 0 ? queue[0] : null;
 
-    useEnqueueWhenReady(useStickyMicrosurveyContent);
-    useEnqueueWhenReady(useAdoptionMicrosurveyContent);
+    useEnqueueWhenReady(useStickyMicrosurveyContent, queue, setQueue);
+    useEnqueueWhenReady(useAdoptionMicrosurveyContent, queue, setQueue);
 
     return [QueuedItem, nextItem];
 }
