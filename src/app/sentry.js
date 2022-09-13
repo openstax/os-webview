@@ -10,8 +10,12 @@ const ignoreErrors = [
     'TypeError: NetworkError when attempting to fetch resource.',
     'TypeError: cancelled',
     'TypeError: Cancelled',
+    'TypeError: e is undefined',
     'TypeError: Cannot read properties of undefined (reading \'default\')',
+    'TypeError: Cannot read property \'default\' of undefined',
+    'TypeError: null is not an object (evaluating \'this.parentNode.style\')',
     'UnhandledRejection: Non-Error promise rejection captured with value: Failed to load Google Analytics',
+    'UnhandledRejection: Non-Error promise rejection captured with value: undefined',
     'TypeError: Cannot read properties of null (reading \'render\')',
     'TypeError: h is not a function. (In \'h("Could not load ".concat(e))\', \'h\' is undefined)',
     'SyntaxError: Unexpected token \'<\'',
@@ -40,7 +44,11 @@ const ignoreMessages = [
     'operation was aborted',
     'Object Not Found Matching Id',
     'The string did not match the expected pattern.',
-    'chrome is not defined'
+    'chrome is not defined',
+    'Loading chunk',
+    'window.mobileAPI',
+    'wistia.com',
+    't.behaviors.embed.embed'
 ];
 
 const ignoreUrls = [
@@ -75,9 +83,6 @@ function beforeSend(event, hint) {
     }
     if (error?.message?.match(/pulseinsights/i)) {
         event.fingerprint = ['pulseinsights'];
-    }
-    if (error?.message?.match(/loading chunk/i)) {
-        event.fingerprint = ['loading chunk'];
     }
     if (error?.message?.match(/localStorage/)) {
         event.fingerprint = ['localStorage'];
