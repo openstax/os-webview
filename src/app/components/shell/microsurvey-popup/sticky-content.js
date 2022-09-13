@@ -21,12 +21,16 @@ function trackClick(event) {
     trackClickFor(putAwayEl, target,
         ['Microdonation microsurvey X', 'close', 'Microdonation microsurvey']
     );
-    trackClickFor(linkEl, target,
-        ['Microdonation microsurvey learn more link', 'open', linkEl.href]
-    );
-    trackClickFor(buttonEl, target,
-        ['Microdonation microsurvey give button', 'open', buttonEl.href]
-    );
+    if (linkEl) {
+        trackClickFor(linkEl, target,
+            ['Microdonation microsurvey learn more link', 'open', linkEl.href]
+        );
+    }
+    if (buttonEl) {
+        trackClickFor(buttonEl, target,
+            ['Microdonation microsurvey give button', 'open', buttonEl.href]
+        );
+    }
 }
 
 function StickyContent({stickyData}) {
