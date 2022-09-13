@@ -11,12 +11,9 @@ import LanguageSelector, {useLanguageText} from '~/components/language-selector/
 import {useTableOfContents} from './common/hooks';
 import useLanguageContext from '~/contexts/language';
 import useDetailsContext, {DetailsContextProvider} from './context';
-// import {useNavigate} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import './details.scss';
 import './table-of-contents.scss';
-
-// import getCompCopyDialogProps from './comp-copy-dialog-props';
 
 function setPageColor(color) {
     document.querySelector('.details-page').classList.add(color);
