@@ -21,7 +21,7 @@ function BookList({name, data}) {
     const labelId = `${name}-nav`;
 
     return (
-        <nav className="book-list" aria-labelled-by={labelId}>
+        <nav className="book-list" aria-labelledby={labelId}>
             <img className="subject-icon" src={data.icon} role="presentation" />
             <h2 id={labelId}>{name}</h2>
             {data.categories.map((c) => <CategoryLink key={c} subject={subdir} category={c} />)}

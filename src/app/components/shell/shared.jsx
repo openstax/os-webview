@@ -11,20 +11,26 @@ if (!window.localStorage) {
 }
 
 export function useSeenCounter(seenEnough) {
-    const counter = {
-        get value() {
-            return Number(window.localStorage.visitedGive || 0);
-        },
-        set value(newValue) {
-            window.localStorage.visitedGive = newValue;
-        }
-    };
-    const [hasBeenSeenEnough, setHasBeenSeenEnough] = useState(counter.value > seenEnough);
+    const [counter, setCounter] = useState(window.localStorage?.visitedGive || 0);
+    const hasBeenSeenEnough = React.useMemo(
+        () => counter > seenEnough,
+        [counter, seenEnough]
+    )
+    const increment = React.useCallback(
+        () => setCounter(counter + 1),
+        [counter]
+    );
 
-    function increment() {
-        ++counter.value;
-        setHasBeenSeenEnough(counter.value > seenEnough);
-    }
+    useEffect(
+        () => {
+            try {
+                window.localStorage.visitedGive = counter;
+            } catch {
+                console.warn('LocalStorage restricted');
+            }
+        },
+        [counter]
+    );
 
     return [hasBeenSeenEnough, increment];
 }
@@ -72,7 +78,7 @@ function useCampaign(stickyData) {
     const mode = getMode(stickyData);
 
     useEffect(() => {
-        if (mode) {
+        if (mode && window.localStorage) {
             const campaignId = `${mode}-${start}`;
             const savedId = window.localStorage.campaignId;
 

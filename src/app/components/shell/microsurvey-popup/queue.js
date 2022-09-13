@@ -1,32 +1,30 @@
-import {useState, useEffect, useCallback} from 'react';
+import React from 'react';
 import useStickyMicrosurveyContent from './sticky-content';
 import useAdoptionMicrosurveyContent from './adoption-content';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+
+function useEnqueueWhenReady(useContent, queue, setQueue) {
+    const [ready, Item] = useContent();
+
+    React.useEffect(
+        () => {
+            if (ready && !queue.includes(Item)) {
+                setQueue([...queue, Item]);
+            }
+            if (!ready && queue.includes(Item)) {
+                setQueue(queue.slice(1));
+            }
+        },
+        [ready, queue, setQueue, Item]
+    );
+}
 
 export default function useMSQueue() {
-    const [queue, setQueue] = useState([]);
-    const QueuedItem = queue.length > 0 ? queue[0] : null;
-    const nextItem = useCallback(
+    const [queue, setQueue] = React.useState([]);
+    const nextItem = React.useCallback(
         () => setQueue(queue.slice(1)),
         [queue]
     );
-
-    function enqueue(Item) {
-        setQueue([...queue, Item]);
-    }
-    function useEnqueueWhenReady(useContent) {
-        const [ready, Item] = useContent();
-        const [hasBeenEnqueued, toggle] = useToggle(false);
-
-        useEffect(() => {
-            if (ready) {
-                enqueue(Item);
-                toggle();
-            } else if (hasBeenEnqueued) {
-                setQueue(queue.slice(1));
-            }
-        }, [ready]); // eslint-disable-line react-hooks/exhaustive-deps
-    }
+    const QueuedItem = queue.length > 0 ? queue[0] : null;
 
     useEnqueueWhenReady(useStickyMicrosurveyContent);
     useEnqueueWhenReady(useAdoptionMicrosurveyContent);

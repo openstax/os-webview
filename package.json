@@ -54,7 +54,7 @@
         "favicons-webpack-plugin": "^5.0.2",
         "html-webpack-plugin": "^5.5.0",
         "jest": "27",
-        "mapbox-gl": "2.9.2",
+        "mapbox-gl": "2.10.0",
         "node-localstorage": "^2.2.1",
         "node-sass": "^7.0.1",
         "particles.js": "^2.0.0",

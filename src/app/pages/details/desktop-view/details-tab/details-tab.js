@@ -15,7 +15,7 @@ function PolishTab({model}) {
                     <h3>Przejdź do książki</h3>
                     <GetThisTitle model={model} />
                 </div>
-                <div className="let-us-know-region" skip="true">
+                <div className="let-us-know-region">
                     <LetUsKnow title={model.title} />
                 </div>
             </div>

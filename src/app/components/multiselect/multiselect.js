@@ -7,7 +7,7 @@ function HiddenSelect({name, required, elementRef}) {
     const {selectedItems} = useMultiselectContext();
 
     return (
-        <select multi name={name} required={required} ref={elementRef} hidden>
+        <select multiple name={name} required={required} ref={elementRef} hidden>
             {
                 selectedItems.map((i) =>
                     <option key={i.value} value={i.value} selected />

@@ -47,7 +47,7 @@ function GetTheBookDropdown({bookInfo}) {
         <div className="navmenu" ref={ref}>
             <button
                 id={buttonId} type="button" aria-haspopup="true" aria-controls={menuId}
-                aria-isexpanded={isOpen} onClick={() => toggle()}
+                aria-expanded={isOpen} onClick={() => toggle()}
             >
                 <FormattedMessage id="getTheBook" defaultMessage="Get the book" />
                 <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
