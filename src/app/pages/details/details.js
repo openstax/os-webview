@@ -15,8 +15,6 @@ import {WindowContextProvider} from '~/contexts/window';
 import './details.scss';
 import './table-of-contents.scss';
 
-// import getCompCopyDialogProps from './comp-copy-dialog-props';
-
 function setPageColor(color) {
     document.querySelector('.details-page').classList.add(color);
 }
@@ -106,9 +104,8 @@ function AnotherLanguage({locale, translations}) {
 }
 
 function LinksToTranslations() {
-    const {translations: [translations=[]], meta: {locale='en'}} = useDetailsContext();
-    const {language, setLanguage} = useLanguageContext();
-    const lastLocaleRef = React.useRef(locale);
+    // This sets translations
+    const {translations: [translations=[]]} = useDetailsContext();
     const LeadIn = React.useCallback(
         () => <FormattedMessage id="bookAvailableIn" defaultMessage="This book available in" />,
         []
@@ -117,15 +114,6 @@ function LinksToTranslations() {
         ({locale: loc}) => <AnotherLanguage locale={loc} translations={translations} />,
         [translations]
     );
-
-    useEffect(() => {
-        if (lastLocaleRef.current !== locale) {
-            if (language !== locale) {
-                setLanguage(locale);
-            }
-            lastLocaleRef.current = locale;
-        }
-    }, [locale, language, setLanguage]);
 
     if (translations.length === 0) {
         return null;
@@ -148,12 +136,17 @@ export function BookDetails() {
         titleImageUrl: titleImage
     } = model;
     const titleLogo = ''; // For future use
+    const {setLanguage} = useLanguageContext();
 
-    useEffect(() => {
-        setPageColor(model.coverColor);
-        setJsonLd(model);
-        analytics.addResourcesToLookupTable(model);
-    }, [model]);
+    useEffect(
+        () => {
+            setPageColor(model.coverColor);
+            setJsonLd(model);
+            analytics.addResourcesToLookupTable(model);
+            setLanguage(model.meta.locale);
+        },
+        [model, setLanguage]
+    );
 
     return (
         <React.Fragment>
