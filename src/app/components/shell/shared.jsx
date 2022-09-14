@@ -15,7 +15,7 @@ export function useSeenCounter(seenEnough) {
     const hasBeenSeenEnough = React.useMemo(
         () => counter > seenEnough,
         [counter, seenEnough]
-    )
+    );
     const increment = React.useCallback(
         () => setCounter(counter + 1),
         [counter]
