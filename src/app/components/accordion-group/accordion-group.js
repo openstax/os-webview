@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React from 'react';
 import $ from '~/helpers/$';
 import {
     Accordion,
@@ -14,18 +14,20 @@ import {faCircleInfo} from '@fortawesome/free-solid-svg-icons/faCircleInfo';
 import './accordion-group.scss';
 
 function useChevronDirection(forwardOnChange, preExpanded) {
-    const [openTabs, updateOpenTabs] = useState([...preExpanded]);
-
-    function chevronDirection(uuid) {
-        return openTabs.includes(uuid) ? 'up' : 'down';
-    }
-
-    function onChange(newOpenTabs) {
-        if (forwardOnChange) {
-            forwardOnChange(newOpenTabs);
-        }
-        updateOpenTabs(newOpenTabs);
-    }
+    const [openTabs, updateOpenTabs] = React.useState([...preExpanded]);
+    const chevronDirection = React.useCallback(
+        (uuid) => openTabs.includes(uuid) ? 'up' : 'down',
+        [openTabs]
+    );
+    const onChange = React.useCallback(
+        (newOpenTabs) => {
+            if (forwardOnChange) {
+                forwardOnChange(newOpenTabs);
+            }
+            updateOpenTabs(newOpenTabs);
+        },
+        [forwardOnChange, updateOpenTabs]
+    );
 
     return [chevronDirection, onChange];
 }
@@ -106,7 +108,7 @@ export default function AccordionGroup({
     forwardOnChange,
     preExpanded=[]
 }) {
-    const root = useRef();
+    const root = React.useRef();
     const preExpandedUuids = preExpanded.map(toUuid);
     const [chevronDirection, onChange] = useChevronDirection(forwardOnChange, preExpandedUuids);
     const scrollAndChangeChevronPlus = React.useCallback(

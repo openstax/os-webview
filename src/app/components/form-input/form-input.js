@@ -26,11 +26,17 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
 }
 
 function useMatches(pattern, suggestions=[]) {
-    const matches = pattern.length > 1 ?
-        suggestions.filter((s) => s.toLowerCase().includes(pattern)) :
-        [];
-    const exactMatch = matches.includes(pattern) ||
-        (matches.length === 1 && pattern === matches[0].toLowerCase());
+    const matches = React.useMemo(
+        () => pattern.length > 1 ?
+            suggestions.filter((s) => s.toLowerCase().includes(pattern)) :
+            [],
+        [pattern, suggestions]
+    );
+    const exactMatch = React.useMemo(
+        () => matches.includes(pattern) ||
+            (matches.length === 1 && pattern === matches[0].toLowerCase()),
+        [matches, pattern]
+    );
 
     return [matches, exactMatch];
 }

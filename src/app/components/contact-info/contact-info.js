@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select.jsx';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
@@ -33,7 +33,7 @@ const schoolTypeOptions = [
 ].map((name) => ({label: name, value: name}));
 
 function SchoolInfo() {
-    const [schoolLocation, setSchoolLocation] = useState();
+    const [schoolLocation, setSchoolLocation] = React.useState();
 
     return (
         <div className="school-info">
@@ -63,13 +63,13 @@ function SchoolInfo() {
 }
 
 function SchoolSelector() {
-    const [value, setValue] = useState('');
+    const [value, setValue] = React.useState('');
     const {schoolNames, schoolIsOk, selectedSchool} = useMatchingSchools(value);
     const showSchoolInfo = !schoolIsOk && value.length > 3;
-
-    function onChange({target}) {
-        setValue(target.value);
-    }
+    const onChange = React.useCallback(
+        ({target}) => setValue(target.value),
+        []
+    );
 
     React.useLayoutEffect(() => {
         if (showSchoolInfo) {
