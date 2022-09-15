@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
-import shellBus from '~/components/shell/shell-bus';
+import {useMainModal} from '~/helpers/main-class-hooks';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import analytics from '~/helpers/analytics';
@@ -108,14 +108,12 @@ function PopupMessage() {
 }
 
 export default function SeparateMap() {
+    useMainModal();
     useEffect(() => {
-        shellBus.emit('with-modal');
         $.setPageTitleAndDescription(
             'Institution Map - OpenStax',
             'Searchable map of institutions that have adopted OpenStax textbooks'
         );
-
-        return () => shellBus.emit('no-modal');
     }, []);
 
     return (

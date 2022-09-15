@@ -3,6 +3,7 @@ import useLanguageContext, {LanguageContextProvider} from '~/contexts/language';
 import {SubjectCategoryContextProvider} from '~/contexts/subject-category';
 import {UserContextProvider} from '~/contexts/user';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
+import useMainClassContext, {MainClassContextProvider} from '~/contexts/main-class';
 import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
 import retry from '~/helpers/retry';
@@ -10,32 +11,7 @@ import ReactModal from 'react-modal';
 import {FlagContextProvider} from './flag-context';
 import Welcome from './welcome/welcome';
 import TakeoverDialog from './takeover-dialog/takeover-dialog';
-import bus from './shell-bus';
 import cn from 'classnames';
-
-let stickyCount = 0;
-
-function setUpBus(mainEl) {
-    bus.on('with-sticky', () => {
-        ++stickyCount;
-        mainEl.classList.add('with-sticky');
-    });
-
-    bus.on('no-sticky', () => {
-        --stickyCount;
-        if (stickyCount <= 0) {
-            mainEl.classList.remove('with-sticky');
-        }
-    });
-    bus.on('with-modal', () => {
-        mainEl.classList.add('with-modal');
-        document.body.classList.add('no-scroll');
-    });
-    bus.on('no-modal', () => {
-        mainEl.classList.remove('with-modal');
-        document.body.classList.remove('no-scroll');
-    });
-}
 
 function ImportedComponent({name}) {
     const Component = React.useMemo(
@@ -58,14 +34,14 @@ const Footer = () => <ImportedComponent name="footer" />;
 function Main() {
     const {language} = useLanguageContext();
     const ref = React.useRef();
+    const {classes} = useMainClassContext();
 
     React.useEffect(() => {
-        setUpBus(ref.current);
         ReactModal.setAppElement(ref.current);
     }, []);
 
     return (
-        <div id="main" className={cn('lang', language)} ref={ref}>
+        <div id="main" className={cn('lang', language, classes)} ref={ref}>
             <Welcome />
             <TakeoverDialog />
             <Router />
@@ -91,7 +67,9 @@ function App() {
                                 <LowerStickyNote />
                             </div>
                             <SalesforceContextProvider>
-                                <Main />
+                                <MainClassContextProvider>
+                                    <Main />
+                                </MainClassContextProvider>
                             </SalesforceContextProvider>
                             <footer id="footer">
                                 <Footer />

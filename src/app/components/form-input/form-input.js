@@ -1,6 +1,6 @@
 import React, {useState, useRef, useLayoutEffect} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import shellBus from '~/components/shell/shell-bus';
+import {useMainSticky} from '~/helpers/main-class-hooks';
 import cn from 'classnames';
 import './form-input.scss';
 
@@ -45,11 +45,7 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
     if (exactMatch) {
         accept(matches[0]);
     }
-    useLayoutEffect(() => {
-        shellBus.emit('with-sticky');
-
-        return () => shellBus.emit('no-sticky');
-    }, []);
+    useMainSticky();
 
     return (
         <div className="suggestions">
