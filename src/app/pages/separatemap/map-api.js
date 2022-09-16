@@ -1,7 +1,6 @@
 import mapboxgl from 'mapbox-gl';
-import mix from '~/helpers/controller/mixins';
-import busMixin from '~/helpers/controller/bus-mixin';
 import mapboxPromise from '~/models/mapbox';
+// import useMapContext from './map-context';
 
 const settings = window.SETTINGS;
 
@@ -24,13 +23,10 @@ const settings = window.SETTINGS;
 mapboxgl.accessToken = settings.mapboxPK;
 
 function resizeOnLoad(map) {
-    map.on('load', () => {
-        if (map.loaded()) {
-            map.resize();
-        }
-    });
+    map.on('load', () => map.loaded() && map.resize());
 }
 
+// map is the MapboxGL map object; this is my new object
 function setupInteractive(map) {
     resizeOnLoad(map);
     map.on('mouseenter', 'os-schools', () => {
@@ -39,22 +35,11 @@ function setupInteractive(map) {
     map.on('mouseleave', 'os-schools', () => {
         map.getCanvas().style.cursor = '';
     });
-    map.on('click', 'os-schools', (el) => {
-        this.emit('select-school', el.features[0].properties.id);
-    });
     map.on('click', (el) => {
         if (!el.features && this.tooltip) {
             this.tooltip.remove();
         }
     });
-    return map;
-}
-
-function setupStatic(map) {
-    resizeOnLoad(map);
-    map.scrollZoom.disable();
-    map.dragPan.disable();
-    map.doubleClickZoom.disable();
     return map;
 }
 
@@ -65,18 +50,18 @@ function hasLngLat({lngLat}) {
 async function createMap(mapOptions) {
     const mapbox = await mapboxPromise;
 
-    return new mapboxgl.Map(Object.assign({
-        style: mapbox.style
-    }, mapOptions));
+    return new mapboxgl.Map({
+        style: mapbox.style,
+        ...mapOptions
+    });
 }
 
 class BaseClass {
 
     constructor(options) {
-        const interactive = delete options.interactive;
-
+        // This is a promise that yields the MapboxGL map object
         this.loaded = createMap(options).then(
-            interactive ? setupInteractive.bind(this) : setupStatic
+            setupInteractive.bind(this)
         );
         this.initialState = {
             center: options.center,
@@ -162,4 +147,4 @@ class BaseClass {
 
 }
 
-export default mix(BaseClass).with(busMixin);
+export default BaseClass;
