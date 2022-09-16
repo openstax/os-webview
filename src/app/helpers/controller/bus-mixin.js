@@ -57,8 +57,6 @@ export default (superclass) => class extends superclass {
      * Adds bus methods to a class, along with a private internal bus implementation
      * Usually, a component will emit events and its parent will listen and
      * handle the event.
-     * One notable exception: the parent may issue `update-props` events that the
-     * child will handle in its `whenPropsUpdated` method.
      */
 
     constructor(...args) {
@@ -73,12 +71,6 @@ export default (superclass) => class extends superclass {
             super.init(...args);
         }
         this[BUS] = new Bus();
-        this.on('update-props', (obj) => {
-            Object.assign(this, obj);
-            if (this.whenPropsUpdated) {
-                this.whenPropsUpdated(obj);
-            }
-        });
     }
 
     on(...args) {
