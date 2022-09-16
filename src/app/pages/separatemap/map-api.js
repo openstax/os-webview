@@ -17,37 +17,16 @@ const settings = window.SETTINGS;
     const firstLink = document.querySelector('head link[rel="stylesheet"]') ||
         document.querySelector('head title');
 
-    firstLink.parentNode.insertBefore(cssEl, firstLink.nextSibling);
+    firstLink?.parentNode.insertBefore(cssEl, firstLink.nextSibling);
 })();
 
 mapboxgl.accessToken = settings.mapboxPK;
-
-function resizeOnLoad(map) {
-    map.on('load', () => map.loaded() && map.resize());
-}
-
-// map is the MapboxGL map object; this is my new object
-function setupInteractive(map) {
-    resizeOnLoad(map);
-    map.on('mouseenter', 'os-schools', () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', 'os-schools', () => {
-        map.getCanvas().style.cursor = '';
-    });
-    map.on('click', (el) => {
-        if (!el.features && this.tooltip) {
-            this.tooltip.remove();
-        }
-    });
-    return map;
-}
 
 function hasLngLat({lngLat}) {
     return Boolean(lngLat);
 }
 
-async function createMap(mapOptions) {
+async function createMapboxMap(mapOptions) {
     const mapbox = await mapboxPromise;
 
     return new mapboxgl.Map({
@@ -56,51 +35,53 @@ async function createMap(mapOptions) {
     });
 }
 
-class BaseClass {
+export default function createMap(options) {
+    // This is a promise that yields the MapboxGL map object
+    const loaded = createMapboxMap(options);
+    const initialState = {
+        center: options.center,
+        zoom: options.zoom
+    };
 
-    constructor(options) {
-        // This is a promise that yields the MapboxGL map object
-        this.loaded = createMap(options).then(
-            setupInteractive.bind(this)
-        );
-        this.initialState = {
-            center: options.center,
-            zoom: options.zoom
-        };
-        this.tooltip = new mapboxgl.Popup({
-            closeButton: false,
-            closeOnClick: false
-        });
-    }
-
-    setFilters(filterSpec) {
-        this.loaded.then((map) => {
-            map.setFilter('os-schools', filterSpec);
-            map.setFilter('os-schools-shadow-at-8', filterSpec);
-            map.setFilter('os-schools-heat-map', filterSpec);
-        });
-    }
-
-    setBounds(bounds) {
-        this.loaded.then((map) => {
+    function setBounds(bounds) {
+        loaded.then((map) => {
             if (bounds) {
                 map.fitBounds(bounds, {
                     padding: 100,
                     maxZoom: 14
                 });
             } else {
-                map.easeTo(this.initialState);
+                map.easeTo(initialState);
             }
         });
     }
 
-    showPoints(pointList) {
+    function setFilters(filterSpec) {
+        loaded.then((map) => {
+            map.setFilter('os-schools', filterSpec);
+            map.setFilter('os-schools-shadow-at-8', filterSpec);
+            map.setFilter('os-schools-heat-map', filterSpec);
+        });
+    }
+
+    const tooltip = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    function reset() {
+        setFilters();
+        setBounds();
+        tooltip.remove();
+    }
+
+    function showPoints(pointList) {
         const mappable = ({lngLat: [lng, lat]}) => !(lng === 0 && lat === 0);
         const mappableData = pointList.filter(hasLngLat).filter(mappable);
 
-        this.tooltip.remove();
+        tooltip.remove();
         if (mappableData.length === 0) {
-            this.reset();
+            reset();
         } else {
             const bounds = mappableData.reduce(
                 (bound, obj) => bound.extend(obj.lngLat),
@@ -108,18 +89,12 @@ class BaseClass {
             );
             const filterSpec = ['in', 'id', ...(mappableData.map((obj) => obj.pk))];
 
-            this.setFilters(filterSpec);
-            this.setBounds(bounds);
+            setFilters(filterSpec);
+            setBounds(bounds);
         }
     }
 
-    reset() {
-        this.setFilters();
-        this.setBounds();
-        this.tooltip.remove();
-    }
-
-    showTooltip(schoolInfo, flyThere) {
+    function showTooltip(schoolInfo, flyThere) {
         if (!hasLngLat(schoolInfo)) {
             return;
         }
@@ -135,16 +110,37 @@ class BaseClass {
         if (schoolInfo.cityState) {
             html += `<br>${schoolInfo.cityState}`;
         }
-        this.tooltip.setLngLat(schoolInfo.lngLat);
-        this.tooltip.setHTML(html);
-        this.loaded.then((map) => {
-            this.tooltip.addTo(map);
+        tooltip.setLngLat(schoolInfo.lngLat);
+        tooltip.setHTML(html);
+        loaded.then((map) => {
+            tooltip.addTo(map);
         });
         if (flyThere) {
-            this.setBounds((new mapboxgl.LngLatBounds()).extend(schoolInfo.lngLat));
+            setBounds((new mapboxgl.LngLatBounds()).extend(schoolInfo.lngLat));
         }
     }
 
-}
+    loaded.then(
+        (map) => {
+            map.on('load', () => map.loaded() && map.resize());
+            map.on('mouseenter', 'os-schools', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', 'os-schools', () => {
+                map.getCanvas().style.cursor = '';
+            });
+            map.on('click', (el) => {
+                if (!el.features && tooltip) {
+                    tooltip.remove();
+                }
+            });
+        }
+    );
 
-export default BaseClass;
+    return {
+        loaded,
+        tooltip,
+        showTooltip,
+        showPoints
+    };
+}
