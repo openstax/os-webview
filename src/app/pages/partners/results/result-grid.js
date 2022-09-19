@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import Dialog from '~/components/dialog/dialog';
 import useDialogContext, {DialogContextProvider} from './dialog-context';
 import PartnerDetails from '../partner-details/partner-details';
@@ -21,21 +21,22 @@ function modelFromEntry(entry) {
     };
 }
 
-function ResultCard({entry, setPartner}) {
+function ResultCard({entry}) {
     const {
         title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
     } = modelFromEntry(entry);
     const summary = {count: ratingCount, rating};
     const navigate = useNavigate();
+    const onSelect = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const href = event.currentTarget.getAttribute('href');
 
-    function onSelect(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        const href = event.currentTarget.getAttribute('href');
-
-        navigate(href, {replace: true});
-        setPartner(entry);
-    }
+            navigate(href, {replace: true});
+        },
+        [navigate]
+    );
 
     return (
         <a href={`?${title}`} type="button" className="card" onClick={onSelect}>
@@ -65,23 +66,29 @@ function ResultCard({entry, setPartner}) {
 }
 
 function usePartnerFromLocation(entries) {
-    const searchArgs = window.location.search.substr(1).split('&').map(decodeURIComponent);
-    const [partner, setPartner] = useState(entries.find((e) => searchArgs.includes(e.title)));
+    const {pathname, search} = useLocation();
+    const partner = React.useMemo(
+        () => {
+            const paramKeys = Array.from(new window.URLSearchParams(search).keys());
+
+            return entries.find((e) => paramKeys.includes(e.title));
+        },
+        [entries, search]
+    );
     const navigate = useNavigate();
-    const location = useLocation();
+    const closePartner = React.useCallback(
+        () => navigate(pathname, {replace: true}),
+        [pathname, navigate]
+    );
+    const sendDetailEvent = analyticsEvents.usePartnerDetailsEvent();
 
     useEffect(() => {
-        if (partner) {
-            analyticsEvents.partnerDetails(partner.title);
+        if (partner?.title) {
+            sendDetailEvent(partner.title);
         }
-    }, [partner]);
+    }, [sendDetailEvent, partner]);
 
-    function closePartner() {
-        navigate(location.pathname, {replace: true});
-        setPartner();
-    }
-
-    return [partner, setPartner, closePartner];
+    return [partner, closePartner];
 }
 
 function DialogInContext(dialogProps) {
@@ -93,7 +100,7 @@ function DialogInContext(dialogProps) {
 }
 
 export default function ResultGrid({entries, linkTexts}) {
-    const [partner, setPartner, closePartner] = usePartnerFromLocation(entries);
+    const [partner, closePartner] = usePartnerFromLocation(entries);
     const detailData = {...partner, ...linkTexts};
 
     return (
@@ -103,7 +110,6 @@ export default function ResultGrid({entries, linkTexts}) {
                     <ResultCard
                         key={entry.title}
                         entry={entry}
-                        setPartner={setPartner}
                     />
                 )
             }

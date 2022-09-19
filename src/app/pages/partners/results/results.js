@@ -1,6 +1,6 @@
 import React from 'react';
 import ResultGrid from './result-grid';
-import {books, types, advanced, sort, resultCount} from '../store';
+import useSearchContext from '../search-context';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import {useDataFromPromise, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shuffle from 'lodash/shuffle';
@@ -32,7 +32,7 @@ export const equityOptions = [
 
 const equityOptionValues = equityOptions.map((entry) => entry.value);
 
-function filterByBooks(candidates) {
+function filterByBooks(candidates, books) {
     if (books.value.length <= 0) {
         return candidates;
     }
@@ -41,7 +41,7 @@ function filterByBooks(candidates) {
     });
 }
 
-function filterByType(candidates) {
+function filterByType(candidates, types) {
     if (! types.value) {
         return candidates;
     }
@@ -53,7 +53,7 @@ function filterByType(candidates) {
 }
 
 // Custom advanced filter handling
-function filterBy(values, candidates, candidateField) {
+function filterBy(values, candidates, candidateField, advanced) {
     const features = advanced.value
         .filter((f) => values.includes(f));
 
@@ -71,11 +71,12 @@ function filterBy(values, candidates, candidateField) {
 }
 
 // eslint-disable-next-line complexity
-function filterEntries(entries) {
+function useFilteredEntries(entries) {
     let result = shuffle(entries);
+    const {books, types, advanced, sort, resultCount} = useSearchContext();
 
-    result = filterByBooks(result);
-    result = filterByType(result);
+    result = filterByBooks(result, books);
+    result = filterByType(result, types);
 
     if (advanced.value.length > 0) {
         result = result.filter((entry) => {
@@ -86,11 +87,11 @@ function filterEntries(entries) {
                     entry.advancedFeatures.includes(requiredFeature)
                 );
         });
-        result = filterBy(costOptionValues, result, 'cost');
-        result = filterBy(equityOptionValues, result, 'equityRating');
+        result = filterBy(costOptionValues, result, 'cost', advanced);
+        result = filterBy(equityOptionValues, result, 'equityRating', advanced);
     }
 
-    resultCount.value = result.length;
+    resultCount.setValue(result.length);
 
     if (Math.abs(sort.value) === 0) {
         return result;
@@ -191,23 +192,10 @@ const isAlly = (level) => level.localeCompare(allyPartnershipLevel, 'en', {sensi
 
 function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
     const entries = partnerData.map(resultEntry);
-    const [filteredEntries, refreshFilters] = React.useReducer(
-        () => filterEntries(entries),
-        filterEntries(entries)
-    );
+    const filteredEntries = useFilteredEntries(entries);
     const filteredPartners = filteredEntries.filter((e) => !isAlly(e.partnershipLevel || ''));
     const filteredAllies = filteredEntries.filter((e) => isAlly(e.partnershipLevel || ''));
     const defaultAlliesOpen = filteredPartners.length === 0;
-
-    React.useEffect(() => {
-        function handleNotifyFor(store) {
-            return store.on('notify', refreshFilters);
-        }
-
-        const cleanup = [books, types, advanced, sort].map(handleNotifyFor);
-
-        return () => cleanup.forEach((fn) => fn());
-    }, [entries]);
 
     return (
         <React.Fragment>

@@ -1,44 +1,76 @@
+import React from 'react';
 import analytics from '~/helpers/analytics';
-import {books, types, advanced} from './store';
+import useSearchContext from './search-context';
 
-function toLabel(store) {
-    return store.value.join(',') || 'N/A';
+function toLabel(storeValue) {
+    return storeValue.join(',') || 'N/A';
 }
 
-function sendFilterEvent(name) {
-    const category = `Partner tool ${name}`;
+export function useValueChangeEvents() {
+    const {books, types, advanced} = useSearchContext();
+    const filterIsSelected = React.useMemo(
+        () => types.size || advanced.size || books.size,
+        [types.size, advanced.size, books.size]
+    );
+    const sendFilterEvent = React.useCallback(
+        (name) => {
+            const category = `Partner tool ${name}`;
 
-    analytics.sendPageEvent(category, 'filter', toLabel(books));
+            analytics.sendPageEvent(category, 'filter', toLabel(books.value));
+        },
+        [books]
+    );
+    const SAERef = React.useRef();
+
+    SAERef.current = React.useCallback(
+        (actionObj) => {
+            if (actionObj && 'add' in actionObj) {
+                sendFilterEvent(actionObj.add);
+            }
+        },
+        [sendFilterEvent]
+    );
+    const sendAddEvent = React.useMemo(
+        () => SAERef.current,
+        []
+    );
+
+    React.useEffect(
+        () => console.info('*** sendAddEvent updated'),
+        [sendAddEvent]
+    );
+
+    React.useEffect(
+        () => sendAddEvent(types.lastAction),
+        [types.lastAction, sendAddEvent]
+    );
+    React.useEffect(
+        () => sendAddEvent(advanced.lastAction),
+        [advanced.lastAction, sendAddEvent]
+    );
+    React.useEffect(
+        () => {
+            if (books.lastAction?.add && filterIsSelected) {
+                sendFilterEvent(books.value);
+                advanced.value.forEach((advancedFilter) => {
+                    sendFilterEvent(advancedFilter);
+                });
+            }
+        },
+        [books, books.lastAction, advanced, sendFilterEvent, filterIsSelected]
+    );
 }
 
-function sendAddEvent(actionObj) {
-    if ('add' in actionObj) {
-        sendFilterEvent(actionObj.add);
-    }
-}
+function usePartnerDetailsEvent() {
+    const {books} = useSearchContext();
 
-function filterIsSelected() {
-    return types.value || advanced.value.length > 0 || books.value.length > 0;
-}
-
-types.on('notify', sendAddEvent);
-advanced.on('notify', sendAddEvent);
-books.on('notify', (obj) => {
-    const addingBook = typeof obj === 'object' && 'add' in obj;
-
-    if (addingBook && filterIsSelected()) {
-        sendFilterEvent(books.value);
-        advanced.value.forEach((advancedFilter) => {
-            sendFilterEvent(advancedFilter);
-        });
-    }
-});
-
-function partnerDetails(partner) {
-    analytics.sendPageEvent(
-        `Partner tool ${partner} lightbox`,
-        'open',
-        toLabel(books)
+    return React.useCallback(
+        (partner) => analytics.sendPageEvent(
+            `Partner tool ${partner} lightbox`,
+            'open',
+            toLabel(books.value)
+        ),
+        [books]
     );
 }
 
@@ -46,7 +78,7 @@ function lightboxScroll(partner) {
     analytics.sendPageEvent(
         `Partner tool ${partner} lightbox scroll`,
         'scroll',
-        toLabel(books)
+        null
     );
 }
 
@@ -83,7 +115,7 @@ function submitReview(partner) {
 }
 
 export default {
-    partnerDetails,
+    usePartnerDetailsEvent,
     lightboxScroll,
     requestInfo,
     partnerWebsite,
