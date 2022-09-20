@@ -2,6 +2,7 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {useUserModel} from '~/models/usermodel';
 import useMyOpenStaxUser from '~/models/myopenstax-user';
+import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers';
 import debounce from 'lodash/debounce';
 
 const debouncedDebug = debounce((...args) => console.debug(...args), 100);
@@ -46,9 +47,8 @@ function useContextValue() {
         [model]
     );
     const isVerified = model?.accountsModel?.faculty_status === 'confirmed_faculty';
-    const [fetchTime, updateMyOpenStaxUser] = React.useReducer(
-        () => (Date.now()),
-        Date.now()
+    const [fetchTime, updateMyOpenStaxUser] = useRefreshable(
+        () => Date.now()
     );
     const myOpenStaxUser = useMyOpenStaxUser(isVerified, fetchTime);
     const value = React.useMemo(
@@ -63,7 +63,7 @@ function useContextValue() {
                 myOpenStaxUser,
                 updateMyOpenStaxUser
             } : {userStatus, myOpenStaxUser},
-        [model, userStatus, isVerified, myOpenStaxUser]
+        [model, userStatus, isVerified, myOpenStaxUser, updateMyOpenStaxUser]
     );
 
     React.useEffect(() => {

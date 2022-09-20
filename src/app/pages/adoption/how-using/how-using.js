@@ -3,9 +3,12 @@ import FormInput from '~/components/form-input/form-input';
 import './how-using.scss';
 
 function HowManyStudents({book, dispatch}) {
-    function onChange({target: {value}}) {
-        dispatch({[book.value]: value});
-    }
+    const updateBookValue = React.useCallback(
+        ({target: {value}}) => {
+            dispatch({[book.value]: value});
+        },
+        [book, dispatch]
+    );
 
     return (
         <div>
@@ -18,7 +21,7 @@ function HowManyStudents({book, dispatch}) {
                     min: '1',
                     max: '999',
                     required: true,
-                    onChange
+                    onChange: updateBookValue
                 }} />
         </div>
     );

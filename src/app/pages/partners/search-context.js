@@ -1,4 +1,5 @@
 import React from 'react';
+import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import buildContext from '~/components/jsx-helpers/build-context';
 
 function useSet() {
@@ -6,9 +7,8 @@ function useSet() {
         () => new window.Set(),
         []
     );
-    const [value, update] = React.useReducer(
-        () => Array.from(data),
-        []
+    const [value, update] = useRefreshable(
+        () => Array.from(data)
     );
     const [lastAction, setLastAction] = React.useReducer(
         (s, a) => JSON.stringify(s) === JSON.stringify(a) ? s : a
@@ -21,14 +21,14 @@ function useSet() {
             setLastAction({[action]: item});
             update();
         },
-        [data]
+        [data, update]
     );
     const clear = React.useCallback(
         () => {
             data.clear();
             update();
         },
-        [data]
+        [data, update]
     );
 
     return {
