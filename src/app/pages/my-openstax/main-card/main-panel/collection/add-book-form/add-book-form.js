@@ -55,14 +55,17 @@ function InstitutionList({adoption}) {
     const ref = React.useRef();
 
     // Catches any clicks below and validates
-    function onClick() {
-        if (!ref.current) {
-            return;
-        }
-        const checked = ref.current.querySelectorAll('[aria-checked="true"]');
+    const updateValidation = React.useCallback(
+        () => {
+            if (!ref.current) {
+                return;
+            }
+            const checked = ref.current.querySelectorAll('[aria-checked="true"]');
 
-        setValidationMessage(checked.length ? '' : 'Check at least one');
-    }
+            setValidationMessage(checked.length ? '' : 'Check at least one');
+        },
+        []
+    );
 
     React.useEffect(() => {
         setTimeout(onClick, 80); // Give it time to render children
@@ -70,7 +73,7 @@ function InstitutionList({adoption}) {
 
     return (
         <LabeledElement label="Institution(s) where this book would be used">
-            <div className="checkbox-group" onClick={onClick} ref={ref}>
+            <div className="checkbox-group" onClick={updateValidation} ref={ref}>
                 {
                     institutions.map((i) =>
                         <Institution
@@ -88,11 +91,14 @@ function InstitutionList({adoption}) {
 function useOptions() {
     const {adoption} = useSalesforceContext();
 
-    return adoption(['adopted', 'recommended', 'interest'])
+    return React.useMemo(
+        () => adoption(['adopted', 'recommended', 'interest'])
         .map((a) => ({
             label: a.text,
             value: a.value
-        }));
+        })),
+        [adoption]
+    );
 }
 
 function payloadFromFormData(formData, books) {
@@ -127,29 +133,34 @@ export function EditBookForm({book, afterSubmit}) {
     const thisAdoption = adoptions[book.value];
     const [levelOfUseValue, setLevelOfUseValue] = React.useState(thisAdoption[0].stageName);
     const options = useOptions();
+    const onSubmit = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            const formData = new window.FormData(event.target);
+            const payload = payloadFromFormData(formData);
 
-    function onSubmit(event) {
-        event.preventDefault();
-        const formData = new window.FormData(event.target);
-        const payload = payloadFromFormData(formData);
-
-        if (!payload) {
-            return;
-        }
-        update(thisAdoption, payload);
-        afterSubmit();
-    }
+            if (!payload) {
+                return;
+            }
+            update(thisAdoption, payload);
+            afterSubmit();
+        },
+        [update, afterSubmit]
+    );
 
     // stage_name should be 'Previous Adoption'
-    function removeBook(event) {
-        event.preventDefault();
-        update(thisAdoption, payloadForRemove(book.value, thisAdoption));
-        afterSubmit();
-    }
-
-    function changeLevelOfUse({target: {value}}) {
-        setLevelOfUseValue(value);
-    }
+    const removeBook = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            update(thisAdoption, payloadForRemove(book.value, thisAdoption));
+            afterSubmit();
+        },
+        [update, afterSubmit, payloadForRemove]
+    );
+    const changeLevelOfUse = React.useCallback(
+        ({target: {value}}) => setLevelOfUseValue(value),
+        [setLevelOfUseValue]
+    );
 
     return (
         <form className="add-book" onSubmit={onSubmit}>
@@ -189,18 +200,20 @@ export default function AddBookForm({afterSubmit}) {
         .map((b) => b.label);
     const ref = React.useRef();
     const options = useOptions();
+    const onSubmit = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            const formData = new window.FormData(event.target);
+            const payload = payloadFromFormData(formData, books);
 
-    function onSubmit(event) {
-        event.preventDefault();
-        const formData = new window.FormData(event.target);
-        const payload = payloadFromFormData(formData, books);
-
-        if (!payload) {
-            return;
-        }
-        add(payload);
-        afterSubmit();
-    }
+            if (!payload) {
+                return;
+            }
+            add(payload);
+            afterSubmit();
+        },
+        [add, afterSubmit]
+    );
 
     React.useEffect(() => {
         const firstInput = ref.current.querySelector('[name="book"]');

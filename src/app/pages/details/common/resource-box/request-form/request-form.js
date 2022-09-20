@@ -8,10 +8,10 @@ function RequestForm({model, done, afterSubmit}) {
     const {userStatus} = useUserContext();
     const {webtocaseUrl} = useSalesforceContext();
     const [count, setCount] = useState();
-
-    function onCountChange(event) {
-        setCount(event.target.value);
-    }
+    const onCountChange = React.useCallback(
+        (event) => setCount(event.target.value),
+        []
+    );
 
     if (!userStatus || !webtocaseUrl) {
         return null;

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import TabGroup from '~/components/tab-group/tab-group.jsx';
+import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import AlumniTab from './alumni-tab/alumni-tab';

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import useDropdownContext from '../dropdown-context';
 import {useLocation} from 'react-router-dom';
 import './menu-expander.scss';
@@ -7,18 +7,20 @@ export default function MenuExpander({active, onClick}) {
     const ref = React.useRef();
     const location = useLocation();
     const {setActiveDropdown} = useDropdownContext();
+    const onClickAndBlur = React.useCallback(
+        (event) => {
+            onClick(event);
+            ref.current.blur();
+        },
+        [onClick]
+    );
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (active) {
             onClick();
             setActiveDropdown({});
         }
     }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    function onClickAndBlur(event) {
-        onClick(event);
-        ref.current.blur();
-    }
 
     return (
         <button

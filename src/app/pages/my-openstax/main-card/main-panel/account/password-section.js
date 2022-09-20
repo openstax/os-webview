@@ -3,10 +3,10 @@ import { TextInput } from '../common';
 
 function usePasswordItem({ label }) {
     const [value, updateValue] = useState('');
-
-    function onChange(event) {
-        updateValue(event.target.value);
-    }
+    const onChange = React.useCallback(
+        (event) => updateValue(event.target.value),
+        []
+    );
 
     return {
         label,
@@ -19,37 +19,42 @@ function usePasswordItem({ label }) {
 export default function PasswordSection() {
     const [saving, updateSaving] = useState(false);
     const [message, updateMessage] = useState('');
-    const passwordItems = [
-        {
-            label: 'Current password'
-        },
-        {
-            label: 'New password'
-        },
-        {
-            label: 'Verify new password'
-        }
-    ].map(usePasswordItem);
-
-    function allHaveValues() {
-        return passwordItems.every((item) => item.value.length >= 8);
-    }
-
-    function canSave() {
-        return !saving &&
-            allHaveValues() &&
+    const passwordItems = React.useMemo(
+        () => [
+            {
+                label: 'Current password'
+            },
+            {
+                label: 'New password'
+            },
+            {
+                label: 'Verify new password'
+            }
+        ].map(usePasswordItem),
+        []
+    );
+    const allHaveValues = React.useMemo(
+        () => passwordItems.every((item) => item.value.length >= 8),
+        [passwordItems]
+    );
+    const canSave = React.useMemo(
+        () => (!saving &&
+            allHaveValues &&
             passwordItems[1].value === passwordItems[2].value &&
-            passwordItems[0].value !== passwordItems[1].value;
-    }
-
-    function save() {
-        updateSaving(true);
-        window.setTimeout(() => {
-            updateSaving(false);
-            updateMessage('Your password was saved successfully');
-            passwordItems.forEach((item) => item.updateValue(''));
-        }, 300);
-    }
+            passwordItems[0].value !== passwordItems[1].value),
+        [saving, passwordItems, allHaveValues]
+    );
+    const save = React.useCallback(
+        () => {
+            updateSaving(true);
+            window.setTimeout(() => {
+                updateSaving(false);
+                updateMessage('Your password was saved successfully');
+                passwordItems.forEach((item) => item.updateValue(''));
+            }, 300);
+        },
+        [passwordItems]
+    );
 
     useEffect(() => {
         if (passwordItems[0].value.length > 0) {
@@ -68,7 +73,7 @@ export default function PasswordSection() {
                 }
             </div>
             <div className='button-and-message'>
-                <button type='submit' disabled={!canSave()} onClick={save}>Change password</button>
+                <button type='submit' disabled={!canSave} onClick={save}>Change password</button>
                 <div className='message'>{message}</div>
             </div>
         </section>

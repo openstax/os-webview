@@ -9,17 +9,22 @@ import './book-options.scss';
 function BookOption({book}) {
     const {select, deselect, isSelected} = useMultiselectContext();
     const {toggle} = useToggleContext();
-    const toggleBook = () => isSelected(book) ? deselect(book) : select(book);
-
-    function onKeyDown(event) {
-        if (event.key === 'Escape') {
-            event.preventDefault();
-            event.stopPropagation();
-            toggle();
-        } else {
-            $.treatSpaceOrEnterAsClick(event);
-        }
-    }
+    const toggleBook = React.useCallback(
+        () => isSelected(book) ? deselect(book) : select(book),
+        [book, isSelected, deselect, select]
+    );
+    const onKeyDown = React.useCallback(
+        (event) => {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                event.stopPropagation();
+                toggle();
+            } else {
+                $.treatSpaceOrEnterAsClick(event);
+            }
+        },
+        [toggle]
+    );
 
     return (
         <span

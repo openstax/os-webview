@@ -5,10 +5,10 @@ import './mobile-selector.scss';
 
 function MenuItem({selectedValue, value, onChange}) {
     const selectedClass = value === selectedValue ? 'selected' : null;
-
-    function onClick() {
-        onChange(value);
-    }
+    const onClick = React.useCallback(
+        () => onChange(value),
+        [onChange, value]
+    );
 
     return (
         <div role="menuitem" className={selectedClass} onClick={onClick}>{value}</div>
@@ -31,14 +31,17 @@ function Menu({selectedValue, values, onChange}) {
 
 export default function MobileSelector({selectedValue, values, onChange}) {
     const [showingMenu, setShowingMenu] = useState(false);
-
-    function toggleShowing() {
-        setShowingMenu(!showingMenu);
-    }
-    function selectItem(value) {
-        setShowingMenu(false);
-        onChange(value);
-    }
+    const toggleShowing = React.useCallback(
+        () => setShowingMenu(!showingMenu),
+        [showingMenu]
+    );
+    const selectItem = React.useCallback(
+        (value) => {
+            setShowingMenu(false);
+            onChange(value);
+        },
+        [onChange]
+    );
 
     return (
         <div className="mobile-selector">

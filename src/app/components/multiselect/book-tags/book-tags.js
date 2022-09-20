@@ -12,11 +12,13 @@ import './book-tags.scss';
 
 function Tag({item}) {
     const {deselect} = useMultiselectContext();
-
-    function onClick(event) {
-        event.stopPropagation();
-        deselect(item);
-    }
+    const onClick = React.useCallback(
+        (event) => {
+            event.stopPropagation();
+            deselect(item);
+        },
+        [deselect, item]
+    );
 
     return (
         <span className="removable-tag">
@@ -34,10 +36,10 @@ function Filter() {
     const {filter, setFilter} = useSFBookContext();
     const {toggle} = useToggleContext();
     const ref = React.useRef();
-
-    function onChange({target: {value}}) {
-        setFilter(value);
-    }
+    const onChange = React.useCallback(
+        ({target: {value}}) => setFilter(value),
+        [setFilter]
+    );
 
     // Force toggle open if using filter
     // If filter is cleared, close toggle and refocus to input (after toggle grabs focus)

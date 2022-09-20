@@ -159,11 +159,13 @@ function resultEntry(pd) {
 
 function SeeMore({defaultOpen, children}) {
     const [opened, toggle] = useToggle(false);
-
-    function onClick(event) {
-        event.preventDefault();
-        toggle();
-    }
+    const onClick = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            toggle();
+        },
+        [toggle]
+    );
 
     if (defaultOpen) {
         return children;
@@ -216,11 +218,14 @@ function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
 
 export default function Results({linkTexts, headerTexts}) {
     const partnerData = useDataFromPromise(partnerFeaturePromise);
+    const visiblePartners = React.useMemo(
+        () => partnerData?.filter((e) => e.visible_on_website),
+        [partnerData]
+    );
 
     if (!partnerData) {
         return null;
     }
-    const visiblePartners = partnerData.filter((e) => e.visible_on_website);
 
     return (
         <section className="results boxed">

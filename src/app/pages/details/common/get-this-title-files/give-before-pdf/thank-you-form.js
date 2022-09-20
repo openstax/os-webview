@@ -10,22 +10,24 @@ function FormWithAfterSubmit({
     ...formProps
 }) {
     const iframeRef = React.useRef();
-
-    function onSubmit(event) {
-        if (firstOnSubmit) {
-            firstOnSubmit(event);
-            if (event.defaultPrevented) {
-                return;
+    const onSubmit = React.useCallback(
+        (event) => {
+            if (firstOnSubmit) {
+                firstOnSubmit(event);
+                if (event.defaultPrevented) {
+                    return;
+                }
             }
-        }
-        const iframe = iframeRef.current;
-        const runAfterSubmit = () => {
-            afterSubmit();
-            iframe.removeEventListener('load', runAfterSubmit);
-        };
+            const iframe = iframeRef.current;
+            const runAfterSubmit = () => {
+                afterSubmit();
+                iframe.removeEventListener('load', runAfterSubmit);
+            };
 
-        iframe.addEventListener('load', runAfterSubmit);
-    }
+            iframe.addEventListener('load', runAfterSubmit);
+        },
+        [firstOnSubmit, afterSubmit]
+    );
 
     return (
         <React.Fragment>
@@ -46,11 +48,13 @@ export default function ThankYou({link, close}) {
     const first = userModel?.first_name;
     const last = userModel?.last_name;
     const school = userModel?.self_reported_school;
-
-    function afterSubmit() {
-        window.open(link);
-        close();
-    }
+    const afterSubmit = React.useCallback(
+        () => {
+            window.open(link);
+            close();
+        },
+        [link, close]
+    );
 
     return (
         <FormWithAfterSubmit

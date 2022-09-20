@@ -8,16 +8,21 @@ import './search-bar.scss';
 
 function SearchInput() {
     const {searchString, setSearchString, doSearch} = useSearchContext();
-
-    function onChange(event) {
-        setSearchString(event.target.value);
-    }
-    function searchOnEnter(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            doSearch();
-        }
-    }
+    const onChange = React.useCallback(
+        (event) => {
+            setSearchString(event.target.value);
+        },
+        [setSearchString]
+    );
+    const searchOnEnter = React.useCallback(
+        (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                doSearch();
+            }
+        },
+        [doSearch]
+    );
 
     return (
         <input
@@ -29,16 +34,19 @@ function SearchInput() {
 
 function ClearButton() {
     const {searchString, setSearchString} = useSearchContext();
-
-    function clearSearch() {
-        setSearchString('');
-    }
-    function clearByKey(event) {
-        if (['Enter', ' '].includes(event.key)) {
-            event.preventDefault();
-            clearSearch();
-        }
-    }
+    const clearSearch = React.useCallback(
+        () => setSearchString(''),
+        [setSearchString]
+    );
+    const clearByKey = React.useCallback(
+        (event) => {
+            if (['Enter', ' '].includes(event.key)) {
+                event.preventDefault();
+                clearSearch();
+            }
+        },
+        [clearSearch]
+    );
     const clearHidden = searchString.length === 0;
 
     return (

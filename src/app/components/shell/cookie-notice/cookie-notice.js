@@ -16,11 +16,13 @@ function acknowledged() {
 export default function ShowNoticeOrNot() {
     const [showCookieDialog, toggle] = useToggle();
     const {userModel} = useUserContext();
-
-    function onClose() {
-        cookie.setKey(ACKNOWLEDGEMENT_KEY);
-        toggle();
-    }
+    const onClose = React.useCallback(
+        () => {
+            cookie.setKey(ACKNOWLEDGEMENT_KEY);
+            toggle();
+        },
+        [toggle]
+    );
 
     React.useEffect(
         () => { // eslint-disable-line complexity

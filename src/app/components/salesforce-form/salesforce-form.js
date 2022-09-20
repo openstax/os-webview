@@ -20,24 +20,22 @@ export function HiddenFields({leadSource}) {
     );
 }
 
-export default function SfForm({children, postTo, afterSubmit}) {
+function SfForm({children, postTo, afterSubmit}) {
     const [listening, setListening] = React.useState(false);
     const {webtocaseUrl, debug, oid} = useSalesforceContext();
-
-    if (!webtocaseUrl) {
-        return (<div>Loading...</div>);
-    }
-
-    function onSubmit() {
-        setListening(true);
-    }
-
-    function onLoad() {
-        if (listening && afterSubmit) {
-            setListening(false);
-            afterSubmit();
-        }
-    }
+    const onSubmit = React.useCallback(
+        () => setListening(true),
+        []
+    );
+    const onLoad = React.useCallback(
+        () => {
+            if (listening && afterSubmit) {
+                setListening(false);
+                afterSubmit();
+            }
+        },
+        [listening, afterSubmit]
+    );
 
     return (
         <React.Fragment>
@@ -61,4 +59,14 @@ export default function SfForm({children, postTo, afterSubmit}) {
             </form>
         </React.Fragment>
     );
+}
+
+export default function SfFormOrLoading(formParams) {
+    const {webtocaseUrl} = useSalesforceContext();
+
+    if (!webtocaseUrl) {
+        return (<div>Loading...</div>);
+    }
+
+    return (<SfForm {...formParams} />);
 }

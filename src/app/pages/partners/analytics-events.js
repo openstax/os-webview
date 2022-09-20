@@ -30,14 +30,10 @@ export function useValueChangeEvents() {
         },
         [sendFilterEvent]
     );
-    const sendAddEvent = React.useMemo(
-        () => SAERef.current,
+    // Some indirection to prevent duplicate calls due to updated hook
+    const sendAddEvent = React.useCallback(
+        (...args) => SAERef.current(...args),
         []
-    );
-
-    React.useEffect(
-        () => console.info('*** sendAddEvent updated'),
-        [sendAddEvent]
     );
 
     React.useEffect(

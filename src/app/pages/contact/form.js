@@ -51,18 +51,22 @@ export default function ContactForm() {
     const [postTo, setPostTo] = useState();
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
     const navigate = useNavigate();
+    const onChangeSubject = React.useCallback(
+        (value) => {
+            const isPolish = value === 'OpenStax Polska';
 
-    function onChangeSubject(value) {
-        const isPolish = value === 'OpenStax Polska';
-
-        setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : null);
-    }
-    function beforeSubmit() {
-        setShowInvalidMessages(true);
-    }
-    function afterSubmit() {
-        navigate('/confirmation/contact');
-    }
+            setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : null);
+        },
+        [setPostTo]
+    );
+    const beforeSubmit = React.useCallback(
+        () => setShowInvalidMessages(true),
+        [setShowInvalidMessages]
+    );
+    const afterSubmit = React.useCallback(
+        () => navigate('/confirmation/contact'),
+        [navigate]
+    );
 
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>

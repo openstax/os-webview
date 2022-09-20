@@ -10,21 +10,24 @@ import './edit-institutions.scss';
 // Return suggestions, and an onChange that updates suggestions
 function useSchoolSuggestions() {
     const [schools, setSchools] = useState([]);
-    const onChange = (event) => {
-        const value = event.target.value;
+    const onChange = React.useCallback(
+        (event) => {
+            const value = event.target.value;
 
-        if (value.length > 1) {
-            sfApiFetch('schools', `/search?name=${value}`)
-                .then((schoolList) => {
-                    setSchools(schoolList.map((s) => ({
-                        label: s.name,
-                        value: s.salesforce_id
-                    })));
-                });
-        } else {
-            setSchools([]);
-        }
-    };
+            if (value.length > 1) {
+                sfApiFetch('schools', `/search?name=${value}`)
+                    .then((schoolList) => {
+                        setSchools(schoolList.map((s) => ({
+                            label: s.name,
+                            value: s.salesforce_id
+                        })));
+                    });
+            } else {
+                setSchools([]);
+            }
+        },
+        []
+    );
 
     return [schools, onChange];
 }
@@ -56,10 +59,13 @@ function scratchReducer(state, [type, payload]) {
 
 function useScratchInstitutions() {
     const {institutions, primarySchoolId} = useInstitutions();
-    const institutionsWithPrimaryFlag = institutions.map((i) => {
-        i.primary = i.id === primarySchoolId;
-        return i;
-    });
+    const institutionsWithPrimaryFlag = React.useMemo(
+        () => institutions.map((i) => {
+            i.primary = i.id === primarySchoolId;
+            return i;
+        }),
+        [institutions, primarySchoolId]
+    );
     const [data, dispatch] = React.useReducer(scratchReducer, institutionsWithPrimaryFlag);
 
     useEffect(() => {
@@ -109,15 +115,20 @@ function InstitutionInput({dispatch}) {
 }
 
 function DeletableRow({institution, dispatch}) {
-    function doDelete(event) {
-        event.preventDefault();
-        dispatch(['remove', institution]);
-    }
-
-    function makePrimary(event) {
-        event.preventDefault();
-        dispatch(['makePrimary', institution]);
-    }
+    const doDelete = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            dispatch(['remove', institution]);
+        },
+        [dispatch, institution]
+    );
+    const makePrimary = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            dispatch(['makePrimary', institution]);
+        },
+        [dispatch, institution]
+    );
 
     return (
         <div className="table-row">
@@ -139,15 +150,17 @@ function EditInstitutions({onPutAway}) {
     const {save, setPrimary} = useInstitutions();
     const nonDeletableInstitutions = institutions.filter((i) => i.primary);
     const deletableInstitutions = institutions.filter((i) => !i.primary);
+    const onSave = React.useCallback(
+        () => {
+            const primaryInstitution = institutions.find((i) => i.primary);
 
-    function onSave() {
-        const primaryInstitution = institutions.find((i) => i.primary);
-
-        if (primaryInstitution) {
-            setPrimary(primaryInstitution.id);
-        }
-        save(institutions.map((obj) => obj.id)).then(onPutAway);
-    }
+            if (primaryInstitution) {
+                setPrimary(primaryInstitution.id);
+            }
+            save(institutions.map((obj) => obj.id)).then(onPutAway);
+        },
+        [institutions, setPrimary, save, onPutAway]
+    );
 
     return (
         <div className="edit-institutions">
@@ -181,11 +194,13 @@ function EditInstitutions({onPutAway}) {
 
 export default function EditInstitutionsDialogLink({text}) {
     const [Dialog, open, close] = useDialog();
-
-    function onClick(e) {
-        e.preventDefault();
-        open();
-    }
+    const onClick = React.useCallback(
+        (e) => {
+            e.preventDefault();
+            open();
+        },
+        [open]
+    );
 
     return (
         <a href={text} className="edit-link" onClick={onClick}>

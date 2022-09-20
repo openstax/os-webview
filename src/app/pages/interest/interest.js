@@ -129,11 +129,13 @@ export default function InterestForm() {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef();
-
-    function onPageChange(page) {
-        setHideRoleSelector(page > 1);
-        ref.current.scrollIntoView();
-    }
+    const onPageChange = React.useCallback(
+        (page) => {
+            setHideRoleSelector(page > 1);
+            ref.current.scrollIntoView();
+        },
+        []
+    );
 
     useEffect(() => {
         $.setPageTitleAndDescription('Interest Form');

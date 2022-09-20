@@ -33,11 +33,13 @@ export default function ErrorTypeSelector() {
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
     const [selectedError, updateSelectedError] = useState();
     const helpBoxVisible = selectedError === 'Other' ? 'visible' : 'not-visible';
-
-    function onChange(event) {
-        updateSelectedError(event.target.value);
-        updateInvalidMessage();
-    }
+    const onChange = React.useCallback(
+        (event) => {
+            updateSelectedError(event.target.value);
+            updateInvalidMessage();
+        },
+        [updateSelectedError, updateInvalidMessage]
+    );
 
     return (
         <React.Fragment>

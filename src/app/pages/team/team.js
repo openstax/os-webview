@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Hero from '~/components/hero/hero';
-import TabGroup from '~/components/tab-group/tab-group.jsx';
+import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import PeopleTab from './people-tab/people-tab';

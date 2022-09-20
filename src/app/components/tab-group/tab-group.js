@@ -4,6 +4,13 @@ import './tab-group.scss';
 
 function Tab({label, selectedLabel, setSelectedLabel, TabTag}) {
     const ref = useRef();
+    const blurAndSetLabel = React.useCallback(
+        (event) => {
+            event.currentTarget.blur();
+            setSelectedLabel(label);
+        },
+        [setSelectedLabel, label]
+    );
 
     // Couldn't get this to work as a normal attribute expression;
     // it would not remove the aria-current attribute, only its value
@@ -15,17 +22,12 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag}) {
         }
     }, [label, selectedLabel]);
 
-    function onClick(event) {
-        event.currentTarget.blur();
-        setSelectedLabel(label);
-    }
-
     return (
         <TabTag
             ref={ref}
             className="tab"
             role="link" tabIndex="0"
-            onClick={onClick}
+            onClick={blurAndSetLabel}
             onKeyDown={$.treatSpaceOrEnterAsClick}
         >
             {label}

@@ -56,7 +56,10 @@ function Stars({rating, setRating}) {
 export function useMyReview() {
     const {reviews} = usePartnerContext();
     const {uuid} = useUserContext();
-    const myReview = reviews.find((r) => r.submittedByAccountUuid === uuid);
+    const myReview = React.useMemo(
+        () => reviews.find((r) => r.submittedByAccountUuid === uuid),
+        [reviews, uuid]
+    );
 
     return myReview;
 }

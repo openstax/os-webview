@@ -26,21 +26,27 @@ export default function FormRadioGroup({
     const [validationMessage, setValidationMessage] = useState('');
     const checkedValue = options.find((opt) => opt.checked)?.value;
     const [selectedValue, setSelectedValue] = useState(checkedValue);
+    const validate = React.useCallback(
+        () => {
+            const invalid = ref.current.querySelector(':invalid');
 
-    function validate() {
-        const invalid = ref.current.querySelector(':invalid');
+            setValidationMessage(invalid ? invalid.validationMessage : '');
+        },
+        []
+    );
+    const onChange = React.useCallback(
+        ({target: {value}}) => {
+            setSelectedValue(value);
+            validate();
+        },
+        [validate]
+    );
+    const passThruProps = React.useMemo(
+        () => ({name, required, selectedValue, onChange}),
+        [name, required, selectedValue, onChange]
+    );
 
-        setValidationMessage(invalid ? invalid.validationMessage : '');
-    }
-
-    function onChange({target: {value}}) {
-        setSelectedValue(value);
-        validate();
-    }
-
-    React.useEffect(validate, []);
-
-    const passThruProps = {name, required, selectedValue, onChange};
+    React.useEffect(validate, [validate]);
 
     return (
         <div className='form-radiogroup'>
