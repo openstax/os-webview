@@ -1,8 +1,10 @@
 import buildContext from '~/components/jsx-helpers/build-context';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 
+const fpdParams = {slug: 'press'};
+
 function useContextValue() {
-    const [data] = usePageData({slug: 'press'});
+    const [data] = usePageData(fpdParams);
 
     return data;
 }

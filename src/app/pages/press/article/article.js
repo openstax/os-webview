@@ -49,7 +49,12 @@ function Article({data}) {
 }
 
 export function ArticleLoader({slug}) {
-    const [data, statusPage] = usePageData({slug, preserveWrapping: true});
+    const [data, statusPage] = usePageData(
+        React.useMemo(
+            () => ({slug, preserveWrapping: true}),
+            [slug]
+        )
+    );
     const {fail} = useRouterContext();
 
     if (data?.error) {

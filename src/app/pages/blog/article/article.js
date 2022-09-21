@@ -175,7 +175,12 @@ export function Article({data}) {
 }
 
 function ArticleLoader({slug, onLoad}) {
-    const [data, statusPage] = usePageData({slug, preserveWrapping: true});
+    const [data, statusPage] = usePageData(
+        React.useMemo(
+            () => ({slug, preserveWrapping: true}),
+            [slug]
+        )
+    );
     const {fail} = useRouterContext();
 
     React.useEffect(

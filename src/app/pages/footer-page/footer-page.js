@@ -10,9 +10,15 @@ const specialSlugFromPath = {
 
 export default function FooterPage() {
     const {pathname} = useLocation();
-    const slugEnd = specialSlugFromPath[pathname] || pathname;
-    const slug = `pages${slugEnd}`;
-    const [data, statusPage] = usePageData({slug});
+    const fpdParams = React.useMemo(
+        () => {
+            const slugEnd = specialSlugFromPath[pathname] || pathname;
+
+            return {slug: `pages${slugEnd}`};
+        },
+        [pathname]
+    );
+    const [data, statusPage] = usePageData(fpdParams);
 
     if (statusPage) {
         return statusPage;

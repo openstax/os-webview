@@ -31,15 +31,18 @@ function reloadDisqus() {
 }
 
 export default function DisqusForm() {
-    useEffect(() => {
-        const disqusScript = d.querySelector('script[src*="openstax.disqus.com"]');
+    useEffect(
+        () => {
+            const disqusScript = d.querySelector('script[src*="openstax.disqus.com"]');
 
-        if (disqusScript) {
-            reloadDisqus();
-        } else {
-            loadDisqus();
-        }
-    });
+            if (disqusScript) {
+                reloadDisqus();
+            } else {
+                loadDisqus();
+            }
+        },
+        []
+    );
 
     return (
         <div id="disqus_thread" className="disqus" />

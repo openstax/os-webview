@@ -4,10 +4,10 @@ import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Form from './form';
 import './contact.scss';
 
-const slug = 'pages/contact';
+const fpdParams = {slug: 'pages/contact'};
 
 export default function ContactPage() {
-    const [pageData, statusPage] = usePageData({slug});
+    const [pageData, statusPage] = usePageData(fpdParams);
 
     if (statusPage) {
         return statusPage;

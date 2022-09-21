@@ -2,10 +2,10 @@ import React from 'react';
 import {usePageData} from '~/helpers/controller/cms-mixin';
 import './adopters.scss';
 
-const slug = 'adopters';
+const fpdParams = {slug: 'adopters'};
 
 export default function Adopters() {
-    const [pageData, statusPage] = usePageData({slug});
+    const [pageData, statusPage] = usePageData(fpdParams);
 
     if (statusPage) {
         return statusPage;
