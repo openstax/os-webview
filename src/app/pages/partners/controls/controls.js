@@ -7,10 +7,10 @@ import {books, types, advanced, sort, clearStores} from '../store';
 import BookOptions from './book-options/book-options';
 import AdvancedOptions from './advanced-options/advanced-options';
 import {useLocation} from 'react-router-dom';
+import {useMainSticky} from '~/helpers/main-class-hooks';
 import cn from 'classnames';
 import './controls.scss';
 import './button-with-popover.scss';
-import shellBus from '~/components/shell/shell-bus';
 
 export const sortOptions = [
     {
@@ -94,18 +94,17 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
         return (openTab === 0 ? 'triangle-dark' : 'triangle-light');
     }
 
+    useMainSticky();
     useEffect(() => {
         function closeAnyOpenButton() {
             setOpenButton(null);
         }
         window.addEventListener('click', closeAnyOpenButton);
-        shellBus.emit('with-sticky');
         clearStores();
         preSelectBooks(location.state);
 
         return () => {
             window.removeEventListener('click', closeAnyOpenButton);
-            shellBus.emit('no-sticky');
         };
     }, [location.state]);
 

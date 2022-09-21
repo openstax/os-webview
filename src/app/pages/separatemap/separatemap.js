@@ -1,55 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
-import shellBus from '~/components/shell/shell-bus';
+import {useMainModal} from '~/helpers/main-class-hooks';
 import $ from '~/helpers/$';
 import cn from 'classnames';
 import analytics from '~/helpers/analytics';
-import {queryById} from '~/models/querySchools';
-import Map from '~/helpers/map-api';
 import SearchBox from './search-box/search-box';
+import {MapContextProvider} from './map-context';
 import './separatemap.scss';
-
-function useMap() {
-    const [map, setMap] = useState();
-    const [selectedSchool, setSelectedSchool] = useState();
-
-    useEffect(() => {
-        const mapZoom = $.isMobileDisplay() ? 2 : 3;
-
-        setMap(new Map({
-            container: 'mapd',
-            center: [-95.712891, 37.090240],
-            zoom: mapZoom,
-            pitchWithRotate: false,
-            dragRotate: false,
-            touchZoomRotate: false,
-            interactive: true
-        }));
-    }, []);
-
-    useEffect(() => {
-        if (map) {
-            const container = document.getElementById('mapd');
-
-            container.addEventListener('click', (event) => {
-                const delegateTarget = event.target.closest('.mapboxgl-popup-content .put-away');
-
-                if (delegateTarget) {
-                    map.tooltip.remove();
-                }
-            });
-            map.on('select-school', (id) => {
-                queryById(id).then((schoolInfo) => {
-                    setSelectedSchool(schoolInfo);
-                });
-            });
-        }
-    }, [map]);
-
-    return [map, selectedSchool];
-}
 
 function GoBackControl() {
     return (
@@ -67,14 +26,10 @@ function GoBackControl() {
 
 function SearchBoxDiv() {
     const [minimized, toggle] = useToggle(false);
-    const [map, selectedSchool] = useMap();
 
     return (
         <div className={cn('search-box-region', {minimized})}>
-            <SearchBox
-                map={map} minimized={minimized} toggle={toggle}
-                selectedSchool={selectedSchool}
-            />
+            <SearchBox minimized={minimized} toggle={toggle} />
         </div>
     );
 }
@@ -108,22 +63,23 @@ function PopupMessage() {
 }
 
 export default function SeparateMap() {
-    useEffect(() => {
-        shellBus.emit('with-modal');
-        $.setPageTitleAndDescription(
+    useMainModal();
+    useEffect(
+        () => $.setPageTitleAndDescription(
             'Institution Map - OpenStax',
             'Searchable map of institutions that have adopted OpenStax textbooks'
-        );
-
-        return () => shellBus.emit('no-modal');
-    }, []);
+        ),
+        []
+    );
 
     return (
         <main id="maincontent" className="separatemap page">
-            <div id="mapd" className="mapd" />
-            <GoBackControl />
-            <SearchBoxDiv />
-            <PopupMessage />
+            <MapContextProvider contextValueParameters={{id: 'mapd'}}>
+                <div id="mapd" className="mapd" />
+                <GoBackControl />
+                <SearchBoxDiv />
+                <PopupMessage />
+            </MapContextProvider>
         </main>
     );
 }

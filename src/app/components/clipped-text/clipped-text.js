@@ -1,13 +1,13 @@
-import React, {useRef, useEffect} from 'react';
+import React from 'react';
 import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import cn from 'classnames';
 import './clipped-text.scss';
 
 function useIsClipped() {
-    const ref = useRef();
+    const ref = React.useRef();
     const [isClipped, setIsClipped] = useToggle(false);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const {clientHeight, scrollHeight} = ref.current;
 
         setIsClipped(scrollHeight > clientHeight);

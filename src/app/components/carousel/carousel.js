@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
@@ -78,9 +78,9 @@ function Carousel({
     children, atATime=1, mobileSlider=false, initialFrame=0, hoverTextThing,
     frameCount = React.Children.count(children)
 }) {
-    const [frameNumber, setFrameNumber] = useState(initialFrame);
-    const ref = useRef();
-    const firstTimeRef = useRef(true);
+    const [frameNumber, setFrameNumber] = React.useState(initialFrame);
+    const ref = React.useRef();
+    const firstTimeRef = React.useRef(true);
     const wcx = useWindowContext();
     // Not useMemo because it has to update when children render
     const step = getStep(atATime, ref.current, frameNumber);

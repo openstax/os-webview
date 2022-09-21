@@ -3,12 +3,15 @@ import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import AdoptionForm from '~/pages/adoption/adoption';
 import {MemoryRouter} from 'react-router-dom';
+import {MainClassContextProvider} from '~/contexts/main-class';
 
 beforeEach(
     async () => {
         render(
             <MemoryRouter initialEntries={["/details/books/college-algebra", "/adoption"]}>
-                <AdoptionForm />
+                <MainClassContextProvider>
+                    <AdoptionForm />
+                </MainClassContextProvider>
             </MemoryRouter>
         );
         await screen.findByText(/Let us know you're using/);

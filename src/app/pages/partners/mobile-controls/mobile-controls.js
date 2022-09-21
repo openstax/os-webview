@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import {books, types, advanced, sort, resultCount, clearStores} from '../store';
 import ActiveFilters from '../active-filters/active-filters';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
@@ -7,7 +7,7 @@ import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import {BaseButton, useStoreSize, sortOptions} from '../controls/controls';
-import shellBus from '~/components/shell/shell-bus';
+import useMainClassContext from '~/contexts/main-class';
 import sortBy from 'lodash/sortBy';
 import cn from 'classnames';
 import './mobile-controls.scss';
@@ -92,10 +92,16 @@ function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
     const typeSize = useStoreSize(types);
     const advancedSize = useStoreSize(advanced);
     const filterSize = bookSize + typeSize + advancedSize;
+    const {setModal} = useMainClassContext();
 
-    useLayoutEffect(() => {
-        shellBus.emit(openButton ? 'with-modal' : 'no-modal');
-    }, [openButton]);
+    React.useEffect(
+        () => {
+            setModal(Boolean(openButton));
+
+            return () => setModal(false);
+        },
+        [openButton, setModal]
+    );
 
     return (
         <React.Fragment>
@@ -117,7 +123,7 @@ function MobileControlRow({advancedFilterOptions, typeOptions}) {
     const ref = useRef();
     const [stuck, setStuck] = useState(false);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const rect = ref.current.getBoundingClientRect();
 
         setStuck(rect.top <= 50);

@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faAtom} from '@fortawesome/free-solid-svg-icons/faAtom';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
@@ -18,7 +18,7 @@ import useTOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
 import useGiveDialog from './give-before-pdf/give-before-pdf';
-import calloutCounter from './recommended-callout/callout-counter';
+import useCalloutCounter from './recommended-callout/use-callout-counter';
 
 function IconAndText({icon, text}) {
     return (
@@ -81,27 +81,6 @@ export function TocOption({model}) {
             </a>
         </div>
     );
-}
-
-const MAX_CALLOUTS = 3;
-
-function useCalloutCounter(slug) {
-    calloutCounter.setSlug(slug);
-    const [count, setCount] = useState(calloutCounter.count);
-
-    useLayoutEffect(() => {
-        if (count < MAX_CALLOUTS) {
-            calloutCounter.increment();
-            setCount(calloutCounter.count);
-        }
-    }, [slug]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    function hideForever() {
-        calloutCounter.count = MAX_CALLOUTS;
-        setCount(MAX_CALLOUTS);
-    }
-
-    return [count < MAX_CALLOUTS, hideForever];
 }
 
 // eslint-disable-next-line complexity

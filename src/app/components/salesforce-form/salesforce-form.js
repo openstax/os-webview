@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import useSalesforceContext from '~/contexts/salesforce';
 
 export function HiddenFields({leadSource}) {
@@ -21,7 +21,7 @@ export function HiddenFields({leadSource}) {
 }
 
 export default function SfForm({children, postTo, afterSubmit}) {
-    const [listening, setListening] = useState(false);
+    const [listening, setListening] = React.useState(false);
     const {webtocaseUrl, debug, oid} = useSalesforceContext();
 
     if (!webtocaseUrl) {

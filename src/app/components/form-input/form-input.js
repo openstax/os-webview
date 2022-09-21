@@ -1,6 +1,6 @@
 import React, {useState, useRef, useLayoutEffect} from 'react';
 import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import shellBus from '~/components/shell/shell-bus';
+import {useMainSticky} from '~/helpers/main-class-hooks';
 import cn from 'classnames';
 import './form-input.scss';
 
@@ -26,11 +26,17 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
 }
 
 function useMatches(pattern, suggestions=[]) {
-    const matches = pattern.length > 1 ?
-        suggestions.filter((s) => s.toLowerCase().includes(pattern)) :
-        [];
-    const exactMatch = matches.includes(pattern) ||
-        (matches.length === 1 && pattern === matches[0].toLowerCase());
+    const matches = React.useMemo(
+        () => pattern.length > 1 ?
+            suggestions.filter((s) => s.toLowerCase().includes(pattern)) :
+            [],
+        [pattern, suggestions]
+    );
+    const exactMatch = React.useMemo(
+        () => matches.includes(pattern) ||
+            (matches.length === 1 && pattern === matches[0].toLowerCase()),
+        [matches, pattern]
+    );
 
     return [matches, exactMatch];
 }
@@ -39,11 +45,7 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
     if (exactMatch) {
         accept(matches[0]);
     }
-    useLayoutEffect(() => {
-        shellBus.emit('with-sticky');
-
-        return () => shellBus.emit('no-sticky');
-    }, []);
+    useMainSticky();
 
     return (
         <div className="suggestions">
