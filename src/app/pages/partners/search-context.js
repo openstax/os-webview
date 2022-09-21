@@ -3,10 +3,7 @@ import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import buildContext from '~/components/jsx-helpers/build-context';
 
 function useSet() {
-    const data = React.useMemo(
-        () => new window.Set(),
-        []
-    );
+    const {current: data} = React.useRef(new window.Set());
     const [value, update] = useRefreshable(
         () => Array.from(data)
     );

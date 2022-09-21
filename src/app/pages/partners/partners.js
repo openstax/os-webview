@@ -102,12 +102,15 @@ function Partners({data}) {
         () => getFilterOptions(data),
         [data]
     );
-    const typeOptions = data.partner_type_choices
-        .sort()
-        .map((k) => ({
-            label: k,
-            value: k
-        }));
+    const typeOptions = React.useMemo(
+        () => data.partner_type_choices
+            .sort()
+            .map((k) => ({
+                label: k,
+                value: k
+            })),
+        [data]
+    );
     const headline = data.heading;
     const description = data.description;
     const {linkTexts, headerTexts} = textsFromData(data);

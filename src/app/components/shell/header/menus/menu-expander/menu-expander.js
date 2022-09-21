@@ -20,7 +20,7 @@ export default function MenuExpander({active, onClick}) {
             onClick();
             setActiveDropdown({});
         }
-    }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [location, active, onClick, setActiveDropdown]);
 
     return (
         <button

@@ -71,7 +71,7 @@ export function useErrataDetail(data={}) {
                 resolutionNotes: data.resolutionNotes
             });
         });
-    }, [data.id]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [data]);
 
     return detail;
 }

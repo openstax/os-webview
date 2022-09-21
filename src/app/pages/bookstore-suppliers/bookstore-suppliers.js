@@ -43,26 +43,35 @@ function CanadaFlagCard() {
 }
 
 export function BookstorePage({data}) {
-    const suppliers = data.providers.map(providerToModel);
-    const featuredSupplier = data.featuredProviders.map(providerToModel); // should only be 1
-    const model = {
-        headline: data.title,
-        subhead: data.introHeading,
-        subhead2: data.introDescription,
+    const [
+        suppliers,
         featuredSupplier,
-        featuredSuppliersBlurb: data.featuredProviderIntroBlurb,
-        suppliersBlurb: data.otherProvidersIntroBlurb,
-        suppliers
-    };
+        headline,
+        subhead,
+        subhead2,
+        featuredSuppliersBlurb,
+        suppliersBlurb
+    ] = React.useMemo(
+        () => [
+            data.providers.map(providerToModel),
+            data.featuredProviders.map(providerToModel),
+            data.title,
+            data.introHeading,
+            data.introDescription,
+            data.featuredProviderIntroBlurb,
+            data.otherProvidersIntroBlurb
+        ],
+        [data]
+    );
 
     return (
         <React.Fragment>
             <div className="hero">
                 <div className="content">
                     <div className="text">
-                        <h1>{model.headline}</h1>
-                        <RawHTML className="small-screen" html={model.subhead} />
-                        <RawHTML className="larger-screen" html={model.subhead2} />
+                        <h1>{headline}</h1>
+                        <RawHTML className="small-screen" html={subhead} />
+                        <RawHTML className="larger-screen" html={subhead2} />
                     </div>
                 </div>
                 <div className="images">
@@ -76,7 +85,7 @@ export function BookstorePage({data}) {
             <div className="main-content">
                 <div className="text-section">
                     <h2>Providers</h2>
-                    <div className="intro-blurb">{model.featuredSuppliersBlurb}</div>
+                    <div className="intro-blurb">{featuredSuppliersBlurb}</div>
                 </div>
                 {
                     featuredSupplier.map((supplier) =>
@@ -85,11 +94,11 @@ export function BookstorePage({data}) {
                         </div>
                     )
                 }
-                <div className="intro-blurb">{model.suppliersBlurb}</div>
+                <div className="intro-blurb">{suppliersBlurb}</div>
                 <div className="swipable-row">
                     <div className="cards">
                         {
-                            model.suppliers.map((supplier) =>
+                            suppliers.map((supplier) =>
                                 <div className="card" key={supplier}>
                                     {Boolean(supplier.isCanadian) && <CanadaFlagCard />}
                                     <CardFeatures supplier={supplier} />

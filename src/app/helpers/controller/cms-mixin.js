@@ -104,9 +104,10 @@ export function usePageData(fpdParams) {
     const [pageData, setPageData] = useState();
     let statusPage = null;
 
-    useEffect(() => {
-        fetchPageData(fpdParams).then(setPageData);
-    }, [fpdParams.slug]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(
+        () => fetchPageData(fpdParams).then(setPageData),
+        [fpdParams, fpdParams.slug]
+    );
 
     if (!pageData) {
         statusPage = <LoadingPlaceholder />;

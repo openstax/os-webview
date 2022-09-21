@@ -72,41 +72,53 @@ function filterBy(values, candidates, candidateField, advanced) {
 
 // eslint-disable-next-line complexity
 function useFilteredEntries(entries) {
-    let result = shuffle(entries);
     const {books, types, advanced, sort, resultCount} = useSearchContext();
+    const finalResult = React.useMemo(
+        () => {
+            let result = shuffle(entries);
 
-    result = filterByBooks(result, books);
-    result = filterByType(result, types);
+            result = filterByBooks(result, books);
+            result = filterByType(result, types);
 
-    if (advanced.value.length > 0) {
-        result = result.filter((entry) => {
-            return advanced.value
-                .filter((feature) => !costOptionValues.includes(feature))
-                .filter((feature) => !equityOptionValues.includes(feature))
-                .every((requiredFeature) =>
-                    entry.advancedFeatures.includes(requiredFeature)
-                );
-        });
-        result = filterBy(costOptionValues, result, 'cost', advanced);
-        result = filterBy(equityOptionValues, result, 'equityRating', advanced);
-    }
+            if (advanced.value.length > 0) {
+                result = result.filter((entry) => {
+                    return advanced.value
+                        .filter((feature) => !costOptionValues.includes(feature))
+                        .filter((feature) => !equityOptionValues.includes(feature))
+                        .every((requiredFeature) =>
+                            entry.advancedFeatures.includes(requiredFeature)
+                        );
+                });
+                result = filterBy(costOptionValues, result, 'cost', advanced);
+                result = filterBy(equityOptionValues, result, 'equityRating', advanced);
+            }
 
-    resultCount.setValue(result.length);
+            return result;
+        },
+        [entries, advanced, books, types]
+    );
 
-    if (Math.abs(sort.value) === 0) {
-        return result;
-    }
+    resultCount.setValue(finalResult.length);
 
-    const getFieldsDict = {
-        1: [(r) => r.title.toLowerCase()],
-        2: [(r) => Math.abs(r.rating), (r) => r.ratingCount]
-    };
-    const sortDir = sort.value < 0 ? 'desc' : 'asc';
+    return React.useMemo(
+        () => {
+            if (Math.abs(sort.value) === 0) {
+                return finalResult;
+            }
 
-    return orderBy(
-        result,
-        getFieldsDict[Math.abs(sort.value)],
-        [sortDir, sortDir]
+            const getFieldsDict = {
+                1: [(r) => r.title.toLowerCase()],
+                2: [(r) => Math.abs(r.rating), (r) => r.ratingCount]
+            };
+            const sortDir = sort.value < 0 ? 'desc' : 'asc';
+
+            return orderBy(
+                finalResult,
+                getFieldsDict[Math.abs(sort.value)],
+                [sortDir, sortDir]
+            );
+        },
+        [finalResult, sort.value]
     );
 }
 
@@ -193,10 +205,19 @@ const allyPartnershipLevel = 'Brand Ally';
 const isAlly = (level) => level.localeCompare(allyPartnershipLevel, 'en', {sensitivity: 'base'}) === 0;
 
 function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
-    const entries = partnerData.map(resultEntry);
+    const entries = React.useMemo(
+        () => partnerData.map(resultEntry),
+        [partnerData]
+    );
     const filteredEntries = useFilteredEntries(entries);
-    const filteredPartners = filteredEntries.filter((e) => !isAlly(e.partnershipLevel || ''));
-    const filteredAllies = filteredEntries.filter((e) => isAlly(e.partnershipLevel || ''));
+    const filteredPartners = React.useMemo(
+        () => filteredEntries.filter((e) => !isAlly(e.partnershipLevel || '')),
+        [filteredEntries]
+    );
+    const filteredAllies = React.useMemo(
+        () => filteredEntries.filter((e) => isAlly(e.partnershipLevel || '')),
+        [filteredEntries]
+    );
     const defaultAlliesOpen = filteredPartners.length === 0;
 
     return (

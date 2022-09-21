@@ -77,7 +77,7 @@ export function useResources(slug) {
         `books/resources/?slug=${title}&x=${isVerified ? 'x' : 'y'}`
     );
     const resources = React.useMemo(
-        () => $.camelCaseKeys(rawResources),
+        () => rawResources?.error ? null : $.camelCaseKeys(rawResources),
         [rawResources]
     );
 

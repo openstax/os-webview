@@ -67,7 +67,11 @@ export function LoaderPage({
     slug, Child, props={}, preserveWrapping, doDocumentSetup=false,
     noCamelCase=false
 }) {
-    const [data, statusPage] = usePageData({slug, setsPageTitleAndDescription: false, preserveWrapping});
+    const fpdParams = React.useMemo(
+        () => ({slug, setsPageTitleAndDescription: false, preserveWrapping}),
+        [slug, preserveWrapping]
+    )
+    const [data, statusPage] = usePageData(fpdParams);
     const {fail} = useRouterContext();
 
     useCanonicalLink(doDocumentSetup);
@@ -84,7 +88,10 @@ export function LoaderPage({
         return statusPage;
     }
 
-    const camelCaseData = noCamelCase ? data : $.camelCaseKeys(data);
+    const camelCaseData = React.useMemo(
+        () => noCamelCase ? data : $.camelCaseKeys(data),
+        [data]
+    );
 
     return (
         <Child {...{data: camelCaseData, ...props}} />

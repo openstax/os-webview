@@ -23,7 +23,7 @@ function useContextValue() {
     useEffect(() => {
         resetError();
         setGoto404();
-    }, [loc]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [loc, resetError, setGoto404]);
 
     return {
         isValid: !error,

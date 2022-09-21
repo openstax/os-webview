@@ -8,10 +8,7 @@ function toLabel(storeValue) {
 
 export function useValueChangeEvents() {
     const {books, types, advanced} = useSearchContext();
-    const filterIsSelected = React.useMemo(
-        () => types.size || advanced.size || books.size,
-        [types.size, advanced.size, books.size]
-    );
+    const filterIsSelected = Boolean(types.size || advanced.size || books.size);
     const sendFilterEvent = React.useCallback(
         (name) => {
             const category = `Partner tool ${name}`;
