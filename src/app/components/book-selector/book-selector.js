@@ -46,7 +46,7 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
 
     React.useLayoutEffect(() => {
         books.filter((book) => preselectedTitle === book.value).forEach(toggleBook);
-    }, [preselectedTitle, books]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [preselectedTitle, books, toggleBook]);
 
     return (
         <div className="book-selector">

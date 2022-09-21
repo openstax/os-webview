@@ -1,6 +1,5 @@
 import mapboxgl from 'mapbox-gl';
 import mapboxPromise from '~/models/mapbox';
-// import useMapContext from './map-context';
 
 const settings = window.SETTINGS;
 
