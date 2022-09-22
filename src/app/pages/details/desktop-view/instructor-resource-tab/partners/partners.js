@@ -11,7 +11,7 @@ function Blurb({blurb, badgeImage, onClick}) {
     const {count: ratingCount, average: rating} = blurb;
     const trackClick = React.useCallback(
         (event) => {
-            analyticsEvents.partnerDetails(blurb.name);
+            analyticsEvents.partnerDetailsEvent(blurb.name);
             onClick(event);
         },
         [onClick, blurb.name]

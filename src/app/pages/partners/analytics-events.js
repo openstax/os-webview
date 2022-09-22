@@ -54,15 +54,19 @@ export function useValueChangeEvents() {
     );
 }
 
+function partnerDetailsEvent(partner, books) {
+    analytics.sendPageEvent(
+        `Partner tool ${partner} lightbox`,
+        'open',
+        books ? toLabel(books.value) : ''
+    );
+}
+
 function usePartnerDetailsEvent() {
     const {books} = useSearchContext();
 
     return React.useCallback(
-        (partner) => analytics.sendPageEvent(
-            `Partner tool ${partner} lightbox`,
-            'open',
-            toLabel(books.value)
-        ),
+        (partner) => partnerDetailsEvent(partner, books),
         [books]
     );
 }
@@ -108,6 +112,7 @@ function submitReview(partner) {
 }
 
 export default {
+    partnerDetailsEvent,
     usePartnerDetailsEvent,
     lightboxScroll,
     requestInfo,
