@@ -230,6 +230,7 @@ function MainRoutes() {
             <Route path="/errata/*" element={<ImportedPage name="errata-detail" />} />
             <Route path="/details/books/:title" element={<ImportedPage name="details" />} />
             <Route path="/details/:title" element={<RedirectToCanonicalDetailsPage />} />
+            <Route path="/details/" element={<Navigate to="/subjects" replace />} />
             <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
             <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
             <Route path="/subjects/*" element={<ImportedPage name="subjects" />} />
