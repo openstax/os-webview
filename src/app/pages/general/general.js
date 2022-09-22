@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML, Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {useTextFromSlug} from '~/helpers/controller/cms-mixin';
+import {useTextFromSlug} from '~/helpers/page-data-utils';
 import useRouterContext from '~/components/shell/router-context';
 import {useLocation} from 'react-router-dom';
 import './general.scss';

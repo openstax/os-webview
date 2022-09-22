@@ -1,3 +1,3 @@
-import cmsFetch from './cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 
 export default cmsFetch('salesforce/savings/');

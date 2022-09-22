@@ -4,7 +4,7 @@ import Byline from '~/components/byline/byline';
 import useRouterContext from '~/components/shell/router-context';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import '~/pages/blog/article/article.scss';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {usePageData} from '~/helpers/page-data-utils';
 
 function Hero({coverUrl}) {
     return (

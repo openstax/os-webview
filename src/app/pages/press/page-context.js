@@ -1,5 +1,5 @@
 import buildContext from '~/components/jsx-helpers/build-context';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {usePageData} from '~/helpers/page-data-utils';
 
 const fpdParams = {slug: 'press'};
 

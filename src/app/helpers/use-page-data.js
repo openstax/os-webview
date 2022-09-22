@@ -1,5 +1,5 @@
 import React from 'react';
-import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
+import {fetchFromCMS} from '~/helpers/page-data-utils';
 import $ from '~/helpers/$';
 
 export default function usePageData(slug, preserveWrapping=false) {

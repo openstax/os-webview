@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import $ from '~/helpers/$';
-import {usePageData, fetchFromCMS} from '~/helpers/controller/cms-mixin';
+import {usePageData, fetchFromCMS} from '~/helpers/page-data-utils';
 import useRouterContext from '~/components/shell/router-context';
 
 export function Document({title, description, noindex}) {

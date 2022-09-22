@@ -1,6 +1,6 @@
 import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
-import {urlFromSlug} from '~/models/cmsFetch';
+import {urlFromSlug} from '~/helpers/cms-fetch';
 import React, {useState, useEffect} from 'react';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 

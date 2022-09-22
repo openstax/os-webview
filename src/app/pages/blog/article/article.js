@@ -4,7 +4,7 @@ import ProgressRing from '~/components/progress-ring/progress-ring';
 import useScrollProgress from './use-progress';
 import {ShareJsx} from '~/components/share/share';
 import React, {useState, useRef} from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {usePageData} from '~/helpers/page-data-utils';
 import useRouterContext from '~/components/shell/router-context';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './article.scss';

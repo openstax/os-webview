@@ -1,4 +1,4 @@
-import cmsFetch from '~/models/cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 
 const GLOBAL_SETTINGS = ['piAId', 'piCId', 'piHostname'];
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import {usePageData} from '~/helpers/page-data-utils';
 import './adopters.scss';
 
 const fpdParams = {slug: 'adopters'};

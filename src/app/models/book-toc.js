@@ -1,4 +1,4 @@
-import cmsFetch from './cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 import {cnxFetch} from './table-of-contents-html';
 import memoize from 'lodash/memoize';
 

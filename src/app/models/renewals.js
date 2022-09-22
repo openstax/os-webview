@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
+import {fetchFromCMS} from '~/helpers/page-data-utils';
 
 export default function useAdoptions(uuid) {
     const [adoptions, setAdoptions] = useState([]);

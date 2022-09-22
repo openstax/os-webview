@@ -16,7 +16,7 @@ import LazyLoad from 'react-lazyload';
 import AboutOpenStax from '../about-openstax';
 import {InfoBoxes} from '../info-boxes';
 import PhilanthropicSupport from '../philanthropic-support';
-import usePageData from '~/components/jsx-helpers/page-loader';
+import usePageData from '~/helpers/use-page-data';
 import useLanguageContext from '~/contexts/language';
 import cn from 'classnames';
 import './specific.scss';

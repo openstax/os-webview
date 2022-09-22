@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
-import {fetchFromCMS} from '~/helpers/controller/cms-mixin';
+import {fetchFromCMS} from '~/helpers/page-data-utils';
 import uniqBy from 'lodash/uniqBy';
 import useBlogContext from '../blog-context';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';

@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import CustomizationForm from '~/pages/details/common/customization-form/customization-form';
 import rawData from '../../data/details-biology-2e';
-import {transformData} from '~/helpers/controller/cms-mixin';
+import {transformData} from '~/helpers/page-data-utils';
 
 const data = transformData(rawData);
 

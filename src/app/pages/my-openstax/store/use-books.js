@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import cmsFetch from '~/models/cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 import uniqBy from 'lodash/uniqBy';
 
 function isSalesforceBook(book) {

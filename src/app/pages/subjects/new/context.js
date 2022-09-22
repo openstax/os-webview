@@ -1,6 +1,6 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import usePageData from '~/components/jsx-helpers/page-loader';
+import usePageData from '~/helpers/use-page-data';
 import useLanguageContext from '~/contexts/language';
 
 const preserveWrapping = true;
