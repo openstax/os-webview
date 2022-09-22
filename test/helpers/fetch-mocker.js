@@ -57,7 +57,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBookTitles = (/fields=title,id/).test(args[0]);
     const isBuyprint = args[0].includes('buyprint');
     const isDonationPopup = args[0].includes('donation-popup');
-    const isErrata = (/pages\/errata\/$/).test(args[0]);
+    const isErrata = (/pages\/errata\//).test(args[0]);
     const isErrataBook = (/errata\/\?book_title/).test(args[0]);
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
     const isErrataResources = (/errata-fields\?field/).test(args[0]);
