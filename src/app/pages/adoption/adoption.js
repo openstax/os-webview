@@ -17,6 +17,7 @@ function BookSelectorPage({selectedBooksRef}) {
     const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = selectedBooks.map((b) => b.value).join('; ');
+    const instructions = 'Select titles you are using even if the edition number is different.';
 
     selectedBooksRef.current = selectedBooks;
     return (
@@ -28,6 +29,7 @@ function BookSelectorPage({selectedBooksRef}) {
                 preselectedTitle={preselectedTitle}
                 toggleBook={toggleBook}
                 limit="5"
+                additionalInstructions={instructions}
             />
             <input type="hidden" name="subject" value={bookList} />
             <label>

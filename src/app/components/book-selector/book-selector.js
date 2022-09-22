@@ -36,7 +36,9 @@ function hintText(selectedCount, limit) {
     return `Maximum ${limit} selected`;
 }
 
-function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselectedTitle, limit}) {
+function BookSelector({
+    data, prompt, name, selectedBooks, toggleBook, preselectedTitle, limit, additionalInstructions
+}) {
     const books = React.useMemo(() => salesforceTitles(data.books), [data.books]);
     const subjects = books.reduce((a, b) => a.concat(b.subjects), [])
         .reduce((a, b) => a.includes(b) ? a : a.concat(b), []);
@@ -53,6 +55,10 @@ function BookSelector({data, prompt, name, selectedBooks, toggleBook, preselecte
             <div>
                 <h2 className="prompt">{prompt}</h2>
                 <div className="hint">{hintText(selectedBooks.length, limit)}</div>
+                {
+                    additionalInstructions &&
+                        <div className="hint">{additionalInstructions}</div>
+                }
             </div>
             {
                 subjects.map((subject) =>

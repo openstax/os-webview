@@ -66,7 +66,7 @@ function BookSelectorPage({selectedBooksRef}) {
     return (
         <div className="page-2">
             <BookSelector
-                prompt="Which textbook(s) are you currently using?"
+                prompt="Which textbook(s) are you interested in using?"
                 required
                 selectedBooks={selectedBooks}
                 preselectedTitle={preselectedTitle}
