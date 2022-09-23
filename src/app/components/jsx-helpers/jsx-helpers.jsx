@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import $ from '~/helpers/$';
-import {usePageData, fetchFromCMS} from '~/helpers/page-data-utils';
+import {fetchFromCMS} from '~/helpers/page-data-utils';
+import usePageData from '~/helpers/use-page-data';
 import useRouterContext from '~/components/shell/router-context';
 
 export function Document({title, description, noindex}) {
@@ -87,18 +88,14 @@ export function LoaderPage({
     slug, Child, props={}, preserveWrapping, doDocumentSetup=false,
     noCamelCase=false
 }) {
-    const fpdParams = React.useMemo(
-        () => ({slug, setsPageTitleAndDescription: false, preserveWrapping}),
-        [slug, preserveWrapping]
-    );
-    const [data, statusPage] = usePageData(fpdParams);
+    const data = usePageData(slug, preserveWrapping, noCamelCase);
     const {fail} = useRouterContext();
 
-    if (data?.error && fail) {
-        fail(`Could not load ${slug}`);
+    if (!data) {
+        return null;
     }
-    if (statusPage) {
-        return statusPage;
+    if (data.error && fail) {
+        fail(`Could not load ${slug}`);
     }
 
     return (<LoadedPage {...{Child, data, props, doDocumentSetup, noCamelCase}} />);

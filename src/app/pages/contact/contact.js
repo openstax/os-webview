@@ -1,23 +1,21 @@
 import React from 'react';
-import {usePageData} from '~/helpers/page-data-utils';
+import usePageData from '~/helpers/use-page-data';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import Form from './form';
 import './contact.scss';
 
-const fpdParams = {slug: 'pages/contact'};
-
 export default function ContactPage() {
-    const [pageData, statusPage] = usePageData(fpdParams);
+    const pageData = usePageData('pages/contact');
 
-    if (statusPage) {
-        return statusPage;
+    if (!pageData) {
+        return null;
     }
     const {
         title,
         tagline,
-        mailing_header: mailingHeader,
-        mailing_address: mailingAddress,
-        customer_service: customerService
+        mailingHeader,
+        mailingAddress,
+        customerService
     } = pageData;
 
     return (

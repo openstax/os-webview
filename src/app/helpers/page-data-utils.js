@@ -1,8 +1,6 @@
-import $ from '~/helpers/$';
 import bookPromise from '~/models/book-titles';
 import urlFromSlug from './url-from-slug';
-import React, {useState, useEffect} from 'react';
-import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import React from 'react';
 
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
@@ -27,26 +25,6 @@ export function transformData(data) {
     });
 
     return data;
-}
-
-function loadImages(data) {
-    const promises = [];
-
-    if (typeof data.image === 'number') {
-        promises.push(fetch(`${$.apiOriginAndPrefix}/images/${data.image}`)
-            .then((response) => response.json())
-            .then((json) => {
-                data.image = json.file || (json.meta || {}).download_url;
-            }));
-    }
-
-    Reflect.ownKeys(data).forEach((prop) => {
-        if (typeof data[prop] === 'object' && data[prop] !== null) {
-            promises.push(loadImages(data[prop]));
-        }
-    });
-
-    return Promise.all(promises);
 }
 
 async function getUrlFor(initialSlug) {
@@ -84,47 +62,6 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
 
     data.slug = slug;
     return (preserveWrapping || data.error) ? data : transformData(data);
-}
-
-// Just a helper for usePageData
-// Fetch from CMS, optionally set page title & description,
-// and wait for images to load before returning
-async function fetchPageData({slug, preserveWrapping, setsPageTitleAndDescription=true}) {
-    const data = await fetchFromCMS(slug, preserveWrapping);
-
-    if (setsPageTitleAndDescription) {
-        $.setPageTitleAndDescriptionFromBookData(data);
-    }
-    try {
-        await loadImages(data);
-    } catch (err) {
-        throw new Error(`Loading images: ${err}`);
-    }
-    return data;
-}
-
-// For actual pages: Displays a placeholder until images are loaded
-// Should probably be a Suspense thing, much like ImportedPage in router.js
-export function usePageData(fpdParams) {
-    const [pageData, setPageData] = useState();
-    let statusPage = null;
-
-    useEffect(
-        () => fetchPageData(fpdParams).then(setPageData),
-        [fpdParams, fpdParams.slug]
-    );
-
-    if (!pageData) {
-        statusPage = <LoadingPlaceholder />;
-    } else if (pageData.error) {
-        statusPage =
-            <div className="page error">
-                Unable to load page: {pageData.error.toString()}
-            </div>
-        ;
-    }
-
-    return [pageData, statusPage];
 }
 
 export function useTextFromSlug(slug) {

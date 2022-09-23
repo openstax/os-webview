@@ -1,6 +1,6 @@
 import React from 'react';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import {usePageData} from '~/helpers/page-data-utils';
+import usePageData from '~/helpers/use-page-data';
 import {useLocation} from 'react-router-dom';
 import './footer-page.scss';
 
@@ -10,27 +10,23 @@ const specialSlugFromPath = {
 
 export default function FooterPage() {
     const {pathname} = useLocation();
-    const fpdParams = React.useMemo(
-        () => {
-            const slugEnd = specialSlugFromPath[pathname] || pathname;
+    const slugEnd = specialSlugFromPath[pathname] || pathname;
+    const slug = `pages${slugEnd}`;
+    const data = usePageData(slug);
 
-            return {slug: `pages${slugEnd}`};
-        },
+    React.useLayoutEffect(
+        () => window.scrollTo(0, 0),
         [pathname]
     );
-    const [data, statusPage] = usePageData(fpdParams);
 
-    if (statusPage) {
-        return statusPage;
+    if (!data) {
+        return null;
     }
 
     const contentFieldName = Reflect.ownKeys(data)
-        .find((k) => k.match(/_content$/));
-    const {intro_heading: heading, [contentFieldName]: content} = data;
+        .find((k) => k.match(/Content$/));
+    const {introHeading: heading, [contentFieldName]: content} = data;
 
-    // Component only renders when location changes, which means new page
-    // loads, which means it should go to the top of the page.
-    window.scrollTo(0, 0);
     return (
         <div className="footer-page page">
             <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />

@@ -1,14 +1,19 @@
 import React from 'react';
-import {usePageData} from '~/helpers/page-data-utils';
+import usePageData from '~/helpers/use-page-data';
 import './adopters.scss';
 
-const fpdParams = {slug: 'adopters'};
-
 export default function Adopters() {
-    const [pageData, statusPage] = usePageData(fpdParams);
+    const pageData = usePageData('adopters');
 
-    if (statusPage) {
-        return statusPage;
+    if (!pageData) {
+        return null;
+    }
+    if (pageData.error) {
+        return (
+            <div className="text-content">
+                <h1>Data missing in the CMS</h1>
+            </div>
+        );
     }
 
     return (
