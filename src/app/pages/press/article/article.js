@@ -1,10 +1,9 @@
 import React from 'react';
 import BodyUnit from '~/components/body-units/body-units';
 import Byline from '~/components/byline/byline';
-import useRouterContext from '~/components/shell/router-context';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import '~/pages/blog/article/article.scss';
-import {usePageData} from '~/helpers/page-data-utils';
+import usePageData from '~/helpers/use-page-data';
 
 function Hero({coverUrl}) {
     return (
@@ -18,7 +17,7 @@ function Hero({coverUrl}) {
 
 function Article({data}) {
     const {
-        article_image: coverUrl,
+        articleImage: coverUrl,
         subheading,
         title,
         author,
@@ -49,19 +48,21 @@ function Article({data}) {
 }
 
 export function ArticleLoader({slug}) {
-    const [data, statusPage] = usePageData(
-        React.useMemo(
-            () => ({slug, preserveWrapping: true}),
-            [slug]
-        )
-    );
-    const {fail} = useRouterContext();
+    const data = usePageData(slug, true);
 
-    if (data?.error) {
-        fail(`Could not load article ${slug}`);
+    if (!data) {
         return null;
     }
-    return (statusPage ? statusPage : <Article data={data} />);
+    if (data.error) {
+        return (
+            <div className="text-content">
+                <h1>[Article not found]</h1>
+                <pre>{data.error.message} {slug}</pre>
+            </div>
+        );
+    }
+
+    return (<Article data={data} />);
 }
 
 export function ArticleFromSlug({slug}) {

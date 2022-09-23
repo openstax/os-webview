@@ -30,10 +30,10 @@ export default function Bookings() {
         return null;
     }
 
-    const blurb = pageData.experts_blurb;
-    const bios = pageData.experts_bios
+    const blurb = pageData.expertsBlurb;
+    const bios = pageData.expertsBios
         .map((b) => ({
-            imageUrl: b.expert_image,
+            imageUrl: b.expertImage,
             name: b.name,
             title: b.title,
             contact: b.email,

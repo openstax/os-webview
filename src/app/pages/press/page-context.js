@@ -1,12 +1,8 @@
 import buildContext from '~/components/jsx-helpers/build-context';
-import {usePageData} from '~/helpers/page-data-utils';
-
-const fpdParams = {slug: 'press'};
+import usePageData from '~/helpers/use-page-data';
 
 function useContextValue() {
-    const [data] = usePageData(fpdParams);
-
-    return data;
+    return usePageData('press');
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});

@@ -1,14 +1,5 @@
-import $ from '~/helpers/$';
 import retry from '~/helpers/retry';
-
-export function urlFromSlug(initialSlug) {
-    const slug = initialSlug === 'news' ? 'pages/openstax-news' : initialSlug;
-    const possibleSlash = (slug.endsWith('/') || slug.includes('?')) ? '' : '/';
-    const apiPrefix = slug.includes('pages') ? $.apiOriginAndPrefix :
-        $.apiOriginAndOldPrefix;
-
-    return `${apiPrefix}/${slug}${possibleSlash}`;
-}
+import urlFromSlug from './url-from-slug';
 
 export default async function cmsFetch(path) {
     const url = path.replace(/[^?]+/, urlFromSlug);
