@@ -63,6 +63,26 @@ export function useCanonicalLink(controlsHeader=true) {
     }, [controlsHeader]);
 }
 
+function LoadedPage({
+    Child, data, props, doDocumentSetup, noCamelCase
+}) {
+    const camelCaseData = React.useMemo(
+        () => noCamelCase ? data : $.camelCaseKeys(data),
+        [data, noCamelCase]
+    );
+
+    useCanonicalLink(doDocumentSetup);
+    useEffect(() => {
+        if (doDocumentSetup) {
+            $.setPageTitleAndDescriptionFromBookData(data);
+        }
+    }, [data, doDocumentSetup]);
+
+    return (
+        <Child {...{data: camelCaseData, ...props}} />
+    );
+}
+
 export function LoaderPage({
     slug, Child, props={}, preserveWrapping, doDocumentSetup=false,
     noCamelCase=false
@@ -70,16 +90,9 @@ export function LoaderPage({
     const fpdParams = React.useMemo(
         () => ({slug, setsPageTitleAndDescription: false, preserveWrapping}),
         [slug, preserveWrapping]
-    )
+    );
     const [data, statusPage] = usePageData(fpdParams);
     const {fail} = useRouterContext();
-
-    useCanonicalLink(doDocumentSetup);
-    useEffect(() => {
-        if (!statusPage && doDocumentSetup) {
-            $.setPageTitleAndDescriptionFromBookData(data);
-        }
-    }, [data, statusPage, doDocumentSetup]);
 
     if (data?.error && fail) {
         fail(`Could not load ${slug}`);
@@ -88,14 +101,7 @@ export function LoaderPage({
         return statusPage;
     }
 
-    const camelCaseData = React.useMemo(
-        () => noCamelCase ? data : $.camelCaseKeys(data),
-        [data]
-    );
-
-    return (
-        <Child {...{data: camelCaseData, ...props}} />
-    );
+    return (<LoadedPage {...{Child, data, props, doDocumentSetup, noCamelCase}} />);
 }
 
 // Making scripts work, per https://stackoverflow.com/a/47614491/392102
