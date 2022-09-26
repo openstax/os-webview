@@ -9,11 +9,13 @@ import './partners.scss';
 function Blurb({blurb, badgeImage, onClick}) {
     const tags = [blurb.cost, blurb.type].filter((x) => x);
     const {count: ratingCount, average: rating} = blurb;
-
-    function trackClick(event) {
-        analyticsEvents.partnerDetails(blurb.name);
-        onClick(event);
-    }
+    const trackClick = React.useCallback(
+        (event) => {
+            analyticsEvents.partnerDetailsEvent(blurb.name);
+            onClick(event);
+        },
+        [onClick, blurb.name]
+    );
 
     return (
         <a className="blurb" href={blurb.url} onClick={trackClick}>
@@ -50,16 +52,18 @@ function Blurb({blurb, badgeImage, onClick}) {
 export default function Partners({bookAbbreviation, model}) {
     const {title, seeMoreText, blurbs, badgeImage} = model;
     const navigate = useNavigate();
+    const onClick = React.useCallback(
+        (event) => {
+            const destUrl = event.target.getAttribute('href');
 
-    function onClick(event) {
-        const destUrl = event.target.getAttribute('href');
-
-        navigate(destUrl, {
-            book: bookAbbreviation,
-            redirect: true
-        });
-        event.preventDefault();
-    }
+            navigate(destUrl, {
+                book: bookAbbreviation,
+                redirect: true
+            });
+            event.preventDefault();
+        },
+        [navigate, bookAbbreviation]
+    );
 
     return (
         <div className="partners">

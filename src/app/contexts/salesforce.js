@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import cmsFetch from '~/models/cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 
 const adoptionName = '[name="Adoption_Status__c"]';
 const adoptionOptions = [{

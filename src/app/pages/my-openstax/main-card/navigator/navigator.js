@@ -60,7 +60,7 @@ function StepWrapper({children}) {
                 setActiveId(targetIds[0]);
             });
         }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [setActiveId, targetIds, showWalkthrough]);
 
     return children;
 }

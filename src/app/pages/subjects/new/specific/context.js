@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import usePageData from '~/components/jsx-helpers/page-loader';
+import usePageData from '~/helpers/use-page-data';
 import buildContext from '~/components/jsx-helpers/build-context';
 import $ from '~/helpers/$';
 

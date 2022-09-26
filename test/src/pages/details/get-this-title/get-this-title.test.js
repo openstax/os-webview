@@ -6,7 +6,7 @@ import {TOCContextProvider} from '~/pages/details/common/toc-slideout/context';
 import BookDetailsContext from '../book-details-context';
 // College algebra book details
 import details from '../../../data/details-college-algebra';
-import {transformData} from '~/helpers/controller/cms-mixin';
+import {transformData} from '~/helpers/page-data-utils';
 import $ from '~/helpers/$';
 
 const model = $.camelCaseKeys(transformData(details));

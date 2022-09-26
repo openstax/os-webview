@@ -1,24 +1,22 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import $ from '~/helpers/$';
-import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './options-list.scss';
 
 function Item({label, value, selected}) {
-    const [isSelected, refresh] = useRefreshable(() => selected.includes(value));
-
-    useEffect(() => {
-        const cleanup = selected.on('notify', refresh);
-
-        return cleanup;
-    }, [selected, value, refresh]);
-
-    function toggleSelected() {
-        if ('toggle' in selected) {
-            selected.toggle(value);
-        } else {
-            selected.value = value;
-        }
-    }
+    const isSelected = React.useMemo(
+        () => selected.includes(value),
+        [selected, value]
+    );
+    const toggleSelected = React.useCallback(
+        () => {
+            if ('toggle' in selected) {
+                selected.toggle(value);
+            } else {
+                selected.setValue(value);
+            }
+        },
+        [selected, value]
+    );
 
     return (
         <div

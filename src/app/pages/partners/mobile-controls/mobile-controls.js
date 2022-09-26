@@ -1,13 +1,13 @@
 import React, {useState, useRef} from 'react';
-import {books, types, advanced, sort, resultCount, clearStores} from '../store';
 import ActiveFilters from '../active-filters/active-filters';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import BookOptions from '../controls/book-options/book-options';
 import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
-import {BaseButton, useStoreSize, sortOptions} from '../controls/controls';
+import {BaseButton, sortOptions} from '../controls/controls';
 import useMainClassContext from '~/contexts/main-class';
+import useSearchContext from '../search-context';
 import sortBy from 'lodash/sortBy';
 import cn from 'classnames';
 import './mobile-controls.scss';
@@ -45,6 +45,7 @@ function AdvancedFilters({store, options}) {
 function MobileFilters({
     typeOptions, advancedFilterOptions, onClose, bookSize, typeSize, advancedSize
 }) {
+    const {books, types, advanced, resultCount, clearStores} = useSearchContext();
     const items = [
         {
             title: 'Books',
@@ -88,9 +89,10 @@ function MobileFiltersToggle({typeOptions, advancedFilterOptions}) {
         openButton,
         setOpenButton
     };
-    const bookSize = useStoreSize(books);
-    const typeSize = useStoreSize(types);
-    const advancedSize = useStoreSize(advanced);
+    const {books, types, advanced, sort} = useSearchContext();
+    const bookSize = books.size;
+    const typeSize = types.size;
+    const advancedSize = advanced.size;
     const filterSize = bookSize + typeSize + advancedSize;
     const {setModal} = useMainClassContext();
 

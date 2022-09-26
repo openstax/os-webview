@@ -47,9 +47,10 @@ function usePopTipStyle(isOpen) {
     const ref = React.useRef();
     const [leftOffset, setLeftOffset] = React.useState(middle);
 
-    useEffect(() => {
-        shiftIntoView(ref, leftOffset, setLeftOffset);
-    }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(
+        () => shiftIntoView(ref, leftOffset, setLeftOffset),
+        [isOpen, leftOffset]
+    );
 
     return {ref, style: {left: leftOffset}};
 }

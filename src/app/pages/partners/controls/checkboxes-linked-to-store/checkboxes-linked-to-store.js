@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import $ from '~/helpers/$';
@@ -6,13 +6,10 @@ import cn from 'classnames';
 import './checkboxes-linked-to-store.scss';
 
 function Checkbox({label, value, store}) {
-    const [checked, setChecked] = useState(store.includes(value));
-
-    useEffect(() => {
-        const cleanup = store.on('notify', () => setChecked(store.includes(value)));
-
-        return cleanup;
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const checked = React.useMemo(
+        () => store.includes(value),
+        [store, value]
+    );
 
     return (
         <label className="form-control">

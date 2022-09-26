@@ -81,7 +81,7 @@ function MissionStatements() {
         return null;
     }
 
-    const missionStatements = pageData.mission_statements
+    const missionStatements = pageData.missionStatements
         .map((obj) => obj.statement);
 
     return (

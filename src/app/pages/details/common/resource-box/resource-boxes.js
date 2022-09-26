@@ -313,14 +313,16 @@ export default function ResourceBoxes({models, includeCommonsHub=false}) {
 
 function VideoResourceBox({model}) {
     const [isOpen, toggle] = useToggle(false);
-
-    function onClick(event) {
-        event.preventDefault();
-        toggle();
-    }
+    const doToggle = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            toggle();
+        },
+        [toggle]
+    );
 
     return (
-        <div className="video resource-box" onClick={onClick} key={model.resource_heading}>
+        <div className="video resource-box" onClick={doToggle} key={model.resource_heading}>
             <div>
                 <div className="top-line">
                     <h3>{model.resource_heading}</h3>

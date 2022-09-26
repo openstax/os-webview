@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import cmsFetch from '~/models/cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 
-export const flagPromise = cmsFetch('flags?format=json')
+export const flagPromise = cmsFetch('flags')
     .then(({all_flags: flags}) => flags.reduce(
         (a, f) => {
             a[f.name] = f.feature_active;

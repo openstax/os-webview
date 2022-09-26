@@ -1,5 +1,5 @@
 import {useState, useLayoutEffect, useCallback} from 'react';
-import cmsFetch, {cmsPost} from './cmsFetch';
+import cmsFetch, {cmsPost} from '~/helpers/cms-fetch';
 import $ from '~/helpers/$';
 import meanBy from 'lodash/meanBy';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ResultGrid from './result-grid';
-import {books, types, advanced, sort, resultCount} from '../store';
+import useSearchContext from '../search-context';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import {useDataFromPromise, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import shuffle from 'lodash/shuffle';
@@ -32,7 +32,7 @@ export const equityOptions = [
 
 const equityOptionValues = equityOptions.map((entry) => entry.value);
 
-function filterByBooks(candidates) {
+function filterByBooks(candidates, books) {
     if (books.value.length <= 0) {
         return candidates;
     }
@@ -41,7 +41,7 @@ function filterByBooks(candidates) {
     });
 }
 
-function filterByType(candidates) {
+function filterByType(candidates, types) {
     if (! types.value) {
         return candidates;
     }
@@ -53,7 +53,7 @@ function filterByType(candidates) {
 }
 
 // Custom advanced filter handling
-function filterBy(values, candidates, candidateField) {
+function filterBy(values, candidates, candidateField, advanced) {
     const features = advanced.value
         .filter((f) => values.includes(f));
 
@@ -71,41 +71,54 @@ function filterBy(values, candidates, candidateField) {
 }
 
 // eslint-disable-next-line complexity
-function filterEntries(entries) {
-    let result = shuffle(entries);
+function useFilteredEntries(entries) {
+    const {books, types, advanced, sort, resultCount} = useSearchContext();
+    const finalResult = React.useMemo(
+        () => {
+            let result = shuffle(entries);
 
-    result = filterByBooks(result);
-    result = filterByType(result);
+            result = filterByBooks(result, books);
+            result = filterByType(result, types);
 
-    if (advanced.value.length > 0) {
-        result = result.filter((entry) => {
-            return advanced.value
-                .filter((feature) => !costOptionValues.includes(feature))
-                .filter((feature) => !equityOptionValues.includes(feature))
-                .every((requiredFeature) =>
-                    entry.advancedFeatures.includes(requiredFeature)
-                );
-        });
-        result = filterBy(costOptionValues, result, 'cost');
-        result = filterBy(equityOptionValues, result, 'equityRating');
-    }
+            if (advanced.value.length > 0) {
+                result = result.filter((entry) => {
+                    return advanced.value
+                        .filter((feature) => !costOptionValues.includes(feature))
+                        .filter((feature) => !equityOptionValues.includes(feature))
+                        .every((requiredFeature) =>
+                            entry.advancedFeatures.includes(requiredFeature)
+                        );
+                });
+                result = filterBy(costOptionValues, result, 'cost', advanced);
+                result = filterBy(equityOptionValues, result, 'equityRating', advanced);
+            }
 
-    resultCount.value = result.length;
+            return result;
+        },
+        [entries, advanced, books, types]
+    );
 
-    if (Math.abs(sort.value) === 0) {
-        return result;
-    }
+    resultCount.setValue(finalResult.length);
 
-    const getFieldsDict = {
-        1: [(r) => r.title.toLowerCase()],
-        2: [(r) => Math.abs(r.rating), (r) => r.ratingCount]
-    };
-    const sortDir = sort.value < 0 ? 'desc' : 'asc';
+    return React.useMemo(
+        () => {
+            if (Math.abs(sort.value) === 0) {
+                return finalResult;
+            }
 
-    return orderBy(
-        result,
-        getFieldsDict[Math.abs(sort.value)],
-        [sortDir, sortDir]
+            const getFieldsDict = {
+                1: [(r) => r.title.toLowerCase()],
+                2: [(r) => Math.abs(r.rating), (r) => r.ratingCount]
+            };
+            const sortDir = sort.value < 0 ? 'desc' : 'asc';
+
+            return orderBy(
+                finalResult,
+                getFieldsDict[Math.abs(sort.value)],
+                [sortDir, sortDir]
+            );
+        },
+        [finalResult, sort.value]
     );
 }
 
@@ -158,11 +171,13 @@ function resultEntry(pd) {
 
 function SeeMore({defaultOpen, children}) {
     const [opened, toggle] = useToggle(false);
-
-    function onClick(event) {
-        event.preventDefault();
-        toggle();
-    }
+    const onClick = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            toggle();
+        },
+        [toggle]
+    );
 
     if (defaultOpen) {
         return children;
@@ -190,24 +205,20 @@ const allyPartnershipLevel = 'Brand Ally';
 const isAlly = (level) => level.localeCompare(allyPartnershipLevel, 'en', {sensitivity: 'base'}) === 0;
 
 function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
-    const entries = partnerData.map(resultEntry);
-    const [filteredEntries, refreshFilters] = React.useReducer(
-        () => filterEntries(entries),
-        filterEntries(entries)
+    const entries = React.useMemo(
+        () => partnerData.map(resultEntry),
+        [partnerData]
     );
-    const filteredPartners = filteredEntries.filter((e) => !isAlly(e.partnershipLevel || ''));
-    const filteredAllies = filteredEntries.filter((e) => isAlly(e.partnershipLevel || ''));
+    const filteredEntries = useFilteredEntries(entries);
+    const filteredPartners = React.useMemo(
+        () => filteredEntries.filter((e) => !isAlly(e.partnershipLevel || '')),
+        [filteredEntries]
+    );
+    const filteredAllies = React.useMemo(
+        () => filteredEntries.filter((e) => isAlly(e.partnershipLevel || '')),
+        [filteredEntries]
+    );
     const defaultAlliesOpen = filteredPartners.length === 0;
-
-    React.useEffect(() => {
-        function handleNotifyFor(store) {
-            return store.on('notify', refreshFilters);
-        }
-
-        const cleanup = [books, types, advanced, sort].map(handleNotifyFor);
-
-        return () => cleanup.forEach((fn) => fn());
-    }, [entries]);
 
     return (
         <React.Fragment>
@@ -228,11 +239,14 @@ function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
 
 export default function Results({linkTexts, headerTexts}) {
     const partnerData = useDataFromPromise(partnerFeaturePromise);
+    const visiblePartners = React.useMemo(
+        () => partnerData?.filter((e) => e.visible_on_website),
+        [partnerData]
+    );
 
     if (!partnerData) {
         return null;
     }
-    const visiblePartners = partnerData.filter((e) => e.visible_on_website);
 
     return (
         <section className="results boxed">

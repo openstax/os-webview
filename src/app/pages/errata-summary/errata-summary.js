@@ -15,14 +15,16 @@ const radioItems = [
 function ErrataSummary({data, book}) {
     const initialValue = window.location.hash.replace('#', '');
     const [selectedFilter, setselectedFilter] = useState(initialValue);
-
-    function onChange(newlySelectedValue) {
-        setselectedFilter(newlySelectedValue);
-        history.replaceState('', '',
-            newlySelectedValue ? `#${newlySelectedValue}` :
-                window.location.href.replace(window.location.hash, '')
-        );
-    }
+    const onChange = React.useCallback(
+        (newlySelectedValue) => {
+            setselectedFilter(newlySelectedValue);
+            history.replaceState('', '',
+                newlySelectedValue ? `#${newlySelectedValue}` :
+                    window.location.href.replace(window.location.hash, '')
+            );
+        },
+        []
+    );
 
     return (
         <React.Fragment>

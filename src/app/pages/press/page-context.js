@@ -1,10 +1,8 @@
 import buildContext from '~/components/jsx-helpers/build-context';
-import {usePageData} from '~/helpers/controller/cms-mixin';
+import usePageData from '~/helpers/use-page-data';
 
 function useContextValue() {
-    const [data] = usePageData({slug: 'press'});
-
-    return data;
+    return usePageData('press');
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});

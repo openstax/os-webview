@@ -25,14 +25,16 @@ export default function ArticleSummary({
 }) {
     const tabTarget = openInNewWindow ? '_blank' : null;
     const SubTag = HeadTag.replace(/\d/, (n) => +n + 1);
-
-    function onClick(event) {
-        if (event.target.getAttribute('target') === '_blank') {
-            return;
-        }
-        event.preventDefault();
-        setPath(event.target.href);
-    }
+    const onClick = React.useCallback(
+        (event) => {
+            if (event.target.getAttribute('target') === '_blank') {
+                return;
+            }
+            event.preventDefault();
+            setPath(event.target.href);
+        },
+        [setPath]
+    );
 
     return (
         <React.Fragment>

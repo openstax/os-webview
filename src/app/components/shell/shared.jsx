@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import cmsFetch from '~/models/cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './shared.scss';
 

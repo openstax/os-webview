@@ -20,15 +20,17 @@ export default function FormCheckboxgroup(
     {name, label, longLabel, instructions, options, onChange}
 ) {
     const checkedItems = React.useMemo(() => new window.Set(), []);
+    const onItemChange = React.useCallback(
+        ({target: {value, checked}}) => {
+            const method = checked ? 'add' : 'delete';
 
-    function onItemChange({target: {value, checked}}) {
-        const method = checked ? 'add' : 'delete';
-
-        checkedItems[method](value);
-        if (onChange) {
-            onChange(Array.from(checkedItems.values()));
-        }
-    }
+            checkedItems[method](value);
+            if (onChange) {
+                onChange(Array.from(checkedItems.values()));
+            }
+        },
+        [checkedItems, onChange]
+    );
 
     return (
         <div className="form-checkboxgroup">

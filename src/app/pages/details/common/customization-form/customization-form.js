@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import FormInput from '~/components/form-input/form-input';
 import ModuleList from './module-list';
-import {cmsPost} from '~/models/cmsFetch';
+import {cmsPost} from '~/helpers/cms-fetch';
 import cn from 'classnames';
 import './customization-form.scss';
 

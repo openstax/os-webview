@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import useLatestBlogEntries from '~/models/blog-entries';
-import cmsFetch from '~/models/cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 import $ from '~/helpers/$';
 
 const stayHere = {path: '/blog'};

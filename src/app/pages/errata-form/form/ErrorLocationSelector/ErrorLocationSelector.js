@@ -7,10 +7,10 @@ import './ErrorLocationSelector.scss';
 function AdditionalLocationInput({value='', readOnly=false, updateValue, required=true}) {
     const inputRef = useRef();
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
-
-    function onChange(event) {
-        updateValue(event.target.value);
-    }
+    const syncValue = React.useCallback(
+        (event) => updateValue(event.target.value),
+        [updateValue]
+    );
 
     useEffect(updateInvalidMessage, [required, updateInvalidMessage]);
 
@@ -21,7 +21,7 @@ function AdditionalLocationInput({value='', readOnly=false, updateValue, require
             <input
                 type="text" name="additional_location_information"
                 placeholder="Describe where you found the error"
-                value={value} onChange={onChange}
+                value={value} onChange={syncValue}
                 ref={inputRef} readOnly={readOnly}
                 required={required}
             />

@@ -71,6 +71,13 @@ function GiveBeforePdf({
 }) {
     const [showThankYou, setShowThankYou] = React.useState(false);
     const [doneDownloading, setDoneDownloading] = React.useState(false);
+    const onThankYouClick = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            setShowThankYou(true);
+        },
+        []
+    );
 
     React.useEffect(
         () => window.setTimeout(() => setDoneDownloading(true), 700),
@@ -85,12 +92,6 @@ function GiveBeforePdf({
         return <ThankYou link={link} close={close} />;
     }
 
-    function onThankYouClick(event) {
-        event.preventDefault();
-        setShowThankYou(true);
-    }
-
-
     return (
         <GiveBeforePdfAfterConditionals {...{onThankYouClick, link, data}} />
     );
@@ -99,15 +100,20 @@ function GiveBeforePdf({
 export default function useGiveDialog() {
     const [Dialog, open, close] = useDialog();
     const data1 = useDataFromSlug('donations/donation-popup');
-    const data = (data1?.length > 0) ? data1[0] : {};
-
-    function GiveDialog({link}) {
-        return (
-            <Dialog>
-                <GiveBeforePdf {...{link, close, data}} />
-            </Dialog>
-        );
-    }
+    const data = React.useMemo(
+        () => (data1?.length > 0) ? data1[0] : {},
+        [data1]
+    );
+    const GiveDialog = React.useCallback(
+        ({link}) => {
+            return (
+                <Dialog>
+                    <GiveBeforePdf {...{link, close, data}} />
+                </Dialog>
+            );
+        },
+        [close, data]
+    );
 
     return {
         GiveDialog,

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import TabGroup from '~/components/tab-group/tab-group.jsx';
+import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import {useIntl} from 'react-intl';
 import DetailsTab from './details-tab/details-tab';

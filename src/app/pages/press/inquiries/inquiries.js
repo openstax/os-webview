@@ -16,10 +16,10 @@ export default function Inquiries() {
         return null;
     }
 
-    const name = pageData.press_inquiry_name;
-    const phone = pageData.press_inquiry_phone;
-    const email = pageData.press_inquiry_email;
-    const pressKitUrl = pageData.press_kit_url;
+    const name = pageData.pressInquiryName;
+    const phone = pageData.pressInquiryPhone;
+    const email = pageData.pressInquiryEmail;
+    const pressKitUrl = pageData.pressKitUrl;
 
     return (
         <div className="inquiries">

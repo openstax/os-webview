@@ -48,11 +48,13 @@ function Card({position, cards}) {
     const {image, storyText: description} = cards[position];
     const articleDataArr = cards.map(useDataFromCard);
     const [isOpen, toggle] = useToggle();
-
-    function onClick(event) {
-        event.preventDefault();
-        toggle();
-    }
+    const openDialog = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            toggle();
+        },
+        [toggle]
+    );
 
     return (
         <div className="card">
@@ -61,7 +63,7 @@ function Card({position, cards}) {
             </div>
             <div className="text-part">
                 <div>{description}</div>
-                <LinkWithChevron href="lightbox-more" onClick={onClick}>
+                <LinkWithChevron href="lightbox-more" onClick={openDialog}>
                     Read more
                 </LinkWithChevron>
             </div>

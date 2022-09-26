@@ -130,16 +130,18 @@ export function StudyEdgeOption({model}) {
     const [Dialog, open] = useDialog();
     const intl = useIntl();
     const text = intl.formatMessage({id: 'getit.app'});
-
-    function onClick(event) {
-        event.preventDefault();
-        open();
-    }
+    const openDialog = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            open();
+        },
+        [open]
+    );
 
     return (
         <SimpleLinkOption
             link={model.enableStudyEdge} icon={faMobileAlt} text={text}
-            onClick={onClick}
+            onClick={openDialog}
         >
             <Dialog className="wider-dialog">
                 <StudyEdge model={model} />
@@ -157,19 +159,22 @@ export function PdfOption({model}) {
     const pdfLink = (model.highResolutionPdfUrl || model.lowResolutionPdfUrl);
     const {GiveDialog, open, enabled} = useGiveDialog();
 
-    function onClick(event) {
-        if (enabled && !$.isMobileDisplay()) {
-            event.preventDefault();
-            open();
-        }
-    }
+    const openGiveDialog = React.useCallback(
+        (event) => {
+            if (enabled && !$.isMobileDisplay()) {
+                event.preventDefault();
+                open();
+            }
+        },
+        [enabled, open]
+    );
 
     return (
         <React.Fragment>
             <SimpleLinkOption
                 link={pdfLink} icon={faCloudDownloadAlt} text={text}
                 data-track="PDF"
-                onClick={onClick}
+                onClick={openGiveDialog}
             />
             <GiveDialog link={pdfLink} />
         </React.Fragment>
@@ -326,21 +331,23 @@ function useExpanderText(optionCount) {
 
 export function OptionExpander({expanded, additionalOptions, toggle}) {
     const text = useExpanderText(additionalOptions)[expanded ? 'fewer' : 'more'];
+    const doToggle = React.useCallback(
+        (event) => {
+            toggle();
+            event.preventDefault();
+        },
+        [toggle]
+    );
 
     if (additionalOptions < 1) {
         return null;
-    }
-
-    function onClick(event) {
-        toggle();
-        event.preventDefault();
     }
 
     return (
         <div className="option expander">
             <a
                 href="."
-                onClick={onClick} onKeyDown={$.treatSpaceOrEnterAsClick}
+                onClick={doToggle} onKeyDown={$.treatSpaceOrEnterAsClick}
                 aria-expanded={expanded}
             >
                 {text}

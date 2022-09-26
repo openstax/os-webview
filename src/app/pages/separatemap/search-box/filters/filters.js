@@ -9,10 +9,10 @@ function InstitutionSelector({setInstitution}) {
         {label: 'Technical/Community College', value: 'Technical/Community College'},
         {label: 'High School', value: 'High School'}
     ];
-
-    function onChange(event) {
-        setInstitution(event.target.value);
-    }
+    const onChange = React.useCallback(
+        (event) => setInstitution(event.target.value),
+        [setInstitution]
+    );
 
     return (
         <FormSelect
@@ -25,15 +25,18 @@ function InstitutionSelector({setInstitution}) {
 }
 
 function ForCheckbox({name, label, selected}) {
-    function onChange(event) {
-        const {checked} = event.target;
+    const onChange = React.useCallback(
+        (event) => {
+            const {checked} = event.target;
 
-        if (checked) {
-            selected.add(name);
-        } else {
-            selected.delete(name);
-        }
-    }
+            if (checked) {
+                selected.add(name);
+            } else {
+                selected.delete(name);
+            }
+        },
+        [selected, name]
+    );
 
     return (
         <label className="for-checkbox">

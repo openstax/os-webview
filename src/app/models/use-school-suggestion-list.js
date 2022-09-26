@@ -1,7 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import useFlagContext from '~/components/shell/flag-context';
 import sfApiFetch from '~/models/sfapi';
-import cmsFetch from '~/models/cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 import debounce from 'lodash/debounce';
 
 const debouncedFetch = debounce(

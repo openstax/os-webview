@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useToggle, RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faThumbtack} from '@fortawesome/free-solid-svg-icons/faThumbtack';
@@ -9,21 +9,25 @@ import './module-list.scss';
 
 function ContentGroup({item, children}) {
     const [expanded, toggleExpanded] = useToggle();
-    const [checkedChildren, setCheckedChildren] = useState(0);
+    const [checkedChildren, setCheckedChildren] = React.useState(0);
     const pinnedIcon = checkedChildren > 0 ? faThumbtack : faCaretDown;
     const icon = expanded ? pinnedIcon : faCaretRight;
+    const onClick = React.useCallback(
+        () => {
+            if (checkedChildren === 0) {
+                toggleExpanded();
+            }
+        },
+        [toggleExpanded, checkedChildren]
+    );
+    const childClicked = React.useCallback(
+        (event) => {
+            const target = event.currentTarget;
 
-    function onClick() {
-        if (checkedChildren === 0) {
-            toggleExpanded();
-        }
-    }
-
-    function childClicked(event) {
-        const target = event.currentTarget;
-
-        setCheckedChildren(Array.from(target.querySelectorAll(':checked')).length);
-    }
+            setCheckedChildren(Array.from(target.querySelectorAll(':checked')).length);
+        },
+        []
+    );
 
     return (
         <React.Fragment>
@@ -43,22 +47,24 @@ function ContentGroup({item, children}) {
 
 function SelectableModule({item, selectedModules}) {
     const [checked, toggle] = useToggle(false);
+    const onClick = React.useCallback(
+        (event) => {
+            const disabled = !checked && selectedModules.isFull;
 
-    function onClick(event) {
-        const disabled = !checked && selectedModules.isFull;
+            if (disabled) {
+                event.preventDefault();
+                return;
+            }
 
-        if (disabled) {
-            event.preventDefault();
-            return;
-        }
-
-        if (checked) {
-            selectedModules.remove(item.slug);
-        } else {
-            selectedModules.add(item.slug, item.title);
-        }
-        toggle();
-    }
+            if (checked) {
+                selectedModules.remove(item.slug);
+            } else {
+                selectedModules.add(item.slug, item.title);
+            }
+            toggle();
+        },
+        [toggle, checked, item, selectedModules]
+    );
 
     return (
         <label>

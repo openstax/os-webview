@@ -4,7 +4,7 @@ import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
 import Reviews from './reviews/reviews';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import TabGroup from '~/components/tab-group/tab-group.jsx';
+import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group.jsx';
 import booksPromise from '~/models/books';
 import analyticsEvents from '../analytics-events';

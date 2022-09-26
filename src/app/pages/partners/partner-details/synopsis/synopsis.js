@@ -28,7 +28,11 @@ function PartnerLink({partnerUrl, partnerLinkText}) {
 
     return (
         partnerUrl &&
-            <a className="partner-website" href={partnerUrl} onClick={trackPartnerVisit}>
+            <a
+                className="partner-website" href={partnerUrl}
+                onClick={trackPartnerVisit}
+                target="_blank" rel="noreferrer"
+            >
                 {partnerLinkText}{' '}
                 <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>

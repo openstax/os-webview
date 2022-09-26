@@ -1,4 +1,4 @@
-import cmsFetch from './cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 
 const fetchBooks = cmsFetch('books?format=json')
     .then((r) => r.books.filter((b) => b.book_state !== 'retired'));

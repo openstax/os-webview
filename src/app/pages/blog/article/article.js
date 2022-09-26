@@ -4,8 +4,7 @@ import ProgressRing from '~/components/progress-ring/progress-ring';
 import useScrollProgress from './use-progress';
 import {ShareJsx} from '~/components/share/share';
 import React, {useState, useRef} from 'react';
-import {usePageData} from '~/helpers/controller/cms-mixin';
-import useRouterContext from '~/components/shell/router-context';
+import usePageData from '~/helpers/use-page-data';
 import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import './article.scss';
 
@@ -175,22 +174,31 @@ export function Article({data}) {
 }
 
 function ArticleLoader({slug, onLoad}) {
-    const [data, statusPage] = usePageData({slug, preserveWrapping: true});
-    const {fail} = useRouterContext();
+    const data = usePageData(slug, true);
 
     React.useEffect(
         () => {
-            if (data && data.error) {
-                fail(`Could not load ${slug}`);
-            }
             if (onLoad && data) {
                 onLoad(data);
             }
         },
-        [data, onLoad, fail, slug]
+        [data, onLoad]
     );
 
-    return (statusPage ? statusPage : <Article data={data} />);
+    if (!data) {
+        return null;
+    }
+
+    if (data.error) {
+        return (
+            <div className="text-content">
+                <h1>[Article not found]</h1>
+                <pre>{data.error.message} {slug}</pre>
+            </div>
+        );
+    }
+
+    return (<Article data={data} />);
 }
 
 export function ArticleFromSlug({slug, onLoad}) {

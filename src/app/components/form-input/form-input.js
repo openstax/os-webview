@@ -92,40 +92,46 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
     const {onChange: otherOnChange, ...otherProps} = inputProps;
     const [matches, exactMatch] = useMatches(value.toLowerCase(), suggestions);
     const [accepted, setAccepted] = useState(!suggestions?.length);
-
-    function accept(item='') {
-        setValue(item);
-        setAccepted(true);
-        if (otherOnChange) {
-            otherOnChange({target: {value: item}});
-        }
-    }
-
+    const accept = React.useCallback(
+        (item='') => {
+            setValue(item);
+            setAccepted(true);
+            if (otherOnChange) {
+                otherOnChange({target: {value: item}});
+            }
+        },
+        [otherOnChange]
+    );
     const [activeIndex, handleKeyDown, setActiveIndex] = useSelectList({
         getItems: () => matches,
         accept,
         searchable: false
     });
-
-    function onChange(event) {
-        if (otherOnChange) {
-            otherOnChange(event);
-        }
-        setValue(event.target.value);
-        // Fields without suggestions should be considered accepted
-        // Empty suggestion lists will still be unaccepted
-        setAccepted(!suggestions);
-    }
-    function onKeyDown(event) {
-        // Don't use space to accept
-        if (event.key === ' ') {
-            return;
-        }
-        if (handleKeyDown(event)) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    }
+    const onChange = React.useCallback(
+        (event) => {
+            if (otherOnChange) {
+                otherOnChange(event);
+            }
+            setValue(event.target.value);
+            // Fields without suggestions should be considered accepted
+            // Empty suggestion lists will still be unaccepted
+            setAccepted(!suggestions);
+        },
+        [otherOnChange, suggestions]
+    );
+    const onKeyDown = React.useCallback(
+        (event) => {
+            // Don't use space to accept
+            if (event.key === ' ') {
+                return;
+            }
+            if (handleKeyDown(event)) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        },
+        [handleKeyDown]
+    );
 
     return (
         <label className="form-input">

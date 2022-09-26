@@ -13,19 +13,23 @@ function UserControls({status}) {
     const {postRating} = usePartnerContext();
     const myReview = useMyReview();
     const displayStatus = ['Deleted', 'Rejected'].includes(status) ? status : 'pending';
-
-    function onUpdate(event) {
-        event.preventDefault();
-        togglePage();
-    }
-
-    function onDelete(event) {
-        event.preventDefault();
-        // eslint-disable-next-line no-alert
-        if (window.confirm('Are you sure you want to delete this review?')) {
-            postRating({id: myReview.id}, 'DELETE');
-        }
-    }
+    const onUpdate = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            togglePage();
+        },
+        [togglePage]
+    );
+    const onDelete = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            // eslint-disable-next-line no-alert
+            if (window.confirm('Are you sure you want to delete this review?')) {
+                postRating({id: myReview.id}, 'DELETE');
+            }
+        },
+        [postRating, myReview]
+    );
 
     return (
         <React.Fragment>

@@ -4,6 +4,8 @@ import Controls from './controls/controls';
 import MobileControlRow from './mobile-controls/mobile-controls';
 import Results, {costOptions, equityOptions} from './results/results';
 import {useLocation} from 'react-router-dom';
+import {SearchContextProvider} from './search-context';
+import {useValueChangeEvents} from './analytics-events';
 import './partners.scss';
 
 function Confirmation() {
@@ -100,16 +102,20 @@ function Partners({data}) {
         () => getFilterOptions(data),
         [data]
     );
-    const typeOptions = data.partner_type_choices
-        .sort()
-        .map((k) => ({
-            label: k,
-            value: k
-        }));
+    const typeOptions = React.useMemo(
+        () => data.partner_type_choices
+            .sort()
+            .map((k) => ({
+                label: k,
+                value: k
+            })),
+        [data]
+    );
     const headline = data.heading;
     const description = data.description;
     const {linkTexts, headerTexts} = textsFromData(data);
 
+    useValueChangeEvents();
     return (
         <React.Fragment>
             {confirmation && <Confirmation />}
@@ -134,7 +140,9 @@ function Partners({data}) {
 export default function PartnersLoader() {
     return (
         <main className="partners page">
-            <LoaderPage slug="pages/partners" Child={Partners} doDocumentSetup noCamelCase />
+            <SearchContextProvider>
+                <LoaderPage slug="pages/partners" Child={Partners} doDocumentSetup noCamelCase />
+            </SearchContextProvider>
         </main>
     );
 }

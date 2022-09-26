@@ -1,24 +1,28 @@
-import {useReducer, useLayoutEffect} from 'react';
+import React from 'react';
+import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
 import buildContext from '~/components/jsx-helpers/build-context';
 
 function useContextValue() {
-    const [value, dispatch] = useReducer(() => document.activeElement);
-    const blurHandler = ({relatedTarget}) => {
-        if (!relatedTarget) {
-            dispatch();
-        }
-    };
+    const [value, refresh] = useRefreshable(() => document.activeElement);
+    const blurHandler = React.useCallback(
+        ({relatedTarget}) => {
+            if (!relatedTarget) {
+                refresh();
+            }
+        },
+        [refresh]
+    );
 
-    useLayoutEffect(() => {
-        document.addEventListener('focus', dispatch, true);
+    React.useLayoutEffect(() => {
+        document.addEventListener('focus', refresh, true);
         document.addEventListener('blur', blurHandler, true);
-        dispatch();
+        refresh();
 
         return () => {
-            document.removeEventListener('focus', dispatch, true);
+            document.removeEventListener('focus', refresh, true);
             document.removeEventListener('blur', blurHandler, true);
         };
-    }, []);
+    }, [refresh, blurHandler]);
 
     return value;
 }

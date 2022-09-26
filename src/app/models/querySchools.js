@@ -1,4 +1,4 @@
-import cmsFetch from './cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 
 const MAX_SEARCH_RESULTS = 1000;
 

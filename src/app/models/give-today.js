@@ -1,4 +1,4 @@
-import cmsFetch from './cmsFetch';
+import cmsFetch from '~/helpers/cms-fetch';
 import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
 
 const promise = cmsFetch('give-today');
