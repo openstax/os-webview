@@ -1,5 +1,6 @@
 import React from 'react';
-import {LoaderPage, RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCanadianMapleLeaf} from '@fortawesome/free-brands-svg-icons/faCanadianMapleLeaf';
 import './bookstore-suppliers.scss';

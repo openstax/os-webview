@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Hero from '~/components/hero/hero';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group.jsx';

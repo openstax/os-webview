@@ -1,5 +1,5 @@
 import React from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import ChildComponent from '~/components/a-component-template/a-component-template.js';
 import './a-page-template.scss';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
 import './role-selector.scss';
 

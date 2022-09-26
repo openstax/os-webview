@@ -1,5 +1,5 @@
 import React from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import {salesforceTitles, afterFormSubmit} from '~/models/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useNavigate, useLocation} from 'react-router-dom';

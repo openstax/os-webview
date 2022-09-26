@@ -1,5 +1,5 @@
 import React from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import $ from '~/helpers/$';
 import Map from './map/map';
 import Statistics from './statistics/stat';

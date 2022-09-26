@@ -1,5 +1,5 @@
 import React from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import LazyLoad from 'react-lazyload';
 import $ from '~/helpers/$';
 import Banner from './sections/banner/banner';

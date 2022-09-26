@@ -1,8 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import $ from '~/helpers/$';
 import {fetchFromCMS} from '~/helpers/page-data-utils';
-import usePageData from '~/helpers/use-page-data';
-import useRouterContext from '~/components/shell/router-context';
 
 export function Document({title, description, noindex}) {
     useEffect(
@@ -62,43 +60,6 @@ export function useCanonicalLink(controlsHeader=true) {
 
         return () => linkController.remove();
     }, [controlsHeader]);
-}
-
-function LoadedPage({
-    Child, data, props, doDocumentSetup, noCamelCase
-}) {
-    const camelCaseData = React.useMemo(
-        () => noCamelCase ? data : $.camelCaseKeys(data),
-        [data, noCamelCase]
-    );
-
-    useCanonicalLink(doDocumentSetup);
-    useEffect(() => {
-        if (doDocumentSetup) {
-            $.setPageTitleAndDescriptionFromBookData(data);
-        }
-    }, [data, doDocumentSetup]);
-
-    return (
-        <Child {...{data: camelCaseData, ...props}} />
-    );
-}
-
-export function LoaderPage({
-    slug, Child, props={}, preserveWrapping, doDocumentSetup=false,
-    noCamelCase=false
-}) {
-    const data = usePageData(slug, preserveWrapping, noCamelCase);
-    const {fail} = useRouterContext();
-
-    if (!data) {
-        return null;
-    }
-    if (data.error && fail) {
-        fail(`Could not load ${slug}`);
-    }
-
-    return (<LoadedPage {...{Child, data, props, doDocumentSetup, noCamelCase}} />);
 }
 
 // Making scripts work, per https://stackoverflow.com/a/47614491/392102
