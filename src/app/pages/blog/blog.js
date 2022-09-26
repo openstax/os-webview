@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Routes, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
-import {Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import Head from '~/components/jsx-helpers/head';
 import ExploreBySubject from './explore/by-subject';
 import ExploreCollections from './explore/collections';
 import ExplorePage from './explore-page/explore-page';
@@ -22,7 +22,7 @@ export function SearchResultsPage() {
 
     return (
         <React.Fragment>
-            <Document title="OpenStax Blog Search" description={pageDescription} />
+            <Head title="OpenStax Blog Search" description={pageDescription} />
             <div className="boxed left">
                 <SearchBar />
             </div>
@@ -37,7 +37,7 @@ export function MainBlogPage() {
 
     return (
         <WindowContextProvider>
-            <Document title="OpenStax News" description={pageDescription} />
+            <Head title="OpenStax News" description={pageDescription} />
             <div className="boxed">
                 <HeadingAndSearchBar>
                     <h1>OpenStax Blog</h1>

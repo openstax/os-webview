@@ -1,7 +1,7 @@
 import React from 'react';
 import CarouselSection from './components/carousel-section';
 import useSpecificSubjectContext from './context';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import './blog-posts.scss';
 
 function Card({article_image: image, title: linkText, slug}) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import useLatestBlogEntries from '~/models/blog-entries';
 import cmsFetch from '~/helpers/cms-fetch';

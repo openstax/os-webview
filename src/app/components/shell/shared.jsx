@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import cmsFetch from '~/helpers/cms-fetch';
-import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromPromise} from '~/helpers/page-data-utils';
 import './shared.scss';
 
 // Shim for incognito windows that disable localStorage

@@ -1,7 +1,7 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import cookie from '~/helpers/cookie';
-import {useSettable} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useSettable} from '~/helpers/data';
 
 function useWalkthroughCookie() {
     return useSettable(

@@ -1,6 +1,6 @@
 import React from 'react';
 import JITLoad from '~/helpers/jit-load';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import $ from '~/helpers/$';
 
 const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours

@@ -2,7 +2,7 @@ import React, {useState, useRef, useMemo} from 'react';
 import useErrataFormContext from '../errata-form-context';
 import managedInvalidMessage from './InvalidMessage.js';
 import getFields from '~/models/errata-fields';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 
 const sourceNames = {
     tutor: 'OpenStax Tutor'

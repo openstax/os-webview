@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import querySchools from '~/models/querySchools';
 import analytics from '~/helpers/analytics';
-import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromPromise} from '~/helpers/page-data-utils';
 
 function useSchoolsPromise(searchString, filters, institution) {
     const [promise, setPromise] = useState();

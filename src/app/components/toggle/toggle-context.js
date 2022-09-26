@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import buildContext from '~/components/jsx-helpers/build-context';
 import throttle from 'lodash/throttle';
 

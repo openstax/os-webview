@@ -3,7 +3,7 @@ import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import {useErrataDetail} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import './confirmation.scss';
 
 const models = {

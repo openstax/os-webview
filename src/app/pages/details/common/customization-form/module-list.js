@@ -1,5 +1,6 @@
 import React from 'react';
-import {useToggle, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromPromise} from '~/helpers/page-data-utils';
+import {useToggle} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faThumbtack} from '@fortawesome/free-solid-svg-icons/faThumbtack';

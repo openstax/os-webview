@@ -1,5 +1,5 @@
 import React from 'react';
-import {Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import Head from '~/components/jsx-helpers/head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useTextFromSlug} from '~/helpers/page-data-utils';
 import useRouterContext from '~/components/shell/router-context';
@@ -39,7 +39,7 @@ export function GeneralPageFromSlug({slug, fallback}) {
 
     return (
         <main>
-            <Document
+            <Head
                 title={head?.title || 'OpenStax'} description={head?.description}
                 noindex
             />

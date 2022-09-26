@@ -1,6 +1,6 @@
 import React from 'react';
 import JITLoad from '~/helpers/jit-load';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useGiveToday from '~/models/give-today';
 import './upper-menu.scss';
 

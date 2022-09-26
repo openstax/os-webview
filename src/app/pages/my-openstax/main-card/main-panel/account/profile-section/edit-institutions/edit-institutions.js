@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import useDialog from '~/pages/my-openstax/dialog/dialog';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import useInstitutions from '~/pages/my-openstax/store/use-institutions';
 import sfApiFetch from '~/models/sfapi';
 import {LabeledElement, FilteringSelect} from '~/components/form-elements/form-elements';

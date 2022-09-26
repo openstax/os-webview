@@ -1,5 +1,5 @@
 import React from 'react';
-import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useRefreshable} from '~/helpers/data';
 import buildContext from '~/components/jsx-helpers/build-context';
 
 function useSet() {

@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useCanonicalLink} from '~/helpers/page-data-utils';
 import $ from '~/helpers/$';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';

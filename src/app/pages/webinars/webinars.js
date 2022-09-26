@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import TabGroup from '~/components/tab-group/tab-group';

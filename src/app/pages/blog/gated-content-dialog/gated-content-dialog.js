@@ -3,7 +3,7 @@ import {useDialog} from '~/components/dialog/dialog';
 import linkHelper from '~/helpers/link';
 import $ from '~/helpers/$';
 import useUserContext from '~/contexts/user';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import ContactInfo from '~/components/contact-info/contact-info';
 import {RoleDropdown} from '~/components/role-selector/role-selector';
 import FormInput from '~/components/form-input/form-input';

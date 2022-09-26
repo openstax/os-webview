@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Routes, Route, Navigate} from 'react-router-dom';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
 import $ from '~/helpers/$';
-import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useCanonicalLink} from '~/helpers/page-data-utils';
 import Hero from './hero';
 import LanguageSelectorSection from './language-selector-section';
 import SubjectsListing from './subjects-listing';

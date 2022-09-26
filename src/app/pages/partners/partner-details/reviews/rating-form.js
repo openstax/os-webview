@@ -5,7 +5,7 @@ import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import usePageContext from './page-context';
 import useUserContext from '~/contexts/user';
 import usePartnerContext from '../partner-context';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import analyticsEvents from '../../analytics-events';
 import './rating-form.scss';

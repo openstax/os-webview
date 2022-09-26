@@ -1,6 +1,18 @@
+import React from 'react';
 import bookPromise from '~/models/book-titles';
 import urlFromSlug from './url-from-slug';
-import React from 'react';
+import $ from '~/helpers/$';
+
+export function useCanonicalLink(controlsHeader=true) {
+    React.useEffect(() => {
+        if (!controlsHeader) {
+            return null;
+        }
+        const linkController = $.setCanonicalLink();
+
+        return () => linkController.remove();
+    }, [controlsHeader]);
+}
 
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
@@ -92,4 +104,25 @@ export function useTextFromSlug(slug) {
     }, [slug]);
 
     return {head, text};
+}
+
+export function useDataFromPromise(promise, defaultValue) {
+    const [data, setData] = React.useState(defaultValue);
+
+    React.useEffect(() => {
+        if (promise) {
+            promise.then(setData);
+        }
+    }, [promise]);
+
+    return data;
+}
+
+export function useDataFromSlug(slug, preserveWrapping=false) {
+    const promise = React.useMemo(
+        () => slug ? fetchFromCMS(slug, preserveWrapping) : null,
+        [slug, preserveWrapping]
+    );
+
+    return useDataFromPromise(promise);
 }

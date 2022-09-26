@@ -1,4 +1,4 @@
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import $ from '~/helpers/$';
 
 const fields = [

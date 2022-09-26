@@ -1,5 +1,5 @@
 import React from 'react';
-import {useCanonicalLink} from './jsx-helpers.jsx';
+import {useCanonicalLink} from '~/helpers/page-data-utils';
 import $ from '~/helpers/$';
 import usePageData from '~/helpers/use-page-data';
 import useRouterContext from '~/components/shell/router-context';

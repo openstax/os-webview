@@ -4,7 +4,7 @@ import {useParams, Link, useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {WindowContextProvider} from '~/contexts/window';
-import {Document} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import Head from '~/components/jsx-helpers/head';
 import PinnedArticle from '../pinned-article/pinned-article';
 import {HeadingAndSearchBar} from '../search-bar/search-bar';
 import MoreStories from '../more-stories/more-stories';
@@ -65,7 +65,7 @@ export default function ExplorePage() {
 
     return (
         <WindowContextProvider>
-            <Document title={`${topic} blog posts - OpenStax`} description={pageDescription} />
+            <Head title={`${topic} blog posts - OpenStax`} description={pageDescription} />
             <div className="boxed left">
                 <Link to="/blog" onClick={goBack} className="breadcrumb">
                     <FontAwesomeIcon icon={faChevronLeft} />

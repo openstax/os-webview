@@ -1,5 +1,5 @@
 import React from 'react';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import cn from 'classnames';
 import './clipped-text.scss';
 

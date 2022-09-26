@@ -1,5 +1,6 @@
 import React from 'react';
-import {useToggle, useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useSelectList from '~/helpers/use-select-list';
+import {useToggle} from '~/helpers/data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import $ from '~/helpers/$';

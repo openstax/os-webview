@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {useMainModal} from '~/helpers/main-class-hooks';
