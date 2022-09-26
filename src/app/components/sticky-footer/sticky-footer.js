@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import {useMainSticky} from '~/helpers/main-class-hooks';
 import cn from 'classnames';

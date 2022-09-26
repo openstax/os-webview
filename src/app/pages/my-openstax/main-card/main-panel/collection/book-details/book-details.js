@@ -1,7 +1,8 @@
 import React from 'react';
 import useCollectionContext from '../collection-context';
 import useAdoptions from '~/pages/my-openstax/store/use-adoptions';
-import {RawHTML, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {EditBookForm} from '../add-book-form/add-book-form';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';

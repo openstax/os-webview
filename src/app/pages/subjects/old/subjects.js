@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
 import useSubjectCategoryContext from '~/contexts/subject-category';
-import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FormattedMessage} from 'react-intl';
 import BookViewer from './book-viewer/book-viewer';
 import savingsPromise from '~/models/savings';

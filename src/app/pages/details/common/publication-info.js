@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {formatDateForBlog as formatDate} from '~/helpers/data';
 import fetchRexRelease from '~/models/rex-release';
 import {FormattedMessage, useIntl} from 'react-intl';

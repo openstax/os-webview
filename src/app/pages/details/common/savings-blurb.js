@@ -2,7 +2,7 @@ import React from 'react';
 import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHandHoldingHeart} from '@fortawesome/free-solid-svg-icons/faHandHoldingHeart';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import './savings-blurb.scss';
 
 export default function SavingsBlurb({model}) {

@@ -7,7 +7,7 @@ import $ from '~/helpers/$';
 import DetailsPane from './details-pane/details-pane';
 import InstructorResourcesPane from './instructor-resources-pane/instructor-resources-pane';
 import StudentResourcesPane from './student-resources-pane/student-resources-pane';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useTableOfContents} from '../common/hooks';
 import {ErrataContents, GiveLink} from '../common/common';
 import './phone-view.scss';

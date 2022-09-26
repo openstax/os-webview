@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import useDropdownContext from '../../dropdown-context';
 import $ from '~/helpers/$';
 import cn from 'classnames';

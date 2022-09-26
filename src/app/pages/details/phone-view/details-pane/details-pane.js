@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {Authors, PublicationInfo} from '../../common/common';
 import CollapsingPane from '~/components/collapsing-pane/collapsing-pane.jsx';
 import SavingsBlurb from '../../common/savings-blurb';

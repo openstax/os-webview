@@ -1,6 +1,6 @@
 import React from 'react';
 import {LabeledSection} from '../common';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import cn from 'classnames';
 import './cost.scss';
 

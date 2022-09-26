@@ -1,7 +1,7 @@
 import React from 'react';
 import useTOCContext from './context';
 import $ from '~/helpers/$';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 
 export default function TOCSlideout({html}) {
     const {toggle} = useTOCContext();

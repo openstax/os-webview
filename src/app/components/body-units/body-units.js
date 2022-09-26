@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import Quote from '~/components/quote/quote.jsx';
 import JITLoad from '~/helpers/jit-load';
 

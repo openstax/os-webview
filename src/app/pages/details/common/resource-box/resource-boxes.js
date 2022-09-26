@@ -1,6 +1,6 @@
 import React from 'react';
-import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import './resource-box.scss';
+import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
@@ -17,6 +17,7 @@ import useUserContext from '~/contexts/user';
 import {FormattedMessage} from 'react-intl';
 import linkhelper from '~/helpers/link';
 import cn from 'classnames';
+import './resource-box.scss';
 
 function CommonsHubBox() {
     const {

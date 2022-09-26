@@ -1,6 +1,6 @@
 import React from 'react';
 import useSubjectsContext from './context';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import './about-openstax.scss';
 
 export default function AboutOpenStax({forceButtonUrl, forceButtonText, aboutOs}) {

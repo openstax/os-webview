@@ -6,7 +6,7 @@ import Partners from './partners/partners';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
 import {faDesktop} from '@fortawesome/free-solid-svg-icons/faDesktop';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {usePartnerFeatures} from '../../common/hooks';
 import useUserContext from '~/contexts/user';
 import useDetailsContext from '~/pages/details/context';

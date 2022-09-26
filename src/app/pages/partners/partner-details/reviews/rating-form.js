@@ -1,11 +1,12 @@
-import React, {useState, useRef} from 'react';
+import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import usePageContext from './page-context';
 import useUserContext from '~/contexts/user';
 import usePartnerContext from '../partner-context';
-import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import analyticsEvents from '../../analytics-events';
 import './rating-form.scss';
 
@@ -66,7 +67,7 @@ export function useMyReview() {
 
 function useRating() {
     const myReview = useMyReview();
-    const [rating, setRating] = useState(myReview ? myReview.rating : 0);
+    const [rating, setRating] = React.useState(myReview ? myReview.rating : 0);
 
     return [rating, setRating, myReview];
 }
@@ -91,7 +92,7 @@ export default function RatingForm() {
     const {uuid, userName} = useUserContext();
     const {postRating, partnerId, partnerName} = usePartnerContext();
     const [rating, setRating, myReview] = useRating();
-    const textAreaRef = useRef();
+    const textAreaRef = React.useRef();
     const guidelinesLink = `
         <a href="/general/tech-scout-review-standards-and-language" target="_blank">
         our guidelines</a>
