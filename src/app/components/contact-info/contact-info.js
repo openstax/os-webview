@@ -1,6 +1,6 @@
 import React from 'react';
 import FormInput from '~/components/form-input/form-input';
-import FormSelect from '~/components/form-select/form-select.jsx';
+import FormSelect from '~/components/form-select/form-select';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
 import './contact-info.scss';

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import TabGroup from '~/components/tab-group/tab-group';
-import ContentGroup from '~/components/content-group/content-group.jsx';
+import ContentGroup from '~/components/content-group/content-group';
 import {useIntl} from 'react-intl';
 import DetailsTab from './details-tab/details-tab';
 import InstructorResourceTab from './instructor-resource-tab/instructor-resource-tab';

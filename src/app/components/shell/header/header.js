@@ -1,6 +1,6 @@
 import React from 'react';
 import JITLoad from '~/helpers/jit-load';
-import {useStickyData} from '../shared.jsx';
+import {useStickyData} from '../shared.js';
 import Menus from './menus/menus';
 import $ from '~/helpers/$';
 import './header.scss';

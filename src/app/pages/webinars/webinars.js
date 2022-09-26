@@ -3,7 +3,7 @@ import {useDataFromSlug} from '~/helpers/page-data-utils';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import TabGroup from '~/components/tab-group/tab-group';
-import ContentGroup from '~/components/content-group/content-group.jsx';
+import ContentGroup from '~/components/content-group/content-group';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import $ from '~/helpers/$';
 import WebinarList from './webinar-list/webinar-list';

@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from './form/form';
-import FormSelect from '~/components/form-select/form-select.jsx';
+import FormSelect from '~/components/form-select/form-select';
 import useErrataFormContext, {ErrataFormContextProvider} from './errata-form-context';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';

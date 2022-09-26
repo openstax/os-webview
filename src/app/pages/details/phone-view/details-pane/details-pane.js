@@ -1,7 +1,7 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {Authors, PublicationInfo} from '../../common/common';
-import CollapsingPane from '~/components/collapsing-pane/collapsing-pane.jsx';
+import CollapsingPane from '~/components/collapsing-pane/collapsing-pane.js';
 import SavingsBlurb from '../../common/savings-blurb';
 import './details-pane.scss';
 

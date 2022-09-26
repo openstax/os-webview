@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {useStickyData, useSeenCounter} from '../shared.jsx';
+import {useStickyData, useSeenCounter} from '../shared.js';
 import analytics from '~/helpers/analytics';
 
 const SEEN_ENOUGH = 3;
