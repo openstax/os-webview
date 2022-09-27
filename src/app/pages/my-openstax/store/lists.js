@@ -1,5 +1,5 @@
 import sfApiFetch from '~/models/sfapi';
-import $ from '~/helpers/$';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 
 export default function (store) {
     const INITIAL_STATE = {
@@ -15,7 +15,7 @@ export default function (store) {
         const all = await sfApiFetch('lists');
 
         if (all instanceof Array) {
-            store.dispatch('lists/update', $.camelCaseKeys(all));
+            store.dispatch('lists/update', camelCaseKeys(all));
         }
     });
     store.on('lists/update', (_, all) => ({lists: all}));

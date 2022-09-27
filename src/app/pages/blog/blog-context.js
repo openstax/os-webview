@@ -1,11 +1,9 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useDataFromSlug} from '~/helpers/page-data-utils';
+import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import buildContextLoader from '~/components/jsx-helpers/context-loader';
 import useLatestBlogEntries from '~/models/blog-entries';
 import cmsFetch from '~/helpers/cms-fetch';
-import $ from '~/helpers/$';
-
 const stayHere = {path: '/blog'};
 
 function useEnglishSubjects() {
@@ -13,7 +11,7 @@ function useEnglishSubjects() {
 
     React.useEffect(
         () => cmsFetch('snippets/subjects?format=json&locale=en')
-            .then($.camelCaseKeys)
+            .then(camelCaseKeys)
             .then(setData),
         []
     );
@@ -26,7 +24,7 @@ function useCollections() {
 
     React.useEffect(
         () => cmsFetch('snippets/blogcollection?format=json')
-            .then($.camelCaseKeys)
+            .then(camelCaseKeys)
             .then(setData),
         []
     );
@@ -56,7 +54,7 @@ function useTopicStories() {
         },
         [topic, topicType]
     );
-    const topicStories = $.camelCaseKeys(useDataFromSlug(slug) || []);
+    const topicStories = camelCaseKeys(useDataFromSlug(slug) || []);
     const topicFeatured = React.useMemo(
         () => {
             const fieldFromType = topicType === 'subject' ? 'articleSubjects' : 'collections';

@@ -10,6 +10,7 @@ import useDetailsContext from '../context';
 import {GiveLink} from '../common/common';
 import {useNavigate} from 'react-router-dom';
 import $ from '~/helpers/$';
+import {findSelectedTab, replaceSearchTerm} from '../common/tab-utils';
 import './desktop-view.scss';
 
 // eslint-disable-next-line complexity
@@ -39,16 +40,16 @@ function useLabelsFromModel(model, polish) {
 }
 
 function useSelectedLabelTiedToSearchString(labels) {
-    const [selectedLabel, setSelectedLabel] = useState($.findSelectedTab(labels));
+    const [selectedLabel, setSelectedLabel] = useState(findSelectedTab(labels));
     const navigate = useNavigate();
-    const selectedTab = $.findSelectedTab(labels);
+    const selectedTab = findSelectedTab(labels);
 
     useEffect(() => {
         setSelectedLabel(selectedTab);
     }, [selectedTab]);
 
     function updateSelectedLabel(newValue) {
-        const newSearchString = $.replaceSearchTerm(labels, selectedLabel, newValue);
+        const newSearchString = replaceSearchTerm(labels, selectedLabel, newValue);
 
         setSelectedLabel(newValue);
         navigate(newSearchString, {replace: true});

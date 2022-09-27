@@ -10,6 +10,8 @@ import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
+import {isMobileDisplay} from '~/helpers/device';
 import {useIntl, FormattedMessage} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
@@ -74,7 +76,7 @@ export function TocOption({model}) {
                 href="/" role="button" className="show-toc"
                 aria-pressed={isOpen}
                 onClick={toggleToc}
-                onKeyDown={$.treatSpaceOrEnterAsClick}
+                onKeyDown={treatSpaceOrEnterAsClick}
             >
                 <FontAwesomeIcon icon={faListOl} />
                 <span className="text">{text}</span>
@@ -161,7 +163,7 @@ export function PdfOption({model}) {
 
     const openGiveDialog = React.useCallback(
         (event) => {
-            if (enabled && !$.isMobileDisplay()) {
+            if (enabled && !isMobileDisplay()) {
                 event.preventDefault();
                 open();
             }
@@ -347,7 +349,7 @@ export function OptionExpander({expanded, additionalOptions, toggle}) {
         <div className="option expander">
             <a
                 href="."
-                onClick={doToggle} onKeyDown={$.treatSpaceOrEnterAsClick}
+                onClick={doToggle} onKeyDown={treatSpaceOrEnterAsClick}
                 aria-expanded={expanded}
             >
                 {text}

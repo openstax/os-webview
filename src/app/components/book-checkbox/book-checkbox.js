@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
-import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import cn from 'classnames';
 import './book-checkbox.scss';
 
@@ -29,7 +29,7 @@ export default function BookCheckbox({book, name, checked, toggle, disabled}) {
             <div
                 className="indicator" tabIndex={disabled ? -1 : 0}
                 role="checkbox" aria-checked={checked} aria-disabled={disabled}
-                onKeyDown={$.treatSpaceOrEnterAsClick}
+                onKeyDown={treatSpaceOrEnterAsClick}
             >
                 {checked && <FontAwesomeIcon icon={faCheck} />}
             </div>

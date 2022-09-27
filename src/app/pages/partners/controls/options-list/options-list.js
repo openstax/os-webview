@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './options-list.scss';
 
 function Item({label, value, selected}) {
@@ -25,7 +25,7 @@ function Item({label, value, selected}) {
             className="option"
             onClick={toggleSelected}
             tabIndex="0"
-            onKeyDown={$.treatSpaceOrEnterAsClick}
+            onKeyDown={treatSpaceOrEnterAsClick}
         >
             {label}
         </div>

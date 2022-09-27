@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 
 function Option({item, name, required, selectedValue, onChange}) {
     return (
         <div className="radio-control-group">
-            <label tabIndex="0" onKeyDown={$.treatSpaceOrEnterAsClick}>
+            <label tabIndex="0" onKeyDown={treatSpaceOrEnterAsClick}>
                 <input
                     type="radio"
                     name={name}

@@ -6,10 +6,9 @@ import {TOCContextProvider} from '~/pages/details/common/toc-slideout/context';
 import BookDetailsContext from '../book-details-context';
 // College algebra book details
 import details from '../../../data/details-college-algebra';
-import {transformData} from '~/helpers/page-data-utils';
-import $ from '~/helpers/$';
+import {transformData, camelCaseKeys} from '~/helpers/page-data-utils';
 
-const model = $.camelCaseKeys(transformData(details));
+const model = camelCaseKeys(transformData(details));
 
 function GTTinContext() {
     return (

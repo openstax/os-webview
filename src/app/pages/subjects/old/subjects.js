@@ -12,7 +12,8 @@ import {forceCheck} from 'react-lazyload';
 import LanguageSelector from '~/components/language-selector/language-selector';
 import {useLocation, useNavigate} from 'react-router-dom';
 import './subjects.scss';
-import $ from '~/helpers/$';
+import {htmlToText} from '~/helpers/data';
+import {useCanonicalLink, setPageDescription} from '~/helpers/use-document-head';
 
 const pagePath = '/subjects';
 
@@ -27,6 +28,7 @@ function useCategoryTiedToPath() {
     const {pathname} = useLocation();
     const navigate = useNavigate();
 
+    useCanonicalLink();
     useEffect(() => {
         const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
 
@@ -35,9 +37,6 @@ function useCategoryTiedToPath() {
             path: pagePath
         });
         window.requestAnimationFrame(forceCheck);
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
     }, [category, navigate]);
 
     useEffect(() => {
@@ -171,7 +170,7 @@ function Subjects() {
     ;
 
     useEffect(
-        () => $.setPageDescription($.htmlToText(pageDescription)),
+        () => setPageDescription(htmlToText(pageDescription)),
         [pageDescription]
     );
 

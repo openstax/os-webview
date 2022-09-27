@@ -1,7 +1,7 @@
 import React from 'react';
 import useCollectionContext from '../collection-context';
 import useAdoptions from '~/pages/my-openstax/store/use-adoptions';
-import {useDataFromSlug} from '~/helpers/page-data-utils';
+import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {EditBookForm} from '../add-book-form/add-book-form';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -10,7 +10,6 @@ import {faBookOpen} from '@fortawesome/free-solid-svg-icons/faBookOpen';
 import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import useDialog from '~/pages/my-openstax/dialog/dialog';
 import {useNavigate} from 'react-router-dom';
-import $ from '~/helpers/$';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import './book-details.scss';
 
@@ -132,7 +131,7 @@ function OnlineResources({detailData}) {
 export default function BookDetails({book}) {
     const [Dialog, open, close] = useDialog();
     const {setSelectedBook} = useCollectionContext();
-    const detailData = $.camelCaseKeys(useDataFromSlug(book.slug)) || {};
+    const detailData = camelCaseKeys(useDataFromSlug(book.slug)) || {};
     const adoptionStatus = useAdoptionStatus(book);
     const summaryText = detailData.description;
     const navigate = useNavigate();

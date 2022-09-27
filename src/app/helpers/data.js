@@ -50,3 +50,10 @@ export function useSet(initialValue=[]) {
 
     return handle;
 }
+
+export function htmlToText(html) {
+    const temp = document.createElement('div');
+
+    temp.innerHTML = html;
+    return temp.textContent;
+}

@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {useDataFromSlug} from '~/helpers/page-data-utils';
+import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
-import $ from '~/helpers/$';
 import WebinarList from './webinar-list/webinar-list';
 import './webinars.scss';
 
@@ -20,7 +19,7 @@ function byDate(a, b) {
 
 function Webinars({data: {heading: headline, description, heroImage}}) {
     const [selectedLabel, setSelectedLabel] = useState(tabLabels[0]);
-    const webinarData = $.camelCaseKeys(
+    const webinarData = camelCaseKeys(
         (useDataFromSlug('webinars/?format=json') || []).sort(byDate)
     );
     const firstFuture = webinarData.findIndex((entry) => new Date(entry.start) > Date.now());

@@ -1,18 +1,6 @@
 import React from 'react';
 import bookPromise from '~/models/book-titles';
 import urlFromSlug from './url-from-slug';
-import $ from '~/helpers/$';
-
-export function useCanonicalLink(controlsHeader=true) {
-    React.useEffect(() => {
-        if (!controlsHeader) {
-            return null;
-        }
-        const linkController = $.setCanonicalLink();
-
-        return () => linkController.remove();
-    }, [controlsHeader]);
-}
 
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
@@ -59,6 +47,25 @@ async function getUrlFor(initialSlug) {
     const qsChar = ((/\?/).test(apiUrl)) ? '&' : '?';
 
     return `${apiUrl}${qsChar}format=json`;
+}
+
+function camelCase(underscored) {
+    return underscored.replace(/_+([a-z0-9])/g, (_, chr) => chr ? chr.toUpperCase() : '');
+}
+
+export function camelCaseKeys(obj) {
+    if (!(obj instanceof Object)) {
+        return obj;
+    }
+
+    if (obj instanceof Array) {
+        return obj.map((v) => camelCaseKeys(v));
+    }
+
+    return Reflect.ownKeys(obj).reduce((result, k) => {
+        result[camelCase(k)] = camelCaseKeys(obj[k]);
+        return result;
+    }, {});
 }
 
 export async function fetchFromCMS(slug, preserveWrapping=false) {

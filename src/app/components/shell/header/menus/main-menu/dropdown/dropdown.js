@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import useDropdownContext from '../../dropdown-context';
-import $ from '~/helpers/$';
+import {isMobileDisplay} from '~/helpers/device';
 import cn from 'classnames';
 import './dropdown.scss';
 
@@ -35,7 +35,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
     }
 
     function closeDesktopMenu() {
-        if (!$.isMobileDisplay()) {
+        if (!isMobileDisplay()) {
             closeMenu();
         }
     }
@@ -46,7 +46,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
         event.preventDefault();
         dropdownCtx.setActiveDropdown(topRef);
         dropdownCtx.setSubmenuLabel(label);
-        if ($.isMobileDisplay()) {
+        if (isMobileDisplay()) {
             event.target.blur();
             if (previousActiveDropdown === topRef) {
                 closeMenu();
@@ -56,7 +56,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
 
     function openDesktopMenu(event) {
         event.preventDefault();
-        if (!$.isMobileDisplay()) {
+        if (!isMobileDisplay()) {
             openMenu(event);
         }
     }

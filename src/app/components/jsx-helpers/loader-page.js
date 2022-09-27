@@ -1,21 +1,21 @@
 import React from 'react';
-import {useCanonicalLink} from '~/helpers/page-data-utils';
-import $ from '~/helpers/$';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 import usePageData from '~/helpers/use-page-data';
 import useRouterContext from '~/components/shell/router-context';
+import {setPageTitleAndDescriptionFromBookData, useCanonicalLink} from '~/helpers/use-document-head';
 
 function LoadedPage({
     Child, data, props, doDocumentSetup, noCamelCase
 }) {
     const camelCaseData = React.useMemo(
-        () => noCamelCase ? data : $.camelCaseKeys(data),
+        () => noCamelCase ? data : camelCaseKeys(data),
         [data, noCamelCase]
     );
 
     useCanonicalLink(doDocumentSetup);
     React.useEffect(() => {
         if (doDocumentSetup) {
-            $.setPageTitleAndDescriptionFromBookData(data);
+            setPageTitleAndDescriptionFromBookData(data);
         }
     }, [data, doDocumentSetup]);
 

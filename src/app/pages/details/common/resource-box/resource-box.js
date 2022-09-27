@@ -1,8 +1,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import linkHelper from '~/helpers/link';
-import {useDataFromSlug} from '~/helpers/page-data-utils';
-import $ from '~/helpers/$';
+import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
 
 const settings = window.SETTINGS;
@@ -77,7 +76,7 @@ export function useResources(slug) {
         `books/resources/?slug=${title}&x=${isVerified ? 'x' : 'y'}`
     );
     const resources = React.useMemo(
-        () => rawResources?.error ? null : $.camelCaseKeys(rawResources),
+        () => rawResources?.error ? null : camelCaseKeys(rawResources),
         [rawResources]
     );
 

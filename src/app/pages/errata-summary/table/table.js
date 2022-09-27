@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {getDisplayStatus} from '~/helpers/errata';
 import './table.scss'; // ?? wasn't used before ??
 
@@ -87,7 +87,7 @@ function DesktopHeaderColumn({colSpec, sortController}) {
         }
     };
     const sortAttributes = colSpec.sortFn ? {
-        role: 'button', tabIndex: 0, onClick, onKeyDown: $.treatSpaceOrEnterAsClick
+        role: 'button', tabIndex: 0, onClick, onKeyDown: treatSpaceOrEnterAsClick
     } : {};
     const sortIndicator = colSpec.sortFn ?
         <span className={`will-sort sortdir${colSpec.sortFn === 'sort' ? 1 : -1}`} /> :

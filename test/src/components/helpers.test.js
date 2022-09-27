@@ -1,7 +1,7 @@
-import $ from '~/helpers/$';
+import isSupported from '~/helpers/device';
 
 describe('Helpers($)', () => {
     it('checks browser', () => {
-        expect($.isSupported()).toBe(false);
+        expect(isSupported()).toBe(false);
     });
 });

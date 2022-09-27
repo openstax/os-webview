@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect, useMemo} from 'react';
 import useErrataFormContext from '../../errata-form-context';
 import managedInvalidMessage from '../InvalidMessage';
 import bookToc from '~/models/book-toc';
-import $ from '~/helpers/$';
+import {htmlToText} from '~/helpers/data';
 // For LOCAL TESTING when you can't reach Rex; there is another testing section below
 // import testData from './test-data';
 
@@ -25,7 +25,7 @@ function treeEntry(title, indentLevel, parent, isChapter) {
 
 function flattenTree(contents, indentLevel=0, parent='') {
     return contents.map((entry) => {
-        const title = $.htmlToText(entry.title);
+        const title = htmlToText(entry.title);
         const isChapter = Boolean(entry.contents);
         const thisEntry = treeEntry(title, indentLevel, parent, isChapter);
 

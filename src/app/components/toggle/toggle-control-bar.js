@@ -2,7 +2,7 @@ import React from 'react';
 import useToggleContext from './toggle-context';
 import {useRefToFocusAfterClose} from './toggle';
 import cn from 'classnames';
-import $ from '~/helpers/$';
+import {treatKeydownAsClick} from '~/helpers/events';
 import './toggle-control-bar.scss';
 
 export default function ToggleControlBar({Indicator, children}) {
@@ -11,7 +11,7 @@ export default function ToggleControlBar({Indicator, children}) {
         (event) => {
             const keyList = isOpen ? ['Escape', 'Enter', ' '] : ['Enter', ' '];
 
-            $.treatKeydownAsClick(event, keyList);
+            treatKeydownAsClick(event, keyList);
         },
         [isOpen]
     );

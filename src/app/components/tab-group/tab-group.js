@@ -1,5 +1,5 @@
 import React, {useRef, useLayoutEffect} from 'react';
-import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './tab-group.scss';
 
 function Tab({label, selectedLabel, setSelectedLabel, TabTag}) {
@@ -28,7 +28,7 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag}) {
             className="tab"
             role="link" tabIndex="0"
             onClick={blurAndSetLabel}
-            onKeyDown={$.treatSpaceOrEnterAsClick}
+            onKeyDown={treatSpaceOrEnterAsClick}
         >
             {label}
         </TabTag>

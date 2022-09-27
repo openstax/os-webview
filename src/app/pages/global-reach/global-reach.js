@@ -1,13 +1,13 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import $ from '~/helpers/$';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 import Map from './map/map';
 import Statistics from './statistics/stat';
 import StudentInfo from './studentinfo/studentinfo';
 import SchoolMap from './schoolmap/schoolmap';
 
 function preprocessData(data) {
-    return $.camelCaseKeys(
+    return camelCaseKeys(
         Reflect.ownKeys(data).reduce((result, key) => {
             const value = data[key];
             const matches = key.match(/(section_.)_(.*)/);

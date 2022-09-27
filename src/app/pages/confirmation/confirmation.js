@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import $ from '~/helpers/$';
 import userModel from '~/models/usermodel';
 import {useErrataDetail} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
-import {useDataFromSlug} from '~/helpers/page-data-utils';
+import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
+import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import './confirmation.scss';
 
 const models = {
@@ -95,7 +95,7 @@ function ErrataStatusNotification({errataId}) {
 
 function ErrataButtonsAndDetail({errataId, text}) {
     const slug = `errata/${errataId}`;
-    const data = $.camelCaseKeys(useDataFromSlug(slug));
+    const data = camelCaseKeys(useDataFromSlug(slug));
 
     return (
         <React.Fragment>
@@ -125,8 +125,8 @@ export default function Confirmation() {
         belowHeaderText
     } = models[referringPage];
 
-    $.setPageTitleAndDescription('Thanks!');
-    $.setCanonicalLink(`/${referringPage}-confirmation`);
+    useDocumentHead({title: 'Thanks!'});
+    useCanonicalLink();
 
     return (
         <div className="confirmation-page page">
