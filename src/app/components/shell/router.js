@@ -190,19 +190,14 @@ function useHomeOrMyOpenStax() {
 
 function TopLevelPage() {
     const {name} = useParams();
-    const [fallback, setFallback] = useToggle(false);
     const {isValid, goto404} = useRouterContext();
 
     if (!isValid || goto404) {
         return (<Error404 />);
     }
 
-    if (fallback) {
-        return (<FallbackToGeneralPage name={name} />);
-    }
-
     return (
-        <ImportedPage name={name} fallback={setFallback} />
+        <ImportedPage name={name} />
     );
 }
 

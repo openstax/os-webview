@@ -1,8 +1,8 @@
 import React from 'react';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 import usePageData from '~/helpers/use-page-data';
-import useRouterContext from '~/components/shell/router-context';
 import {setPageTitleAndDescriptionFromBookData, useCanonicalLink} from '~/helpers/use-document-head';
+import Error404 from '~/pages/404/404';
 
 function LoadedPage({
     Child, data, props, doDocumentSetup, noCamelCase
@@ -19,6 +19,10 @@ function LoadedPage({
         }
     }, [data, doDocumentSetup]);
 
+    if (data.error) {
+        return (<Error404 />);
+    }
+
     return (
         <Child {...{data: camelCaseData, ...props}} />
     );
@@ -29,13 +33,9 @@ export default function LoaderPage({
     noCamelCase=false
 }) {
     const data = usePageData(slug, preserveWrapping, noCamelCase);
-    const {fail} = useRouterContext();
 
     if (!data) {
         return null;
-    }
-    if (data.error && fail) {
-        fail(`Could not load ${slug}`);
     }
 
     return (<LoadedPage {...{Child, data, props, doDocumentSetup, noCamelCase}} />);
