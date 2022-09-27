@@ -1,10 +1,14 @@
 import React from 'react';
-import Head from '~/components/jsx-helpers/head';
+import useDocumentHead from '~/helpers/use-document-head';
 
 export default function Page() {
+    useDocumentHead({
+        title: '404 Not Found - OpenStax',
+        noindex: true
+    });
+
     return (
         <main className="not-found no-style page">
-            <Head title="404 Not Found - OpenStax" noindex />
             <img
                 className="strips" src="/dist/images/components/strips.svg"
                 height="10" alt="" role="presentation"

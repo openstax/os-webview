@@ -1,5 +1,5 @@
 import React from 'react';
-import Head from '~/components/jsx-helpers/head';
+import useDocumentHead from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useTextFromSlug} from '~/helpers/page-data-utils';
 import useRouterContext from '~/components/shell/router-context';
@@ -37,12 +37,14 @@ export function GeneralPageFromSlug({slug, fallback}) {
         fallback ? fallback() : fail(`Could not load general page from ${slug}`);
     }
 
+    useDocumentHead({
+        title: head?.title || 'OpenStax',
+        description: head?.description,
+        noindex: true
+    });
+
     return (
         <main>
-            <Head
-                title={head?.title || 'OpenStax'} description={head?.description}
-                noindex
-            />
             {html ? <GeneralPage html={html} /> : <h1>Loading...</h1>}
         </main>
     );

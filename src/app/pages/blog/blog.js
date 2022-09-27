@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Routes, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
-import Head from '~/components/jsx-helpers/head';
+import useDocumentHead from '~/helpers/use-document-head';
 import ExploreBySubject from './explore/by-subject';
 import ExploreCollections from './explore/collections';
 import ExplorePage from './explore-page/explore-page';
@@ -20,9 +20,13 @@ import './blog.scss';
 export function SearchResultsPage() {
     const {pageDescription} = useBlogContext();
 
+    useDocumentHead({
+        title: 'OpenStax Blog Search',
+        description: pageDescription
+    });
+
     return (
         <React.Fragment>
-            <Head title="OpenStax Blog Search" description={pageDescription} />
             <div className="boxed left">
                 <SearchBar />
             </div>
@@ -35,9 +39,13 @@ export function SearchResultsPage() {
 export function MainBlogPage() {
     const {pinnedStory, pageDescription} = useBlogContext();
 
+    useDocumentHead({
+        title: 'OpenStax News',
+        description: pageDescription
+    });
+
     return (
         <WindowContextProvider>
-            <Head title="OpenStax News" description={pageDescription} />
             <div className="boxed">
                 <HeadingAndSearchBar>
                     <h1>OpenStax Blog</h1>

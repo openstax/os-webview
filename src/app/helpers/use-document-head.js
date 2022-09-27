@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import $ from '~/helpers/$';
 
-export default function Head({title, description, noindex}) {
+export default function useDocumentHead({title, description, noindex}) {
     useEffect(
         () => $.setPageTitleAndDescription(title, description),
         [title, description]
@@ -22,6 +22,4 @@ export default function Head({title, description, noindex}) {
         },
         [noindex]
     );
-
-    return null;
 }
