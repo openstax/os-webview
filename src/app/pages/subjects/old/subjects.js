@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect} from 'react';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
@@ -11,47 +11,53 @@ import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {forceCheck} from 'react-lazyload';
 import LanguageSelector from '~/components/language-selector/language-selector';
 import {useLocation, useNavigate} from 'react-router-dom';
-import './subjects.scss';
 import {htmlToText} from '~/helpers/data';
 import {useCanonicalLink, setPageDescription} from '~/helpers/use-document-head';
+import './subjects.scss';
 
 const pagePath = '/subjects';
 
-function categoryFromPath() {
-    return window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
-}
-
 function useCategoryTiedToPath() {
-    const [category, setCategory] = useState(categoryFromPath());
-    const categories = useSubjectCategoryContext();
-    const {title} = useSubjectsContext();
     const {pathname} = useLocation();
     const navigate = useNavigate();
+    const categories = useSubjectCategoryContext();
+    const category = React.useMemo(
+        () => pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all',
+        [pathname]
+    );
+    const setCategory = React.useCallback(
+        (c) => {
+            const path = c === 'view-all' ? pagePath : `${pagePath}/${c}`;
+
+            navigate(path, {
+                filter: c,
+                path: pagePath
+            });
+        },
+        [navigate]
+    );
+    const {title} = useSubjectsContext();
 
     useCanonicalLink();
-    useEffect(() => {
-        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
 
-        navigate(path, {
-            filter: category,
-            path: pagePath
-        });
-        window.requestAnimationFrame(forceCheck);
-    }, [category, navigate]);
+    // Ensures Lazy Loaded book titles are seen
+    useEffect(
+        () => window.requestAnimationFrame(forceCheck),
+        [category]
+    );
 
+    // Unknown category routes to view all (except /ap routes to /high-school)
     useEffect(() => {
         const categoryEntry = categories.find((e) => e.value === category);
 
-        if (!categoryEntry && categories.length > 0) {
+        if (category === 'ap') {
+            setCategory('high-school');
+        } else if (!categoryEntry && categories.length > 0) {
             setCategory(categories[0].value);
         } else {
             document.title = (categoryEntry?.title) || title;
         }
-    }, [category, categories, title]);
-
-    useEffect(() => {
-        setCategory(categoryFromPath());
-    }, [pathname]);
+    }, [category, categories, title, setCategory]);
 
     return {category, setCategory, categories};
 }
