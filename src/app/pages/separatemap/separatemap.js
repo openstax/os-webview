@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import React from 'react';
+import {useToggle} from '~/helpers/data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {useMainModal} from '~/helpers/main-class-hooks';
-import $ from '~/helpers/$';
+import useDocumentHead from '~/helpers/use-document-head';
 import cn from 'classnames';
 import analytics from '~/helpers/analytics';
 import SearchBox from './search-box/search-box';
@@ -64,13 +64,10 @@ function PopupMessage() {
 
 export default function SeparateMap() {
     useMainModal();
-    useEffect(
-        () => $.setPageTitleAndDescription(
-            'Institution Map - OpenStax',
-            'Searchable map of institutions that have adopted OpenStax textbooks'
-        ),
-        []
-    );
+    useDocumentHead({
+        title: 'Institution Map - OpenStax',
+        description: 'Searchable map of institutions that have adopted OpenStax textbooks'
+    });
 
     return (
         <main id="maincontent" className="separatemap page">

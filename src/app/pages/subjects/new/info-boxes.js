@@ -1,7 +1,7 @@
 import React from 'react';
 import useSubjectsContext from './context';
 import {linkClickTracker} from '~/helpers/savings-blurb';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import './info-boxes.scss';
 
 const eventName = 'Microdonation subjects page donor supported blurb impact link';

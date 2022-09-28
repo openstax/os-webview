@@ -4,7 +4,7 @@ import {FrameChanger} from '~/components/carousel/carousel';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMaximize} from '@fortawesome/free-solid-svg-icons/faMaximize';
 import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
-import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useRefreshable} from '~/helpers/data';
 import cn from 'classnames';
 import './pdf-unit.scss';
 

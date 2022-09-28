@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {RawHTML, LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import linkHelper from '~/helpers/link';
 import './llph.scss';
 

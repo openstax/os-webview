@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
-import {fetchFromCMS} from '~/helpers/page-data-utils';
+import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
 import uniqBy from 'lodash/uniqBy';
 import useBlogContext from '../blog-context';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
-import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
 import usePaginatorContext, {PaginatorContextProvider} from '~/components/paginator/paginator-context';
 import {PaginatorControls} from '~/components/paginator/search-results/paginator.js';
@@ -27,7 +26,7 @@ function useAllArticles() {
                         .map((data) => {
                             data.heading = data.title;
                             delete data.subheading;
-                            return blurbModel($.camelCaseKeys(data));
+                            return blurbModel(camelCaseKeys(data));
                         })
                 );
             });

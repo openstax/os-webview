@@ -1,5 +1,6 @@
 import React, {useState, useRef} from 'react';
-import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import FormInput from '~/components/form-input/form-input';
 import ModuleList from './module-list';
 import {cmsPost} from '~/helpers/cms-fetch';

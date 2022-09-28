@@ -1,6 +1,6 @@
+import React from 'react';
 import bookPromise from '~/models/book-titles';
 import urlFromSlug from './url-from-slug';
-import React from 'react';
 
 export function transformData(data) {
     Reflect.ownKeys(data).forEach((prop) => {
@@ -49,6 +49,25 @@ async function getUrlFor(initialSlug) {
     return `${apiUrl}${qsChar}format=json`;
 }
 
+function camelCase(underscored) {
+    return underscored.replace(/_+([a-z0-9])/g, (_, chr) => chr ? chr.toUpperCase() : '');
+}
+
+export function camelCaseKeys(obj) {
+    if (!(obj instanceof Object)) {
+        return obj;
+    }
+
+    if (obj instanceof Array) {
+        return obj.map((v) => camelCaseKeys(v));
+    }
+
+    return Reflect.ownKeys(obj).reduce((result, k) => {
+        result[camelCase(k)] = camelCaseKeys(obj[k]);
+        return result;
+    }, {});
+}
+
 export async function fetchFromCMS(slug, preserveWrapping=false) {
     const apiUrl = await getUrlFor(slug);
     let data;
@@ -92,4 +111,25 @@ export function useTextFromSlug(slug) {
     }, [slug]);
 
     return {head, text};
+}
+
+export function useDataFromPromise(promise, defaultValue) {
+    const [data, setData] = React.useState(defaultValue);
+
+    React.useEffect(() => {
+        if (promise) {
+            promise.then(setData);
+        }
+    }, [promise]);
+
+    return data;
+}
+
+export function useDataFromSlug(slug, preserveWrapping=false) {
+    const promise = React.useMemo(
+        () => slug ? fetchFromCMS(slug, preserveWrapping) : null,
+        [slug, preserveWrapping]
+    );
+
+    return useDataFromPromise(promise);
 }

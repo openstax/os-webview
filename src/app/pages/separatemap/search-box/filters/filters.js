@@ -1,5 +1,5 @@
 import React from 'react';
-import FormSelect from '~/components/form-select/form-select.jsx';
+import FormSelect from '~/components/form-select/form-select';
 import './filters.scss';
 
 function InstitutionSelector({setInstitution}) {

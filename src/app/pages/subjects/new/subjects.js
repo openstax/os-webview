@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Routes, Route, Navigate} from 'react-router-dom';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
-import $ from '~/helpers/$';
-import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {htmlToText} from '~/helpers/data';
+import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import Hero from './hero';
 import LanguageSelectorSection from './language-selector-section';
 import SubjectsListing from './subjects-listing';
@@ -16,11 +16,11 @@ import './subjects.scss';
 function SEOSetup() {
     const {title, pageDescription} = useSubjectsContext();
 
+    useDocumentHead({
+        title,
+        description: htmlToText(pageDescription)
+    });
     useCanonicalLink();
-    useEffect(
-        () => $.setPageTitleAndDescription(title, $.htmlToText(pageDescription)),
-        [title, pageDescription]
-    );
 
     return null;
 }

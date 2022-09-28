@@ -1,6 +1,7 @@
 import React from 'react';
 import {LabeledSection} from '../common';
-import {RawHTML, useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';

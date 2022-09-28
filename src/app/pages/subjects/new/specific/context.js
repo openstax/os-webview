@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import usePageData from '~/helpers/use-page-data';
 import buildContext from '~/components/jsx-helpers/build-context';
-import $ from '~/helpers/$';
+import {setPageTitleAndDescriptionFromBookData} from '~/helpers/use-document-head';
 
 const preserveWrapping = false;
 
@@ -11,7 +11,7 @@ function useContextValue(slug) {
     useEffect(
         () => {
             if (data) {
-                $.setPageTitleAndDescriptionFromBookData(data);
+                setPageTitleAndDescriptionFromBookData(data);
             }
         },
         [data]

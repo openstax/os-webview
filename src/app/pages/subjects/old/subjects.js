@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect} from 'react';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
 import useSubjectCategoryContext from '~/contexts/subject-category';
-import {RawHTML, useDataFromPromise} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromPromise} from '~/helpers/page-data-utils';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FormattedMessage} from 'react-intl';
 import BookViewer from './book-viewer/book-viewer';
 import savingsPromise from '~/models/savings';
@@ -10,48 +11,53 @@ import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {forceCheck} from 'react-lazyload';
 import LanguageSelector from '~/components/language-selector/language-selector';
 import {useLocation, useNavigate} from 'react-router-dom';
+import {htmlToText} from '~/helpers/data';
+import {useCanonicalLink, setPageDescription} from '~/helpers/use-document-head';
 import './subjects.scss';
-import $ from '~/helpers/$';
 
 const pagePath = '/subjects';
 
-function categoryFromPath() {
-    return window.location.pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all';
-}
-
 function useCategoryTiedToPath() {
-    const [category, setCategory] = useState(categoryFromPath());
-    const categories = useSubjectCategoryContext();
-    const {title} = useSubjectsContext();
     const {pathname} = useLocation();
     const navigate = useNavigate();
+    const categories = useSubjectCategoryContext();
+    const category = React.useMemo(
+        () => pathname.replace(/.*subjects/, '').substr(1).toLowerCase() || 'view-all',
+        [pathname]
+    );
+    const setCategory = React.useCallback(
+        (c) => {
+            const path = c === 'view-all' ? pagePath : `${pagePath}/${c}`;
 
-    useEffect(() => {
-        const path = category === 'view-all' ? pagePath : `${pagePath}/${category}`;
+            navigate(path, {
+                filter: c,
+                path: pagePath
+            });
+        },
+        [navigate]
+    );
+    const {title} = useSubjectsContext();
 
-        navigate(path, {
-            filter: category,
-            path: pagePath
-        });
-        window.requestAnimationFrame(forceCheck);
-        const linkController = $.setCanonicalLink();
+    useCanonicalLink();
 
-        return () => linkController.remove();
-    }, [category, navigate]);
+    // Ensures Lazy Loaded book titles are seen
+    useEffect(
+        () => window.requestAnimationFrame(forceCheck),
+        [category]
+    );
 
+    // Unknown category routes to view all (except /ap routes to /high-school)
     useEffect(() => {
         const categoryEntry = categories.find((e) => e.value === category);
 
-        if (!categoryEntry && categories.length > 0) {
+        if (category === 'ap') {
+            setCategory('high-school');
+        } else if (!categoryEntry && categories.length > 0) {
             setCategory(categories[0].value);
         } else {
             document.title = (categoryEntry?.title) || title;
         }
-    }, [category, categories, title]);
-
-    useEffect(() => {
-        setCategory(categoryFromPath());
-    }, [pathname]);
+    }, [category, categories, title, setCategory]);
 
     return {category, setCategory, categories};
 }
@@ -170,7 +176,7 @@ function Subjects() {
     ;
 
     useEffect(
-        () => $.setPageDescription($.htmlToText(pageDescription)),
+        () => setPageDescription(htmlToText(pageDescription)),
         [pageDescription]
     );
 

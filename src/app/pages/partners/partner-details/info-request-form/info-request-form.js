@@ -1,13 +1,13 @@
 import React from 'react';
 import usePartnerContext from '../partner-context';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import BookTagsMultiselect, {BookTagsContextProvider} from '~/components/multiselect/book-tags/book-tags';
 import useSearchContext from '../../search-context';
 import FormRadiogroup from '~/components/form-radiogroup/form-radiogroup';
-import FormSelect from '~/components/form-select/form-select.jsx';
+import FormSelect from '~/components/form-select/form-select';
 import {FilteringSelect} from '~/components/form-elements/form-elements';
 import inputProps from '~/components/form-elements/input-props';
 import FormInput from '~/components/form-input/form-input';

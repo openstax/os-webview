@@ -2,7 +2,7 @@ import React from 'react';
 import useMultiselectContext from '../multiselect-context.js';
 import useSFBookContext from './sf-book-context';
 import useToggleContext from '~/components/toggle/toggle-context.js';
-import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './book-options.scss';
 
 
@@ -20,7 +20,7 @@ function BookOption({book}) {
                 event.stopPropagation();
                 toggle();
             } else {
-                $.treatSpaceOrEnterAsClick(event);
+                treatSpaceOrEnterAsClick(event);
             }
         },
         [toggle]

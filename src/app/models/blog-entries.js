@@ -1,5 +1,4 @@
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import $ from '~/helpers/$';
+import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 
 const fields = [
     'title', 'id', 'article_image', 'featured_image_alt_text', 'heading',
@@ -16,7 +15,7 @@ export default function useLatestBlogEntries(limit) {
         return null;
     }
 
-    const ccItems = $.camelCaseKeys(lsData.items);
+    const ccItems = camelCaseKeys(lsData.items);
 
     ccItems.totalCount = lsData.meta.total_count;
 

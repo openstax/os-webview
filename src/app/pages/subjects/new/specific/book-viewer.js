@@ -1,6 +1,6 @@
 import React from 'react';
 import useSpecificSubjectContext from './context';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';

@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import useSpecificSubjectContext from './context';
 import {JumpToSection} from './navigator';
 import useToggleContext, {ToggleContextProvider} from '~/components/toggle/toggle-context';

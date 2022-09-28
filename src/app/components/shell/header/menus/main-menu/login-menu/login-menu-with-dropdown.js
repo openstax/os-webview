@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from '../dropdown/dropdown';

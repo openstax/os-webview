@@ -4,7 +4,7 @@ import MenuExpander from './menu-expander/menu-expander';
 import UpperMenu from './upper-menu/upper-menu';
 import Logo from './logo/logo';
 import MainMenu from './main-menu/main-menu';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import cn from 'classnames';
 import './menus.scss';
 

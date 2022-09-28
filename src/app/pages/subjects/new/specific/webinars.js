@@ -1,7 +1,8 @@
 import React from 'react';
 import CarouselSection from './components/carousel-section';
 import useSpecificSubjectContext from './context';
-import {RawHTML, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import './webinars.scss';

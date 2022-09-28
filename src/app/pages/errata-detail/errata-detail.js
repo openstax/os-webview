@@ -1,6 +1,6 @@
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import React from 'react';
-import ProgressBar from './progress-bar/progress-bar.jsx';
+import ProgressBar from './progress-bar/progress-bar';
 import Detail from './detail/detail';
 import {getDisplayStatus} from '~/helpers/errata';
 import './errata-detail.scss';

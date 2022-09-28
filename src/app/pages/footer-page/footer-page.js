@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import usePageData from '~/helpers/use-page-data';
 import {useLocation} from 'react-router-dom';
 import './footer-page.scss';

@@ -1,6 +1,4 @@
-import $ from '~/helpers/$';
-
-export default $.camelCaseKeys({
+export default {
     "id": 225,
     "meta": {
         "slug": "print-order",
@@ -95,4 +93,4 @@ export default $.camelCaseKeys({
     "canadian_isbn_download_url": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/documents/Canada_ISBN_list.pdf",
     "canadian_isbn_cta": "Download our retail price list (Canada)",
     "promote_image": null
-});
+};

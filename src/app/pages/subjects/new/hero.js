@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import useSubjectsContext from './context';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import './hero.scss';

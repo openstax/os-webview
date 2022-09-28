@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
-import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import cn from 'classnames';
 import './checkboxes-linked-to-store.scss';
 
@@ -13,7 +13,7 @@ function Checkbox({label, value, store}) {
 
     return (
         <label className="form-control">
-            <span className={cn('indicator', {checked})} tabIndex="0" onKeyDown={$.treatSpaceOrEnterAsClick}>
+            <span className={cn('indicator', {checked})} tabIndex="0" onKeyDown={treatSpaceOrEnterAsClick}>
                 <input
                     className="hidden" type="checkbox"
                     value={value}

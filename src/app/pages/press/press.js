@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import usePageContext, {PageContextProvider} from './page-context';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {ArticleLoader} from './article/article';
 import MoreFewer, {Paginated} from '~/components/more-fewer/more-fewer';
 import Inquiries from './inquiries/inquiries';

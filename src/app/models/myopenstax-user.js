@@ -1,7 +1,7 @@
 import React from 'react';
 import useFlagContext from '~/components/shell/flag-context';
 import sfApiFetch from '~/models/sfapi';
-import $ from '~/helpers/$';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 
 const INITIAL_STATE = {
     user: {
@@ -15,7 +15,7 @@ const INITIAL_STATE = {
 async function fetchUser() {
     const user = await sfApiFetch('users');
 
-    return $.camelCaseKeys({...INITIAL_STATE, ...user});
+    return camelCaseKeys({...INITIAL_STATE, ...user});
 }
 
 export default function useMyOpenStaxUser(isVerified, fetchTime) {

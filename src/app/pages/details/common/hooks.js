@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import tableOfContentsHtml from '~/models/table-of-contents-html';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
-import $ from '~/helpers/$';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 
 export function useTableOfContents(model) {
     const webviewLink = model.webviewRexLink || model.webviewLink;
@@ -27,7 +27,7 @@ export function useTableOfContents(model) {
 }
 
 function toBlurb(partner) {
-    const pData = $.camelCaseKeys(partner);
+    const pData = camelCaseKeys(partner);
 
     return {
         id: pData.id,

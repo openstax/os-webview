@@ -1,6 +1,6 @@
 import React from 'react';
 import {LabeledSection} from '../common';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import Carousel from '~/components/carousel/carousel';

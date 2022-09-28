@@ -1,5 +1,5 @@
 import React from 'react';
-import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useRefreshable} from '~/helpers/data';
 import useWindowContext from '~/contexts/window';
 
 function getProgress(divRect, viewportBottom) {

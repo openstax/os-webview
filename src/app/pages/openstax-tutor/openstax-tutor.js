@@ -1,4 +1,4 @@
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import React from 'react';
 import LazyLoad from 'react-lazyload';
 import Banner from './banner/banner';

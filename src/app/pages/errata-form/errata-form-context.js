@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import fetchBooks from '~/models/books';
 import {useLocation} from 'react-router-dom';
-import {useDataFromPromise, useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromPromise, useDataFromSlug} from '~/helpers/page-data-utils';
 
 function useSearchParams() {
     const {search} = useLocation();

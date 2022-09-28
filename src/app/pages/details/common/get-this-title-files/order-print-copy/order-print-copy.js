@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 import {faUsers} from '@fortawesome/free-solid-svg-icons/faUsers';

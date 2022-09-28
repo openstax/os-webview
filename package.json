@@ -95,7 +95,7 @@
         "modulePathIgnorePatterns": [
             "package.json"
         ],
-        "testURL": "https://cms-dev.openstax.org/",
+        "testURL": "https://dev.openstax.org/",
         "testEnvironment": "jsdom"
     },
     "engines": {

@@ -1,12 +1,11 @@
 import React from 'react';
-import {fetchFromCMS} from '~/helpers/page-data-utils';
-import $ from '~/helpers/$';
+import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
 
 export default function usePageData(slug, preserveWrapping=false, noCamelCase=false) {
     const [data, setData] = React.useState();
 
     React.useEffect(() => {
-        const camelCaseOrNot = noCamelCase ? (obj) => obj : $.camelCaseKeys;
+        const camelCaseOrNot = noCamelCase ? (obj) => obj : camelCaseKeys;
 
         fetchFromCMS(slug, preserveWrapping)
             .then(camelCaseOrNot)

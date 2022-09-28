@@ -1,9 +1,8 @@
 import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import linkHelper from '~/helpers/link';
-import $ from '~/helpers/$';
 import useUserContext from '~/contexts/user';
-import {useDataFromSlug} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import ContactInfo from '~/components/contact-info/contact-info';
 import {RoleDropdown} from '~/components/role-selector/role-selector';
 import FormInput from '~/components/form-input/form-input';
@@ -14,7 +13,7 @@ import './gated-content-dialog.scss';
 function SubjectSelector() {
     const data = useDataFromSlug('snippets/subjects');
     const options = React.useMemo(
-        () => $.camelCaseKeys(data || [])
+        () => camelCaseKeys(data || [])
             .map((obj) => ({label: obj.name, value: obj.name})),
         [data]
     );
@@ -40,7 +39,7 @@ function SubjectSelector() {
 function RoleSelector({value, setValue}) {
     const roleData = useDataFromSlug('snippets/roles');
     const roleOptions = React.useMemo(
-        () => $.camelCaseKeys(roleData) || [],
+        () => camelCaseKeys(roleData) || [],
         [roleData]
     );
     const message = value ? '' : 'Please select one';

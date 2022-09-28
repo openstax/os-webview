@@ -1,6 +1,6 @@
 import React from 'react';
 import usePageData from '~/helpers/use-page-data';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import Form from './form';
 import './contact.scss';
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Hero from './hero/hero';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import Table from './table/table';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import './errata-summary.scss';
 
 const radioItems = [

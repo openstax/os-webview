@@ -4,10 +4,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons/faCaretLeft';
 import {faCaretRight} from '@fortawesome/free-solid-svg-icons/faCaretRight';
 import $ from '~/helpers/$';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 
 function PseudoButton({onClick, children}) {
     return (
-        <div role="button" tabIndex="0" onClick={onClick} onKeyDown={$.treatSpaceOrEnterAsClick}>
+        <div role="button" tabIndex="0" onClick={onClick} onKeyDown={treatSpaceOrEnterAsClick}>
             {children}
         </div>
     );

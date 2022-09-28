@@ -2,7 +2,7 @@ import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import cookie from '~/helpers/cookie';
 import useAccount from '~/pages/my-openstax/store/use-account';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useNavigate} from 'react-router-dom';
 import './welcome.scss';
 

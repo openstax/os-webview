@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import useUserContext from '~/contexts/user';
 import {useLocation} from 'react-router-dom';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import cookie from '~/helpers/cookie';
 
 const DISMISSED_KEY = 'renewal_dialog_dismissed';

@@ -1,5 +1,5 @@
 import buildContext from '~/components/jsx-helpers/build-context';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 
 function useContextValue() {
     const [tocActive, toggleTocActive] = useToggle(false);

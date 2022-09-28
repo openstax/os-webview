@@ -1,5 +1,5 @@
 import React, {useState, useRef, useLayoutEffect} from 'react';
-import {useSelectList} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import useSelectList from '~/helpers/use-select-list';
 import {useMainSticky} from '~/helpers/main-class-hooks';
 import cn from 'classnames';
 import './form-input.scss';

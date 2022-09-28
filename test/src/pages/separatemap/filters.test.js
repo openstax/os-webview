@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {render, screen} from '@testing-library/preact';
 import Filters from '~/pages/separatemap/search-box/filters/filters';
-import {useSet} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useSet} from '~/helpers/data';
 
 // I need the hooks
 function WrappedFilters() {

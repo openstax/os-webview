@@ -1,7 +1,7 @@
 import React from 'react';
 import useTOCContext from './context';
-import $ from '~/helpers/$';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 
 export default function TOCSlideout({html}) {
     const {toggle} = useTOCContext();
@@ -12,7 +12,7 @@ export default function TOCSlideout({html}) {
                 <span
                     className="close-toc" role="button" tabIndex="0"
                     onClick={() => toggle()}
-                    onKeyDown={$.treatSpaceOrEnterAsClick}
+                    onKeyDown={treatSpaceOrEnterAsClick}
                 >
                     &times;
                 </span>

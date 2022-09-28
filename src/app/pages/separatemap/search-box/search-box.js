@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import cn from 'classnames';
-import {useToggle, useSet} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle, useSet} from '~/helpers/data';
 import Inputs from './inputs/inputs';
 import Filters from './filters/filters';
 import ResultBox from './result-box/result-box';

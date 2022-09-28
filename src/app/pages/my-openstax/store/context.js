@@ -1,7 +1,7 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import sfApiFetch from '~/models/sfapi';
-import $ from '~/helpers/$';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 import uniq from 'lodash/uniq';
 
 // Takes a school entry from sfapi, returns a standard school
@@ -55,7 +55,7 @@ function useContextValue() {
     React.useEffect(
         () => {
             sfApiFetch('lists')
-                .then($.camelCaseKeys)
+                .then(camelCaseKeys)
                 .then(setLists);
         },
         []

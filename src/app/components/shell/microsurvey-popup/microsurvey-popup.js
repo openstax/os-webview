@@ -1,5 +1,5 @@
 import React from 'react';
-import {PutAway} from '../shared.jsx';
+import {PutAway} from '../shared.js';
 import useMSQueue from './queue';
 import './microsurvey-popup.scss';
 

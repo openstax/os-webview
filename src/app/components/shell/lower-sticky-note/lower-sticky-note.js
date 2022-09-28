@@ -1,5 +1,5 @@
 import React from 'react';
-import {usePutAway, useStickyData} from '../shared.jsx';
+import {usePutAway, useStickyData} from '../shared.js';
 import JITLoad from '~/helpers/jit-load';
 
 export default function LowerStickyNote() {

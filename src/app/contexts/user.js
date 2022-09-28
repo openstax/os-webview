@@ -2,7 +2,7 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {useUserModel} from '~/models/usermodel';
 import useMyOpenStaxUser from '~/models/myopenstax-user';
-import {useRefreshable} from '~/components/jsx-helpers/jsx-helpers';
+import {useRefreshable} from '~/helpers/data';
 import debounce from 'lodash/debounce';
 
 const debouncedDebug = debounce((...args) => console.debug(...args), 100);

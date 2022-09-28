@@ -5,7 +5,7 @@ import useScrollProgress from './use-progress';
 import {ShareJsx} from '~/components/share/share';
 import React, {useState, useRef} from 'react';
 import usePageData from '~/helpers/use-page-data';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import './article.scss';
 
 function normalUnits(unit) {return unit.value.alignment !== 'bottom';}

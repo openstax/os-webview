@@ -1,7 +1,7 @@
 import React from 'react';
 import useSpecificSubjectContext from './context';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import './learn-more.scss';
 
 function learnMoreDataToAccordionItem({heading: title, text: html}) {

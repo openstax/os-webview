@@ -1,6 +1,6 @@
 import React from 'react';
 import JITLoad from '~/helpers/jit-load';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import useUserContext from '~/contexts/user';
 import analytics from '~/helpers/analytics';
 import cookie from '~/helpers/cookie';

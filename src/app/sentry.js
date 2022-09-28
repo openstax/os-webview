@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import {Integrations} from '@sentry/tracing';
-import $ from '~/helpers/$';
+import isSupported from '~/helpers/device';
 
 const packageVersion = require('../../package.json').version;
 
@@ -63,7 +63,7 @@ function beforeSend(event, hint) {
     if (window.location.hostname !== 'openstax.org') {
         return null;
     }
-    if (!$.isSupported()) {
+    if (!isSupported()) {
         return null;
     }
     if (window.location.pathname.startsWith('/l/') || window.location.pathname.startsWith('/rex/')) {

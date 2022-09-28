@@ -1,6 +1,6 @@
 import {useState, useLayoutEffect, useCallback} from 'react';
 import cmsFetch, {cmsPost} from '~/helpers/cms-fetch';
-import $ from '~/helpers/$';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 import meanBy from 'lodash/meanBy';
 
 const postUrl = 'salesforce/reviews/';
@@ -36,7 +36,7 @@ function usePartnerData(id) {
     useLayoutEffect(
         () => {
             cmsFetch(`salesforce/partners/${id}`)
-                .then($.camelCaseKeys)
+                .then(camelCaseKeys)
                 .then(recalculateRatings)
                 .then(setData);
         },
@@ -56,7 +56,7 @@ export default function useReviews(partnerId) {
             if (typeof postResult === 'string') {
                 throw new Error(`Error posting review: ${postResult}`);
             } else {
-                updateReview($.camelCaseKeys(postResult));
+                updateReview(camelCaseKeys(postResult));
             }
         } catch (e) {
             // eslint-disable-next-line no-alert

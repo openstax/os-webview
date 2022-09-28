@@ -1,5 +1,5 @@
 import React from 'react';
-import {RawHTML} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import Hero from '~/components/hero/hero';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import './our-reach.scss';

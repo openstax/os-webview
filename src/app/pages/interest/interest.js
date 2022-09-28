@@ -1,6 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {useCanonicalLink} from '~/components/jsx-helpers/jsx-helpers.jsx';
-import $ from '~/helpers/$';
+import React, {useState, useRef} from 'react';
+import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
@@ -137,9 +136,7 @@ export default function InterestForm() {
         []
     );
 
-    useEffect(() => {
-        $.setPageTitleAndDescription('Interest Form');
-    }, []);
+    useDocumentHead({title: 'Interest Form'});
     useCanonicalLink();
 
     return (

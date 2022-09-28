@@ -14,7 +14,7 @@ import retry from '~/helpers/retry';
 import analytics from '~/helpers/analytics';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import $ from '~/helpers/$';
-import {useToggle} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import {useToggle} from '~/helpers/data';
 import useUserContext from '~/contexts/user';
 import useRouterContext, {RouterContextProvider} from './router-context';
 
@@ -190,19 +190,14 @@ function useHomeOrMyOpenStax() {
 
 function TopLevelPage() {
     const {name} = useParams();
-    const [fallback, setFallback] = useToggle(false);
     const {isValid, goto404} = useRouterContext();
 
     if (!isValid || goto404) {
         return (<Error404 />);
     }
 
-    if (fallback) {
-        return (<FallbackToGeneralPage name={name} />);
-    }
-
     return (
-        <ImportedPage name={name} fallback={setFallback} />
+        <ImportedPage name={name} />
     );
 }
 

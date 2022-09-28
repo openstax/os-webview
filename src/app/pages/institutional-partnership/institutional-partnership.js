@@ -1,7 +1,7 @@
 import React from 'react';
-import {LoaderPage} from '~/components/jsx-helpers/jsx-helpers.jsx';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import LazyLoad from 'react-lazyload';
-import $ from '~/helpers/$';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 import Banner from './sections/banner/banner';
 import OverlappingQuote from './sections/overlapping-quote/overlapping-quote';
 import About from './sections/about/about';
@@ -25,7 +25,7 @@ function unprefixKey(newObject, oldKey, prefix, data) {
 function sectionData(data, sectionNumber) {
     const sectionPrefix = `section_${sectionNumber}_`;
 
-    return $.camelCaseKeys(
+    return camelCaseKeys(
         Reflect.ownKeys(data)
             .filter((k) => k.startsWith(sectionPrefix))
             .reduce(
