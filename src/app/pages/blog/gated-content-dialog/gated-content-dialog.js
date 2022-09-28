@@ -123,5 +123,5 @@ function GatedContentDialog() {
 }
 
 export default function WaitForData({articleData}) {
-    return (articleData?.gated_content ? <GatedContentDialog /> : null);
+    return (articleData?.gatedContent ? <GatedContentDialog /> : null);
 }

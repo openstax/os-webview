@@ -90,8 +90,8 @@ function NormalArticle({data}) {
     const ref = useRef();
     const [progress, bodyRef] = useScrollProgress(ref);
     const {
-        article_image: image,
-        featured_image_alt_text: imageAlt,
+        articleImage: image,
+        featuredImageAltText: imageAlt,
         tags
     } = data;
 
@@ -133,7 +133,7 @@ function VideoArticle({data}) {
     const [readTime, setReadTime] = useState();
     const ref = useRef();
     const [progress, bodyRef] = useScrollProgress(ref);
-    const {featured_video: [{value: videoEmbed}], body, tags} = data;
+    const {featuredVideo: [{value: videoEmbed}], body, tags} = data;
 
     return (
         <div className="content">
@@ -162,7 +162,7 @@ export function Article({data}) {
 
             if (isPdf) {
                 return PdfArticle;
-            } else if (data.featured_video?.length) {
+            } else if (data.featuredVideo?.length) {
                 return VideoArticle;
             }
             return NormalArticle;

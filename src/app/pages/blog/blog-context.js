@@ -83,22 +83,24 @@ function useContextValue(pageData) {
     const totalCount = pinnedData?.totalCount;
     const subjectSnippet = useEnglishSubjects();
     const collectionSnippet = useCollections();
+    const setPath = React.useCallback(
+        (href) => {
+            const {pathname, search, hash} = new window.URL(href, window.location.href);
+
+            navigate(`${pathname}${search}${hash}`, stayHere);
+            window.scrollTo(0, 0);
+        },
+        [navigate]
+    );
 
     if (pinnedStory && !pinnedStory.slug) {
         pinnedStory.slug = pinnedStory.meta.slug;
     }
 
-    function setPath(href) {
-        const {pathname, search, hash} = new window.URL(href, window.location.href);
-
-        navigate(`${pathname}${search}${hash}`, stayHere);
-        window.scrollTo(0, 0);
-    }
-
     return {
         setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet,
         topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular,
-        pageDescription: pageData.meta.search_description
+        pageDescription: pageData.meta.searchDescription
     };
 }
 
