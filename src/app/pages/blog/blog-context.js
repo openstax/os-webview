@@ -1,7 +1,8 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
+import usePageData from '~/helpers/use-page-data';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
-import buildContextLoader from '~/components/jsx-helpers/context-loader';
+import buildContext from '~/components/jsx-helpers/build-context';
 import useLatestBlogEntries from '~/models/blog-entries';
 import cmsFetch from '~/helpers/cms-fetch';
 const stayHere = {path: '/blog'};
@@ -104,17 +105,22 @@ function useContextValue(pageData) {
     };
 }
 
-const {useContext, ContextLoader} = buildContextLoader();
+const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export function BlogContextProvider({children}) {
+function BlogContextProvider({children}) {
+    const data = usePageData('news', false, true);
+
+    if (!data) {
+        return null;
+    }
     return (
-        <ContextLoader
-            slug="news" useContextValue={useContextValue}
-            doDocumentSetup noCamelCase
-        >
+        <ContextProvider contextValueParameters={data}>
             {children}
-        </ContextLoader>
+        </ContextProvider>
     );
 }
 
-export default useContext;
+export {
+    useContext as default,
+    BlogContextProvider
+};
