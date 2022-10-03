@@ -4,17 +4,20 @@ import useAdoptionMicrosurveyContent from './adoption-content';
 
 function useEnqueueWhenReady(useContent, queue, setQueue) {
     const [ready, Item] = useContent();
+    const [hasQueued, setHasQueued] = React.useState(false);
 
     React.useEffect(
+        // eslint-disable-next-line complexity
         () => {
-            if (ready && !queue.includes(Item)) {
+            if (!hasQueued && ready && !queue.includes(Item)) {
                 setQueue([...queue, Item]);
+                setHasQueued(true);
             }
             if (!ready && queue.includes(Item)) {
                 setQueue(queue.slice(1));
             }
         },
-        [ready, queue, setQueue, Item]
+        [ready, queue, setQueue, Item, hasQueued]
     );
 }
 
