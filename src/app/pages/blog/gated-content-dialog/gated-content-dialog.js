@@ -7,8 +7,11 @@ import ContactInfo from '~/components/contact-info/contact-info';
 import {RoleDropdown} from '~/components/role-selector/role-selector';
 import FormInput from '~/components/form-input/form-input';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
+import useFormTarget from '~/components/form-target/form-target';
 import cn from 'classnames';
 import './gated-content-dialog.scss';
+
+const formSubmitUrl = window.SETTINGS.gatedContentEndpoint;
 
 function SubjectSelector() {
     const data = useDataFromSlug('snippets/subjects');
@@ -55,35 +58,45 @@ function RoleSelector({value, setValue}) {
     );
 }
 
-function GatedContentForm() {
-    const [submitted, setSubmitted] = React.useState(false);
+function GatedContentForm({submitted, setSubmitted}) {
+    const afterSubmit = React.useCallback(
+        () => setSubmitted(true),
+        [setSubmitted]
+    );
+    const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const [selectedRole, setSelectedRole] = React.useState();
 
     return (
-        <form className={cn({submitted})}>
-            <ContactInfo>
-                <SubjectSelector />
-                <RoleSelector value={selectedRole} setValue={setSelectedRole} />
-                {
-                    selectedRole === 'Faculty' &&
-                        <FormInput
-                            label="Number of students you teach"
-                            inputProps={{
-                                type: 'number',
-                                name: 'num_students',
-                                required: true,
-                                min: 1,
-                                max: 999
-                            }}
-                        />
-                }
-            </ContactInfo>
-            <button className="primary" onClick={() => setSubmitted(true)}>Submit</button>
-        </form>
+        <React.Fragment>
+            <FormTarget submitting={submitting} />
+            <form
+                className={cn({submitted})} action={formSubmitUrl} onSubmit={onSubmit}
+                target="form-target"
+            >
+                <ContactInfo>
+                    <SubjectSelector />
+                    <RoleSelector value={selectedRole} setValue={setSelectedRole} />
+                    {
+                        selectedRole === 'Faculty' &&
+                            <FormInput
+                                label="Number of students you teach"
+                                inputProps={{
+                                    type: 'number',
+                                    name: 'num_students',
+                                    required: true,
+                                    min: 1,
+                                    max: 999
+                                }}
+                            />
+                    }
+                </ContactInfo>
+                <button className="primary">Submit</button>
+            </form>
+        </React.Fragment>
     );
 }
 
-function GatedContentBody() {
+function GatedContentBody({submitted, setSubmitted}) {
     const loginLocation = new window.URL(linkHelper.loginLink());
 
     return (
@@ -95,7 +108,7 @@ function GatedContentBody() {
             <a className="btn secondary" href={loginLocation.href} data-local="true">
                 Login to my account
             </a>
-            <GatedContentForm />
+            <GatedContentForm {...{submitted, setSubmitted}} />
         </div>
     );
 }
@@ -103,21 +116,22 @@ function GatedContentBody() {
 function GatedContentDialog() {
     const [Dialog, open, close] = useDialog();
     const {userModel} = useUserContext();
+    const [submitted, setSubmitted] = React.useState(false);
 
     React.useEffect(() => {
-        if (userModel?.id) {
+        if (userModel?.id || submitted) {
             close();
         } else {
             open();
         }
-    }, [userModel, open, close]);
+    }, [userModel, open, close, submitted]);
 
     return (
         <Dialog
             title="Thanks for reading the OpenStax blog."
             className="gated-content"
         >
-            <GatedContentBody />
+            <GatedContentBody {...{submitted, setSubmitted}} />
         </Dialog>
     );
 }
