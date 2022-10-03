@@ -1,6 +1,7 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import LazyLoad from 'react-lazyload';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import './about.scss';
 
 const slug = 'pages/about';
@@ -16,12 +17,26 @@ function translateCard(c) {
     };
 }
 
+function Card({link, image, text}) {
+    return (
+        <a className="card" href={link}>
+            <img src={image} role="presentation" />
+            <div className="content">
+                {text}
+            </div>
+        </a>
+    );
+}
+
 function About({data: {
     whoHeading, whoParagraph, whoImageUrl,
     whatHeading, whatParagraph, whatCards,
     whereHeading, whereParagraph, whereMapUrl: map, whereMapAlt
 }}) {
-    const cards = (whatCards || []).map(translateCard);
+    const cards = React.useMemo(
+        () => (whatCards || []).map(translateCard),
+        [whatCards]
+    );
     const mapAlt = whereMapAlt || 'animated map suggesting where our books are being adopted';
 
     return (
@@ -30,7 +45,7 @@ function About({data: {
                 <div className="content">
                     <div className="text-block">
                         <h1>{whoHeading}</h1>
-                        <div dangerouslySetInnerHTML={{__html: whoParagraph}} />
+                        <RawHTML html={whoParagraph} />
                     </div>
                 </div>
                 <img src={whoImageUrl} role="presentation" />
@@ -40,19 +55,16 @@ function About({data: {
                     <div className="content">
                         <div className="text-content">
                             <h2>{whatHeading}</h2>
-                            <div dangerouslySetInnerHTML={{__html: whatParagraph}} />
+                            <RawHTML html={whatParagraph} />
                         </div>
                         <div className="cards">
-                            {
-                                cards.map((card) =>
-                                    <a className="card" href={card.link} key={card}>
-                                        <img src={card.image} role="presentation" />
-                                        <div className="content">
-                                            {card.text}
-                                        </div>
-                                    </a>
-                                )
-                            }
+                            {cards.map(
+                                ({link, image, text}) =>
+                                    <Card
+                                        key={text}
+                                        link={link} image={image} text={text}
+                                    />
+                            )}
                         </div>
                     </div>
                 </section>
@@ -61,7 +73,7 @@ function About({data: {
                 <section className="where content">
                     <div className="text-content">
                         <h2>{whereHeading}</h2>
-                        <div dangerouslySetInnerHTML={{__html: whereParagraph}} />
+                        <RawHTML html={whereParagraph} />
                     </div>
                 </section>
                 <div className="map">
