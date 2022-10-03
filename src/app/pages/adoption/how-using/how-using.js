@@ -34,12 +34,18 @@ function reducer(state, action) {
 
 export default function HowUsing({selectedBooks}) {
     const [bookData, dispatch] = React.useReducer(reducer, {});
-    const rewrittenBookData = selectedBooks.map(
-        ({value: name}) => ({name, students: +bookData[name]})
+    const json = React.useMemo(
+        () => {
+            const rewrittenBookData = selectedBooks.map(
+                ({value: name}) => ({name, students: Number(bookData[name])})
+            );
+
+            return JSON.stringify({
+                'Books': rewrittenBookData
+            });
+        },
+        [bookData, selectedBooks]
     );
-    const json = JSON.stringify({
-        'Books': rewrittenBookData
-    });
 
     return (
         <div className="how-using">
