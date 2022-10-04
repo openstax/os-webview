@@ -1,15 +1,20 @@
 import React, {useRef} from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import useDropdownContext from '../../dropdown-context';
+import useWindowContext from '~/contexts/window';
 import {isMobileDisplay} from '~/helpers/device';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import cn from 'classnames';
 import './dropdown.scss';
 
 export function MenuItem({label, url, local}) {
+    const {innerWidth: _} = useWindowContext();
+    const tabIndex = isMobileDisplay() ? 0 : -1;
+
     return (
         <RawHTML
             Tag="a" html={label}
-            href={url} tabIndex={-1} data-local={local} role="menuitem"
+            href={url} tabIndex={tabIndex} data-local={local} role="menuitem"
         />
     );
 }
@@ -83,9 +88,6 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
         case 'Escape':
             event.preventDefault();
             event.target.blur();
-            // falls through -- these do default behavior and close menu
-        case 'Enter':
-        case 'Tab':
             closeDesktopMenu();
             break;
         default:
@@ -108,6 +110,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                     onFocus={openDesktopMenu}
                     ref={topRef}
                     onClick={openMenu}
+                    onKeyDown={treatSpaceOrEnterAsClick}
                     className={cn({'is-open': isOpen})}
                 >
                     <span id={labelId}>{label}</span>

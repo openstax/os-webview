@@ -1,12 +1,26 @@
 import React from 'react';
 import useDropdownContext from '../dropdown-context';
 import {useLocation} from 'react-router-dom';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './menu-expander.scss';
+
+function useCloseOnLocationChange(onClick, active) {
+    const location = useLocation();
+    const {setActiveDropdown} = useDropdownContext();
+    const activeRef = React.useRef();
+
+    activeRef.current = active;
+
+    React.useEffect(() => {
+        if (activeRef.current) {
+            onClick({});
+            setActiveDropdown({});
+        }
+    }, [location, onClick, setActiveDropdown]);
+}
 
 export default function MenuExpander({active, onClick}) {
     const ref = React.useRef();
-    const location = useLocation();
-    const {setActiveDropdown} = useDropdownContext();
     const onClickAndBlur = React.useCallback(
         (event) => {
             onClick(event);
@@ -15,12 +29,7 @@ export default function MenuExpander({active, onClick}) {
         [onClick]
     );
 
-    React.useEffect(() => {
-        if (active) {
-            onClick();
-            setActiveDropdown({});
-        }
-    }, [location, active, onClick, setActiveDropdown]);
+    useCloseOnLocationChange(onClick, active);
 
     return (
         <button
@@ -30,6 +39,7 @@ export default function MenuExpander({active, onClick}) {
             tabIndex="0"
             onClick={onClickAndBlur}
             ref={ref}
+            onKeyDown={treatSpaceOrEnterAsClick}
         >
             <span />
         </button>
