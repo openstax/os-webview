@@ -1,12 +1,12 @@
 import React from 'react';
 import './progress-ring.scss';
 
-function Circle({basicProps, className, style}) {
+function Circle({basicProps, className, strokeDashoffset=0}) {
     return (
         <circle
             {...basicProps}
             className={className}
-            style={style}
+            strokeDashoffset={strokeDashoffset}
         />
     );
 }
@@ -14,14 +14,19 @@ function Circle({basicProps, className, style}) {
 export default function ProgressRing({message, radius, progress, stroke}) {
     const normalizedRadius = radius - stroke * 2;
     const circumference = normalizedRadius * 2 * Math.PI;
-    const basicCircleProps = {
-        cx: radius,
-        cy: radius,
-        fill: 'transparent',
-        r: normalizedRadius,
-        strokeDashArray: `${circumference} ${circumference}`,
-        strokeWidth: stroke
-    };
+    const basicCircleProps = React.useMemo(
+        () => {
+            return ({
+                cx: radius,
+                cy: radius,
+                fill: 'transparent',
+                r: normalizedRadius,
+                strokeDasharray: circumference,
+                strokeWidth: stroke
+            });
+        },
+        [radius, normalizedRadius, circumference, stroke]
+    );
     const strokeDashoffset = circumference - progress / 100 * circumference;
 
     return (
@@ -32,12 +37,11 @@ export default function ProgressRing({message, radius, progress, stroke}) {
             <svg height={radius * 2} width={radius * 2}>
                 <Circle
                     basicProps={basicCircleProps}
-                    className="unfinished"
-                    style="stroke-dashoffset: 0" />
+                    className="unfinished" />
                 <Circle
                     basicProps={basicCircleProps}
                     className="finished"
-                    style={`stroke-dashoffset: ${strokeDashoffset}`} />
+                    strokeDashoffset={strokeDashoffset} />
             </svg>
         </div>
     );
