@@ -15,7 +15,10 @@ import './adoption.scss';
 function BookSelectorPage({selectedBooksRef}) {
     const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
-    const bookList = selectedBooks.map((b) => b.value).join('; ');
+    const bookList = React.useMemo(
+        () => selectedBooks.map((b) => b.value).join('; '),
+        [selectedBooks]
+    );
     const instructions = 'Select titles you are using even if the edition number is different.';
 
     selectedBooksRef.current = selectedBooks;
@@ -48,21 +51,26 @@ function FacultyForm({position, onPageChange}) {
     const afterSubmit = useAfterSubmit(selectedBooksRef);
     const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const {adoptionUrl} = useSalesforceContext();
+    const validatePage = React.useCallback(
+        (page) => {
+            if (page === 1 && position === 'Student') {
+                return false;
+            }
+            if (page === 2 && selectedBooksRef.current.length < 1) {
+                return false;
+            }
+            return true;
+        },
+        [position]
+    );
 
-    function validatePage(page) {
-        if (page === 1 && position === 'Student') {
-            return false;
-        }
-        if (page === 2 && selectedBooksRef.current.length < 1) {
-            return false;
-        }
-        return true;
-    }
-
-    function doSubmit(form) {
-        form.submit();
-        onSubmit();
-    }
+    const doSubmit = React.useCallback(
+        (form) => {
+            form.submit();
+            onSubmit();
+        },
+        [onSubmit]
+    );
 
     return (
         <React.Fragment>

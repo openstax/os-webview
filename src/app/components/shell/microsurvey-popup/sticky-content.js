@@ -57,20 +57,27 @@ function StickyContent({stickyData}) {
     );
 }
 
+function useBoundStickyContent(stickyData, incrementSeenCount) {
+    // Increment seen count on each fresh load
+    React.useEffect(
+        () => incrementSeenCount(),
+        [incrementSeenCount]
+    );
+
+    return React.useCallback(
+        () => <StickyContent stickyData={stickyData} />,
+        [stickyData]
+    );
+}
+
 export default function useStickyMicrosurveyContent() {
     const stickyData = useStickyData();
     const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
-    const BoundStickyContent = React.useCallback(
-        () => {
-            incrementSeenCount();
-            return (<StickyContent stickyData={stickyData} />);
-        },
-        [stickyData, incrementSeenCount]
-    );
+    const BoundStickyContent = useBoundStickyContent(stickyData, incrementSeenCount);
+
     const ready = Boolean(
         stickyData?.mode === 'popup' && !hasBeenSeenEnough
     );
-
 
     return [ready, BoundStickyContent];
 }

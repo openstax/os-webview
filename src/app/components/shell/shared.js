@@ -11,14 +11,13 @@ if (!window.localStorage) {
 }
 
 export function useSeenCounter(seenEnough) {
-    const [counter, setCounter] = useState(window.localStorage?.visitedGive || 0);
+    const [counter, increment] = React.useReducer(
+        (s) => s + 1,
+        window.localStorage?.visitedGive || 0
+    );
     const hasBeenSeenEnough = React.useMemo(
         () => counter > seenEnough,
         [counter, seenEnough]
-    );
-    const increment = React.useCallback(
-        () => setCounter(counter + 1),
-        [counter]
     );
 
     useEffect(
@@ -102,11 +101,10 @@ export function useStickyData() {
 
     useCampaign(stickyData);
 
-    if (!stickyData) {
-        return null;
-    }
-
     const mode = getMode(stickyData);
 
-    return {mode, ...stickyData};
+    return React.useMemo(
+        () => stickyData ? ({mode, ...stickyData}) : null,
+        [mode, stickyData]
+    );
 }
