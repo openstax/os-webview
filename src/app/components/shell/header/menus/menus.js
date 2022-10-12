@@ -11,12 +11,18 @@ import './menus.scss';
 export default function Menus({open}) {
     const ref = React.useRef();
     const [active, toggle] = useToggle();
-
-    function clickOverlay(event) {
-        if (event.currentTarget === event.target) {
-            toggle();
-        }
-    }
+    const expandMenu = React.useCallback(
+        () => toggle(),
+        [toggle]
+    );
+    const clickOverlay = React.useCallback(
+        (event) => {
+            if (event.currentTarget === event.target) {
+                expandMenu();
+            }
+        },
+        [expandMenu]
+    );
 
     return (
         <DropdownContextProvider>
@@ -32,8 +38,8 @@ export default function Menus({open}) {
                 </nav>
             </div>
             <div className={cn('menus mobile', {active})}>
-                <MenuExpander active={active} onClick={() => toggle()} />
                 <Logo />
+                <MenuExpander active={active} onClick={expandMenu} />
                 <div className="menu-popover-overlay" onClick={clickOverlay}>
                     <div className="menu-popover">
                         <div className="menu-title">Menu</div>
