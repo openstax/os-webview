@@ -50,7 +50,6 @@ export default function MainMenu() {
             <SubjectsMenu />
             <Dropdown className="technology-dropdown" label="Technology">
                 <MenuItem url="/kinetic" label="OpenStax Kinetic" />
-                <MenuItem url="/openstax-tutor" label="OpenStax Tutor" />
                 <MenuItem url="/partners" label="Partner learning platforms" />
             </Dropdown>
             <Dropdown className="what-we-do-dropdown" label="What we do">
