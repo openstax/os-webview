@@ -21,3 +21,24 @@ const tagManagerID = 'GTM-W6N7PB';
         f.parentNode.insertBefore(j, f);
     }
 })(window, document, 'script', 'dataLayer', tagManagerID);
+
+// GA4 stuff
+const {GA4: ga4id} = window.SETTINGS;
+
+if (ga4id) {
+    const tag = document.createElement('script');
+
+    tag.type = 'text/javascript';
+    tag.onload = () => {
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag(...args) {
+            window.dataLayer.push(args);
+        }
+
+        gtag('js', new Date());
+        gtag('config', ga4id);
+    };
+    tag.src = `https://www.googletagmanager.com/gtag/js?id=${ga4id}`;
+    document.body.appendChild(tag);
+}
