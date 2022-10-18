@@ -14,7 +14,7 @@ import './gated-content-dialog.scss';
 const formSubmitUrl = window.SETTINGS.gatedContentEndpoint;
 
 function SubjectSelector() {
-    const data = useDataFromSlug('snippets/subjects');
+    const data = useDataFromSlug('snippets/subjects?locale=en');
     const options = React.useMemo(
         () => camelCaseKeys(data || [])
             .map((obj) => ({label: obj.name, value: obj.name})),
