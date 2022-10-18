@@ -1,0 +1,49 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.ally-logos.page {
+    padding-bottom: 6rem;
+
+    .text-content,
+    .boxed {
+        align-items: flex-start;
+    }
+
+    .ally-logo-grid {
+        display: grid;
+        grid-auto-flow: row;
+        grid-gap: 5rem;
+        width: 100%;
+        grid-template-columns: repeat(auto-fill, minmax(26rem, 1fr));
+        padding: 3rem 0;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .url-field-and-button {
+        @include set-font(helper-label);
+
+        border: thin solid ui-color(form-border);
+        border-radius: 0.4rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-top: $normal-margin;
+        overflow: hidden;
+        word-break: break-all;
+
+        .url {
+            padding: 0.5rem 0 0.5rem 1rem;
+        }
+    }
+
+    .boxed.smaller-icon img {
+        max-height: 8rem;
+    }
+
+    .boxed.book-icons .ally-logo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    }
+
+}
