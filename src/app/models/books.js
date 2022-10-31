@@ -43,9 +43,11 @@ export function afterFormSubmit(navigate, preselectedTitle, selectedBooks) {
         const scoutBooks = selectedBooks.map((sfBook) => sfBook.value);
 
         navigate('/partners', {
-            confirmation: true,
-            book: scoutBooks,
-            slug: backTo?.slug
+            state: {
+                confirmation: true,
+                book: scoutBooks,
+                slug: backTo?.slug
+            }
         });
     });
 }
