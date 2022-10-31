@@ -45,10 +45,16 @@ function BookSelector({
     const booksBySubject = (subject) => books.filter((b) => b.subjects.includes(subject));
     const validationMessage = selectedBooks.length > 0 ? '' : 'Please select at least one book';
     const limitReached = selectedBooks.length >= limit;
+    const preselectedBook = React.useMemo(
+        () => books.find((book) => preselectedTitle === book.value),
+        [books, preselectedTitle]
+    );
 
-    React.useLayoutEffect(() => {
-        books.filter((book) => preselectedTitle === book.value).forEach(toggleBook);
-    }, [preselectedTitle, books, toggleBook]);
+    React.useEffect(() => {
+        if (!selectedBooks.includes(preselectedBook)) {
+            toggleBook(preselectedBook);
+        }
+    }, [selectedBooks, preselectedBook, toggleBook]);
 
     return (
         <div className="book-selector">
@@ -77,14 +83,16 @@ function BookSelector({
 
 export function useSelectedBooks() {
     const [selectedBooks, setSelectedBooks] = React.useState([]);
-
-    function toggleBook(value) {
-        if (selectedBooks.includes(value)) {
-            setSelectedBooks(selectedBooks.filter((b) => b !== value));
-        } else {
-            setSelectedBooks([...selectedBooks, value]);
-        }
-    }
+    const toggleBook = React.useCallback(
+        (value) => {
+            if (selectedBooks.includes(value)) {
+                setSelectedBooks(selectedBooks.filter((b) => b !== value));
+            } else {
+                setSelectedBooks([...selectedBooks, value]);
+            }
+        },
+        [selectedBooks]
+    );
 
     return [selectedBooks, toggleBook];
 }
