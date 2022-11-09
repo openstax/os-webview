@@ -4,7 +4,6 @@ import LazyLoad from 'react-lazyload';
 import Banner from './banner/banner';
 import Features from './features/features';
 import Quotes from './quotes/quotes';
-import Tutor from './tutor/tutor';
 import WhatsOpenStax from './whats-openstax/whats-openstax';
 import Map from './map/map';
 import './home.scss';
@@ -20,7 +19,7 @@ function Homepage({data: ungroupedData}) {
     const data = {};
 
     // Group the data by section prefixes
-    ['banner', 'features', 'quotes', 'tutor', 'whatsOpenstax', 'map'].forEach((sectionName) => {
+    ['banner', 'features', 'quotes', 'whatsOpenstax', 'map'].forEach((sectionName) => {
         const sectionKeys = keys.filter((k) => k.startsWith(sectionName));
 
         data[sectionName] = sectionKeys.reduce((a, b) => {
@@ -39,9 +38,6 @@ function Homepage({data: ungroupedData}) {
             <Features data={data.features} />
             <LazyLoad once offset={100} height={400}>
                 <Quotes data={data.quotes} />
-            </LazyLoad>
-            <LazyLoad once offset={100} height={400}>
-                <Tutor data={data.tutor} />
             </LazyLoad>
             <LazyLoad once offset={100} height={400}>
                 <WhatsOpenStax data={data.whatsOpenstax} />
