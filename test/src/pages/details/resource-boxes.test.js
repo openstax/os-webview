@@ -13,7 +13,7 @@ import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~
 const resourceData = {
     resourceUnlocked: true,
     linkText: 'Click this',
-    linkDocumentUrl: '/download'
+    linkDocument: {file: '/download'}
 };
 const userStatus = {
     isInstructor: false
