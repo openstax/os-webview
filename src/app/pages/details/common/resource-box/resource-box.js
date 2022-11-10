@@ -22,7 +22,7 @@ function resourceBoxPermissions({
             iconType: isExternal ? 'external-link-alt' : 'download',
             link: {
                 text: resourceData.linkText,
-                url: resourceData.linkExternal || resourceData.linkDocumentUrl
+                url: resourceData.linkExternal || resourceData.linkDocument?.file
             }
         },
         pending: {
