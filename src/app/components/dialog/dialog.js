@@ -81,20 +81,16 @@ export default function Dialog({
 
 export function useDialog(initiallyOpen=false) {
     const [showDialog, updateShowDialog] = React.useState(initiallyOpen);
-    const open = React.useCallback(
-        () => updateShowDialog(true),
-        []
-    );
-    const close = React.useCallback(
-        () => updateShowDialog(false),
-        []
-    );
-    const BoundDialog = React.useCallback(
-        ({
+
+    return React.useMemo(() => {
+        const open = () => updateShowDialog(true);
+        const close = () => updateShowDialog(false);
+
+        function BoundDialog({
             title, children, modal = true, className,
             showPutAway=true, afterClose=() => null,
             ...otherProps
-        }) => {
+        }) {
             const Modal = modal ? ReactModal : React.Fragment;
             const closeAndAfterClose = () => {
                 close();
@@ -117,9 +113,8 @@ export function useDialog(initiallyOpen=false) {
                     </Dialog>
                 </Modal>
             );
-        },
-        [showDialog, close]
-    );
+        }
 
-    return [BoundDialog, open, close, showDialog];
+        return [BoundDialog, open, close, showDialog];
+    }, [showDialog]);
 }

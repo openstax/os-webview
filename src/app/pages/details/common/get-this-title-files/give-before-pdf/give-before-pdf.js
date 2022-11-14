@@ -29,12 +29,17 @@ function OpenGiveInNewWindow(event) {
     );
 }
 
-function GiveBeforePdfAfterConditionals({onThankYouClick, link, data}) {
+function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
     React.useEffect(() => {
         if (window.dataLayer) {
             window.dataLayer.push({event: 'optimize.giveBeforePdf'});
         }
     });
+
+    const closeAfterDelay = React.useCallback(
+        () => window.setTimeout(close, 200),
+        [close]
+    );
 
     return (
         <div className="give-before-pdf">
@@ -61,7 +66,7 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data}) {
             </div>
             <p className="giving-optional">{data.giving_optional}</p>
             <hr />
-            <a href={link} className="btn go-to">Go to PDF</a>
+            <a href={link} onClick={closeAfterDelay} className="btn go-to">Go to PDF</a>
         </div>
     );
 }
@@ -93,7 +98,7 @@ function GiveBeforePdf({
     }
 
     return (
-        <GiveBeforePdfAfterConditionals {...{onThankYouClick, link, data}} />
+        <GiveBeforePdfAfterConditionals {...{onThankYouClick, link, data, close}} />
     );
 }
 
