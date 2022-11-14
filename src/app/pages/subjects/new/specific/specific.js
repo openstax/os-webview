@@ -1,5 +1,5 @@
 import React from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useSpecificSubjectContext, {SpecificSubjectContextProvider} from './context';
 import Navigator from './navigator';
@@ -139,11 +139,12 @@ function useConsistentLanguage(subject, foundSubject) {
 export default function LoadSubject() {
     const {subject} = useParams();
     const foundSubject = useFoundSubject();
+    const navigate = useNavigate();
 
     useConsistentLanguage(subject, foundSubject);
 
     if (!foundSubject) {
-        console.warn(`Unknown subject ${subject}`);
+        navigate('/subjects');
         return null;
     }
 
