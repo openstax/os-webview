@@ -98,10 +98,15 @@ function FacultyForm({position, onPageChange}) {
         return Boolean(page !== 1 || position !== 'Student');
     }
 
-    function doSubmit(form) {
-        form.submit();
-        onSubmit();
-    }
+    const doSubmit = React.useCallback(
+        (form) => {
+            if (selectedBooksRef.current?.length > 0) {
+                form.submit();
+                onSubmit();
+            }
+        },
+        [onSubmit]
+    );
 
     return (
         <React.Fragment>
