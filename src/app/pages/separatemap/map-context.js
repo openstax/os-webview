@@ -1,11 +1,11 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import Map from './map-api';
-import $ from '~/helpers/$';
+import {isMobileDisplay} from '~/helpers/device';
 import {queryById} from '~/models/querySchools';
 
 function useMap(id) {
-    const mapZoom = $.isMobileDisplay() ? 2 : 3;
+    const mapZoom = isMobileDisplay() ? 2 : 3;
     const map = React.useMemo(
         () => new Map({
             container: id,
