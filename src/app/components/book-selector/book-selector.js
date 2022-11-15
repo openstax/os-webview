@@ -52,7 +52,7 @@ function BookSelector({
 
     React.useEffect(
         () => {
-            if (!selectedBooks.includes(preselectedBook)) {
+            if (preselectedBook && !selectedBooks.includes(preselectedBook)) {
                 toggleBook(preselectedBook);
             }
         },
