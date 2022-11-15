@@ -51,6 +51,10 @@
         }
 
         &.validated  {
+            .invalid-message {
+                display: block;
+            }
+
             :invalid {
                 background-color: ui-color(error-bg);
                 border-color: ui-color(error-border);
