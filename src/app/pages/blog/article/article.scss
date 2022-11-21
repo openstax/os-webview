@@ -170,6 +170,10 @@
         @include wider-than($phone-max) {
             padding: 0 $normal-margin;
         }
+
+        pre {
+            white-space: pre-wrap;
+        }
     }
 
     .body {

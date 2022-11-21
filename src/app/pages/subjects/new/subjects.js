@@ -53,6 +53,7 @@ export default function SubjectsRouter() {
             <Routes>
                 <Route path="" element={<SubjectsPage />} />
                 <Route path="view-all" element={<Navigate to="/subjects" replace />} />
+                <Route path="ap" element=<Navigate to="/subjects/high-school" replace /> />
                 <Route path=":subject" element={<LoadSubject />} />
             </Routes>
         </SubjectsContextProvider>
