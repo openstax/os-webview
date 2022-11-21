@@ -66,8 +66,10 @@ function FacultyForm({position, onPageChange}) {
 
     const doSubmit = React.useCallback(
         (form) => {
-            form.submit();
-            onSubmit();
+            if (selectedBooksRef.current?.length > 0) {
+                form.submit();
+                onSubmit();
+            }
         },
         [onSubmit]
     );
