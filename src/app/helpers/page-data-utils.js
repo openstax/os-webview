@@ -100,7 +100,7 @@ export function useTextFromSlug(slug) {
                         setText(newDoc.body.innerHTML);
                         setHead({
                             title: newDoc.head.querySelector('title')?.textContent,
-                            description: newDoc.head.querySelector('[name="description"]').getAttribute('content')
+                            description: newDoc.head.querySelector('[name="description"]')?.getAttribute('content')
                         });
                     });
                 } else {
