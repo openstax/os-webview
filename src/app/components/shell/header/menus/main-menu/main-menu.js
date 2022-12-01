@@ -9,6 +9,53 @@ import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
 import './main-menu.scss';
 
+const menuStructure = [
+    {
+        label: 'Technology',
+        items: [
+            {label: 'OpenStax Kinetic', url: '/kinetic'},
+            {label: 'Partner learning platform', url: '/partners'}
+        ]
+    },
+    {
+        label: 'What we do',
+        items: [
+            {label: 'About Us', url: '/about'},
+            {label: 'Team', url: '/team'},
+            {label: 'Research', url: '/research'},
+            {label: 'Institutional Partnerships', url: '/institutional-partnership'},
+            {label: 'Technology Partnerships', url: '/openstax-ally-technology-partner-program'},
+            {label: 'Webinars', url: '/webinars'}
+        ]
+    }
+];
+
+function DropdownOrMenuItem({item}) {
+    if ('items' in item) {
+        return (
+            <Dropdown label={item.label}>
+                <MenusFromStructure structure={item.items} />
+            </Dropdown>
+        );
+    }
+
+    return (
+        <MenuItem label={item.label} url={item.url} />
+    );
+}
+
+function MenusFromStructure({structure}) {
+    return (
+        <React.Fragment>
+            {
+                structure.map(
+                    (item) => <DropdownOrMenuItem key={item.label} item={item} />
+                )
+            }
+        </React.Fragment>
+    );
+}
+
 function SubjectsMenu() {
     const categories = useSubjectCategoryContext();
     const {language} = useLanguageContext();
@@ -48,18 +95,7 @@ export default function MainMenu() {
     return (
         <ul className="nav-menu main-menu no-bullets" role="menubar">
             <SubjectsMenu />
-            <Dropdown className="technology-dropdown" label="Technology">
-                <MenuItem url="/kinetic" label="OpenStax Kinetic" />
-                <MenuItem url="/partners" label="Partner learning platforms" />
-            </Dropdown>
-            <Dropdown className="what-we-do-dropdown" label="What we do">
-                <MenuItem url="/about" label="About Us" />
-                <MenuItem url="/team" label="Team" />
-                <MenuItem url="/research" label="Research" />
-                <MenuItem url="/institutional-partnership" label="Institutional Partnerships" />
-                <MenuItem url="/openstax-ally-technology-partner-program" label="Technology Partnerships" />
-                <MenuItem url="/webinars" label="Webinars" />
-            </Dropdown>
+            <MenusFromStructure structure={menuStructure} />
             <LoginMenu />
             <li className="give-button-item" role="presentation"><GiveButton /></li>
         </ul>
