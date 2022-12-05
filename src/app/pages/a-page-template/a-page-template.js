@@ -1,18 +1,13 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import ChildComponent from '~/components/a-component-template/a-component-template.js';
 import './a-page-template.scss';
 
 const slug = 'books/biology-2e';
 
-function Pagename({data: {heading, message}}) {
+function Pagename({data: {heading}}) {
     return (
         <div className="content">
             <h1>{heading}</h1>
-            {
-                message &&
-                <ChildComponent message={message} />
-            }
         </div>
     );
 }
