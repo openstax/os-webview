@@ -7,7 +7,7 @@ import {IfToggleIsOpen} from '~/components/toggle/toggle';
 import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import BookOptions from './book-options';
-import PutAway from '~/pages/my-openstax/put-away/put-away';
+import PutAway from '~/components/put-away/put-away';
 import './book-tags.scss';
 
 function Tag({item}) {

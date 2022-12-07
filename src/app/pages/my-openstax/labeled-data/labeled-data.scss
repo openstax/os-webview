@@ -1,9 +1,0 @@
-@import 'pattern-library/core/pattern-library/headers';
-
-.labeled-data {
-  label {
-    @include set-font(helper-label);
-
-    font-weight: bold;
-  }
-}
