@@ -20,10 +20,6 @@ export const sortOptions = [
     {
         label: 'Name: Z to A',
         value: '-1'
-    },
-    {
-        label: 'Rating: High to Low',
-        value: '-2'
     }
 ];
 
