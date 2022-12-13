@@ -1,47 +1,48 @@
 import React from 'react';
 import JITLoad from '~/helpers/jit-load';
-import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useGiveToday from '~/models/give-today';
 import './upper-menu.scss';
 
-function BlogItem() {
-    const data = useDataFromSlug(
-        'pages?type=news.newsArticle&fields=id&limit=3'
-    );
+const menuStructure = {
+    Bookstores: '/bookstore-suppliers',
+    'Our Impact': '/impact',
+    Supporters: '/foundation',
+    Blog: '/blog',
+    Give: 'https://riceconnect.rice.edu/donation/support-openstax-header',
+    Help: 'https://openstax.secure.force.com/help'
+};
 
-    const shouldDisplay = data?.items?.length > 0;
+const menuData = Object.entries(menuStructure).map(
+    ([key, value]) => ({label: key, url: value})
+);
 
-    if (!shouldDisplay) {
-        return null;
+function MenuItem({label, url, showButton}) {
+    if (label === 'Give') {
+        return showButton ?
+            null :
+            <a className="nav-menu" target="_blank" rel="noreferrer" href={url}>
+                {label}
+            </a>
+        ;
     }
+
     return (
-        <a className="nav-menu" href="/blog">Blog</a>
+        <a className="nav-menu" href={url}>{label}</a>
     );
 }
 
-function GiveItem() {
-    return (
-        <a
-            className="nav-menu" target="_blank" rel="noreferrer"
-            href="https://riceconnect.rice.edu/donation/support-openstax-header"
-        >
-            Give
-        </a>
-    );
-}
+const importGiveButton = () => import('../give-button/give-button');
 
 export default function UpperMenu() {
     const {showButton} = useGiveToday();
-    const importGiveButton = React.useCallback(() => import('../give-button/give-button'), []);
 
     return (
         <div className="container">
-            <a className="nav-menu" href="/bookstore-suppliers">Bookstores</a>
-            <a className="nav-menu" href="/impact">Our Impact</a>
-            <a className="nav-menu" href="/foundation">Supporters</a>
-            <BlogItem />
-            {showButton ? null : <GiveItem />}
-            <a className="nav-menu" href="https://openstax.secure.force.com/help">Help</a>
+            {
+                menuData.map(
+                    ({label, url}) => <MenuItem key={label} label={label} url={url} showButton={showButton} />
+                )
+            }
             <a className="logo rice-logo logo-wrapper" href="http://www.rice.edu">
                 <img src="/dist/images/rice.webp" alt="Rice University logo" height="30" width="79" />
             </a>
