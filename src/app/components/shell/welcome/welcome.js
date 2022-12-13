@@ -11,7 +11,6 @@ import useFlagContext from '../flag-context';
     If the user is a new account, show the welcome message for new
       student or educator account
     If an existing account and an educator, show a message for that
-    Educators navigate to my-openstax (as their homepage?)
     Students can be navigated to subjects
 */
 

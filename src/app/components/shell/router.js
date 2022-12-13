@@ -15,7 +15,6 @@ import analytics from '~/helpers/analytics';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import $ from '~/helpers/$';
 import {useToggle} from '~/helpers/data';
-import useUserContext from '~/contexts/user';
 import useRouterContext, {RouterContextProvider} from './router-context';
 
 const FOOTER_PAGES = [
@@ -182,12 +181,6 @@ function ImportedPage({name}) {
     );
 }
 
-function useHomeOrMyOpenStax() {
-    const {myOpenStaxUser} = useUserContext();
-
-    return myOpenStaxUser.error ? 'home' : 'my-openstax';
-}
-
 function TopLevelPage() {
     const {name} = useParams();
     const {isValid, goto404} = useRouterContext();
@@ -210,11 +203,9 @@ function RedirectToCanonicalDetailsPage() {
 }
 
 function MainRoutes() {
-    const homeOrMyOpenStax = useHomeOrMyOpenStax();
-
     return (
         <Routes>
-            <Route path="/" element={<ImportedPage name={homeOrMyOpenStax} />} />
+            <Route path="/" element={<ImportedPage name="home" />} />
             {
                 FOOTER_PAGES.map(
                     (path) => <Route path={path} key={path} element={<ImportedPage name="footer-page" />} />
