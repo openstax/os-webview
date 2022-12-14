@@ -24,6 +24,11 @@
             }
         }
 
+        .image-holder img {
+            max-height: 15rem;
+            max-width: 100%;
+        }
+
         .name {
             @include set-font(h4);
         }
