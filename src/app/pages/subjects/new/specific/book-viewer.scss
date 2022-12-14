@@ -37,7 +37,7 @@
                 display: none;
             }
 
-            [aria-isexpanded="true"] {
+            [aria-expanded="true"] {
                 border-radius: 0.5rem 0.5rem 0 0;
 
                 + [role="menu"] {
