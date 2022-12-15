@@ -24,7 +24,7 @@ function Footer({
                     <div className="column col1">
                         <h3>Help</h3>
                         <a href="/contact">Contact Us</a>
-                        <a href="https://openstax.secure.force.com/help">Support Center</a>
+                        <a href="https://help.openstax.org">Support Center</a>
                         <a href="/faq">FAQ</a>
                     </div>
                     <div className="column col2">
