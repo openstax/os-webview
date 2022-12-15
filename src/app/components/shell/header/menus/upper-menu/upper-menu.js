@@ -9,7 +9,7 @@ const menuStructure = {
     Supporters: '/foundation',
     Blog: '/blog',
     Give: 'https://riceconnect.rice.edu/donation/support-openstax-header',
-    Help: 'https://openstax.secure.force.com/help'
+    Help: 'https://help.openstax.org/s/'
 };
 
 const menuData = Object.entries(menuStructure).map(
