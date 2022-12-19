@@ -27,7 +27,7 @@ const config = {
                         loader:  'fast-sass-loader',
                         options: {
                             implementation: require('node-sass'),
-                            includePaths: [ './src/styles', './node_modules' ]
+                            includePaths: ['./src/styles', './node_modules']
                         }
                     }
                 ]
@@ -50,14 +50,14 @@ const config = {
 
                         // npm package names are URL-safe, but some servers don't like @ symbols
                         return `npm.${packageName.replace('@', '')}`;
-                    },
-                },
-            },
-        },
+                    }
+                }
+            }
+        }
     },
     plugins: [
         new CopyWebpackPlugin({
-            patterns: [{from: 'src/images', to:'images'}]
+            patterns: [{from: 'src/images', to: 'images'}]
         }),
         new webpack.EnvironmentPlugin({ API_ORIGIN }),
         new ESLintPlugin({fix: true}),
@@ -78,50 +78,50 @@ const config = {
             'react': 'preact/compat',
             'react-dom/test-utils': 'preact/test-utils',
             'react-dom': 'preact/compat',
-            '~': path.resolve(__dirname, 'src/app'),
+            '~': path.resolve(__dirname, 'src/app')
         },
         modules: [
             path.resolve(__dirname, 'src/app'),
-            'node_modules',
+            'node_modules'
         ],
         extensions: ['.js', '.jsx']
     },
     watchOptions: {
         aggregateTimeout: 500,
-        poll: 1000,
+        poll: 1000
     },
     devServer: {
-      client: {
-          logging: 'warn',
-      },
-      devMiddleware: {
-          index: false,
-          publicPath,
-          stats: 'errors-only',
-      },
-      headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-          'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
-      },
-      historyApiFallback: { index: `${publicPath}/index.html` },
-      hot: true,
-      liveReload: true,
-      open: true,
-      port: devServerPort,
-      // fonts are always loaded with CORS but the CMS doesn't set CORS headers for them
-      // to get around this, we proxy them instead
-      proxy: {
-          context: (path) => path.startsWith('/cms/assets/fonts'),
-          target: API_ORIGIN,
-          changeOrigin: true
-      },
-      static: {
-          directory: path.resolve(__dirname, './src'),
-          publicPath: publicPath
-      }
-    },
-}
+        client: {
+            logging: 'warn'
+        },
+        devMiddleware: {
+            index: false,
+            publicPath,
+            stats: 'errors-only'
+        },
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+            'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+        },
+        historyApiFallback: { index: `${publicPath}/index.html` },
+        hot: true,
+        liveReload: true,
+        open: true,
+        port: devServerPort,
+        // fonts are always loaded with CORS but the CMS doesn't set CORS headers for them
+        // to get around this, we proxy them instead
+        proxy: {
+            context: (p) => p.startsWith('/cms/assets/fonts'),
+            target: API_ORIGIN,
+            changeOrigin: true
+        },
+        static: {
+            directory: path.resolve(__dirname, './src'),
+            publicPath
+        }
+    }
+};
 
 module.exports = (env, argv) => {
     config.mode = argv.mode || 'development';
@@ -133,8 +133,8 @@ module.exports = (env, argv) => {
         config.optimization.splitChunks.maxInitialRequests = 5;
         config.output.chunkFilename = 'chunk-[chunkhash].js';
     } else {
-        config.output.filename = '[name].js',
-        config.devtool = 'inline-source-map',
+        config.output.filename = '[name].js';
+        config.devtool = 'inline-source-map';
         config.optimization.splitChunks.maxInitialRequests = 1;
     }
 
