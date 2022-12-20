@@ -14,9 +14,9 @@ const MemberGrid = styled.div({
     display: 'grid',
     gap: '2rem',
     padding: '4rem',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(10em, 1fr))',
     [media.mobile]: {
-        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(8em, 1fr))',
         gap: '3rem',
         padding: '2rem'
     }
@@ -26,9 +26,9 @@ const CollaboratorGrid = styled.div({
     display: 'grid',
     gap: '2rem',
     padding: '4rem',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(10em, 1fr))',
     [media.mobile]: {
-        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(10em, 1fr))',
         gap: '3rem',
         padding: '2rem'
     }
