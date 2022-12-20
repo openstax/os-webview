@@ -1,0 +1,22 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.research.page .people-section {
+    h2 {
+        @include set-font(body-large);
+
+        padding-top: 0;
+    }
+
+    @include width-up-to($phone-max) {
+        .desktop-only {
+            display: none;
+        }
+    }
+
+    @include wider-than($phone-max) {
+        .mobile-only {
+            display: none;
+        }
+    }
+
+}

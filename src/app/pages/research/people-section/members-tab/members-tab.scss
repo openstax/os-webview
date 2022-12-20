@@ -1,0 +1,50 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.members-tab {
+    display: grid;
+    grid-gap: #{2 * $normal-margin};
+    padding: 4rem 0;
+
+    @include width-between($phone-max, $tablet-max) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @include wider-than($tablet-max) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .card {
+        @extend %card;
+
+        background-color: ui-color(white);
+        padding: 4rem;
+
+        .content {
+            align-items: center;
+            display: grid;
+            grid-gap: 1rem;
+            justify-items: center;
+            text-align: center;
+        }
+
+        .image-holder {
+            background-color: ui-color(page-bg);
+            border-radius: 50%;
+            height: 14rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            width: 14rem;
+
+            img {
+                margin-left: -20%;
+                margin-top: 10%;
+                max-height: 140%;
+                max-width: 140%;
+            }
+        }
+
+        .name {
+            @include set-font(h4);
+        }
+    }
+}

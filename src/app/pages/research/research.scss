@@ -1,89 +1,75 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-@include wider-than($phone-max) {
-    .mobile-only {
-        display: none;
-    }
-}
-
-@include width-up-to($phone-max) {
-    .desktop-only {
-        display: none;
-    }
-
-    .ReactModal__Content, dialog {
-        width: 100% !important;
-    }
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-    margin-block: 0 !important;
-}
-
 .research.page {
+    h1 {
+        @include scale-set-font(h3, h2);
+
+        margin-bottom: 2rem;
+    }
+
+    section {
+        padding: 6rem 0;
+    }
+
+    .projects-section,
+    .publications-section {
+        background-color: lighten(ui-color(page-bg), 3%);
+    }
+
     .content {
         @extend %content;
     }
 
-    .link-text {
-        text-decoration-line: underline;
-        color: #026AA1;
-        cursor: pointer;
-    }
 
-    .p-4 {
-        padding: 4rem;
-    }
+    .card {
+        @extend %card;
 
-    .px-2 {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
+        background-color: ui-color(white);
+        margin-bottom: 0.5rem;
+        overflow: hidden;
 
-    .px-4 {
-        padding-left: 4rem;
-        padding-right: 4rem;
-    }
+        h2 {
+            @include set-font(h4);
 
-    .pb-2 {
-        padding-bottom: 2rem;
-    }
+            margin-top: 0;
+        }
 
-    .pt-2 {
-        padding-top: 2rem;
-    }
+        > a {
+            color: inherit;
+            text-decoration: inherit;
+        }
 
-    .pt-4 {
-        padding-top: 4rem;
-    }
+        .card-content {
+            border-bottom: 0;
+            border-left: 0;
+            border-right: 0;
+            border-top: 0.4rem solid transparent;
+            padding: 4rem;
+        }
 
-    .py-1 {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
+        &.blue .card-content {
+            border-color: inherit;
+            border-image: linear-gradient(to right, os-color(blue), lighten(os-color(light-blue), 20%)) 1 stretch;
+        }
 
-    .py-2 {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
+        &.green .card-content {
+            border-color: inherit;
+            border-image: linear-gradient(to right, os-color(deep-green), lighten(os-color(green), 25%)) 1 stretch;
+        }
 
-    .py-3 {
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-    }
+        &.yellow .card-content {
+            border-color: inherit;
+            border-image: linear-gradient(to right, os-color(gold), lighten(os-color(yellow), 20%)) 1 stretch;
+        }
 
-    .py-4 {
-        padding-top: 4rem;
-        padding-bottom: 4rem;
-    }
+        &.red .card-content {
+            border-color: inherit;
+            border-image: linear-gradient(to right, darken(os-color(red), 10%), lighten(os-color(red), 20%)) 1 stretch;
+        }
 
-    .py-5 {
-        padding-top: 5rem;
-        padding-bottom: 5rem;
-    }
-
-    .text-decoration-none {
-        text-decoration: none;
+        &.orange .card-content {
+            border-color: inherit;
+            border-image: linear-gradient(to right, darken(os-color(orange), 20%), os-color(gold)) 1 stretch;
+        }
     }
 }

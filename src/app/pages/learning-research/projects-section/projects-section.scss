@@ -1,0 +1,33 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+$box-shadow-compensation: 0.5rem;
+.research.page .projects-section {
+    .project-cards {
+        display: grid;
+        grid-gap: #{2 * $normal-margin};
+        margin-top: 3rem;
+
+        @include width-up-to($phone-max) {
+            grid-auto-flow: column;
+            grid-gap: 2rem;
+            margin-left: -$box-shadow-compensation;
+            overflow-x: scroll;
+
+            .card {
+                width: calc(100vw - 6rem);
+
+                &:first-child {
+                    margin-left: $box-shadow-compensation;
+                }
+            }
+        }
+
+        @include width-between($phone-max, $tablet-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+}
