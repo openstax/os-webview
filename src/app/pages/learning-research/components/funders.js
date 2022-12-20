@@ -37,7 +37,7 @@ export const Funders = () => {
                     </Box>
 
                     <div>
-                        <a href="https://openstax.org/foundation" target='_blank' className="mb-2" css={{ color: colors.linkText }} rel="noreferrer">
+                        <a href="https://openstax.org/foundation" target='_blank' className="mb-2 large-link" css={{ color: colors.linkText }} rel="noreferrer">
                             <h5>View Other Philanthropic Supporters</h5>
                         </a>
 

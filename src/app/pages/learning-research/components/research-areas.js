@@ -2,13 +2,13 @@ import React from 'react';
 import {Box} from 'boxible';
 import styled from '@emotion/styled';
 import {Section} from '~/pages/learning-research/components/section';
-import {media} from '~/pages/learning-research/theme';
+import {colors, media} from '~/pages/learning-research/theme';
 import {TabAccordionCombo} from '~/pages/learning-research/components/tab-accordion-combo';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 
 export const ResearchSection = ({data: {researchAreasList, researchAreaHeader, researchAreaDescription}}) => {
     return (
-        <Section>
+        <Section backgroundColor={colors.lightGrayBackground}>
             <h2>{researchAreaHeader}</h2>
             <RawHTML html={researchAreaDescription} className='mobile-only' />
             <ResearchFocusAreas researchAreaList={researchAreasList} />
@@ -40,9 +40,9 @@ export const ResearchFocusAreas = ({researchAreaList}) => {
 
 export const ResearchFocusArea = ({ researchArea, isLast }) => (
     <div>
-        <Box gap='xlarge' direction={{ mobile: 'column' }} className='py-2'>
+        <Box gap='xlarge' direction={{ mobile: 'column' }} className='py-3'>
             <ResearchAreaImage src={researchArea.photo.file} alt={researchArea.photo.title} />
-            <Box direction='column' css={{ flex: 6 }}>
+            <Box direction='column' gap='large' css={{ flex: 6 }}>
                 <h4>{researchArea.header}</h4>
                 <RawHTML className='desktop-only' html={researchArea.description} />
                 <RawHTML className='mobile-only' html={researchArea.shortDescription} />

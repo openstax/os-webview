@@ -51,7 +51,7 @@ export const Publications = ({data: {publicationsHeader, publications}}) => {
 export const PublicationItem = ({ publication }) => (
     <Box direction='column' className='py-2' css={{ lineHeight: 1.8 }}>
         <div>
-            <a className='fw-bold' href={publication.pdf} target='_blank' rel="noreferrer">
+            <a className='large-link' href={publication.pdf} target='_blank' rel="noreferrer">
                 {publication.title}
             </a>
         </div>
