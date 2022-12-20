@@ -28,16 +28,12 @@ export const colors = {
     white: '#ffffff'
 };
 
-export const screenSizes = {
-    sm: 576,
-    md: 768,
-    lg: 992,
-    xl: 1200,
-    xxl: 1400
-};
+const scaleFactor = 10/16;
+const medium = scaleFactor * 96;
+const large = scaleFactor * 120;
 
 export const media = {
-    mobile: `@media (max-width: ${screenSizes.md}px)`,
-    tablet: `@media (min-width: ${screenSizes.md}px) and (max-width: ${screenSizes.xl}px)`,
-    desktop: `@media (min-width: ${screenSizes.xl}px)`
+    mobile: `@media (max-width: ${medium}em)`,
+    tablet: `@media (min-width: ${medium}em) and (max-width: ${large}em)`,
+    desktop: `@media (min-width: ${large}em)`
 };
