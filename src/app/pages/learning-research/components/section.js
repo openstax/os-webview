@@ -1,5 +1,5 @@
-import {colors, media} from '~/pages/learning-research/theme';
 import React from 'react';
+import {colors, media} from '~/pages/learning-research/theme';
 
 export const Section = ({ children, backgroundColor= colors.white, padding = true }) => {
     return (

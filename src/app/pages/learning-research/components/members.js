@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
+import {Box} from 'boxible';
 import styled from '@emotion/styled';
 import {colors, media} from '~/pages/learning-research/theme';
-import {Box} from 'boxible';
 import {Section} from '~/pages/learning-research/components/section';
 import {TabAccordionCombo} from '~/pages/learning-research/components/tab-accordion-combo';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

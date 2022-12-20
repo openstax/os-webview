@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
+import {Box} from 'boxible';
 import {isMobileDisplay} from '~/helpers/device';
 import {publications} from '~/pages/learning-research/data/research-data';
 import {Section} from '~/pages/learning-research/components/section';
-import {Box} from 'boxible';
 import {colors} from '~/pages/learning-research/theme';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';

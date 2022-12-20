@@ -1,6 +1,6 @@
 import React from 'react';
-import {colors, media} from '~/pages/learning-research/theme';
 import {Box} from 'boxible';
+import {colors, media} from '~/pages/learning-research/theme';
 import {Section} from '~/pages/learning-research/components/section';
 
 export const ContactUs = () => (

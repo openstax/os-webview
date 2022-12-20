@@ -1,8 +1,8 @@
 import React from 'react';
+import {Box} from 'boxible';
+import styled from '@emotion/styled';
 import {Section} from '~/pages/learning-research/components/section';
 import {media} from '~/pages/learning-research/theme';
-import styled from '@emotion/styled';
-import {Box} from 'boxible';
 import {TabAccordionCombo} from '~/pages/learning-research/components/tab-accordion-combo';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 
