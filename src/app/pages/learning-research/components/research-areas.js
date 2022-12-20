@@ -17,9 +17,8 @@ export const ResearchSection = ({data: {researchAreasList, researchAreaHeader, r
 };
 
 export const ResearchFocusAreas = ({researchAreaList}) => {
-    console.log(researchAreaList);
     return (
-        <TabAccordionCombo>
+        <TabAccordionCombo collapseAll={true}>
             {researchAreaList.map((researchArea, i) => {
                 return (
                     <div label={researchArea.researchAreaTitle} selected className='py-2' key={i}>

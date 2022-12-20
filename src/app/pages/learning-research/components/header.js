@@ -24,7 +24,7 @@ export const Header = ({data: { missionBody }}) => {
                     {missionBody}
                 </h1>
                 <HeaderImage
-                    src='/dist/images/research/banner-image.png'
+                    src='/dist/images/learning-research/banner-image.png'
                     alt='banner-image' css={{ flex: 2 }}
                 />
             </Box>

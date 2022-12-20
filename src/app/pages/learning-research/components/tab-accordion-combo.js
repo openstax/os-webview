@@ -20,9 +20,8 @@ export const DesktopTabs = ({labels, initialSelection, children}) => {
     );
 };
 
-export const TabAccordionCombo = ({children}) => {
+export const TabAccordionCombo = ({children, initialSelection = 0, collapseAll = false}) => {
     const labels = React.Children.map(children, (c) => c.props.label);
-    const initialSelection = children.findIndex((c) => c.props.selected) || 0;
     const items = React.Children.map(children, (child, i) => ({
         title: labels[i],
         contentComponent: child
@@ -34,7 +33,7 @@ export const TabAccordionCombo = ({children}) => {
                 {children}
             </DesktopTabs>
             <div className="mobile-only">
-                <AccordionGroup items={items} preExpanded={[labels[initialSelection]]} />
+                <AccordionGroup items={items} preExpanded={collapseAll ? [] : [labels[initialSelection]]} />
             </div>
         </React.Fragment>
     );

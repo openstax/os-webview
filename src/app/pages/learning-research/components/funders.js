@@ -27,12 +27,12 @@ export const Funders = () => {
                         <Supporter target="_blank" href="https://ies.ed.gov/">
                             <SupporterImage
                                 alt="Institute of Education Sciences logo"
-                                src='/dist/images/research/funders/ies-logo.webp' />
+                                src='/dist/images/learning-research/funders/ies-logo.webp' />
                         </Supporter>
                         <Supporter target="_blank" href="https://www.nsf.org/gb/en">
                             <SupporterImage
                                 alt="National Science Foundation logo"
-                                src='/dist/images/research/funders/nsf-logo.webp' />
+                                src='/dist/images/learning-research/funders/nsf-logo.webp' />
                         </Supporter>
                     </Box>
 
