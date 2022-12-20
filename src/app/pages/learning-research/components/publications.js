@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {Box} from 'boxible';
 import {isMobileDisplay} from '~/helpers/device';
-import {publications} from '~/pages/learning-research/data/research-data';
 import {Section} from '~/pages/learning-research/components/section';
 import {colors} from '~/pages/learning-research/theme';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
@@ -9,7 +8,8 @@ import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowUpRightFromSquare} from '@fortawesome/free-solid-svg-icons/faArrowUpRightFromSquare';
 
-export const Publications = () => {
+export const Publications = ({data: {publicationsHeader, publications}}) => {
+    console.log(publications, publicationsHeader);
     const [viewAll, setViewAll] = useState(false);
     const initialCount = isMobileDisplay() ? 3 : 5;
     const publicationList = viewAll ? publications : publications.slice(0, initialCount);
@@ -58,7 +58,7 @@ export const PublicationItem = ({ publication }) => (
         <div>
             <span>{publication.date} &middot;&nbsp;</span>
             <span css={{ color: colors.grayText }}>
-                {publication.body}
+                {publication.date} {publication.authors} {publication.excerpt}
             </span>
         </div>
         <Box gap='xlarge'>
