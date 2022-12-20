@@ -26,6 +26,10 @@ h1, h2, h3, h4, h5, h6 {
         @extend %content;
     }
 
+    .accordion-group .content-pane {
+        background-color: rgba(0,0,0,0);
+    }
+
     .link-text {
         text-decoration-line: underline;
         color: #026AA1;

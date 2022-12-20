@@ -25,7 +25,8 @@ export const colors = {
     linkText: '#026AA1',
     linkButtonIcon: '#DBDBDB',
     linkButtonIconHover: '#151B2C',
-    white: '#ffffff'
+    white: '#ffffff',
+    transparent: 'rgba(0,0,0,0)'
 };
 
 const scaleFactor = 10/16;
