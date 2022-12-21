@@ -6,11 +6,11 @@ import {colors, media} from '~/pages/learning-research/theme';
 import {TabAccordionCombo} from '~/pages/learning-research/components/tab-accordion-combo';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 
-export const ResearchSection = ({data: {researchAreasList, researchAreaHeader, researchAreaDescription}}) => {
+export const ResearchSection = ({data: {researchAreasList, researchAreaHeader, researchAreaDescriptionMobile}}) => {
     return (
         <Section backgroundColor={colors.lightGrayBackground}>
             <h2>{researchAreaHeader}</h2>
-            <RawHTML html={researchAreaDescription} className='mobile-only' />
+            <RawHTML html={researchAreaDescriptionMobile} className='mobile-only' />
             <ResearchFocusAreas researchAreaList={researchAreasList} />
         </Section>
     );

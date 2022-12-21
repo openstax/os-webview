@@ -12,15 +12,9 @@ import {MembersSection} from '~/pages/learning-research/components/members';
 function LearningResearchPage({data}) {
     return (
         <React.Fragment>
-            <LazyLoad>
-                <Header data={data} />
-            </LazyLoad>
-            <LazyLoad>
-                <Banner data={data} />
-            </LazyLoad>
-            <LazyLoad>
-                <ResearchSection data={data} />
-            </LazyLoad>
+            <Header data={data} />
+            <Banner data={data} />
+            <ResearchSection data={data} />
             <LazyLoad>
                 <Publications data={data} />
             </LazyLoad>
@@ -29,8 +23,6 @@ function LearningResearchPage({data}) {
             </LazyLoad>
             <LazyLoad>
                 <Funders />
-            </LazyLoad>
-            <LazyLoad>
                 <ContactUs />
             </LazyLoad>
         </React.Fragment>

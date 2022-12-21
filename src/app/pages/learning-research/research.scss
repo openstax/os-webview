@@ -4,6 +4,14 @@
     .mobile-only {
         display: none;
     }
+
+    .ReactModal__Content {
+        width: 60% !important;
+    }
+
+    dialog {
+        width: 100% !important;
+    }
 }
 
 @include width-up-to($phone-max) {

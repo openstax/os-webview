@@ -190,7 +190,7 @@ export const MemberInfo = ({ member }) => {
             <Box direction='column'>
                 <h4>{member.firstName} {member.lastName}</h4>
                 <span css={{ color: colors.grayText }}>
-                    {member.title}
+                    {member.longTitle || member.title}
                 </span>
             </Box>
         </Box>
