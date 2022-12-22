@@ -39,7 +39,7 @@ function ResultCard({entry}) {
     );
 
     return (
-        <a href={`?${title}`} type="button" className="card" onClick={onSelect}>
+        <a href={`?${encodeURIComponent(title)}`} type="button" className="card" onClick={onSelect}>
             <div className="logo">
                 {logoUrl && <img src={logoUrl} alt="" />}
             </div>
