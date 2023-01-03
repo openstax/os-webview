@@ -9,7 +9,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowUpRightFromSquare} from '@fortawesome/free-solid-svg-icons/faArrowUpRightFromSquare';
 
 export const Publications = ({data: {publicationsHeader, publications}}) => {
-    console.log(publications, publicationsHeader);
     const [viewAll, setViewAll] = useState(false);
     const initialCount = isMobileDisplay() ? 3 : 5;
     const publicationList = viewAll ? publications : publications.slice(0, initialCount);
@@ -22,7 +21,7 @@ export const Publications = ({data: {publicationsHeader, publications}}) => {
     return (
         <Section>
             <Box direction='column' ref={publicationsRef}>
-                <h2>Publications</h2>
+                <h2>{publicationsHeader}</h2>
                 {publicationList.map((publication, index) =>
                     <PublicationItem key={index} publication={publication} />
                 )}
