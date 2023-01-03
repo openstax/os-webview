@@ -49,14 +49,19 @@ export function Stars({stars}) {
     );
 }
 
-export default function StarsAndCount({rating=0, count=0, showNumber=false}) {
-    const s = count !== 1 ? 's' : '';
+// ** RESTORE when using ratings again
+// export default function StarsAndCount({rating=0, count=0, showNumber=false}) {
+//     const s = count !== 1 ? 's' : '';
 
-    return (
-        <div className="stars-and-count">
-            <Stars stars={rating} />
-            {showNumber && (count > 0) && roundedRating(rating)}
-            <span>({`${count || 'no'} review${s}`})</span>
-        </div>
-    );
+//     return (
+//         <div className="stars-and-count">
+//             <Stars stars={rating} />
+//             {showNumber && (count > 0) && roundedRating(rating)}
+//             <span>({`${count || 'no'} review${s}`})</span>
+//         </div>
+//     );
+// }
+
+export default function StarsAndCount() {
+    return null;
 }

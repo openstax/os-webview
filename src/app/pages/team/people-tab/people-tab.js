@@ -5,6 +5,9 @@ function PersonCard({entry}) {
     return (
         <div className="card">
             <div className="content">
+                <div className="image-holder">
+                    {entry?.photo ? <img src={entry?.photo?.file} alt={entry.name} /> : null}
+                </div>
                 <div className="name">{entry.name}</div>
                 <div className="bio">{entry.bio}</div>
             </div>

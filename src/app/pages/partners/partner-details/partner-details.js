@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import usePartnerContext, {PartnerContextProvider} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
-import Reviews from './reviews/reviews';
+// import Reviews from './reviews/reviews';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
@@ -155,7 +155,9 @@ function PartnerDetails({model}) {
     } = model;
     const icon = logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
     const partnerLinkProps = {partnerUrl: website || partnerWebsite, partnerLinkText};
-    const labels = ['Overview', 'Reviews'];
+    // ** Restore the Reviews tab when using Reviews again
+    // const labels = ['Overview', 'Reviews'];
+    const labels = ['Overview'];
     const [selectedLabel, setSelectedLabel] = useState(labels[0]);
     const ref = useRef();
 
@@ -180,7 +182,10 @@ function PartnerDetails({model}) {
                 <div className="tab-content">
                     <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
                         <Overview model={model} icon={icon} />
-                        <Reviews partnerId={model.id} />
+                        {
+                            // ** Restore when using Reviews again
+                            // <Reviews partnerId={model.id} />
+                        }
                     </ContentGroup>
                 </div>
             </div>

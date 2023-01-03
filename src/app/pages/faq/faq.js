@@ -1,7 +1,8 @@
+import React from 'react';
 import {useToggle} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import React from 'react';
+import useChatButton from './chat-button';
 import cn from 'classnames';
 import $ from '~/helpers/$';
 import './faq.scss';
@@ -85,6 +86,8 @@ function FAQ({data: {
 }
 
 export default function FAQLoader() {
+    useChatButton();
+
     return (
         <main className="faq-page page">
             <LoaderPage slug="pages/faq" Child={FAQ} doDocumentSetup />
