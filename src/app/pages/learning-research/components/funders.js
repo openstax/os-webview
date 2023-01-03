@@ -17,7 +17,7 @@ const SupporterImage = styled.img({
 export const Funders = () => {
     return (
         <Section>
-            <Box direction="column" align={{ mobile: 'center' }} className='py-2 container'>
+            <Box direction="column" padding={{vertical: 'large'}} align={{ mobile: 'center' }}>
                 <div
                     css={{
                         margin: 'auto'

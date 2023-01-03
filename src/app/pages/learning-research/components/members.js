@@ -178,14 +178,13 @@ const MemberImage = styled.img({
     height: 145,
     [media.mobile]: {
         width: 75,
-        height: 75,
-        marginRight: '2rem'
+        height: 75
     }
 });
 
 export const MemberInfo = ({ member }) => {
     return (
-        <Box align='center'>
+        <Box align='center' gap='large'>
             <MemberImage className='mobile-only' src={member.photo.file} alt={member.firstName} />
             <Box direction='column'>
                 <h4>{member.firstName} {member.lastName}</h4>

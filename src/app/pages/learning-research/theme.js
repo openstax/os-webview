@@ -1,3 +1,5 @@
+import {SIZES} from 'boxible';
+
 export const colors = {
     pageBackground: '#f7f8fa',
     lightGrayBackground: '#F1F1F1',
@@ -38,3 +40,8 @@ export const media = {
     tablet: `@media (min-width: ${medium}em) and (max-width: ${large}em)`,
     desktop: `@media (min-width: ${large}em)`
 };
+
+SIZES.medium = '1rem';
+SIZES.large = '2rem';
+SIZES.xlarge = '3rem';
+SIZES.xxlarge = '4rem';

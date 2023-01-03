@@ -36,54 +36,24 @@ export const Banner = ({data: {bannerBody, bannerHeader, bannerCTA, bannerURL}})
     if (!bannerBody) {return null;}
     return (
         <div css={{backgroundColor: colors.lightTeal}}>
-            <Box direction={{mobile: 'column'}} className='container align-items-center py-2' gap='medium'>
+            <Box direction={{mobile: 'column'}} padding={{vertical: 'large'}} gap='medium'>
                 <h4 css={{color: colors.blackText, flex: 1}}>
                     {bannerHeader}
                 </h4>
-                <Box align={{mobile: 'center'}} className='justify-content-center' direction='column' css={{flex: 4}}>
+                <Box align={{mobile: 'center'}} className='justify-content-center' direction='column' flex="4">
                     <span>{bannerBody}</span>
                     {(bannerCTA && bannerURL) && <a
                         className='text-decoration-none' href={bannerURL}
                         target='_blank' rel="noreferrer">
-                        <Box align='center'>
-                            {bannerCTA}
-                            &nbsp;
+                        <Box align='center' gap>
+                            <span>{bannerCTA}</span>
                             <FontAwesomeIcon size='sm' icon={faArrowUpRightFromSquare} />
                         </Box>
                     </a>}
                 </Box>
             </Box>
-            <OXColoredStripe />
+            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="separator" />
         </div>
     );
 };
 
-export const OXColoredStripe = () => (
-    <Box css={{ height: 10 }}>
-        <span
-            css={{
-                backgroundColor: colors.orange,
-                flex: 3.5
-            }}></span>
-        <span
-            css={{
-                backgroundColor: colors.primaryBlue,
-                flex: 1.5
-            }}></span>
-        <span
-            css={{
-                backgroundColor: colors.red,
-                flex: 1
-            }}></span>
-        <span
-            css={{
-                backgroundColor: colors.yellow,
-                flex: 2.5
-            }}></span>
-        <span
-            css={{
-                backgroundColor: colors.lightBlue,
-                flex: 1.5
-            }}></span>
-    </Box>
-);

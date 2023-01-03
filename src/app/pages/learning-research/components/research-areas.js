@@ -21,7 +21,13 @@ export const ResearchFocusAreas = ({researchAreaList}) => {
         <TabAccordionCombo collapseAll={true}>
             {researchAreaList.map((researchArea, i) => {
                 return (
-                    <div label={researchArea.researchAreaTitle} selected className='py-2' key={i}>
+                    <Box
+                        direction='column'
+                        label={researchArea.researchAreaTitle}
+                        selected
+                        padding={{vertical: 'large'}}
+                        key={i}
+                    >
                         <RawHTML className='mobile-only' html={researchArea.researchAreaBlurbMobile} />
                         <RawHTML className='desktop-only' html={researchArea.researchAreaBlurb} />
                         {researchArea.researchAreas.map((areaSection, j) => (
@@ -31,7 +37,7 @@ export const ResearchFocusAreas = ({researchAreaList}) => {
                                 key={j}
                             />
                         ))}
-                    </div>
+                    </Box>
                 );
             })}
         </TabAccordionCombo>
@@ -40,7 +46,7 @@ export const ResearchFocusAreas = ({researchAreaList}) => {
 
 export const ResearchFocusArea = ({ researchArea, isLast }) => (
     <div>
-        <Box gap='xlarge' direction={{ mobile: 'column' }} className='py-3'>
+        <Box gap='xlarge' direction={{ mobile: 'column' }} padding={{vertical: 'xlarge'}}>
             <ResearchAreaImage src={researchArea.photo.file} alt={researchArea.photo.title} />
             <Box direction='column' gap='large' css={{ flex: 6 }}>
                 <h4>{researchArea.header}</h4>

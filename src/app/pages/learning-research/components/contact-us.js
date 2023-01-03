@@ -5,7 +5,12 @@ import {Section} from '~/pages/learning-research/components/section';
 
 export const ContactUs = () => (
     <Section backgroundColor={colors.lightTeal} padding={false}>
-        <Box className='py-3' direction={{ mobile: 'column' }} align={{ desktop: 'center' }} gap='xlarge'>
+        <Box
+            padding={{ vertical: 'xlarge' }}
+            direction={{ mobile: 'column' }}
+            align={{ desktop: 'center' }}
+            gap='xlarge'
+        >
             <h3>Connect with our Research Team</h3>
             <a
                 className="btn btn-orange"

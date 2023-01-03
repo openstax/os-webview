@@ -48,7 +48,7 @@ export const Publications = ({data: {publicationsHeader, publications}}) => {
 };
 
 export const PublicationItem = ({ publication }) => (
-    <Box direction='column' className='py-2' css={{ lineHeight: 1.8 }}>
+    <Box direction='column' padding={{vertical: 'large'}} css={{ lineHeight: 1.8 }}>
         <div>
             <a className='large-link' href={publication.pdf} target='_blank' rel="noreferrer">
                 {publication.title}
@@ -62,15 +62,15 @@ export const PublicationItem = ({ publication }) => (
         </div>
         <Box gap='xlarge'>
             <a className='text-decoration-none' href={publication.pdf} target='_blank' rel="noreferrer">
-                <Box align='center'>
-                    Pdf&nbsp;
+                <Box align='center' gap>
+                    <span>Pdf</span>
                     <FontAwesomeIcon size='sm' icon={faArrowUpRightFromSquare} />
                 </Box>
             </a>
             {publication.github &&
                 <a className='text-decoration-none' href={publication.github} target='_blank' rel="noreferrer">
-                    <Box align='center'>
-                        Github&nbsp;
+                    <Box align='center' gap>
+                        <span>Github</span>
                         <FontAwesomeIcon size='sm' icon={faArrowUpRightFromSquare} />
                     </Box>
                 </a>}
