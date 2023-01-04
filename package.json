@@ -23,8 +23,8 @@
         "@fortawesome/free-regular-svg-icons": "^6.2.1",
         "@fortawesome/free-solid-svg-icons": "^6.2.1",
         "@fortawesome/react-fontawesome": "^0.2.0",
-        "@sentry/react": "^7.24.2",
-        "@sentry/tracing": "^7.24.2",
+        "@sentry/react": "^7.28.1",
+        "@sentry/tracing": "^7.28.1",
         "babel-loader": "^9.1.0",
         "babel-plugin-formatjs": "^10.3.35",
         "boxible": "^1.7.0",
@@ -36,7 +36,7 @@
         "react-router-dom": "6.4.5"
     },
     "devDependencies": {
-        "@babel/core": "^7.20.5",
+        "@babel/core": "^7.20.7",
         "@babel/eslint-parser": "^7.19.1",
         "@babel/plugin-transform-async-to-generator": "^7.18.6",
         "@babel/plugin-transform-runtime": "^7.19.6",
