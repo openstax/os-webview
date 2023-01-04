@@ -55,7 +55,6 @@ module.exports = {
         'eqeqeq': 'error',
         'global-require': 'error',
         'guard-for-in': 'error',
-        'react/jsx-uses-react': 'error',
         'no-alert': 'error',
         'no-caller': 'error',
         'no-case-declarations': 'error',
@@ -210,6 +209,7 @@ module.exports = {
         'react/jsx-uses-vars': 'error',
         'react/jsx-uses-react': 'error',
         'react/prop-types': 'off',
-        'react/no-children-prop': 'off'
+        'react/no-children-prop': 'off',
+        'react/no-unknown-property': ['error', { 'ignore': ['css'] }]
     }
 };

@@ -15,6 +15,9 @@
     },
     "license": "AGPL-3.0",
     "dependencies": {
+        "@emotion/babel-preset-css-prop": "^11.10.0",
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
         "@fortawesome/fontawesome-svg-core": "^6.2.1",
         "@fortawesome/free-brands-svg-icons": "^6.2.1",
         "@fortawesome/free-regular-svg-icons": "^6.2.1",
@@ -24,6 +27,7 @@
         "@sentry/tracing": "^7.28.1",
         "babel-loader": "^9.1.0",
         "babel-plugin-formatjs": "^10.3.35",
+        "boxible": "^1.7.0",
         "classnames": "^2.3.2",
         "react-accessible-accordion": "^4.0.0",
         "react-intl": "^6.2.5",

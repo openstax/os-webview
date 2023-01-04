@@ -1,16 +1,17 @@
 {
     "presets": [
         [
-            '@babel/preset-env',
+            "@babel/preset-env",
             {
-                targets: [
-                    'last 2 major versions',
-                    'not ie > 0', 'not node > 0', 'not dead',
-                    'iOS > 10'
+                "targets": [
+                    "last 2 major versions",
+                    "not ie > 0", "not node > 0", "not dead",
+                    "iOS > 10"
                 ]
             }
         ],
-        '@babel/preset-react'
+        "@babel/preset-react",
+        "@emotion/babel-preset-css-prop"
     ],
     "env": {
         "development": {
@@ -30,6 +31,7 @@
                 "idInterpolationPattern": "[sha512:contenthash:base64:6]",
                 "ast": true
             }
-        ]
+        ],
+        ["@emotion/babel-plugin"]
     ]
 }
