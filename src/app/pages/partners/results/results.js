@@ -155,6 +155,7 @@ function resultEntry(pd) {
         books: (pd.books||'').split(/;/),
         advancedFeatures: advancedFilterKeys(pd).filter((k) => pd[k] === true),
         website: pd.landing_page,
+        partnerWebsite: pd.partner_website,
         images: [pd.image_1, pd.image_2, pd.image_3, pd.image_4, pd.image_5]
             .filter((img) => Boolean(img)),
         videos: [pd.video_1, pd.video_2]
