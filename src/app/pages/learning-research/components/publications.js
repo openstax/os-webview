@@ -57,7 +57,7 @@ export const PublicationItem = ({ publication }) => (
         <div>
             <span>{publication.date} &middot;&nbsp;</span>
             <span css={{ color: colors.grayText }}>
-                {publication.date} {publication.authors} {publication.excerpt}
+                {publication.authors} {publication.excerpt}
             </span>
         </div>
         <Box gap='xlarge'>

@@ -35,12 +35,12 @@ export const Header = ({data: { missionBody }}) => {
 export const Banner = ({data: {bannerBody, bannerHeader, bannerCTA, bannerURL}}) => {
     if (!bannerBody) {return null;}
     return (
-        <div css={{backgroundColor: colors.lightTeal}}>
-            <Box direction={{mobile: 'column'}} padding={{vertical: 'large'}} gap='medium'>
+        <Section padding={false} css={{backgroundColor: colors.lightTeal}}>
+            <Box align={{mobile: 'center'}} direction={{mobile: 'column'}} padding={{vertical: 'large'}} gap='medium'>
                 <h4 css={{color: colors.blackText, flex: 1}}>
                     {bannerHeader}
                 </h4>
-                <Box align={{mobile: 'center'}} className='justify-content-center' direction='column' flex="4">
+                <Box direction='column' flex={{grow: 3}}>
                     <span>{bannerBody}</span>
                     {(bannerCTA && bannerURL) && <a
                         className='text-decoration-none' href={bannerURL}
@@ -53,7 +53,7 @@ export const Banner = ({data: {bannerBody, bannerHeader, bannerCTA, bannerURL}})
                 </Box>
             </Box>
             <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="separator" />
-        </div>
+        </Section>
     );
 };
 
