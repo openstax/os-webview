@@ -1,5 +1,6 @@
 import React, {lazy, Suspense} from 'react';
 import useFlagContext from '~/components/shell/flag-context';
+import {useLocation} from 'react-router-dom';
 
 function useFeatureFlag() {
     const {new_subjects: flag} = useFlagContext();
@@ -37,10 +38,12 @@ function SelectedComponent({featureFlag}) {
 
 export default function PickVersion() {
     const featureFlag = useFeatureFlag();
+    const {pathname} = useLocation();
+    const override = pathname.includes('-preview');
 
     if (featureFlag === null) {
         return null;
     }
 
-    return (<SelectedComponent featureFlag={featureFlag} />);
+    return (<SelectedComponent featureFlag={featureFlag || override} />);
 }
