@@ -29,7 +29,6 @@ import pressData from '../src/data/press';
 import pressArticleData from '../src/data/press-article';
 import printOrderData from '../src/data/print-order';
 import renewalData from '../src/data/renewal';
-import researchData from '../src/data/research';
 import rolesData from '../src/data/roles';
 import salesforceData from '../src/data/salesforce';
 import salesforcePartnerData from '../src/data/salesforce-partners';
@@ -93,7 +92,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSalesforcePartners = (/salesforce\/partners/).test(args[0]);
 
     return new Promise(
-        function (resolve, reject) {
+        (resolve, reject) => {
             let payload = {};
 
             if (isAdoption) {
@@ -105,9 +104,9 @@ global.fetch = jest.fn().mockImplementation((...args) => {
             } else if (isBlogMoreStories) {
                 payload = blogMoreStories;
             } else if (isBlogPinned) {
-                payload = blogPinned
+                payload = blogPinned;
             } else if (isDonationPopup) {
-                payload = donationPopupData
+                payload = donationPopupData;
             } else if (isErrata) {
                 payload = errataData;
             } else if (isErrataBook) {
@@ -160,8 +159,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = booksForAnalyticsData;
             } else if (isRenewal) {
                 payload = renewalData;
-            } else if (isResearch) {
-                payload = researchData;
             } else if (isRoles) {
                 payload = rolesData;
             } else if (isSchools) {
@@ -200,7 +197,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 json() {
                     return Promise.resolve(payload);
                 }
-            })
+            });
         }
     );
 });
