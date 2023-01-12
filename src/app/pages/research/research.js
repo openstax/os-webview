@@ -32,7 +32,7 @@ function ResearchPage({data}) {
 export default function ResearchLoader() {
     return (
         <main className="research page">
-            <LoaderPage slug="pages/learning-research" Child={ResearchPage} doDocumentSetup />
+            <LoaderPage slug="pages/research" Child={ResearchPage} doDocumentSetup />
         </main>
     );
 }
