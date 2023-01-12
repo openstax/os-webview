@@ -36,12 +36,17 @@ export const Banner = ({data: {bannerBody, bannerHeader, bannerCTA, bannerURL}})
     if (!bannerBody) {return null;}
     return (
         <Section padding={false} css={{backgroundColor: colors.lightTeal}}>
-            <Box align={{mobile: 'center'}} direction={{mobile: 'column'}} padding={{vertical: 'large'}} gap='medium'>
-                <h4 css={{color: colors.blackText, flex: 1}}>
+            <Box
+                align={{mobile: 'center'}}
+                direction={{mobile: 'column'}}
+                padding={{vertical: 'large'}}
+                gap='xlarge'
+            >
+                <h4 css={{color: colors.blackText, flex: 2, [media.desktop]: {maxWidth: 250}}}>
                     {bannerHeader}
                 </h4>
-                <Box direction='column' flex={{grow: 3}}>
-                    <span>{bannerBody}</span>
+                <Box align={{mobile: 'center'}} direction='column' flex={{grow: 6, shrink: 1, basis: '0%'}}>
+                    <span css={{[media.mobile]: {textAlign: 'center'}}}>{bannerBody}</span>
                     {(bannerCTA && bannerURL) && <a
                         className='text-decoration-none' href={bannerURL}
                         target='_blank' rel="noreferrer">
