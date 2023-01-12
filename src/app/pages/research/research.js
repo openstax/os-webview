@@ -9,7 +9,7 @@ import {ContactUs} from '~/pages/research/components/contact-us';
 import {Publications} from '~/pages/research/components/publications';
 import {MembersSection} from '~/pages/research/components/members';
 
-function LearningResearchPage({data}) {
+function ResearchPage({data}) {
     return (
         <React.Fragment>
             <Header data={data} />
@@ -29,10 +29,10 @@ function LearningResearchPage({data}) {
     );
 }
 
-export default function LearningResearchLoader() {
+export default function ResearchLoader() {
     return (
         <main className="research page">
-            <LoaderPage slug="pages/learning-research" Child={LearningResearchPage} doDocumentSetup />
+            <LoaderPage slug="pages/learning-research" Child={ResearchPage} doDocumentSetup />
         </main>
     );
 }
