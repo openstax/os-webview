@@ -1,0 +1,41 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k-12.page .sign-up-form {
+    padding: 7rem $normal-margin;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        max-width: 54rem;
+        width: 100%;
+
+        .name-fields {
+            align-items: flex-end;
+            display: grid;
+            gap: 2rem $normal-margin;
+            grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+        }
+
+        select {
+            appearance: none;
+            border-radius: 0.4rem;
+            font: inherit;
+            padding: 0.8rem 3.2rem 0.8rem $normal-margin;
+        }
+
+        [type="submit"] {
+            @include button();
+            @extend %primary;
+
+            align-self: flex-start;
+            padding: 0 5rem;
+        }
+    }
+
+    .privacy {
+        @include body-font(1.2rem);
+
+        max-width: 40rem;
+    }
+}

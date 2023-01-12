@@ -1,0 +1,32 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k-12.page {
+    background-color: ui-color(white);
+
+    h1,
+    h2,
+    h3 {
+        margin: 0;
+    }
+
+    .testimonial {
+        background-color: os-color(deep-green);
+    }
+
+    .faq {
+        padding: 7rem 0;
+    }
+
+    .footer-banner {
+        height: 40rem;
+        background-size: cover;
+        background-position: center;
+        border-bottom: 1.5rem solid #0d9372;
+        background-image: url("https://images.unsplash.com/photo-1507537509458-b8312d35a233?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
+    }
+
+    .rfi {
+        padding: 7rem 0;
+    }
+
+}

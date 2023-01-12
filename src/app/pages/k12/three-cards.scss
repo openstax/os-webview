@@ -1,0 +1,29 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k-12.page .three-cards {
+    padding: 3rem 0;
+
+    .boxed {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(26rem, 1fr));
+
+        @include scale-feature(gap, 2rem, 5rem);
+    }
+
+    .card {
+        background-color: ui-color(page-bg);
+        border-radius: 2.5rem;
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 5rem auto;
+        padding: 3rem;
+
+        img {
+            max-width: 100%;
+        }
+
+        h2 {
+            @include set-font(h4);
+        }
+    }
+}

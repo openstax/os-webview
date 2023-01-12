@@ -1,0 +1,36 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k-12.page .faq {
+    h1 {
+        @include set-font(h2);
+    }
+
+    .articles {
+        border-top: 0.5rem solid ui-color(form-border);
+        width: 100%;
+
+        .accordion-group {
+            grid-gap: 0;
+        }
+
+        .accordion-item {
+            border: none;
+            border-bottom: thin solid ui-color(form-border);
+
+            .label {
+                @include set-font(h4);
+            }
+
+            .content-pane {
+                padding: 1rem 2rem 2rem;
+            }
+        }
+
+        .accordion-button {
+            border: none;
+            height: auto;
+            padding: 2rem;
+        }
+
+    }
+}
