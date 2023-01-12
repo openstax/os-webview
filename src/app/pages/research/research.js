@@ -1,24 +1,29 @@
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import React from 'react';
 import LazyLoad from 'react-lazyload';
-import HeroSection from './hero-section/hero-section';
-import ProjectsSection from './projects-section/projects-section';
-import PeopleSection from './people-section/people-section';
-import PublicationsSection from './publications-section/publications-section';
-import './research.scss';
+import '~/pages/research/research.scss';
+import {Banner, Header} from '~/pages/research/components/header';
+import {ResearchSection} from '~/pages/research/components/research-areas';
+import {Funders} from '~/pages/research/components/funders';
+import {ContactUs} from '~/pages/research/components/contact-us';
+import {Publications} from '~/pages/research/components/publications';
+import {MembersSection} from '~/pages/research/components/members';
 
 function ResearchPage({data}) {
     return (
         <React.Fragment>
-            <HeroSection data={data} />
+            <Header data={data} />
+            <Banner data={data} />
+            <ResearchSection data={data} />
             <LazyLoad>
-                <ProjectsSection data={data} />
+                <Publications data={data} />
             </LazyLoad>
             <LazyLoad>
-                <PeopleSection data={data} />
+                <MembersSection data={data} />
             </LazyLoad>
             <LazyLoad>
-                <PublicationsSection data={data} />
+                <Funders />
+                <ContactUs />
             </LazyLoad>
         </React.Fragment>
     );

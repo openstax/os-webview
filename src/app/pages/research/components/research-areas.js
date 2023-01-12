@@ -1,9 +1,9 @@
 import React from 'react';
 import {Box} from 'boxible';
 import styled from '@emotion/styled';
-import {Section} from '~/pages/learning-research/components/section';
-import {colors, media} from '~/pages/learning-research/theme';
-import {TabAccordionCombo} from '~/pages/learning-research/components/tab-accordion-combo';
+import {Section} from '~/pages/research/components/section';
+import {colors, media} from '~/pages/research/theme';
+import {TabAccordionCombo} from '~/pages/research/components/tab-accordion-combo';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 
 export const ResearchSection = ({data: {researchAreasList, researchAreaHeader, researchAreaDescriptionMobile}}) => {

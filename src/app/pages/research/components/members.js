@@ -1,9 +1,9 @@
 import React, {useRef, useState} from 'react';
 import {Box} from 'boxible';
 import styled from '@emotion/styled';
-import {colors, media} from '~/pages/learning-research/theme';
-import {Section} from '~/pages/learning-research/components/section';
-import {TabAccordionCombo} from '~/pages/learning-research/components/tab-accordion-combo';
+import {colors, media} from '~/pages/research/theme';
+import {Section} from '~/pages/research/components/section';
+import {TabAccordionCombo} from '~/pages/research/components/tab-accordion-combo';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';

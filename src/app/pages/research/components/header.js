@@ -2,7 +2,7 @@ import React from 'react';
 import {colors, media} from '../theme';
 import styled from '@emotion/styled';
 import {Box} from 'boxible';
-import {Section} from '~/pages/learning-research/components/section';
+import {Section} from '~/pages/research/components/section';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowUpRightFromSquare} from '@fortawesome/free-solid-svg-icons/faArrowUpRightFromSquare';
 
