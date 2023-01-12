@@ -1,13 +1,13 @@
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import React from 'react';
 import LazyLoad from 'react-lazyload';
-import '~/pages/learning-research/research.scss';
-import {Banner, Header} from '~/pages/learning-research/components/header';
-import {ResearchSection} from '~/pages/learning-research/components/research-areas';
-import {Funders} from '~/pages/learning-research/components/funders';
-import {ContactUs} from '~/pages/learning-research/components/contact-us';
-import {Publications} from '~/pages/learning-research/components/publications';
-import {MembersSection} from '~/pages/learning-research/components/members';
+import '~/pages/research/research.scss';
+import {Banner, Header} from '~/pages/research/components/header';
+import {ResearchSection} from '~/pages/research/components/research-areas';
+import {Funders} from '~/pages/research/components/funders';
+import {ContactUs} from '~/pages/research/components/contact-us';
+import {Publications} from '~/pages/research/components/publications';
+import {MembersSection} from '~/pages/research/components/members';
 
 function LearningResearchPage({data}) {
     return (

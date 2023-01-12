@@ -1,8 +1,8 @@
 import React from 'react';
 import {Box} from 'boxible';
 import styled from '@emotion/styled';
-import {colors} from '~/pages/learning-research/theme';
-import {Section} from '~/pages/learning-research/components/section';
+import {colors} from '~/pages/research/theme';
+import {Section} from '~/pages/research/components/section';
 
 const Supporter = styled.a({
     display: 'flex',
