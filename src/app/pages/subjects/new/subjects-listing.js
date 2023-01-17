@@ -3,17 +3,21 @@ import useSubjectsContext from './context';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
+import {useLocation} from 'react-router-dom';
 import './subjects-listing.scss';
 
 function CategoryLink({subject, category}) {
+    const {pathname} = useLocation();
+
     return (
-        <a href={`/subjects/${subject}#${category}`}>{category}</a>
+        <a href={`${pathname}/${subject}#${category}`}>{category}</a>
     );
 }
 
 function BookList({name, data}) {
     const categories = useSubjectCategoryContext();
     const subdir = categories.find((c) => c.html === name)?.value;
+    const {pathname} = useLocation();
 
     if (data.categories.length === 0) {
         return null;
@@ -27,7 +31,7 @@ function BookList({name, data}) {
             {data.categories.map((c) => <CategoryLink key={c} subject={subdir} category={c} />)}
             {
                 data.categories.length > 1 ?
-                    <a href={`/subjects/${subdir}/`} className="all-link">
+                    <a href={`${pathname}/${subdir}`} className="all-link">
                         {`View all ${name} books `}
                         <FontAwesomeIcon icon={faArrowRight} />
                     </a> : null
