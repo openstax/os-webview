@@ -145,7 +145,7 @@ export const Member = ({ member, displayName }) => {
             >
                 {displayName}
             </span>
-            <small>{member.title}</small>
+            <small css={{textAlign: 'center'}}>{member.title}</small>
             <MemberModal member={member} isOpen={show} onHide={() => setShow(false)} />
         </Box>
     );
