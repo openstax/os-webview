@@ -1,0 +1,86 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../shared/faq-section';
+
+.k12-subject.page .books {
+    @include scale-feature(padding-top, 4rem, 7rem);
+    @include scale-feature(padding-bottom, 4rem, 7rem);
+
+    .boxed {
+        row-gap: 5rem;
+    }
+
+    .overview {
+        .text-content {
+            row-gap: 1.5rem;
+        }
+
+        h1 {
+            @include set-font(h2);
+
+            margin: 0;
+        }
+    }
+
+    .book-viewer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+        margin: $normal-margin 0;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            grid-gap: 1rem;
+        }
+
+        @include wider-than($phone-max) {
+            grid-gap: 4rem 2rem;
+        }
+    }
+
+    .book-tile {
+        background-color: ui-color(white);
+        border-radius: 0.5rem;
+        box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+
+        img {
+            max-width: 100%;
+        }
+
+        .text-block {
+            padding: 1rem;
+
+            a {
+                @include set-font(helper-label);
+
+                font-weight: bold;
+                text-decoration: none;
+            }
+        }
+    }
+    
+    .about-the-books {
+        @include faq-section();
+
+        max-width: 80rem;
+    }
+
+    .resource-link {
+        text-transform: uppercase;
+    }
+    .adoption-box {
+        background-color: rgb(219, 243, 248);
+        border-radius: 1.5rem;
+        max-width: 80rem;
+        padding: 5rem;
+        row-gap: 2rem;
+
+        h2 {
+            @include title-font(1.8rem);
+        }
+    }
+
+
+    .btn {
+        @include button();
+        @extend %primary;
+    }
+}

@@ -1,0 +1,61 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k12-subject.page .resources {
+    padding: 6rem $normal-margin;
+
+    h1 {
+        @include set-font(h2);
+
+        margin: 0;
+    }
+
+    .tab-group .tab {
+        @include set-font(body-large);
+    }
+
+    .tab-heading,
+    .content-group {
+        width: 100%;
+    }
+
+    .content-group {
+        padding: 6rem 0;
+
+        .card-grid:not([hidden]) {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
+            gap: $normal-margin;
+            width: 100%;
+        }
+    }
+
+    .card {
+        @include card();
+
+        padding: 2rem;
+
+        .top {
+            align-items: center;
+            display: flex;
+            gap: 0.5rem;
+            padding-bottom: 2rem;
+            border-bottom: thin solid text-color(normal);
+
+            img {
+                height: 5rem;
+                width: 5rem;
+            }
+        }
+
+        h3 {
+            @include set-font(h4);
+
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 2rem 0;
+        }
+    }
+}

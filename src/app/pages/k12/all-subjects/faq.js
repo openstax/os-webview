@@ -1,5 +1,5 @@
 import React from 'react';
-import AccordionGroup from '~/components/accordion-group/accordion-group';
+import FAQSection from '../shared/faq-section';
 import './faq.scss';
 
 const data = [
@@ -29,12 +29,7 @@ export default function FAQ() {
 
     return (
         <section className="faq">
-            <div className='boxed'>
-                <h1>Frequently Asked Questions</h1>
-                <div className="articles">
-                    <AccordionGroup items={accordionItems} noScroll />
-                </div>
-            </div>
+            <FAQSection heading="Frequently Asked Questions" items={accordionItems} />
         </section>
     );
 }

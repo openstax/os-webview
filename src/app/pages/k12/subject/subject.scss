@@ -1,0 +1,52 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k12-subject.page {
+    background-color: ui-color(white);
+
+    .quick-links {
+        background-color: os-color(blue);
+        color: text-color(white);
+        text-transform: uppercase;
+        padding-top: 3.2rem;
+        padding-bottom: 3.2rem;
+
+        .boxed {
+            flex-direction: row;
+            gap: 3rem;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .items {
+            a {
+                padding: 0.5rem 2rem 0.2rem;
+            }
+
+            :not(:first-child) {
+                border-left: thin solid text-color(white);
+            }
+        }
+    }
+
+    .what-teachers-say {
+        background-color: #e9f1f7;
+        padding: 7rem $normal-margin;
+
+        .boxed {
+            align-items: center;
+            display: grid;
+            gap: 2rem 4rem;
+            grid-template-columns: 2fr 3fr;
+
+            h2 {
+                margin: 0;
+            }
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: 100%;
+            }
+        }
+    }
+}

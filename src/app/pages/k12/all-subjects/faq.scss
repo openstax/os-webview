@@ -1,0 +1,6 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../shared/faq-section';
+
+.k12.page .faq {
+    @include faq-section();
+}

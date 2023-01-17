@@ -1,8 +1,12 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.k-12.page .faq {
+@mixin faq-section() {
+    width: 100%;
+
     h1 {
         @include set-font(h2);
+
+        margin: 0;
     }
 
     .articles {
