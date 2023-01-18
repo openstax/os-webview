@@ -15,6 +15,8 @@ function Footer({
         facebookLink, twitterLink, linkedinLink
     }
 }) {
+    const updatedCopyright = copyright.replace(/-\d+/, `-${new Date().getFullYear()}`);
+
     return (
         <React.Fragment>
             <CookieDialog />
@@ -48,7 +50,7 @@ function Footer({
             <div className="bottom">
                 <div className="boxed">
                     <div className="copyrights">
-                        <RawHTML html={copyright} />
+                        <RawHTML html={updatedCopyright} />
                         <RawHTML Tag="ap-html" html={apStatement} />
                     </div>
                     <div className="social" role="directory">
