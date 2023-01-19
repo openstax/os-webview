@@ -8,7 +8,7 @@ import MobileContent from './content-mobile';
 import './takeover-dialog.scss';
 
 function goalHasPassed(data) {
-    if (data.messageType !== 'goal') {
+    if (!data.goalTime) {
         return false;
     }
     const goalTimeMs = new Date(data.goalTime).getTime();
