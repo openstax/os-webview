@@ -1,5 +1,5 @@
 import React from 'react';
-import useDocumentHead from '~/helpers/use-document-head';
+import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useTextFromSlug} from '~/helpers/page-data-utils';
 import useRouterContext from '~/components/shell/router-context';
@@ -51,8 +51,11 @@ export function GeneralPageFromSlug({slug, fallback}) {
 }
 
 export default function GeneralPageLoader() {
-    const location = useLocation();
-    const slug = location.pathname.substr(1).replace('general', 'spike');
+    const {pathname} = useLocation();
+    const slug = pathname.substr(1).replace('general', 'spike');
+    const canonicalPath = pathname.replace(/.*\//, '/');
+
+    useCanonicalLink(true, canonicalPath);
 
     return (
         <GeneralPageFromSlug slug={slug} />
