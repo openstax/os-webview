@@ -32,6 +32,7 @@ function GeneralPage({html}) {
 export function GeneralPageFromSlug({slug, fallback}) {
     const {head, text: html} = useTextFromSlug(slug);
     const {fail} = useRouterContext();
+    const canonicalPath = slug.replace(/.*\//, '/');
 
     if (html instanceof Error) {
         fallback ? fallback() : fail(`Could not load general page from ${slug}`);
@@ -43,6 +44,8 @@ export function GeneralPageFromSlug({slug, fallback}) {
         noindex: true
     });
 
+    useCanonicalLink(true, canonicalPath);
+
     return (
         <main>
             {html ? <GeneralPage html={html} /> : <h1>Loading...</h1>}
@@ -53,9 +56,6 @@ export function GeneralPageFromSlug({slug, fallback}) {
 export default function GeneralPageLoader() {
     const {pathname} = useLocation();
     const slug = pathname.substr(1).replace('general', 'spike');
-    const canonicalPath = pathname.replace(/.*\//, '/');
-
-    useCanonicalLink(true, canonicalPath);
 
     return (
         <GeneralPageFromSlug slug={slug} />
