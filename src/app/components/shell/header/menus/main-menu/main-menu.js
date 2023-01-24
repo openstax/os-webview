@@ -35,15 +35,45 @@ function MenusFromStructure({structure}) {
     );
 }
 
+function useKineticEnabled() {
+    const [kineticEnabled, setKineticEnabled] = React.useState(false);
+
+    React.useEffect(
+        () => {
+            fetch('https://kinetic.openstax.org/api/v1/eligibility')
+                .then(
+                    (response) => response.json()
+                ).then(
+                    (response) => setKineticEnabled(response.eligible)
+                );
+        },
+        []
+    );
+
+    return kineticEnabled;
+}
+
 function MenusFromCMS() {
     const structure = useDataFromSlug('oxmenus');
+    const kineticEnabled = useKineticEnabled();
+    const filteredStructure = React.useMemo(
+        () => structure?.map(
+            (entry) => ({
+                label: entry.label,
+                items: kineticEnabled ? entry.items : entry.items.filter(
+                    (i) => !(/kinetic/i).test(i.label)
+                )
+            })
+        ),
+        [kineticEnabled, structure]
+    );
 
     if (!structure) {
         return null;
     }
 
     return (
-        <MenusFromStructure structure={structure} />
+        <MenusFromStructure structure={filteredStructure} />
     );
 }
 
