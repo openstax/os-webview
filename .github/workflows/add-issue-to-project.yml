@@ -11,5 +11,5 @@ jobs:
     steps:
       - uses: actions/add-to-project@v0.4.0
         with:
-          project-url: https://github.com/orgs/openstax/projects/18
+          project-url: https://github.com/orgs/openstax/projects/14
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
