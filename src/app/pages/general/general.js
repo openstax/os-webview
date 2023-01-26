@@ -1,5 +1,5 @@
 import React from 'react';
-import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
+import useDocumentHead, {useCanonicalLink, useNoIndex} from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useTextFromSlug} from '~/helpers/page-data-utils';
 import useRouterContext from '~/components/shell/router-context';
@@ -33,6 +33,7 @@ export function GeneralPageFromSlug({slug, fallback}) {
     const {head, text: html} = useTextFromSlug(slug);
     const {fail} = useRouterContext();
     const canonicalPath = slug.replace(/.*\//, '/');
+    const putCanonicalLinkInPage = slug.includes('kinetic');
 
     if (html instanceof Error) {
         fallback ? fallback() : fail(`Could not load general page from ${slug}`);
@@ -44,7 +45,8 @@ export function GeneralPageFromSlug({slug, fallback}) {
         noindex: true
     });
 
-    useCanonicalLink(true, canonicalPath);
+    useCanonicalLink(putCanonicalLinkInPage, canonicalPath);
+    useNoIndex(!putCanonicalLinkInPage);
 
     return (
         <main>

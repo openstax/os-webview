@@ -15,6 +15,19 @@ function setCanonicalPath(newPath) {
     return el;
 }
 
+function noindexMeta() {
+    const el = document.createElement('meta');
+    const titleEl = document.querySelector('head title');
+
+    if (titleEl) {
+        el.setAttribute('name', 'robots');
+        el.setAttribute('content', 'noindex');
+        titleEl.parentNode.insertBefore(el, titleEl.nextSibling);
+    }
+
+    return el;
+}
+
 export function useCanonicalLink(controlsHeader=true, path=window.location.pathname) {
     useEffect(() => {
         if (!controlsHeader) {
@@ -24,6 +37,20 @@ export function useCanonicalLink(controlsHeader=true, path=window.location.pathn
 
         return () => linkController.remove();
     }, [controlsHeader, path]);
+}
+
+export function useNoIndex(controlsHeader) {
+    useEffect(
+        () => {
+            if (controlsHeader) {
+                const el = noindexMeta();
+
+                return () => el.remove();
+            }
+            return null;
+        },
+        [controlsHeader]
+    );
 }
 
 export function setPageDescription(description) {
