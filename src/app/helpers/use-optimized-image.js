@@ -6,7 +6,8 @@ export default function useOptimizedImage(src, maxDim) {
     const originalDomain = url.hostname;
     const originalPath = url.pathname;
     const format = (/\.(jpg|png)$/).test(src) ? 'webp' : 'orig';
-    const directives = `f=${format},w=${maxDim},h=${maxDim}`;
+    const dims = maxDim ? `,w=${maxDim},h=${maxDim}` : '';
+    const directives = `f=${format}${dims}`;
 
     return `${distributionUrl}/apps/image-cdn/${version}/${originalDomain}/${directives}${originalPath}`;
 }

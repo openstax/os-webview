@@ -82,13 +82,9 @@ $offset-bottom-section: 12rem;
     .cards {
         display: grid;
         grid-gap: 2rem;
-        grid-template-columns: repeat(4, 26rem);
+        grid-template-columns: repeat(auto-fill, minmax(26rem, 1fr));
         overflow-x: auto;
         padding: 0 0 2rem;
-
-        @include width-between($phone-max, $tablet-max) {
-            grid-template-columns: 26rem 26rem;
-        }
 
         .card {
             @extend %card;
