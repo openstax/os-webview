@@ -2,6 +2,7 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import useUserContext from '~/contexts/user';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './banner.scss';
 
 function NotLoggedInButtons({data}) {
@@ -24,10 +25,11 @@ function LoggedInButtons({data}) {
 export default function Banner({data}) {
     const userModel = useUserContext();
     const Buttons = userModel?.accountId ? LoggedInButtons : NotLoggedInButtons;
+    const leftImage = useOptimizedImage(data.leftImage, 570);
 
     return (
         <section className="banner">
-            <img className="left-bg" src={data.leftImage} alt />
+            <img className="left-bg" src={leftImage} alt />
             <div className="boxed">
                 <div className="text-block">
                     <h1>{data.headline}</h1>

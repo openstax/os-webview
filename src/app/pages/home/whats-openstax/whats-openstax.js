@@ -1,12 +1,15 @@
 import React from 'react';
 import ClippedImage from '~/components/clipped-image/clipped-image';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './whats-openstax.scss';
 
 export default function WhatsOpenStax({data}) {
+    const image = useOptimizedImage(data.image, 960);
+
     return (
         <section className="whats-openstax">
             <div className="half-boxed">
-                <ClippedImage src={data.image} alt="" />
+                <ClippedImage src={image} alt="" />
                 <div className="text-block">
                     <h2>{data.headline}</h2>
                     <div>{data.description}</div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import JITLoad from '~/helpers/jit-load';
 import useGiveToday from '~/models/give-today';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './upper-menu.scss';
 
 const menuStructure = {
@@ -35,6 +36,7 @@ const importGiveButton = () => import('../give-button/give-button');
 
 export default function UpperMenu() {
     const {showButton} = useGiveToday();
+    const riceLogo = useOptimizedImage('https://openstax.org/dist/images/rice.webp', 80);
 
     return (
         <div className="container">
@@ -44,7 +46,7 @@ export default function UpperMenu() {
                 )
             }
             <a className="logo rice-logo logo-wrapper" href="http://www.rice.edu">
-                <img src="/dist/images/rice.webp" alt="Rice University logo" height="30" width="79" />
+                <img src={riceLogo} alt="Rice University logo" height="30" width="79" />
             </a>
             {showButton ? <JITLoad importFn={importGiveButton} /> : null}
         </div>
