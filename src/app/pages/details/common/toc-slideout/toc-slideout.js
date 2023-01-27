@@ -4,7 +4,7 @@ import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 
 export default function TOCSlideout({html}) {
-    const {toggle} = useTOCContext();
+    const {isOpen, toggle} = useTOCContext();
 
     return (
         <div className="toc-slideout">
@@ -19,7 +19,7 @@ export default function TOCSlideout({html}) {
             </div>
             <div className="toc-slideout-contents">
                 <div className="toc-drawer">
-                    <RawHTML html={html} className="table-of-contents" />
+                    {isOpen && <RawHTML html={html} className="table-of-contents" />}
                 </div>
             </div>
             <div className="bottom-padding"></div>
