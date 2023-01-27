@@ -1,5 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './quotes.scss';
 
 function Quote({className, quote, attribution}) {
@@ -15,6 +16,8 @@ function Quote({className, quote, attribution}) {
 
 export default function QuotesSection({data}) {
     const quotes = data.quotes[0];
+    const studentImage = useOptimizedImage(data.studentImage, 600);
+    const instructorImage = useOptimizedImage(data.instructorImage, 700);
 
     return (
         <section className="quotes">
@@ -22,8 +25,8 @@ export default function QuotesSection({data}) {
                 <h2>{data.headline}</h2>
             </div>
             <div className="images">
-                <img className="left-bg" src={data.studentImage} alt width="400" height="400" />
-                <img className="right-bg" src={data.instructorImage} alt width="400" height="400" />
+                <img className="left-bg" src={studentImage} alt width="500" height="500" />
+                <img className="right-bg" src={instructorImage} alt width="600" height="600" />
             </div>
             <div className="boxed">
                 <div className="side-by-side">

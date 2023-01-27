@@ -2,6 +2,7 @@ import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import LazyLoad from 'react-lazyload';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './about.scss';
 
 const slug = 'pages/about';
@@ -18,9 +19,11 @@ function translateCard(c) {
 }
 
 function Card({link, image, text}) {
+    const optimizedImage = useOptimizedImage(image);
+
     return (
         <a className="card" href={link}>
-            <img src={image} role="presentation" />
+            <img src={optimizedImage} role="presentation" />
             <div className="content">
                 {text}
             </div>
@@ -38,6 +41,8 @@ function About({data: {
         [whatCards]
     );
     const mapAlt = whereMapAlt || 'animated map suggesting where our books are being adopted';
+    const maxDim = window.innerWidth < 1920 ? 1015 : null;
+    const optimizedWhoImage = useOptimizedImage(whoImageUrl, maxDim);
 
     return (
         <main className="about page">
@@ -48,7 +53,7 @@ function About({data: {
                         <RawHTML html={whoParagraph} />
                     </div>
                 </div>
-                <img src={whoImageUrl} role="presentation" />
+                <img src={optimizedWhoImage} role="presentation" />
             </section>
             <LazyLoad>
                 <section className="what">

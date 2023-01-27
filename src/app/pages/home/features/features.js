@@ -1,6 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './features.scss';
 
 function RadioItem({item, selectedItem, changeItem}) {
@@ -39,10 +40,11 @@ export default function Features({data}) {
     const [featureList, exploreLink] = selectedItem === data.tab1Heading ?
         [data.tab1Features, data.tab1ExploreUrl] :
         [data.tab2Features, data.tab2ExploreUrl];
+    const bgImage = useOptimizedImage(data.bgImage, 570);
 
     return (
         <section className="features">
-            <img className="right-bg" src={data.bgImage} alt />
+            <img className="right-bg" src={bgImage} alt />
             <div className="boxed text-block">
                 <h2>{data.headline}</h2>
                 <RadioGroup
