@@ -1,8 +1,10 @@
 import React, {useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 import useTOCContext, {TOCContextProvider} from './common/toc-slideout/context';
 import TOCSlideout from './common/toc-slideout/toc-slideout';
 import $ from '~/helpers/$';
 import analytics from '~/helpers/analytics';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import cn from 'classnames';
 import PhoneView from './phone-view/phone-view';
 import DesktopView from './desktop-view/desktop-view';
@@ -149,7 +151,7 @@ export function BookDetails() {
     );
 
     return (
-        <React.Fragment>
+        <main className="details-page">
             <div className={cn('hero', {'reverse-gradient': reverseGradient})}>
                 <div className="content book-title">
                     {titleImage && <TitleImage {...{titleImage, bookTitle, titleLogo}} />}
@@ -169,16 +171,40 @@ export function BookDetails() {
                     </WindowContextProvider>
                 </TocSlideoutAndContent>
             </TOCContextProvider>
-        </React.Fragment>
+        </main>
+    );
+}
+
+function getSlugFromLocation(pathname) {
+    const bookTitle = pathname.replace(/.*details\//, '');
+    let slug;
+
+    if ((/^books/).test(bookTitle)) {
+        slug = bookTitle;
+    } else {
+        slug = `books/${bookTitle}`;
+    }
+    // Special handling for books whose slugs have changed
+    if ((/university-physics$/).test(slug)) {
+        slug += '-volume-1';
+    }
+
+    return slug;
+}
+
+function BookDetailsWithContext({data}) {
+    return (
+        <DetailsContextProvider contextValueParameters={{data}}>
+            <BookDetails />
+        </DetailsContextProvider>
     );
 }
 
 export default function BookDetailsLoader() {
+    const {pathname} = useLocation();
+    const slug = getSlugFromLocation(pathname);
+
     return (
-        <main className="details-page">
-            <DetailsContextProvider>
-                <BookDetails />
-            </DetailsContextProvider>
-        </main>
+        <LoaderPage slug={slug} Child={BookDetailsWithContext} doDocumentSetup />
     );
 }
