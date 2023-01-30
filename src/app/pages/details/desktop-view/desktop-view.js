@@ -8,8 +8,13 @@ import {GiveLink} from '../common/common';
 import {useNavigate} from 'react-router-dom';
 import $ from '~/helpers/$';
 import JITLoad from '~/helpers/jit-load';
+import useWindowContext from '~/contexts/window';
 import {findSelectedTab, replaceSearchTerm} from '../common/tab-utils';
 import './desktop-view.scss';
+
+const importDetailsTab = () => import('./details-tab/details-tab.js');
+const importInstructorTab = () => import('./instructor-resource-tab/instructor-resource-tab.js');
+const importStudentTab = () => import('./student-resource-tab/student-resource-tab.js');
 
 // eslint-disable-next-line complexity
 function useLabelsFromModel(model, polish) {
@@ -56,10 +61,6 @@ function useSelectedLabelTiedToSearchString(labels) {
     return [selectedLabel, updateSelectedLabel];
 }
 
-const importDetailsTab = () => import('./details-tab/details-tab.js');
-const importInstructorTab = () => import('./instructor-resource-tab/instructor-resource-tab.js');
-const importStudentTab = () => import('./student-resource-tab/student-resource-tab.js');
-
 function StubUntilSeen({active, ...JLParams}) {
     const [seen, setSeen] = useState(false);
 
@@ -84,10 +85,27 @@ export default function DesktopView({onContentChange}) {
     const [selectedLabel, setSelectedLabel] = useSelectedLabelTiedToSearchString(labels);
     const TabTag = 'h2';
     const activeIndex = labels.indexOf(selectedLabel);
+    const {innerWidth} = useWindowContext();
+    const [onlyBeenPhone, setOnlyBeenPhone] = React.useState(true);
 
     useEffect(() => {
         onContentChange(selectedLabel !== 'Book details');
     }, [selectedLabel, onContentChange]);
+
+    // Don't render until the window isn't just phone-width.
+    // But after you render, don't throw it away.
+    React.useEffect(
+        () => {
+            if (innerWidth > 600) {
+                setOnlyBeenPhone(false);
+            }
+        },
+        [innerWidth]
+    );
+
+    if (onlyBeenPhone) {
+        return null;
+    }
 
     return (
         <React.Fragment>
