@@ -61,10 +61,6 @@ function useSelectedLabelTiedToSearchString(labels) {
     return [selectedLabel, updateSelectedLabel];
 }
 
-const importDetailsTab = () => import('./details-tab/details-tab.js');
-const importInstructorTab = () => import('./instructor-resource-tab/instructor-resource-tab.js');
-const importStudentTab = () => import('./student-resource-tab/student-resource-tab.js');
-
 function StubUntilSeen({active, ...JLParams}) {
     const [seen, setSeen] = useState(false);
 
