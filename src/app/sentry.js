@@ -41,6 +41,7 @@ const ignoreMessages = [
     'Failed to read the \'localStorage\' property from \'Window\'',
     'b is not a function.',
     'evaluating \'e.default\'',
+    'IDBFactory.open() called',
     'Failed to load Google Analytics',
     'operation was aborted',
     'Object Not Found Matching Id',
