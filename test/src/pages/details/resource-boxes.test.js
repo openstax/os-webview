@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import BookDetailsContext from './book-details-context';
+import BookDetailsLoader from './book-details-context';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/common/resource-box/resource-box';
 
@@ -24,10 +24,11 @@ const payload = {
 }
 
 function LangWrapResourceBoxes({models}) {
+    console.info('*** MODELS', models);
     return (
-        <BookDetailsContext>
+        <BookDetailsLoader slug={'books/college-algebra'}>
             <ResourceBoxes models={models} />
-        </BookDetailsContext>
+        </BookDetailsLoader>
     )
 }
 
