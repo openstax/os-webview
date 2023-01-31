@@ -24,7 +24,9 @@
         grid-template-columns: 4rem 1fr;
         gap: 2rem;
 
-        img {
+        [role="img"] {
+            color: os-color(yellow);
+            height: 4rem;
             margin-top: 0.5rem;
             width: 4rem;
         }

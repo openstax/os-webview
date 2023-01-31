@@ -2,54 +2,8 @@ import React from 'react';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faRightLong} from '@fortawesome/free-solid-svg-icons/faRightLong';
+import uniq from 'lodash/uniq';
 import './subjects.scss';
-
-const radioItems = [
-    {value: '', html: 'All'},
-    {value: 'math', html: 'Math'},
-    {value: 'science', html: 'Science'},
-    {value: 'social-studies', html: 'Social Studies'},
-    {value: 'career', html: 'Career &amp; College Readiness'}
-];
-
-const matchingSubcats = [
-    {
-        name: 'Algebra',
-        link: '',
-        image: 'https://images.unsplash.com/photo-1509228468518-180dd4864904',
-        color: 'light-blue'
-    },
-    {
-        name: 'Algebra2',
-        link: '',
-        image: 'https://images.unsplash.com/photo-1509228468518-180dd4864904',
-        color: 'orange'
-    },
-    {
-        name: 'Algebra3',
-        link: '',
-        image: 'https://images.unsplash.com/photo-1509228468518-180dd4864904',
-        color: 'green'
-    },
-    {
-        name: 'Algebra4',
-        link: '',
-        image: 'https://images.unsplash.com/photo-1509228468518-180dd4864904',
-        color: 'yellow'
-    },
-    {
-        name: 'Algebra5',
-        link: '',
-        image: 'https://images.unsplash.com/photo-1509228468518-180dd4864904',
-        color: 'blue'
-    },
-    {
-        name: 'Algebra6',
-        link: '',
-        image: 'https://images.unsplash.com/photo-1509228468518-180dd4864904',
-        color: 'gray'
-    }
-];
 
 function Card({data}) {
     const style = {backgroundImage: `url(${data.image})`};
@@ -58,7 +12,7 @@ function Card({data}) {
         <div className={`card ${data.color}`}>
             <div className="picture-stripe" style={style} />
             <div className="name-stripe">
-                {data.name}
+                {data.title}
             </div>
             <a className="link-stripe" href={data.link}>
                 <FontAwesomeIcon icon={faRightLong} />
@@ -67,23 +21,54 @@ function Card({data}) {
     );
 }
 
-function BookCardsGrid() {
+function BookCardsGrid({data}) {
     return (
         <div className="book-cards-grid">
             {
-                matchingSubcats.map((b) => <Card key={b.name} data={b} />)
+                data.map((b) => <Card key={b.title} data={b} />)
             }
         </div>
     );
 }
 
-function FilteringGrid() {
-    const [selectedFilter, setselectedFilter] = React.useState(radioItems[0].value);
-    const onChange = React.useCallback(
-        (newlySelectedValue) => {
-            setselectedFilter(newlySelectedValue);
-        },
-        []
+function FilteringGrid({data}) {
+    const k12titles = React.useMemo(
+        () => Reflect.ownKeys(data).map(
+            (k) => ({
+                title: k,
+                ...data[k]
+            })
+        ),
+        [data]
+    );
+    const k12cats = React.useMemo(
+        () => uniq(k12titles.map((item) => item.subjectCategory)),
+        [k12titles]
+    );
+    const radioItems = React.useMemo(
+        () => [
+            {value: '', html: 'All'},
+            ...(
+                k12cats
+                    .map(
+                        (cat) => ({
+                            value: cat,
+                            html: cat
+                        })
+                    )
+            )
+        ],
+        [k12cats]
+    );
+    const [selectedFilter, setSelectedFilter] = React.useState(radioItems[0].value);
+    const matchingTitles = React.useMemo(
+        () => selectedFilter === '' ?
+            k12titles :
+            k12titles.filter(
+                (t) => t.subjectCategory === selectedFilter
+            )
+        ,
+        [selectedFilter, k12titles]
     );
 
     return (
@@ -91,33 +76,25 @@ function FilteringGrid() {
             <RadioPanel
                 items={radioItems}
                 selectedItem={selectedFilter}
-                onChange={onChange}
+                onChange={setSelectedFilter}
             />
-            <BookCardsGrid />
+            <BookCardsGrid data={matchingTitles} />
         </div>
     );
 }
 
-export default function Subjects() {
-    const heading = 'Find your subject';
-    const text = `
-        Adopting an OpenStax textbook for your high school class is simple and
-        stress-free. Our peer-reviewed textbooks cover a wide range of disciplines,
-        from biology to psychology to sociology. Find your subject below to uncover
-        all that OpenStax has to offer.
-    `;
-
+export default function Subjects({data}) {
     return (
         <section className="subjects">
             <div className="header boxed">
                 <div className="content">
                     <div className="text-content">
-                        <h1>{heading}</h1>
-                        <p>{text}</p>
+                        <h1>{data.subjectLibraryHeader}</h1>
+                        <p>{data.subjectLibraryDescription}</p>
                     </div>
                 </div>
             </div>
-            <FilteringGrid />
+            <FilteringGrid data={data.k12library} />
         </section>
     );
 }

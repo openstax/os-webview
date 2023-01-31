@@ -61,7 +61,7 @@
                 background-position: center;
             }
 
-            $colors: light-blue, orange, green, yellow, blue, gray;
+            $colors: light-blue, orange, green, yellow, blue, gray, green, light-gray, red, deep-green, gold, medium-blue;
 
             @each $name in $colors {
                 &.#{$name} {
@@ -69,7 +69,8 @@
                         color: os-color($name);
                     }
 
-                    .link-stripe {
+                    .link-stripe,
+                    .picture-stripe {
                         background-color: os-color($name);
                     }
                 }

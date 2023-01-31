@@ -1,56 +1,18 @@
 import React from 'react';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import './testimonial.scss';
 
-const cmsData = {
-    heading: 'What our teachers are saying',
-    description: `
-    At OpenStax, we have been dedicated to improving access to high-quality education
-    for over a decade now. Our high school materials are no exception – we work closely
-    with high school teachers to ensure our resources meet their needs and the needs of
-    their students.
-    `,
-    quotes: [
-        {
-            quote: `[It's] wonderful to have high-quality resources that may be used
-            with students and no budget impact`,
-            attribution1: 'High School Teacher',
-            attribution2: 'Verified OpenStax User',
-            imgSrc: 'https://images.unsplash.com/photo-1564325724739-bae0bd08762c'
-        },
-        {
-            quote: `Your product is amazing. It rivals any textbook out there. More
-            and more of my colleagues are dropping their PAID FOR texts and heading
-            your way.`,
-            attribution1: 'High School Teacher',
-            attribution2: 'Verified OpenStax User',
-            imgSrc: 'https://images.unsplash.com/photo-1562884328-39da45501a9c'
-        },
-        {
-            quote: `I am deeply grateful as a teacher in an urban setting that we can
-            access valuable, current, and expert curriculum without cost for our students.`,
-            attribution1: 'High School Teacher',
-            attribution2: 'Verified OpenStax User',
-            imgSrc: 'https://images.unsplash.com/photo-1562884328-39da45501a9c'
-        },
-        {
-            quote: `Thank you for making this free!! So much better than out-of-date hard
-            copy textbooks!`,
-            attribution1: 'High School Teacher',
-            attribution2: 'Verified OpenStax User',
-            imgSrc: 'https://images.unsplash.com/photo-1630286643448-ca2f23679a35'
-        }
-    ]
-};
-
 function QuoteCard({data, selected}) {
+    const [attribution1, attribution2] = data.author.split(',');
+
     return (
         <div className="card" aria-hidden={!selected}>
-            <div className="quote">&ldquo;{data.quote}&rdquo;</div>
-            <img src={data.imgSrc} />
+            <RawHTML className="quote" html={data.testimonial} />
+            <img src={data.authorIcon.file} />
             <div className="attribution">
-                <div><strong>{data.attribution1}</strong></div>
-                <div>{data.attribution2}</div>
+                <div><strong>{attribution1}</strong></div>
+                <div>{attribution2}</div>
             </div>
         </div>
     );
@@ -117,19 +79,17 @@ function QuoteCarousel({data}) {
     );
 }
 
-export default function Testimonial() {
-    const data = cmsData;
-
+export default function Testimonial({data}) {
     return (
         <section className="testimonial">
             <div className="bg-image-top-left" />
             <div className="bg-image-bottom-right" />
             <div className="text-content">
-                <h1>{data.heading}</h1>
-                <p>{data.description}</p>
+                <h1>{data.testimonialsHeader}</h1>
+                <p>{data.testimonialsDescription}</p>
             </div>
             <WindowContextProvider>
-                <QuoteCarousel data={data.quotes} />
+                <QuoteCarousel data={data.testimonials} />
             </WindowContextProvider>
         </section>
     );

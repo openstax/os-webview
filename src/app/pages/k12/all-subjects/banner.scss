@@ -2,6 +2,7 @@
 
 .k12.page .banner {
     border-bottom: 0.5rem solid ui-color(page-bg);
+    margin-bottom: 1rem;
     position: relative;
 
     .boxed {
@@ -42,6 +43,7 @@
     .right-bg {
         background-position: left bottom;
         background-repeat: no-repeat;
+        background-size: contain;
         height: 116%;
         position: absolute;
         right: 0;

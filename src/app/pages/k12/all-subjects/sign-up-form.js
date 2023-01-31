@@ -2,18 +2,20 @@ import React from 'react';
 import ContactForm from '../shared/contact-form';
 import './sign-up-form.scss';
 
-const data = {
-    heading: 'Stay in touch',
-    description: `Sign up for our email newsletter to keep current with the latest
-    news, textbooks, resources, and blogs.`
-};
+export default function SignUpForm({data}) {
+    const bannerStyle = React.useMemo(
+        () => ({backgroundImage: `url(${data.rfiImage.meta.downloadUrl})`}),
+        [data]
+    );
 
-export default function SignUpForm() {
     return (
-        <section className="sign-up-form boxed">
-            <h1>{data.heading}</h1>
-            <div>{data.description}</div>
-            <ContactForm />
+        <section className="sign-up-form">
+            <div className="banner" style={bannerStyle} />
+            <div className="boxed">
+                <h1>{data.rfiHeader}</h1>
+                <div>{data.rfiDescription}</div>
+                <ContactForm />
+            </div>
         </section>
     );
 }
