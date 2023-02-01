@@ -5,7 +5,7 @@ import './features.scss';
 function Card({data: {icon, title, description}}) {
     return (
         <div className="card">
-            <img src={icon.file} alt={icon.title} />
+            <img src={icon.file} alt={icon.title} width="50" height="50" />
             <div>
                 <h2>{title}</h2>
                 <RawHTML html={description} />
@@ -16,7 +16,7 @@ function Card({data: {icon, title, description}}) {
 
 export default function Features({data}) {
     return (
-        <section className="three-cards">
+        <section className="features">
             <div className="boxed">
                 {
                     data.featuresCards.map((d) => <Card key={d.head} data={d} />)

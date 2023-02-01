@@ -9,7 +9,7 @@ function QuoteCard({data, selected}) {
     return (
         <div className="card" aria-hidden={!selected}>
             <RawHTML className="quote" html={data.testimonial} />
-            <img src={data.authorIcon.file} />
+            <img src={data.authorIcon.file} height="50" width="50" />
             <div className="attribution">
                 <div><strong>{attribution1}</strong></div>
                 <div>{attribution2}</div>

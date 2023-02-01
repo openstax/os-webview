@@ -2,22 +2,24 @@ import React from 'react';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faRightLong} from '@fortawesome/free-solid-svg-icons/faRightLong';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import uniq from 'lodash/uniq';
 import './subjects.scss';
 
 function Card({data}) {
-    const style = {backgroundImage: `url(${data.image})`};
+    const optimizedImage = useOptimizedImage(data.image, 600);
+    const style = {backgroundImage: `url(${optimizedImage})`};
 
     return (
-        <div className={`card ${data.color}`}>
+        <a href={data.link} className={`card ${data.color}`}>
             <div className="picture-stripe" style={style} />
             <div className="name-stripe">
                 {data.title}
             </div>
-            <a className="link-stripe" href={data.link}>
+            <div className="link-stripe" >
                 <FontAwesomeIcon icon={faRightLong} />
-            </a>
-        </div>
+            </div>
+        </a>
     );
 }
 

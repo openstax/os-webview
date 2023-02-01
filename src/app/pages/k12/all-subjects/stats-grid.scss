@@ -2,7 +2,8 @@
 
 
 .k12.page .stats-grid {
-    padding: 6rem 0;
+    @include scale-feature(padding-top, 2rem, 6rem);
+    @include scale-feature(padding-bottom, 2rem, 6rem);
 
     .boxed {
         display: grid;

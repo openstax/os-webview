@@ -13,17 +13,20 @@
         position: absolute;
         width: 40%;
         height: 50%;
-        background-size: 110%;
+        background-repeat: no-repeat;
+        background-size: calc(27rem + 55%);
     }
 
     .bg-image-top-left {
         left: 0;
         top: 0;
+        background-position: top left;
     }
 
     .bg-image-bottom-right {
         bottom: 0;
         right: 0;
+        background-position: bottom right;
     }
 
     h1 {

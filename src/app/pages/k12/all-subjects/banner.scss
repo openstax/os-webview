@@ -16,6 +16,10 @@
             max-width: 57rem;
             row-gap: 3rem;
             width: 50%;
+
+            @include width-up-to($phone-max) {
+                width: auto;
+            }
         }
 
         select.classic {
@@ -49,6 +53,13 @@
         right: 0;
         top: -2rem;
         width: 50%;
+
+        @include width-up-to($phone-max) {
+            position: relative;
+            height: calc(15rem + 20vw);
+            margin-top: -4rem;
+            width: auto;
+        }
     }
 }
 

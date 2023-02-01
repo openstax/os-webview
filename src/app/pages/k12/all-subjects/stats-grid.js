@@ -2,6 +2,7 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons/faCheckCircle';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './stats-grid.scss';
 
 function StatsChecklistItem({heading, text}) {
@@ -16,13 +17,24 @@ function StatsChecklistItem({heading, text}) {
     );
 }
 
-function StatsCard({boldStatText: line1, normalStatText: line2, imgSrc}) {
-    const style = imgSrc ? {backgroundImage: `url(${imgSrc})`} : null;
+function PictureCard({imgSrc}) {
+    const optimizedUrl = useOptimizedImage(imgSrc, 400);
+    const style = {backgroundImage: `url(${optimizedUrl})`};
 
     return (
-        <div className="card" style={style}>
-            {line1 ? <strong>{line1}</strong> : null}
-            {line2 ? <div>{line2}</div> : null}
+        <div className="card" style={style} />
+    );
+}
+
+function StatsCard({boldStatText: line1, normalStatText: line2, imgSrc}) {
+    if (imgSrc) {
+        return (<PictureCard imgSrc={imgSrc} />);
+    }
+
+    return (
+        <div className="card">
+            <strong>{line1}</strong>
+            <div>{line2}</div>
         </div>
     );
 }
