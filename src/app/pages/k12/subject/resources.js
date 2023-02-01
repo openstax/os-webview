@@ -3,104 +3,81 @@ import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
 import './resources.scss';
 
-const data = {
-    heading: 'Supplemental resources',
-    tabs: [
-        {
-            heading: 'Teacher resources',
-            resources: [
-                {
-                    iconUrl: '',
-                    heading: 'Question Bank',
-                    links: [
-                        {
-                            url: '',
-                            text: 'Concepts of Bio'
-                        },
-                        {
-                            url: '',
-                            text: 'Microbiology'
-                        }
-                    ]
-                },
-                {
-                    iconUrl: '',
-                    heading: 'Instructor Solutions Manual',
-                    links: [
-                        {
-                            url: '',
-                            text: 'Biology 2e'
-                        },
-                        {
-                            url: '',
-                            text: 'AP Biology'
-                        },
-                        {
-                            url: '',
-                            text: 'Concepts of Biology'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            heading: 'Student resources',
-            resources: [
-                {
-                    iconUrl: '',
-                    heading: 'Studenty Things',
-                    links: [
-                        {
-                            url: '',
-                            text: 'AP Biology'
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-};
+function ResourceLink({data}) {
+    const url = data.linkExternal || data.linkDocumentUrl;
 
-function ResourceToContent({resources}) {
-    return (<div className="card-grid">
-        {
-            resources.map(
-                (d) => <div key={d.heading} className="card">
-                    <div className="top">
-                        <img src={d.iconUrl} alt="" />
-                        <h3>{d.heading}</h3>
-                    </div>
-                    <ul>
-                        {
-                            d.links.map(
-                                (link) => <li key={link.text}><a href={link.url}>{link.text}</a></li>
-                            )
-                        }
-                    </ul>
-                </div>
-            )
-        }
-    </div>);
+    return (
+        <li>
+            <a href={url}>{data.book}</a>
+        </li>
+    );
 }
 
-export default function Resources() {
-    const labels = data.tabs.map((d) => d.heading);
+function ResourceToContent({resources}) {
+    return (
+        <div className="card-grid">
+            {
+
+                Reflect.ownKeys(resources)?.map(
+                    (name) => {
+                        const resourceList = resources[name];
+
+
+                        return (
+                            <div key={name} className="card">
+                                <div className="top">
+                                    <img src={resourceList[0].icon} alt="" />
+                                    <h3>{name}</h3>
+                                </div>
+                                <ul>
+                                    {resourceList.map((r) => <ResourceLink key={r.book} data={r} />)}
+                                </ul>
+                            </div>
+                        );
+                    }
+                )
+            }
+        </div>
+    );
+}
+
+// Resource headers have one entry for each heading/book combo
+// Need to group them by heading`
+function resourceHeadersToResources(resourceHeaders) {
+    return resourceHeaders.reduce(
+        (a, b) => {
+            if (!(b.heading in a)) {
+                a[b.heading] = [];
+            }
+            a[b.heading].push(b);
+            return a;
+        },
+        {}
+    );
+}
+
+// const fields = ['instructorResources', 'studentResources'];
+
+export default function Resources({data}) {
+    const labels = ['Instructor resources', 'Student resources'];
     const [selectedLabel, setSelectedLabel] = React.useState(labels[0]);
-    const resourceTabContents = React.useMemo(
-        () => data.tabs.map(
-            (tabData) => <ResourceToContent key={tabData.heading} resources={tabData.resources} />
-        ),
-        []
+    const studentResources = React.useMemo(
+        () => resourceHeadersToResources(data.studentResourceHeaders),
+        [data]
+    );
+    const instructorResources = React.useMemo(
+        () => resourceHeadersToResources(data.facultyResourceHeaders),
+        [data]
     );
 
-    console.info('RTC', resourceTabContents);
     return (
-        <section className="resources">
+        <section id="resources">
             <div className="boxed">
-                <h1>{data.heading}</h1>
+                <h1>{data.resourcesHeading}</h1>
                 <TabGroup {...{labels, selectedLabel, setSelectedLabel}} />
                 <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
-                    {resourceTabContents}
+                    <ResourceToContent resources={instructorResources} />
+                    <ResourceToContent resources={studentResources} />
                 </ContentGroup>
             </div>
         </section>

@@ -10,6 +10,8 @@
     }
 
     .overview {
+        width: 100%;
+
         .text-content {
             row-gap: 1.5rem;
         }
@@ -22,8 +24,8 @@
     }
 
     .book-viewer {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+        display: flex;
+        justify-content: center;
         margin: $normal-margin 0;
         width: 100%;
 

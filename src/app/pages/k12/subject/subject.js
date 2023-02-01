@@ -4,13 +4,10 @@ import Books from './books';
 import Resources from './resources';
 import Blogs from './blogs';
 import Contact from './contact';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
+import {useLocation} from 'react-router-dom';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import './subject.scss';
-
-const data = {
-    testimonial2Header: 'What our teachers say',
-    testimonial2Quote: `It's wonderful to have high-quality resources that may
-    be used with students and no budget impact.`
-};
 
 function QuickLinks() {
     return (
@@ -28,31 +25,38 @@ function QuickLinks() {
     );
 }
 
-function WhatTeachersSay() {
+function WhatTeachersSay({data}) {
     return (
         <section className="what-teachers-say">
             <div className="boxed">
                 <div className="left_col">
-                    <h2>{data.testimonial2Header}</h2>
+                    <h2>{data.quoteHeading}</h2>
                 </div>
-                <div className="right_col">
-                    &ldquo;{data.testimonial2Quote}&rdquo;
-                </div>
+                <RawHTML className="right_col" html={data.quoteText} />
             </div>
         </section>
     );
 }
 
-export default function Subject() {
+function Subject({data}) {
     return (
         <div className="k12-subject page">
-            <Banner />
+            <Banner data={data} />
             <QuickLinks />
-            <Books />
-            <WhatTeachersSay />
-            <Resources />
-            <Blogs />
-            <Contact />
+            <Books data={data} />
+            <WhatTeachersSay data={data} />
+            <Resources data={data} />
+            <Blogs data={data} />
+            <Contact data={data} />
         </div>
+    );
+}
+
+export default function LoadSubject() {
+    const {pathname} = useLocation();
+    const slug = `pages${pathname.replace('k12/', 'k12-')}`;
+
+    return (
+        <LoaderPage slug={slug} Child={Subject} doDocumentSetup />
     );
 }

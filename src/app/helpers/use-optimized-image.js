@@ -2,6 +2,9 @@ const distributionUrl = 'https://images.openstax.org';
 const version = 'v1';
 
 export default function useOptimizedImage(src, maxDim) {
+    if (!src) {
+        return src;
+    }
     const url = new window.URL(src);
     const originalDomain = url.hostname;
     const originalPath = url.pathname;

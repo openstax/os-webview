@@ -4,15 +4,13 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import './testimonial.scss';
 
 function QuoteCard({data, selected}) {
-    const [attribution1, attribution2] = data.author.split(',');
-
     return (
         <div className="card" aria-hidden={!selected}>
             <RawHTML className="quote" html={data.testimonial} />
             <img src={data.authorIcon.file} height="50" width="50" />
             <div className="attribution">
-                <div><strong>{attribution1}</strong></div>
-                <div>{attribution2}</div>
+                <div><strong>{data.authorName}</strong></div>
+                <div>{data.authorTitle}</div>
             </div>
         </div>
     );
@@ -29,26 +27,29 @@ function CarouselButton({item, selectedItem, setSelectedItem}) {
     );
 }
 
+function useStyle(el, selectedItem, innerWidth) {
+    if (!el || selectedItem < 0 || innerWidth < 100) { // need to use innerWidth somehow...
+        return null;
+    }
+    const {left: rowLeft} = el.getBoundingClientRect();
+    const card = el.querySelectorAll('.card')[selectedItem];
+
+    if (!card) {
+        return null;
+    }
+    const {left: cLeft, right: cRight} = card.getBoundingClientRect();
+    const mid = (cRight + cLeft) / 2 - rowLeft;
+
+    return ({
+        left: `calc(50% - ${mid}px)`
+    });
+}
+
 function QuoteCarousel({data}) {
     const [selectedItem, setSelectedItem] = React.useState(-1);
     const ref = React.useRef();
     const {innerWidth} = useWindowContext();
-    const style = React.useMemo(
-        () => {
-            if (selectedItem < 0 || innerWidth < 100) { // need to use innerWidth somehow...
-                return null;
-            }
-            const {left: rowLeft} = ref.current.getBoundingClientRect();
-            const card = ref.current.querySelectorAll('.card')[selectedItem];
-            const {left: cLeft, right: cRight} = card.getBoundingClientRect();
-            const mid = (cRight + cLeft) / 2 - rowLeft;
-
-            return ({
-                left: `calc(50% - ${mid}px)`
-            });
-        },
-        [selectedItem, innerWidth]
-    );
+    const style = useStyle(ref.current, selectedItem, innerWidth);
 
     React.useLayoutEffect(() => setSelectedItem(0), []);
 
