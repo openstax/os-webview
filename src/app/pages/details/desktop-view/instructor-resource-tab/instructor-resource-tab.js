@@ -10,7 +10,6 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {usePartnerFeatures} from '../../common/hooks';
 import useUserContext from '~/contexts/user';
 import useDetailsContext from '~/pages/details/context';
-import useWindowContext from '~/contexts/window';
 import './instructor-resource-tab.scss';
 
 function FreeStuff({freeStuffContent, userStatus}) {
@@ -125,27 +124,6 @@ function InstructorResourceTab({model, userStatus}) {
     );
 }
 
-function StubUnlessDisplayed({model, userStatus}) {
-    const ref = React.useRef();
-    const [y, setY] = React.useState(null);
-    const {innerWidth} = useWindowContext();
-
-    React.useLayoutEffect(
-        () => setY(ref.current?.getBoundingClientRect().y),
-        [innerWidth]
-    );
-
-    return (
-        <div className="instructor-resources" ref={ref}>
-            {
-                y ?
-                    <InstructorResourceTab model={model} userStatus={userStatus} /> :
-                    null
-            }
-        </div>
-    );
-}
-
 export default function LoadUserStatusThenInstructorTab({model}) {
     const {userStatus} = useUserContext();
 
@@ -153,6 +131,8 @@ export default function LoadUserStatusThenInstructorTab({model}) {
         return null;
     }
     return (
-        <StubUnlessDisplayed model={model} userStatus={userStatus} />
+        <div className="instructor-resources">
+            <InstructorResourceTab model={model} userStatus={userStatus} /> :
+        </div>
     );
 }

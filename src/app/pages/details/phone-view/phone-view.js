@@ -4,14 +4,17 @@ import GetThisTitle from '../common/get-this-title';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import useDetailsContext from '../context';
 import $ from '~/helpers/$';
+import JITLoad from '~/helpers/jit-load';
 import {findSelectedTab} from '../common/tab-utils';
-import DetailsPane from './details-pane/details-pane';
-import InstructorResourcesPane from './instructor-resources-pane/instructor-resources-pane';
-import StudentResourcesPane from './student-resources-pane/student-resources-pane';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useTableOfContents} from '../common/hooks';
 import {ErrataContents, GiveLink} from '../common/common';
+import useWindowContext from '~/contexts/window';
 import './phone-view.scss';
+
+const importDetailsPane = () => import('./details-pane/details-pane.js');
+const importInstructorPane = () => import('./instructor-resources-pane/instructor-resources-pane.js');
+const importStudentPane = () => import('./student-resources-pane/student-resources-pane.js');
 
 function TocPane({model}) {
     const tocHtml = useTableOfContents(model);
@@ -37,23 +40,23 @@ function items(model) {
         [
             {
                 title: 'Szczegóły książki',
-                contentComponent: <DetailsPane model={model} polish={polish} />
+                contentComponent: <JITLoad importFn={importDetailsPane} model={model} polish={polish} />
             }
         ] :
         [
             {
                 title: 'Book details',
-                contentComponent: <DetailsPane model={model} polish={polish} />
+                contentComponent: <JITLoad importFn={importDetailsPane} model={model} polish={polish} />
             },
             {
                 title: 'Instructor resources',
                 titleTag: 'updated',
-                contentComponent: <InstructorResourcesPane model={model} />
+                contentComponent: <JITLoad importFn={importInstructorPane} model={model} />
             },
             {
                 title: 'Student resources',
                 openTitle: `Student resources (${model.bookStudentResources.length})`,
-                contentComponent: <StudentResourcesPane model={model} />
+                contentComponent: <JITLoad importFn={importStudentPane} model={model} />
             }
         ];
 
@@ -81,6 +84,21 @@ export default function PhoneView() {
     const model = useDetailsContext();
     const accordionItems = items(model);
     const selectedTab = findSelectedTab(accordionItems.map((i) => i.title));
+    const {innerWidth} = useWindowContext();
+    const [onlyBeenDesktop, setOnlyBeenDesktop] = React.useState(true);
+
+    React.useEffect(
+        () => {
+            if (innerWidth <= 600) {
+                setOnlyBeenDesktop(false);
+            }
+        },
+        [innerWidth]
+    );
+
+    if (onlyBeenDesktop) {
+        return null;
+    }
 
     return (
         <div className="detail-phone-view">

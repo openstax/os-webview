@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GetThisTitle from '~/pages/details/common/get-this-title';
 import {TOCContextProvider} from '~/pages/details/common/toc-slideout/context';
-import BookDetailsContext from '../book-details-context';
+import BookDetailsLoader from '../book-details-context';
 // College algebra book details
 import details from '../../../data/details-college-algebra';
 import {transformData, camelCaseKeys} from '~/helpers/page-data-utils';
@@ -12,11 +12,11 @@ const model = camelCaseKeys(transformData(details));
 
 function GTTinContext() {
     return (
-        <BookDetailsContext>
+        <BookDetailsLoader slug={'books/college-algebra'}>
             <TOCContextProvider>
                 <GetThisTitle model={model} />
             </TOCContextProvider>
-        </BookDetailsContext>
+        </BookDetailsLoader>
     );
 }
 

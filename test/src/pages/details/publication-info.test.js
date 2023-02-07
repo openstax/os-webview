@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import useDetailsContext from '~/pages/details/context';
 import PublicationInfo from '~/pages/details/common/publication-info';
-import BookDetailsContext from './book-details-context';
+import BookDetailsLoader from './book-details-context';
 
 function WrappedPublicationInfo({additionalItems={}}) {
     const model = {...useDetailsContext(), ...additionalItems};
@@ -13,7 +13,11 @@ function WrappedPublicationInfo({additionalItems={}}) {
 }
 
 test('Shows publication dates', async () => {
-    render(<BookDetailsContext><WrappedPublicationInfo /></BookDetailsContext>);
+    render(
+        <BookDetailsLoader slug="books/college-algebra">
+            <WrappedPublicationInfo />
+        </BookDetailsLoader>
+    );
     await screen.findByText('Publish Date:');
     expect(screen.getByText('Hardcover:'));
     expect(screen.getByText('Paperback:'));
@@ -27,9 +31,9 @@ test('Shows iBooks publication dates when present', async () => {
     };
 
     render(
-        <BookDetailsContext>
+        <BookDetailsLoader slug="books/college-algebra">
             <WrappedPublicationInfo additionalItems={additionalItems} />
-        </BookDetailsContext>
+        </BookDetailsLoader>
     );
     await screen.findByText('Publish Date:');
     expect(screen.queryAllByText('iBooks', {exact: false})).toHaveLength(2);
