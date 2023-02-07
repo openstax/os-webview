@@ -1,16 +1,20 @@
 import React from 'react';
-import {MemoryRouter} from 'react-router-dom';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
 import ShellContextProvider from '../../../helpers/shell-context';
 import {DetailsContextProvider} from '~/pages/details/context';
 
-export default function BookDetailsContextProvider({children}) {
+function BookDetailsWithContext({data, children}) {
     return (
         <ShellContextProvider>
-            <MemoryRouter initialEntries={["/details/books/college-algebra"]}>
-                <DetailsContextProvider>
-                    {children}
-                </DetailsContextProvider>
-            </MemoryRouter>
+            <DetailsContextProvider contextValueParameters={{data}}>
+                {children}
+            </DetailsContextProvider>
         </ShellContextProvider>
+    );
+}
+
+export default function BookDetailsLoader({slug, children}) {
+    return (
+        <LoaderPage slug={slug} Child={BookDetailsWithContext} doDocumentSetup props={{children}} />
     );
 }

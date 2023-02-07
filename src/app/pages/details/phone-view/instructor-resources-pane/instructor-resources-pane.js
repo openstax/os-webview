@@ -66,8 +66,8 @@ function StubUnlessDisplayed({model, userStatus}) {
     const {innerWidth, scrollY} = useWindowContext();
 
     React.useEffect(
-        () => setY(ref.current?.getBoundingClientRect().y),
-        [innerWidth, scrollY]
+        () => setY(y || ref.current?.getBoundingClientRect().y),
+        [innerWidth, scrollY, y]
     );
 
     return (

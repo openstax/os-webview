@@ -1,5 +1,5 @@
 import React from 'react';
-import BookDetailsContextProvider from './book-details-context';
+import BookDetailsLoader from './book-details-context';
 import LetUsKnow from '~/pages/details/common/let-us-know/let-us-know';
 import {render, screen} from '@testing-library/preact';
 
@@ -8,17 +8,17 @@ const polishTitle = 'Fizyka dla szkół wyższych. Tom 1';
 
 test('handles English title', async () => {
     render(
-        <BookDetailsContextProvider>
+        <BookDetailsLoader slug={'books/college-algebra'}>
             <LetUsKnow title={englishTitle} />
-        </BookDetailsContextProvider>
+        </BookDetailsLoader>
     );
     await screen.findByText('Using this book? Let us know.');
 });
 test('handles Polish title', async () => {
     render(
-        <BookDetailsContextProvider>
+        <BookDetailsLoader slug={'books/college-algebra'}>
             <LetUsKnow title={polishTitle} />
-        </BookDetailsContextProvider>
+        </BookDetailsLoader>
     );
     await screen.findByText('Korzystasz z tej książki? Daj nam znać.');
 });
