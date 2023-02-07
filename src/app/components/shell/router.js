@@ -226,6 +226,10 @@ function MainRoutes() {
             <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
             <Route path="/campaign/*" element={<ImportedPage name="campaign" />} />
             <Route path="/press/*" element={<ImportedPage name="press" />} />
+            <Route
+                path="/edtech-partner-program"
+                element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
+            />
             <Route path="/:name" element={<TopLevelPage />} />
             <Route element={<h1>Fell through</h1>} />
         </Routes>
