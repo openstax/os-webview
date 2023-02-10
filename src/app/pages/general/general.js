@@ -29,11 +29,15 @@ function GeneralPage({html}) {
     );
 }
 
+function isCanonical(slug) {
+    return slug.includes('kinetic') || slug.endsWith('partner-program');
+}
+
 export function GeneralPageFromSlug({slug, fallback}) {
     const {head, text: html} = useTextFromSlug(slug);
     const {fail} = useRouterContext();
     const canonicalPath = slug.replace(/.*\//, '/');
-    const putCanonicalLinkInPage = slug.includes('kinetic');
+    const putCanonicalLinkInPage = isCanonical(slug);
 
     if (html instanceof Error) {
         fallback ? fallback() : fail(`Could not load general page from ${slug}`);
