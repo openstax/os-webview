@@ -4,14 +4,17 @@ import useSubjectsContext, {SubjectsContextProvider} from './context';
 import {htmlToText} from '~/helpers/data';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import Hero from './hero';
-import LanguageSelectorSection from './language-selector-section';
-import SubjectsListing from './subjects-listing';
-import TutorAd from './tutor-ad';
+import JITLoad from '~/helpers/jit-load';
 import {AllSubjectsAboutOpenStax} from './about-openstax';
-import InfoBoxes from './info-boxes';
-import PhilanthropicSupport from './philanthropic-support';
 import LoadSubject from './specific/specific';
 import './subjects.scss';
+
+const importLanguageSelector = () => import('./language-selector-section.js');
+const importSubjectsListing = () => import('./subjects-listing.js');
+const importTutorAd = () => import('./tutor-ad.js');
+const importInfoBoxes = () => import('./info-boxes.js');
+const importPhilanthropicSupport = () => import('./philanthropic-support.js');
+
 
 function SEOSetup() {
     const {title, pageDescription} = useSubjectsContext();
@@ -37,12 +40,12 @@ export function SubjectsPage() {
             <SEOSetup />
             <Hero />
             <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="separator" />
-            <LanguageSelectorSection otherLocales={otherLocales} />
-            <SubjectsListing />
-            <TutorAd />
+            <JITLoad importFn={importLanguageSelector} otherLocales={otherLocales} />
+            <JITLoad importFn={importSubjectsListing} />
+            <JITLoad importFn={importTutorAd} />
             <AllSubjectsAboutOpenStax />
-            <InfoBoxes />
-            <PhilanthropicSupport />
+            <JITLoad importFn={importInfoBoxes} />
+            <JITLoad importFn={importPhilanthropicSupport} />
         </main>
     );
 }

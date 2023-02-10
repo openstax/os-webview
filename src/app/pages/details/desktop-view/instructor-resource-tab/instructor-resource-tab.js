@@ -132,7 +132,7 @@ export default function LoadUserStatusThenInstructorTab({model}) {
     }
     return (
         <div className="instructor-resources">
-            <InstructorResourceTab model={model} userStatus={userStatus} /> :
+            <InstructorResourceTab model={model} userStatus={userStatus} />
         </div>
     );
 }

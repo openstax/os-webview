@@ -2,14 +2,16 @@ import React from 'react';
 import CarouselSection from './components/carousel-section';
 import useSpecificSubjectContext from './context';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './blog-posts.scss';
 
 function Card({article_image: image, title: linkText, slug}) {
     const link = `/blog/${slug}`;
+    const optimizedImage = useOptimizedImage(image, 400);
 
     return (
         <div className="card">
-            <img src={image} role="presentation" />
+            <img src={optimizedImage} role="presentation" />
             <a href={link}>{linkText}</a>
         </div>
     );
