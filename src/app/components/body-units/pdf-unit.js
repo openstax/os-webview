@@ -6,6 +6,7 @@ import {faMaximize} from '@fortawesome/free-solid-svg-icons/faMaximize';
 import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 import {useRefreshable} from '~/helpers/data';
 import cn from 'classnames';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 import './pdf-unit.scss';
 
 function PageControls({pageNumber, setPageNumber, lastPage}) {
