@@ -13,6 +13,6 @@ test('main subjects page', async () => {
         </ShellContextProvider>
     );
     await screen.findByText('Browse our subjects');
-    screen.getByText('We have textbooks in', {exact: false});
+    await screen.findByText('We have textbooks in', {exact: false});
     screen.getByText('View all Business books');
 });
