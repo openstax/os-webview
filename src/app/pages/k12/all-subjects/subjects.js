@@ -9,9 +9,10 @@ import './subjects.scss';
 function Card({data}) {
     const optimizedImage = useOptimizedImage(data.image, 600);
     const style = {backgroundImage: `url(${optimizedImage})`};
+    const fixedLink = data.link.replace(/^\/*/, '/'); // ensure one leading slash
 
     return (
-        <a href={data.link} className={`card ${data.color}`}>
+        <a href={fixedLink} className={`card ${data.color}`}>
             <div className="picture-stripe" style={style} />
             <div className="name-stripe">
                 {data.title}

@@ -6,7 +6,7 @@ import './banner.scss';
 export default function Banner({data}) {
     const bannerImgUrl = useOptimizedImage(data.subjectImage, 600);
     const bgStyle = React.useMemo(
-        () => ({style: `url(${bannerImgUrl})`}),
+        () => ({backgroundImage: `url(${bannerImgUrl})`}),
         [bannerImgUrl]
     );
 
