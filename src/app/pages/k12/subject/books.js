@@ -22,7 +22,7 @@ function Overview({data}) {
 
 function AboutTheBooks({data}) {
     const items = data.books.map(
-        (d) => ({title: d.title, contentComponent: <RawHTML html={d.description} />})
+        (book) => ({title: book.title, contentComponent: <RawHTML html={book.description} />})
     );
 
     return (
