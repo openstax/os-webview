@@ -1,0 +1,101 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k12.page .subjects {
+    padding: 3rem $normal-margin;
+
+    .header {
+        background-color: ui-color(page-bg);
+        border-radius: 5rem;
+        overflow: hidden;
+        padding: 0;
+        width: 100%;
+
+        .content {
+            border-top: 2rem solid os-color(orange);
+            padding: 7rem $normal-margin;
+            text-align: center;
+            width: 100%;
+
+            h1 {
+                @include set-font(h2);
+            }
+        }
+    }
+
+    .filter-buttons {
+        background-color: transparent;
+        border: none;
+        margin: 3rem 0;
+
+        [role="radio"] {
+            border: none;
+            font-weight: bold;
+            text-transform: uppercase;
+    
+            &[aria-checked="true"] {
+                background-color: inherit;
+                color: os-color(orange);
+                text-decoration: underline;
+            }
+
+            &:hover {
+                background-color: inherit;
+            }
+        }
+    }
+
+
+    .book-cards-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+        width: 100%;
+
+        .card {
+            border-radius: 2rem;
+            overflow: hidden;
+            text-decoration: none;
+
+            .picture-stripe {
+                height: 9rem;
+                background-size: cover;
+                background-position: center;
+            }
+
+            $colors: light-blue, orange, green, yellow, blue, gray, green, light-gray, red, deep-green, gold, medium-blue;
+
+            @each $name in $colors {
+                &.#{$name} {
+                    .name-stripe {
+                        color: os-color($name);
+                    }
+
+                    .link-stripe,
+                    .picture-stripe {
+                        background-color: os-color($name);
+                    }
+                }
+            }
+
+            .name-stripe {
+                align-items: center;
+                background-color: ui-color(page-bg);
+                display: flex;
+                font-weight: bold;
+                min-height: 11rem;
+                padding: 2rem;
+                text-transform: uppercase;
+            }
+
+            .link-stripe {
+                align-items: center;
+                color: text-color(white);
+                display: flex;
+                height: 3rem;
+                justify-content: flex-end;
+                padding-right: 2rem;
+                width: 100%;
+            }
+        }
+    }
+}

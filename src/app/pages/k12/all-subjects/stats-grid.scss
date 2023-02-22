@@ -1,0 +1,82 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+
+.k12.page .stats-grid {
+    @include scale-feature(padding-top, 2rem, 6rem);
+    @include scale-feature(padding-bottom, 2rem, 6rem);
+
+    .boxed {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
+        gap: 3rem;
+
+        @include width-up-to(#{43rem * $scale-factor}) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    h3 {
+        margin-bottom: 3rem;
+    }
+
+    .checklist {
+        align-items: start;
+        display: grid;
+        grid-template-columns: 4rem 1fr;
+        gap: 2rem;
+
+        [role="img"] {
+            color: os-color(yellow);
+            height: 4rem;
+            margin-top: 0.5rem;
+            width: 4rem;
+        }
+    }
+
+    .card-grid {
+        display: grid;
+        font-weight: bold;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        height: 100%;
+        max-width: 100%;
+        text-transform: uppercase;
+
+        @include width-up-to(25em) {
+            grid-template-columns: 1fr;
+        }
+
+        @include width-up-to($phone-max) {
+            gap: $normal-margin;
+        }
+
+        .card {
+            align-items: center;
+            background-position: center;
+            background-size: cover;
+            color: text-color(white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 11rem;
+            padding: 3rem;
+
+            @include scale-feature(border-radius, 1.8rem, 2.5rem);
+
+            &:nth-of-type(1) {
+                background-color: os-color(red);
+            }
+            &:nth-of-type(4) {
+                background-color: os-color(orange);
+            }
+            &:nth-of-type(5) {
+                background-color: os-color(light-blue);
+            }
+        }
+
+        strong {
+            font-size: 4rem;
+            margin-bottom: 0.7rem;
+        }
+    }
+}

@@ -221,6 +221,7 @@ function MainRoutes() {
             <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
             <Route path="/subjects/*" element={<ImportedPage name="subjects" />} />
             <Route path="/subjects-preview/*" element={<ImportedPage name="subjects" />} />
+            <Route path="/k12/*" element={<ImportedPage name="k12" />} />
             <Route path="/blog/*" element={<ImportedPage name="blog" />} />
             <Route path="/general/*" element={<ImportedPage name="general" />} />
             <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />

@@ -1,4 +1,5 @@
 import React, {Suspense} from 'react';
+import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 
 export default function JITLoad({importFn, ...componentParams}) {
     const Component = React.useMemo(
@@ -7,7 +8,7 @@ export default function JITLoad({importFn, ...componentParams}) {
     );
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingPlaceholder />}>
             <Component {...componentParams} />
         </Suspense>
     );

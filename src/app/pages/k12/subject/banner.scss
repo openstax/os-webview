@@ -1,0 +1,41 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k12-subject.page .banner {
+    .boxed {
+        align-items: center;
+        display: grid;
+        gap: 4rem 8%;
+        grid-template-columns: 1fr 1fr;
+        padding-bottom: 11rem;
+        padding-top: 6rem;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+
+        .text-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+
+            .category,
+            h1 {
+                text-transform: uppercase;
+            }
+
+            h1 {
+                margin: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .right-bg {
+            background-position: center;
+            background-size: cover;
+            border-radius: 7rem;
+            min-height: 40rem;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}

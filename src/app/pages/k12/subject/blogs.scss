@@ -1,0 +1,10 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.k12-subject.page .blogs {
+    padding: 7rem $normal-margin;
+
+    h1 {
+        @include set-font(h2);
+        margin: 0;
+    }
+}

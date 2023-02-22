@@ -2,6 +2,7 @@ import React from 'react';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 import usePageData from '~/helpers/use-page-data';
 import {setPageTitleAndDescriptionFromBookData, useCanonicalLink} from '~/helpers/use-document-head';
+import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import Error404 from '~/pages/404/404';
 
 function LoadedPage({
@@ -35,7 +36,7 @@ export default function LoaderPage({
     const data = usePageData(slug, preserveWrapping, noCamelCase);
 
     if (!data) {
-        return null;
+        return <LoadingPlaceholder />;
     }
 
     return (<LoadedPage {...{Child, data, props, doDocumentSetup, noCamelCase}} />);

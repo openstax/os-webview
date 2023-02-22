@@ -1,0 +1,25 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../shared/contact-form';
+
+.k12.page .sign-up-form {
+
+    .banner {
+        height: 40rem;
+        background-size: cover;
+        background-position: center;
+        border-bottom: 1.5rem solid #0d9372;
+    }
+
+    .boxed {
+        gap: 2rem;
+        padding: 7rem $normal-margin;
+
+        h1 {
+            @include set-font(h2);
+        }
+    }
+
+    form {
+        @include contact-form();
+    }
+}

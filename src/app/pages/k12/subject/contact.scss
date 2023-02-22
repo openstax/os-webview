@@ -1,0 +1,30 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../shared/contact-form';
+
+.k12-subject.page .contact {
+    background-color: ui-color(page-bg);
+    padding: 7rem $normal-margin;
+
+    .boxed {
+        align-items: start;
+        display: grid;
+        grid-template-columns: minmax(25rem, 1fr) minmax(min-content, 50rem);
+        row-gap: 2rem;
+
+        @include scale-feature(column-gap, 3rem, 6rem);
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+
+        h1 {
+            @include set-font(h2);
+            margin: 0;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            @include contact-form();
+        }
+    }
+}
