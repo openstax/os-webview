@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import {htmlToText} from '~/helpers/data';
+import {camelCaseKeys} from '~/helpers/page-data-utils';
 
 function setCanonicalPath(newPath) {
     const el = document.createElement('link');
@@ -69,14 +70,14 @@ function setPageTitleAndDescription(title='OpenStax', description) {
     document.title = title.includes('OpenStax') ? title : `${title} - OpenStax`;
 }
 
-export function setPageTitleAndDescriptionFromBookData(data) {
-    const meta = data.meta || {};
+export function setPageTitleAndDescriptionFromBookData(data={}) {
+    const meta = camelCaseKeys(data.meta || {});
     const defaultDescription = data.description ?
         htmlToText(data.description) : '';
 
     setPageTitleAndDescription(
-        data.title || meta.seo_title,
-        meta.search_description || defaultDescription
+        meta.seoTitle || data.title,
+        meta.searchDescription || defaultDescription
     );
 }
 

@@ -6,6 +6,7 @@ import {ShareJsx} from '~/components/share/share';
 import React, {useState, useRef} from 'react';
 import usePageData from '~/helpers/use-page-data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import {setPageTitleAndDescriptionFromBookData} from '~/helpers/use-document-head';
 import './article.scss';
 
 function normalUnits(unit) {return unit.value.alignment !== 'bottom';}
@@ -175,6 +176,11 @@ export function Article({data}) {
 
 function ArticleLoader({slug, onLoad}) {
     const data = usePageData(slug, true);
+
+    React.useEffect(
+        () => setPageTitleAndDescriptionFromBookData(data),
+        [data]
+    );
 
     React.useEffect(
         () => {
