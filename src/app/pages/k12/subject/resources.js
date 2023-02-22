@@ -17,11 +17,9 @@ function ResourceToContent({resources}) {
     return (
         <div className="card-grid">
             {
-
                 Reflect.ownKeys(resources)?.map(
                     (name) => {
                         const resourceList = resources[name];
-
 
                         return (
                             <div key={name} className="card">
@@ -55,8 +53,6 @@ function resourceHeadersToResources(resourceHeaders) {
         {}
     );
 }
-
-// const fields = ['instructorResources', 'studentResources'];
 
 export default function Resources({data}) {
     const labels = ['Instructor resources', 'Student resources'];

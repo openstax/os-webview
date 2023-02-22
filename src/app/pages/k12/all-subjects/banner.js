@@ -30,7 +30,6 @@ export default function Banner({data}) {
                     <h1>{data.bannerHeadline}</h1>
                     <div>{data.bannerDescription}</div>
                     <div className="buttons">
-
                         <select className="classic" onChange={navigateToSelection}>
                             <option>{subjectLabel}</option>
                             {
