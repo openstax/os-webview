@@ -6,8 +6,6 @@ module.exports = {
             true,
             {ignore: ['selectors-within-list']}
         ],
-        'selector-combinator-space-after': 'always',
-        'selector-combinator-space-before': 'always',
         'property-no-unknown' : [
             true,
             {ignoreAtRules: ['supports']}
