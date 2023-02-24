@@ -15,7 +15,6 @@ const importTutorAd = () => import('./tutor-ad.js');
 const importInfoBoxes = () => import('./info-boxes.js');
 const importPhilanthropicSupport = () => import('./philanthropic-support.js');
 
-
 function SEOSetup() {
     const {title, pageDescription} = useSubjectsContext();
 
@@ -32,15 +31,23 @@ export function SubjectsPage() {
     const {translations} = useSubjectsContext();
     const otherLocales = translations.length ?
         translations[0].value.map((t) => t.locale) :
-        []
-    ;
+        [];
 
     return (
-        <main className="subjects-page">
+        <main className='subjects-page'>
             <SEOSetup />
             <Hero />
-            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="separator" />
-            <JITLoad importFn={importLanguageSelector} otherLocales={otherLocales} />
+            <img
+                className='strips'
+                src='/dist/images/components/strips.svg'
+                height='10'
+                alt=''
+                role='separator'
+            />
+            <JITLoad
+                importFn={importLanguageSelector}
+                otherLocales={otherLocales}
+            />
             <JITLoad importFn={importSubjectsListing} />
             <JITLoad importFn={importTutorAd} />
             <AllSubjectsAboutOpenStax />
@@ -54,10 +61,16 @@ export default function SubjectsRouter() {
     return (
         <SubjectsContextProvider>
             <Routes>
-                <Route path="" element={<SubjectsPage />} />
-                <Route path="view-all" element={<Navigate to="/subjects" replace />} />
-                <Route path="ap" element=<Navigate to="/subjects/high-school" replace /> />
-                <Route path=":subject" element={<LoadSubject />} />
+                <Route path='' element={<SubjectsPage />} />
+                <Route
+                    path='view-all'
+                    element={<Navigate to='/subjects' replace />}
+                />
+                <Route
+                    path='ap'
+                    element={<Navigate to='/subjects/high-school' replace />}
+                />
+                <Route path=':subject' element={<LoadSubject />} />
             </Routes>
         </SubjectsContextProvider>
     );
