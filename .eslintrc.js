@@ -14,7 +14,8 @@ module.exports = {
     ],
     'extends': [
         'eslint:recommended',
-        'plugin:react/recommended'
+        'plugin:react/recommended',
+        'prettier'
     ],
     'globals': {
         'console': 'readonly',
@@ -35,7 +36,7 @@ module.exports = {
             'files': ['src/**/*.js', 'src/**/*.jsx']
         }
     ],
-    'ignorePatterns': ['src/vendor/**/*.js'],
+    'ignorePatterns': ['src/vendor/**/*.js', 'src/settings.js'],
     'settings': {
         'react': {
             'version': 'detect'
@@ -155,7 +156,7 @@ module.exports = {
             {'blankLine': 'any', 'prev': 'const', 'next': 'let'},
             {'blankLine': 'any', 'prev': 'const', 'next': 'const'},
         ],
-        'quotes': ['error', 'single'],
+        'quotes': ['error', 'single', {'avoidEscape': true, 'allowTemplateLiterals': false}],
         'semi-spacing': ['error', {'before': false, 'after': true}],
         'semi': ['error', 'always'],
         'space-before-blocks': ['error', 'always'],
