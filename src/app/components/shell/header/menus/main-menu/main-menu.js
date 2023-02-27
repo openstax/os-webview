@@ -1,7 +1,10 @@
 import React from 'react';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useLanguageContext from '~/contexts/language';
-import {LanguageSelectorWrapper, LanguageLink} from '~/components/language-selector/language-selector';
+import {
+    LanguageSelectorWrapper,
+    LanguageLink
+} from '~/components/language-selector/language-selector';
 import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
@@ -23,8 +26,15 @@ const menuStructure = [
             {label: 'About Us', url: '/about'},
             {label: 'Team', url: '/team'},
             {label: 'Research', url: '/research'},
-            {label: 'Institutional Partnerships', url: '/institutional-partnership'},
-            {label: 'Technology Partnerships', url: '/openstax-ally-technology-partner-program'},
+            {label: 'K12 Books &amp; Resources', url: '/k12'},
+            {
+                label: 'Institutional Partnerships',
+                url: '/institutional-partnership'
+            },
+            {
+                label: 'Technology Partnerships',
+                url: '/openstax-ally-technology-partner-program'
+            },
             {label: 'Webinars', url: '/webinars'}
         ]
     }
@@ -39,19 +49,15 @@ function DropdownOrMenuItem({item}) {
         );
     }
 
-    return (
-        <MenuItem label={item.label} url={item.url} />
-    );
+    return <MenuItem label={item.label} url={item.url} />;
 }
 
 function MenusFromStructure({structure}) {
     return (
         <React.Fragment>
-            {
-                structure.map(
-                    (item) => <DropdownOrMenuItem key={item.label} item={item} />
-                )
-            }
+            {structure.map((item) => (
+                <DropdownOrMenuItem key={item.label} item={item} />
+            ))}
         </React.Fragment>
     );
 }
@@ -64,40 +70,37 @@ function SubjectsMenu() {
     const {pathname} = useLocation();
 
     if (!categories.length) {
-        return (<li>Loading...</li>);
+        return <li>Loading...</li>;
     }
 
     return (
-        <Dropdown className="subjects-dropdown" label="Subjects">
-            {
-                categories.map((obj) =>
-                    <MenuItem
-                        key={obj.value}
-                        label={obj.html}
-                        url={`/subjects/${obj.value}`}
-                    />
-                )
-            }
-            {
-                pathname.startsWith('/details/books') ?
-                    null :
-                    <LanguageSelectorWrapper>
-                        <FormattedMessage id="view" defaultMessage="View" />
-                        {' '}
-                        <LanguageLink locale={otherLocale} />
-                    </LanguageSelectorWrapper>
-            }
+        <Dropdown className='subjects-dropdown' label='Subjects'>
+            {categories.map((obj) => (
+                <MenuItem
+                    key={obj.value}
+                    label={obj.html}
+                    url={`/subjects/${obj.value}`}
+                />
+            ))}
+            {pathname.startsWith('/details/books') ? null : (
+                <LanguageSelectorWrapper>
+                    <FormattedMessage id='view' defaultMessage='View' />{' '}
+                    <LanguageLink locale={otherLocale} />
+                </LanguageSelectorWrapper>
+            )}
         </Dropdown>
     );
 }
 
 export default function MainMenu() {
     return (
-        <ul className="nav-menu main-menu no-bullets" role="menubar">
+        <ul className='nav-menu main-menu no-bullets' role='menubar'>
             <SubjectsMenu />
             <MenusFromStructure structure={menuStructure} />
             <LoginMenu />
-            <li className="give-button-item" role="presentation"><GiveButton /></li>
+            <li className='give-button-item' role='presentation'>
+                <GiveButton />
+            </li>
         </ul>
     );
 }

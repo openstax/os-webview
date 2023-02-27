@@ -19,12 +19,19 @@ const config = {
     },
     module: {
         rules: [
-            { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'esbuild-loader',
+                options: {loader: 'jsx'}
+            },
             {
                 test: /\.s?css$/,
-                use: [ 'style-loader', 'fast-css-loader',
+                use: [
+                    'style-loader',
+                    'fast-css-loader',
                     {
-                        loader:  'fast-sass-loader',
+                        loader: 'fast-sass-loader',
                         options: {
                             implementation: require('node-sass'),
                             includePaths: ['./src/styles', './node_modules']
@@ -46,7 +53,9 @@ const config = {
                     name(module) {
                         // get the name. E.g. node_modules/packageName/not/this/part.js
                         // or node_modules/packageName
-                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+                        const packageName = module.context.match(
+                            /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                        )[1];
 
                         // npm package names are URL-safe, but some servers don't like @ symbols
                         return `npm.${packageName.replace('@', '')}`;
@@ -59,7 +68,7 @@ const config = {
         new CopyWebpackPlugin({
             patterns: [{from: 'src/images', to: 'images'}]
         }),
-        new webpack.EnvironmentPlugin({ API_ORIGIN }),
+        new webpack.EnvironmentPlugin({API_ORIGIN}),
         new ESLintPlugin({fix: true}),
         new FaviconsWebpackPlugin('./src/images/favicon.svg'),
         new HtmlWebpackPlugin({
@@ -71,19 +80,16 @@ const config = {
     ],
     performance: {
         maxEntrypointSize: 2.5 * 1000000, // 1MB
-        maxAssetSize: 2.1 * 1000000,
+        maxAssetSize: 2.1 * 1000000
     },
     resolve: {
         alias: {
-            'react': 'preact/compat',
+            react: 'preact/compat',
             'react-dom/test-utils': 'preact/test-utils',
             'react-dom': 'preact/compat',
             '~': path.resolve(__dirname, 'src/app')
         },
-        modules: [
-            path.resolve(__dirname, 'src/app'),
-            'node_modules'
-        ],
+        modules: [path.resolve(__dirname, 'src/app'), 'node_modules'],
         extensions: ['.js', '.jsx']
     },
     watchOptions: {
@@ -101,10 +107,12 @@ const config = {
         },
         headers: {
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-            'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+            'Access-Control-Allow-Methods':
+                'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+            'Access-Control-Allow-Headers':
+                'X-Requested-With, content-type, Authorization'
         },
-        historyApiFallback: { index: `${publicPath}/index.html` },
+        historyApiFallback: {index: `${publicPath}/index.html`},
         hot: true,
         liveReload: true,
         open: true,
