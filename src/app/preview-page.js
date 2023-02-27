@@ -3,7 +3,7 @@
 export default function setPreviewPage() {
     const slackTitle = document.querySelector('meta[property="og:title"]');
 
-    slackTitle.setAttribute('content', 'Updated value');
+    slackTitle.setAttribute("content", "This is what you should see");
 }
 
 /* <html>
