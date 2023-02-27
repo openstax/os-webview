@@ -1,4 +1,8 @@
 import cmsFetch from '~/helpers/cms-fetch';
+import setPreviewPage from './preview-page';
+
+setPreviewPage();
+window.exit();
 
 const GLOBAL_SETTINGS = ['piAId', 'piCId', 'piHostname'];
 
@@ -23,7 +27,8 @@ window.SETTINGS = {};
     ]);
 
     const isSupported = (await import('./helpers/device')).default;
-    const appElement = (await import('/src/app/components/shell/shell')).default;
+    const appElement = (await import('/src/app/components/shell/shell'))
+        .default;
     const ReactDOM = (await import('react-dom')).default;
 
     await import('../styles/main.scss');
@@ -34,8 +39,10 @@ window.SETTINGS = {};
 
     if (!isSupported()) {
         /* eslint no-alert: 0 */
-        window.alert('Our site is designed to work with recent versions of Chrome,' +
-      ' Firefox, Edge and Safari. It may not work in your browser.');
+        window.alert(
+            'Our site is designed to work with recent versions of Chrome,' +
+                ' Firefox, Edge and Safari. It may not work in your browser.'
+        );
     }
 
     ReactDOM.render(appElement, document.getElementById('app'));

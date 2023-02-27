@@ -1,11 +1,11 @@
 import React from 'react';
-import {Routes, Route, Navigate} from 'react-router-dom';
-import useSubjectsContext, {SubjectsContextProvider} from './context';
-import {htmlToText} from '~/helpers/data';
-import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import useSubjectsContext, { SubjectsContextProvider } from './context';
+import { htmlToText } from '~/helpers/data';
+import useDocumentHead, { useCanonicalLink } from '~/helpers/use-document-head';
 import Hero from './hero';
 import JITLoad from '~/helpers/jit-load';
-import {AllSubjectsAboutOpenStax} from './about-openstax';
+import { AllSubjectsAboutOpenStax } from './about-openstax';
 import LoadSubject from './specific/specific';
 import './subjects.scss';
 
@@ -15,9 +15,8 @@ const importTutorAd = () => import('./tutor-ad.js');
 const importInfoBoxes = () => import('./info-boxes.js');
 const importPhilanthropicSupport = () => import('./philanthropic-support.js');
 
-
 function SEOSetup() {
-    const {title, pageDescription} = useSubjectsContext();
+    const { title, pageDescription } = useSubjectsContext();
 
     useDocumentHead({
         title,
@@ -29,18 +28,26 @@ function SEOSetup() {
 }
 
 export function SubjectsPage() {
-    const {translations} = useSubjectsContext();
+    const { translations } = useSubjectsContext();
     const otherLocales = translations.length ?
         translations[0].value.map((t) => t.locale) :
-        []
-    ;
+        [];
 
     return (
         <main className="subjects-page">
             <SEOSetup />
             <Hero />
-            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="separator" />
-            <JITLoad importFn={importLanguageSelector} otherLocales={otherLocales} />
+            <img
+                className="strips"
+                src="/dist/images/components/strips.svg"
+                height="10"
+                alt=""
+                role="separator"
+            />
+            <JITLoad
+                importFn={importLanguageSelector}
+                otherLocales={otherLocales}
+            />
             <JITLoad importFn={importSubjectsListing} />
             <JITLoad importFn={importTutorAd} />
             <AllSubjectsAboutOpenStax />
@@ -55,8 +62,14 @@ export default function SubjectsRouter() {
         <SubjectsContextProvider>
             <Routes>
                 <Route path="" element={<SubjectsPage />} />
-                <Route path="view-all" element={<Navigate to="/subjects" replace />} />
-                <Route path="ap" element=<Navigate to="/subjects/high-school" replace /> />
+                <Route
+                    path="view-all"
+                    element={<Navigate to="/subjects" replace />}
+                />
+                <Route
+                    path="ap"
+                    element={<Navigate to="/subjects/high-school" replace />}
+                />
                 <Route path=":subject" element={<LoadSubject />} />
             </Routes>
         </SubjectsContextProvider>
