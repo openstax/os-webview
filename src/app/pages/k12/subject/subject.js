@@ -4,27 +4,39 @@ import Books from './books';
 import Resources from './resources';
 import Contact from './contact';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import {useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './subject.scss';
 
-function QuickLinks() {
+function QuickLinks({ labels, setSelectedLabel }) {
     return (
         <section className="quick-links">
             <div className="boxed">
                 <strong>Quick links:</strong>
                 <div className="items">
                     <a href="#books">Books</a>
-                    <a href="#instructor-resources">Instructor Resources</a>
-                    <a href="#student-resources">Student Resources</a>
-                    <a href="#other">Other</a>
+                    {labels.map((text) => (
+                        <a
+                            href="#resources"
+                            onClick={() =>
+                                // Without a delay, the state variable loses its mind
+                                window.setTimeout(
+                                    () => setSelectedLabel(text),
+                                    0
+                                )}
+                            key={text}
+                        >
+                            {text}
+                        </a>
+                    ))}
+                    <a href="#contact">Contact us</a>
                 </div>
             </div>
         </section>
     );
 }
 
-function WhatTeachersSay({data}) {
+function WhatTeachersSay({ data }) {
     return (
         <section className="what-teachers-say">
             <div className="boxed">
@@ -37,14 +49,29 @@ function WhatTeachersSay({data}) {
     );
 }
 
-function Subject({data}) {
+function Subject({ data }) {
+    const labels = ['Instructor resources', 'Student resources'];
+    const [selectedLabel, setSelectedLabel] = React.useState(labels[0]);
+    const { hash } = useLocation();
+
+    React.useLayoutEffect(() => {
+        const id = hash.substring(1);
+        const target = document.getElementById(id);
+
+        if (target) {
+            target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        } else {
+            console.warn('Target not found', id);
+        }
+    }, [hash]);
+
     return (
         <div className="k12-subject page">
             <Banner data={data} />
-            <QuickLinks />
+            <QuickLinks {...{ labels, setSelectedLabel }} />
             <Books data={data} />
             <WhatTeachersSay data={data} />
-            <Resources data={data} />
+            <Resources {...{ data, labels, selectedLabel, setSelectedLabel }} />
             {/* <Blogs data={data} /> */}
             <Contact data={data} />
         </div>
@@ -52,10 +79,8 @@ function Subject({data}) {
 }
 
 export default function LoadSubject() {
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
     const slug = `pages${pathname.replace('k12/', 'k12-')}`;
 
-    return (
-        <LoaderPage slug={slug} Child={Subject} doDocumentSetup />
-    );
+    return <LoaderPage slug={slug} Child={Subject} doDocumentSetup />;
 }
