@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 @import '../shared/faq-section';
 
-.k12-subject.page .books {
+.k12-subject.page #books {
     @include scale-feature(padding-top, 4rem, 7rem);
     @include scale-feature(padding-bottom, 4rem, 7rem);
 
