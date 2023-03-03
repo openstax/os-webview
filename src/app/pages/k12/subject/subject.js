@@ -18,7 +18,12 @@ function QuickLinks({ labels, setSelectedLabel }) {
                     {labels.map((text) => (
                         <a
                             href="#resources"
-                            onClick={() => setSelectedLabel(text)}
+                            onClick={() =>
+                                // Without a delay, the state variable loses its mind
+                                window.setTimeout(
+                                    () => setSelectedLabel(text),
+                                    0
+                                )}
                             key={text}
                         >
                             {text}
