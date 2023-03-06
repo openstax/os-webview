@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 // import ContactForm from '../shared/contact-form';
-import { InterestForm } from '~/pages/interest/interest';
-import './sign-up-form.scss';
+import { InterestForm } from "~/pages/interest/interest";
+import "./sign-up-form.scss";
 
 export default function SignUpForm({ data }) {
     const bannerStyle = React.useMemo(
@@ -15,7 +15,7 @@ export default function SignUpForm({ data }) {
             <div className="boxed">
                 <h1>{data.rfiHeader}</h1>
                 <div>{data.rfiDescription}</div>
-                <InterestForm />
+                <InterestForm role="K12 Instructor" />
             </div>
         </section>
     );
