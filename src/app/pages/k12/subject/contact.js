@@ -1,5 +1,6 @@
 import React from 'react';
-import ContactForm from '../shared/contact-form';
+// import ContactForm from '../shared/contact-form';
+import { InterestForm } from '~/pages/interest/interest';
 import './contact.scss';
 
 export default function Contact({ data }) {
@@ -10,7 +11,7 @@ export default function Contact({ data }) {
                     <h1>{data.rfiHeading}</h1>
                     <div>{data.rfiText}</div>
                 </div>
-                <ContactForm />
+                <InterestForm />
             </div>
         </section>
     );

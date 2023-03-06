@@ -13,7 +13,7 @@
 
         @include scale-feature(column-gap, 3rem, 6rem);
 
-        @include width-up-to($phone-max) {
+        @include width-up-to($tablet-max) {
             grid-template-columns: 100%;
         }
 
