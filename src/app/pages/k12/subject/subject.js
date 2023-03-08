@@ -60,7 +60,7 @@ function Subject({ data }) {
 
         if (target) {
             target.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        } else {
+        } else if (id) {
             console.warn('Target not found', id);
         }
     }, [hash]);
