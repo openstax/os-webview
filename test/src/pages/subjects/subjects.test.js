@@ -2,13 +2,16 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import ShellContextProvider from '../../../helpers/shell-context';
 import {MemoryRouter} from 'react-router-dom';
-import SubjectsRouter from '~/pages/subjects/new/subjects';
+import {SubjectsContextProvider} from '~/pages/subjects/new/context';
+import {SubjectsPage} from '~/pages/subjects/new/subjects';
 
 test('main subjects page', async () => {
     render(
         <ShellContextProvider>
             <MemoryRouter initialEntries={['']}>
-                <SubjectsRouter />
+                <SubjectsContextProvider>
+                    <SubjectsPage />
+                </SubjectsContextProvider>
             </MemoryRouter>
         </ShellContextProvider>
     );
