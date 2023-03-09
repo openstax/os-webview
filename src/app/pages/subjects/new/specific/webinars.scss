@@ -25,7 +25,7 @@
         background-color: ui-color(white);
         display: flex;
         flex-direction: column;
-        min-width: 25rem;
+        min-width: 29rem;
         padding: 2rem;
         row-gap: 2rem;
 
@@ -33,6 +33,11 @@
             @include set-font(h4);
 
             margin: 0;
+
+            + div {
+                max-height: 40rem;
+                overflow: auto;
+            }
         }
     }
 }
