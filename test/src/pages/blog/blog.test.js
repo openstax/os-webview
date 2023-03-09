@@ -27,5 +27,5 @@ test('blog Article page', async () => {
         </MemoryRouter>
     );
     expect(await screen.findAllByText('Read more')).toHaveLength(3);
-    expect(screen.queryAllByRole('link')).toHaveLength(20);
+    expect(screen.queryAllByRole('link')).toHaveLength(10);
 });

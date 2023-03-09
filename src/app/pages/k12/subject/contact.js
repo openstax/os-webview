@@ -1,16 +1,17 @@
-import React from 'react';
-import ContactForm from '../shared/contact-form';
-import './contact.scss';
+import React from "react";
+// import ContactForm from '../shared/contact-form';
+import { InterestForm } from "~/pages/interest/interest";
+import "./contact.scss";
 
-export default function Contact({data}) {
+export default function Contact({ data }) {
     return (
-        <section className='contact'>
-            <div className='boxed'>
+        <section id="contact">
+            <div className="boxed">
                 <div>
                     <h1>{data.rfiHeading}</h1>
                     <div>{data.rfiText}</div>
                 </div>
-                <ContactForm />
+                <InterestForm role="K12 Instructor" />
             </div>
         </section>
     );

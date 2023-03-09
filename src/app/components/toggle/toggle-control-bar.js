@@ -1,12 +1,13 @@
 import React from 'react';
 import useToggleContext from './toggle-context';
-import {useRefToFocusAfterClose} from './toggle';
+import { useRefToFocusAfterClose } from './toggle';
 import cn from 'classnames';
-import {treatKeydownAsClick} from '~/helpers/events';
+import { treatKeydownAsClick } from '~/helpers/events';
 import './toggle-control-bar.scss';
 
-export default function ToggleControlBar({Indicator, children}) {
-    const {isOpen, toggle} = useToggleContext();
+export default function ToggleControlBar({ Indicator, children }) {
+    const { isOpen, toggle } = useToggleContext();
+    const [hasBeenOpened, setHasBeenOpened] = React.useState(false);
     const onKeyDown = React.useCallback(
         (event) => {
             const keyList = isOpen ? ['Escape', 'Enter', ' '] : ['Enter', ' '];
@@ -18,17 +19,24 @@ export default function ToggleControlBar({Indicator, children}) {
     const focusRef = useRefToFocusAfterClose();
 
     React.useEffect(() => {
-        if (!isOpen) {
+        if (isOpen) {
+            setHasBeenOpened(true);
+        }
+    }, [isOpen]);
+
+    React.useEffect(() => {
+        if (hasBeenOpened && !isOpen) {
             // Restore focus to an input if there is one, otherwise to focusRef
-            const focusOn = focusRef.current.querySelector('input') || focusRef.current;
+            const focusOn =
+                focusRef.current.querySelector('input') || focusRef.current;
 
             focusOn.focus();
         }
-    }, [isOpen, focusRef]);
+    }, [hasBeenOpened, isOpen, focusRef]);
 
     return (
         <div
-            className={cn('toggle-control-bar', {open: isOpen})}
+            className={cn('toggle-control-bar', { open: isOpen })}
             tabIndex="0"
             onClick={() => toggle()}
             onKeyDown={onKeyDown}

@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 @import '../shared/faq-section';
 
-.k12-subject.page .books {
+.k12-subject.page #books {
     @include scale-feature(padding-top, 4rem, 7rem);
     @include scale-feature(padding-bottom, 4rem, 7rem);
 
@@ -24,27 +24,36 @@
     }
 
     .book-viewer {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(16rem, calc(25% - 3rem)));
         justify-content: center;
         margin: $normal-margin 0;
         width: 100%;
 
         @include width-up-to($phone-max) {
+            grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
             grid-gap: 1rem;
         }
 
         @include wider-than($phone-max) {
             grid-gap: 4rem 2rem;
         }
+
+        @include wider-than($tablet-max) {
+            grid-template-columns: repeat(auto-fit, minmax(16rem, 18%));
+        }
     }
 
     .book-tile {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
         background-color: ui-color(white);
         border-radius: 0.5rem;
         box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+        height: 100%;
 
         img {
-            max-width: 100%;
+            width: 100%;
         }
 
         .text-block {
