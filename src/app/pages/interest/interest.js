@@ -1,25 +1,25 @@
-import React, { useState, useRef } from "react";
-import useDocumentHead, { useCanonicalLink } from "~/helpers/use-document-head";
-import FormHeader from "~/components/form-header/form-header";
-import RoleSelector from "~/components/role-selector/role-selector";
-import StudentForm from "~/components/student-form/student-form";
-import MultiPageForm from "~/components/multi-page-form/multi-page-form";
-import ContactInfo from "~/components/contact-info/contact-info";
+import React, { useState, useRef } from 'react';
+import useDocumentHead, { useCanonicalLink } from '~/helpers/use-document-head';
+import FormHeader from '~/components/form-header/form-header';
+import RoleSelector from '~/components/role-selector/role-selector';
+import StudentForm from '~/components/student-form/student-form';
+import MultiPageForm from '~/components/multi-page-form/multi-page-form';
+import ContactInfo from '~/components/contact-info/contact-info';
 import BookSelector, {
     useSelectedBooks,
     useAfterSubmit,
-    useFirstSearchArgument,
-} from "~/components/book-selector/book-selector";
-import useFormTarget from "~/components/form-target/form-target";
-import useSalesforceContext from "~/contexts/salesforce";
-import FormInput from "~/components/form-input/form-input";
-import FormCheckboxgroup from "~/components/form-checkboxgroup/form-checkboxgroup";
-import "./interest.scss";
+    useFirstSearchArgument
+} from '~/components/book-selector/book-selector';
+import useFormTarget from '~/components/form-target/form-target';
+import useSalesforceContext from '~/contexts/salesforce';
+import FormInput from '~/components/form-input/form-input';
+import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
+import './interest.scss';
 
 function useBundledValues() {
-    const [bundledValues, setBundledValues] = useState("");
+    const [bundledValues, setBundledValues] = useState('');
     const onChange = React.useCallback(
-        (values) => setBundledValues(values.join("; ")),
+        (values) => setBundledValues(values.join('; ')),
         []
     );
 
@@ -38,14 +38,14 @@ function useBundledValues() {
 
 function HowDidYouHear() {
     const options = [
-        { value: "Web search", label: "Web search" },
-        { value: "Colleague", label: "Colleague" },
-        { value: "Conference", label: "Conference" },
-        { value: "Email", label: "Email" },
-        { value: "Facebook", label: "Facebook" },
-        { value: "Twitter", label: "Twitter" },
-        { value: "Webinar", label: "Webinar" },
-        { value: "Partner organization", label: "Partner organization" },
+        { value: 'Web search', label: 'Web search' },
+        { value: 'Colleague', label: 'Colleague' },
+        { value: 'Conference', label: 'Conference' },
+        { value: 'Email', label: 'Email' },
+        { value: 'Facebook', label: 'Facebook' },
+        { value: 'Twitter', label: 'Twitter' },
+        { value: 'Webinar', label: 'Webinar' },
+        { value: 'Partner organization', label: 'Partner organization' }
     ];
     const { onChange, BundledValuesInput } = useBundledValues();
 
@@ -65,7 +65,7 @@ function HowDidYouHear() {
 function BookSelectorPage({ selectedBooksRef }) {
     const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
-    const bookList = selectedBooks.map((b) => b.value).join("; ");
+    const bookList = selectedBooks.map((b) => b.value).join('; ');
 
     selectedBooksRef.current = selectedBooks;
 
@@ -82,11 +82,11 @@ function BookSelectorPage({ selectedBooksRef }) {
             <FormInput
                 longLabel="How many students do you teach each semester?"
                 inputProps={{
-                    name: "number_of_students",
-                    type: "number",
-                    min: "1",
-                    max: "999",
-                    required: true,
+                    name: 'number_of_students',
+                    type: 'number',
+                    min: '1',
+                    max: '999',
+                    required: true
                 }}
             />
             <input type="hidden" name="subject_interest" value={bookList} />
@@ -102,7 +102,7 @@ function FacultyForm({ position, onPageChange, role }) {
     const { interestUrl } = useSalesforceContext();
 
     function validatePage(page) {
-        return Boolean(page !== 1 || position !== "Student");
+        return Boolean(page !== 1 || position !== 'Student');
     }
 
     const doSubmit = React.useCallback(
@@ -147,8 +147,8 @@ function FacultyForm({ position, onPageChange, role }) {
     );
 }
 
-export function InterestForm({ role = "Instructor" }) {
-    const [selectedRole, setSelectedRole] = useState("");
+export function InterestForm({ role = 'Instructor' }) {
+    const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef();
     const onPageChange = React.useCallback((page) => {
@@ -175,7 +175,7 @@ export function InterestForm({ role = "Instructor" }) {
 }
 
 export default function InterestPage() {
-    useDocumentHead({ title: "Interest Form" });
+    useDocumentHead({ title: 'Interest Form' });
     useCanonicalLink();
 
     return (

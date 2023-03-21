@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 // import ContactForm from '../shared/contact-form';
-import { InterestForm } from "~/pages/interest/interest";
-import "./contact.scss";
+import { InterestForm } from '~/pages/interest/interest';
+import './contact.scss';
 
 export default function Contact({ data }) {
     return (
