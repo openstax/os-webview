@@ -21,7 +21,7 @@ test('blog Article page', async () => {
         <MemoryRouter initialEntries={['/blog/blog-article']}>
             <BlogContextProvider>
                 <Routes>
-                    <Route path="/blog/:slug" element={<ArticlePage />} />
+                    <Route path='/blog/:slug' element={<ArticlePage />} />
                 </Routes>
             </BlogContextProvider>
         </MemoryRouter>

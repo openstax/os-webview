@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes, Route, Navigate} from 'react-router-dom';
+import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
 import {htmlToText} from '~/helpers/data';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
@@ -57,11 +57,20 @@ export function SubjectsPage() {
     );
 }
 
+function RedirectSlash() {
+    const {pathname} = useLocation();
+
+    if (pathname.endsWith('/')) {
+        return <Navigate to={pathname.slice(0, -1)} replace />;
+    }
+    return <SubjectsPage />;
+}
+
 export default function SubjectsRouter() {
     return (
         <SubjectsContextProvider>
             <Routes>
-                <Route path='' element={<SubjectsPage />} />
+                <Route path='/' element={<RedirectSlash />} />
                 <Route
                     path='view-all'
                     element={<Navigate to='/subjects' replace />}
