@@ -61,7 +61,7 @@ function RedirectSlash() {
     const {pathname} = useLocation();
 
     if (pathname.endsWith('/')) {
-        return <Navigate to={pathname.slice(0, -1)} relace />;
+        return <Navigate to={pathname.slice(0, -1)} replace />;
     }
     return <SubjectsPage />;
 }
