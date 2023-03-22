@@ -1,0 +1,38 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.assignable .banner {
+    color: text-color(white);
+    padding: 0;
+    position: relative;
+
+    @include scale-feature(padding-top, 4rem, 16rem);
+
+    @include wider-than($phone-max) {
+        padding-bottom: 24rem;
+    }
+
+    @include width-up-to($phone-max) {
+        padding-bottom: 6rem;
+    }
+
+    .background-image {
+        background-color: os-color(blue);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: -1;
+    }
+
+    .text-content {
+        padding: 0;
+    }
+
+    .btn {
+        justify-self: left;
+    }
+}
