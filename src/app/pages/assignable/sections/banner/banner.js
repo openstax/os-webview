@@ -4,11 +4,16 @@ import useOptimizedImage from '~/helpers/use-optimized-image';
 import './banner.scss';
 
 export default function Banner({
-    heading, subheading, description, linkText, link,
-    backgroundImage: {meta: {downloadUrl: backgroundImage}}
+    data: {
+        heading, subheading,
+        headingDescription: description,
+        headingButtonText: linkText,
+        headingButtonLink: link,
+        headingImage: {meta: {downloadUrl: image}}
+    }
 }) {
     const maxDim = window.innerWidth < 1920 ? 1920 : null;
-    const optimizedImage = useOptimizedImage(backgroundImage, maxDim);
+    const optimizedImage = useOptimizedImage(image, maxDim);
 
     return (
         <section className="banner">

@@ -1,7 +1,15 @@
 import React from 'react';
 import './overlapping-quote.scss';
 
-export default function OverlappingQuote({quote, name, title, school}) {
+export default function OverlappingQuote({
+    data: {
+        quote, quoteAuthor: name, quoteTitle: title, quoteSchool: school
+    }
+}) {
+    if (!quote) {
+        return null;
+    }
+
     return (
         <section className="overlapping-quote near-white">
             <div className="overlapping">

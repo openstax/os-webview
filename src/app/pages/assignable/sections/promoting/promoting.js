@@ -18,15 +18,16 @@ function CourseList({heading, courses}) {
 }
 
 export default function Promoting({
-    heading1, courses1,
-    heading2, courses2,
-    html
+    data: {
+        heading1 = 'Available courses',
+        courses1 = ['need', 'book', 'query'],
+        coursesComingSoon: html
+    }
 }) {
     return (
         <section className="promoting white">
             <div className="content-block">
                 <CourseList heading={heading1} courses={courses1} />
-                <CourseList heading={heading2} courses={courses2} />
                 <RawHTML html={html} />
             </div>
         </section>

@@ -4,8 +4,12 @@ import useOptimizedImage from '~/helpers/use-optimized-image';
 import './about.scss';
 
 export default function About({
-    heading, description, altText,
-    image: {meta: {downloadUrl: image}}
+    data: {
+        section2Heading: heading,
+        section2Description: description,
+        altText,
+        section2Image: {meta: {downloadUrl: image}}
+    }
 }) {
     const optimizedImage = useOptimizedImage(image);
 
