@@ -4,9 +4,9 @@ import LazyLoad from 'react-lazyload';
 import Banner from './sections/banner/banner';
 import OverlappingQuote from './sections/overlapping-quote/overlapping-quote';
 import About from './sections/about/about';
-import Promoting from './sections/promoting/promoting';
-import Results from './sections/results/results';
-import SignUp from './sections/sign-up/sign-up';
+import Courses from './sections/courses/courses';
+import Add from './sections/add/add';
+import Cta from './sections/cta/cta';
 import './assignable.scss';
 
 /* eslint-disable camelcase,max-len */
@@ -133,11 +133,11 @@ function Assignable({data}) {
             <OverlappingQuote data={data} />
             <About data={data} />
             <LazyLoad>
-                <Promoting data={data} />
-                <Results data={data} />
+                <Courses data={data} />
+                <Add data={data} />
             </LazyLoad>
             <LazyLoad>
-                <SignUp data={data} />
+                <Cta data={data} />
             </LazyLoad>
         </React.Fragment>
     );
