@@ -22,10 +22,9 @@ function ButtonOrPresentation({condition, children, onClick}) {
     );
 }
 
-export function Paginated({children}) {
+export function Paginated({children, perPage=10}) {
     const [pageNumber, setPageNumber] = useState(1);
     const [pageChanged, setPageChanged] = useState();
-    const perPage = 10;
     const lastPage = Math.ceil(children.length / perPage);
     const firstDisplayed = perPage * (pageNumber - 1);
     const displayedChildren = children
