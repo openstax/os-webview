@@ -7,8 +7,6 @@ export default function Banner({
     data: {
         heading, subheading,
         headingDescription: description,
-        headingButtonText: linkText,
-        headingButtonLink: link,
         headingImage: {meta: {downloadUrl: image}}
     }
 }) {
@@ -24,7 +22,6 @@ export default function Banner({
                     <div><i>{subheading}</i></div>
                 </div>
                 <RawHTML class="text-content" html={description} />
-                <a className="btn primary" href={link}>{linkText}</a>
             </div>
         </section>
     );

@@ -1,29 +1,34 @@
 import React from 'react';
 import './courses.scss';
 
-function CourseList({heading, courses}) {
+function BookInfo({data}) {
     return (
-        <React.Fragment>
-            <h2>{heading}</h2>
-            <div className="courses">{courses}</div>
-        </React.Fragment>
+        <div>
+            <img src={data.cover} alt="" />
+            <div>{data.title}</div>
+        </div>
+
     );
 }
 
-export default function Courses({
-    data: {
-        availableCoursesHeader: heading1,
-        availableCourses: courses1,
-        coursesComingSoonHeader: heading2,
-        coursesComingSoon: courses2
-
-    }
-}) {
+function CourseList({heading, courses}) {
     return (
-        <section className="promoting white">
+        <div>
+            <h2>{heading}</h2>
+            <div className="course-list">
+                { courses.map((c) => <BookInfo data={c} key={c.title} />) }
+            </div>
+        </div>
+    );
+}
+
+export default function Courses({data}) {
+    console.info('DATA', data);
+    return (
+        <section className="courses white">
             <div className="content-block">
-                <CourseList heading={heading1} courses={courses1} />
-                <CourseList heading={heading2} courses={courses2} />
+                <CourseList heading={data.availableCoursesHeader} courses={data.availableBooks} />
+                <CourseList heading={data.coursesComingSoonHeader} courses={data.comingSoonBooks} />
             </div>
         </section>
     );

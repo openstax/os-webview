@@ -4,9 +4,11 @@ $near-white: #f8f8f8;
 
 .assignable.page {
 
+    @include set-font(body-large);
+
     section {
-        @include scale-feature(padding-top, 2rem, 16rem);
-        @include scale-feature(padding-bottom, 2rem, 16rem);
+        @include scale-feature(padding-top, 2rem, 12rem);
+        @include scale-feature(padding-bottom, 2rem, 12rem);
 
         max-width: 100%;
         overflow: auto;
