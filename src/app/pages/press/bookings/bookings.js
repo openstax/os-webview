@@ -43,7 +43,7 @@ export default function Bookings() {
     return (
         <div className="bookings">
             <div className="heading">
-                <h2>Book our experts</h2>
+                <h2>Senior leadership</h2>
                 <RawHTML html={blurb} />
             </div>
             {
