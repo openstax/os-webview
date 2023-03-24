@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 // import ContactForm from '../shared/contact-form';
-import { InterestForm } from "~/pages/interest/interest";
-import "./sign-up-form.scss";
+import { InterestForm } from '~/pages/interest/interest';
+import './sign-up-form.scss';
 
 export default function SignUpForm({ data }) {
     const bannerStyle = React.useMemo(
