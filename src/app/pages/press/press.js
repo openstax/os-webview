@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import usePageContext, {PageContextProvider} from './page-context';
+import {setPageTitleAndDescriptionFromBookData, useCanonicalLink} from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {ArticleLoader} from './article/article';
 import MoreFewer, {Paginated} from '~/components/more-fewer/more-fewer';
@@ -68,7 +69,7 @@ function NewsMentions() {
         .sort((a, b) => b.asDate.getTime() - a.asDate.getTime());
 
     return (
-        <Paginated>
+        <Paginated perPage={7}>
             {newsMentions.map((props) => <PressExcerpt {...props} key={props.url} />)}
         </Paginated>
     );
@@ -128,6 +129,14 @@ function MainPage() {
         'Booking'
     ];
     const [selectedSection, setSelectedSection] = useState(sections[0]);
+
+    // Should be using a LoaderPage
+    useCanonicalLink(true);
+    React.useEffect(() => {
+        if (pageData) {
+            setPageTitleAndDescriptionFromBookData(pageData);
+        }
+    }, [pageData]);
 
     if (!pageData) {
         return null;
