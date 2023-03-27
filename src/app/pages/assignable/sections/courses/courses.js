@@ -7,7 +7,6 @@ function BookInfo({data}) {
             <img src={data.cover} alt="" />
             <div>{data.title}</div>
         </div>
-
     );
 }
 
@@ -23,7 +22,6 @@ function CourseList({heading, courses}) {
 }
 
 export default function Courses({data}) {
-    console.info('DATA', data);
     return (
         <section className="courses white">
             <div className="content-block">

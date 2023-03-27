@@ -4,7 +4,7 @@ import './cta.scss';
 
 export default function Cta({data}) {
     return (
-        <section className="sign-up green">
+        <section className="cta green">
             <div className="content">
                 <h2>{data.assignableCtaText}</h2>
                 <a className="btn primary" href={data.assignableCtaLink}>
