@@ -1,0 +1,18 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.assignable.page .about {
+    position: relative;
+
+    .content-block {
+        align-items: center;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: repeat(auto-fit, minmax(42rem, auto));
+        }
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+}

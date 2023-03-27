@@ -1,0 +1,54 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.assignable.page {
+
+    @include set-font(body-large);
+
+    section {
+        @include scale-feature(padding-top, 2rem, 12rem);
+        @include scale-feature(padding-bottom, 2rem, 12rem);
+
+        max-width: 100%;
+        overflow: auto;
+    }
+
+    .content-block {
+        @extend %content;
+        @include scale-feature(grid-gap, $normal-margin, 4rem);
+
+        display: grid;
+
+        > * {
+            margin: 0;
+        }
+    }
+
+    .btn.primary {
+        @extend %button;
+        @extend %primary;
+    }
+
+    .near-white {
+        background-color: ui-color(page-bg);
+    }
+
+    .white {
+        background-color: ui-color(white);
+    }
+
+    .green {
+        background-color: os-color(deep-green);
+        color: text-color(white);
+    }
+
+    [data-html] > p {
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+}
