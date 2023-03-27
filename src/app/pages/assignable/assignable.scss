@@ -1,7 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$near-white: #f8f8f8;
-
 .assignable.page {
 
     @include set-font(body-large);
@@ -31,7 +29,7 @@ $near-white: #f8f8f8;
     }
 
     .near-white {
-        background-color: $near-white;
+        background-color: ui-color(page-bg);
     }
 
     .white {

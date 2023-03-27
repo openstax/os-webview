@@ -50,10 +50,10 @@
         position: relative;
 
         a {
-            color: adjust-color(text-color(link), $lightness: +30%);
+            color: adjust-color(text-color(link), $lightness: + 30%);
 
             &:hover {
-                color: adjust-color(text-color(link-hover), $lightness: +25%);
+                color: adjust-color(text-color(link-hover), $lightness: + 25%);
             }
         }
 
