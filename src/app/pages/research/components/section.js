@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import {jsx} from '@emotion/react';
 import {colors, media} from '~/pages/research/theme';
 
 export const Section = ({ children, backgroundColor= colors.white, padding = true }) => {

@@ -29,7 +29,7 @@ module.exports = {
         'Promise': 'readonly',
         'Reflect': 'readonly',
         'require': 'readonly',
-        'window': 'readonly',
+        'window': 'readonly'
     },
     'overrides': [
         {
@@ -153,7 +153,7 @@ module.exports = {
             {'blankLine': 'any', 'prev': 'let', 'next': 'let'},
             {'blankLine': 'any', 'prev': 'let', 'next': 'const'},
             {'blankLine': 'any', 'prev': 'const', 'next': 'let'},
-            {'blankLine': 'any', 'prev': 'const', 'next': 'const'},
+            {'blankLine': 'any', 'prev': 'const', 'next': 'const'}
         ],
         'quotes': ['error', 'single', {'avoidEscape': true, 'allowTemplateLiterals': false}],
         'semi-spacing': ['error', {'before': false, 'after': true}],

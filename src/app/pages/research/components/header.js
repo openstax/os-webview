@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import {jsx} from '@emotion/react';
 import {colors, media} from '../theme';
 import styled from '@emotion/styled';
 import {Box} from 'boxible';
