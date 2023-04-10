@@ -10,10 +10,8 @@
                 ]
             }
         ],
-        [
-            "@babel/preset-react",
-            { "runtime": "automatic", "importSource": "@emotion/react" }
-        ]
+        "@babel/preset-react",
+        "@emotion/babel-preset-css-prop"
     ],
     "env": {
         "development": {
@@ -33,6 +31,7 @@
                 "idInterpolationPattern": "[sha512:contenthash:base64:6]",
                 "ast": true
             }
-        ]
+        ],
+        ["@emotion/babel-plugin"]
     ]
 }
