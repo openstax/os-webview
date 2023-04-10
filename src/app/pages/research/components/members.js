@@ -1,4 +1,6 @@
-import React, {useRef, useState} from 'react';
+/** @jsx jsx */
+import {jsx} from '@emotion/react';
+import {useRef, useState} from 'react';
 import {Box} from 'boxible';
 import styled from '@emotion/styled';
 import {colors, media} from '~/pages/research/theme';
@@ -244,7 +246,7 @@ export const MemberLinks = ({ member }) => {
 };
 
 export const Alumnus = ({ alumnus }) => (
-    <Box direction={{ mobile: 'column' }} align='center' justify='center'>
+    <Box direction={{ mobile: 'column' }} align='center' justify='center' gap>
         <a css={{ flex: 1 }} href={alumnus.linkedIn} target='_blank' rel="noreferrer">{alumnus.name}</a>
         <span css={{ flex: 3, color: colors.grayText }}>{alumnus.title}</span>
     </Box>
