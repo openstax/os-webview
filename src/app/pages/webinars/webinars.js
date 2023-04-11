@@ -11,8 +11,8 @@ import './webinars.scss';
 const tabLabels = ['Upcoming webinars', 'Past webinar recordings'];
 
 function byDate(a, b) {
-    const da = new Date(a.start);
-    const db = new Date(b.start);
+    const da = new Date(a.start).getTime();
+    const db = new Date(b.start).getTime();
 
     return da - db;
 }
@@ -22,9 +22,12 @@ function Webinars({data: {heading: headline, description, heroImage}}) {
     const webinarData = camelCaseKeys(
         (useDataFromSlug('webinars/?format=json') || []).sort(byDate)
     );
-    const firstFuture = webinarData.findIndex((entry) => new Date(entry.start) > Date.now());
-    const upcomingData = webinarData.slice(firstFuture);
-    const pastData = webinarData.slice(0, firstFuture);
+    const firstFuture = webinarData.findIndex(
+        (entry) => new Date(entry.start).getTime() > Date.now()
+    );
+    const index = firstFuture > 0 ? firstFuture : webinarData.length;
+    const upcomingData = webinarData.slice(index);
+    const pastData = webinarData.slice(0, index);
     const tabContents = [
         <WebinarList key="1" data={upcomingData} upcoming />,
         <WebinarList key="2" data={pastData} />
