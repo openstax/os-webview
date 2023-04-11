@@ -1,6 +1,6 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import LazyLoad from 'react-lazyload';
+import LazyLoad, {forceCheck} from 'react-lazyload';
 import Banner from './banner/banner';
 import Features from './features/features';
 import Quotes from './quotes/quotes';
@@ -15,22 +15,31 @@ function uncapitalizeInitial(str) {
 }
 
 function Homepage({data: ungroupedData}) {
-    const keys = Reflect.ownKeys(ungroupedData);
-    const data = {};
+    const data = React.useMemo(
+        () => {
+            const keys = Reflect.ownKeys(ungroupedData);
+            const result = {};
 
-    // Group the data by section prefixes
-    ['banner', 'features', 'quotes', 'whatsOpenstax', 'map'].forEach((sectionName) => {
-        const sectionKeys = keys.filter((k) => k.startsWith(sectionName));
+            // Group the data by section prefixes
+            ['banner', 'features', 'quotes', 'whatsOpenstax', 'map'].forEach((sectionName) => {
+                const sectionKeys = keys.filter((k) => k.startsWith(sectionName));
 
-        data[sectionName] = sectionKeys.reduce((a, b) => {
-            const newKey = uncapitalizeInitial(b.substr(sectionName.length)) || sectionName;
-            const value = ungroupedData[b];
-            const imageValue = value?.meta?.downloadUrl;
+                result[sectionName] = sectionKeys.reduce((a, b) => {
+                    const newKey = uncapitalizeInitial(b.substr(sectionName.length)) || sectionName;
+                    const value = ungroupedData[b];
+                    const imageValue = value?.meta?.downloadUrl;
 
-            a[newKey] = imageValue || value;
-            return a;
-        }, {});
-    });
+                    a[newKey] = imageValue || value;
+                    return a;
+                }, {});
+            });
+            return result;
+        },
+        [ungroupedData]
+    );
+
+    // Ensure any lazyloaded sections that are visible know it
+    React.useEffect(forceCheck);
 
     return (
         <React.Fragment>
