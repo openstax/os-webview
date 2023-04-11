@@ -1,4 +1,6 @@
-import React, {useRef, useState} from 'react';
+/** @jsx jsx */
+import {jsx} from '@emotion/react';
+import {useRef, useState} from 'react';
 import {Box} from 'boxible';
 import {isMobileDisplay} from '~/helpers/device';
 import {Section} from '~/pages/research/components/section';

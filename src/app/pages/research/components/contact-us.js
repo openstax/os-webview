@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import {jsx} from '@emotion/react';
 import {Box} from 'boxible';
 import {colors, media} from '~/pages/research/theme';
 import {Section} from '~/pages/research/components/section';
