@@ -38,7 +38,7 @@ function useCategoryTiedToPath() {
     );
     const {title} = useSubjectsContext();
 
-    useCanonicalLink();
+    useCanonicalLink(true, pathname.replace(/\/view-all$/, ''));
 
     // Ensures Lazy Loaded book titles are seen
     useEffect(
