@@ -15,6 +15,7 @@
     },
     "license": "AGPL-3.0",
     "dependencies": {
+        "@emotion/babel-preset-css-prop": "^11.10.0",
         "@emotion/react": "^11.10.6",
         "@emotion/styled": "^11.10.6",
         "@fortawesome/fontawesome-svg-core": "^6.3.0",
