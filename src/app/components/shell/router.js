@@ -1,92 +1,16 @@
-import React, {Suspense, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
     Routes,
     Route,
     Navigate,
     useLocation,
-    useNavigate,
     useParams
 } from 'react-router-dom';
-import Error404 from '~/pages/404/404';
-import {GeneralPageFromSlug} from '~/pages/general/general';
-import linkHelper from '~/helpers/link';
-import retry from '~/helpers/retry';
-import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
-import $ from '~/helpers/$';
-import {useToggle} from '~/helpers/data';
+import useLinkHandler from './router-helpers/useLinkHandler';
 import useRouterContext, {RouterContextProvider} from './router-context';
-
-const FOOTER_PAGES = [
-    'license', 'tos', 'privacy', 'privacy-policy', 'accessibility-statement', 'careers'
-].map((s) => `/${s}/`);
-
-// eslint-disable-next-line complexity
-function handleExternalLink(href, el) {
-    if (el.dataset.local === 'true') {
-        document.location.href = href;
-    } else {
-        const newWindow = window.open(href, '_blank');
-
-        if (newWindow === null) {
-            document.location.href = href;
-        }
-    }
-}
-
-function useLinkHandler() {
-    const navigate = useNavigate();
-    const navigateTo = React.useCallback(
-        (path, state = {x: 0, y: 0}) => {
-            navigate(linkHelper.stripOpenStaxDomain(path), state);
-        },
-        [navigate]
-    );
-    const linkHandler = React.useCallback(
-        // eslint-disable-next-line complexity
-        (e) => {
-            // Only handle left-clicks on links
-            const el = linkHelper.validUrlClick(e);
-
-            if (!el || e.button !== 0) {
-                return;
-            }
-            e.preventDefault();
-
-            const fullyQualifiedHref = el.href;
-            const followLink = (el.target || linkHelper.isExternal(fullyQualifiedHref)) ?
-                () => handleExternalLink(fullyQualifiedHref, el) :
-                () => navigateTo(fullyQualifiedHref);
-
-            // Pardot tracking
-            if ('piTracker' in window) {
-                piTracker(fullyQualifiedHref.split('#')[0]);
-            }
-
-            if (e.trackingInfo) {
-                retry(
-                    () => fetch(
-                        `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
-                        {
-                            method: 'POST',
-                            mode: 'cors',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(e.trackingInfo)
-                        }
-                    )
-                )
-                    .catch((err) => {throw new Error(`Unable to download-track: ${err}`);})
-                    .finally(followLink);
-            } else {
-                followLink();
-            }
-        },
-        [navigateTo]
-    );
-
-    return linkHandler;
-}
+import analytics from '~/helpers/analytics';
+import loadable from 'react-loadable';
+import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 
 function useAnalyticsPageView() {
     const location = useLocation();
@@ -97,42 +21,39 @@ function useAnalyticsPageView() {
     }, [isRedirect]);
 }
 
-// Dynamic import is persnickety about building paths; you can't just pass it
-// a string with a path, it needs to know it's building a string
-// Then webpack chunks everything that matches that string (in this case, all pages)
-// in one chunk. Not as dynamic as one might hope.
-function useImportedComponent(name) {
-    const importFn = React.useCallback(() => import(`~/pages/${name}/${name}`), [name]);
-    const [loadState, setLoadState] = React.useState({});
-    const loadError = React.useMemo(
-        () => loadState.name === name ? loadState.error : null,
-        [loadState, name]
-    );
-    const Component = React.useMemo(
-        () => React.lazy(() => importFn()
-            .catch((error) => {
-                setLoadState({ name, error });
-            })),
-        [importFn, name]
-    );
-
-    return {Component, loadError};
-}
-
-function FallbackToGeneralPage({name}) {
-    const [fallback, setFallback] = useToggle(false);
-
-    if (fallback) {
-        return (<Error404 />);
-    }
-    return (
-        <GeneralPageFromSlug slug={`spike/${name}`} fallback={setFallback} />
-    );
-}
+const FallbackToGeneralPage = loadable({
+    loader: () => import('./router-helpers/fallback-to-general.js'),
+    loading: () => <h1>...General</h1>
+});
+const Error404 = loadable({
+    loader: () => import('~/pages/404/404'),
+    loading: () => <h1>404</h1>
+});
 
 function ImportedPage({name}) {
-    const {Component, loadError} = useImportedComponent(name);
     const {pathname} = useLocation();
+    const Page = React.useMemo(
+        () => {
+            function Loading({error, pastDelay, retry}) {
+                if (error) {
+                    if (error.code === 'MODULE_NOT_FOUND') {
+                        return <FallbackToGeneralPage name={name} />;
+                    }
+                    return <div>Error! <button onClick={ retry }>Retry</button></div>;
+                }
+                if (pastDelay) {
+                    return <LoadingPlaceholder />;
+                }
+                return null;
+            }
+
+            return loadable({
+                loader: () => import(`~/pages/${name}/${name}`),
+                loading: Loading
+            });
+        },
+        [name]
+    );
 
     useAnalyticsPageView();
 
@@ -143,21 +64,19 @@ function ImportedPage({name}) {
         [name, pathname]
     );
 
-    if (loadError) {
-        return (<FallbackToGeneralPage name={name} />);
-    }
 
-    return (
-        <Suspense fallback={<LoadingPlaceholder />}>
-            <Component />
-        </Suspense>
-    );
+    return (<Page />);
 }
+
+const FOOTER_PAGES = [
+    'license', 'tos', 'privacy', 'privacy-policy', 'accessibility-statement', 'careers'
+].map((s) => `/${s}/`);
 
 function TopLevelPage() {
     const {name} = useParams();
     const {isValid, goto404} = useRouterContext();
 
+    React.useEffect(() => console.info('Top Level Render'), []);
     if (!isValid || goto404) {
         return (<Error404 />);
     }
@@ -192,7 +111,6 @@ function MainRoutes() {
             <Route path="/details/" element={<Navigate to="/subjects" replace />} />
             <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
             <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
-            <Route path="/subjects/*" element={<ImportedPage name="subjects" />} />
             <Route path="/subjects-preview/*" element={<ImportedPage name="subjects" />} />
             <Route path="/k12/*" element={<ImportedPage name="k12" />} />
             <Route path="/blog/*" element={<ImportedPage name="blog" />} />
@@ -205,7 +123,7 @@ function MainRoutes() {
                 path="/edtech-partner-program"
                 element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
             />
-            <Route path="/:name" element={<TopLevelPage />} />
+            <Route path="/:name/*" element={<TopLevelPage />} />
             <Route element={<h1>Fell through</h1>} />
         </Routes>
     );

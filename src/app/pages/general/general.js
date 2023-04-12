@@ -2,7 +2,6 @@ import React from 'react';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useTextFromSlug} from '~/helpers/page-data-utils';
-import useRouterContext from '~/components/shell/router-context';
 import {useLocation} from 'react-router-dom';
 import './general.scss';
 
@@ -35,26 +34,29 @@ function isCanonical(slug) {
 
 export function GeneralPageFromSlug({slug, fallback}) {
     const {head, text: html} = useTextFromSlug(slug);
-    const {fail} = useRouterContext();
     const canonicalPath = slug.replace(/.*\//, '/');
     const putCanonicalLinkInPage = isCanonical(slug);
-
-    if (html instanceof Error) {
-        fallback ? fallback() : fail(`Could not load general page from ${slug}`);
-    }
 
     useDocumentHead({
         title: head?.title || 'OpenStax',
         description: head?.description,
         noindex: !putCanonicalLinkInPage
     });
-
     useCanonicalLink(putCanonicalLinkInPage, canonicalPath);
 
+    if (html instanceof Error) {
+        if (fallback) {
+            fallback();
+        }
+        return <h1>Error: {head}</h1>;
+    }
+
+    if (!html) {
+        return <h1>Loading...</h1>;
+    }
+
     return (
-        <main>
-            {html ? <GeneralPage html={html} /> : <h1>Loading...</h1>}
-        </main>
+        <GeneralPage html={html} />
     );
 }
 

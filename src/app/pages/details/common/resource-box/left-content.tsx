@@ -24,7 +24,7 @@ type LinkIsSet = {
     link: {url: string; text: string};
 };
 
-type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
+export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
     trackingInfo: object;
 };
 
