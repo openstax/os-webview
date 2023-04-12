@@ -146,7 +146,7 @@ module.exports = {
         'no-trailing-spaces': 'error',
         'no-whitespace-before-property': 'error',
         'one-var': ['error', 'never'],
-        'operator-linebreak': ['error', 'after'],
+        'operator-linebreak': 'off',
         'padded-blocks': ['error', {
             'blocks': 'never',
             'switches': 'never',

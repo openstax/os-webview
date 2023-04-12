@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 import useLinkHandler from './router-helpers/useLinkHandler';
 import useRouterContext, {RouterContextProvider} from './router-context';
-import analytics from '~/helpers/analytics';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 
