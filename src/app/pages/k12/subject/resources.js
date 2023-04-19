@@ -1,14 +1,29 @@
 import React from 'react';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
+import useUserContext from '~/contexts/user';
 import './resources.scss';
 
 function ResourceLink({ data }) {
     const url = data.linkExternal || data.linkDocumentUrl;
+    const {isVerified} = useUserContext();
+
+    React.useEffect(
+        () => {
+            if (!data.resourceUnlocked) {
+                console.info('Need to check', data);
+            }
+        },
+        [data]
+    );
 
     return (
         <li>
-            <a href={url}>{data.book}</a>
+            {
+                data.resourceUnlocked || isVerified ?
+                <a href={url}>{data.book}</a> :
+                <span>{data.book} (verified instructor only)</span>
+            }
         </li>
     );
 }
