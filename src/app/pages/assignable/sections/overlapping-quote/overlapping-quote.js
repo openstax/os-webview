@@ -3,23 +3,20 @@ import './overlapping-quote.scss';
 
 export default function OverlappingQuote({
     data: {
-        quote, quoteAuthor: name, quoteTitle: title, quoteSchool: school
+        addAssignableCtaHeader: header,
+        addAssignableCtaDescription: description,
+        addAssignableCtaLink: url,
+        addAssignableCtaButtonText: buttonText
     }
 }) {
-    if (!quote) {
-        return null;
-    }
-
     return (
         <section className="overlapping-quote near-white">
             <div className="overlapping">
                 <div className="quote-box">
-                    <div className="big-orange-quote">“</div>
                     <div className="text-block">
-                        <div className="quote">{quote}</div>
-                        <div className="name">- {name}</div>
-                        <div className="title">{title}</div>
-                        <div className="school">{school}</div>
+                        <h1>{header}</h1>
+                        <div className="description">- {description}</div>
+                        <a className="btn primary" href={url}>{buttonText}</a>
                     </div>
                 </div>
             </div>

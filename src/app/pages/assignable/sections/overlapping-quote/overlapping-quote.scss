@@ -3,6 +3,9 @@
 .assignable.page .overlapping-quote {
 
     overflow: visible;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding: 0;
     position: relative;
 
     @include width-up-to($phone-max) {
@@ -35,9 +38,6 @@
 
         background-color: white;
         color: text-color(normal);
-        display: grid;
-        grid-gap: 1rem;
-        grid-template-columns: auto 1fr;
         min-height: 16rem;
         padding: 4rem;
         pointer-events: none;
@@ -46,24 +46,19 @@
             padding: 3.5rem;
         }
 
-        .quote {
-            margin-bottom: 2rem;
+        h1 {
+            @include set-font(h2);
+            margin: 0;
         }
 
         .text-block {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
             max-width: $text-content-max;
         }
 
-        .name {
-            font-weight: bold;
-        }
-    }
-
-    .big-orange-quote {
-        @include set-font(hero-h1);
-
-        color: os-color(orange);
-        margin-top: -1rem;
     }
 
 }
