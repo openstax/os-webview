@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import FAQSection from '../shared/faq-section';
+import FAQSection from '~/components/faq-section/faq-section';
 import BookTile from '~/components/book-tile/book-tile';
 import './books.scss';
 

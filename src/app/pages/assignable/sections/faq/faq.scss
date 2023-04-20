@@ -1,6 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import '../../../components/faq-section/faq-section';
+@import '../../../../components/faq-section/faq-section';
 
-.k12.page .faq {
+.assignable.page .faq {
     @include faq-section();
 }
