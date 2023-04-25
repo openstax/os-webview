@@ -5,7 +5,7 @@ import './banner.scss';
 
 export default function Banner({
     data: {
-        heading, subheading,
+        headingTitleImageUrl, subheading,
         headingDescription: description,
         headingImage: {meta: {downloadUrl: image}}
     }
@@ -18,7 +18,7 @@ export default function Banner({
             <div className="background-image" style={{backgroundImage: `url(${optimizedImage})`}} />
             <div className="content-block">
                 <div>
-                    <h1>{heading}</h1>
+                    <img src={headingTitleImageUrl} className="title-image" alt="" />
                     <div><i>{subheading}</i></div>
                 </div>
                 <RawHTML class="text-content" html={description} />
