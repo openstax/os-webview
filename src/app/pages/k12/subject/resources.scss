@@ -57,5 +57,10 @@
             list-style: none;
             padding: 2rem 0;
         }
+
+        li {
+            margin-left: $normal-margin;
+            text-indent: -$normal-margin;
+        }
     }
 }
