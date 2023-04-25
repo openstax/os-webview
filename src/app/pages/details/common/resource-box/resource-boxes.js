@@ -239,14 +239,35 @@ function LeftButton({ model }) {
     );
 }
 
+function useDoneWaitingForModelChange(model) {
+    const [timeIsUp, toggle] = useToggle(false);
+    const timerRef = React.useRef();
+
+    React.useEffect(
+        () => {
+            window.clearTimeout(timerRef.current);
+            toggle(false);
+            timerRef.current = window.setTimeout(
+                () => toggle(true),
+                250
+            );
+        },
+        [model, toggle]
+    );
+
+    return timeIsUp;
+}
+
+// eslint-disable-next-line complexity
 function LeftContent({ model }) {
     const { userStatus } = useUserContext();
+    const doneWaiting = useDoneWaitingForModelChange(model);
 
     if (!model.link) {
         return <AccessPending />;
     }
     if (!model.link.url) {
-        return <MissingLink />;
+        return doneWaiting ? <MissingLink /> : null;
     }
 
     // logged in but not an instructor
