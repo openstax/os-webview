@@ -7,13 +7,28 @@
     }
     position: relative;
 
-    .course-list {
-        display: grid;
-        gap: 3rem;
-        grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+    .content-block {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
 
-        img {
-            max-width: 20rem;
+        > * {
+            max-width: 100%;
+        }
+    }
+
+    .course-list {
+        display: flex;
+        flex-wrap: wrap;
+
+        @include scale-feature(gap, 2rem, 3rem);
+
+        > * {
+            @include scale-feature(width, 16rem, 20rem);
+
+            img {
+                width: 100%;
+            }
         }
     }
 }
