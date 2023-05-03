@@ -28,7 +28,7 @@ window.SETTINGS = {};
 
     await import('../styles/main.scss');
 
-    if (['3', '4'].includes(window.SETTINGS.analyticsID.substr(-1))) {
+    if (['3', '4'].includes(window.SETTINGS.analyticsID?.substr(-1))) {
         import('preact/debug');
     }
 
