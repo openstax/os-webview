@@ -22,23 +22,7 @@ const tagManagerID = 'GTM-W6N7PB';
     }
 })(window, document, 'script', 'dataLayer', tagManagerID);
 
-// GA4 stuff
-const {GA4: ga4id} = window.SETTINGS;
-
-if (ga4id) {
-    const tag = document.createElement('script');
-
-    tag.type = 'text/javascript';
-    tag.onload = () => {
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag(...args) {
-            window.dataLayer.push(args);
-        }
-
-        gtag('js', new Date());
-        gtag('config', ga4id);
-    };
-    tag.src = `https://www.googletagmanager.com/gtag/js?id=${ga4id}`;
-    document.body.appendChild(tag);
-}
+window.dataLayer = window.dataLayer || [];
+// eslint-disable-next-line prefer-rest-params
+window.gtag = window.gtag || function () {window.dataLayer.push(arguments);};
+window.gtag('set', {platform: 'osweb'});
