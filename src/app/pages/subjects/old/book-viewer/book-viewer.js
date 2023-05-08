@@ -45,7 +45,11 @@ function CategorySection({categoryData, categorizedBooks, category}) {
     return (
         <div className={cn('book-category', {hidden})}>
             <RawHTML Tag="h2" html={subjectHtml} className="subject" />
-            <div className="row">
+              <div
+                className="row"
+                data-analytics-content-list={`subjects_${categoryData.value}`}
+                data-list-name={`Subjects (${categoryData.cms})`}
+              >
                 {books.map((book) => <BookCover {...book} key={book.slug} />)}
             </div>
         </div>

@@ -112,6 +112,8 @@ function ThreeDotMenu({slug, details}) {
 
 export default function BookCover({
     coverUrl,
+    cnxId,
+    subjects,
     slug,
     title,
     bookState: state,
@@ -130,11 +132,17 @@ export default function BookCover({
     return (
         <div className={className}>
             <ThreeDotMenu slug={slug} details={details} />
-            <a href={`/details/${slug}`}>
-                <LazyLoad once offset={100}>
-                    <img src={coverUrl} alt={title} />
-                </LazyLoad>
-                <div className="cover-caption">{title}</div>
+            <a
+              href={`/details/${slug}`}
+              data-analytics-select-content={cnxId}
+              data-content-type="book"
+              data-content-name={title}
+              data-content-categories={subjects.join(',')}
+            >
+              <LazyLoad once offset={100}>
+                  <img src={coverUrl} alt={title} />
+              </LazyLoad>
+              <div className="cover-caption">{title}</div>
             </a>
         </div>
     );
