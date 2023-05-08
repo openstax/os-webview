@@ -40,7 +40,6 @@
         color: text-color(normal);
         min-height: 16rem;
         padding: 4rem;
-        pointer-events: none;
 
         @include width-up-to($phone-max) {
             padding: 3.5rem;
