@@ -96,10 +96,16 @@ function Top({ isNew, model }) {
     );
 }
 
-function BottomBasic({ leftContent, icon }) {
+function BottomBasic({ leftContent, icon, model }) {
     return (
         <div className="bottom">
-            <a className="left">
+            <a
+              className="left"
+              data-analytics-select-content={model.id}
+              data-content-type="book_resource"
+              data-content-name={model.heading}
+              data-content-categories={model.resource_category}
+            >
                 <FontAwesomeIcon icon={icon} />
                 {leftContent}
             </a>
@@ -229,6 +235,10 @@ function LeftButton({ model }) {
                 data-local={model.iconType === 'lock'}
                 onClick={openDialog}
                 data-track={model.heading}
+                data-analytics-select-content={model.id}
+                data-content-type="book_resource"
+                data-content-name={model.heading}
+                data-content-categories={model.resource_category}
             >
                 <FontAwesomeIcon icon={icon} />
                 <span>{model.link.text}</span>
@@ -362,7 +372,7 @@ function VideoResourceBox({ model }) {
                     <source src={model.video_file} type="video/avi" />
                 </video>
             </div>
-            <BottomBasic leftContent="Watch video" icon={faPlay} />
+            <BottomBasic model={model} leftContent="Watch video" icon={faPlay} />
             <Dialog
                 isOpen={isOpen}
                 onPutAway={toggle}

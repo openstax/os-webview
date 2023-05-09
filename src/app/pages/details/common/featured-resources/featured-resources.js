@@ -25,7 +25,11 @@ function FeaturedResources({headline, resources}) {
             <div className="headline">
                 {headline}
             </div>
-            <div className="resources">
+            <div
+                data-analytics-content-list="featured_resources"
+                data-list-name="Featured Resources"
+                className="resources"
+            >
                 <ResourceBoxes models={modResources} />
             </div>
         </div>

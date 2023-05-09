@@ -87,6 +87,7 @@ export function useResources(slug) {
 export function resourceBoxModel(resourceData, userStatus, bookModel) {
     return Object.assign(
         {
+            id: resourceData.resource.id,
             heading: resourceData.resource.heading,
             description: resourceData.resource.description,
             creatorFest: resourceData.resource.creatorFestResource,

@@ -110,7 +110,7 @@ export default function DesktopView({onContentChange}) {
     return (
         <React.Fragment>
             <div className="tab-controller">
-                <TabGroup {...{TabTag, labels, selectedLabel, setSelectedLabel}}>
+                <TabGroup {...{TabTag, labels, selectedLabel, setSelectedLabel}} data-analytics-nav="Book Details Tabs">
                     <GiveLink />
                 </TabGroup>
             </div>

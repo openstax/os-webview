@@ -105,7 +105,11 @@ export default function PhoneView() {
             <div className="main-grid">
                 <GetThisTitle model={model} />
                 <div className="accordion-region">
-                    <AccordionGroup items={items(model)} preExpanded={[selectedTab]} />
+                    <AccordionGroup
+                      data-analytics-nav="Book Details Accordion"
+                      items={items(model)}
+                      preExpanded={[selectedTab]}
+                    />
                 </div>
             </div>
             <div className="let-us-know-region">
