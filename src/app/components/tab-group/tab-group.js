@@ -7,20 +7,24 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}) {
     const blurAndSetLabel = React.useCallback(
         (event) => {
             event.currentTarget.blur();
-            setSelectedLabel(label);
+            window.setTimeout(() => setSelectedLabel(label), 1);
         },
         [setSelectedLabel, label]
     );
 
+    const isSelected = React.useMemo(() =>
+        label === selectedLabel
+    , [label, selectedLabel]);
+
     // Couldn't get this to work as a normal attribute expression;
     // it would not remove the aria-current attribute, only its value
     useLayoutEffect(() => {
-        if (label === selectedLabel) {
+        if (isSelected) {
             ref.current.setAttribute('aria-current', 'page');
         } else {
             ref.current.removeAttribute('aria-current');
         }
-    }, [label, selectedLabel]);
+    }, [isSelected]);
 
     return (
         <TabTag
@@ -29,7 +33,7 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}) {
             role="link" tabIndex="0"
             onClick={blurAndSetLabel}
             onKeyDown={treatSpaceOrEnterAsClick}
-            data-analytics-link={analytics ? '' : undefined}
+            data-analytics-link={analytics && !isSelected ? '' : undefined}
         >
             {label}
         </TabTag>

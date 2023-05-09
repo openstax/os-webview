@@ -63,12 +63,13 @@ function TitleBar({title, titleTag, chevronDirection, tooltipContent, analytics}
         down: faChevronDown,
         up: faChevronUp
     })[chevronDirection];
+    const isOpen = chevronDirection === 'up';
 
     return (
         <AccordionItemHeading aria-level="2">
             <AccordionItemButton
                 className="accordion-button"
-                data-analytics-link={analytics ? '' : undefined}
+                data-analytics-link={analytics && !isOpen ? '' : undefined}
             >
                 <div className="label">
                     {title}
@@ -129,7 +130,7 @@ export default function AccordionGroup({
                     20
                 );
             }
-            onChange(...args);
+            window.setTimeout(() => onChange(...args), 1);
         },
         [onChange, noScroll]
     );
