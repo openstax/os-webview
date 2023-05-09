@@ -71,13 +71,23 @@ function WebinarBox({entry, upcoming}) {
     );
 }
 
+function NoWebinars() {
+    return (
+        <div className="card">
+            (No webinars)
+        </div>
+    );
+}
+
 export default function WebinarList({data, upcoming=false}) {
     return (
         <div className="webinar-list">
             {
-                data.map((entry) =>
-                    <WebinarBox entry={entry} key={entry.registrationUrl} upcoming={upcoming} />
-                )
+                data.length ?
+                    data.map((entry) =>
+                        <WebinarBox entry={entry} key={entry.registrationUrl} upcoming={upcoming} />
+                    ) :
+                    <NoWebinars />
             }
         </div>
     );
