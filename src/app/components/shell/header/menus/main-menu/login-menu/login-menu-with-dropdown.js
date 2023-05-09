@@ -6,8 +6,8 @@ import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from '../dropdown/dropdown';
 
 const settings = window.SETTINGS;
-const facultySignupStep4 = `${settings.accountHref}/signup/educator/profile_form`;
-const reqFacultyAccessLink = `${settings.accountHref}/signup/educator/cs_form`;
+const facultySignupStep4 = `${settings.accountHref}/i/signup/educator/profile_form`;
+const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
 const profileLink = `${settings.accountHref}/profile`;
 
 function TutorMenuItem() {
