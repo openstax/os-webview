@@ -36,7 +36,7 @@ export function useSeenCounter(seenEnough) {
 
 export function PutAway({onClick}) {
     return (
-        <div className="put-away" role="button" onClick={onClick}>
+        <div className="put-away" role="button" onClick={onClick} data-nudge-action="dismissed">
             &times;
         </div>
     );

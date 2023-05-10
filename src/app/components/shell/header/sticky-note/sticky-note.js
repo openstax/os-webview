@@ -11,7 +11,12 @@ export default function StickyNote({stickyData}) {
     }
 
     return (
-        <div className="sticky-note">
+        <div
+            className="sticky-note"
+            data-analytics-view
+            data-analytics-nudge="emergency"
+            data-nudge-placement="banner"
+        >
             <div className="text-content" role="alert">
                 <PutAway />
                 <RawHTML className="html-content" html={stickyData.emergency_content} />

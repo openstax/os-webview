@@ -33,7 +33,7 @@ function trackClick(event) {
     }
 }
 
-function StickyContent({stickyData}) {
+function StickyContent({stickyData, children}) {
     const ref = React.useRef();
 
     React.useEffect(
@@ -48,9 +48,16 @@ function StickyContent({stickyData}) {
     );
 
     return (
-        <div className="microsurvey-content" ref={ref}>
+        <div
+            className="microsurvey-content"
+            ref={ref}
+            data-analytics-view
+            data-analytics-nudge="donation"
+            data-nudge-placement="popup"
+        >
+            {children}
             <RawHTML className="blurb" html={stickyData.body} />
-            <a className="btn primary" href={stickyData.link}>
+            <a className="btn primary" href={stickyData.link} data-nudge-action="interacted">
                 {stickyData.link_text}
             </a>
         </div>
@@ -65,7 +72,7 @@ function useBoundStickyContent(stickyData, incrementSeenCount) {
     );
 
     return React.useCallback(
-        () => <StickyContent stickyData={stickyData} />,
+        (props) => <StickyContent stickyData={stickyData} {...props} />,
         [stickyData]
     );
 }
