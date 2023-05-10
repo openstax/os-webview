@@ -15,7 +15,7 @@ export default function OverlappingQuote({
                 <div className="quote-box">
                     <div className="text-block">
                         <h1>{header}</h1>
-                        <div className="description">- {description}</div>
+                        <div className="description">{description}</div>
                         <a className="btn primary" href={url}>{buttonText}</a>
                     </div>
                 </div>
