@@ -15,6 +15,7 @@ import LatestBlogPosts from './latest-blog-posts/latest-blog-posts';
 import {ArticleFromSlug} from './article/article';
 import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
 import timers from './timers';
+import StickyFooter from '../../components/sticky-footer/sticky-footer';
 import './blog.scss';
 
 export function SearchResultsPage() {
@@ -38,6 +39,11 @@ export function SearchResultsPage() {
 // Exported so it can be tested
 export function MainBlogPage() {
     const {pinnedStory, pageDescription} = useBlogContext();
+    const leftButton = {
+        descriptionHtml: 'Interested in sharing your story?',
+        text: 'Write for us',
+        link: '/write-for-us'
+    };
 
     useDocumentHead({
         title: 'OpenStax News',
@@ -55,6 +61,7 @@ export function MainBlogPage() {
                 <PinnedArticle />
                 <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
             </div>
+            <StickyFooter leftButton={leftButton} />
         </WindowContextProvider>
     );
 }
