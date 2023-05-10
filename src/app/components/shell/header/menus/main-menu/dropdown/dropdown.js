@@ -28,7 +28,7 @@ function OptionalWrapper({isWrapper=true, children}) {
     );
 }
 
-export default function Dropdown({Tag='li', className, label, children, excludeWrapper=false}) {
+export default function Dropdown({Tag='li', className, label, children, excludeWrapper=false, navAnalytics}) {
     const topRef = useRef();
     const dropdownRef = useRef();
     const dropdownCtx = useDropdownContext();
@@ -49,14 +49,17 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
         const previousActiveDropdown = dropdownCtx.activeDropdown;
 
         event.preventDefault();
-        dropdownCtx.setActiveDropdown(topRef);
-        dropdownCtx.setSubmenuLabel(label);
-        if (isMobileDisplay()) {
-            event.target.blur();
-            if (previousActiveDropdown === topRef) {
-                closeMenu();
-            }
-        }
+
+        window.setTimeout(() => {
+          dropdownCtx.setActiveDropdown(topRef);
+          dropdownCtx.setSubmenuLabel(label);
+          if (isMobileDisplay()) {
+              event.target.blur();
+              if (previousActiveDropdown === topRef) {
+                  closeMenu();
+              }
+          }
+        }, 1);
     }
 
     function openDesktopMenu(event) {
@@ -106,12 +109,16 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
         >
             <OptionalWrapper isWrapper={!excludeWrapper}>
                 <a
-                    href="." role="menuitem" aria-haspopup="true"
+                    href="."
+                    role="menuitem"
+                    aria-haspopup="true"
                     onFocus={openDesktopMenu}
                     ref={topRef}
                     onClick={openMenu}
                     onKeyDown={treatSpaceOrEnterAsClick}
                     className={cn({'is-open': isOpen})}
+                    data-analytics-link={isOpen ? 'false' : ''}
+                    data-analytics-label={label}
                 >
                     <span id={labelId}>{label}</span>
                     <svg className="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30">
@@ -126,6 +133,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                         aria-expanded={isOpen}
                         aria-label={`${label} menu`}
                         ref={dropdownRef}
+                        data-analytics-nav={navAnalytics || undefined}
                     >
                         {children}
                     </div>

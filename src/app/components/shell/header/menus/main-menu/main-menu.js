@@ -44,7 +44,7 @@ const menuStructure = [
 function DropdownOrMenuItem({item}) {
     if ('items' in item) {
         return (
-            <Dropdown label={item.label}>
+            <Dropdown label={item.label} navAnalytics={`Main Menu (${item.label})`}>
                 <MenusFromStructure structure={item.items} />
             </Dropdown>
         );
@@ -75,7 +75,7 @@ function SubjectsMenu() {
     }
 
     return (
-        <Dropdown className='subjects-dropdown' label='Subjects'>
+        <Dropdown className='subjects-dropdown' label='Subjects' navAnalytics="Main Menu (Subjects)">
             {categories.map((obj) => (
                 <MenuItem
                     key={obj.value}
@@ -95,7 +95,7 @@ function SubjectsMenu() {
 
 export default function MainMenu() {
     return (
-        <ul className='nav-menu main-menu no-bullets' role='menubar'>
+        <ul className='nav-menu main-menu no-bullets' role='menubar' data-analytics-nav="Main Menu">
             <SubjectsMenu />
             <MenusFromStructure structure={menuStructure} />
             <LoginMenu />
