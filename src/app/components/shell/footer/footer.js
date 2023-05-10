@@ -80,7 +80,7 @@ function Footer({
 
 export default function FooterLoader() {
     return (
-        <footer className="page-footer">
+        <footer className="page-footer" data-analytics-nav="Footer">
             <LoaderPage slug="footer" Child={Footer} />
         </footer>
     );
