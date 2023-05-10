@@ -45,7 +45,7 @@ function resourceBoxPermissions({
 // is available to the user (instructor version)
 export function instructorResourceBoxPermissions(resourceData, userStatus, search) {
     const resourceStatus = () => {
-        if (resourceData.resourceUnlocked || userStatus.isInstructor) {
+        if (resourceData?.resource?.resourceUnlocked || userStatus.isInstructor) {
             return 'unlocked';
         }
         if (userStatus.pendingVerification) {
