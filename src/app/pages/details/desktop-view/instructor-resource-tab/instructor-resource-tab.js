@@ -105,7 +105,11 @@ function InstructorResourceTab({model, userStatus}) {
                         />
                 }
                 <div className={`cards ${includePartners}`}>
-                    <div className="resources">
+                    <div
+                        className="resources"
+                        data-analytics-content-list="instructor_resources"
+                        data-list-name="Instructor Resources"
+                    >
                         <VideoResourceBoxes
                             models={bookVideoFacultyResources}
                             blogLinkModels={blogLinkModels}

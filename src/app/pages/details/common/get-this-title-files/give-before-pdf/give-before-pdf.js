@@ -42,7 +42,12 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
     );
 
     return (
-        <div className="give-before-pdf">
+        <div
+            className="give-before-pdf"
+            data-analytics-view
+            data-analytics-nudge="donate"
+            data-nudge-placement="PDF download"
+        >
             <img className="download-icon" src={data.download_image} alt="" />
             <h1>{data.download_ready}</h1>
             <hr />
@@ -56,11 +61,21 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
                 <span>{data.header_subtitle}</span>
             </p>
             <div className="button-row">
-                <a href={data.give_link} className="btn primary" onClick={OpenGiveInNewWindow}>
+                <a
+                    href={data.give_link}
+                    className="btn primary"
+                    onClick={OpenGiveInNewWindow}
+                    data-nudge-action="interacted"
+                >
                     {data.give_link_text}
                     <FontAwesomeIcon icon={faHeart} />
                 </a>
-                <a href={data.thank_you_link} className="btn secondary" onClick={onThankYouClick}>
+                <a
+                    href={data.thank_you_link}
+                    className="btn secondary"
+                    onClick={onThankYouClick}
+                    data-nudge-action="thank-you"
+                >
                     {data.thank_you_link_text}
                 </a>
             </div>

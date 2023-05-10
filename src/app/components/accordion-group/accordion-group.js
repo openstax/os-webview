@@ -58,15 +58,19 @@ function TooltipButton({content}) {
     );
 }
 
-function TitleBar({title, titleTag, chevronDirection, tooltipContent}) {
+function TitleBar({title, titleTag, chevronDirection, tooltipContent, analytics}) {
     const icon = ({
         down: faChevronDown,
         up: faChevronUp
     })[chevronDirection];
+    const isOpen = chevronDirection === 'up';
 
     return (
         <AccordionItemHeading aria-level="2">
-            <AccordionItemButton className="accordion-button">
+            <AccordionItemButton
+                className="accordion-button"
+                data-analytics-link={analytics && !isOpen ? '' : undefined}
+            >
                 <div className="label">
                     {title}
                     {
@@ -87,13 +91,13 @@ function toUuid(name) {
     return name.replace(/\W+/g, '_');
 }
 
-function Item({title, titleTag, tooltipContent, checkChevronDirection, contentComponent}) {
+function Item({title, titleTag, tooltipContent, checkChevronDirection, contentComponent, analytics}) {
     const uuid = toUuid(title);
     const chevronDirection = checkChevronDirection(uuid);
 
     return (
         <AccordionItem uuid={uuid} className="accordion-item">
-            <TitleBar {...{title, titleTag, tooltipContent, chevronDirection}} />
+            <TitleBar {...{title, titleTag, tooltipContent, chevronDirection, analytics}} />
             <AccordionItemPanel className="content-pane">
                 {contentComponent}
             </AccordionItemPanel>
@@ -106,7 +110,8 @@ export default function AccordionGroup({
     accordionProps={allowZeroExpanded: true},
     noScroll=false,
     forwardOnChange,
-    preExpanded=[]
+    preExpanded=[],
+    ...props
 }) {
     const root = React.useRef();
     const preExpandedUuids = preExpanded.map(toUuid);
@@ -125,10 +130,11 @@ export default function AccordionGroup({
                     20
                 );
             }
-            onChange(...args);
+            window.setTimeout(() => onChange(...args), 1);
         },
         [onChange, noScroll]
     );
+    const analyticsNav = props['data-analytics-nav'];
 
     return (
         <div ref={root}>
@@ -137,11 +143,16 @@ export default function AccordionGroup({
                 onChange={scrollAndChangeChevronPlus}
                 className="accordion-group"
                 preExpanded={preExpandedUuids}
+                data-analytics-nav={analyticsNav}
             >
                 {
                     items.map((item) =>
-                        item.inline ||
-                            <Item key={item.title} {...item} checkChevronDirection={chevronDirection} />
+                        item.inline || <Item
+                          analytics={!!analyticsNav}
+                          key={item.title}
+                          {...item}
+                          checkChevronDirection={chevronDirection}
+                        />
                     )
                 }
             </Accordion>

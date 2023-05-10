@@ -18,7 +18,15 @@ function Blurb({blurb, badgeImage, onClick}) {
     );
 
     return (
-        <a className="blurb" href={blurb.url} onClick={trackClick}>
+        <a
+          className="blurb"
+          href={blurb.url}
+          onClick={trackClick}
+          data-analytics-select-content={blurb.id}
+          data-content-type="partner_profile"
+          data-content-name={blurb.name}
+          data-content-categories={blurb.type}
+        >
             <div className="logo">
                 <img src={blurb.image} alt="" />
                 {
@@ -68,11 +76,15 @@ export default function Partners({bookAbbreviation, model}) {
     return (
         <div className="partners">
             <div className="callout"></div>
-            <div className="title-bar">
+            <div className="title-bar" data-analytics-nav={title}>
                 {title}
                 <a className="filter-for-book" href="/partners" onClick={onClick}>{seeMoreText}</a>
             </div>
-            <div className="blurb-scroller">
+            <div
+              className="blurb-scroller"
+              data-analytics-content-list="book_partners"
+              data-list-name={title}
+            >
                 <div className="blurbs">
                     {
                         blurbs.map((blurb) =>

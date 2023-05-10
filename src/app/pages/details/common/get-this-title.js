@@ -55,7 +55,7 @@ export default function GetThisTitle({model}) {
     return (
         <div className="get-the-book">
             <div className="get-this-title">
-                <div className="options" onClick={interceptLinkClicks}>
+                <div className="options" onClick={interceptLinkClicks} data-analytics-nav="Get the book">
                     <TocOption model={model} />
                     <WebviewOption model={model} />
                     <StudyEdgeOption model={model} />

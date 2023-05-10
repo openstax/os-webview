@@ -28,7 +28,11 @@ function StudentResourceTab({model, userStatus}) {
                 <RawHTML Tag="h2" html={fss.heading} />
                 <RawHTML html={fss.content} className="blurb-body" />
             </div>
-            <div className="resources">
+            <div
+                className="resources"
+                data-analytics-content-list="student_resources"
+                data-list-name="Student Resources"
+            >
                 <ResourceBoxes models={models} />
             </div>
         </div>

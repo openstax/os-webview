@@ -52,7 +52,11 @@ export function InstructorResourcesPane({model, userStatus}) {
                 OpenStax Partners{' '}
                 <FontAwesomeIcon icon={faSignOutAlt} />
             </a>
-            <div className="free-resources-region">
+            <div
+                className="free-resources-region"
+                data-analytics-content-list="instructor_resources"
+                data-list-name="Instructor Resources"
+            >
                 <VideoResourceBoxes models={bookVideoFacultyResources} referenceModels={referenceModels} />
                 <ResourceBoxes models={otherModels} includeCommonsHub />
             </div>
