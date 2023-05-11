@@ -62,6 +62,14 @@
 
     .text-content {
       padding-bottom: 4rem;
+
+      a[href^="https://www2"] {
+        @include button();
+        @extend %primary;
+
+        height: 4rem;
+        margin: 0.5rem 0;
+      }
     }
 
     .testimonial {
