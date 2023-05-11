@@ -8,15 +8,6 @@ function ResourceLink({ data }) {
     const url = data.linkExternal || data.linkDocumentUrl;
     const {isVerified} = useUserContext();
 
-    React.useEffect(
-        () => {
-            if (!data.resourceUnlocked) {
-                console.info('Need to check', data);
-            }
-        },
-        [data]
-    );
-
     return (
         <li>
             {

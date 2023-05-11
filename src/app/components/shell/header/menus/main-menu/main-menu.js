@@ -17,7 +17,7 @@ const menuStructure = [
         label: 'Technology',
         items: [
             {label: 'OpenStax Kinetic', url: '/kinetic'},
-            // {label: 'OpenStax Assignable', url: '/assignable'},
+            {label: 'OpenStax Assignable', url: '/assignable'},
             {label: 'Partner learning platform', url: '/partners'}
         ]
     },

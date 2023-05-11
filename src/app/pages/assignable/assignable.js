@@ -5,7 +5,7 @@ import Banner from './sections/banner/banner';
 import OverlappingQuote from './sections/overlapping-quote/overlapping-quote';
 import About from './sections/about/about';
 import Courses from './sections/courses/courses';
-import Add from './sections/add/add';
+import FAQ from './sections/faq/faq';
 import Cta from './sections/cta/cta';
 import './assignable.scss';
 
@@ -17,7 +17,7 @@ function Assignable({data}) {
             <About data={data} />
             <LazyLoad>
                 <Courses data={data} />
-                <Add data={data} />
+                <FAQ data={data} />
             </LazyLoad>
             <LazyLoad>
                 <Cta data={data} />
