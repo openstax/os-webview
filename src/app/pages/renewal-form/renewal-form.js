@@ -93,6 +93,7 @@ function Counts({counts, updateCount}) {
                                 type="number" value={counts[b.value]}
                                 onChange={({target}) => updateCount(b.value, target.value)}
                                 min="1" max="999"
+                                required
                             />
                         </React.Fragment>
                     )
