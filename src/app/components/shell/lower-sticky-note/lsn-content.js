@@ -45,7 +45,7 @@ function NoteWithImage({bannerInfo}) {
             <img src={bannerInfo.banner_thumbnail} alt="" />
             <div className="text-side">
                 <RawHTML className="blurb" html={bannerInfo.html_message} />
-                <a className="cta" href={bannerInfo.link_url}>
+                <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
                     {bannerInfo.link_text}
                     <FontAwesomeIcon icon={faChevronRight} />
                 </a>
@@ -58,7 +58,7 @@ function NoteWithoutImage({bannerInfo}) {
     return (
         <div className="content">
             <RawHTML className="blurb" html={bannerInfo.html_message} />
-            <a className="cta" href={bannerInfo.link_url}>
+            <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
                 <FontAwesomeIcon icon={faHeart} className="red-heart" />
                 {bannerInfo.link_text}
                 <FontAwesomeIcon icon={faChevronRight} />
@@ -77,6 +77,9 @@ export default function LowerStickyNote({stickyData, PutAway}) {
                 )
             }
             onClick={trackClick}
+            data-analytics-view
+            data-analytics-nudge="donation"
+            data-nudge-placement="banner"
         >
             <PutAway />
             {

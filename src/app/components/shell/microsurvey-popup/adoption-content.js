@@ -53,13 +53,24 @@ export default function useAdoptionMicrosurveyContent() {
         [clicked, recentlyDismissed, setCookieValue]
     );
 
-    function AdoptionContent() {
+    function AdoptionContent({children}) {
         return (
-            <div className="microsurvey-content" ref={ref}>
+            <div
+              className="microsurvey-content"
+              ref={ref}
+              data-analytics-view
+              data-analytics-nudge="adoption"
+              data-nudge-placement="popup"
+            >
+                {children}
                 <h1>
                     Hi, {name}. Could you update our records
                     of which books you&apos;re using?
-                    Fill out the <a href="/renewal-form?from=popup" onClick={disable}>form here</a>.
+                    Fill out the <a
+href="/renewal-form?from=popup"
+                        onClick={disable}
+                        data-nudge-action="interacted"
+                    >form here</a>.
                 </h1>
             </div>
         );
