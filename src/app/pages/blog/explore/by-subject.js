@@ -22,7 +22,7 @@ export default function ExploreBySubject() {
     return (
         <section id="explore-by-subject">
             <h2>Explore by subject</h2>
-            <div className="subject-links">
+            <div className="subject-links" data-analytics-nav="Blog Subjects">
                 {
                     categories.map(
                         (c) => <SubjectLink data={c} key={c.id} />

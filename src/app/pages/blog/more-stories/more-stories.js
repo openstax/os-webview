@@ -20,7 +20,11 @@ export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
         .slice(-pageSize);
 
     return (
-        <div className="latest-blurbs cards">
+        <div
+            className="latest-blurbs cards"
+            data-analytics-content-list="latest_blog_posts"
+            data-list-name="Latest Blog Posts"
+        >
             {
                 articles.map((article) =>
                     <div className="card" key={article.articleSlug}>
@@ -38,7 +42,11 @@ export default function MoreStories({exceptSlug, subhead}) {
             <SectionHeader head="Latest blog posts" subhead={subhead} />
             <LatestBlurbs page={1} pageSize={3} exceptSlug={exceptSlug} />
             <div className="button-row">
-                <a className="btn primary" href="/blog/latest">View more of the latest</a>
+                <a
+                    className="btn primary"
+                    href="/blog/latest"
+                    data-analytics-link="blog_latest"
+                >View more of the latest</a>
             </div>
         </div>
     );

@@ -15,7 +15,11 @@ export default function PinnedArticle({subhead}) {
     return (
         <React.Fragment>
             <SectionHeader head="Featured blog post" subhead={subhead} />
-            <div className="pinned-article">
+            <div
+                className="pinned-article"
+                data-list-name="Featured Blog Posts"
+                data-analytics-content-list="featured_blog_posts"
+            >
                 <ArticleSummary {...model} HeadTag='h3' />
             </div>
         </React.Fragment>
