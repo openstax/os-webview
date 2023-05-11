@@ -2,7 +2,10 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import BookDetailsLoader from './book-details-context';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
-import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~/pages/details/common/resource-box/resource-box';
+import {
+    instructorResourceBoxPermissions,
+    studentResourceBoxPermissions
+} from '~/pages/details/common/resource-box/resource-box';
 
 // Test all the conditions in here:
 // userStatus: isInstructor: true|false
@@ -11,8 +14,9 @@ import {instructorResourceBoxPermissions, studentResourceBoxPermissions} from '~
 // resourceData: link_text, link_external, link_document_url
 
 const resourceData = {
-    resourceUnlocked: true,
+    resource: {resourceUnlocked: true},
     linkText: 'Click this',
+    lockedText: 'Login to unlock',
     linkDocument: {file: '/download'}
 };
 const userStatus = {
@@ -46,15 +50,12 @@ function instructorModels(resDelta, userDelta={}) {
 function studentModels(resDelta, userDelta={}) {
     const res = Object.assign({}, resourceData, resDelta);
     const user = Object.assign({}, userStatus, userDelta);
+
     return [
         Object.assign(payload, studentResourceBoxPermissions(
             res, user, 'Student resource'
         ))
     ];
-}
-
-async function getLinkTextContent() {
-
 }
 
 test('handles unlocked instructor resources', async () => {
@@ -65,13 +66,13 @@ test('handles unlocked instructor resources', async () => {
 });
 
 test('handles locked instructor resources', async () => {
-    render(<LangWrapResourceBoxes models={instructorModels({resourceUnlocked: false})} />);
-    expect((await screen.findByRole('link')).textContent).toBe('Login to unlock');
+    render(<LangWrapResourceBoxes models={instructorModels({resource: {resourceUnlocked: false}})} />);
+    expect((await screen.findByRole('link')).textContent).toBe(resourceData.lockedText);
 });
 
 test('allows instructors access to locked resources', async () => {
     const models = instructorModels(
-        {resourceUnlocked: false},
+        {resource: {resourceUnlocked: false}},
         {isInstructor: true}
     );
 
@@ -81,12 +82,12 @@ test('allows instructors access to locked resources', async () => {
 
 test('handles locked student resources', async () => {
     const models = studentModels(
-        {resourceUnlocked: false},
+        {resource: {resourceUnlocked: false}},
         {isStudent: false, isInstructor: false}
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    expect((await screen.findByRole('link')).textContent).toBe('Login to unlock');
+    expect((await screen.findByRole('link')).textContent).toBe(resourceData.lockedText);
 });
 
 test('allows students access to locked resources', async () => {
