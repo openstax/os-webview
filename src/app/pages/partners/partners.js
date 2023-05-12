@@ -132,7 +132,11 @@ function Partners({data}) {
                     height="10" alt="" role="presentation" />
             </section>
             <MobileControlRow {...{advancedFilterOptions, typeOptions}} />
-            <div className="padding">
+            <div
+                className="padding"
+                data-analytics-content-list="partners"
+                data-list-name={headline}
+            >
                 <Results linkTexts={linkTexts} headerTexts={headerTexts} />
             </div>
         </React.Fragment>

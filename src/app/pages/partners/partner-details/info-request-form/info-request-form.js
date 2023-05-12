@@ -244,6 +244,7 @@ export default function InfoRequestForm() {
             <FormTarget submitting={submitting} />
             <MultiPageForm
                 action={techScoutUrl} className="info-request-form"
+                name="partner_info_request"
                 onSubmit={doSubmit} submitting={submitting}
                 target="form-target"
             >
