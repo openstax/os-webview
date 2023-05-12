@@ -84,7 +84,11 @@ export default function ExplorePage() {
                 <PinnedArticle subhead={heading} />
                 <div className="popular-posts">
                     <SectionHeader head="Popular blog posts" subhead={heading} />
-                    <div className="latest-blurbs cards">
+                    <div
+                        className="latest-blurbs cards"
+                        data-analytics-content-list="popular_blog_posts"
+                        data-list-name="Popular Blog Posts"
+                    >
                         {
                             topicPopular.map(blurbModel).map((article) =>
                                 <div className="card" key={article.articleSlug}>

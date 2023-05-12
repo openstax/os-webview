@@ -20,7 +20,7 @@ export default function ExploreCollections() {
     return (
         <section id="explore-collections">
             <h2>Explore collections</h2>
-            <div className="cards">
+            <div className="cards" data-analytics-nav="Blog Collections">
                 {
                     collections.map(
                         (c) => <CollectionLink data={c} key={c.id} />

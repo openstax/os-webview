@@ -15,6 +15,12 @@ export default {
             title: "OpenStax, OER Commons partner on community hubs",
             date: "2016-10-11",
             author: "Jade Boyd, Rice News",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/test.jpg",
             featured_image_alt_text: null
         },
@@ -30,6 +36,12 @@ export default {
             title: "More than 1.5 million students have used OpenStax’s free textbooks",
             date: "2016-09-27",
             author: "Jade Boyd, Rice News",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/Infographic-Students.jpg",
             featured_image_alt_text: null
         },
@@ -45,6 +57,12 @@ export default {
             title: "Turning textbook highlighting into time well-spent",
             date: "2016-08-18",
             author: "Jade Boyd, Rice News",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/DSC_7558.jpg",
             featured_image_alt_text: null
         },
@@ -60,6 +78,12 @@ export default {
             title: "Top 10: Which colleges save the most with free textbooks?",
             date: "2016-08-01",
             author: "David Ruth, Rice News",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/Top_10_schools_recognized_for_saving_students.jpg",
             featured_image_alt_text: null
         },
@@ -75,6 +99,12 @@ export default {
             title: "OpenStax, Rice Online Learning offer suite of free resources",
             date: "2016-07-13",
             author: "David Ruth, Rice News",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/Screen_Shot_2016-12-07_at_2.31.47_PM.png",
             featured_image_alt_text: null
         },
@@ -90,6 +120,12 @@ export default {
             title: "Jimmieka Mills part 1: Meet Jimmieka",
             date: "2017-02-15",
             author: "Jimmieka Mills",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/DSC_3863.jpg",
             featured_image_alt_text: null
         },
@@ -105,6 +141,12 @@ export default {
             title: "Welcome to the blog!",
             date: "2016-12-07",
             author: "Dani Nicholson",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/DSC_1229.jpg",
             featured_image_alt_text: null
         },
@@ -120,6 +162,12 @@ export default {
             title: "What we learned about question quality",
             date: "2017-02-15",
             author: "Phillip Grimaldi, PhD",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/DSC_9609.original2.jpg",
             featured_image_alt_text: null
         },
@@ -135,6 +183,12 @@ export default {
             title: "Reimagining the role of technology in higher education",
             date: "2017-01-25",
             author: "Richard Baraniuk",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/Richard_Baraniuk.jpg",
             featured_image_alt_text: null
         },
@@ -150,6 +204,12 @@ export default {
             title: "Be an OpenStax Intern",
             date: "2017-03-02",
             author: "Jessica Fuquay",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/EstebanAndrea1200x600.jpg",
             featured_image_alt_text: null
         },
@@ -165,6 +225,12 @@ export default {
             title: "OpenStax down under",
             date: "2017-03-24",
             author: "Bill Healy, CEO, Kilbaha Multimedia Publishing",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/shutterstock_353371643.jpg",
             featured_image_alt_text: null
         },
@@ -180,6 +246,12 @@ export default {
             title: "Jimmieka Mills part 2: Opportunity knocks",
             date: "2017-03-24",
             author: "Jimmieka Mills",
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             article_image: "https://assets.openstax.org/oscms-dev/media/original_images/DSC_4034.jpg",
             featured_image_alt_text: null
         }

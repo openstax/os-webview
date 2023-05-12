@@ -8,6 +8,15 @@ export function blurbModel(data) {
     }
 
     return {
+        id: data.id,
+        collectionNames: data.collections.map((item) => 'name' in item ?
+            item.name :
+            item.value.map(({collection}) => collection.name)
+        ).flat(2),
+        articleSubjectNames: data.articleSubjects.map((item) => 'name' in item ?
+            item.name :
+            item.value.map(({subject}) => subject.name)
+        ).flat(2),
         headline: data.heading,
         subheading: data.subheading,
         image: data.articleImage,
@@ -20,7 +29,7 @@ export function blurbModel(data) {
 }
 
 export default function ArticleSummary({
-    articleSlug, altText, image, headline, subheading, body, date, author,
+    id, articleSlug, altText, image, headline, subheading, body, date, author, collectionNames, articleSubjectNames,
     forwardRef={}, setPath, openInNewWindow, HeadTag='h2'
 }) {
     const tabTarget = openInNewWindow ? '_blank' : null;
@@ -36,9 +45,17 @@ export default function ArticleSummary({
         [setPath]
     );
 
+    const analytics = {
+        'data-analytics-select-content': id,
+        'data-content-type': 'blog_post',
+        'data-content-name': headline,
+        'data-content-categories': [...collectionNames, ...articleSubjectNames]
+    };
+
     return (
         <React.Fragment>
             <a
+                {...analytics}
                 className="link-image" href={`/blog/${articleSlug}`}
                 ref={forwardRef}
                 aria-label={altText || headline}
@@ -47,7 +64,7 @@ export default function ArticleSummary({
             />
             <div className="text-block">
                 <HeadTag className="article-headline">
-                    <a href={`/blog/${articleSlug}`} onClick={onClick} target={tabTarget}>
+                    <a {...analytics} href={`/blog/${articleSlug}`} onClick={onClick} target={tabTarget}>
                         {headline}
                     </a>
                 </HeadTag>
@@ -58,6 +75,7 @@ export default function ArticleSummary({
                 <Byline date={date} author={author} />
                 <RawHTML className="article-blurb" html={body} />
                 <a
+                    {...analytics}
                     className="read-more" href={`/blog/${articleSlug}`} onClick={onClick}
                     target={tabTarget}
                 >

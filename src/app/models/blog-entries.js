@@ -2,7 +2,7 @@ import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 
 const fields = [
     'title', 'id', 'article_image', 'featured_image_alt_text', 'heading',
-    'subheading', 'body_blurb', 'date', 'author'
+    'subheading', 'body_blurb', 'date', 'author', 'article_subjects', 'collections'
 ].join(',');
 
 export default function useLatestBlogEntries(limit) {

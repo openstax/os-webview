@@ -12,6 +12,12 @@ export default {
                 html_url: "https://cms-dev.openstax.org/openstax-news/from-here-on-out-the-health-and-wellness-of-oer/",
                 first_published_at: "2018-10-15T16:10:46.162510-05:00"
             },
+            collections: [
+                {name: "Teaching and Learning"}
+            ],
+            article_subjects: [
+                {name: "Math"}
+            ],
             title: "From here on out – the health and wellness of OER",
             date: "2018-10-14",
             author: "Joyce Moon",
