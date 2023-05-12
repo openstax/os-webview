@@ -19,6 +19,12 @@ export default {
             "title": "Openstax News"
         }
     },
+    "collections": [
+        {"name": "Teaching and Learning"}
+    ],
+    "article_subjects": [
+        {"name": "Math"}
+    ],
     "title": "From here on out – the health and wellness of OER",
     "date": "2018-10-14",
     "heading": "From here on out – the health and wellness of OER",
