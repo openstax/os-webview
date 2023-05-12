@@ -14,7 +14,7 @@ function useAllArticles() {
     const searchParam = new window.URLSearchParams(search).get('q');
     const [allArticles, setAllArticles] = useState([]);
 
-    analytics.sendPageEvent('Blog search', decodeURIComponent(searchParam));
+    analytics.sendPageEvent('Blog search', searchParam);
     useEffect(() => {
         const slug = `search/?q=${searchParam}`;
 
