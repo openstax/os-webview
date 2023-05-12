@@ -10,6 +10,8 @@ import analyticsEvents from '../analytics-events';
 
 function modelFromEntry(entry) {
     return {
+        id: entry.id,
+        type: entry.type,
         title: entry.title,
         logoUrl: entry.logoUrl,
         description: entry.blurb,
@@ -23,14 +25,13 @@ function modelFromEntry(entry) {
 
 function ResultCard({entry}) {
     const {
-        title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
+        id, type, title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
     } = modelFromEntry(entry);
     const summary = {count: ratingCount, rating};
     const navigate = useNavigate();
     const onSelect = React.useCallback(
         (event) => {
             event.preventDefault();
-            event.stopPropagation();
             const href = event.currentTarget.getAttribute('href');
 
             navigate(href, {replace: true});
@@ -39,7 +40,15 @@ function ResultCard({entry}) {
     );
 
     return (
-        <a href={`?${encodeURIComponent(title)}`} type="button" className="card" onClick={onSelect}>
+        <a
+            href={`?${encodeURIComponent(title)}`} type="button"
+            className="card"
+            onClick={onSelect}
+            data-analytics-select-content={id}
+            data-content-type="partner_profile"
+            data-content-name={title}
+            data-content-categories={type}
+        >
             <div className="logo">
                 {logoUrl && <img src={logoUrl} alt="" />}
             </div>
