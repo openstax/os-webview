@@ -4,10 +4,10 @@ import useBlogContext from '../blog-context';
 
 function useContextValue() {
     const {setPath} = useBlogContext();
-    const [searchString, setSearchString] = useState(decodeURIComponent(window.location.search.substr(1)));
+    const [searchString, setSearchString] = useState(new window.URLSearchParams(window.location.search).get('q') || '');
 
     function doSearch() {
-        setPath(`/blog/?${searchString}`);
+        setPath(`/blog/?q=${searchString}`);
     }
 
     return {searchString, setSearchString, doSearch};

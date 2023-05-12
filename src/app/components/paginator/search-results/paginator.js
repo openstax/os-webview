@@ -62,7 +62,7 @@ export function PaginatorControls({items}) {
     const firstIndex = (currentPage - 1) * resultsPerPage;
     const endBefore = Math.min(firstIndex + resultsPerPage, items);
     const resultRange = `${firstIndex + 1}-${endBefore}`;
-    const searchTerm = decodeURIComponent(window.location.search.substr(1));
+    const searchTerm = new window.URLSearchParams(window.location.search).get('q');
 
     return (
         <div className="paginator">

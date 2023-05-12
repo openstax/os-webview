@@ -11,10 +11,10 @@ import './search-results.scss';
 
 function useAllArticles() {
     const {search} = useLocation();
+    const searchParam = new window.URLSearchParams(search).get('q');
     const [allArticles, setAllArticles] = useState([]);
-    const searchParam = search.substr(1);
 
-    analytics.sendPageEvent('Blog search', decodeURIComponent(searchParam));
+    analytics.sendPageEvent('Blog search', searchParam);
     useEffect(() => {
         const slug = `search/?q=${searchParam}`;
 
