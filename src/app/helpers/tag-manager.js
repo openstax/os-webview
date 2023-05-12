@@ -23,6 +23,4 @@ const tagManagerID = 'GTM-W6N7PB';
 })(window, document, 'script', 'dataLayer', tagManagerID);
 
 window.dataLayer = window.dataLayer || [];
-// eslint-disable-next-line prefer-rest-params
-window.gtag = window.gtag || function () {window.dataLayer.push(arguments);};
-window.gtag('set', {platform: 'osweb'});
+window.dataLayer.push({event: 'app_loaded', app: 'osweb'});
