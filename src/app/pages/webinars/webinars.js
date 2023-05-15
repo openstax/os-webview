@@ -28,8 +28,9 @@ function Webinars({data: {heading: headline, description, heroImage}}) {
     const index = firstFuture > 0 ? firstFuture : webinarData.length;
     const upcomingData = webinarData.slice(index);
     const pastData = webinarData.slice(0, index);
+    const emptyMessage = webinarData.noWebinarsMessage || '(No webinars)';
     const tabContents = [
-        <WebinarList key="1" data={upcomingData} upcoming />,
+        <WebinarList key="1" data={upcomingData} emptyMessage={emptyMessage} upcoming />,
         <WebinarList key="2" data={pastData} />
     ];
     const accordionItems = tabLabels.map((title, i) => ({
