@@ -71,15 +71,15 @@ function WebinarBox({entry, upcoming}) {
     );
 }
 
-function NoWebinars() {
+function NoWebinars({message}) {
     return (
         <div className="card">
-            (No webinars)
+            {message}
         </div>
     );
 }
 
-export default function WebinarList({data, upcoming=false}) {
+export default function WebinarList({data, emptyMessage, upcoming=false}) {
     return (
         <div className="webinar-list">
             {
@@ -87,7 +87,7 @@ export default function WebinarList({data, upcoming=false}) {
                     data.map((entry) =>
                         <WebinarBox entry={entry} key={entry.registrationUrl} upcoming={upcoming} />
                     ) :
-                    <NoWebinars />
+                    <NoWebinars message={emptyMessage} />
             }
         </div>
     );
