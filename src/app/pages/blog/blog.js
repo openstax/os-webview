@@ -38,11 +38,11 @@ export function SearchResultsPage() {
 
 // Exported so it can be tested
 export function MainBlogPage() {
-    const {pinnedStory, pageDescription} = useBlogContext();
+    const {pinnedStory, pageDescription, footerText, footerLabel, footerUrl} = useBlogContext();
     const leftButton = {
-        descriptionHtml: 'Interested in sharing your story?',
-        text: 'Write for us',
-        link: '/write-for-us'
+        descriptionHtml: footerText || 'Interested in sharing your story?',
+        text: footerLabel || 'Write for us',
+        link: footerUrl || '/write-for-us'
     };
 
     useDocumentHead({

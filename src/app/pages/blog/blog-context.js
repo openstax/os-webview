@@ -93,6 +93,7 @@ function useContextValue(pageData) {
         },
         [navigate]
     );
+    const {footerText, footerLabel, footerUrl} = pageData;
 
     if (pinnedStory && !pinnedStory.slug) {
         pinnedStory.slug = pinnedStory.meta.slug;
@@ -101,7 +102,8 @@ function useContextValue(pageData) {
     return {
         setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet,
         topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular,
-        pageDescription: pageData.meta.searchDescription
+        pageDescription: pageData.meta.searchDescription,
+        footerText, footerLabel, footerUrl
     };
 }
 
