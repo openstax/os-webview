@@ -3,36 +3,26 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/helpers/cms-fetch';
 
 const adoptionName = '[name="Adoption_Status__c"]';
-const adoptionOptions = [{
-    key: 'adopted',
-    value: 'Confirmed Adoption Won',
-    text: 'Fully adopted and using it as our main text.',
-    qtext: 'Yes, I am using OpenStax as a primary resource in my courses'
-}, {
-    key: 'piloting',
-    value: 'Piloting book this semester',
-    text: 'Piloting the book this semester.'
+
+export const adoptionOptions = [{
+    key: 'core',
+    value: 'As the core textbook for my course',
+    text: 'As the core textbook for my course'
 }, {
     key: 'recommended',
-    value: 'Confirmed Will Recommend',
-    text: 'Recommending the book as an option.',
-    qtext: 'Yes, I am recommending OpenStax to my students as an optional resource'
+    value: 'As an optional/recommended textbook for my course',
+    text: 'As an optional/recommended textbook for my course'
 }, {
-    key: 'interest',
-    value: 'High Interest in Adopting',
-    text: 'Interested in using it.'
+    key: 'outside',
+    value: 'To teach, tutor, or support students outside of a course setting',
+    text: 'To teach, tutor, or support students outside of a course setting'
 }, {
-    key: 'no',
-    value: 'Not using',
-    text: 'Currently have no plans to use it.',
-    qtext: 'No, I\'m not using OpenStax in my courses yet'
+    key: 'self',
+    value: 'For my own knowledge or other work',
+    text: 'For my own knowledge or other work'
 }];
 
-function adoption(options) {
-    return adoptionOptions.filter((option) => options.includes(option.key));
-}
-
-const initialContextValue = {adoption, adoptionName};
+const initialContextValue = {adoptionName};
 const fetchPromise = cmsFetch('salesforce/forms/');
 
 export function useContextValue() {
