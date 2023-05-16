@@ -26,6 +26,8 @@ export default function Banner({data}) {
     const userModel = useUserContext();
     const Buttons = userModel?.accountId ? LoggedInButtons : NotLoggedInButtons;
     const leftImage = useOptimizedImage(data.leftImage, 570);
+    const targetWidth = Math.ceil(window.innerWidth/800) * 400;
+    const rightImage = useOptimizedImage(data.rightImage, targetWidth);
 
     return (
         <section className="banner">
@@ -37,7 +39,7 @@ export default function Banner({data}) {
                     <Buttons data={data} />
                 </div>
             </div>
-            <ClippedImage className="right-bg" src={data.rightImage} alt />
+            <ClippedImage className="right-bg" src={rightImage} alt />
         </section>
     );
 }
