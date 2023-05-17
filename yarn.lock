@@ -27,7 +27,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.21.7.tgz#61caffb60776e49a57ba61a88f02bedd8714f6bc"
   integrity sha512-KYMqFYTaenzMK4yUtf4EW9wc4N9ef80FsbMtkwool5zpwl4YrT1SdWYSTRcT94KO4hannogdS+LxY7L+arP3gA==
 
-"@babel/core@^7.1.0", "@babel/core@^7.10.4", "@babel/core@^7.11.6", "@babel/core@^7.12.3", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
+"@babel/core@^7", "@babel/core@^7.1.0", "@babel/core@^7.10.4", "@babel/core@^7.11.6", "@babel/core@^7.12.3", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
   version "7.21.8"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.21.8.tgz#2a8c7f0f53d60100ba4c32470ba0281c92aa9aa4"
   integrity sha512-YeM22Sondbo523Sz0+CirSPnbj9bG3P0CdHcBZdqUuaeOaYEFbOLoGU7lebvGP6P5J/WE9wOn7u7C4J9HvS1xQ==
@@ -1875,10 +1875,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@remix-run/router@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.4.0.tgz#74935d538e4df8893e47831a7aea362f295bcd39"
-  integrity sha512-BJ9SxXux8zAg991UmT8slpwpsd31K1dHHbD3Ba4VzD+liLQ4WAMSxQp2d2ZPRPfN0jN2NPRowcSSoM7lCaF08Q==
+"@remix-run/router@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.6.2.tgz#bbe75f8c59e0b7077584920ce2cc76f8f354934d"
+  integrity sha512-LzqpSrMK/3JBAVBI9u3NWtOhWNw5AMQfrUFYB0+bDHTSw17z++WJLsPsxAuK+oSddsxk4d7F/JcdDPM1M5YAhA==
 
 "@sentry-internal/tracing@7.52.1":
   version "7.52.1"
@@ -6564,10 +6564,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-mapbox-gl@2.13.0:
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-2.13.0.tgz#a69b1ec4c26e075f17fa5db292757e5fe8af8310"
-  integrity sha512-G8pU1/I9HC7xNbhKPKFtRkdUDkWJBNbYPMeRjBig3lPaYtvHPIaFmXMR6BDyZ/gnwodElrwMZGdGsoH8kecX8w==
+mapbox-gl@^2.14:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-2.14.1.tgz#5e6aef1010e83d3dc5af7bc62ed8eec099803667"
+  integrity sha512-KfHYcjzJeEF1UXZQin3vSdyIXoTBBdpNesTMmyzP9Dv8wRg8DnRu078Vr/CJ2A6Xocsvh9UAqTWYtHlrc20nwA==
   dependencies:
     "@mapbox/geojson-rewind" "^0.5.2"
     "@mapbox/jsonlint-lines-primitives" "^2.0.2"
@@ -7643,20 +7643,20 @@ react-pdf@6.2.2:
     tiny-invariant "^1.0.0"
     tiny-warning "^1.0.0"
 
-react-router-dom@6.9.0:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.9.0.tgz#dd8b4e461453bd4cad2e6404493d1a5b4bfea758"
-  integrity sha512-/seUAPY01VAuwkGyVBPCn1OXfVbaWGGu4QN9uj0kCPcTyNYgL1ldZpxZUpRU7BLheKQI4Twtl/OW2nHRF1u26Q==
+react-router-dom@^6.11:
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.11.2.tgz#324d55750ffe2ecd54ca4ec6b7bc7ab01741f170"
+  integrity sha512-JNbKtAeh1VSJQnH6RvBDNhxNwemRj7KxCzc5jb7zvDSKRnPWIFj9pO+eXqjM69gQJ0r46hSz1x4l9y0651DKWw==
   dependencies:
-    "@remix-run/router" "1.4.0"
-    react-router "6.9.0"
+    "@remix-run/router" "1.6.2"
+    react-router "6.11.2"
 
-react-router@6.9.0:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.9.0.tgz#0f503d9becbc62d9e4ddc0f9bd4026e0fd29fbf5"
-  integrity sha512-51lKevGNUHrt6kLuX3e/ihrXoXCa9ixY/nVWRLlob4r/l0f45x3SzBvYJe3ctleLUQQ5fVa4RGgJOTH7D9Umhw==
+react-router@6.11.2:
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.11.2.tgz#006301c4da1a173d7ad76b7ecd2da01b9dd3837a"
+  integrity sha512-74z9xUSaSX07t3LM+pS6Un0T55ibUE/79CzfZpy5wsPDZaea1F8QkrsiyRnA2YQ7LwE/umaydzXZV80iDCPkMg==
   dependencies:
-    "@remix-run/router" "1.4.0"
+    "@remix-run/router" "1.6.2"
 
 read-pkg-up@^7.0.1:
   version "7.0.1"
