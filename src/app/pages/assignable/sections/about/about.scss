@@ -1,19 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-section.carousel {
-
-    .img-container {
-        display: flex;
-        flex-shrink: 0;
-        justify-content: center;
-        width: 100%;
-
-        img {
-            max-width: calc(100% - 3rem);
-        }
-    }
-}
-
 .assignable.page .about {
     position: relative;
 
