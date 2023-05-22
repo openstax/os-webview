@@ -1,0 +1,34 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+@mixin button-group-mixin {
+    .button-group {
+        @extend %content;
+        display: grid;
+        justify-content: center;
+
+        @include wider-than($phone-max) {
+            grid-template: 'desc btn';
+            justify-content: space-between;
+
+            .btn {
+                grid-area: btn;
+            }
+
+            .description {
+                grid-area: desc;
+            }
+        }
+
+        .btn.medium {
+            @extend %button;
+            @extend %primary;
+
+            height: 5rem;
+            min-width: 17rem;
+        }
+
+        .description {
+            @include set-font(body-large);
+        }
+    }
+}

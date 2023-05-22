@@ -2,17 +2,20 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import {BrowserRouter, MemoryRouter, Routes, Route} from 'react-router-dom';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
-import {BlogPage, MainBlogPage, ArticlePage} from '~/pages/blog/blog';
+import {MainBlogPage, ArticlePage} from '~/pages/blog/blog';
+import {MainClassContextProvider} from '~/contexts/main-class';
 
 test('blog default page', async () => {
     render(
         <BrowserRouter>
             <BlogContextProvider>
-                <MainBlogPage />
+                <MainClassContextProvider>
+                    <MainBlogPage />
+                </MainClassContextProvider>
             </BlogContextProvider>
         </BrowserRouter>
     );
-    expect(await screen.findAllByText('Read more')).toHaveLength(4);
+    expect(await screen.findAllByText('Read more')).toHaveLength(3);
     expect(screen.queryAllByRole('textbox')).toHaveLength(1);
 });
 
