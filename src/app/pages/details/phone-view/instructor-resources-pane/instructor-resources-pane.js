@@ -46,7 +46,12 @@ export function InstructorResourcesPane({model, userStatus}) {
         <React.Fragment>
             {
                 featuredModels.length > 0 &&
-                    <FeaturedResourcesSection header={model.featuredResourcesHeader} models={featuredModels} />
+                    <FeaturedResourcesSection
+                        data-analytics-content-list="instructor_featured_resources"
+                        data-list-name="Instructor Featured Resources"
+                        header={model.featuredResourcesHeader}
+                        models={featuredModels}
+                    />
             }
             <a className="card filter-for-book" onClick={goToPartners}>
                 OpenStax Partners{' '}

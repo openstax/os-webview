@@ -3,7 +3,7 @@ import ResourceBoxes from '../resource-box/resource-boxes';
 import {FormattedMessage} from 'react-intl';
 import './featured-resources.scss';
 
-function FeaturedResources({headline, resources}) {
+function FeaturedResources({headline, resources, ...props}) {
     const modResources = resources.map((res) => {
         const storageKey = `featured-resource-${res.heading}`;
         const seenTimes = 1 + Number(window.localStorage[storageKey] || 0);
@@ -26,8 +26,8 @@ function FeaturedResources({headline, resources}) {
                 {headline}
             </div>
             <div
-                data-analytics-content-list="featured_resources"
-                data-list-name="Featured Resources"
+                data-analytics-content-list={props['data-analytics-content-list']}
+                data-list-name={props['data-list-name']}
                 className="resources"
             >
                 <ResourceBoxes models={modResources} />
@@ -36,11 +36,11 @@ function FeaturedResources({headline, resources}) {
     );
 }
 
-export default function FeaturedResourcesSection({header, models}) {
+export default function FeaturedResourcesSection({header, models, ...props}) {
     return (
         <div>
             <div className="featured-resources">
-                <FeaturedResources headline={header} resources={models} />
+                <FeaturedResources headline={header} resources={models} {...props} />
             </div>
             <div className="divider">
                 <div className="line"></div>
