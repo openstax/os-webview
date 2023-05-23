@@ -52,7 +52,7 @@ function StickyContent({stickyData, children}) {
             className="microsurvey-content"
             ref={ref}
             data-analytics-view
-            data-analytics-nudge="donation"
+            data-analytics-nudge="donate"
             data-nudge-placement="popup"
         >
             {children}

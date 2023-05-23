@@ -78,7 +78,7 @@ export default function LowerStickyNote({stickyData, PutAway}) {
             }
             onClick={trackClick}
             data-analytics-view
-            data-analytics-nudge="donation"
+            data-analytics-nudge="donate"
             data-nudge-placement="banner"
         >
             <PutAway />

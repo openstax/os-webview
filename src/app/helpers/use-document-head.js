@@ -54,9 +54,17 @@ export function useNoIndex(controlsHeader) {
     );
 }
 
+function getPageDescriptionElement() {
+    return document.querySelector('head meta[name="description"]');
+}
+
+export function getPageDescription() {
+    return getPageDescriptionElement().getAttribute('content');
+}
+
 export function setPageDescription(description) {
-    const descriptionEl = document.querySelector('head meta[name="description"]');
     const defaultDescription = 'Access our free college textbooks and low-cost learning materials.';
+    const descriptionEl = getPageDescriptionElement();
 
     if (descriptionEl) {
         descriptionEl.setAttribute('content', description || defaultDescription);

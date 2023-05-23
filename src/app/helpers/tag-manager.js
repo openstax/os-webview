@@ -1,3 +1,5 @@
+import {accountsModel} from '~/models/usermodel';
+import {getPageDescription} from '~/helpers/use-document-head';
 const tagManagerID = 'GTM-W6N7PB';
 
 // eslint-disable-next-line max-params
@@ -23,4 +25,49 @@ const tagManagerID = 'GTM-W6N7PB';
 })(window, document, 'script', 'dataLayer', tagManagerID);
 
 window.dataLayer = window.dataLayer || [];
-window.dataLayer.push({event: 'app_loaded', app: 'osweb'});
+
+/*
+ * google analytics 4 has enhanced tracking for page views when javascript
+ * navigates with the history api, in these cases GA4 seems to wait for the
+ * page metadata to be updated so it gets the right title, but the initial
+ * page load fires as soon as the config is loaded, so we delay the
+ * app_initialized event until the page title has been updated
+ */
+const initialTitle = document.title;
+const initialDescription = getPageDescription();
+
+let timeout;
+let interval;
+const dataInitialized = Promise.race([
+  new Promise((resolve) => {
+    timeout = window.setTimeout(resolve, 1000);
+  }),
+  new Promise((resolve) => {
+   interval = window.setInterval(() => {
+      if (initialTitle !== document.title && initialDescription !== getPageDescription()) {
+        resolve();
+      }
+    }, 1);
+  })
+])
+  .finally(() => {
+    window.clearInterval(interval);
+    window.clearTimeout(timeout);
+  });
+
+Promise.all([accountsModel.load(), dataInitialized]).then(([accountResponse]) => {
+    const role = ['instructor', 'student'].includes(accountResponse.self_reported_role) ?
+        accountResponse.self_reported_role :
+        undefined;
+
+    const faculty = accountResponse.faculty_status;
+
+    // eslint-disable-next-line camelcase
+    const user_tags = (role === 'instructor' || faculty === 'confirmed_faculty' ?
+        [role, faculty, accountResponse.using_openstax] :
+        [role]
+    ).filter((x) => !!x).join(',') || undefined;
+
+    // eslint-disable-next-line camelcase
+    window.dataLayer.push({event: 'app_loaded', app: 'osweb', user_tags});
+});
