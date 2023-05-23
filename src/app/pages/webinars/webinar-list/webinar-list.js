@@ -1,6 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import './webinar-list.scss';
 
 function DatedHeading({entry}) {
@@ -71,13 +72,26 @@ function WebinarBox({entry, upcoming}) {
     );
 }
 
+function NoWebinars() {
+    const snippet = useDataFromSlug('snippets/nowebinarmessage/?format=json');
+    const message = snippet ? snippet[0].no_webinar_message : '(no webinars)';
+
+    return (
+        <div className="card">
+            {message}
+        </div>
+    );
+}
+
 export default function WebinarList({data, upcoming=false}) {
     return (
         <div className="webinar-list">
             {
-                data.map((entry) =>
-                    <WebinarBox entry={entry} key={entry.registrationUrl} upcoming={upcoming} />
-                )
+                data.length ?
+                    data.map((entry) =>
+                        <WebinarBox entry={entry} key={entry.registrationUrl} upcoming={upcoming} />
+                    ) :
+                    <NoWebinars />
             }
         </div>
     );
