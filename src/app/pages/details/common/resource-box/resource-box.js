@@ -89,6 +89,7 @@ export function resourceBoxModel(resourceData, userStatus, bookModel) {
         {
             id: resourceData.resource.id,
             heading: resourceData.resource.heading,
+            resourceCategory: resourceData.resource.resourceCategory,
             description: resourceData.resource.description,
             creatorFest: resourceData.resource.creatorFestResource,
             comingSoon: Boolean(resourceData.comingSoonText),
