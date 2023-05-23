@@ -67,30 +67,32 @@ const accountsModel = {
         // });
         // eslint-disable-next-line no-unreachable
         return fetch(accountsUrl, {credentials: 'include'})
-            .then(
-                (response) => {
-                    return response.json().then(
-                        (result) => {
-                            if (window.dataLayer) {
-                                window.dataLayer.push({
-                                    faculty_status: result.faculty_status
-                                });
-                            }
-                            return result;
-                        },
-                        (err) => {
-                            console.warn('No JSON in Accounts response');
-                            return {err};
-                        }
-                    );
-                },
-                (err) => {
-                    console.warn('"Error fetching user info"');
-                    return {err};
+        .then(
+            (response) => {
+                if (response.status === 403) {
+                    return null;
                 }
-            )
-            .catch((err) => {throw new Error(`Unable to fetch user data: ${err}`);})
-        ;
+                return response.json().then(
+                    (result) => {
+                        if (window.dataLayer) {
+                            window.dataLayer.push({
+                                faculty_status: result.faculty_status
+                            });
+                        }
+                        return result;
+                    },
+                    (err) => {
+                        console.warn('No JSON in Accounts response');
+                        return {err};
+                    }
+                );
+            },
+            (err) => {
+                console.warn('"Error fetching user info"');
+                return {err};
+            }
+        )
+        .catch((err) => {throw new Error(`Unable to fetch user data: ${err}`);});
     })
 };
 
