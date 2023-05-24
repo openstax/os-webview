@@ -1,0 +1,13 @@
+#featured-in {
+    .link-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+
+        img {
+            min-width: 16rem;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+}

@@ -1,0 +1,31 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+.page.press #in-the-press {
+    background-image: linear-gradient(
+        to left,
+        lighten(os-color(green), 18%),
+        darken(os-color(green), 3%)
+    );
+    color: text-color(white);
+    max-width: none;
+    padding: 0;
+
+    @extend %light-on-dark;
+
+    .hero {
+        align-items: start;
+        background-color: transparent;
+        max-width: $content-max;
+        margin: 0 auto;
+        width: 100%;
+
+        @include scale-feature(padding-top, 3rem, 8rem);
+        @include scale-feature(padding-bottom, 2rem, 4rem);
+
+        h1 {
+            margin: 0;
+            text-align: left;
+        }
+    }
+}

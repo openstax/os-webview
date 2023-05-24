@@ -1,0 +1,45 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#testimonials {
+    $card-min-width: 28rem;
+
+    background-color: transparent;
+
+    .items {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: repeat(auto-fill, minmax($card-min-width, 1fr));
+        gap: 2rem;
+    }
+
+    .card {
+        @include card();
+
+        border-radius: 0.5rem;
+        min-width: $card-min-width;
+        overflow: hidden;
+    }
+
+    .picture-part {
+        display: block;
+        height: 38rem;
+        max-width: 100%;
+        overflow: hidden;
+
+        > .clipped-image {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .text-part {
+        background-color: ui-color(white);
+        display: flex;
+        flex-direction: column;
+        grid-gap: 3rem;
+        height: calc(100% - 38rem);
+        justify-content: space-between;
+        padding: 4rem;
+        position: relative;
+    }
+}
