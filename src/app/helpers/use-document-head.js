@@ -59,7 +59,7 @@ function getPageDescriptionElement() {
 }
 
 export function getPageDescription() {
-    return getPageDescriptionElement().getAttribute('content');
+    return getPageDescriptionElement()?.getAttribute('content');
 }
 
 export function setPageDescription(description) {
