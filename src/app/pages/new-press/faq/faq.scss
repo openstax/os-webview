@@ -1,0 +1,9 @@
+@import '../../../components/faq-section/faq-section';
+
+#faq {
+    @include faq-section();
+
+    .content-block {
+        gap: 0.5rem;
+    }
+}

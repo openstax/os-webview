@@ -1,0 +1,70 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.page.press {
+    background-color: ui-color(white);
+    display: grid;
+    gap: $normal-margin;
+    padding-bottom: 6rem;
+
+    section {
+        border: thin solid ui-color(form-border);
+        max-width: calc(100vw - 3rem);
+
+        @include width-up-to($tablet-max) {
+            margin: 0 $normal-margin;
+        }
+
+        .boxed {
+            align-items: start;
+        }
+    }
+
+    @include wider-than($tablet-max) {
+        grid-template-columns: calc(50vw - 60rem) 2fr 1fr 2fr calc(50vw - 60rem);
+
+        #in-the-press {
+            grid-column: 1 / 6;
+        }
+
+        #testimonials,
+        #faq {
+            grid-column: 2 / 5;
+        }
+
+        #featured-in,
+        #facts-infographic {
+            grid-column: 2 / 4;
+        }
+
+        #press-releases {
+            grid-column: 2 / 3;
+        }
+
+        #news-mentions {
+            grid-column: 3 / 5;
+        }
+
+        #mission {
+            grid-column: 4 / 5;
+            grid-row: span 2;
+        }
+    }
+
+    .content-block {
+        @extend %content;
+        @include scale-feature(gap, $normal-margin, 2.5rem);
+        padding: 0;
+
+        display: flex;
+        flex-direction: column;
+        max-width: 100%;
+
+        > * {
+            margin: 0;
+        }
+    }
+
+    h2 {
+        margin: 0;
+    }
+}

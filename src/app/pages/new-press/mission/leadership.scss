@@ -1,0 +1,40 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#mission .leadership {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    max-width: 100%;
+
+    h2 {
+        @include set-font(h3);
+    }
+
+    .bio {
+        max-width: 40rem;
+
+        .card {
+            overflow: hidden;
+            position: relative;
+        }
+
+        img {
+            margin-left: 50%;
+            transform: translateX(-50%);
+
+            @include scale-feature(max-height, 21rem, 33rem);
+        }
+
+        .span-2 {
+            grid-column-start: span 2;
+        }
+
+        .name {
+            font-weight: bold;
+        }
+    }
+
+    .bottom-link {
+        justify-self: right;
+    }
+}
