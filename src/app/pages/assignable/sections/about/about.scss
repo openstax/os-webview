@@ -6,6 +6,10 @@
     .content-block {
         align-items: center;
 
+        @include wider-than($media-content-max) {
+            grid-template-columns: 1fr 70rem;
+        }
+
         .text-block {
             margin: auto;
             max-width: 80rem;
@@ -18,6 +22,11 @@
 
     .carousel {
         border: thin solid ui-color(form-border);
+        min-width: 54rem;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
 
         .img-container {
             align-items: center;
