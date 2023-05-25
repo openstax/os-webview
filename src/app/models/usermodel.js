@@ -70,7 +70,7 @@ const accountsModel = {
         .then(
             (response) => {
                 if (response.status === 403) {
-                    return null;
+                    return {};
                 }
                 return response.json().then(
                     (result) => {
