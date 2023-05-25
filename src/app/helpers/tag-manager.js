@@ -1,6 +1,9 @@
+/* eslint-disable camelcase, no-nested-ternary */
 import {accountsModel} from '~/models/usermodel';
 import {getPageDescription} from '~/helpers/use-document-head';
 const tagManagerID = 'GTM-W6N7PB';
+
+window.dataLayer = window.dataLayer || [];
 
 // eslint-disable-next-line max-params
 (function (w, d, s, l, i) {
@@ -23,8 +26,6 @@ const tagManagerID = 'GTM-W6N7PB';
         f.parentNode.insertBefore(j, f);
     }
 })(window, document, 'script', 'dataLayer', tagManagerID);
-
-window.dataLayer = window.dataLayer || [];
 
 /*
  * google analytics 4 has enhanced tracking for page views when javascript
@@ -58,16 +59,27 @@ const dataInitialized = Promise.race([
 Promise.all([accountsModel.load(), dataInitialized]).then(([accountResponse]) => {
     const role = ['instructor', 'student'].includes(accountResponse.self_reported_role) ?
         accountResponse.self_reported_role :
-        undefined;
+        accountResponse.uuid ? 'other' : 'none';
+    const roleTag = `role=${role}`;
 
     const faculty = accountResponse.faculty_status;
+    const facultyTag = faculty ? `faculty=${faculty}` : undefined;
 
-    // eslint-disable-next-line camelcase
-    const user_tags = (role === 'instructor' || faculty === 'confirmed_faculty' ?
-        [role, faculty, accountResponse.using_openstax] :
-        [role]
-    ).filter((x) => !!x).join(',') || undefined;
+    const usingOpenstax = accountResponse.using_openstax;
+    const usingOpenstaxTag = usingOpenstax ? 'adopter=yes' : undefined;
 
-    // eslint-disable-next-line camelcase
+    const user_tags = ['', roleTag, facultyTag, usingOpenstaxTag, '']
+      .filter((x) => x !== undefined).join(',');
+
     window.dataLayer.push({event: 'app_loaded', app: 'osweb', user_tags});
 });
+
+export function setContentTags(tags) {
+    const content_tags = tags.length > 0 ?
+        ['', ...tags, ''].join(',') :
+        undefined;
+
+    if (content_tags) {
+        window.dataLayer.push({event: 'app_config', content_tags});
+    }
+}

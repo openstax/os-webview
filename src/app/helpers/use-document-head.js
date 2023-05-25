@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import {htmlToText} from '~/helpers/data';
+import {setContentTags} from '~/helpers/tag-manager';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 
 function setCanonicalPath(newPath) {
@@ -82,6 +83,14 @@ export function setPageTitleAndDescriptionFromBookData(data={}) {
     const meta = camelCaseKeys(data.meta || {});
     const defaultDescription = data.description ?
         htmlToText(data.description) : '';
+
+    const contentTags = [
+      `book=${data.title}`,
+      ...data.bookSubjects.map((subject) => `subject=${subject.subjectName}`),
+      ...data.bookCategories.map((category) => `category=${category.subjectCategory} (${category.subjectName})`)
+    ];
+
+    setContentTags(contentTags);
 
     setPageTitleAndDescription(
         meta.seoTitle || data.title,
