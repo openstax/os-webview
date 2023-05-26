@@ -85,7 +85,6 @@ export function setPageTitleAndDescriptionFromBookData(data={}) {
     const defaultDescription = data.description ?
         htmlToText(data.description) : '';
 
-  console.log(data);
     const contentTags = [
       `book=${data.title}`,
       ...(data.bookSubjects || []).map((subject) => `subject=${subject.subjectName}`),
