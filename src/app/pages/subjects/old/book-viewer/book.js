@@ -112,7 +112,6 @@ function ThreeDotMenu({slug, details}) {
 
 export default function BookCover({
     coverUrl,
-    cnxId,
     subjects,
     slug,
     title,
@@ -134,9 +133,8 @@ export default function BookCover({
             <ThreeDotMenu slug={slug} details={details} />
             <a
               href={`/details/${slug}`}
-              data-analytics-select-content={cnxId}
+              data-analytics-select-content={title}
               data-content-type="book"
-              data-content-name={title}
               data-content-tags={['',
                   ...subjects.map((subject) => `subject=${subject}`),
               ''].join(',')}
