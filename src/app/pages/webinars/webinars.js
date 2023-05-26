@@ -29,9 +29,9 @@ function Webinars({data: {heading: headline, description, heroImage}}) {
     const upcomingData = webinarData.slice(index);
     const pastData = webinarData.slice(0, index);
     const tabContents = [
-        <WebinarList key="1" data={upcomingData} upcoming />,
-        <WebinarList key="2" data={pastData} />
-    ];
+        {data: upcomingData, upcoming: true},
+        {data: pastData}
+    ].map((props, i) => <WebinarList key={i} {...props} />);
     const accordionItems = tabLabels.map((title, i) => ({
         title,
         contentComponent: tabContents[i]

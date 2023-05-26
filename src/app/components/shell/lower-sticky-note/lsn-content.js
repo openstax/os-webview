@@ -42,7 +42,7 @@ function trackClick(event) {
 function NoteWithImage({bannerInfo}) {
     return (
         <div className="content with-image">
-            <img src={bannerInfo.banner_thumbnail} alt="" />
+            <img src={bannerInfo.banner_thumbnail} height="70" width="70" alt="" />
             <div className="text-side">
                 <RawHTML className="blurb" html={bannerInfo.html_message} />
                 <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
