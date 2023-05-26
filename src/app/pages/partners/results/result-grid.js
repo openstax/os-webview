@@ -47,7 +47,7 @@ function ResultCard({entry}) {
             data-analytics-select-content={id}
             data-content-type="partner_profile"
             data-content-name={title}
-            data-content-categories={type}
+            data-content-tags={`,category=${type},`}
         >
             <div className="logo">
                 {logoUrl && <img src={logoUrl} alt="" />}

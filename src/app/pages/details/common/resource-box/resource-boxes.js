@@ -104,7 +104,7 @@ function BottomBasic({ leftContent, icon, model }) {
               data-analytics-select-content={model.id}
               data-content-type="book_resource"
               data-content-name={model.heading}
-              data-content-categories={model.resourceCategory}
+              data-content-tags={`,category=${model.resourceCategory},`}
             >
                 <FontAwesomeIcon icon={icon} />
                 {leftContent}
@@ -238,7 +238,7 @@ function LeftButton({ model }) {
                 data-analytics-select-content={model.id}
                 data-content-type="book_resource"
                 data-content-name={model.heading}
-                data-content-categories={model.resourceCategory}
+                data-content-tags={`,category=${model.resourceCategory},`}
             >
                 <FontAwesomeIcon icon={icon} />
                 <span>{model.link.text}</span>

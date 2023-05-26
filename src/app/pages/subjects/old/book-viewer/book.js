@@ -137,7 +137,9 @@ export default function BookCover({
               data-analytics-select-content={cnxId}
               data-content-type="book"
               data-content-name={title}
-              data-content-categories={subjects.join(',')}
+              data-content-tags={['',
+                  ...subjects.map((subject) => `subject=${subject}`),
+              ''].join(',')}
             >
               <LazyLoad once offset={100}>
                   <img src={coverUrl} alt={title} />

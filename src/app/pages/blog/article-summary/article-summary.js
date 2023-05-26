@@ -49,7 +49,12 @@ export default function ArticleSummary({
         'data-analytics-select-content': id,
         'data-content-type': 'blog_post',
         'data-content-name': headline,
-        'data-content-categories': [...collectionNames, ...articleSubjectNames]
+        'data-content-tags': [
+            '',
+            ...collectionNames.map((collection) => `collection=${collection}`),
+            ...articleSubjectNames.map((subject) => `subject=${subject}`),
+            ''
+        ].join(',')
     };
 
     return (
