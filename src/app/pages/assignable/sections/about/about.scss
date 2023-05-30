@@ -6,8 +6,13 @@
     .content-block {
         align-items: center;
 
-        @include wider-than($phone-max) {
-            grid-template-columns: repeat(auto-fit, minmax(42rem, auto));
+        @include wider-than($media-content-max) {
+            grid-template-columns: 1fr 70rem;
+        }
+
+        .text-block {
+            margin: auto;
+            max-width: 80rem;
         }
     }
 
@@ -15,4 +20,28 @@
         max-width: 100%;
     }
 
+    .carousel {
+        border: thin solid ui-color(form-border);
+        min-width: 54rem;
+
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+
+        .img-container {
+            align-items: center;
+            display: flex;
+            flex-shrink: 0;
+            justify-content: center;
+            width: 100%;
+    
+            img {
+                max-height: 100%;
+                max-width: calc(100% - 3rem);
+                height: auto;
+                width: auto;
+            }
+        }
+    }
+    
 }
