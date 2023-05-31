@@ -21,7 +21,7 @@ function VerifiedBadge({verifiedFeatures}) {
     );
 }
 
-function PartnerLink({partnerUrl, partnerLinkText}) {
+function PartnerLink({partnerUrl, partnerLinkText, partnerName}) {
     function trackPartnerVisit() {
         analyticsEvents.partnerWebsite(partnerUrl);
     }
@@ -32,6 +32,7 @@ function PartnerLink({partnerUrl, partnerLinkText}) {
                 className="partner-website" href={partnerUrl}
                 onClick={trackPartnerVisit}
                 target="_blank" rel="noreferrer"
+                data-analytics-link={`Partner Link (${partnerName})`}
             >
                 {partnerLinkText}{' '}
                 <FontAwesomeIcon icon={faExternalLinkAlt} />
@@ -62,7 +63,7 @@ export default function Synopsis({model, icon, partnerLinkProps}) {
                 }
             </div>
             <StarsAndCount rating={rating} count={reviewCount} showNumber />
-            <PartnerLink {...partnerLinkProps} />
+            <PartnerLink {...partnerLinkProps} partnerName={partnerName} />
         </section>
     );
 }

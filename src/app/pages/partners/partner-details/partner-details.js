@@ -171,14 +171,14 @@ function PartnerDetails({model}) {
 
     return (
         <div
-            className="partner-details" onClick={(e) => e.stopPropagation()}
+            className="partner-details"
             ref={ref}
         >
             <div className="sticky-region">
                 <Synopsis {...{model, icon, partnerLinkProps}} />
                 <TabGroup {...{labels, selectedLabel, setSelectedLabel}} />
             </div>
-            <div className="scrolling-region boxed" onClick={(e) => e.stopPropagation()}>
+            <div className="scrolling-region boxed">
                 <div className="tab-content">
                     <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
                         <Overview model={model} icon={icon} />

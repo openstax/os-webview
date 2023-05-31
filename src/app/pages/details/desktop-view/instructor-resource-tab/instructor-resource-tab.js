@@ -100,6 +100,8 @@ function InstructorResourceTab({model, userStatus}) {
                 {
                     featuredModels.length > 0 &&
                         <FeaturedResourcesSection
+                            data-analytics-content-list="instructor_featured_resources"
+                            data-list-name="Instructor Featured Resources"
                             header={model.featuredResourcesHeader}
                             models={featuredModels}
                         />

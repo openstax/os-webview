@@ -25,7 +25,7 @@ function modelFromEntry(entry) {
 
 function ResultCard({entry}) {
     const {
-        id, type, title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
+        type, title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
     } = modelFromEntry(entry);
     const summary = {count: ratingCount, rating};
     const navigate = useNavigate();
@@ -44,10 +44,9 @@ function ResultCard({entry}) {
             href={`?${encodeURIComponent(title)}`} type="button"
             className="card"
             onClick={onSelect}
-            data-analytics-select-content={id}
+            data-analytics-select-content={title}
             data-content-type="partner_profile"
-            data-content-name={title}
-            data-content-categories={type}
+            data-content-tags={`,category=${type},`}
         >
             <div className="logo">
                 {logoUrl && <img src={logoUrl} alt="" />}

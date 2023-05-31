@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import {htmlToText} from '~/helpers/data';
+import {setContentTags} from '~/helpers/tag-manager';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 
 function setCanonicalPath(newPath) {
@@ -54,9 +55,17 @@ export function useNoIndex(controlsHeader) {
     );
 }
 
+function getPageDescriptionElement() {
+    return document.querySelector('head meta[name="description"]');
+}
+
+export function getPageDescription() {
+    return getPageDescriptionElement()?.getAttribute('content');
+}
+
 export function setPageDescription(description) {
-    const descriptionEl = document.querySelector('head meta[name="description"]');
     const defaultDescription = 'Access our free college textbooks and low-cost learning materials.';
+    const descriptionEl = getPageDescriptionElement();
 
     if (descriptionEl) {
         descriptionEl.setAttribute('content', description || defaultDescription);
@@ -70,10 +79,19 @@ function setPageTitleAndDescription(title='OpenStax', description) {
     document.title = title.includes('OpenStax') ? title : `${title} - OpenStax`;
 }
 
+// eslint-disable-next-line complexity
 export function setPageTitleAndDescriptionFromBookData(data={}) {
     const meta = camelCaseKeys(data.meta || {});
     const defaultDescription = data.description ?
         htmlToText(data.description) : '';
+
+    const contentTags = [
+      `book=${data.title}`,
+      ...(data.bookSubjects || []).map((subject) => `subject=${subject.subjectName}`),
+      ...(data.bookCategories || []).map((category) => `category=${category.subjectCategory} (${category.subjectName})`)
+    ];
+
+    setContentTags(contentTags);
 
     setPageTitleAndDescription(
         meta.seoTitle || data.title,

@@ -29,7 +29,7 @@ export function blurbModel(data) {
 }
 
 export default function ArticleSummary({
-    id, articleSlug, altText, image, headline, subheading, body, date, author, collectionNames, articleSubjectNames,
+    articleSlug, altText, image, headline, subheading, body, date, author, collectionNames, articleSubjectNames,
     forwardRef={}, setPath, openInNewWindow, HeadTag='h2'
 }) {
     const tabTarget = openInNewWindow ? '_blank' : null;
@@ -46,10 +46,14 @@ export default function ArticleSummary({
     );
 
     const analytics = {
-        'data-analytics-select-content': id,
+        'data-analytics-select-content': headline,
         'data-content-type': 'blog_post',
-        'data-content-name': headline,
-        'data-content-categories': [...collectionNames, ...articleSubjectNames]
+        'data-content-tags': [
+            '',
+            ...collectionNames.map((collection) => `collection=${collection}`),
+            ...articleSubjectNames.map((subject) => `subject=${subject}`),
+            ''
+        ].join(',')
     };
 
     return (
