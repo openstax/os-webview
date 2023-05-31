@@ -85,11 +85,25 @@ export function setPageTitleAndDescriptionFromBookData(data={}) {
     const defaultDescription = data.description ?
         htmlToText(data.description) : '';
 
-    const contentTags = [
-      `book=${data.title}`,
-      ...(data.bookSubjects || []).map((subject) => `subject=${subject.subjectName}`),
-      ...(data.bookCategories || []).map((category) => `category=${category.subjectCategory} (${category.subjectName})`)
-    ];
+    // setPageTitleAndDescriptionFromBookData is actually called with a variety
+    // of page data types, not just books
+    const contentTags =
+        // eslint-disable-next-line no-nested-ternary
+        /* books */ data.bookSubjects && data.bookCategories ? [
+            `book=${data.title}`,
+            ...data.bookSubjects.map((subject) => `subject=${subject.subjectName}`),
+            ...data.bookCategories.map((category) => `category=${category.subjectCategory} (${category.subjectName})`)
+        ] :
+        /* blog posts */ data.articleSubjects && data.collections ? [
+            ...data.collections.map((item) => 'name' in item ?
+                item.name :
+                item.value.map(({collection}) => collection.name)
+            ).flat(2).map((name) => `collection=${name}`),
+            ...data.articleSubjects.map((item) => 'name' in item ?
+                item.name :
+                item.value.map(({subject}) => subject.name)
+            ).flat(2).map((name) => `subject=${name}`)
+        ] : [];
 
     setContentTags(contentTags);
 
