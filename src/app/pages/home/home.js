@@ -3,6 +3,7 @@ import LoaderPage from '~/components/jsx-helpers/loader-page';
 import LazyLoad, {forceCheck} from 'react-lazyload';
 import Banner from './banner/banner';
 import Features from './features/features';
+import OverlappingBoxes from './overlapping-boxes/overlapping-boxes';
 import Quotes from './quotes/quotes';
 import WhatsOpenStax from './whats-openstax/whats-openstax';
 import Map from './map/map';
@@ -21,7 +22,8 @@ function Homepage({data: ungroupedData}) {
             const result = {};
 
             // Group the data by section prefixes
-            ['banner', 'features', 'quotes', 'whatsOpenstax', 'map'].forEach((sectionName) => {
+            ['banner', 'features', 'quotes', 'whatsOpenstax', 'map', 'k12Cta', 'researchCta']
+            .forEach((sectionName) => {
                 const sectionKeys = keys.filter((k) => k.startsWith(sectionName));
 
                 result[sectionName] = sectionKeys.reduce((a, b) => {
@@ -45,6 +47,7 @@ function Homepage({data: ungroupedData}) {
         <React.Fragment>
             <Banner data={data.banner} />
             <Features data={data.features} />
+            <OverlappingBoxes data={data} />
             <LazyLoad once offset={100} height={400}>
                 <Quotes data={data.quotes} />
             </LazyLoad>
