@@ -20,13 +20,13 @@
         max-width: none;
 
         @include width-up-to($phone-max) {
-            background-size: contain;
+            background-size: 120vw;
             bottom: -10vw;
             height: 70vw;
             left: -6vw;
             margin-top: -10vw;
-            width: 115vw;
             position: relative;
+            width: 106vw;
         }
         @include wider-than($phone-max) {
             background-position: left bottom;

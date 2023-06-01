@@ -4,12 +4,6 @@
     background-color: ui-color(white);
     position: relative;
 
-    .boxed {
-        @include wider-than($phone-max) {
-            padding-bottom: 11rem;
-        }
-    }
-
     .right-bg {
         transform: rotate(180deg);
 
