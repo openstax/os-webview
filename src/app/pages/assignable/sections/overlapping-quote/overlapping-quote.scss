@@ -42,7 +42,6 @@
         margin: 0 auto;
         max-width: 100%;
         padding: 4rem;
-        pointer-events: none;
         width: max-content;
 
         @include width-up-to($phone-max) {
