@@ -10,47 +10,43 @@ import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 
 export default function Inquiries() {
     const pageData = usePageContext();
-
-    if (!pageData) {
-        console.info('No page data');
-        return null;
-    }
-
     const name = pageData.pressInquiryName;
     const phone = pageData.pressInquiryPhone;
     const email = pageData.pressInquiryEmail;
     const pressKitUrl = pageData.pressKitUrl;
 
     return (
-        <div className="inquiries">
+        <div className='inquiries'>
             <div>
                 <h2>Press inquiries</h2>
-                <div className="contact">
-                    {
-                        Boolean(name) && <div>{name}</div>
-                    }
-                    <div><a href={`tel:${phone}`}>{phone}</a></div>
-                    <div><a href={`mailto:${email}`}>{email}</a></div>
+                <div className='contact'>
+                    {Boolean(name) && <div>{name}</div>}
+                    <div>
+                        <a href={`tel:${phone}`}>{phone}</a>
+                    </div>
+                    <div>
+                        <a href={`mailto:${email}`}>{email}</a>
+                    </div>
                 </div>
             </div>
-            <div className="find-us">
+            <div className='find-us'>
                 <h2>Find us on</h2>
-                <div className="icon-row">
-                    <a href="https://www.facebook.com/openstax">
+                <div className='icon-row'>
+                    <a href='https://www.facebook.com/openstax'>
                         <FontAwesomeIcon icon={faFacebook} />
                     </a>
-                    <a href="https://www.linkedin.com/company/openstax">
+                    <a href='https://www.linkedin.com/company/openstax'>
                         <FontAwesomeIcon icon={faLinkedin} />
                     </a>
-                    <a href="https://www.instagram.com/openstax/">
+                    <a href='https://www.instagram.com/openstax/'>
                         <FontAwesomeIcon icon={faInstagram} />
                     </a>
-                    <a href="https://twitter.com/openstax">
+                    <a href='https://twitter.com/openstax'>
                         <FontAwesomeIcon icon={faTwitterSquare} />
                     </a>
                 </div>
             </div>
-            <a href={pressKitUrl} className="btn primary">
+            <a href={pressKitUrl} className='btn primary'>
                 Download press kit
                 <FontAwesomeIcon icon={faDownload} />
             </a>

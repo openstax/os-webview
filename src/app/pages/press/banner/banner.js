@@ -3,12 +3,12 @@ import usePageContext from '../page-context';
 import './banner.scss';
 
 export default function Banner() {
-    const {headline} = usePageContext();
+    const {title} = usePageContext();
 
     return (
         <div className='content-block'>
             <div className='hero'>
-                <h1>{headline}</h1>
+                <h1>{title}</h1>
             </div>
         </div>
     );
