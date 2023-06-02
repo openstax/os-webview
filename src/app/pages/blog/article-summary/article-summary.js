@@ -47,7 +47,7 @@ export default function ArticleSummary({
 
     const analytics = {
         'data-analytics-select-content': headline,
-        'data-content-type': 'blog_post',
+        'data-content-type': 'Blog Post',
         'data-content-tags': [
             '',
             ...collectionNames.map((collection) => `collection=${collection}`),

@@ -23,7 +23,7 @@ function Blurb({blurb, badgeImage, onClick}) {
           href={blurb.url}
           onClick={trackClick}
           data-analytics-select-content={blurb.name}
-          data-content-type="partner_profile"
+          data-content-type="Partner Profile"
           data-content-tags={`,category=${blurb.type},`}
         >
             <div className="logo">

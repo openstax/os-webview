@@ -45,7 +45,7 @@ function ResultCard({entry}) {
             className="card"
             onClick={onSelect}
             data-analytics-select-content={title}
-            data-content-type="partner_profile"
+            data-content-type="Partner Profile"
             data-content-tags={`,category=${type},`}
         >
             <div className="logo">
