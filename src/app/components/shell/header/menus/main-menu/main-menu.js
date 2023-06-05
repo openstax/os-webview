@@ -7,50 +7,22 @@ import {
 } from '~/components/language-selector/language-selector';
 import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
+import { useDataFromSlug } from '~/helpers/page-data-utils';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
 import './main-menu.scss';
 
-const menuStructure = [
-    {
-        label: 'Technology',
-        items: [
-            {label: 'OpenStax Kinetic', url: '/kinetic'},
-            {label: 'OpenStax Assignable', url: '/assignable'},
-            {label: 'Partner learning platform', url: '/partners'}
-        ]
-    },
-    {
-        label: 'What we do',
-        items: [
-            {label: 'About Us', url: '/about'},
-            {label: 'Team', url: '/team'},
-            {label: 'Research', url: '/research'},
-            {label: 'K12 Books &amp; Resources', url: '/k12'},
-            {
-                label: 'Institutional Partnerships',
-                url: '/institutional-partnership'
-            },
-            {
-                label: 'Technology Partnerships',
-                url: '/openstax-ally-technology-partner-program'
-            },
-            {label: 'Webinars', url: '/webinars'}
-        ]
-    }
-];
-
 function DropdownOrMenuItem({item}) {
-    if ('items' in item) {
+    if ('menu' in item) {
         return (
-            <Dropdown label={item.label} navAnalytics={`Main Menu (${item.label})`}>
-                <MenusFromStructure structure={item.items} />
+            <Dropdown label={item.name} navAnalytics={`Main Menu (${item.name})`}>
+                <MenusFromStructure structure={item.menu} />
             </Dropdown>
         );
     }
 
-    return <MenuItem label={item.label} url={item.url} />;
+    return <MenuItem label={item.label} url={item.partial_url} />;
 }
 
 function MenusFromStructure({structure}) {
@@ -60,6 +32,18 @@ function MenusFromStructure({structure}) {
                 <DropdownOrMenuItem key={item.label} item={item} />
             ))}
         </React.Fragment>
+    );
+}
+
+function MenusFromCMS() {
+    const structure = useDataFromSlug('oxmenus');
+
+    if (!structure) {
+        return null;
+    }
+
+    return (
+        <MenusFromStructure structure={structure} />
     );
 }
 
@@ -97,7 +81,7 @@ export default function MainMenu() {
     return (
         <ul className='nav-menu main-menu no-bullets' role='menubar' data-analytics-nav="Main Menu">
             <SubjectsMenu />
-            <MenusFromStructure structure={menuStructure} />
+            <MenusFromCMS />
             <LoginMenu />
             <li className='give-button-item' role='presentation'>
                 <GiveButton />
