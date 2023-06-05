@@ -5,10 +5,11 @@
     width: 100%;
 
     .cards {
-        display: flex;
-        flex-shrink: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
         gap: 3rem;
         margin-top: 2rem;
+        width: 100%;
 
         .card {
             @include card();
@@ -16,7 +17,6 @@
             color: inherit;
             padding: 1rem 2rem;
             text-decoration: none;
-            width: 25rem;
 
             .centered-image {
                 display: flex;
