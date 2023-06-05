@@ -102,8 +102,7 @@ function BottomBasic({ leftContent, icon, model }) {
             <a
               className="left"
               data-analytics-select-content={model.heading}
-              data-content-type="book_resource"
-              data-content-tags={`,category=${model.resourceCategory},`}
+              data-content-type={`Book Resource (${model.resourceCategory})`}
             >
                 <FontAwesomeIcon icon={icon} />
                 {leftContent}
@@ -235,8 +234,7 @@ function LeftButton({ model }) {
                 onClick={openDialog}
                 data-track={model.heading}
                 data-analytics-select-content={model.heading}
-                data-content-type="book_resource"
-                data-content-tags={`,category=${model.resourceCategory},`}
+                data-content-type={`Book Resource (${model.resourceCategory})`}
             >
                 <FontAwesomeIcon icon={icon} />
                 <span>{model.link.text}</span>

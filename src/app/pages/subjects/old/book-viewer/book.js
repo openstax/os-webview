@@ -134,7 +134,7 @@ export default function BookCover({
             <a
               href={`/details/${slug}`}
               data-analytics-select-content={title}
-              data-content-type="book"
+              data-content-type="Book"
               data-content-tags={['',
                   ...subjects.map((subject) => `subject=${subject}`),
               ''].join(',')}
