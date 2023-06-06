@@ -58,7 +58,8 @@ export default function LoginMenuWithDropdown() {
         (userModel.groups || []).includes('Faculty') ||
         (!userModel.stale_verification && userModel.pending_verification) ||
         userModel.pendingInstructorAccess ||
-        userModel.emailUnverified
+        userModel.emailUnverified ||
+        userModel.rejectedFaculty
     );
 
     return (
