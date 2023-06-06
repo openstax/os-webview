@@ -130,7 +130,7 @@ export default function AccordionGroup({
                     20
                 );
             }
-            window.setTimeout(() => onChange(...args), 1);
+            onChange(...args);
         },
         [onChange, noScroll]
     );

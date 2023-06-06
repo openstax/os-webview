@@ -335,7 +335,7 @@ export function OptionExpander({expanded, additionalOptions, toggle}) {
     const text = useExpanderText(additionalOptions)[expanded ? 'fewer' : 'more'];
     const doToggle = React.useCallback(
         (event) => {
-            window.setTimeout(toggle, 1);
+            toggle();
             event.preventDefault();
         },
         [toggle]
