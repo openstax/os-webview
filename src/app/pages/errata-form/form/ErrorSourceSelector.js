@@ -71,6 +71,9 @@ function filterForBook(bookInfo, tutorBookList) {
         if (type.startsWith('Rover')) {
             return false;
         }
+        if (type.startsWith('Assignable')) {
+            return bookInfo.assignable_book;
+        }
         if (type.endsWith('Tutor')) {
             return tutorBookList.includes(bookInfo.title);
         }
