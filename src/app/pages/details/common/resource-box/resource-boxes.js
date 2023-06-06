@@ -272,8 +272,9 @@ function LeftContent({ model }) {
     if (!model.link) {
         return <AccessPending />;
     }
+
     if (!model.link.url) {
-        return doneWaiting ? <MissingLink /> : null;
+        return doneWaiting && !model.comingSoon ? <MissingLink /> : null;
     }
 
     // logged in but not an instructor
