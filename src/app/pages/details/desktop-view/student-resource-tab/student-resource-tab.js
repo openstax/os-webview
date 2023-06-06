@@ -30,8 +30,7 @@ function StudentResourceTab({model, userStatus}) {
             </div>
             <div
                 className="resources"
-                data-analytics-content-list="student_resources"
-                data-list-name="Student Resources"
+                data-analytics-content-list="Student Resources"
             >
                 <ResourceBoxes models={models} />
             </div>

@@ -81,8 +81,7 @@ export default function Partners({bookAbbreviation, model}) {
             </div>
             <div
               className="blurb-scroller"
-              data-analytics-content-list="book_partners"
-              data-list-name={title}
+              data-analytics-content-list={title}
             >
                 <div className="blurbs">
                     {

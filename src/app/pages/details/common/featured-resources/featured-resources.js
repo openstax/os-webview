@@ -27,7 +27,6 @@ function FeaturedResources({headline, resources, ...props}) {
             </div>
             <div
                 data-analytics-content-list={props['data-analytics-content-list']}
-                data-list-name={props['data-list-name']}
                 className="resources"
             >
                 <ResourceBoxes models={modResources} />
