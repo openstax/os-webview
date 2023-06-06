@@ -1,6 +1,5 @@
 import React from 'react';
 import usePageContext from '../page-context';
-// import './featured-in.scss';
 
 export default function Infographic() {
     const {infographicText, infographicImage} = usePageContext();
