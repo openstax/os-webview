@@ -41,5 +41,5 @@ export default function useResults(searchString, selectedFilters, institution) {
             message = 'No matching results';
         }
     }
-    return [results, message];
+    return [results || [], message];
 }
