@@ -134,8 +134,7 @@ function Partners({data}) {
             <MobileControlRow {...{advancedFilterOptions, typeOptions}} />
             <div
                 className="padding"
-                data-analytics-content-list="partners"
-                data-list-name={headline}
+                data-analytics-content-list={headline}
             >
                 <Results linkTexts={linkTexts} headerTexts={headerTexts} />
             </div>

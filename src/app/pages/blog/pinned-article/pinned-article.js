@@ -17,8 +17,7 @@ export default function PinnedArticle({subhead}) {
             <SectionHeader head="Featured blog post" subhead={subhead} />
             <div
                 className="pinned-article"
-                data-list-name="Featured Blog Posts"
-                data-analytics-content-list="featured_blog_posts"
+                data-analytics-content-list="Featured Blog Posts"
             >
                 <ArticleSummary {...model} HeadTag='h3' />
             </div>
