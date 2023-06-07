@@ -7,7 +7,7 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}) {
     const blurAndSetLabel = React.useCallback(
         (event) => {
             event.currentTarget.blur();
-            window.setTimeout(() => setSelectedLabel(label), 1);
+            setSelectedLabel(label);
         },
         [setSelectedLabel, label]
     );

@@ -50,16 +50,14 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
 
         event.preventDefault();
 
-        window.setTimeout(() => {
-          dropdownCtx.setActiveDropdown(topRef);
-          dropdownCtx.setSubmenuLabel(label);
-          if (isMobileDisplay()) {
-              event.target.blur();
-              if (previousActiveDropdown === topRef) {
-                  closeMenu();
-              }
-          }
-        }, 1);
+        dropdownCtx.setActiveDropdown(topRef);
+        dropdownCtx.setSubmenuLabel(label);
+        if (isMobileDisplay()) {
+            event.target.blur();
+            if (previousActiveDropdown === topRef) {
+                closeMenu();
+            }
+        }
     }
 
     function openDesktopMenu(event) {
