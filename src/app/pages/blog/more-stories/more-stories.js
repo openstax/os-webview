@@ -22,8 +22,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
     return (
         <div
             className="latest-blurbs cards"
-            data-analytics-content-list="latest_blog_posts"
-            data-list-name="Latest Blog Posts"
+            data-analytics-content-list="Latest Blog Posts"
         >
             {
                 articles.map((article) =>
