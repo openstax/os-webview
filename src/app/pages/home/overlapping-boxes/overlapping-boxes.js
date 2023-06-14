@@ -7,7 +7,7 @@ function CTABox({data: {header, description, link, buttonText}}) {
             <div className="text-block">
                 <h1>{header}</h1>
                 <div className="description">{description}</div>
-                <a className="btn primary" href={link}>{buttonText}</a>
+                <a className="btn primary" href={link} data-analytics-link>{buttonText}</a>
             </div>
         </div>
     );
