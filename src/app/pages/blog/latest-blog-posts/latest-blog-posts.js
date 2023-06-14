@@ -23,13 +23,19 @@ function Showing({page}) {
 
 export default function LatestBlogPosts() {
     const [page, setPage] = React.useState(1);
-    const {totalCount} = useBlogContext();
-    const totalPages = Math.ceil(totalCount / perPage);
 
     React.useLayoutEffect(
         () => window.scrollTo(0, 0),
         [page]
     );
+
+    const {totalCount} = useBlogContext();
+
+    if (!totalCount) {
+        return null;
+    }
+
+    const totalPages = Math.ceil(totalCount / perPage);
 
     return (
         <div className="latest-blog-posts page">

@@ -6,7 +6,7 @@ import './more-stories.scss';
 import SectionHeader from '../section-header/section-header';
 
 export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
-    const numberNeeded = page * pageSize + 1;
+    const numberNeeded = page * pageSize;
     const latestStories = useLatestBlogEntries(numberNeeded);
     const {setPath, topicStories} = useBlogContext();
 
@@ -17,7 +17,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
     const articles = (topicStories.length ? topicStories : latestStories)
         .map(blurbModel)
         .filter((article) => exceptSlug !== article.articleSlug)
-        .slice(-pageSize);
+        .slice((page - 1) * pageSize, numberNeeded);
 
     return (
         <div

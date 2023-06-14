@@ -119,6 +119,8 @@ export function useDataFromPromise(promise, defaultValue) {
     React.useEffect(() => {
         if (promise) {
             promise.then(setData);
+        } else {
+            setData(null);
         }
     }, [promise]);
 
