@@ -76,7 +76,7 @@ function useTopicStories() {
     return ({topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular});
 }
 
-function useContextValue({footerText, footerLabel, footerUrl, meta}) {
+function useContextValue({displayFooter, footerText, footerButtonText, footerLink, meta}) {
     const navigate = useNavigate();
     const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} = useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
@@ -102,7 +102,7 @@ function useContextValue({footerText, footerLabel, footerUrl, meta}) {
         setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet,
         topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular,
         pageDescription: meta.searchDescription,
-        footerText, footerLabel, footerUrl
+        displayFooter, footerText, footerButtonText, footerLink
     };
 }
 
@@ -114,8 +114,9 @@ function BlogContextProvider({children}) {
     if (!data) {
         return null;
     }
+
     return (
-        <ContextProvider contextValueParameters={data}>
+        <ContextProvider contextValueParameters={camelCaseKeys(data)}>
             {children}
         </ContextProvider>
     );

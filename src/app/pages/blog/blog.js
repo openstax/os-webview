@@ -37,12 +37,13 @@ export function SearchResultsPage() {
 }
 
 // Exported so it can be tested
+// eslint-disable-next-line complexity
 export function MainBlogPage() {
-    const {pinnedStory, pageDescription, footerText, footerLabel, footerUrl} = useBlogContext();
+    const {pinnedStory, pageDescription, displayFooter, footerText, footerButtonText, footerLink} = useBlogContext();
     const leftButton = {
         descriptionHtml: footerText || 'Interested in sharing your story?',
-        text: footerLabel || 'Write for us',
-        link: footerUrl || '/write-for-us'
+        text: footerButtonText || 'Write for us',
+        link: footerLink || '/write-for-us'
     };
 
     useDocumentHead({
@@ -61,7 +62,8 @@ export function MainBlogPage() {
                 <PinnedArticle />
                 <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
             </div>
-            <StickyFooter leftButton={leftButton} />
+            { displayFooter && <StickyFooter leftButton={leftButton} /> }
+
         </WindowContextProvider>
     );
 }

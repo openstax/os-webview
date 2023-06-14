@@ -15,7 +15,7 @@ test('blog default page', async () => {
             </BlogContextProvider>
         </BrowserRouter>
     );
-    expect(await screen.findAllByText('Read more')).toHaveLength(3);
+    expect(await screen.findAllByText('Read more')).toHaveLength(4);
     expect(screen.queryAllByRole('textbox')).toHaveLength(1);
 });
 
