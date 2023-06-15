@@ -131,6 +131,7 @@ function oldUserModel(sfUserModel) {
     // faculty_status: 'rejected_by_sheerid',
     const pendingInstructorAccess = sfUserModel.faculty_status === 'rejected_by_sheerid';
     const emailUnverified = sfUserModel.faculty_status === 'incomplete_signup';
+    const rejectedFaculty = sfUserModel.faculty_status === 'rejected_faculty';
 
     /* eslint camelcase: 0 */
     return {
@@ -146,6 +147,7 @@ function oldUserModel(sfUserModel) {
         needsProfileCompleted: sfUserModel.needs_complete_edu_profile,
         pendingInstructorAccess,
         emailUnverified,
+        rejectedFaculty,
         is_newflow: sfUserModel.is_newflow,
         username: sfUserModel.id,
         renewal_eligible: sfUserModel.renewal_eligible,
