@@ -1,0 +1,58 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.home.page .overlapping-boxes {
+    background: linear-gradient(to bottom, ui-color(white) 50%, os-color(blue) 50%);
+    overflow: visible;
+    padding: 0;
+
+    .overlapping {
+        @extend %content;
+        background: transparent;
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fill, minmax(55rem, 1fr));
+        z-index: 1;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+
+    }
+
+    .cta-box {
+        @extend %card;
+        @include set-font(body-large);
+
+        background-color: white;
+        color: text-color(normal);
+        min-height: 16rem;
+        margin: 0 auto;
+        max-width: 100%;
+        padding: 4rem;
+        width: 100%;
+
+        @include width-up-to($phone-max) {
+            padding: 3.5rem;
+        }
+
+        h1 {
+            @include set-font(h2);
+            margin: 0;
+        }
+
+        .text-block {
+            align-items: start;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: $text-content-max;
+        }
+
+    }
+
+    .btn.primary {
+        @include button();
+        @extend %primary;
+    }
+
+}
