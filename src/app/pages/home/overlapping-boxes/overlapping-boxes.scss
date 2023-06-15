@@ -5,12 +5,6 @@
     overflow: visible;
     padding: 0;
 
-    @include width-up-to($phone-max) {
-        margin-top: 3rem;
-        margin-bottom: 3rem;
-        padding-bottom: 0.5rem;
-    }
-
     .overlapping {
         @extend %content;
         background: transparent;
@@ -20,7 +14,6 @@
         z-index: 1;
 
         @include width-up-to($phone-max) {
-            margin-top: -2rem;
             grid-template-columns: 100%;
         }
 
