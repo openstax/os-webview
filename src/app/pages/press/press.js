@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
+import {Routes, Route, Navigate, useLocation, useParams} from 'react-router-dom';
 import usePageContext, {PageContextProvider} from './page-context';
 import {
     setPageTitleAndDescriptionFromBookData,
@@ -12,6 +12,7 @@ import Testimonials from './testimonials/testimonials';
 import MissionStatements from './mission/mission';
 import Infographic from './infographic/infographic';
 import PressReleases from './press-releases/press-releases';
+import {ArticleLoader} from './article/article';
 import NewsMentions from './news-mentions/news-mentions';
 import FAQ from './faq/faq';
 import './press.scss';
@@ -60,7 +61,20 @@ function MainPage() {
 }
 
 function ArticlePage() {
-    return <h1>Article page</h1>;
+    const {article} = useParams();
+    const slug = `press/${article}`;
+
+    return (
+        <React.Fragment>
+            <ArticleLoader slug={slug} />
+            <div className="text-content">
+                <h1>Other press releases</h1>
+                <div className="other press-releases">
+                    <PressReleases excludeSlug={slug} />
+                </div>
+            </div>
+        </React.Fragment>
+    );
 }
 
 function RedirectSlash() {

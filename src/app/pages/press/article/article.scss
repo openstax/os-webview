@@ -1,0 +1,8 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.press.page .article,
+.press.page > .text-content {
+    @include wider-than($tablet-max) {
+        grid-column: 1 / 6;
+    }
+}
