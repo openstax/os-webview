@@ -36,7 +36,6 @@ function useContextValue() {
 
     return {
         selectedBook: bookInfo,
-        isTutor: Boolean(bookInfo?.tutor_marketing_book),
         books,
         hasError, setHasError,
         hideErrors,

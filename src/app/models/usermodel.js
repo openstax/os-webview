@@ -48,7 +48,6 @@ const accountsModel = {
         //     school_location: 'domestic_school',
         //     is_kip: false,
         //     is_administrator: false,
-        //     grant_tutor_access: false,
         //     contact_infos: [
         //         {
         //             id: 61694,
@@ -115,9 +114,7 @@ function oldUserModel(sfUserModel) {
         ['pending_faculty'].includes(sfUserModel.faculty_status) &&
         !isVerificationStale;
     const groups = (function () {
-        const result = (sfUserModel.applications || [])
-            .map((obj) => obj.name)
-            .filter((name) => name === 'OpenStax Tutor');
+        const result = [];
 
         if (isStudent) {
             result.push('Student');

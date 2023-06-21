@@ -27,7 +27,6 @@ export default {
     'resources.loginToUnlock': 'Login to unlock',
     'getit.toc': 'Table of contents',
     'getit.webview.link': 'View online',
-    'getit.webview.tutor': 'Go to OpenStax Tutor',
     'getit.app': 'Download the app',
     'getit.pdf.download': ' Download a PDF',
     'getit.pdf.sample': ' sample',

@@ -10,7 +10,7 @@ export function cnxFetch({isRex, cnxId, webviewLink}) {
     ;
 }
 
-export default function ({isRex, cnxId, webviewLink, isTutor}) {
+export default function tableOfContentsHtml({isRex, cnxId, webviewLink}) {
     function pageLink(entry) {
         const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
 
@@ -30,10 +30,6 @@ export default function ({isRex, cnxId, webviewLink, isTutor}) {
                         htmlEntities.push(e);
                     });
                 htmlEntities.push('</ul>');
-            } else if (isTutor) {
-                htmlEntities.push(
-                    `<${tag}>${entry.title}</${tag}>`
-                );
             } else {
                 htmlEntities.push(
                     `<${tag}><a href="${pageLink(entry)}">${entry.title}</a></${tag}>`

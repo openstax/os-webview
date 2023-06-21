@@ -349,19 +349,6 @@ export default {
             "title": "Sapling Learning",
             "do_not_display": true
         },
-        "openstax-tutor-beta": {
-            "heading": "OpenStax Tutor Beta",
-            "short_description": "<p>OpenStax Tutor Beta gives college students easy-to-use online courseware and learning tools they need to complete their course the first time. <br/></p>",
-            "is_ap": false,
-            "ally_bw_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/OSTB-Stacked-TM-GREY-RETINA-2017.png",
-            "long_description": "<p>Improve how your students learn with research-based technology — for only $10. OpenStax Tutor Beta gives college students easy-to-use online courseware and learning tools they need to complete their course the first time around. And it’s all based on science. This low-cost, easy-to-use, professionally written, peer-reviewed, and research-based tool is designed to help students learn and retain information. OpenStax Tutor Beta uses OpenStax textbooks to deliver high-quality content, simulations and videos, spaced practice, and immediate feedback. This innovative learning tool was created with the help of grants from the Bill &amp; Melinda Gates Foundation, the Laura and John Arnold Foundation, and the Maxfield Foundation. We keep our costs low at $10 per student, per course, allowing us to support the tool and make research-backed improvements while keeping it as accessible as possible to students.</p><p>OpenStax Tutor Beta supports OpenStax <a href=\"/details/biology\">Biology</a>, <a href=\"/details/college-physics\">College Physics</a>, and <a href=\"/details/introduction-sociology-2e\">Introduction to Sociology 2e</a>.</p>",
-            "subjects": [
-                "Science",
-                "Social Sciences"
-            ],
-            "title": "OpenStax Tutor Beta",
-            "do_not_display": false
-        },
         "top-hat": {
             "heading": "Top Hat",
             "short_description": "<p>Top Hat is a teaching app that helps you create your perfect course, engage students, and build comprehension inside and outside the classroom.<br/></p>",

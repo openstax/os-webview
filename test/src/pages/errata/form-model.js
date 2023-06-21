@@ -2,7 +2,6 @@ export default {
     "defaultEmail": "gmf3+teacher01@rice.edu",
     "submittedBy": 23,
     "selectedTitle": "Biology 2e",
-    "isTutor": false,
     "mode": "form",
     "books": [
         {

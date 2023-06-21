@@ -1,6 +1,5 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
-import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from '../dropdown/dropdown';
@@ -9,26 +8,6 @@ const settings = window.SETTINGS;
 const facultySignupStep4 = `${settings.accountHref}/i/signup/educator/profile_form`;
 const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
 const profileLink = `${settings.accountHref}/profile`;
-
-function TutorMenuItem() {
-    const tutorPageData = useDataFromSlug('pages/openstax-tutor');
-
-    if (!tutorPageData) {
-        return null;
-    }
-    return (
-        <MenuItem
-            label="OpenStax Tutor"
-            url={`${tutorPageData.tutor_login_link}/dashboard`}
-        />
-    );
-}
-
-function TutorMenuItemIfUser({userModel}) {
-    const isTutorUser = (userModel.groups || []).includes('OpenStax Tutor');
-
-    return isTutorUser ? <TutorMenuItem /> : null;
-}
 
 function AccountItem() {
     const {myOpenStaxUser} = useUserContext();
@@ -65,7 +44,6 @@ export default function LoginMenuWithDropdown() {
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>
             <AccountItem />
-            <TutorMenuItemIfUser userModel={userModel} />
             {incomplete && <MenuItem label="Finish signing up" url={facultySignupStep4} />}
             {
                 instructorEligible &&

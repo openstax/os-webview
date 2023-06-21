@@ -1,6 +1,5 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faAtom} from '@fortawesome/free-solid-svg-icons/faAtom';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import {faListOl} from '@fortawesome/free-solid-svg-icons/faListOl';
@@ -90,16 +89,11 @@ export function WebviewOption({model}) {
     const [showCallout, hideForever] = useCalloutCounter(model.slug);
     const intl = useIntl();
     const texts = {
-        link: intl.formatMessage({id: 'getit.webview.link'}),
-        tutor: intl.formatMessage({id: 'getit.webview.tutor'})
+        link: intl.formatMessage({id: 'getit.webview.link'})
     };
-    const isTutor = model.webviewRexLink?.includes('tutor');
-    const isRex = !isTutor && Boolean(model.webviewRexLink);
+    const isRex = Boolean(model.webviewRexLink);
     const webviewLink = model.webviewRexLink || model.webviewLink;
-    const iconAndTextArgs = isTutor ? {
-        icon: faAtom,
-        text: texts.tutor
-    } : {
+    const iconAndTextArgs = {
         icon: faLaptop,
         text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : texts.link
     };
@@ -109,7 +103,7 @@ export function WebviewOption({model}) {
             <div className="option-with-callout">
                 <a
                     href={webviewLink} data-local={isRex} data-track="Online"
-                    target={isTutor ? '_blank' : ''} rel="noreferrer"
+                    rel="noreferrer"
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>

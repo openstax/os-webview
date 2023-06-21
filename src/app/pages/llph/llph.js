@@ -17,8 +17,6 @@ function LLPH({data}) {
         signupLinkHref
     } = data;
     const heroBackground = data.heroBackground.meta.downloadUrl;
-    const ostLink = '/openstax-tutor';
-    const ostLogo = '/dist/images/llph/tutor-logo.svg';
     const briLink = 'https://billofrightsinstitute.org/';
     const briLogo = '/dist/images/llph/bri-logo.png';
     const loginLocation = new window.URL(linkHelper.loginLink());
@@ -60,7 +58,6 @@ function LLPH({data}) {
             </section>
             <section className="icon-links">
                 <div className="content">
-                    <a href={ostLink}><img src={ostLogo} alt="OpenStax Tutor" /></a>
                     <a href={briLink}><img src={briLogo} alt="Bill of Rights Institute" /></a>
                 </div>
             </section>

@@ -1,8 +1,6 @@
 import React from 'react';
-import TutorPage from './openstax-tutor/openstax-tutor';
 
 const pageRoutes = {
-    'openstax-tutor': TutorPage
 };
 
 function pageSlugFromPath() {
