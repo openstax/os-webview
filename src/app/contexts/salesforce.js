@@ -22,7 +22,11 @@ export const adoptionOptions = [{
     text: 'For my own knowledge or other work'
 }];
 
-const initialContextValue = {adoptionName};
+function adoption(options) {
+    return adoptionOptions.filter((option) => options.includes(option.key));
+}
+
+const initialContextValue = {adoption, adoptionName};
 const fetchPromise = cmsFetch('salesforce/forms/');
 
 export function useContextValue() {

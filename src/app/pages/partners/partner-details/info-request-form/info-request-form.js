@@ -17,7 +17,7 @@ import './info-request-form.scss';
 
 function AdoptedQuestion() {
     const {adoption} = useSalesforceContextValue();
-    const [yesObj, noObj] = adoption(['adopted', 'recommended']);
+    const [yesObj, noObj] = adoption(['core', 'recommended']);
     const adoptionYesNoOptions = [
         {label: 'Yes', value: yesObj.value},
         {label: 'No', value: noObj.value}
