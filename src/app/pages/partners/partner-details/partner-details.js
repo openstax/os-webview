@@ -37,7 +37,6 @@ function useRealTitles(books) {
     return titles;
 }
 
-// -- RESTORE this to use the new form
 function RequestInfoButton({infoText='Request info', partnerName}) {
     const {toggleForm, books} = usePartnerContext();
     const validTitle = books.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
@@ -60,33 +59,6 @@ function RequestInfoButton({infoText='Request info', partnerName}) {
         </section>
     );
 }
-
-// -- This uses the old form
-/*
-function RequestInfoButton({infoUrl, infoText='Request info', partnerName}) {
-    const {books} = usePartnerContext();
-    const validTitle = books.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
-
-    function trackInfoRequest() {
-        analyticsEvents.requestInfo(partnerName);
-    }
-
-    // NOTE: click is not propagating up to router. For external form, target is _blank
-    // For custom local form, remove that.
-    return (
-        infoUrl && validTitle && (
-            <section>
-                <a
-                    className="btn primary" href={infoUrl} onClick={trackInfoRequest}
-                    target="_blank" rel="noreferrer"
-                >
-                    {infoText}
-                </a>
-            </section>
-        )
-    );
-}
-*/
 
 function Overview({model, icon}) {
     const {
