@@ -38,11 +38,9 @@ function TitleSelector() {
             </p>
             <FormSelect
                 selectAttributes={{
-                    placeholder: 'Please select one',
-                    onChange(event) {
-                        setTitle(event.target.value);
-                    }
+                    placeholder: 'Please select one'
                 }}
+                onValueUpdate={setTitle}
                 label="What book were you in, again?" options={options} />
         </div>
     );
