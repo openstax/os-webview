@@ -294,6 +294,9 @@ function LeftContent({ model }) {
 }
 
 function Bottom({ model }) {
+    if (model.comingSoon && model.iconType === 'lock') {
+        return null;
+    }
     return (
         <div className="bottom">
             <LeftContent model={model} />
