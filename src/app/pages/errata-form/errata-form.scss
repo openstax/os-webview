@@ -27,7 +27,13 @@
 
     .title-selector {
         align-items: initial;
+        min-height: 70rem;
         padding: 4rem 0 30rem;
+
+        .vertical-list {
+            max-height: 50rem;
+            overflow: auto;
+        }
     }
 
     .boxed {
