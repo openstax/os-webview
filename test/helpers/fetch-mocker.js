@@ -19,6 +19,7 @@ import flags from '../src/data/flags';
 import footerData from '../src/data/footer';
 import formHeadings from '../src/data/form-headings';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
+import kineticData from '../src/data/kinetic';
 import newSubjectsData from '../src/data/new-subjects';
 import openstaxHomepageData from '../src/data/openstax-homepage';
 import osNewsData from '../src/data/openstax-news-detail';
@@ -65,6 +66,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isFooter = (/api\/footer/).test(args[0]);
     const isFormHeading = (/form-headings/).test(args[0]);
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
+    const isKinetic = args[0].endsWith('kinetic/');
     const isHomepage = (/openstax-homepage/).test(args[0]);
     const isNewSubjects = args[0].includes('new-subjects');
     const isOsNews = (/openstax-news/).test(args[0]);
@@ -75,7 +77,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isPressArticle = (/api\/press\/./).test(args[0]);
     const isPrintOrder = (/pages\/print-order/).test(args[0]);
     const isRenewal = args[0].includes('renewal?account_uuid');
-    const isResearch = (/pages\/research/).test(args[0]);
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
     const isSfapiUser = (/api\/v1\/users/).test(args[0]);
@@ -92,6 +93,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSalesforcePartners = (/salesforce\/partners/).test(args[0]);
 
     return new Promise(
+        // eslint-disable-next-line
         (resolve, reject) => {
             let payload = {};
 
@@ -127,6 +129,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = openstaxHomepageData;
             } else if (isInstitutionalPartnership) {
                 payload = institutionalPartnershipData;
+            } else if (isKinetic) {
+                payload = kineticData;
             } else if (isSubjects) {
                 payload = subjectData;
             } else if (isSubjectPage) {
@@ -192,9 +196,13 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                     '*************'
                 );
             }
+
             resolve({
                 ok: true,
                 json() {
+                    return Promise.resolve(payload);
+                },
+                text() {
                     return Promise.resolve(payload);
                 }
             });
