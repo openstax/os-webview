@@ -1,11 +1,10 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import useUserContext from '~/contexts/user';
 import {useLocation} from 'react-router-dom';
-import {useToggle} from '~/helpers/data';
 import cookie from '~/helpers/cookie';
 
 const DISMISSED_KEY = 'renewal_dialog_dismissed';
-const YESTERDAY = Date.now() - 60 * 60 * 24 * 1000;
+// const YESTERDAY = Date.now() - 60 * 60 * 24 * 1000;
 
 function useCookieKey(key) {
     return React.useReducer(
@@ -17,64 +16,82 @@ function useCookieKey(key) {
     );
 }
 
-export default function useAdoptionMicrosurveyContent() {
-    const {userModel} = useUserContext();
-    const {first_name: name} = userModel || {};
+function useDismissalCookie() {
     const [cookieValue, setCookieValue] = useCookieKey(DISMISSED_KEY);
-    const recentlyDismissed = React.useMemo(
-        () => +Number(cookieValue) > YESTERDAY,
+    const clicked = React.useMemo(
+        () => +Number(cookieValue) > 0,
         [cookieValue]
     );
-    const [clicked, disable] = useToggle(recentlyDismissed);
-    const ready = React.useMemo(
-        () => !clicked && userModel?.renewal_eligible,
-        [clicked, userModel]
-    );
-    const ref = useRef();
+    const {userModel} = useUserContext();
+    const isFaculty = userModel?.accountsModel?.faculty_status === 'confirmed_faculty';
     const {pathname} = useLocation();
+    const ready = React.useMemo(
+        () => {
+            if (pathname === '/renewal-form') {
+                return false;
+            }
+            return !clicked && isFaculty;
+        },
+        [clicked, isFaculty, pathname]
+    );
+    const disable = React.useCallback(
+        () => setCookieValue(Date.now().toString()),
+        [setCookieValue]
+    );
 
     // Dismiss upon navigation
     React.useEffect(
         () => {
-            if (!clicked && pathname === '/renewal-form') {
-                disable();
-            }
+            window.setTimeout(
+                () => {
+                    if (!clicked && pathname === '/renewal-form') {
+                        disable();
+                    }
+                },
+                10
+            );
         },
-        [pathname, clicked, disable]
+        [pathname, disable, clicked]
     );
 
-    // On dismiss, write cookie entry
-    React.useEffect(
-        () => {
-            if (!recentlyDismissed && clicked) {
-                setCookieValue(Date.now().toString());
-            }
-        },
-        [clicked, recentlyDismissed, setCookieValue]
-    );
+    return [ready, disable];
+}
 
-    function AdoptionContent({children}) {
-        return (
-            <div
-              className="microsurvey-content"
-              ref={ref}
-              data-analytics-view
-              data-analytics-nudge="adoption"
-              data-nudge-placement="popup"
-            >
-                {children}
-                <h1>
-                    Hi, {name}. Could you update our records
-                    of which books you&apos;re using?
-                    Fill out the <a
+function AdoptionContentBase({children, disable}) {
+    const {userModel} = useUserContext();
+    const {first_name: name} = userModel || {};
+
+    return (
+        <div
+          className="microsurvey-content"
+          data-analytics-view
+          data-analytics-nudge="adoption"
+          data-nudge-placement="popup"
+        >
+            {children}
+            <h1>
+                Hi, {name}. Could you update our records
+                of which books you&apos;re using?
+                Fill out the <a
 href="/renewal-form?from=popup"
-                        onClick={disable}
-                        data-nudge-action="interacted"
-                    >form here</a>.
-                </h1>
-            </div>
-        );
-    }
+                    onClick={() => disable()}
+                    data-nudge-action="interacted"
+                >form here</a>.
+            </h1>
+        </div>
+    );
+}
+
+export default function useAdoptionMicrosurveyContent() {
+    const [ready, disable] = useDismissalCookie();
+    const AdoptionContent = React.useCallback(
+        ({children}) => (
+            <AdoptionContentBase disable={disable}>
+                {children}
+            </AdoptionContentBase>
+        ),
+        [disable]
+    );
 
     return [ready, AdoptionContent];
 }
