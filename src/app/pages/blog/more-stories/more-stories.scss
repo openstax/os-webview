@@ -21,7 +21,6 @@ $image-height: 24rem;
         @extend %article-summary;
 
         background-color: ui-color(white);
-        height: 100%;
 
         .link-image {
             height: $image-height;
