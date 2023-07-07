@@ -68,7 +68,7 @@
         "react-modal": "^3.16.1",
         "require-dir": "^1.2.0",
         "style-loader": "^3.3.2",
-        "stylelint": "^15.3.0",
+        "stylelint": "^15.10.1",
         "stylelint-config-standard-scss": "^7.0.1",
         "stylelint-scss": "^4.6.0",
         "stylelint-webpack-plugin": "^4.1.0",
