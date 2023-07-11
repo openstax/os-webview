@@ -2,7 +2,6 @@ import React from 'react';
 import JITLoad from '~/helpers/jit-load';
 import {useToggle} from '~/helpers/data';
 import useUserContext from '~/contexts/user';
-import analytics from '~/helpers/analytics';
 import cookie from '~/helpers/cookie';
 import './cookie-notice.scss';
 
@@ -38,12 +37,9 @@ export default function ShowNoticeOrNot() {
             }
 
             if (typeof accountsModel.id !== 'undefined') {
-                const userid = accountsModel.uuid;
-
                 if (!accountsModel.is_not_gdpr_location || accountsModel.opt_out_of_cookies) {
                     return;
                 }
-                analytics.setUser(userid);
                 if (!acknowledged()) {
                     toggle();
                 }

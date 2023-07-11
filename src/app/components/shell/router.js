@@ -11,7 +11,6 @@ import Error404 from '~/pages/404/404';
 import {GeneralPageFromSlug} from '~/pages/general/general';
 import linkHelper from '~/helpers/link';
 import retry from '~/helpers/retry';
-import analytics from '~/helpers/analytics';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import $ from '~/helpers/$';
 import {useToggle} from '~/helpers/data';
@@ -21,34 +20,11 @@ const FOOTER_PAGES = [
     'license', 'tos', 'privacy', 'privacy-policy', 'accessibility-statement', 'careers'
 ].map((s) => `/${s}/`);
 
-function instructorResourceNodeContaining(el) {
-    const resourcesSections = Array.from(
-        document.querySelectorAll('.instructor-resources .resources .resource-box')
-    );
-
-    return resourcesSections.find((node) => node.contains(el));
-}
-
 // eslint-disable-next-line complexity
 function handleExternalLink(href, el) {
     if (el.dataset.local === 'true') {
-        // REX books open in the current window; track them
-        if (linkHelper.isREX(href)) {
-            analytics.record(href);
-        }
         document.location.href = href;
     } else {
-        const irNode = instructorResourceNodeContaining(el);
-
-        if (linkHelper.isTOCLink(el)) {
-            analytics.sendTOCEvent(href);
-        } else if (irNode) {
-            const title = irNode.querySelector('.top-line').textContent;
-
-            analytics.sendInstructorResourceEvent(title, href);
-        } else {
-            analytics.record(href);
-        }
         const newWindow = window.open(href, '_blank');
 
         if (newWindow === null) {
@@ -118,9 +94,6 @@ function useAnalyticsPageView() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (!isRedirect) {
-            analytics.sendPageview();
-        }
     }, [isRedirect]);
 }
 

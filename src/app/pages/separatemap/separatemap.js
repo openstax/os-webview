@@ -5,7 +5,6 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {useMainModal} from '~/helpers/main-class-hooks';
 import useDocumentHead from '~/helpers/use-document-head';
 import cn from 'classnames';
-import analytics from '~/helpers/analytics';
 import SearchBox from './search-box/search-box';
 import {MapContextProvider} from './map-context';
 import './separatemap.scss';
@@ -14,7 +13,6 @@ function GoBackControl() {
     return (
         <a
             href="/global-reach" className="back-impact-div"
-            onClick={() => analytics.sendPageEvent('map', 'close', '')}
         >
             <span className="close-map-msg">Close map</span>
             <div className="back-impact-btn">
@@ -37,10 +35,6 @@ function SearchBoxDiv() {
 function PopupMessage() {
     const [popupVisible, togglePopup] = useToggle(true);
 
-    function sendAdoptionEvent() {
-        analytics.sendPageEvent('map', 'adoption', '');
-    }
-
     return popupVisible && (
         <div className="popup-msg-div">
             <div className="popup-msg-cross">
@@ -51,7 +45,7 @@ function PopupMessage() {
                 />
             </div>
             <div>Not seeing your school? Numbers aren&apos;t right?</div>
-            <div className="popup-msg-link" onClick={sendAdoptionEvent}>
+            <div className="popup-msg-link">
                 <a href="https://openstax.org/adoption">Let us know.</a>
             </div>
             <div>

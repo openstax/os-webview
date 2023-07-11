@@ -9,7 +9,6 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart
 import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import Dialog from '~/components/dialog/dialog';
-import analytics from '~/helpers/analytics';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
 import useDetailsContext from '../../context';
@@ -161,16 +160,6 @@ function CustomizationDialog({ isOpen, toggle }) {
         event.stopPropagation();
         toggle();
     }
-
-    React.useEffect(() => {
-        if (isOpen) {
-            analytics.sendPageEvent(
-                'Instructor resources',
-                'open',
-                'Google Docs Customization'
-            );
-        }
-    }, [isOpen]);
 
     return (
         <Dialog

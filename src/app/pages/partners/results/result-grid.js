@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Dialog from '~/components/dialog/dialog';
 import useDialogContext, {DialogContextProvider} from './dialog-context';
 import PartnerDetails from '../partner-details/partner-details';
@@ -6,7 +6,6 @@ import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import {useNavigate, useLocation} from 'react-router-dom';
-import analyticsEvents from '../analytics-events';
 
 function modelFromEntry(entry) {
     return {
@@ -88,13 +87,6 @@ function usePartnerFromLocation(entries) {
         () => navigate(pathname, {replace: true}),
         [pathname, navigate]
     );
-    const sendDetailEvent = analyticsEvents.usePartnerDetailsEvent();
-
-    useEffect(() => {
-        if (partner?.title) {
-            sendDetailEvent(partner.title);
-        }
-    }, [sendDetailEvent, partner]);
 
     return [partner, closePartner];
 }

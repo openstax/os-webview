@@ -3,41 +3,8 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
-import analytics from '~/helpers/analytics';
 import cn from 'classnames';
 import './lower-sticky-note.scss';
-
-function trackClickFor(el, target, eventArgs) {
-    if (el && el.contains(target)) {
-        analytics.sendPageEvent(...eventArgs);
-    }
-}
-
-function matchesOrContains(el, selector) {
-    return el.matches(selector) ? el : el?.querySelector(selector);
-}
-
-function trackClick(event) {
-    const div = event.currentTarget;
-    const target = event.target;
-    const putAwayEl = div.querySelector('.put-away');
-    const linkEl = matchesOrContains(div, '.blurb a');
-    const buttonEl = matchesOrContains(div, 'a.primary');
-
-    trackClickFor(putAwayEl, target,
-        ['Microdonation header X', 'close', 'Microdonation header']
-    );
-    if (linkEl) {
-        trackClickFor(linkEl, target,
-            ['Microdonation header learn more link', 'open', linkEl.href]
-        );
-    }
-    if (buttonEl) {
-        trackClickFor(buttonEl, target,
-            ['Microdonation header give button', 'open', buttonEl.href]
-        );
-    }
-}
 
 function NoteWithImage({bannerInfo}) {
     return (
@@ -76,7 +43,6 @@ export default function LowerStickyNote({stickyData, PutAway}) {
                     {'with-image': stickyData.bannerInfo.banner_thumbnail}
                 )
             }
-            onClick={trackClick}
             data-analytics-view
             data-analytics-nudge="donate"
             data-nudge-placement="banner"

@@ -4,7 +4,6 @@ import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
 import uniqBy from 'lodash/uniqBy';
 import useBlogContext from '../blog-context';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
-import analytics from '~/helpers/analytics';
 import usePaginatorContext, {PaginatorContextProvider} from '~/components/paginator/paginator-context';
 import {PaginatorControls} from '~/components/paginator/search-results/paginator.js';
 import './search-results.scss';
@@ -14,7 +13,6 @@ function useAllArticles() {
     const searchParam = new window.URLSearchParams(search).get('q');
     const [allArticles, setAllArticles] = useState([]);
 
-    analytics.sendPageEvent('Blog search', searchParam);
     useEffect(() => {
         const slug = `search/?q=${searchParam}`;
 
