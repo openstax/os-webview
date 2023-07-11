@@ -60,6 +60,9 @@ function useDismissalCookie() {
 function AdoptionContentBase({children, disable}) {
     const {userModel} = useUserContext();
     const {first_name: name} = userModel || {};
+    const {pathname} = useLocation();
+    const href = `${window.location.origin}${pathname}`;
+    const renewalFormHref = `/renewal-form?from=popup&href=${encodeURIComponent(href)}`;
 
     return (
         <div
@@ -73,7 +76,7 @@ function AdoptionContentBase({children, disable}) {
                 Hi, {name}. Could you update our records
                 of which books you&apos;re using?
                 Fill out the <a
-href="/renewal-form?from=popup"
+                    href={renewalFormHref}
                     onClick={() => disable()}
                     data-nudge-action="interacted"
                 >form here</a>.
