@@ -5,7 +5,6 @@
     box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
     padding: 2rem $normal-margin;
     position: relative;
-    width: 100%;
 
     .put-away {
         background-color: transparent;
@@ -78,6 +77,10 @@
                     max-width: 100%;
                 }
             }
+        }
+
+        .blurb {
+            text-wrap: balance;
         }
     }
 
