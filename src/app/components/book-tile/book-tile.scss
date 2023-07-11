@@ -1,9 +1,15 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/coming-soon';
 
 .book-tile {
     background-color: ui-color(white);
     border-radius: 0.5rem;
     box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+    position: relative;
+
+    &.coming-soon::before {
+        @include coming-soon;
+    }
 
     img {
         height: auto;
