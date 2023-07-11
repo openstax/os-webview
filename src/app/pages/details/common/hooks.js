@@ -6,16 +6,14 @@ import {camelCaseKeys} from '~/helpers/page-data-utils';
 
 export function useTableOfContents(model) {
     const webviewLink = model.webviewRexLink || model.webviewLink;
-    const isTutor = model.webviewRexLink?.includes('tutor');
-    const isRex = !isTutor && Boolean(model.webviewRexLink);
+    const isRex = Boolean(model.webviewRexLink);
     const [tocHtml, setTocHtml] = useState('');
 
     tableOfContentsHtml({
         isRex,
         cnxId: model.cnxId,
         bookSlug: model.slug,
-        webviewLink,
-        isTutor
+        webviewLink
     }).then(
         setTocHtml,
         (err) => {

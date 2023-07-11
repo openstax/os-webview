@@ -3858,7 +3858,6 @@ export default {
             }
         ]
     },
-    "tutor_marketing_book": true,
     "partner_list_label": "Technology Partners",
     "partner_page_link_text": "See all partners",
     "videos": [],

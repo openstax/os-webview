@@ -196,8 +196,7 @@ export default function PublicationInfo({model, url, polish}) {
     const labelPart2 = intl.formatMessage({id: 'getit.ibooks.part2'});
 
     useEffect(() => {
-        const isTutor = model.webviewRexLink?.includes('tutor');
-        const isRex = !isTutor && Boolean(model.webviewRexLink);
+        const isRex = Boolean(model.webviewRexLink);
 
         if (isRex) {
             fetchRexRelease(model.webviewRexLink, model.cnxId)

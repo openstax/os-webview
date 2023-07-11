@@ -22,10 +22,6 @@ const fetchRexInfo = memoize((rexOrigin) => {
 
 // REMEMBER: The first parameter is the memo key
 const fetchContents = memoize((cnxId, rexOrigin) => {
-    if (rexOrigin.includes('tutor')) {
-        return retry(() => fetch(`${process.env.API_ORIGIN}/contents/${cnxId}`))
-            .then((r) => r.json());
-    }
     return fetchRexInfo(rexOrigin)
         .then((rexInfo) => {
             const archiveOverride = rexInfo.release.books[cnxId].archiveOverride;

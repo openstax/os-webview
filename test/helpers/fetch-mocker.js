@@ -23,7 +23,6 @@ import kineticData from '../src/data/kinetic';
 import newSubjectsData from '../src/data/new-subjects';
 import openstaxHomepageData from '../src/data/openstax-homepage';
 import osNewsData from '../src/data/openstax-news-detail';
-import osTutorData from '../src/data/openstax-tutor';
 import pageData from '../src/data/partners';
 import polishData from '../src/data/details-polish';
 import pressData from '../src/data/press';
@@ -70,7 +69,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isHomepage = (/openstax-homepage/).test(args[0]);
     const isNewSubjects = args[0].includes('new-subjects');
     const isOsNews = (/openstax-news/).test(args[0]);
-    const isOsTutor = (/pages\/openstax-tutor/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
     const isPolishPhysics = (/fizyka/).test(args[0]);
     const isPress = (/api\/press\/?$/).test(args[0]);
@@ -93,8 +91,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSalesforcePartners = (/salesforce\/partners/).test(args[0]);
 
     return new Promise(
-        // eslint-disable-next-line
-        (resolve, reject) => {
+        (resolve) => {
             let payload = {};
 
             if (isAdoption) {
@@ -157,8 +154,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = blogArticleData;
             } else if (isTeam) {
                 payload = teamData;
-            } else if (isOsTutor) {
-                payload = osTutorData;
             } else if (isBooksForAnalytics) {
                 payload = booksForAnalyticsData;
             } else if (isRenewal) {

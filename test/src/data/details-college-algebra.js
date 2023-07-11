@@ -1337,7 +1337,6 @@ const details = {
             }
         ]
     },
-    "tutor_marketing_book": false,
     "partner_list_label": "Technology Partners",
     "partner_page_link_text": "See all partners",
     "videos": [],

@@ -50,7 +50,7 @@ created_at: "2022-05-27T12:13:44.311511-05:00"
 },
 ad_html: "<strong>Assign homework and readings synced with OpenStax textbooks</strong>",
 link_text: "Learn more",
-link_href: "https://dev.openstax.org/openstax-tutor"
+link_href: "https://dev.openstax.org/openstax-thingy"
 },
 id: "7bed790f-79f2-4e5a-97af-8581f5b944dd"
 }

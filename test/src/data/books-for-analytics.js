@@ -3466,17 +3466,6 @@ export default {
                     "book_link_text": "Explore"
                 },
                 {
-                    "id": 1361,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "OpenStax Tutor Beta",
-                    "ally_short_description": "<p>OpenStax Tutor Beta gives college students easy-to-use online courseware and learning tools they need to complete their course the first time. <br/></p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/OSTB-Horiz-TM-CMYK-RETINA-2017.png",
-                    "book_link_url": "https://openstax.org/openstax-tutor",
-                    "book_link_text": "Explore"
-                },
-                {
                     "id": 1362,
                     "meta": {
                         "type": "books.BookAllies"
@@ -3854,17 +3843,6 @@ export default {
                     "ally_short_description": "<p>Realizeit goes beyond learning personalization. Our adaptive platform enables educators to truly transform the educational experience in quantifiable ways. </p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/RealizeItlogo_10.23.png",
                     "book_link_url": "http://realizeitlearning.com/",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1711,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "OpenStax Tutor Beta",
-                    "ally_short_description": "<p>OpenStax Tutor Beta gives college students easy-to-use online courseware and learning tools they need to complete their course the first time. <br/></p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/OSTB-Horiz-TM-CMYK-RETINA-2017.png",
-                    "book_link_url": "https://openstax.org/openstax-tutor",
                     "book_link_text": "Explore"
                 }
             ],
@@ -5160,17 +5138,6 @@ export default {
                     "ally_short_description": "<p>With Odigia, instructors turn open educational resources into engaging learning experiences and help students learn like never before.</p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Odigia.png",
                     "book_link_url": "http://www.odigia.com/openstax-collegephysics/",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1409,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "OpenStax Tutor Beta",
-                    "ally_short_description": "<p>OpenStax Tutor Beta gives college students easy-to-use online courseware and learning tools they need to complete their course the first time. <br/></p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/OSTB-Horiz-TM-CMYK-RETINA-2017.png",
-                    "book_link_url": "https://openstax.org/openstax-tutor",
                     "book_link_text": "Explore"
                 },
                 {
@@ -8268,17 +8235,6 @@ export default {
                     "ally_short_description": "<p>With Odigia, instructors turn open educational resources into engaging learning experiences and help students learn like never before.</p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Odigia.png",
                     "book_link_url": "http://www.odigia.com/openstaxsociology/",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1483,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "OpenStax Tutor Beta",
-                    "ally_short_description": "<p>OpenStax Tutor Beta gives college students easy-to-use online courseware and learning tools they need to complete their course the first time. <br/></p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/OSTB-Horiz-TM-CMYK-RETINA-2017.png",
-                    "book_link_url": "https://openstax.org/openstax-tutor",
                     "book_link_text": "Explore"
                 },
                 {

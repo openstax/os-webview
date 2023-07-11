@@ -2,10 +2,8 @@ import React, {useState, useRef, useMemo} from 'react';
 import useErrataFormContext from '../errata-form-context';
 import managedInvalidMessage from './InvalidMessage.js';
 import getFields from '~/models/errata-fields';
-import {useDataFromSlug} from '~/helpers/page-data-utils';
 
 const sourceNames = {
-    tutor: 'OpenStax Tutor'
 };
 
 const resourcePromise = getFields('resources')
@@ -62,7 +60,7 @@ function LabeledButton({selectedSource, sType, onChange, radioRef}) {
     );
 }
 
-function filterForBook(bookInfo, tutorBookList) {
+function filterForBook(bookInfo) {
     // eslint-disable-next-line complexity
     return function (type) {
         if (type.startsWith('iBooks')) {
@@ -73,9 +71,6 @@ function filterForBook(bookInfo, tutorBookList) {
         }
         if (type.startsWith('Assignable')) {
             return bookInfo.assignable_book;
-        }
-        if (type.endsWith('Tutor')) {
-            return tutorBookList.includes(bookInfo.title);
         }
         if (type.endsWith('SE')) {
             return bookInfo.enable_study_edge;
@@ -97,25 +92,14 @@ function filterForBook(bookInfo, tutorBookList) {
     };
 }
 
-function useTutorBookList() {
-    const tutorPageData = useDataFromSlug('pages/openstax-tutor');
-    const list = useMemo(
-        () => tutorPageData?.tutor_books?.map((b) => b.title) || [],
-        [tutorPageData]
-    );
-
-    return list;
-}
-
 function useSourceTypes() {
     const {searchParams, selectedBook} = useErrataFormContext();
     const source = searchParams.get('source');
     const initialSource = source && sourceNames[source.toLowerCase()];
     const [sourceTypes, updateSourceTypes] = useState([]);
-    const tutorBookList = useTutorBookList();
     const filteredSourceTypes = useMemo(
-        () => sourceTypes.filter(filterForBook(selectedBook, tutorBookList)),
-        [sourceTypes, selectedBook, tutorBookList]
+        () => sourceTypes.filter(filterForBook(selectedBook)),
+        [sourceTypes, selectedBook]
     );
     const [selectedSource, updateSelectedSource] = useState(initialSource);
     const onChange = React.useCallback(
