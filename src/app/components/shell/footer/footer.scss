@@ -87,6 +87,9 @@ $lower-footer: #3b3b3b;
             grid-gap: 0.5rem;
 
             a {
+                @include width-up-to($phone-max) {
+                    padding: 1.15rem 0;
+                }
                 text-decoration: none;
 
                 &:hover {
