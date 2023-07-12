@@ -62,7 +62,7 @@ function AdoptionContentBase({children, disable}) {
     const {first_name: name} = userModel || {};
     const {pathname} = useLocation();
     const href = `${window.location.origin}${pathname}`;
-    const renewalFormHref = `/renewal-form?from=popup&href=${encodeURIComponent(href)}`;
+    const renewalFormHref = `/renewal-form?from=popup&returnTo=${encodeURIComponent(href)}`;
 
     return (
         <div
