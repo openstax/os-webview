@@ -149,6 +149,7 @@ $lower-footer: #3b3b3b;
             grid-auto-flow: column;
             grid-gap: 1rem;
             justify-content: left;
+            list-style-type: none;
 
             > .btn {
                 background-color: os-color(light-gray);
