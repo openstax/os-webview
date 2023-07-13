@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import usePartnerContext, {PartnerContextProvider} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
@@ -7,7 +7,6 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
 import booksPromise from '~/models/books';
-import analyticsEvents from '../analytics-events';
 import InfoRequestForm from './info-request-form/info-request-form';
 import './partner-details.scss';
 
@@ -37,12 +36,11 @@ function useRealTitles(books) {
     return titles;
 }
 
-function RequestInfoButton({infoText='Request info', partnerName}) {
+function RequestInfoButton({infoText='Request info'}) {
     const {toggleForm, books} = usePartnerContext();
     const validTitle = books.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
 
     function gotoForm() {
-        analyticsEvents.requestInfo(partnerName);
         toggleForm();
     }
 
@@ -104,22 +102,6 @@ function Overview({model, icon}) {
     );
 }
 
-function logScrollingInRegion(detailsEl, name) {
-    if (!detailsEl) {
-        return null;
-    }
-    const scrollingRegion = detailsEl.closest('.main-region');
-    const removeScrollListener = (callback) => scrollingRegion.removeEventListener('scroll', callback);
-    const scrollCallback = () => {
-        analyticsEvents.lightboxScroll(name);
-        removeScrollListener(scrollCallback);
-    };
-
-    scrollingRegion.addEventListener('scroll', scrollCallback);
-
-    return () => removeScrollListener(scrollCallback);
-}
-
 function PartnerDetails({model}) {
     const {
         website, partnerWebsite, websiteLinkText: partnerLinkText,
@@ -131,21 +113,9 @@ function PartnerDetails({model}) {
     // const labels = ['Overview', 'Reviews'];
     const labels = ['Overview'];
     const [selectedLabel, setSelectedLabel] = useState(labels[0]);
-    const ref = useRef();
-
-    useEffect(() => logScrollingInRegion(ref.current, model.title), [model.title]);
-
-    useEffect(() => {
-        if (selectedLabel === 'Reviews') {
-            analyticsEvents.viewReviews(model.title);
-        }
-    }, [selectedLabel, model.title]);
 
     return (
-        <div
-            className="partner-details"
-            ref={ref}
-        >
+        <div className="partner-details">
             <div className="sticky-region">
                 <Synopsis {...{model, icon, partnerLinkProps}} />
                 <TabGroup {...{labels, selectedLabel, setSelectedLabel}} />

@@ -1,6 +1,5 @@
 import React, {useRef} from 'react';
 import StarsAndCount from '~/components/stars-and-count/stars-and-count';
-import analyticsEvents from '../../analytics-events';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
@@ -22,15 +21,10 @@ function VerifiedBadge({verifiedFeatures}) {
 }
 
 function PartnerLink({partnerUrl, partnerLinkText, partnerName}) {
-    function trackPartnerVisit() {
-        analyticsEvents.partnerWebsite(partnerUrl);
-    }
-
     return (
         partnerUrl &&
             <a
                 className="partner-website" href={partnerUrl}
-                onClick={trackPartnerVisit}
                 target="_blank" rel="noreferrer"
                 data-analytics-link={`Partner Link (${partnerName})`}
             >

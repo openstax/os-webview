@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import querySchools from '~/models/querySchools';
-import analytics from '~/helpers/analytics';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 
 function useSchoolsPromise(searchString, filters, institution) {
@@ -18,8 +17,6 @@ function useSchoolsPromise(searchString, filters, institution) {
 
         if (p) {
             setPromise(p);
-            analytics.sendPageEvent('map', 'search', searchString);
-            analytics.sendPageEvent('map', 'filters', filtersArray);
         }
     }, [searchString, filters, institution]);
 

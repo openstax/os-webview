@@ -3,7 +3,6 @@ import {useLocation} from 'react-router-dom';
 import useTOCContext, {TOCContextProvider} from './common/toc-slideout/context';
 import TOCSlideout from './common/toc-slideout/toc-slideout';
 import $ from '~/helpers/$';
-import analytics from '~/helpers/analytics';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import cn from 'classnames';
 import PhoneView from './phone-view/phone-view';
@@ -144,7 +143,6 @@ export function BookDetails() {
         () => {
             setPageColor(model.coverColor);
             setJsonLd(model);
-            analytics.addResourcesToLookupTable(model);
             setLanguage(model.meta.locale);
         },
         [model, setLanguage]

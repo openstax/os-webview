@@ -7,7 +7,6 @@ import MobileControlRow from './mobile-controls/mobile-controls';
 import Results, {costOptions, equityOptions} from './results/results';
 import {useLocation} from 'react-router-dom';
 import {SearchContextProvider} from './search-context';
-import {useValueChangeEvents} from './analytics-events';
 import './partners.scss';
 
 function Confirmation() {
@@ -117,7 +116,6 @@ function Partners({data}) {
     const description = data.description;
     const {linkTexts, headerTexts} = textsFromData(data);
 
-    useValueChangeEvents();
     return (
         <React.Fragment>
             {confirmation && <Confirmation />}
