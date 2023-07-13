@@ -50,25 +50,25 @@ function Footer({
                         <RawHTML html={updatedCopyright} />
                         <RawHTML Tag="ap-html" html={apStatement} />
                     </div>
-                    <div className="social" role="directory">
-                        <a className="btn btn-social facebook" href={facebookLink} title="Facebook">
+                    <ul className="social">
+                        <li><a className="btn btn-social facebook" href={facebookLink} title="Facebook">
                             <FontAwesomeIcon icon={faFacebookF} />
-                        </a>
-                        <a className="btn btn-social twitter" href={twitterLink} title="Twitter">
+                        </a></li>
+                        <li><a className="btn btn-social twitter" href={twitterLink} title="Twitter">
                             <FontAwesomeIcon icon={faTwitter} />
-                        </a>
-                        <a className="btn btn-social linkedin" href={linkedinLink} title="LinkedIn">
+                        </a></li>
+                        <li><a className="btn btn-social linkedin" href={linkedinLink} title="LinkedIn">
                             <FontAwesomeIcon icon={faLinkedinIn} title="LinkedIn" />
-                        </a>
-                        <a className="btn btn-social instagram" href="https://www.instagram.com/openstax/" title="Instagram">
+                        </a></li>
+                        <li><a className="btn btn-social instagram" href="https://www.instagram.com/openstax/" title="Instagram">
                             <FontAwesomeIcon icon={faInstagram} title="Instagram" />
-                        </a>
-                        <a className="rice-logo" href="http://www.rice.edu">
+                        </a></li>
+                        <li><a className="rice-logo" href="http://www.rice.edu">
                             <img
                                 src="/dist/images/rice-white-text.webp" alt="Rice University logo"
                                 width="99" height="40" />
-                        </a>
-                    </div>
+                        </a></li>
+                    </ul>
                 </div>
             </div>
         </React.Fragment>

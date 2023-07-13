@@ -123,14 +123,15 @@ export default function BookCover({
     const details = {
         coverColor, hasFacultyResources, hasStudentResources
     };
+    const comingSoon = state === 'coming_soon';
     const className = cn('cover', {
-        'coming-soon': state === 'coming_soon',
+        'coming-soon': comingSoon,
         polish: $.isPolish(slug)
     });
 
     return (
         <div className={className}>
-            <ThreeDotMenu slug={slug} details={details} />
+            {!comingSoon && <ThreeDotMenu slug={slug} details={details} />}
             <a
               href={`/details/${slug}`}
               data-analytics-select-content={title}

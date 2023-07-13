@@ -1,15 +1,12 @@
 import React from 'react';
 import useSubjectsContext from './context';
-import {linkClickTracker} from '~/helpers/savings-blurb';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './info-boxes.scss';
-
-const eventName = 'Microdonation subjects page donor supported blurb impact link';
 
 function AboutBlurb({image, heading, text: description}) {
     return (
         <div className="container">
-            <div className="blurb" onClick={linkClickTracker(eventName)}>
+            <div className="blurb">
                 <div>
                     <img src={image.file} role="presentation" />
                     <h3 className="title">{heading}</h3>
