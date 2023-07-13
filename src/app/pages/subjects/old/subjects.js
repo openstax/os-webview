@@ -6,7 +6,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FormattedMessage} from 'react-intl';
 import BookViewer from './book-viewer/book-viewer';
 import savingsPromise from '~/models/savings';
-import useSavingsDataIn, {linkClickTracker} from '~/helpers/savings-blurb';
+import useSavingsDataIn from '~/helpers/savings-blurb';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import {forceCheck} from 'react-lazyload';
 import LanguageSelector from '~/components/language-selector/language-selector';
@@ -63,10 +63,8 @@ function useCategoryTiedToPath() {
 }
 
 function AboutBlurb({heading, description}) {
-    const eventName = 'Microdonation subjects page donor supported blurb impact link';
-
     return (
-        <div className="blurb" onClick={linkClickTracker(eventName)}>
+        <div className="blurb">
             <h3 className="title">{heading}</h3>
             <RawHTML Tag="p" className="text" html={description} />
         </div>
@@ -74,12 +72,10 @@ function AboutBlurb({heading, description}) {
 }
 
 function SavingsBlurb({description}) {
-    const eventName = 'Microdonation subjects page bottom sentence impact link';
-
     return (
         <React.Fragment>
             <hr />
-            <div className="text-content" onClick={linkClickTracker(eventName)}>
+            <div className="text-content">
                 <RawHTML Tag="p" className="savings-blurb" html={description} />
             </div>
         </React.Fragment>
