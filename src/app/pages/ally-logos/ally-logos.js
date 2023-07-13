@@ -46,7 +46,6 @@ function LogoSection({heading, description, logos, className}) {
 function AllyLogos({data: {
     heading, description,
     allyLogosHeading, allyLogosDescription, allyLogos: [allyLogos],
-    openstaxLogosHeading, openstaxLogosDescription, openstaxLogos: [openstaxLogos],
     bookAllyLogosHeading, bookAllyLogosDescription, bookAllyLogos: [bookAllyLogos]
 }}) {
     return (
@@ -59,12 +58,6 @@ function AllyLogos({data: {
                 heading={allyLogosHeading}
                 description={allyLogosDescription}
                 logos={allyLogos}
-            />
-            <LogoSection
-                heading={openstaxLogosHeading}
-                description={openstaxLogosDescription}
-                logos={openstaxLogos}
-                className="smaller-icon"
             />
             <LogoSection
                 heading={bookAllyLogosHeading}
