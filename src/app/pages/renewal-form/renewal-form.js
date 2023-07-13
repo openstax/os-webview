@@ -39,7 +39,9 @@ function useFormData(adoptions) {
 
 function HiddenFields({email, uuid, counts}) {
     const {search} = useLocation();
-    const fromValue = new window.URLSearchParams(search).get('from');
+    const params = new window.URLSearchParams(search);
+    const fromValue = params.get('from');
+    const returnToValue = params.get('returnTo');
     const source = fromValue || 'email';
     const {selectedItems} = useBookTagsContext();
     const json = React.useMemo(
@@ -64,6 +66,9 @@ function HiddenFields({email, uuid, counts}) {
             <input type="hidden" name="adoption_json" value={json} />
             <input type="hidden" name="subject" value={subjects} />
             <input type="hidden" name="subject_interest" value={subjects} />
+            { returnToValue ?
+                <input type="hidden" name="success_location" value={returnToValue} /> :
+                null}
         </React.Fragment>
     );
 }
