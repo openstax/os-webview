@@ -1,13 +1,14 @@
 import React from 'react';
 
 // Making scripts work, per https://stackoverflow.com/a/47614491/392102
-function activateScripts(el) {
-    const scripts = Array.from(el.querySelectorAll('script'));
+function activateScripts(el: HTMLElement) {
+    const scripts: HTMLScriptElement[] = Array.from(el.querySelectorAll('script'));
     const processOne = (() => {
-        if (scripts.length === 0) {
+        const s = scripts.shift();
+
+        if (!s?.textContent) {
             return;
         }
-        const s = scripts.shift();
         const newScript = document.createElement('script');
         const p = (s.src) ? new Promise((resolve) => {
             newScript.onload = resolve;
@@ -25,15 +26,17 @@ function activateScripts(el) {
     processOne();
 }
 
-export default function RawHTML({Tag='div', html, embed=false, ...otherProps}) {
-    const ref = React.useRef();
+type RawHTMLArgs = {Tag?: string, html: TrustedHTML, embed?: boolean}
+
+export default function RawHTML({Tag='div', html, embed=false, ...otherProps}: RawHTMLArgs) {
+    const ref = React.useRef<HTMLElement>();
 
     React.useEffect(() => {
-        if (embed) {
+        if (embed && ref.current) {
             activateScripts(ref.current);
         }
     });
     return (
-        <Tag dangerouslySetInnerHTML={{__html: html}} {...otherProps} ref={ref} />
+        React.createElement(Tag, {ref, dangerouslySetInnerHTML: {__html: html}, ...otherProps})
     );
 }

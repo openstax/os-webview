@@ -7,7 +7,8 @@
         "stats": "webpack --profile --json=stats.json",
         "seestats": "webpack-bundle-analyzer stats.json",
         "eslint": "eslint src",
-        "stylelint": "stylelint 'src/**/*.scss'"
+        "stylelint": "stylelint 'src/**/*.scss'",
+        "typecheck": "tsc --skipLibCheck"
     },
     "repository": {
         "type": "git",
@@ -41,9 +42,12 @@
         "@babel/plugin-transform-runtime": "^7.21.0",
         "@babel/preset-env": "^7.20.2",
         "@babel/preset-react": "^7.18.6",
+        "@babel/preset-typescript": "^7.22.5",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/preact": "^3.2.3",
         "@testing-library/user-event": "^14.4.3",
+        "@types/react": "^18.2.15",
+        "@types/react-dom": "^18.2.7",
         "babel-jest": "^28.1.3",
         "copy-webpack-plugin": "^11.0.0",
         "eslint": "^8.36.0",
@@ -72,6 +76,8 @@
         "stylelint-config-standard-scss": "^7.0.1",
         "stylelint-scss": "^4.6.0",
         "stylelint-webpack-plugin": "^4.1.0",
+        "ts-loader": "^9.4.4",
+        "typescript": "^5.1.6",
         "webpack": "^5.76.2",
         "webpack-cli": "^5.0.1",
         "webpack-dev-server": "^4.13.1"
