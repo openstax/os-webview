@@ -20,12 +20,20 @@
         }
 
         .items {
-            a {
-                padding: 0.5rem 2rem 0.2rem;
+            @include width-up-to($tablet-max) {
+                border-left: thin solid text-color(white);
+                display: flex;
+                flex-direction: column;
             }
 
-            :not(:first-child) {
-                border-left: thin solid text-color(white);
+            @include wider-than($tablet-max) {
+                :not(:first-child) {
+                    border-left: thin solid text-color(white);
+                }
+            }
+
+            a {
+                padding: 0.5rem 2rem 0.2rem;
             }
         }
     }
