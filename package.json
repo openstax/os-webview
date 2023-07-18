@@ -8,7 +8,8 @@
         "seestats": "webpack-bundle-analyzer stats.json",
         "eslint": "eslint src",
         "stylelint": "stylelint 'src/**/*.scss'",
-        "typecheck": "tsc --skipLibCheck"
+        "typecheck": "tsc --skipLibCheck",
+        "lint": "yarn eslint && yarn typecheck && yarn stylelint"
     },
     "repository": {
         "type": "git",
