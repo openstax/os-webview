@@ -7,6 +7,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import { usePrintCopyDialog } from '~/pages/details/common/get-this-title-files/options';
 import useActiveElementContext from '~/contexts/active-element';
+import bookPromise from '~/models/book-titles';
+import cn from 'classnames';
 import './book-tile.scss';
 
 function PrintOption({ bookInfo }) {
@@ -94,11 +96,25 @@ function GetTheBookDropdown({ bookInfo }) {
     );
 }
 
+function useBookState(id) {
+    const [state, setState] = React.useState();
+
+    React.useEffect(
+        () => bookPromise.then(
+            (items) => setState(items.find((i) => i.id === id)?.book_state)
+        ),
+        [id]
+    );
+    return state;
+}
+
 export default function BookTile({ book: [book] }) {
     const { coverUrl, title, slug } = book;
+    const state = useBookState(book.id);
+    const classes = cn({'book-tile': true, 'coming-soon': state === 'coming_soon'});
 
     return (
-        <div className="book-tile">
+        <div className={classes}>
             <img src={coverUrl} role="presentation" width="240" height="240" />
             <div className="text-block">
                 <a href={`/details/${slug}`}>{title}</a>
