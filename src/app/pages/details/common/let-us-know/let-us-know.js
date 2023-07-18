@@ -34,7 +34,7 @@ export default function LetUsKnow({title}) {
     const {url1, url2, text1, text2} = useDataStuffFor(title);
     const {locale} = useIntl();
 
-    if (locale !== 'en') {
+    if (locale !== 'en' || !title) {
         return null;
     }
     return (
