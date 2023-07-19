@@ -28,7 +28,7 @@
 
             @include wider-than($tablet-max) {
                 :not(:first-child) {
-                    border-left: thin solid text-color(white);
+                    border-left: 0.1rem solid text-color(white);
                 }
             }
 
