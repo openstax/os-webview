@@ -21,7 +21,7 @@ export default function Banner({
                     <img src={headingTitleImageUrl} className="title-image" alt="" />
                     <div><i>{subheading}</i></div>
                 </div>
-                <RawHTML class="text-content" html={description} />
+                <RawHTML className="text-content" html={description} />
             </div>
         </section>
     );

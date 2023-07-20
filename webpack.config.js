@@ -26,6 +26,11 @@ const config = {
                 options: {loader: 'jsx'}
             },
             {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                use: 'ts-loader'
+            },
+            {
                 test: /\.s?css$/,
                 use: [
                     'style-loader',
@@ -90,7 +95,7 @@ const config = {
             '~': path.resolve(__dirname, 'src/app')
         },
         modules: [path.resolve(__dirname, 'src/app'), 'node_modules'],
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx', '.tsx', '.ts']
     },
     watchOptions: {
         aggregateTimeout: 500,
