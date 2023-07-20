@@ -8,7 +8,7 @@
         "seestats": "webpack-bundle-analyzer stats.json",
         "lint:js": "eslint src",
         "lint:css": "stylelint 'src/**/*.scss'",
-        "lint:ts": "tsc --skipLibCheck",
+        "lint:ts": "tsc --skipLibCheck  --noEmit",
         "lint": "yarn lint:js && yarn lint:ts && yarn lint:css"
     },
     "repository": {
