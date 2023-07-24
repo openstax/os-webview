@@ -5,6 +5,8 @@ const fetchBooks = cmsFetch('books?format=json')
 
 export default fetchBooks;
 
+const statesToInclude = ['live', 'new_edition_available', 'coming_soon'];
+
 export function salesforceTitles(books) {
     const seenTitles = {};
 
@@ -14,10 +16,10 @@ export function salesforceTitles(books) {
             const abbrev = book.salesforce_abbreviation;
             const seen = abbrev in seenTitles;
 
-            if (['live', 'new_edition_available'].includes(book.book_state)) {
+            if (statesToInclude.includes(book.book_state)) {
                 seenTitles[abbrev] = true;
             }
-            return abbrev && !seen && ['live', 'new_edition_available'].includes(book.book_state);
+            return abbrev && !seen && statesToInclude.includes(book.book_state);
         })
         .map((book) => ({
             text: book.salesforce_name,
@@ -36,7 +38,7 @@ export function subjects(sfTitles) {
 
 export function afterFormSubmit(navigate, preselectedTitle, selectedBooks) {
     fetchBooks.then((b) => {
-        const liveBooks = b.filter((entry) => ['live', 'new_edition_available'].includes(entry.book_state));
+        const liveBooks = b.filter((entry) => statesToInclude.includes(entry.book_state));
         const backTo = liveBooks.find((entry) => entry.salesforce_abbreviation === preselectedTitle);
 
         /* Send to Tech Scout with books pre-selected */
