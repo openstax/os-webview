@@ -3,12 +3,30 @@
 .press.page .article {
     @include scale-feature(padding-top, 2rem, 4rem);
 
-    .body {
-        padding-top: 1rem;
-        
-        p {
-            margin: 0;
+    .hero {
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 30vh;
+        margin-bottom: 3rem;
+        position: relative;
+        width: 100%;
+
+        img {
+            position: absolute;
+            bottom: 0;
         }
+    }
+
+    .text-content {
+        align-items: start;
+    }
+
+    .body {
+        @extend %content;
+
+        padding: 0;
+        position: relative;
     }
 }
 
