@@ -38,5 +38,6 @@ window.SETTINGS = {};
       ' Firefox, Edge and Safari. It may not work in your browser.');
     }
 
+    // eslint-disable-next-line react/no-deprecated
     ReactDOM.render(appElement, document.getElementById('app'));
 })();
