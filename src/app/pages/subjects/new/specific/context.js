@@ -6,7 +6,7 @@ import {setPageTitleAndDescriptionFromBookData} from '~/helpers/use-document-hea
 const preserveWrapping = false;
 
 function useContextValue(slug) {
-    const data = usePageData(`pages/${slug}?type=pages.Subject`, preserveWrapping);
+    const data = usePageData(`pages/${slug}-books?type=pages.Subject`, preserveWrapping);
 
     useEffect(
         () => {
