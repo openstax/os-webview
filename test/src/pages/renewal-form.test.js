@@ -13,6 +13,6 @@ test(`renders navigator`, async () => {
         </ShellContextProvider>
     );
 
-    screen.getByText('Adoption renewal');
+    screen.getByText('Reporting your use', {exact: false});
     await screen.findByRole('button');
 });
