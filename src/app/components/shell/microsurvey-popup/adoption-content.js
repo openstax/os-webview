@@ -74,13 +74,13 @@ function AdoptionContentBase({children, disable}) {
         >
             {children}
             <h1>
-                Hi, {name}. Could you update our records
-                of which books you&apos;re using?
-                Fill out the <a
+                Hi, {name}! Are you still using OpenStax in your course(s)?
+                Please take 1 minute to tell us by filling out{' '}
+                <a
                     href={renewalFormHref}
                     onClick={() => disable()}
                     data-nudge-action="interacted"
-                >form here</a>.
+                >this form</a>.
             </h1>
         </div>
     );
