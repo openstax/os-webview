@@ -81,7 +81,7 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
             </div>
             <p className="giving-optional">{data.giving_optional}</p>
             <hr />
-            <a href={link} onClick={closeAfterDelay} className="btn go-to">Go to PDF</a>
+            <a href={link} onClick={closeAfterDelay} className="btn go-to">Go to downloaded resource</a>
         </div>
     );
 }

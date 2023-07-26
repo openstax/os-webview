@@ -6,11 +6,11 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalL
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart';
-import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import Dialog from '~/components/dialog/dialog';
 import CompCopyRequestForm from './request-form/request-form';
 import CustomizationForm from '../customization-form/customization-form';
+import VideoResourceBox from './video-resource-box';
 import useDetailsContext from '../../context';
 import useUserContext from '~/contexts/user';
 import { FormattedMessage } from 'react-intl';
@@ -91,21 +91,6 @@ function Top({ isNew, model }) {
                 )}
             </div>
             <RawHTML className="description" html={description} />
-        </div>
-    );
-}
-
-function BottomBasic({ leftContent, icon, model }) {
-    return (
-        <div className="bottom">
-            <a
-              className="left"
-              data-analytics-select-content={model.heading}
-              data-content-type={`Book Resource (${model.resourceCategory})`}
-            >
-                <FontAwesomeIcon icon={icon} />
-                {leftContent}
-            </a>
         </div>
     );
 }
@@ -333,61 +318,6 @@ export default function ResourceBoxes({ models, includeCommonsHub = false }) {
     );
 }
 
-function VideoResourceBox({ model }) {
-    const [isOpen, toggle] = useToggle(false);
-    const doToggle = React.useCallback(
-        (event) => {
-            event.preventDefault();
-            toggle();
-        },
-        [toggle]
-    );
-
-    return (
-        <div
-            className="video resource-box"
-            onClick={doToggle}
-            key={model.resource_heading}
-        >
-            <div>
-                <div className="top-line">
-                    <h3>{model.resource_heading}</h3>
-                </div>
-                <RawHTML
-                    className="description"
-                    html={model.resource_description}
-                />
-                <video controls preload="metadata">
-                    <source src={model.video_file} type="video/avi" />
-                </video>
-            </div>
-            <BottomBasic model={model} leftContent="Watch video" icon={faPlay} />
-            <Dialog
-                isOpen={isOpen}
-                onPutAway={toggle}
-                title={model.video_title || model.resource_heading}
-            >
-                <ResourceVideoViewer customClass="reverse-colors" />
-            </Dialog>
-        </div>
-    );
-}
-
-function VideoViewer({ file }) {
-    return (
-        <div className="aspect-16-by-9-container">
-            <video controls src={file} />
-        </div>
-    );
-}
-
-function ResourceVideoViewer(...args) {
-    return (
-        <div className="instructor-resource-video-viewer">
-            <VideoViewer {...args} />
-        </div>
-    );
-}
 
 export function VideoResourceBoxes({
     models,
