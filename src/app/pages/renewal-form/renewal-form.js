@@ -204,7 +204,10 @@ export default function RenewalForm() {
     return (
         <div className="renewal-form page">
             <div className="boxed">
-                <h1>Adoption renewal</h1>
+                <h1>What textbook(s) are you using?</h1>
+                <div>
+                    Reporting your use of OpenStax helps us secure additional funding for future titles!
+                </div>
                 <EnsureLoggedIn />
             </div>
         </div>
