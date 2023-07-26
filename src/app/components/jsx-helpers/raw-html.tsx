@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 
 // Making scripts work, per https://stackoverflow.com/a/47614491/392102
 function activateScripts(el: HTMLElement) {
@@ -26,7 +26,7 @@ function activateScripts(el: HTMLElement) {
     processOne();
 }
 
-type RawHTMLArgs = {Tag?: string, html: TrustedHTML, embed?: boolean} & HTMLAttributes<HTMLDivElement>;
+type RawHTMLArgs = {Tag?: string, html: TrustedHTML, embed?: boolean} & React.HTMLAttributes<HTMLDivElement>;
 
 export default function RawHTML({Tag='div', html, embed=false, ...otherProps}: RawHTMLArgs) {
     const ref = React.useRef<HTMLElement>();

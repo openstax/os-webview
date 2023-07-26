@@ -1,21 +1,48 @@
-import React, { ReactComponentElement, ReactElement } from 'react';
-import { useToggle } from '~/helpers/data';
+import React, {ReactElement} from 'react';
+import {useToggle} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPlay} from '@fortawesome/free-solid-svg-icons/faPlay';
 import Dialog from '~/components/dialog/dialog';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import ResourceBox from './resource-box';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 type VideoResourceBoxModelType = {
-    heading: string,
-    resourceHeading: string,
-    resourceDescription: TrustedHTML,
-    videoFile: string,
-    videoTitle: string,
-    resourceCategory: string
+    heading: string;
+    resourceHeading: string;
+    resourceDescription: TrustedHTML;
+    videoFile: string;
+    videoTitle: string;
+    resourceCategory: string;
 };
 
-export default function VideoResourceBox({ model }: {model: VideoResourceBoxModelType}) {
+type VideoResourceBoxesArgs = {
+    models: VideoResourceBoxModelType[];
+    blogLinkModels: any[];
+    referenceModels: any[];
+};
+
+export default function VideoResourceBoxes({
+    models,
+    blogLinkModels,
+    referenceModels
+}: VideoResourceBoxesArgs) {
+    return (
+        <React.Fragment>
+            {models.map((model) => (
+                <VideoResourceBox {...{model}} key={model.videoFile} />
+            ))}
+            {blogLinkModels?.map((model: any) => (
+                <ResourceBox model={model} key={model.heading} />
+            ))}
+            {referenceModels.map((model: any) => (
+                <ResourceBox model={model} key={model.heading} />
+            ))}
+        </React.Fragment>
+    );
+}
+
+function VideoResourceBox({model}: {model: VideoResourceBoxModelType}) {
     const [isOpen, toggle] = useToggle(false);
     const doToggle = React.useCallback(
         (event: React.MouseEvent<HTMLElement>) => {
@@ -27,23 +54,27 @@ export default function VideoResourceBox({ model }: {model: VideoResourceBoxMode
 
     return (
         <div
-            className="video resource-box"
+            className='video resource-box'
             onClick={doToggle}
             key={model.resourceHeading}
         >
             <div>
-                <div className="top-line">
+                <div className='top-line'>
                     <h3>{model.resourceHeading}</h3>
                 </div>
                 <RawHTML
-                    className="description"
+                    className='description'
                     html={model.resourceDescription}
                 />
-                <video controls preload="metadata">
-                    <source src={model.videoFile} type="video/avi" />
+                <video controls preload='metadata'>
+                    <source src={model.videoFile} type='video/avi' />
                 </video>
             </div>
-            <BottomBasic model={model} leftContent="Watch video" icon={faPlay} />
+            <BottomBasic
+                model={model}
+                leftContent='Watch video'
+                icon={faPlay}
+            />
             <Dialog
                 isOpen={isOpen}
                 onPutAway={toggle}
@@ -55,11 +86,11 @@ export default function VideoResourceBox({ model }: {model: VideoResourceBoxMode
     );
 }
 
-type VideoViewerArgs = { file: string };
+type VideoViewerArgs = {file: string};
 
-function VideoViewer({ file }: VideoViewerArgs) {
+function VideoViewer({file}: VideoViewerArgs) {
     return (
-        <div className="aspect-16-by-9-container">
+        <div className='aspect-16-by-9-container'>
             <video controls src={file} />
         </div>
     );
@@ -67,21 +98,25 @@ function VideoViewer({ file }: VideoViewerArgs) {
 
 function ResourceVideoViewer(args: VideoViewerArgs) {
     return (
-        <div className="instructor-resource-video-viewer">
+        <div className='instructor-resource-video-viewer'>
             <VideoViewer {...args} />
         </div>
     );
 }
 
-type BottomBasicArgs = { leftContent: string | ReactElement, icon: IconProp, model: VideoResourceBoxModelType};
+type BottomBasicArgs = {
+    leftContent: string | ReactElement;
+    icon: IconProp;
+    model: VideoResourceBoxModelType;
+};
 
-function BottomBasic({ leftContent, icon, model }: BottomBasicArgs) {
+function BottomBasic({leftContent, icon, model}: BottomBasicArgs) {
     return (
-        <div className="bottom">
+        <div className='bottom'>
             <a
-              className="left"
-              data-analytics-select-content={model.heading}
-              data-content-type={`Book Resource (${model.resourceCategory})`}
+                className='left'
+                data-analytics-select-content={model.heading}
+                data-content-type={`Book Resource (${model.resourceCategory})`}
             >
                 <FontAwesomeIcon icon={icon} />
                 {leftContent}
@@ -89,4 +124,3 @@ function BottomBasic({ leftContent, icon, model }: BottomBasicArgs) {
         </div>
     );
 }
-
