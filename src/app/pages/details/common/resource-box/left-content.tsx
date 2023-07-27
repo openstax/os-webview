@@ -10,10 +10,8 @@ import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLin
 import {useToggle} from '~/helpers/data';
 import {UseToggleType} from '~helpers/data-types';
 import linkHelper from '~/helpers/link';
-import useDetailsContext from '../../context';
-import CompCopyRequestForm from './request-form/request-form';
-import Dialog from '~/components/dialog/dialog';
-import CustomizationForm from '../customization-form/customization-form';
+import useGiveDialog from '../get-this-title-files/give-before-pdf/give-before-pdf';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 
 type LeftContentModelType = {
     link?: {url?: string; text?: string};
@@ -32,7 +30,6 @@ type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
     trackingInfo: object;
 };
 
-// eslint-disable-next-line complexity
 export default function LeftContent({model}: {model: LeftContentModelType}) {
     const {userStatus}: UserContextType = useUserContext();
     const doneWaiting = useDoneWaitingForModelChange(model);
@@ -83,24 +80,36 @@ function AccessPending() {
     );
 }
 
+const iconLookup: {[key: string]: IconDefinition} = {
+    lock: faLock,
+    download: faDownload,
+    'external-link-alt': faExternalLinkAlt
+};
+
+type UseGiveDialogTypes = {
+    GiveDialog: ({}: {
+        link: string;
+        onDownload: (event: TrackedMouseEvent) => void;
+    }) => React.JSX.Element;
+    open: () => null;
+    enabled: boolean;
+};
+
 function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
-    const [isOpen, toggle] = useToggle(false) as UseToggleType;
-    const isCompCopy = model.link.url.endsWith('comp-copy');
-    const isCustomization = model.link.url.endsWith('customized-modules');
-    const icon =
-        {
-            lock: faLock,
-            download: faDownload,
-            'external-link-alt': faExternalLinkAlt
-        }[model.iconType] || faExclamationTriangle;
+    const icon = iconLookup[model.iconType] || faExclamationTriangle;
+    const isDownload = icon === faDownload;
     const {userModel}: UserContextType = useUserContext();
+    const {GiveDialog, open, enabled} = useGiveDialog() as UseGiveDialogTypes;
+    const trackDownloadClick = React.useCallback((event: TrackedMouseEvent) => {
+        if (model.bookModel) {
+            interceptLinkClicks(event, model.bookModel.id, userModel);
+        }
+    }, []);
 
     function openDialog(event: TrackedMouseEvent) {
-        if (isCompCopy || isCustomization) {
+        if (enabled) {
             event.preventDefault();
-            toggle();
-        } else if (model.bookModel) {
-            interceptLinkClicks(event, model.bookModel.id, userModel);
+            open();
         }
     }
 
@@ -118,8 +127,12 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
                 <FontAwesomeIcon icon={icon} />
                 <span>{model.link.text}</span>
             </a>
-            {isCompCopy && <IbooksDialog {...{model, isOpen, toggle}} />}
-            {isCustomization && <CustomizationDialog {...{isOpen, toggle}} />}
+            {isDownload && (
+                <GiveDialog
+                    link={model.link.url}
+                    onDownload={trackDownloadClick}
+                />
+            )}
         </React.Fragment>
     );
 }
@@ -156,62 +169,4 @@ function interceptLinkClicks(
         };
         /* eslint-enable camelcase */
     }
-}
-
-type IbooksDialogArgs = {
-    model: LeftContentModelType;
-    isOpen: boolean;
-    toggle: UseToggleType[1];
-};
-
-function IbooksDialog({model, isOpen, toggle}: IbooksDialogArgs) {
-    const bookModel = useDetailsContext();
-
-    if (!('bookModel' in model)) {
-        // When useDetailsContext is converted to TS, this casts should be unnecessary
-        model.bookModel = bookModel as LeftContentModelType['bookModel'];
-    }
-
-    function done(event: React.MouseEvent) {
-        event.preventDefault();
-        event.stopPropagation();
-        toggle();
-    }
-
-    return (
-        <Dialog
-            isOpen={isOpen}
-            onPutAway={toggle}
-            title='Request a complimentary iBooks title'
-        >
-            <CompCopyRequestForm model={model} done={done} />
-        </Dialog>
-    );
-}
-
-function CustomizationDialog({
-    isOpen,
-    toggle
-}: {
-    isOpen: boolean;
-    toggle: UseToggleType[1];
-}) {
-    const bookModel =
-        useDetailsContext() as Required<LeftContentModelType>['bookModel'];
-
-    function done(event: React.MouseEvent) {
-        event.preventDefault();
-        event.stopPropagation();
-        toggle();
-    }
-
-    return (
-        <Dialog
-            isOpen={isOpen}
-            onPutAway={toggle}
-            title={bookModel.customizationFormHeading}
-        >
-            <CustomizationForm model={bookModel} done={done} />
-        </Dialog>
-    );
 }
