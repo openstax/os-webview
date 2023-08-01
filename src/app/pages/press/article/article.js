@@ -32,9 +32,9 @@ function Article({data}) {
     const date = formatDate(rawDate);
 
     return (
-        <div className='article text-content'>
+        <div className='article'>
             {Boolean(coverUrl) && <Hero coverUrl={coverUrl} />}
-            <article>
+            <article className='text-content'>
                 <h1>{title}</h1>
                 {Boolean(subheading) && <h2>{subheading}</h2>}
                 <Byline author={author} date={date} />
