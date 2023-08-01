@@ -93,6 +93,10 @@ function useContextValue({displayFooter, footerText, footerButtonText, footerLin
         },
         [navigate]
     );
+    const searchFor = React.useCallback(
+        (searchString) => setPath(`/blog/?q=${searchString}`),
+        [setPath]
+    );
 
     if (pinnedStory && !pinnedStory.slug) {
         pinnedStory.slug = pinnedStory.meta.slug;
@@ -102,7 +106,8 @@ function useContextValue({displayFooter, footerText, footerButtonText, footerLin
         setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet,
         topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular,
         pageDescription: meta.searchDescription,
-        displayFooter, footerText, footerButtonText, footerLink
+        displayFooter, footerText, footerButtonText, footerLink,
+        searchFor
     };
 }
 

@@ -1,14 +1,12 @@
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import useBlogContext from '../blog-context';
 
-function useContextValue() {
-    const {setPath} = useBlogContext();
+function useContextValue({searchFor}) {
     const [searchString, setSearchString] = useState(new window.URLSearchParams(window.location.search).get('q') || '');
-
-    function doSearch() {
-        setPath(`/blog/?q=${searchString}`);
-    }
+    const doSearch = useCallback(
+        () => searchFor(searchString),
+        [searchFor, searchString]
+    );
 
     return {searchString, setSearchString, doSearch};
 }

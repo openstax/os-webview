@@ -1,6 +1,5 @@
 import React from 'react';
 import useSearchContext, {SearchContextProvider} from './search-context';
-import useBlogContext from '../blog-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
@@ -73,9 +72,9 @@ function SearchButton() {
     );
 }
 
-export default function SearchBar() {
+export default function SearchBar({searchFor}) {
     return (
-        <SearchContextProvider>
+        <SearchContextProvider contextValueParameters={{searchFor}}>
             <div className="search-bar">
                 <div className="input-with-clear-button">
                     <SearchInput />
@@ -87,13 +86,11 @@ export default function SearchBar() {
     );
 }
 
-export function HeadingAndSearchBar({children}) {
-    const {setPath} = useBlogContext();
-
+export function HeadingAndSearchBar({searchFor, children}) {
     return (
         <div className="heading-and-searchbar">
             {children}
-            <SearchBar setPath={setPath} />
+            <SearchBar searchFor={searchFor} />
         </div>
     );
 }

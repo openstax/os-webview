@@ -6,7 +6,7 @@ import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
 import PinnedArticle from '../pinned-article/pinned-article';
-import {HeadingAndSearchBar} from '../search-bar/search-bar';
+import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import MoreStories from '../more-stories/more-stories';
 import SectionHeader from '../section-header/section-header';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
@@ -51,7 +51,7 @@ function useParamsToSetTopic() {
 
 export default function ExplorePage() {
     useParamsToSetTopic();
-    const {topic, pinnedStory, topicPopular, setPath, pageDescription} = useBlogContext();
+    const {topic, pinnedStory, topicPopular, setPath, pageDescription, searchFor} = useBlogContext();
     const navigate = useNavigate();
     const goBack = React.useCallback(
         (e) => {
@@ -75,7 +75,7 @@ export default function ExplorePage() {
                     <FontAwesomeIcon icon={faChevronLeft} />
                     <span>Back to Main Blog</span>
                 </Link>
-                <HeadingAndSearchBar>
+                <HeadingAndSearchBar searchFor={searchFor}>
                     <HeadingForExplorePage {...{subject, heading}} />
                 </HeadingAndSearchBar>
                 <div className="explore-topic-blurb text-content">

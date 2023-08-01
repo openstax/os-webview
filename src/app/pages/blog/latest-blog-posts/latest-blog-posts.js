@@ -1,6 +1,6 @@
 import React from 'react';
 import {LatestBlurbs} from '../more-stories/more-stories';
-import {HeadingAndSearchBar} from '../search-bar/search-bar';
+import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import SimplePaginator from '~/components/paginator/simple-paginator';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
@@ -29,7 +29,7 @@ export default function LatestBlogPosts() {
         [page]
     );
 
-    const {totalCount} = useBlogContext();
+    const {totalCount, searchFor} = useBlogContext();
 
     if (!totalCount) {
         return null;
@@ -44,7 +44,7 @@ export default function LatestBlogPosts() {
                     <FontAwesomeIcon icon={faChevronLeft} />
                     Back to Main Blog
                 </a>
-                <HeadingAndSearchBar>
+                <HeadingAndSearchBar searchFor={searchFor}>
                     <h1>Latest blog posts</h1>
                 </HeadingAndSearchBar>
                 <Showing page={page} />
