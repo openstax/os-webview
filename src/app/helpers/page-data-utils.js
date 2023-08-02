@@ -27,7 +27,7 @@ export function transformData(data) {
     return data;
 }
 
-async function getUrlFor(initialSlug) {
+export async function getUrlFor(initialSlug) {
     let apiUrl = urlFromSlug(initialSlug);
 
     // A little magic to handle book titles

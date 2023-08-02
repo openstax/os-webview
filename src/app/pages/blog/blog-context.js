@@ -4,33 +4,23 @@ import usePageData from '~/helpers/use-page-data';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useLatestBlogEntries from '~/models/blog-entries';
-import cmsFetch from '~/helpers/cms-fetch';
+import useData from '~/helpers/use-data';
 const stayHere = {path: '/blog'};
 
 function useEnglishSubjects() {
-    const [data, setData] = React.useState([]);
-
-    React.useEffect(
-        () => cmsFetch('snippets/subjects?format=json&locale=en')
-            .then(camelCaseKeys)
-            .then(setData),
-        []
-    );
-
-    return data;
+    return useData({
+        slug: 'snippets/subjects?format=json&locale=en',
+        resolveTo: 'json',
+        camelCase: true
+    }, []);
 }
 
 function useCollections() {
-    const [data, setData] = React.useState([]);
-
-    React.useEffect(
-        () => cmsFetch('snippets/blogcollection?format=json')
-            .then(camelCaseKeys)
-            .then(setData),
-        []
-    );
-
-    return data;
+    return useData({
+        slug: 'snippets/blogcollection?format=json',
+        resolveTo: 'json',
+        camelCase: true
+    }, []);
 }
 
 function useTopicStories() {
@@ -114,14 +104,14 @@ function useContextValue({displayFooter, footerText, footerButtonText, footerLin
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
 function BlogContextProvider({children}) {
-    const data = usePageData('news', false, true);
+    const data = usePageData('news');
 
     if (!data) {
         return null;
     }
 
     return (
-        <ContextProvider contextValueParameters={camelCaseKeys(data)}>
+        <ContextProvider contextValueParameters={data}>
             {children}
         </ContextProvider>
     );
