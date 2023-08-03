@@ -30,7 +30,7 @@ function LoadedPage({
 }
 
 export default function LoaderPage({
-    slug, Child, props={}, preserveWrapping, doDocumentSetup=false,
+    slug, Child, props={}, preserveWrapping=false, doDocumentSetup=false,
     noCamelCase=false
 }) {
     const data = usePageData(slug, preserveWrapping, noCamelCase);

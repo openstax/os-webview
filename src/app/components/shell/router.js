@@ -196,6 +196,7 @@ function MainRoutes() {
             <Route path="/subjects-preview/*" element={<ImportedPage name="subjects" />} />
             <Route path="/k12/*" element={<ImportedPage name="k12" />} />
             <Route path="/blog/*" element={<ImportedPage name="blog" />} />
+            <Route path="/webinars/*" element={<ImportedPage name="webinars" />} />
             <Route path="/general/*" element={<ImportedPage name="general" />} />
             <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
             <Route path="/campaign/*" element={<ImportedPage name="campaign" />} />

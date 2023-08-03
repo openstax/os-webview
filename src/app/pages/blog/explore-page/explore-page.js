@@ -75,7 +75,7 @@ export default function ExplorePage() {
                     <FontAwesomeIcon icon={faChevronLeft} />
                     <span>Back to Main Blog</span>
                 </Link>
-                <HeadingAndSearchBar searchFor={searchFor}>
+                <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <HeadingForExplorePage {...{subject, heading}} />
                 </HeadingAndSearchBar>
                 <div className="explore-topic-blurb text-content">

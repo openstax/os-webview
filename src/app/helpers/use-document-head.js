@@ -113,7 +113,7 @@ export function setPageTitleAndDescriptionFromBookData(data={}) {
     );
 }
 
-export default function useDocumentHead({title, description, noindex}) {
+export default function useDocumentHead({title, description=undefined, noindex=false}) {
     useEffect(
         () => setPageTitleAndDescription(title, description),
         [title, description]

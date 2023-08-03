@@ -44,7 +44,7 @@ export default function LatestBlogPosts() {
                     <FontAwesomeIcon icon={faChevronLeft} />
                     Back to Main Blog
                 </a>
-                <HeadingAndSearchBar searchFor={searchFor}>
+                <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <h1>Latest blog posts</h1>
                 </HeadingAndSearchBar>
                 <Showing page={page} />

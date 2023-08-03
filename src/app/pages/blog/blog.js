@@ -3,8 +3,8 @@ import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Routes, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
-import ExploreBySubject from './explore/by-subject';
-import ExploreCollections from './explore/collections';
+import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject';
+import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
 import ExplorePage from './explore-page/explore-page';
 import PinnedArticle from './pinned-article/pinned-article';
 import DisqusForm from './disqus-form/disqus-form';
@@ -28,7 +28,7 @@ export function SearchResultsPage() {
     return (
         <React.Fragment>
             <div className="boxed left">
-                <SearchBar searchFor={searchFor} />
+                <SearchBar searchFor={searchFor} amongWhat='blog posts' />
             </div>
             <SearchResults />
         </React.Fragment>
@@ -40,6 +40,8 @@ export function SearchResultsPage() {
 export function MainBlogPage() {
     const {
         pinnedStory, pageDescription, searchFor,
+        subjectSnippet: categories,
+        collectionSnippet: collections,
         displayFooter, footerText, footerButtonText, footerLink
     } = useBlogContext();
     const leftButton = {
@@ -56,11 +58,11 @@ export function MainBlogPage() {
     return (
         <WindowContextProvider>
             <div className="boxed">
-                <HeadingAndSearchBar searchFor={searchFor}>
+                <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <h1>OpenStax Blog</h1>
                 </HeadingAndSearchBar>
-                <ExploreBySubject />
-                <ExploreCollections />
+                <ExploreBySubject categories={categories} analyticsNav='Blog Subjects' />
+                <ExploreByCollection collections={collections} analyticsNav='Blog Collections' />
                 <PinnedArticle />
                 <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
             </div>
