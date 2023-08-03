@@ -25,6 +25,7 @@
         "@fortawesome/free-regular-svg-icons": "^6.3.0",
         "@fortawesome/free-solid-svg-icons": "^6.3.0",
         "@fortawesome/react-fontawesome": "^0.2.0",
+        "@openstax/experiments": "^1.0.2",
         "@sentry/react": "^7.45.0",
         "@sentry/tracing": "^7.44.2",
         "babel-plugin-formatjs": "^10.4.0",

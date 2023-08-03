@@ -4,6 +4,7 @@ import {useDialog} from '~/components/dialog/dialog';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import ThankYou from './thank-you-form';
+import {enroll} from '@openstax/experiments';
 import './give-before-pdf.scss';
 
 function Downloading({data}) {
@@ -41,6 +42,18 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
         [close]
     );
 
+    const donationExperiment = enroll({
+      name: 'Donation Experiment 2023',
+      variants: [
+        // eslint-disable-next-line camelcase
+        {name: 'control', header_subtitle: data.header_subtitle},
+        {name: 'public good',
+          // eslint-disable-next-line camelcase
+          header_subtitle: 'Join us in sustaining OpenStax as a public good for years to come by giving today.'
+        }
+      ]
+    });
+
     return (
         <div
             className="give-before-pdf"
@@ -58,7 +71,7 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
             <p>
                 <span className="header-title">{data.header_title}</span>
                 <br />
-                <span>{data.header_subtitle}</span>
+                <span>{donationExperiment.header_subtitle}</span>
             </p>
             <div className="button-row">
                 <a
