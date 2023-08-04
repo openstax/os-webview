@@ -67,7 +67,10 @@ export function PaginatorControls({items}) {
     return (
         <div className="paginator">
             {pages > 1 && <PageButtonBar pages={pages} />}
-            <div className="summary">{resultRange} of {items} for <b>&apos;{searchTerm}&apos;</b></div>
+            <div className="summary">
+                {items > 0 && `${resultRange} of `}
+                {items} for <b>&apos;{searchTerm}&apos;</b>
+            </div>
         </div>
     );
 }
