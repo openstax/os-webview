@@ -3,7 +3,7 @@ import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import useLatestBlogEntries from '~/models/blog-entries';
 import useBlogContext from '../blog-context';
 import './more-stories.scss';
-import SectionHeader from '../section-header/section-header';
+import Section from '~/components/explore-page/section/section';
 
 export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
     const numberNeeded = page * pageSize;
@@ -37,8 +37,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
 
 export default function MoreStories({exceptSlug, subhead}) {
     return (
-        <div className="more-stories">
-            <SectionHeader head="Latest blog posts" subhead={subhead} />
+        <Section className="more-stories" name="Latest blog posts" topicHeading={subhead}>
             <LatestBlurbs page={1} pageSize={3} exceptSlug={exceptSlug} />
             <div className="button-row">
                 <a
@@ -47,6 +46,6 @@ export default function MoreStories({exceptSlug, subhead}) {
                     data-analytics-link="blog_latest"
                 >View more of the latest</a>
             </div>
-        </div>
+        </Section>
     );
 }

@@ -12,14 +12,14 @@ function SubjectLink({
 }) {
     return (
         <div className='card'>
-            <div className='icon-holder'>
-                {subjectIcon && <img src={subjectIcon} />}
-            </div>
-            <div className='subject-name'>
-                <Link to={`./explore/subject/${name}`} state={{from}}>
+            <Link to={`./explore/subject/${name}`} state={{from}}>
+                <div className='icon-holder'>
+                    {subjectIcon && <img src={subjectIcon} />}
+                </div>
+                <div className='subject-name'>
                     {name}
-                </Link>
-            </div>
+                </div>
+            </Link>
         </div>
     );
 }

@@ -7,7 +7,7 @@ import useDocumentHead from '~/helpers/use-document-head';
 import PinnedArticle from '../pinned-article/pinned-article';
 import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import MoreStories from '../more-stories/more-stories';
-import SectionHeader from '../section-header/section-header';
+import Section from '~/components/explore-page/section/section';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 
 // If it returns null, the topic is not a Subject
@@ -50,13 +50,13 @@ function useParamsToSetTopic() {
 
 export default function ExplorePage() {
     useParamsToSetTopic();
-    const {topic, pinnedStory, topicPopular, setPath, pageDescription, searchFor} = useBlogContext();
+    const {topic, pinnedStory, topicPopular, setPath, searchDescription, searchFor} = useBlogContext();
     const subject = useSubjectSnippetForTopic(topic);
     const heading = useTopicHeading(topic, subject);
 
     useDocumentHead({
         title: `${topic} blog posts - OpenStax`,
-        description: pageDescription
+        description: searchDescription
     });
 
     return (
@@ -70,8 +70,7 @@ export default function ExplorePage() {
                     {subject?.pageContent}
                 </div>
                 <PinnedArticle subhead={heading} />
-                <div className="popular-posts">
-                    <SectionHeader head="Popular blog posts" subhead={heading} />
+                <Section name="Popular blog posts" topicHeading={heading} className="popular-posts">
                     <div
                         className="latest-blurbs cards"
                         data-analytics-content-list="Popular Blog Posts"
@@ -84,7 +83,7 @@ export default function ExplorePage() {
                             )
                         }
                     </div>
-                </div>
+                </Section>
                 <MoreStories exceptSlug={pinnedStory?.slug} subhead={heading} />
             </div>
         </WindowContextProvider>

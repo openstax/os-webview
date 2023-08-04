@@ -1,14 +1,10 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 #explore-collections {
-    margin-top: 2rem;
-    width: 100%;
-
     .cards {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
         gap: 3rem;
-        margin-top: 2rem;
         width: 100%;
 
         .card {

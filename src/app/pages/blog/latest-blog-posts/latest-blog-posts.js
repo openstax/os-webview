@@ -1,24 +1,12 @@
 import React from 'react';
 import {LatestBlurbs} from '../more-stories/more-stories';
 import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
-import SimplePaginator from '~/components/paginator/simple-paginator';
+import SimplePaginator, {Showing} from '~/components/paginator/simple-paginator';
 import Breadcrumb from '~/components/breadcrumb/breadcrumb';
 import useBlogContext from '../blog-context';
 import './latest-blog-posts.scss';
 
 const perPage = 9;
-
-function Showing({page}) {
-    const {totalCount} = useBlogContext();
-    const end = Math.min(totalCount, page * perPage);
-    const start = end - perPage + 1;
-
-    return (
-        <div className="whats-showing">
-            Showing {start}-{end} of all {totalCount} blog posts
-        </div>
-    );
-}
 
 export default function LatestBlogPosts() {
     const [page, setPage] = React.useState(1);
@@ -43,7 +31,7 @@ export default function LatestBlogPosts() {
                 <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <h1>Latest blog posts</h1>
                 </HeadingAndSearchBar>
-                <Showing page={page} />
+                <Showing page={page} totalCount={totalCount} perPage={perPage} ofWhat="blog posts" />
                 <LatestBlurbs page={page} pageSize={perPage} openInNewWindow />
                 <SimplePaginator currentPage={page} setPage={setPage} totalPages={totalPages} />
             </div>

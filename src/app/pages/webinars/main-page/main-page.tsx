@@ -4,6 +4,7 @@ import useWebinarContext from '../webinar-context';
 import {HeadingAndSearchBar} from '../../../components/search-bar/search-bar';
 import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject';
 import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
+import LatestWebinars from '../webinar-cards/latest-webinars';
 
 export default function MainPage() {
     const {subjects, searchFor, pageData, collections} = useWebinarContext();
@@ -25,6 +26,7 @@ export default function MainPage() {
                 collections={collections}
                 analyticsNav='Blog Collections'
             />
+            <LatestWebinars />
         </div>
     );
 }

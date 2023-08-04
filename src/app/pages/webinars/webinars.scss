@@ -1,5 +1,4 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import 'mixins/placeholder-selectors';
 
 .webinars.page {
     background-color: ui-color(white);
@@ -12,9 +11,17 @@
         margin: 0;
     }
 
+    h2 {
+        @include set-font(h3);
+    }
+
     .boxed {
         align-items: start;
-        gap: 2rem;
+        gap: 3rem;
         padding: 2.5rem $normal-margin;
+    }
+
+    section {
+        width: 100%;
     }
 }

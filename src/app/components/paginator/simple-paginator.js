@@ -96,3 +96,20 @@ export default function SimplePaginator({currentPage, setPage, totalPages}) {
         </div>
     );
 }
+
+export function itemRangeOnPage(page, perPage, totalCount) {
+    const end = Math.min(totalCount, page * perPage);
+    const start = (page - 1) * perPage + 1;
+
+    return [start, end];
+}
+
+export function Showing({page, perPage=9, totalCount, ofWhat}) {
+    const [start, end] = itemRangeOnPage(page, perPage, totalCount);
+
+    return (
+        <div className="whats-showing">
+            Showing {start}-{end} of all {totalCount} {ofWhat}
+        </div>
+    );
+}

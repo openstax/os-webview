@@ -6,6 +6,10 @@
     justify-items: center;
     width: 100%;
 
+    section {
+        width: 100%;
+    }
+
     .heading-and-searchbar,
     .section-header {
         margin: 2.5rem 0 2rem;
@@ -15,6 +19,12 @@
         @include wider-than($media-content-max) {
             max-width: $content-max;
         }
+    }
+
+    .explore-topic-blurb {
+        align-items: start;
+        margin: 0;
+        padding: 0;
     }
 
     .boxed.left {
@@ -47,8 +57,6 @@
     h2 {
         &:not(.section-header) {
             @include set-font(h3);
-
-            margin: 0;
         }
     }
 
