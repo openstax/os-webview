@@ -2,8 +2,7 @@ import React from 'react';
 import {LatestBlurbs} from '../more-stories/more-stories';
 import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import SimplePaginator from '~/components/paginator/simple-paginator';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import Breadcrumb from '~/components/breadcrumb/breadcrumb';
 import useBlogContext from '../blog-context';
 import './latest-blog-posts.scss';
 
@@ -40,10 +39,7 @@ export default function LatestBlogPosts() {
     return (
         <div className="latest-blog-posts page">
             <div className="boxed">
-                <a className="breadcrumb" href="/blog">
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                    Back to Main Blog
-                </a>
+                <Breadcrumb name='Blog' />
                 <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <h1>Latest blog posts</h1>
                 </HeadingAndSearchBar>

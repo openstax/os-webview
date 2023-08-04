@@ -1,8 +1,7 @@
 import React from 'react';
 import useBlogContext from '../blog-context';
-import {useParams, Link, useNavigate} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import {useParams} from 'react-router-dom';
+import Breadcrumb from '~/components/breadcrumb/breadcrumb';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
 import PinnedArticle from '../pinned-article/pinned-article';
@@ -52,14 +51,6 @@ function useParamsToSetTopic() {
 export default function ExplorePage() {
     useParamsToSetTopic();
     const {topic, pinnedStory, topicPopular, setPath, pageDescription, searchFor} = useBlogContext();
-    const navigate = useNavigate();
-    const goBack = React.useCallback(
-        (e) => {
-            navigate(-1);
-            e.preventDefault();
-        },
-        [navigate]
-    );
     const subject = useSubjectSnippetForTopic(topic);
     const heading = useTopicHeading(topic, subject);
 
@@ -71,10 +62,7 @@ export default function ExplorePage() {
     return (
         <WindowContextProvider>
             <div className="boxed left">
-                <Link to="/blog" onClick={goBack} className="breadcrumb">
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                    <span>Back to Main Blog</span>
-                </Link>
+                <Breadcrumb name="Main Blog" />
                 <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <HeadingForExplorePage {...{subject, heading}} />
                 </HeadingAndSearchBar>

@@ -1,8 +1,7 @@
-// Has to remain JS so it can be dynamically imported
 import React from 'react';
 import useDocumentHead from '~/helpers/use-document-head';
-import useWebinarContext from './webinar-context';
-import {HeadingAndSearchBar} from '../../components/search-bar/search-bar';
+import useWebinarContext from '../webinar-context';
+import {HeadingAndSearchBar} from '../../../components/search-bar/search-bar';
 import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject';
 import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
 

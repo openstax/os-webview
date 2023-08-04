@@ -16,14 +16,6 @@
         padding-top: 3rem;
     }
 
-    .breadcrumb {
-        align-items: center;
-        font-weight: bold;
-        display: flex;
-        gap: 1rem;
-        text-decoration: none;
-    }
-
     .whats-showing {
         @include title-font(1.8rem);
     }
