@@ -1,7 +1,8 @@
 import React from 'react';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
 import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box';
-import ResourceBoxes, {VideoResourceBoxes} from '../../common/resource-box/resource-boxes';
+import ResourceBoxes from '../../common/resource-box/resource-boxes';
+import VideoResourceBoxes from '../../common/resource-box/video-resource-box';
 import Partners from './partners/partners';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
