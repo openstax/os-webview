@@ -106,10 +106,11 @@ export function itemRangeOnPage(page, perPage, totalCount) {
 
 export function Showing({page, perPage=9, totalCount, ofWhat}) {
     const [start, end] = itemRangeOnPage(page, perPage, totalCount);
+    const countMessage = totalCount <= perPage ? 'all' : `${start}-${end} of`;
 
     return (
         <div className="whats-showing">
-            Showing {start}-{end} of all {totalCount} {ofWhat}
+            Showing {countMessage} {totalCount} {ofWhat}
         </div>
     );
 }

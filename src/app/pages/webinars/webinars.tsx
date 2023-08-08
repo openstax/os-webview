@@ -7,6 +7,7 @@ import './webinars.scss';
 const importMain = () => import('./import-main-page.js');
 const importExplore = () => import('./import-explore-page.js');
 const importLatest = () => import('./import-latest-page');
+const importSearch = () => import('./import-search-page');
 
 export default function WebinarsLoader() {
     return (
@@ -24,6 +25,10 @@ export default function WebinarsLoader() {
                     <Route
                         path='latest'
                         element={<JITLoad importFn={importLatest} />}
+                    />
+                    <Route
+                        path='search'
+                        element={<JITLoad importFn={importSearch} />}
                     />
                 </Routes>
             </WebinarContextProvider>

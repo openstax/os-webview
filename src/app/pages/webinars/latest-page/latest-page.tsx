@@ -27,7 +27,7 @@ export default function LatestWebinarsPage() {
                 perPage={perPage}
                 ofWhat='webinars'
             />
-            <WebinarGrid webinars={latestWebinars.slice(first, last)} />
+            <WebinarGrid webinars={latestWebinars.slice(first - 1, last)} />
             <SimplePaginator
                 currentPage={page}
                 setPage={setPage}

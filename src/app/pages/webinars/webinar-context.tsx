@@ -1,4 +1,5 @@
 import React, {ReactElement} from 'react';
+import {useNavigate} from 'react-router-dom';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useData from '~/helpers/use-data';
 import {Collection} from '~/components/explore-by-collection/types';
@@ -45,16 +46,18 @@ function useWebinars() {
 
 // Sort helper for webinars
 function byDate(a: Webinar, b: Webinar) {
-    return a.start.valueOf() - b.start.valueOf();
+    return b.start.valueOf() - a.start.valueOf();
 }
 
 function useContextValue() {
     const subjects = useEnglishSubjects();
     const collections = useCollections();
     const webinars = useWebinars();
+    const navigate = useNavigate();
     const searchFor = React.useCallback(
-        (term: string) => console.info(`Search for ${term} not implemented`),
-        []
+        (term: string) =>
+            navigate(`/webinars/search?q=${encodeURIComponent(term)}`),
+        [navigate]
     );
     const pageData = useData<PageData>(
         {
