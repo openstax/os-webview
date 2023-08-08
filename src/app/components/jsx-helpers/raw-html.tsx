@@ -26,7 +26,7 @@ function activateScripts(el: HTMLElement) {
     processOne();
 }
 
-type RawHTMLArgs = {Tag?: string, html: TrustedHTML, embed?: boolean}
+type RawHTMLArgs = {Tag?: string, html: TrustedHTML, embed?: boolean} & React.HTMLAttributes<HTMLDivElement>;
 
 export default function RawHTML({Tag='div', html, embed=false, ...otherProps}: RawHTMLArgs) {
     const ref = React.useRef<HTMLElement>();

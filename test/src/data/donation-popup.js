@@ -1,7 +1,7 @@
 export default [
     {
         "download_image": "https://assets.openstax.org/oscms-dev/media/Group.png",
-        "download_ready": "Your PDF is ready.",
+        "download_ready": "Your file is ready.",
         "header_image": "https://assets.openstax.org/oscms-dev/media/Ellipse_1.png",
         "header_title": "Support as much as you can",
         "header_subtitle": "Give back to support more resources for all.",

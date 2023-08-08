@@ -30,7 +30,7 @@ function OpenGiveInNewWindow(event) {
     );
 }
 
-function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
+function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close, onDownload}) {
     React.useEffect(() => {
         if (window.dataLayer) {
             window.dataLayer.push({event: 'optimize.giveBeforePdf'});
@@ -38,8 +38,13 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
     });
 
     const closeAfterDelay = React.useCallback(
-        () => window.setTimeout(close, 200),
-        [close]
+        (event) => {
+            if (onDownload) {
+                onDownload(event);
+            }
+            window.setTimeout(close, 200);
+        },
+        [close, onDownload]
     );
 
     const donationExperiment = enroll({
@@ -94,13 +99,13 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close}) {
             </div>
             <p className="giving-optional">{data.giving_optional}</p>
             <hr />
-            <a href={link} onClick={closeAfterDelay} className="btn go-to">Go to PDF</a>
+            <a href={link} onClick={closeAfterDelay} className="btn go-to">Go to your file</a>
         </div>
     );
 }
 
 function GiveBeforePdf({
-    link, close, data
+    link, close, data, onDownload
 }) {
     const [showThankYou, setShowThankYou] = React.useState(false);
     const [doneDownloading, setDoneDownloading] = React.useState(false);
@@ -126,7 +131,7 @@ function GiveBeforePdf({
     }
 
     return (
-        <GiveBeforePdfAfterConditionals {...{onThankYouClick, link, data, close}} />
+        <GiveBeforePdfAfterConditionals {...{onThankYouClick, link, data, close, onDownload}} />
     );
 }
 
@@ -138,10 +143,10 @@ export default function useGiveDialog() {
         [data1]
     );
     const GiveDialog = React.useCallback(
-        ({link}) => {
+        ({link, onDownload}) => {
             return (
                 <Dialog>
-                    <GiveBeforePdf {...{link, close, data}} />
+                    <GiveBeforePdf {...{link, close, data, onDownload}} />
                 </Dialog>
             );
         },
