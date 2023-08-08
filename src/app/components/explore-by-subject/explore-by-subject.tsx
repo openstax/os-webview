@@ -3,27 +3,6 @@ import {Link, useLocation} from 'react-router-dom';
 import {Category} from './types';
 import './explore-by-subject.scss';
 
-function SubjectLink({
-    category: {name, subjectIcon},
-    from
-}: {
-    category: Category;
-    from: string;
-}) {
-    return (
-        <div className='card'>
-            <Link to={`./explore/subject/${name}`} state={{from}}>
-                <div className='icon-holder'>
-                    {subjectIcon && <img src={subjectIcon} />}
-                </div>
-                <div className='subject-name'>
-                    {name}
-                </div>
-            </Link>
-        </div>
-    );
-}
-
 export default function ExploreBySubject({
     categories,
     analyticsNav
@@ -42,5 +21,26 @@ export default function ExploreBySubject({
                 ))}
             </div>
         </section>
+    );
+}
+
+function SubjectLink({
+    category: {name, subjectIcon},
+    from
+}: {
+    category: Category;
+    from: string;
+}) {
+    return (
+        <div className='card'>
+            <Link to={`./explore/subjects/${name}`} state={{from}}>
+                <div className='icon-holder'>
+                    {subjectIcon && <img src={subjectIcon} />}
+                </div>
+                <div className='subject-name'>
+                    {name}
+                </div>
+            </Link>
+        </div>
     );
 }

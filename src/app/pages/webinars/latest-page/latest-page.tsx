@@ -41,7 +41,7 @@ function WebinarHSB() {
     const {searchFor} = useWebinarContext();
 
     return (
-        <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
+        <HeadingAndSearchBar searchFor={searchFor} amongWhat='webinars'>
             <h1>Webinars</h1>
         </HeadingAndSearchBar>
     );
