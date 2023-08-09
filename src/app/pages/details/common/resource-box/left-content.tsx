@@ -97,7 +97,7 @@ type UseGiveDialogTypes = {
 function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
-    const {userModel}: UserContextType = useUserContext();
+    const {userModel} = useUserContext();
     const {GiveDialog, open, enabled} = useGiveDialog() as UseGiveDialogTypes;
     const trackDownloadClick = React.useCallback((event: TrackedMouseEvent) => {
         if (model.bookModel) {
@@ -149,7 +149,7 @@ function MissingLink() {
 function interceptLinkClicks(
     event: TrackedMouseEvent,
     book: string,
-    userModel: UserContextType['userModel']
+    userModel: ReturnType<typeof useUserContext>['userModel']
 ) {
     const el = linkHelper.validUrlClick(event);
 
