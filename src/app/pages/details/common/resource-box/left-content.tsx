@@ -1,6 +1,5 @@
 import React from 'react';
 import useUserContext from '~/contexts/user';
-import {UserContextType} from '~/contexts/user-types';
 import {FormattedMessage} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
@@ -8,7 +7,6 @@ import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import {useToggle} from '~/helpers/data';
-import {UseToggleType} from '~helpers/data-types';
 import linkHelper from '~/helpers/link';
 import useGiveDialog from '../get-this-title-files/give-before-pdf/give-before-pdf';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
@@ -30,8 +28,9 @@ type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
     trackingInfo: object;
 };
 
+// eslint-disable-next-line complexity
 export default function LeftContent({model}: {model: LeftContentModelType}) {
-    const {userStatus}: UserContextType = useUserContext();
+    const {userStatus} = useUserContext();
     const doneWaiting = useDoneWaitingForModelChange(model);
 
     if (!model.link) {
@@ -59,7 +58,7 @@ export default function LeftContent({model}: {model: LeftContentModelType}) {
 }
 
 function useDoneWaitingForModelChange(model: LeftContentModelType) {
-    const [timeIsUp, toggle] = useToggle(false) as UseToggleType;
+    const [timeIsUp, toggle] = useToggle(false);
     const timerRef = React.useRef<number>();
 
     React.useEffect(() => {
@@ -87,7 +86,7 @@ const iconLookup: {[key: string]: IconDefinition} = {
 };
 
 type UseGiveDialogTypes = {
-    GiveDialog: ({}: {
+    GiveDialog: ({link, onDownload}: {
         link: string;
         onDownload: (event: TrackedMouseEvent) => void;
     }) => React.JSX.Element;
@@ -104,7 +103,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
         if (model.bookModel) {
             interceptLinkClicks(event, model.bookModel.id, userModel);
         }
-    }, []);
+    }, [model.bookModel, userModel]);
 
     function openDialog(event: TrackedMouseEvent) {
         if (enabled) {
