@@ -16,10 +16,12 @@ type VideoResourceBoxModelType = {
     resourceCategory: string;
 };
 
+type BoxModel = { heading: string };
+
 type VideoResourceBoxesArgs = {
     models: VideoResourceBoxModelType[];
-    blogLinkModels: any[];
-    referenceModels: any[];
+    blogLinkModels: BoxModel[];
+    referenceModels: BoxModel[];
 };
 
 export default function VideoResourceBoxes({
@@ -32,10 +34,10 @@ export default function VideoResourceBoxes({
             {models.map((model) => (
                 <VideoResourceBox {...{model}} key={model.videoFile} />
             ))}
-            {blogLinkModels?.map((model: any) => (
+            {blogLinkModels?.map((model) => (
                 <ResourceBox model={model} key={model.heading} />
             ))}
-            {referenceModels.map((model: any) => (
+            {referenceModels.map((model) => (
                 <ResourceBox model={model} key={model.heading} />
             ))}
         </React.Fragment>

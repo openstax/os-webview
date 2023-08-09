@@ -153,7 +153,7 @@ export default function useGiveDialog() {
                 </Dialog>
             );
         },
-        [close, data]
+        [close, data, Dialog]
     );
 
     return {

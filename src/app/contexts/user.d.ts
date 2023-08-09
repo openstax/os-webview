@@ -7,7 +7,7 @@ type UserType = {
     groups: string[];
 };
 
-export type UserContextType = {
+type UserContextType = {
     userStatus?: {
         isInstructor: boolean;
         isStudent: boolean;
@@ -21,3 +21,5 @@ export type UserContextType = {
     };
     userModel?: UserModelType;
 };
+
+export default function useUserContext(): UserContextType;

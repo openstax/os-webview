@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/react';
 import {Integrations} from '@sentry/tracing';
 import isSupported from '~/helpers/device';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageVersion = require('../../package.json').version;
 
 const ignoreErrors = [

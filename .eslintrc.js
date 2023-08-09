@@ -1,5 +1,5 @@
 module.exports = {
-    'parser': '@babel/eslint-parser',
+    'parser': '@typescript-eslint/parser',
     'parserOptions': {
         'ecmaVersion': 6,
         'sourceType': 'module',
@@ -10,12 +10,14 @@ module.exports = {
     'plugins': [
         'react',
         'react-hooks',
-        'formatjs'
+        'formatjs',
+        '@typescript-eslint'
     ],
     'extends': [
         'eslint:recommended',
         'plugin:react/recommended',
-        'prettier'
+        'prettier',
+        'plugin:@typescript-eslint/recommended'
     ],
     'globals': {
         'console': 'readonly',
@@ -109,7 +111,11 @@ module.exports = {
         'no-shadow-restricted-names': 'error',
         'no-shadow': 'error',
         'no-undef-init': 'error',
-        'no-use-before-define': 'error',
+        'no-use-before-define': 'off',
+        '@typescript-eslint/no-use-before-define': ['error', {
+            'functions': false,
+            'variables': false
+        }],
 
         // Stylistic
         'array-bracket-spacing': ['error', 'never'],
@@ -175,7 +181,8 @@ module.exports = {
         'no-duplicate-imports': 'error',
         'no-new-symbol': 'error',
         'no-this-before-super': 'error',
-        'no-unused-vars': ['error', {'varsIgnorePattern': '_'}],
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': ['error', {'varsIgnorePattern': '_'}],
         'no-useless-computed-key': 'error',
         'no-useless-constructor': 'error',
         'no-useless-rename': 'error',

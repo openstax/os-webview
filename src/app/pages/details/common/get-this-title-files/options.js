@@ -189,7 +189,7 @@ export function usePrintCopyDialog() {
                 <OrderPrintCopy amazonDataLink={amazonDataLink} hideDialog={() => close()} />
             </Dialog>
         ),
-        [close]
+        [close, Dialog]
     );
     const onClick = React.useCallback(
         (event) => {
