@@ -17,29 +17,31 @@ type ProcessingOptions = {
     // Common transformations of CMS data
     transform?: boolean;
     camelCase?: boolean;
-    postProcess?: (rawData: any) => any;
+    postProcess?: (rawData: unknown) => unknown;
 };
 
 export default function useFetchedData<T>(
     options: SourceOption & ProcessingOptions,
     defaultValue: T
 ): T {
+    const slug = (options as SlugSource).slug;
     const slugPromise = React.useMemo(() => {
-        if (!('slug' in options)) {
+        if (!slug) {
             return null;
         }
         return new Promise<Response>((resolve) =>
-            getUrlFor(options.slug).then((url: string) =>
+            getUrlFor(slug).then((url: string) =>
                 fetch(url).then(resolve)
             )
         );
-    }, [options]);
+    }, [slug]);
+    const url = (options as UrlSource).url;
     const urlPromise = React.useMemo(() => {
-        if (!('url' in options)) {
+        if (!url) {
             return null;
         }
-        return fetch(options.url);
-    }, [options]);
+        return fetch(url);
+    }, [url]);
     const promiseOption: Promise<Response> | null = (options as PromiseSource)
         .promise;
     const promise: Promise<Response> = React.useMemo(
@@ -51,7 +53,7 @@ export default function useFetchedData<T>(
             promise
                 .then((resp) => resp[options.resolveTo]())
                 .then((rawData) => processRawData<T>(rawData, options)),
-        [promise, options]
+        [promise, options.resolveTo] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     return usePromise(processedPromise, defaultValue);
@@ -68,8 +70,8 @@ export function usePromise<T>(promise: Promise<T>, defaultValue: T) {
     return data;
 }
 
-function processRawData<T>(rawData: any, processing: ProcessingOptions): T {
-    let returnValue: any = rawData;
+function processRawData<T>(rawData: unknown, processing: ProcessingOptions): T {
+    let returnValue = rawData;
 
     if (processing.transform) {
         // mutates
@@ -79,7 +81,7 @@ function processRawData<T>(rawData: any, processing: ProcessingOptions): T {
         returnValue = camelCaseKeys(rawData);
     }
     if (processing.postProcess) {
-        returnValue = returnValue.map(processing.postProcess);
+        returnValue = (returnValue as Array<unknown>).map(processing.postProcess);
     }
 
     return returnValue as T;

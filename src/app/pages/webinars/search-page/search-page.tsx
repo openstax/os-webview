@@ -53,7 +53,9 @@ function useSearchResults() {
             slug: `webinars/search?q=${encodeURIComponent(term)}`,
             resolveTo: 'json',
             camelCase: true,
-            postProcess: (w) => {
+            postProcess(wRaw) {
+                const w = wRaw as Webinar;
+
                 w.start = new Date(w.start);
                 w.end = new Date(w.end);
                 return w;

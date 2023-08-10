@@ -8,7 +8,7 @@ export function useCurrentSearchParameter() {
     return new window.URLSearchParams(search).get('q') ?? '';
 }
 
-type SearchFunction = (term: string) => Array<any>;
+type SearchFunction = (term: string) => Array<unknown>;
 
 function useContextValue({searchFor}: {searchFor: SearchFunction}) {
     const [searchString, setSearchString] = useState(
