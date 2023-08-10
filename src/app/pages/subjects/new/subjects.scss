@@ -34,10 +34,19 @@
 
     .language-selector-section {
         background-color: ui-color(white);
+        padding-top: 4rem;
     }
 
     .language-selector {
         @include scale-feature(margin-bottom, 2rem, 3rem);
+
+        position: relative;
+        z-index: 1;
+
+        > span {
+            background-color: ui-color(white);
+            padding: 0.2rem 0.5rem;
+        }
     }
 
     .savings-blurb {
