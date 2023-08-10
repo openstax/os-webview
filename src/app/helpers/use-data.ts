@@ -33,13 +33,13 @@ export default function useFetchedData<T>(
                 fetch(url).then(resolve)
             )
         );
-    }, [(options as SlugSource).slug]);
+    }, [options]);
     const urlPromise = React.useMemo(() => {
         if (!('url' in options)) {
             return null;
         }
         return fetch(options.url);
-    }, [(options as UrlSource).url]);
+    }, [options]);
     const promiseOption: Promise<Response> | null = (options as PromiseSource)
         .promise;
     const promise: Promise<Response> = React.useMemo(
@@ -51,7 +51,7 @@ export default function useFetchedData<T>(
             promise
                 .then((resp) => resp[options.resolveTo]())
                 .then((rawData) => processRawData<T>(rawData, options)),
-        [promise]
+        [promise, options]
     );
 
     return usePromise(processedPromise, defaultValue);

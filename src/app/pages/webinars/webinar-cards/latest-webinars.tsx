@@ -17,7 +17,7 @@ export default function LatestWebinars({
     const {latestWebinars} = useWebinarContext();
     const filteredWebinars = React.useMemo(
         () => latestWebinars.filter(filter).slice(0, limit),
-        [latestWebinars]
+        [latestWebinars, filter, limit]
     );
 
     return (

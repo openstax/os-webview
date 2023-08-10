@@ -35,6 +35,6 @@ function useGoBack(path: string) {
             }
             e.preventDefault();
         },
-        [navigate]
+        [navigate, path, state?.from]
     );
 }
