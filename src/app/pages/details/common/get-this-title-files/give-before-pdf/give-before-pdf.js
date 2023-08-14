@@ -6,6 +6,7 @@ import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import ThankYou from './thank-you-form';
 import {enroll} from '@openstax/experiments';
 import './give-before-pdf.scss';
+import useGiveLinks from './use-give-links';
 
 function Downloading({data}) {
     return (
@@ -47,14 +48,16 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close, onD
         [close, onDownload]
     );
 
+    const [controlLink, alternateLink] = useGiveLinks();
     const donationExperiment = enroll({
       name: 'Donation Experiment 2023',
       variants: [
         // eslint-disable-next-line camelcase
-        {name: 'control', header_subtitle: data.header_subtitle},
+        {name: 'control', header_subtitle: data.header_subtitle, giveLink: controlLink},
         {name: 'public good',
           // eslint-disable-next-line camelcase
-          header_subtitle: 'Join us in sustaining OpenStax as a public good for years to come by giving today.'
+          header_subtitle: 'Join us in sustaining OpenStax as a public good for years to come by giving today.',
+          giveLink: alternateLink
         }
       ]
     });
@@ -80,7 +83,7 @@ function GiveBeforePdfAfterConditionals({onThankYouClick, link, data, close, onD
             </p>
             <div className="button-row">
                 <a
-                    href={data.give_link}
+                    href={donationExperiment.giveLink}
                     className="btn primary"
                     onClick={OpenGiveInNewWindow}
                     data-nudge-action="interacted"
