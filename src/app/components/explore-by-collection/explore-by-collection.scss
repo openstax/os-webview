@@ -15,6 +15,7 @@
             text-decoration: none;
 
             .centered-image {
+                align-items: center;
                 display: flex;
                 justify-content: center;
                 padding-bottom: 1rem;
@@ -22,6 +23,7 @@
 
                 img {
                     max-height: 14rem;
+                    min-height: 8rem;
                     max-width: 100%;
                 }
             }

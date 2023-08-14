@@ -33,9 +33,9 @@ function SubjectLink({
 }) {
     return (
         <div className='card'>
-            <Link to={`./explore/subjects/${name}`} state={{from}}>
+            <Link to={`./explore/subjects/${encodeURIComponent(name)}`} state={{from}}>
                 <div className='icon-holder'>
-                    {subjectIcon && <img src={subjectIcon} />}
+                    {subjectIcon && <img src={subjectIcon} alt='' />}
                 </div>
                 <div className='subject-name'>
                     {name}

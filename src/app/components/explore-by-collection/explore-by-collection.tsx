@@ -33,7 +33,7 @@ function CollectionLink({
 }) {
     return (
         <Link
-            to={`./explore/collections/${collection.name}`}
+            to={`./explore/collections/${encodeURIComponent(collection.name)}`}
             state={{from}}
             className='card'
         >

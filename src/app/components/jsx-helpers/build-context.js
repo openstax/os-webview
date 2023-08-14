@@ -13,7 +13,7 @@ export default function buildContext({
     function ContextProvider({children, contextValueParameters=undefined}) {
         const value = useContextValue(contextValueParameters);
 
-        if (typeof value === 'undefined') {
+        if (value === undefined) {
             return null;
         }
 
