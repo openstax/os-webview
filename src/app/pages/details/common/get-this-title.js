@@ -2,7 +2,7 @@ import React from 'react';
 import {useToggle} from '~/helpers/data';
 import userModel from '~/models/usermodel';
 import {
-    TocOption, WebviewOption, StudyEdgeOption, PdfOption, PrintOption, BookshareOption,
+    TocOption, WebviewOption, PdfOption, PrintOption, BookshareOption,
     IbooksOption, KindleOption, CheggOption, OptionExpander
 } from './get-this-title-files/options';
 import './get-this-title-files/get-this-title.scss';
@@ -58,7 +58,6 @@ export default function GetThisTitle({model}) {
                 <div className="options" onClick={interceptLinkClicks} data-analytics-nav="Get the book">
                     <TocOption model={model} />
                     <WebviewOption model={model} />
-                    <StudyEdgeOption model={model} />
                     <PdfOption model={model} />
                     <PrintOption model={model} />
                     <CheggOption model={model} />

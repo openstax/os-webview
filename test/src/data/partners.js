@@ -488,20 +488,6 @@ export default {
             "title": "Connect For Education",
             "do_not_display": false
         },
-        "study-edge": {
-            "heading": "Study Edge",
-            "short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-            "is_ap": false,
-            "ally_bw_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo_BW.png",
-            "long_description": "<p>Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses, do better on homework, or watch a quick refresher on a tough concept right before an exam. We give students the tools they need to study efficiently on their own time and perform better on any of the other OpenStax Ally products. Any student can try us out for free at <a href=\"http://studyedge.com/openstax\">studyedge.com/openstax</a>, or purchase a membership for $14.95/month. Institutional and course licenses are also available at a much lower per-student cost.</p><p></p><p>Study Edge has provided content for numerous statewide projects, and over 1,000,000 students have benefited from our resources. Email and phone support is available to all students, professors, and staff 7 days a week at 888-97-STUDY and support@studyedge.com.</p><p></p><p>Study Edge supports OpenStax <a href=\"/details/books/algebra-and-trigonometry\">Algebra and Trigonometry</a>, <a href=\"/details/books/calculus-volume-1\">Calculus Volume 1</a>, <a href=\"/details/books/calculus-volume-2\">Calculus Volume 2</a>, <a href=\"/details/books/calculus-volume-3\">Calculus Volume 3</a>, <a href=\"/details/books/chemistry\">Chemistry</a>, <a href=\"/details/books/chemistry-atoms-first\">Chemistry: Atoms First</a>, <a href=\"/details/books/college-algebra\">College Algebra</a>, <a href=\"/details/books/college-physics\">College Physics</a>, <a href=\"/details/books/precalculus\">Precalculus</a>, <a href=\"/details/books/principles-economics-2e\">Principles of Economics 2e</a>, <a href=\"/details/books/principles-macroeconomics-2e\">Principles of Macroeconomics 2e</a>, <a href=\"/details/books/principles-microeconomics-2e\">Principles of Microeconomics 2e</a>, and <a href=\"/details/books/university-physics-volume-1\">University Physics Volume 2</a>. </p><p></p><p></p>",
-            "subjects": [
-                "Math",
-                "Science",
-                "Social Sciences"
-            ],
-            "title": "Study Edge",
-            "do_not_display": false
-        },
         "graphlock": {
             "heading": "GraphLock",
             "short_description": "<p>GraphLock is an affordable scientific and graphing calculator application with a built-in lockdown feature to uphold classroom and testing integrity.</p>",
