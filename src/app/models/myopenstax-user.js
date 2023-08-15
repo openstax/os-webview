@@ -1,5 +1,5 @@
 import React from 'react';
-import useFlagContext from '~/components/shell/flag-context';
+import useSharedDataContext from '~/contexts/shared-data';
 import sfApiFetch from '~/models/sfapi';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 
@@ -20,7 +20,7 @@ async function fetchUser() {
 
 export default function useMyOpenStaxUser(isVerified, fetchTime) {
     const [user, setUser] = React.useState({error: 'not loaded'});
-    const {my_openstax: isEnabled} = useFlagContext();
+    const {flags: {my_openstax: isEnabled}} = useSharedDataContext();
 
     React.useEffect(() => {
         if (isEnabled) {

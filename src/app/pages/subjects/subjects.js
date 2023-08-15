@@ -1,9 +1,9 @@
 import React, {lazy, Suspense} from 'react';
-import useFlagContext from '~/components/shell/flag-context';
+import useSharedDataContext from '~/contexts/shared-data';
 import {useLocation} from 'react-router-dom';
 
 function useFeatureFlag() {
-    const {new_subjects: flag} = useFlagContext();
+    const {flags: {new_subjects: flag}} = useSharedDataContext();
 
     return flag;
 }

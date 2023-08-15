@@ -1,6 +1,7 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
+import useSharedDataContext from '~/contexts/shared-data';
 import {useMainSticky} from '~/helpers/main-class-hooks';
 import cn from 'classnames';
 import './sticky-footer.scss';
@@ -16,8 +17,17 @@ function useCollapsedState() {
 
 function StickyFooterBody({leftButton, rightButton}) {
     const collapsed = useCollapsedState();
+    const {stickyFooterState: [_, setSFS]} = useSharedDataContext();
 
     useMainSticky();
+
+    React.useEffect(
+        () => {
+            setSFS(collapsed);
+            return () => setSFS(null);
+        },
+        [collapsed, setSFS]
+    );
 
     return (
         <div className={cn('sticky-footer', {collapsed})}>

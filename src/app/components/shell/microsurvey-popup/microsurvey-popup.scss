@@ -1,16 +1,40 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.microsurvey-content {
-    .btn,
-    button {
-        @extend %button;
-        @extend %primary;
+#microsurvey {
+    background-color: ui-color(white);
+    border-radius: 0.3rem;
+    bottom: $normal-margin;
+    box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
+    max-width: 32rem;
+    overflow: hidden;
+    position: fixed;
+    right: $normal-margin;
+    z-index: 4;
 
-        height: 4rem;
-        margin-top: 1rem;
+    > div:not(:empty):not(.put-away) {
+        padding: 2.5rem 2.5rem $normal-margin $normal-margin;
     }
 
-    h1 {
-        @include title-font(1.8rem);
+    .put-away {
+        height: 2rem;
+        line-height: 1.8rem;
+        right: 0.7rem;
+        top: 0.7rem;
+        width: 2rem;
+    }
+
+    .microsurvey-content {
+        .btn,
+        button {
+            @extend %button;
+            @extend %primary;
+    
+            height: 4rem;
+            margin-top: 1rem;
+        }
+    
+        h1 {
+            @include title-font(1.8rem);
+        }
     }
 }
