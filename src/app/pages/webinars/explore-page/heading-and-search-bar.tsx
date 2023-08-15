@@ -23,7 +23,7 @@ type HeadingArgs = {
 function HeadingForExplorePage({subject, heading}: HeadingArgs) {
     return (
         <h1>
-            {subject?.subjectIcon && <img src={subject.subjectIcon} />}
+            {subject?.subjectIcon && <img src={subject.subjectIcon} alt='' />}
             <span>{heading}</span>
         </h1>
     );

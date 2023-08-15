@@ -83,7 +83,7 @@ function UpcomingWebinar({data}: {data: Webinar}) {
         <div className='card upcoming'>
             <div className='dated-heading'>
                 <div className='date'>
-                    <div className='day-of-month'>{data.start.getDay()}</div>
+                    <div className='day-of-month'>{data.start.getDate()}</div>
                     <div className='month'>
                         {data.start.toLocaleString('en', {month: 'short'})}
                     </div>
