@@ -1,12 +1,11 @@
 import React from 'react';
 import useSearchContext, {SearchContextProvider} from './search-context';
-import useBlogContext from '../blog-context';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import './search-bar.scss';
 
-function SearchInput() {
+function SearchInput({amongWhat}) {
     const {searchString, setSearchString, doSearch} = useSearchContext();
     const onChange = React.useCallback(
         (event) => {
@@ -26,7 +25,7 @@ function SearchInput() {
 
     return (
         <input
-            type="text" placeholder="Search all blog posts" name="search-input"
+            type="text" placeholder={`Search all ${amongWhat}`} name="search-input"
             value={searchString} onChange={onChange} onKeyPress={searchOnEnter}
         />
     );
@@ -73,12 +72,12 @@ function SearchButton() {
     );
 }
 
-export default function SearchBar() {
+export default function SearchBar({searchFor, amongWhat}) {
     return (
-        <SearchContextProvider>
+        <SearchContextProvider contextValueParameters={{searchFor}}>
             <div className="search-bar">
                 <div className="input-with-clear-button">
-                    <SearchInput />
+                    <SearchInput amongWhat={amongWhat} />
                     <ClearButton />
                 </div>
                 <SearchButton />
@@ -87,13 +86,11 @@ export default function SearchBar() {
     );
 }
 
-export function HeadingAndSearchBar({children}) {
-    const {setPath} = useBlogContext();
-
+export function HeadingAndSearchBar({searchFor, amongWhat, children}) {
     return (
         <div className="heading-and-searchbar">
             {children}
-            <SearchBar setPath={setPath} />
+            <SearchBar searchFor={searchFor} amongWhat={amongWhat} />
         </div>
     );
 }

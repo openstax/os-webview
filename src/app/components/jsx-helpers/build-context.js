@@ -10,10 +10,10 @@ export default function buildContext({
         return React.useContext(Context);
     }
 
-    function ContextProvider({children, contextValueParameters}) {
+    function ContextProvider({children, contextValueParameters=undefined}) {
         const value = useContextValue(contextValueParameters);
 
-        if (typeof value === 'undefined') {
+        if (value === undefined) {
             return null;
         }
 

@@ -1,105 +1,27 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import 'mixins/placeholder-selectors';
 
 .webinars.page {
+    background-color: ui-color(white);
+    justify-items: center;
+    width: 100%;
+
     h1 {
-        @include set-font(h1);
+        @include set-font(h2);
+
+        margin: 0;
     }
 
-    .hero {
-        @extend %light-on-dark;
-        @include set-font(body-large);
-
-        background-color: text-color(link);
-        color: text-color(white);
-        padding: 0;
-        text-align: left;
-
-        @include wider-than($phone-max) {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 100%;
-        }
-
-        .text-side {
-            padding-left: $normal-margin;
-
-            @include width-up-to($phone-max) {
-                padding: 4rem;
-            }
-
-            @include wider-than($phone-max) {
-                margin-right: 23%;
-                padding-top: 6rem;
-                padding-bottom: 6rem;
-            }
-
-            @include wider-than($media-content-max) {
-                padding-left: calc(50vw - #{$content-max / 2 - $normal-margin});
-            }
-        }
-
-        .picture-side {
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center center;
-            height: 100%;
-
-            @include width-up-to($phone-max) {
-                height: 67vw;
-            }
-        }
-
+    h2 {
+        @include set-font(h3);
     }
 
-    .content {
-        @extend %content;
+    .boxed {
+        align-items: start;
+        gap: 3rem;
+        padding: 2.5rem $normal-margin;
     }
 
-    main {
-        padding: 6rem 0;
-
-        @include width-up-to($phone-max) {
-            padding: 4rem 0;
-        }
-
-        h2 {
-            @include set-font(h2);
-
-            margin: 0 0 1rem;
-        }
-
-        h3 {
-            @include body-font(1.8rem);
-        }
-
-        .tab-group .tab {
-            padding: 1rem $normal-margin 1rem;
-        }
-    }
-
-    .phone-view {
-        @include wider-than($phone-max) {
-            display: none;
-        }
-
-        .accordion-group {
-            margin-bottom: 1rem;
-
-            .content-pane {
-                background-color: transparent;
-                margin-top: 1rem;
-
-                .card {
-                    margin-bottom: 2rem;
-                }
-            }
-        }
-    }
-
-    .bigger-view {
-        @include width-up-to($phone-max) {
-            display: none;
-        }
+    section {
+        width: 100%;
     }
 }

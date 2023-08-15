@@ -4,33 +4,23 @@ import usePageData from '~/helpers/use-page-data';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useLatestBlogEntries from '~/models/blog-entries';
-import cmsFetch from '~/helpers/cms-fetch';
+import useData from '~/helpers/use-data';
 const stayHere = {path: '/blog'};
 
 function useEnglishSubjects() {
-    const [data, setData] = React.useState([]);
-
-    React.useEffect(
-        () => cmsFetch('snippets/subjects?format=json&locale=en')
-            .then(camelCaseKeys)
-            .then(setData),
-        []
-    );
-
-    return data;
+    return useData({
+        slug: 'snippets/subjects?format=json&locale=en',
+        resolveTo: 'json',
+        camelCase: true
+    }, []);
 }
 
 function useCollections() {
-    const [data, setData] = React.useState([]);
-
-    React.useEffect(
-        () => cmsFetch('snippets/blogcollection?format=json')
-            .then(camelCaseKeys)
-            .then(setData),
-        []
-    );
-
-    return data;
+    return useData({
+        slug: 'snippets/blogcollection?format=json',
+        resolveTo: 'json',
+        camelCase: true
+    }, []);
 }
 
 function useTopicStories() {
@@ -93,6 +83,10 @@ function useContextValue({displayFooter, footerText, footerButtonText, footerLin
         },
         [navigate]
     );
+    const searchFor = React.useCallback(
+        (searchString) => setPath(`/blog/?q=${searchString}`),
+        [setPath]
+    );
 
     if (pinnedStory && !pinnedStory.slug) {
         pinnedStory.slug = pinnedStory.meta.slug;
@@ -102,21 +96,22 @@ function useContextValue({displayFooter, footerText, footerButtonText, footerLin
         setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet,
         topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular,
         pageDescription: meta.searchDescription,
-        displayFooter, footerText, footerButtonText, footerLink
+        displayFooter, footerText, footerButtonText, footerLink,
+        searchFor
     };
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
 function BlogContextProvider({children}) {
-    const data = usePageData('news', false, true);
+    const data = usePageData('news');
 
     if (!data) {
         return null;
     }
 
     return (
-        <ContextProvider contextValueParameters={camelCaseKeys(data)}>
+        <ContextProvider contextValueParameters={data}>
             {children}
         </ContextProvider>
     );

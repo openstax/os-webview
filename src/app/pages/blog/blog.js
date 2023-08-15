@@ -3,13 +3,13 @@ import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Routes, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
-import ExploreBySubject from './explore/by-subject';
-import ExploreCollections from './explore/collections';
+import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject';
+import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
 import ExplorePage from './explore-page/explore-page';
 import PinnedArticle from './pinned-article/pinned-article';
 import DisqusForm from './disqus-form/disqus-form';
 import MoreStories from './more-stories/more-stories';
-import SearchBar, {HeadingAndSearchBar} from './search-bar/search-bar';
+import SearchBar, {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import LatestBlogPosts from './latest-blog-posts/latest-blog-posts';
 import {ArticleFromSlug} from './article/article';
@@ -18,7 +18,7 @@ import StickyFooter from '../../components/sticky-footer/sticky-footer';
 import './blog.scss';
 
 export function SearchResultsPage() {
-    const {pageDescription} = useBlogContext();
+    const {pageDescription, searchFor} = useBlogContext();
 
     useDocumentHead({
         title: 'OpenStax Blog Search',
@@ -28,7 +28,7 @@ export function SearchResultsPage() {
     return (
         <React.Fragment>
             <div className="boxed left">
-                <SearchBar />
+                <SearchBar searchFor={searchFor} amongWhat='blog posts' />
             </div>
             <SearchResults />
         </React.Fragment>
@@ -38,7 +38,12 @@ export function SearchResultsPage() {
 // Exported so it can be tested
 // eslint-disable-next-line complexity
 export function MainBlogPage() {
-    const {pinnedStory, pageDescription, displayFooter, footerText, footerButtonText, footerLink} = useBlogContext();
+    const {
+        pinnedStory, pageDescription, searchFor,
+        subjectSnippet: categories,
+        collectionSnippet: collections,
+        displayFooter, footerText, footerButtonText, footerLink
+    } = useBlogContext();
     const leftButton = {
         descriptionHtml: footerText || 'Interested in sharing your story?',
         text: footerButtonText || 'Write for us',
@@ -53,11 +58,11 @@ export function MainBlogPage() {
     return (
         <WindowContextProvider>
             <div className="boxed">
-                <HeadingAndSearchBar>
+                <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <h1>OpenStax Blog</h1>
                 </HeadingAndSearchBar>
-                <ExploreBySubject />
-                <ExploreCollections />
+                <ExploreBySubject categories={categories} analyticsNav='Blog Subjects' />
+                <ExploreByCollection collections={collections} analyticsNav='Blog Collections' />
                 <PinnedArticle />
                 <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
             </div>

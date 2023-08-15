@@ -6,14 +6,7 @@
     justify-items: center;
     width: 100%;
 
-    .breadcrumb {
-        align-items: center;
-        font-weight: bold;
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        margin-top: 3rem;
-        text-decoration: none;
+    section {
         width: 100%;
     }
 
@@ -26,6 +19,12 @@
         @include wider-than($media-content-max) {
             max-width: $content-max;
         }
+    }
+
+    .explore-topic-blurb {
+        align-items: start;
+        margin: 0;
+        padding: 0;
     }
 
     .boxed.left {
@@ -58,8 +57,6 @@
     h2 {
         &:not(.section-header) {
             @include set-font(h3);
-
-            margin: 0;
         }
     }
 

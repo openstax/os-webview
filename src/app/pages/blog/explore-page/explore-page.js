@@ -1,14 +1,13 @@
 import React from 'react';
 import useBlogContext from '../blog-context';
-import {useParams, Link, useNavigate} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import {useParams} from 'react-router-dom';
+import Breadcrumb from '~/components/breadcrumb/breadcrumb';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
 import PinnedArticle from '../pinned-article/pinned-article';
-import {HeadingAndSearchBar} from '../search-bar/search-bar';
+import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import MoreStories from '../more-stories/more-stories';
-import SectionHeader from '../section-header/section-header';
+import Section from '~/components/explore-page/section/section';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 
 // If it returns null, the topic is not a Subject
@@ -51,39 +50,27 @@ function useParamsToSetTopic() {
 
 export default function ExplorePage() {
     useParamsToSetTopic();
-    const {topic, pinnedStory, topicPopular, setPath, pageDescription} = useBlogContext();
-    const navigate = useNavigate();
-    const goBack = React.useCallback(
-        (e) => {
-            navigate(-1);
-            e.preventDefault();
-        },
-        [navigate]
-    );
+    const {topic, pinnedStory, topicPopular, setPath, searchDescription, searchFor} = useBlogContext();
     const subject = useSubjectSnippetForTopic(topic);
     const heading = useTopicHeading(topic, subject);
 
     useDocumentHead({
         title: `${topic} blog posts - OpenStax`,
-        description: pageDescription
+        description: searchDescription
     });
 
     return (
         <WindowContextProvider>
             <div className="boxed left">
-                <Link to="/blog" onClick={goBack} className="breadcrumb">
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                    <span>Back to Main Blog</span>
-                </Link>
-                <HeadingAndSearchBar>
+                <Breadcrumb name="Main Blog" />
+                <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <HeadingForExplorePage {...{subject, heading}} />
                 </HeadingAndSearchBar>
                 <div className="explore-topic-blurb text-content">
                     {subject?.pageContent}
                 </div>
                 <PinnedArticle subhead={heading} />
-                <div className="popular-posts">
-                    <SectionHeader head="Popular blog posts" subhead={heading} />
+                <Section name="Popular blog posts" topicHeading={heading} className="popular-posts">
                     <div
                         className="latest-blurbs cards"
                         data-analytics-content-list="Popular Blog Posts"
@@ -96,7 +83,7 @@ export default function ExplorePage() {
                             )
                         }
                     </div>
-                </div>
+                </Section>
                 <MoreStories exceptSlug={pinnedStory?.slug} subhead={heading} />
             </div>
         </WindowContextProvider>

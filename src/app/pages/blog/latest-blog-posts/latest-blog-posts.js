@@ -1,25 +1,12 @@
 import React from 'react';
 import {LatestBlurbs} from '../more-stories/more-stories';
-import {HeadingAndSearchBar} from '../search-bar/search-bar';
-import SimplePaginator from '~/components/paginator/simple-paginator';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
+import SimplePaginator, {Showing} from '~/components/paginator/simple-paginator';
+import Breadcrumb from '~/components/breadcrumb/breadcrumb';
 import useBlogContext from '../blog-context';
 import './latest-blog-posts.scss';
 
 const perPage = 9;
-
-function Showing({page}) {
-    const {totalCount} = useBlogContext();
-    const end = Math.min(totalCount, page * perPage);
-    const start = end - perPage + 1;
-
-    return (
-        <div className="whats-showing">
-            Showing {start}-{end} of all {totalCount} blog posts
-        </div>
-    );
-}
 
 export default function LatestBlogPosts() {
     const [page, setPage] = React.useState(1);
@@ -29,7 +16,7 @@ export default function LatestBlogPosts() {
         [page]
     );
 
-    const {totalCount} = useBlogContext();
+    const {totalCount, searchFor} = useBlogContext();
 
     if (!totalCount) {
         return null;
@@ -40,14 +27,11 @@ export default function LatestBlogPosts() {
     return (
         <div className="latest-blog-posts page">
             <div className="boxed">
-                <a className="breadcrumb" href="/blog">
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                    Back to Main Blog
-                </a>
-                <HeadingAndSearchBar>
+                <Breadcrumb name='Blog' />
+                <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <h1>Latest blog posts</h1>
                 </HeadingAndSearchBar>
-                <Showing page={page} />
+                <Showing page={page} totalCount={totalCount} perPage={perPage} ofWhat="blog posts" />
                 <LatestBlurbs page={page} pageSize={perPage} openInNewWindow />
                 <SimplePaginator currentPage={page} setPage={setPage} totalPages={totalPages} />
             </div>
