@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 $facebook-blue: #3b5998;
-$twitter-blue: #00aced;
+$twitter-black: #000;
 $linkedin-blue: #0077b5;
 
 .share-buttons {
@@ -37,7 +37,7 @@ $linkedin-blue: #0077b5;
             }
 
             &.twitter {
-                background-color: $twitter-blue;
+                background-color: $twitter-black;
             }
 
             &.linkedin {
