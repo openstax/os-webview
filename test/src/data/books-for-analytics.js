@@ -967,17 +967,6 @@ export default {
                     "book_link_text": "Explore"
                 },
                 {
-                    "id": 1677,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
-                    "book_link_text": "Explore"
-                },
-                {
                     "id": 1718,
                     "meta": {
                         "type": "books.BookAllies"
@@ -1240,17 +1229,6 @@ export default {
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/knewton_new_color.png",
                     "book_link_url": "https://www.knewtonalta.com/start-here/",
                     "book_link_text": "Explore"
-                },
-                {
-                    "id": 1671,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
-                    "book_link_text": "Explore"
                 }
             ],
             "book_student_resources": [
@@ -1492,17 +1470,6 @@ export default {
                     "ally_short_description": "<p>For $29, zyBooks delivers OpenStax content the way students want it. Animations and learning questions present topics where text and figures fall short.</p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/zybooks_color.png",
                     "book_link_url": "http://www.zybooks.com/catalog/precalculus/",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1679,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
                     "book_link_text": "Explore"
                 }
             ],
@@ -1759,17 +1726,6 @@ export default {
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Lyryx_Color.png",
                     "book_link_url": "https://lyryx.com/products/openstax-ally/",
                     "book_link_text": "Explore"
-                },
-                {
-                    "id": 1672,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
-                    "book_link_text": "Explore"
                 }
             ],
             "book_student_resources": [
@@ -2013,17 +1969,6 @@ export default {
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Lyryx_Color.png",
                     "book_link_url": "https://lyryx.com/products/openstax-ally/",
                     "book_link_text": "Explore"
-                },
-                {
-                    "id": 1673,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
-                    "book_link_text": "Explore"
                 }
             ],
             "book_student_resources": [
@@ -2266,17 +2211,6 @@ export default {
                     "ally_short_description": "<p>Lyryx high-quality online homework includes authentic, expert-reviewed questions that are uniquely randomized, and instructive feedback prompting a positive learning environment.</p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Lyryx_Color.png",
                     "book_link_url": "https://lyryx.com/products/openstax-ally/",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1674,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
                     "book_link_text": "Explore"
                 }
             ],
@@ -4676,17 +4610,6 @@ export default {
                     "book_link_text": "Explore"
                 },
                 {
-                    "id": 1675,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
-                    "book_link_text": "Explore"
-                },
-                {
                     "id": 1719,
                     "meta": {
                         "type": "books.BookAllies"
@@ -4948,17 +4871,6 @@ export default {
                     "ally_short_description": "<p>Top Hat is a teaching app that helps you create your perfect course, engage students, and build comprehension inside and outside the classroom.<br/></p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/TopHat_wide-new10-2017.png",
                     "book_link_url": "https://tophat.com/marketplace/beta/oer-openstax-atoms-first/2549",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1676,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
                     "book_link_text": "Explore"
                 }
             ],
@@ -5226,17 +5138,6 @@ export default {
                     "ally_short_description": "<p>Realizeit goes beyond learning personalization. Our adaptive platform enables educators to truly transform the educational experience in quantifiable ways. </p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/RealizeItlogo_10.23.png",
                     "book_link_url": "http://realizeitlearning.com/",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1678,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
                     "book_link_text": "Explore"
                 }
             ],
@@ -5548,17 +5449,6 @@ export default {
                     "ally_short_description": "<p>Realizeit goes beyond learning personalization. Our adaptive platform enables educators to truly transform the educational experience in quantifiable ways. </p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/RealizeItlogo_10.23.png",
                     "book_link_url": "http://realizeitlearning.com/",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1683,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
                     "book_link_text": "Explore"
                 }
             ],
@@ -7046,17 +6936,6 @@ export default {
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/BlendingEdColor.png",
                     "book_link_url": "https://blending.education/library/principles-of-economics-course/",
                     "book_link_text": "Explore"
-                },
-                {
-                    "id": 1680,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
-                    "book_link_text": "Explore"
                 }
             ],
             "book_student_resources": [
@@ -7341,17 +7220,6 @@ export default {
                     "ally_short_description": "<p>Sapling Learning/Macmillan Learning&#x27;s legacy of excellence informs our approach to developing content with interactive teaching tools.</p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/Sapling.png",
                     "book_link_url": "http://www.macmillanlearning.com/Catalog/elearningbrowsebymediatype/SaplingLearning",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1746,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
                     "book_link_text": "Explore"
                 },
                 {
@@ -7657,17 +7525,6 @@ export default {
                     "ally_short_description": "<p>Hawkes Learning is an interactive, mastery-based courseware platform with error-specific feedback for students. Instructors access customization options and detailed reporting &amp; analytics.</p>",
                     "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/HawkesColor.png",
                     "book_link_url": "http://www.hawkeslearning.com/Products/Economics/PrinciplesofMicroeconomics.html",
-                    "book_link_text": "Explore"
-                },
-                {
-                    "id": 1760,
-                    "meta": {
-                        "type": "books.BookAllies"
-                    },
-                    "ally_heading": "Study Edge",
-                    "ally_short_description": "<p> Study Edge provides engaging (non-boring) videos, downloadable and printable study guides (PDFs), and practice problems. Using our web, iOS, and Android apps, students can stay on track with their courses.</p>",
-                    "ally_color_logo": "https://d3bxy9euw4e147.cloudfront.net/oscms-dev/media/original_images/SE_Logo.png",
-                    "book_link_url": "http://www.studyedge.com/openstax",
                     "book_link_text": "Explore"
                 },
                 {

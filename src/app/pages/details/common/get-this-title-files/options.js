@@ -3,7 +3,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import {faListOl} from '@fortawesome/free-solid-svg-icons/faListOl';
-import {faMobileAlt} from '@fortawesome/free-solid-svg-icons/faMobileAlt';
 import {faCloudDownloadAlt} from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
 import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
@@ -14,7 +13,6 @@ import {isMobileDisplay} from '~/helpers/device';
 import {useIntl, FormattedMessage} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
-import StudyEdge from './study-edge/study-edge';
 import useTOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
@@ -119,30 +117,6 @@ export function WebviewOption({model}) {
                 }
             </div>
         </Option>
-    );
-}
-
-export function StudyEdgeOption({model}) {
-    const [Dialog, open] = useDialog();
-    const intl = useIntl();
-    const text = intl.formatMessage({id: 'getit.app'});
-    const openDialog = React.useCallback(
-        (event) => {
-            event.preventDefault();
-            open();
-        },
-        [open]
-    );
-
-    return (
-        <SimpleLinkOption
-            link={model.enableStudyEdge} icon={faMobileAlt} text={text}
-            onClick={openDialog}
-        >
-            <Dialog className="wider-dialog">
-                <StudyEdge model={model} />
-            </Dialog>
-        </SimpleLinkOption>
     );
 }
 

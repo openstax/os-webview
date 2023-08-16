@@ -72,9 +72,6 @@ function filterForBook(bookInfo) {
         if (type.startsWith('Assignable')) {
             return bookInfo.assignable_book;
         }
-        if (type.endsWith('SE')) {
-            return bookInfo.enable_study_edge;
-        }
         if (type.startsWith('Kindle')) {
             return Boolean(bookInfo.kindle_link);
         }

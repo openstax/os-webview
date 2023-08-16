@@ -384,7 +384,6 @@ export default {
     "webview_rex_link": "https://openstax.org/books/biology-2e/pages/1-introduction",
     "rex_callout_title": "Recommended",
     "rex_callout_blurb": "<b>New</b> Highlight and add notes — it’s 100% free!",
-    "enable_study_edge": true,
     "bookshare_link": "",
     "amazon_coming_soon": false,
     "amazon_link": "https://www.amazon.com/dp/1947172514",
