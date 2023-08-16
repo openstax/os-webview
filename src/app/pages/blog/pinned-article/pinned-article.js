@@ -4,7 +4,7 @@ import useBlogContext from '../blog-context';
 import Section from '~/components/explore-page/section/section';
 import './pinned-article.scss';
 
-export default function PinnedArticle({subhead}) {
+export default function PinnedArticle({subhead=null}) {
     const {pinnedStory, setPath} = useBlogContext();
 
     if (!pinnedStory) {

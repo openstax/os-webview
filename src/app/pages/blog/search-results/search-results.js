@@ -6,6 +6,7 @@ import useBlogContext from '../blog-context';
 import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
 import usePaginatorContext, {PaginatorContextProvider} from '~/components/paginator/paginator-context';
 import {PaginatorControls} from '~/components/paginator/search-results/paginator.js';
+import NoResults from './no-results';
 import './search-results.scss';
 
 function useAllArticles() {
@@ -52,6 +53,10 @@ function VisibleArticles({articles}) {
 
 export default function SearchResults() {
     const allArticles = useAllArticles();
+
+    if (allArticles.length === 0) {
+        return (<NoResults />);
+    }
 
     return (
         <div className="search-results">
