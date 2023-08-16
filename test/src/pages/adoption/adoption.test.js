@@ -4,35 +4,35 @@ import userEvent from '@testing-library/user-event';
 import AdoptionForm from '~/pages/adoption/adoption';
 import {MemoryRouter} from 'react-router-dom';
 import {MainClassContextProvider} from '~/contexts/main-class';
+import {SharedDataContextProvider} from '~/contexts/shared-data';
 
-beforeEach(
-    async () => {
-        render(
-            <MemoryRouter initialEntries={["/details/books/college-algebra", "/adoption"]}>
+beforeEach(async () => {
+    render(
+        <SharedDataContextProvider>
+            <MemoryRouter
+                initialEntries={['/details/books/college-algebra', '/adoption']}
+            >
                 <MainClassContextProvider>
                     <AdoptionForm />
                 </MainClassContextProvider>
             </MemoryRouter>
-        );
-        await screen.findByText(/Let us know you're using/);
-    }
-);
+        </SharedDataContextProvider>
+    );
+    await screen.findByText(/Let us know you're using/);
+});
 
-test(
-    'creates with role selector',
-    () => expect(screen.queryAllByRole('option', {hidden: true})).toHaveLength(8)
-);
+test('creates with role selector', () =>
+    expect(screen.queryAllByRole('option', {hidden: true})).toHaveLength(8));
 
-test(
-    'form appears when role is selected',
-    async () => {
-        const listBox = screen.queryByRole('listbox');
-        const user = userEvent.setup();
+test('form appears when role is selected', async () => {
+    const listBox = screen.queryByRole('listbox');
+    const user = userEvent.setup();
 
-        await user.click(listBox);
-        const options = await screen.findAllByRole('option', {hidden: true});
-        const instructorOption = options.find((o) => o.textContent === 'Instructor');
-        await user.click(instructorOption);
-        await screen.findByRole('form');
-    }
-)
+    await user.click(listBox);
+    const options = await screen.findAllByRole('option', {hidden: true});
+    const instructorOption = options.find(
+        (o) => o.textContent === 'Instructor'
+    );
+    await user.click(instructorOption);
+    await screen.findByRole('form');
+});
