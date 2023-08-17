@@ -10,25 +10,38 @@ import SimplePaginator, {
     Showing
 } from '~/components/paginator/simple-paginator';
 import {WebinarGrid} from '../webinar-cards/latest-webinars';
+import NoResults from './no-results';
 
 const perPage = 9;
 
 export default function SearchPage() {
     const {searchFor} = useWebinarContext();
+
+    return (
+        <div className='search-page boxed left'>
+            <Breadcrumb name='Webinars page' />
+            <SearchBar searchFor={searchFor} amongWhat='webinars' />
+            <SearchResults />
+        </div>
+    );
+}
+
+function SearchResults() {
     const webinars = useSearchResults();
     const [page, setPage] = React.useState(1);
 
     if (typeof webinars === 'undefined') {
         return null;
     }
+    if (webinars.length === 0) {
+        return (<NoResults />);
+    }
     const totalCount = webinars.length;
     const totalPages = Math.ceil(totalCount / perPage);
     const [first, last] = itemRangeOnPage(page, perPage, totalCount);
 
     return (
-        <div className='search-page boxed left'>
-            <Breadcrumb name='Webinars page' />
-            <SearchBar searchFor={searchFor} amongWhat='webinars' />
+        <React.Fragment>
             <Showing
                 page={page}
                 totalCount={totalCount}
@@ -41,7 +54,8 @@ export default function SearchPage() {
                 setPage={setPage}
                 totalPages={totalPages}
             />
-        </div>
+
+        </React.Fragment>
     );
 }
 
