@@ -1,0 +1,9 @@
+@mixin assignable($fn: coming-soon) {
+    background-color: white;
+    content: '';
+    height: 4rem;
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    width: auto;
+}

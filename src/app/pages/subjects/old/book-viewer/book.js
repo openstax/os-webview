@@ -8,6 +8,8 @@ import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import {faChalkboardTeacher} from '@fortawesome/free-solid-svg-icons/faChalkboardTeacher';
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons/faEllipsisV';
 import {faGraduationCap} from '@fortawesome/free-solid-svg-icons/faGraduationCap';
+import assignableSnippet from '~/models/assignable-snippet';
+import {usePromise} from '~/helpers/use-data';
 import LazyLoad from 'react-lazyload';
 
 function QuickLink({url, icon, text}) {
@@ -110,6 +112,18 @@ function ThreeDotMenu({slug, details}) {
     );
 }
 
+function AssignableBadge() {
+    const snippet = usePromise(assignableSnippet);
+
+    if (!snippet) {
+        return null;
+    }
+
+    return (
+        <img className="badge" src={snippet.assignableAvailableImage} alt={snippet.assignableDescription} />
+    );
+}
+
 export default function BookCover({
     coverUrl,
     subjects,
@@ -118,7 +132,8 @@ export default function BookCover({
     bookState: state,
     coverColor,
     hasFacultyResources,
-    hasStudentResources
+    hasStudentResources,
+    assignableBook
 }) {
     const details = {
         coverColor, hasFacultyResources, hasStudentResources
@@ -126,12 +141,14 @@ export default function BookCover({
     const comingSoon = state === 'coming_soon';
     const className = cn('cover', {
         'coming-soon': comingSoon,
+        'assignable': assignableBook,
         polish: $.isPolish(slug)
     });
 
     return (
         <div className={className}>
             {!comingSoon && <ThreeDotMenu slug={slug} details={details} />}
+            {assignableBook && <AssignableBadge />}
             <a
               href={`/details/${slug}`}
               data-analytics-select-content={title}

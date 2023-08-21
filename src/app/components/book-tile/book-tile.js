@@ -103,22 +103,23 @@ function GetTheBookDropdown({ bookInfo }) {
     );
 }
 
-function useBookState(id) {
+function useBookInfo(id) {
     const [state, setState] = React.useState();
 
     React.useEffect(
         () => bookPromise.then(
-            (items) => setState(items.find((i) => i.id === id)?.book_state)
+            (items) => setState(items.find((i) => i.id === id))
         ),
         [id]
     );
     return state;
 }
 
+
 export default function BookTile({ book: [book] }) {
     const { coverUrl, title, slug } = book;
-    const state = useBookState(book.id);
-    const classes = cn({'book-tile': true, 'coming-soon': state === 'coming_soon'});
+    const info = useBookInfo(book.id);
+    const classes = cn({'book-tile': true, 'coming-soon': info?.state === 'coming_soon'});
 
     return (
         <div className={classes}>

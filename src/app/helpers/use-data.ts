@@ -13,7 +13,7 @@ type SourceOption = UrlSource | SlugSource | PromiseSource;
 // https://developer.mozilla.org/en-US/docs/Web/API/Response#instance_methods
 type ResponseMethod = 'json' | 'text';
 type ProcessingOptions = {
-    resolveTo: ResponseMethod;
+    resolveTo?: ResponseMethod;
     // Common transformations of CMS data
     transform?: boolean;
     camelCase?: boolean;
@@ -21,7 +21,7 @@ type ProcessingOptions = {
 };
 
 export default function useFetchedData<T>(
-    options: SourceOption & ProcessingOptions,
+    {resolveTo = 'json', ...options}: SourceOption & ProcessingOptions,
     defaultValue: T
 ): T {
     const slug = (options as SlugSource).slug;
@@ -30,9 +30,7 @@ export default function useFetchedData<T>(
             return null;
         }
         return new Promise<Response>((resolve) =>
-            getUrlFor(slug).then((url: string) =>
-                fetch(url).then(resolve)
-            )
+            getUrlFor(slug).then((url: string) => fetch(url).then(resolve))
         );
     }, [slug]);
     const url = (options as UrlSource).url;
@@ -51,9 +49,9 @@ export default function useFetchedData<T>(
     const processedPromise = React.useMemo(
         () =>
             promise
-                .then((resp) => resp[options.resolveTo]())
+                .then((resp) => resp[resolveTo]())
                 .then((rawData) => processRawData<T>(rawData, options)),
-        [promise, options.resolveTo] // eslint-disable-line react-hooks/exhaustive-deps
+        [promise, resolveTo] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     return usePromise(processedPromise, defaultValue);
@@ -70,7 +68,10 @@ export function usePromise<T>(promise: Promise<T>, defaultValue: T) {
     return data;
 }
 
-function processRawData<T>(rawData: unknown, processing: ProcessingOptions): T {
+function processRawData<T>(
+    rawData: unknown,
+    processing: Omit<ProcessingOptions, 'resolveTo'>
+): T {
     let returnValue = rawData;
 
     if (processing.transform) {
@@ -81,7 +82,9 @@ function processRawData<T>(rawData: unknown, processing: ProcessingOptions): T {
         returnValue = camelCaseKeys(rawData);
     }
     if (processing.postProcess) {
-        returnValue = (returnValue as Array<unknown>).map(processing.postProcess);
+        returnValue = (returnValue as Array<unknown>).map(
+            processing.postProcess
+        );
     }
 
     return returnValue as T;

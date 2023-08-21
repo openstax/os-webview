@@ -10,7 +10,6 @@ const stayHere = {path: '/blog'};
 function useEnglishSubjects() {
     return useData({
         slug: 'snippets/subjects?format=json&locale=en',
-        resolveTo: 'json',
         camelCase: true
     }, []);
 }
@@ -18,7 +17,6 @@ function useEnglishSubjects() {
 function useCollections() {
     return useData({
         slug: 'snippets/blogcollection?format=json',
-        resolveTo: 'json',
         camelCase: true
     }, []);
 }
