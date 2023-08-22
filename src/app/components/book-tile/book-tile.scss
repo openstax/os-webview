@@ -55,6 +55,7 @@
                 padding: 1rem 0;
                 position: absolute;
                 width: calc(100% - 2rem);
+                z-index: 1;
     
                 [role="menuitem"] {
                     padding: 0.3rem 1rem;
