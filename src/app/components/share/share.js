@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
-import {faTwitter} from '@fortawesome/free-brands-svg-icons/faTwitter';
+import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
 import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
 import './share.scss';
 
@@ -38,7 +38,7 @@ function ShareInterior({pageUrl, message, minimal}) {
         {
             aClass: 'twitter twitter-share-button btn',
             url: `https://twitter.com/intent/tweet?text=${message}&url=${pageUrl}`,
-            icon: faTwitter,
+            icon: faXTwitter,
             iconLabel: 'Twitter'
         },
         {

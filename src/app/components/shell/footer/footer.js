@@ -4,7 +4,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
-import {faTwitter} from '@fortawesome/free-brands-svg-icons/faTwitter';
+import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
 import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
 import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
 import './footer.scss';
@@ -55,7 +55,7 @@ function Footer({
                             <FontAwesomeIcon icon={faFacebookF} />
                         </a></li>
                         <li><a className="btn btn-social twitter" href={twitterLink} title="Twitter">
-                            <FontAwesomeIcon icon={faTwitter} />
+                            <FontAwesomeIcon icon={faXTwitter} />
                         </a></li>
                         <li><a className="btn btn-social linkedin" href={linkedinLink} title="LinkedIn">
                             <FontAwesomeIcon icon={faLinkedinIn} title="LinkedIn" />

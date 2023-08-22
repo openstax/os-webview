@@ -4,7 +4,7 @@ import './inquiries.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebook} from '@fortawesome/free-brands-svg-icons/faFacebook';
 import {faLinkedin} from '@fortawesome/free-brands-svg-icons/faLinkedin';
-import {faTwitterSquare} from '@fortawesome/free-brands-svg-icons/faTwitterSquare';
+import {faSquareXTwitter} from '@fortawesome/free-brands-svg-icons/faSquareXTwitter';
 import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
 import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 
@@ -42,7 +42,7 @@ export default function Inquiries() {
                         <FontAwesomeIcon icon={faInstagram} />
                     </a>
                     <a href='https://twitter.com/openstax'>
-                        <FontAwesomeIcon icon={faTwitterSquare} />
+                        <FontAwesomeIcon icon={faSquareXTwitter} />
                     </a>
                 </div>
             </div>
