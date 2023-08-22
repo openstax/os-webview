@@ -5,7 +5,7 @@ import useBlogContext from '../blog-context';
 import './more-stories.scss';
 import Section from '~/components/explore-page/section/section';
 
-export function LatestBlurbs({page, pageSize, exceptSlug, openInNewWindow}) {
+export function LatestBlurbs({page, pageSize, exceptSlug='', openInNewWindow}) {
     const numberNeeded = page * pageSize;
     const latestStories = useLatestBlogEntries(numberNeeded);
     const {setPath, topicStories} = useBlogContext();
