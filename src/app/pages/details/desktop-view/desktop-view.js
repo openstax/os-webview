@@ -8,7 +8,6 @@ import {GiveLink} from '../common/common';
 import {useNavigate} from 'react-router-dom';
 import $ from '~/helpers/$';
 import JITLoad from '~/helpers/jit-load';
-import useWindowContext from '~/contexts/window';
 import {findSelectedTab, replaceSearchTerm} from '../common/tab-utils';
 import './desktop-view.scss';
 
@@ -43,22 +42,18 @@ function useLabelsFromModel(model, polish) {
 }
 
 function useSelectedLabelTiedToSearchString(labels) {
-    const [selectedLabel, setSelectedLabel] = useState(findSelectedTab(labels));
     const navigate = useNavigate();
     const selectedTab = findSelectedTab(labels);
+    const updateSelectedLabel = React.useCallback(
+        (newValue) => {
+            const newSearchString = replaceSearchTerm(labels, selectedTab, newValue);
 
-    useEffect(() => {
-        setSelectedLabel(selectedTab);
-    }, [selectedTab]);
+            navigate(newSearchString, {replace: true});
+        },
+        [labels, navigate, selectedTab]
+    );
 
-    function updateSelectedLabel(newValue) {
-        const newSearchString = replaceSearchTerm(labels, selectedLabel, newValue);
-
-        setSelectedLabel(newValue);
-        navigate(newSearchString, {replace: true});
-    }
-
-    return [selectedLabel, updateSelectedLabel];
+    return [selectedTab, updateSelectedLabel];
 }
 
 function StubUntilSeen({active, ...JLParams}) {
@@ -78,34 +73,22 @@ function StubUntilSeen({active, ...JLParams}) {
     );
 }
 
-export default function DesktopView({onContentChange}) {
+function setCardBackground(isShowingCards) {
+    const el = document.querySelector('.details-page');
+
+    el?.classList[isShowingCards ? 'add' : 'remove']('card-background');
+}
+
+export default function DesktopView() {
     const model = useDetailsContext();
     const polish = $.isPolish(model.title);
     const labels = useLabelsFromModel(model, polish);
     const [selectedLabel, setSelectedLabel] = useSelectedLabelTiedToSearchString(labels);
     const TabTag = 'h2';
     const activeIndex = labels.indexOf(selectedLabel);
-    const {innerWidth} = useWindowContext();
-    const [onlyBeenPhone, setOnlyBeenPhone] = React.useState(true);
+    const isShowingCards = selectedLabel !== 'Book details';
 
-    useEffect(() => {
-        onContentChange(selectedLabel !== 'Book details');
-    }, [selectedLabel, onContentChange]);
-
-    // Don't render until the window isn't just phone-width.
-    // But after you render, don't throw it away.
-    React.useEffect(
-        () => {
-            if (innerWidth > 600) {
-                setOnlyBeenPhone(false);
-            }
-        },
-        [innerWidth]
-    );
-
-    if (onlyBeenPhone) {
-        return null;
-    }
+    useEffect(() => setCardBackground(isShowingCards), [isShowingCards]);
 
     return (
         <React.Fragment>

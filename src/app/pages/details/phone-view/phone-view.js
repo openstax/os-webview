@@ -9,7 +9,6 @@ import {findSelectedTab} from '../common/tab-utils';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useTableOfContents} from '../common/hooks';
 import {ErrataContents, GiveLink} from '../common/common';
-import useWindowContext from '~/contexts/window';
 import './phone-view.scss';
 
 const importDetailsPane = () => import('./details-pane/details-pane.js');
@@ -84,21 +83,6 @@ export default function PhoneView() {
     const model = useDetailsContext();
     const accordionItems = items(model);
     const selectedTab = findSelectedTab(accordionItems.map((i) => i.title));
-    const {innerWidth} = useWindowContext();
-    const [onlyBeenDesktop, setOnlyBeenDesktop] = React.useState(true);
-
-    React.useEffect(
-        () => {
-            if (innerWidth <= 600) {
-                setOnlyBeenDesktop(false);
-            }
-        },
-        [innerWidth]
-    );
-
-    if (onlyBeenDesktop) {
-        return null;
-    }
 
     return (
         <div className="detail-phone-view">
