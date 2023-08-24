@@ -1,4 +1,5 @@
 import React from 'react';
+import AssignableBadge from '~/components/assignable-badge/assignable-badge';
 import { useToggle } from '~/helpers/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp } from '@fortawesome/free-solid-svg-icons/faCaretUp';
@@ -115,14 +116,16 @@ function useBookInfo(id) {
     return state;
 }
 
-
 export default function BookTile({ book: [book] }) {
     const { coverUrl, title, slug } = book;
     const info = useBookInfo(book.id);
-    const classes = cn({'book-tile': true, 'coming-soon': info?.state === 'coming_soon'});
+    const comingSoon = info?.state === 'coming_soon';
+    const assignable = info?.assignable_book === true;
+    const classes = cn({'book-tile': true, 'coming-soon': comingSoon, assignable});
 
     return (
         <div className={classes}>
+            {assignable && <AssignableBadge />}
             <a href={`/details/${slug}`}>
                 <img src={coverUrl} role="presentation" width="240" height="240" />
             </a>

@@ -3,13 +3,12 @@ import useActiveElementContext from '~/contexts/active-element';
 import {useIntl} from 'react-intl';
 import $ from '~/helpers/$';
 import cn from 'classnames';
+import AssignableBadge from '~/components/assignable-badge/assignable-badge';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import {faChalkboardTeacher} from '@fortawesome/free-solid-svg-icons/faChalkboardTeacher';
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons/faEllipsisV';
 import {faGraduationCap} from '@fortawesome/free-solid-svg-icons/faGraduationCap';
-import assignableSnippet from '~/models/assignable-snippet';
-import {usePromise} from '~/helpers/use-data';
 import LazyLoad from 'react-lazyload';
 
 function QuickLink({url, icon, text}) {
@@ -109,18 +108,6 @@ function ThreeDotMenu({slug, details}) {
             <FontAwesomeIcon icon={faEllipsisV} />
             <Dropdown urlBase={`/details/${slug}`} details={details} />
         </div>
-    );
-}
-
-function AssignableBadge() {
-    const snippet = usePromise(assignableSnippet);
-
-    if (!snippet) {
-        return null;
-    }
-
-    return (
-        <img className="badge" src={snippet.assignableAvailableImage} alt={snippet.assignableDescription} />
     );
 }
 
