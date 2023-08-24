@@ -106,7 +106,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     }, [model.bookModel, userModel]);
 
     function openDialog(event: TrackedMouseEvent) {
-        if (enabled) {
+        if (isDownload && enabled) {
             event.preventDefault();
             open();
         }
