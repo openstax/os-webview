@@ -14,18 +14,18 @@ function GeneralPage({html}) {
             'text/html'
         )
         .querySelector('img');
-    const innerHTML = Array.from(newDoc.body.children).reduce((arr, el) => {
-        if (el.classList.contains('block-heading')) {
-            el.innerHTML = `<h1>${el.innerHTML.trim()}</h1>`;
-            el.appendChild(strips);
-        }
-        arr.push(el.outerHTML);
-        return arr;
-    }, []).join('\n');
+    const innerHTML = Array.from(newDoc.body.children)
+        .reduce((arr, el) => {
+            if (el.classList.contains('block-heading')) {
+                el.innerHTML = `<h1>${el.innerHTML.trim()}</h1>`;
+                el.appendChild(strips);
+            }
+            arr.push(el.outerHTML);
+            return arr;
+        }, [])
+        .join('\n');
 
-    return (
-        <RawHTML className="general page" html={innerHTML} embed />
-    );
+    return <RawHTML className='general page' html={innerHTML} embed />;
 }
 
 function isCanonical(slug) {
@@ -51,20 +51,12 @@ export function GeneralPageFromSlug({slug, fallback}) {
         return <h1>Error: {head}</h1>;
     }
 
-    if (!html) {
-        return <h1>Loading...</h1>;
-    }
-
-    return (
-        <GeneralPage html={html} />
-    );
+    return !html ? <h1>Loading...</h1> : <GeneralPage html={html} />;
 }
 
 export default function GeneralPageLoader() {
     const {pathname} = useLocation();
     const slug = pathname.substring(1).replace('general', 'spike');
 
-    return (
-        <GeneralPageFromSlug slug={slug} />
-    );
+    return <GeneralPageFromSlug slug={slug} />;
 }

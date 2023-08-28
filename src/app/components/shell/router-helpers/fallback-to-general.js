@@ -6,11 +6,9 @@ import {GeneralPageFromSlug} from '~/pages/general/general';
 export default function FallbackToGeneralPage({name}) {
     const [fallback, setFallback] = useToggle(false);
 
-    if (fallback) {
-        return <Error404 />;
-    }
-
-    return (
+    return fallback ? (
+        <Error404 />
+    ) : (
         <GeneralPageFromSlug slug={`spike/${name}`} fallback={setFallback} />
     );
 }
