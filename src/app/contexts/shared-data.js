@@ -1,8 +1,9 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/helpers/cms-fetch';
+import {usePromise} from '~/helpers/use-data';
 
-export const flagPromise = cmsFetch('flags')
+const flagPromise = cmsFetch('flags')
     .then(({all_flags: flags}) => flags.reduce(
         (a, f) => {
             a[f.name] = f.feature_active;
@@ -13,17 +14,23 @@ export const flagPromise = cmsFetch('flags')
     .catch((err) => {throw new Error(`Unable to get flags: ${err}`);})
 ;
 
+function useFlags() {
+    return usePromise(flagPromise, false);
+}
+
 function useContextValue() {
-    const [value, setValue] = useState(false);
+    const flags = useFlags();
+    const stickyFooterState = useState(null);
 
-    useEffect(() => flagPromise.then(setValue), []);
-
-    return value;
+    return {
+        flags,
+        stickyFooterState
+    };
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
 export {
     useContext as default,
-    ContextProvider as FlagContextProvider
+    ContextProvider as SharedDataContextProvider
 };

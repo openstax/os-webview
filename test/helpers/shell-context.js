@@ -2,11 +2,11 @@ import React from 'react';
 import {LanguageContextProvider} from '~/contexts/language';
 import {SubjectCategoryContextProvider} from '~/contexts/subject-category';
 import {UserContextProvider} from '~/contexts/user';
-import {FlagContextProvider} from '~/components/shell/flag-context';
+import {SharedDataContextProvider} from '~/contexts/shared-data';
 
 export default function ShellContextProvider({children}) {
     return (
-        <FlagContextProvider>
+        <SharedDataContextProvider>
             <UserContextProvider>
                 <LanguageContextProvider>
                     <SubjectCategoryContextProvider>
@@ -14,6 +14,6 @@ export default function ShellContextProvider({children}) {
                     </SubjectCategoryContextProvider>
                 </LanguageContextProvider>
             </UserContextProvider>
-        </FlagContextProvider>
+        </SharedDataContextProvider>
     );
 }

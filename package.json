@@ -67,6 +67,7 @@
         "favicons": "^7.1.1",
         "favicons-webpack-plugin": "^6.0.0",
         "html-webpack-plugin": "^5.5.0",
+        "ignore-loader": "^0.1.2",
         "jest": "27",
         "mapbox-gl": "^2.14",
         "node-localstorage": "^2.2.1",

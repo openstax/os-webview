@@ -4,24 +4,25 @@ import userEvent from '@testing-library/user-event';
 import AdoptionForm from '~/pages/adoption/adoption';
 import {MemoryRouter} from 'react-router-dom';
 import {MainClassContextProvider} from '~/contexts/main-class';
+import {SharedDataContextProvider} from '~/contexts/shared-data';
 
-beforeEach(
-    async () => {
-        render(
-            <MemoryRouter initialEntries={["/details/books/college-algebra", "/adoption"]}>
+beforeEach(async () => {
+    render(
+        <SharedDataContextProvider>
+            <MemoryRouter
+                initialEntries={['/details/books/college-algebra', '/adoption']}
+            >
                 <MainClassContextProvider>
                     <AdoptionForm />
                 </MainClassContextProvider>
             </MemoryRouter>
-        );
-        await screen.findByText(/Let us know you're using/);
-    }
-);
+        </SharedDataContextProvider>
+    );
+    await screen.findByText(/Let us know you're using/);
+});
 
-test(
-    'creates with role selector',
-    () => expect(screen.queryAllByRole('option', {hidden: true})).toHaveLength(8)
-);
+test('creates with role selector', () =>
+    expect(screen.queryAllByRole('option', {hidden: true})).toHaveLength(8));
 
 /* This test works locally, but not on checkin
  * Moreover, the form it finds is just the one around the role selector
