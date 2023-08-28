@@ -24,16 +24,20 @@ async function fetchDataAndExpandImages(slug, preserveWrapping) {
     return data;
 }
 
-export default function usePageData(slug, preserveWrapping=false, noCamelCase=false) {
+export function fetchPageData(slug, preserveWrapping=false, noCamelCase=false) {
+    const camelCaseOrNot = noCamelCase ? (obj) => obj : camelCaseKeys;
+
+    return fetchDataAndExpandImages(slug, preserveWrapping)
+        .then(camelCaseOrNot);
+}
+
+export default function usePageData(slug, preserveWrapping, noCamelCase) {
     const [data, setData] = React.useState();
 
-    React.useEffect(() => {
-        const camelCaseOrNot = noCamelCase ? (obj) => obj : camelCaseKeys;
-
-        fetchDataAndExpandImages(slug, preserveWrapping)
-            .then(camelCaseOrNot)
-            .then(setData);
-    }, [slug, preserveWrapping, noCamelCase]);
+    React.useEffect(() =>
+        fetchPageData(slug, preserveWrapping, noCamelCase)
+            .then(setData),
+    [slug, preserveWrapping, noCamelCase]);
 
     return data;
 }
