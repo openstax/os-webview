@@ -26,8 +26,12 @@ const config = {
                 options: {loader: 'jsx'}
             },
             {
+                test: /\.d\.ts$/,
+                loader: 'ignore-loader'
+            },
+            {
                 test: /\.tsx?$/,
-                exclude: /node_modules/,
+                exclude: /node_modules|\.d\.ts$/,
                 use: 'ts-loader'
             },
             {

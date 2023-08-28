@@ -1,5 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import useFlagContext from '~/components/shell/flag-context';
+import useSharedDataContext from '~/contexts/shared-data';
 import sfApiFetch from '~/models/sfapi';
 import cmsFetch from '~/helpers/cms-fetch';
 import debounce from 'lodash/debounce';
@@ -24,7 +24,7 @@ const debouncedFetch = debounce(
 );
 
 function useSchoolFetchFunction() {
-    const {my_openstax: isEnabled} = useFlagContext();
+    const {flags: {my_openstax: isEnabled}} = useSharedDataContext();
     const fn = useMemo(
         () => isEnabled ?
             (value) => sfApiFetch('schools', `/search?name=${value}`) :

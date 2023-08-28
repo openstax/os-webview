@@ -8,7 +8,7 @@ import {BrowserRouter} from 'react-router-dom';
 import Router from './router';
 import retry from '~/helpers/retry';
 import ReactModal from 'react-modal';
-import {FlagContextProvider} from './flag-context';
+import {SharedDataContextProvider} from '../../contexts/shared-data';
 import Welcome from './welcome/welcome';
 import TakeoverDialog from './takeover-dialog/takeover-dialog';
 import cn from 'classnames';
@@ -52,14 +52,12 @@ function Main() {
 function App() {
     // BrowserRouter has to include everything that uses useLocation
     return (
-        <FlagContextProvider>
+        <SharedDataContextProvider>
             <UserContextProvider>
                 <LanguageContextProvider>
                     <SubjectCategoryContextProvider>
                         <BrowserRouter>
-                            <div id="microsurvey">
-                                <Microsurvey />
-                            </div>
+                            <Microsurvey />
                             <header id="header">
                                 <Header />
                             </header>
@@ -78,7 +76,7 @@ function App() {
                     </SubjectCategoryContextProvider>
                 </LanguageContextProvider>
             </UserContextProvider>
-        </FlagContextProvider>
+        </SharedDataContextProvider>
     );
 }
 
