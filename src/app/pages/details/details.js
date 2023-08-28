@@ -5,10 +5,8 @@ import TOCSlideout from './common/toc-slideout/toc-slideout';
 import $ from '~/helpers/$';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import cn from 'classnames';
-import PhoneView from './phone-view/phone-view';
-import DesktopView from './desktop-view/desktop-view';
-import {FormattedMessage} from 'react-intl';
-import LanguageSelector, {useLanguageText} from '~/components/language-selector/language-selector';
+import TitleImage from './title-image';
+import DualView from './dual-view';
 import {useTableOfContents} from './common/hooks';
 import useLanguageContext from '~/contexts/language';
 import useDetailsContext, {DetailsContextProvider} from './context';
@@ -56,22 +54,6 @@ function setJsonLd(data) {
     }
 }
 
-
-function TitleImage({titleImage, bookTitle, titleLogo}) {
-    return (
-        <h1 className="image-heading">
-            <img className="title-image" src={titleImage} alt={bookTitle} height="130" width="392" />
-            {titleLogo && <img className="title-logo" src={titleLogo} alt="" />}
-        </h1>
-    );
-}
-
-function setCardBackground(isShowingCards) {
-    const el = document.querySelector('.details-page');
-
-    el.classList[isShowingCards ? 'add' : 'remove']('card-background');
-}
-
 function TocSlideoutAndContent({children}) {
     const {isOpen} = useTOCContext();
     const model = useDetailsContext();
@@ -88,55 +70,8 @@ function TocSlideoutAndContent({children}) {
     );
 }
 
-function AnotherLanguage({locale, translations}) {
-    const LanguageText = useLanguageText(locale);
-    const translation = React.useMemo(
-        () => translations.find((t) => t.locale === locale),
-        [translations, locale]
-    );
-
-    // translation is guaranteed to have a valid value, because the locale
-    // is pulled from translations
-    return (
-        <a href={`/details/books/${translation.slug}`}>
-            <LanguageText />
-        </a>
-    );
-}
-
-function LinksToTranslations() {
-    // This sets translations
-    const {translations: [translations=[]]} = useDetailsContext();
-    const LeadIn = React.useCallback(
-        () => <FormattedMessage id="bookAvailableIn" defaultMessage="This book available in" />,
-        []
-    );
-    const LinkPresentation = React.useCallback(
-        ({locale: loc}) => <AnotherLanguage locale={loc} translations={translations} />,
-        [translations]
-    );
-
-    if (translations.length === 0) {
-        return null;
-    }
-
-    return (
-        <LanguageSelector
-            LeadIn={LeadIn}
-            otherLocales={translations.map((t) => t.locale)}
-            LinkPresentation={LinkPresentation}
-        />
-    );
-}
-
 export function BookDetails() {
     const model = useDetailsContext();
-    const {
-        reverseGradient,
-        title: bookTitle,
-        titleImageUrl: titleImage
-    } = model;
-    const titleLogo = ''; // For future use
     const {setLanguage} = useLanguageContext();
 
     useEffect(
@@ -149,23 +84,12 @@ export function BookDetails() {
     );
 
     return (
-        <main className="details-page">
-            <div className={cn('hero', {'reverse-gradient': reverseGradient})}>
-                <div className="content book-title">
-                    {titleImage && <TitleImage {...{titleImage, bookTitle, titleLogo}} />}
-                </div>
-            </div>
+        <main className={cn('details-page', {'card-background': model.useCardBackground})}>
+            <TitleImage />
             <TOCContextProvider>
                 <TocSlideoutAndContent>
                     <WindowContextProvider>
-                        <div className="phone-view">
-                            <LinksToTranslations />
-                            <PhoneView />
-                        </div>
-                        <div className="bigger-view">
-                            <LinksToTranslations />
-                            <DesktopView onContentChange={setCardBackground} />
-                        </div>
+                        <DualView />
                     </WindowContextProvider>
                 </TocSlideoutAndContent>
             </TOCContextProvider>
