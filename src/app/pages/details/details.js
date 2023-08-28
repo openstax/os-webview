@@ -84,7 +84,7 @@ export function BookDetails() {
     );
 
     return (
-        <main className="details-page">
+        <main className={cn('details-page', {'card-background': model.useCardBackground})}>
             <TitleImage />
             <TOCContextProvider>
                 <TocSlideoutAndContent>

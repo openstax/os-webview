@@ -9,15 +9,6 @@ export default function LinksToTranslations() {
     const {
         translations: [translations = []]
     } = useDetailsContext();
-    const LeadIn = React.useCallback(
-        () => (
-            <FormattedMessage
-                id='bookAvailableIn'
-                defaultMessage='This book available in'
-            />
-        ),
-        []
-    );
     const LinkPresentation = React.useCallback(
         ({locale}: LocaleType) => (
             <AnotherLanguage locale={locale} translations={translations} />
@@ -34,6 +25,15 @@ export default function LinksToTranslations() {
             LeadIn={LeadIn}
             otherLocales={translations.map((t) => t.locale)}
             LinkPresentation={LinkPresentation}
+        />
+    );
+}
+
+function LeadIn() {
+    return (
+        <FormattedMessage
+            id='bookAvailableIn'
+            defaultMessage='This book available in'
         />
     );
 }

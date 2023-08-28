@@ -73,12 +73,6 @@ function StubUntilSeen({active, ...JLParams}) {
     );
 }
 
-function setCardBackground(isShowingCards) {
-    const el = document.querySelector('.details-page');
-
-    el?.classList[isShowingCards ? 'add' : 'remove']('card-background');
-}
-
 export default function DesktopView() {
     const model = useDetailsContext();
     const polish = $.isPolish(model.title);
@@ -87,8 +81,9 @@ export default function DesktopView() {
     const TabTag = 'h2';
     const activeIndex = labels.indexOf(selectedLabel);
     const isShowingCards = selectedLabel !== 'Book details';
+    const setUseCardBackground = model.setUseCardBackground;
 
-    useEffect(() => setCardBackground(isShowingCards), [isShowingCards]);
+    useEffect(() => setUseCardBackground(isShowingCards), [isShowingCards, setUseCardBackground]);
 
     return (
         <React.Fragment>
