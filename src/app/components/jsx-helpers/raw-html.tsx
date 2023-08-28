@@ -6,7 +6,7 @@ function activateScripts(el: HTMLElement) {
     const processOne = (() => {
         const s = scripts.shift();
 
-        if (!s?.textContent) {
+        if (!s) {
             return;
         }
         const newScript = document.createElement('script');
@@ -16,7 +16,9 @@ function activateScripts(el: HTMLElement) {
 
         Array.from(s.attributes)
             .forEach((a) => newScript.setAttribute(a.name, a.value));
-        newScript.appendChild(document.createTextNode(s.textContent));
+        if (s.textContent) {
+            newScript.appendChild(document.createTextNode(s.textContent));
+        }
         newScript.async = false;
         s.parentNode?.replaceChild(newScript, s);
 
