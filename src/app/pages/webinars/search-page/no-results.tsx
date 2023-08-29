@@ -6,7 +6,7 @@ export default function NoResults() {
     return (
         <div className='boxed left no-results'>
             <div>
-                <h1>No matching blog posts found</h1>
+                <h1>No matching webinars found</h1>
                 <div>Our latest webinars are below.</div>
             </div>
             <LatestWebinars limit={6} />

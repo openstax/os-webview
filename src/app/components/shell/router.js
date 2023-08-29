@@ -75,7 +75,6 @@ function TopLevelPage() {
     const {name} = useParams();
     const {isValid, goto404} = useRouterContext();
 
-    React.useEffect(() => console.info('Top Level Render'), []);
     if (!isValid || goto404) {
         return (<Error404 />);
     }

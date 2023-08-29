@@ -65,6 +65,12 @@ function AdoptionContentBase({children, disable}) {
     const href = `${window.location.origin}${pathname}`;
     const renewalFormHref = `/renewal-form?from=popup&returnTo=${encodeURIComponent(href)}`;
 
+    // Return disable so that when dismissed, it is permanently disabled
+    React.useEffect(
+        () => disable,
+        [disable]
+    );
+
     return (
         <div
           className="microsurvey-content"
