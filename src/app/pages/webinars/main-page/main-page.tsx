@@ -24,7 +24,7 @@ export default function MainPage() {
             />
             <ExploreByCollection
                 collections={collections}
-                analyticsNav='Blog Collections'
+                analyticsNav='Webinar Collections'
             />
             <LatestWebinars />
         </div>
