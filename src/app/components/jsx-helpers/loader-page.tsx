@@ -40,8 +40,10 @@ type LoaderPageProps = LoadedPageProps & {
     noCamelCase: boolean;
 }
 
+const defaultProps = {};
+
 export default function LoaderPage({
-    slug, Child, props={}, preserveWrapping=false, doDocumentSetup=false,
+    slug, Child, props=defaultProps, preserveWrapping=false, doDocumentSetup=false,
     noCamelCase=false
 }: LoaderPageProps) {
     const Page = React.useMemo(
