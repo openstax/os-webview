@@ -24,19 +24,15 @@ beforeEach(async () => {
 test('creates with role selector', () =>
     expect(screen.queryAllByRole('option', {hidden: true})).toHaveLength(8));
 
-/* This test works locally, but not on checkin
- * Moreover, the form it finds is just the one around the role selector
- */
-// test(
-//     'form appears when role is selected',
-//     async () => {
-//         const listBox = screen.queryByRole('listbox');
-//         const user = userEvent.setup();
+test('form appears when role is selected', async () => {
+    const listBox = screen.queryByRole('listbox');
+    const user = userEvent.setup();
 
-//         await user.click(listBox);
-//         const options = await screen.findAllByRole('option', {hidden: true});
-//         const instructorOption = options.find((o) => o.textContent === 'Instructor');
-//         await user.click(instructorOption);
-//         await screen.findByRole('form');
-//     }
-// )
+    await user.click(listBox);
+    const options = await screen.findAllByRole('option', {hidden: true});
+    const instructorOption = options.find(
+        (o) => o.textContent === 'Instructor'
+    );
+    await user.click(instructorOption);
+    await screen.findByRole('form');
+});
