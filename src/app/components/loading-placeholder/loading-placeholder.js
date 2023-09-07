@@ -1,11 +1,7 @@
 import React from 'react';
 import './loader.scss';
 
-export default function LoadingPlaceholder(props={}) {
-    if (props.error) {
-        return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
-    }
-
+export default function LoadingPlaceholder() {
     /* eslint-disable */
     return (
         <div className="os-loader">
