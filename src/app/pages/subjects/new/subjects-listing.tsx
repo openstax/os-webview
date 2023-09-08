@@ -1,0 +1,78 @@
+import React from 'react';
+import useSubjectsContext, {SubjectData} from './context';
+import useSubjectCategoryContext from '~/contexts/subject-category';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
+import {useLocation} from 'react-router-dom';
+import './subjects-listing.scss';
+
+export default function SubjectsListing() {
+    const {subjects} = useSubjectsContext();
+    const names = Reflect.ownKeys(subjects) as Array<string>;
+
+    return (
+        <section className='subjects-listing'>
+            <div className='content'>
+                {names.map((name) => (
+                    <BookList name={name} data={subjects[name]} key={name} />
+                ))}
+            </div>
+        </section>
+    );
+}
+
+function BookList({name, data}: {name: string; data: SubjectData}) {
+    const {pathname} = useLocation();
+    const subdir = useSubdir(name);
+
+    if (data.categories.length === 0) {
+        return null;
+    }
+    const labelId = `${name}-nav`;
+
+    return (
+        <nav className='book-list' aria-labelledby={labelId}>
+            <img className='subject-icon' src={data.icon} role='presentation' />
+            <h2 id={labelId}>{name}</h2>
+            {data.categories.map((c) => (
+                <CategoryLink key={c} subject={subdir} category={c} />
+            ))}
+            {data.categories.length > 1 && subdir ? (
+                <a href={`${pathname}/${subdir}`} className='all-link'>
+                    {`View all ${name} books `}
+                    <FontAwesomeIcon icon={faArrowRight} />
+                </a>
+            ) : null}
+        </nav>
+    );
+}
+
+// This ensures that subdir is never null
+// When transitioning between languages, SubjectsContext and SubjectCategoryContext
+// both update, and if they are out of sync, subdir isn't found, causing flashing
+function useSubdir(name: string) {
+    const categories = useSubjectCategoryContext();
+    const [subdir, setSubdir] = React.useState<string>('');
+
+    React.useEffect(() => {
+        const newSubdir = categories.find((c) => c.html === name);
+
+        if (newSubdir) {
+            setSubdir(newSubdir.value);
+        }
+    }, [categories, name]);
+
+    return subdir;
+}
+
+function CategoryLink({
+    subject,
+    category
+}: {
+    subject: string;
+    category: string;
+}) {
+    const {pathname} = useLocation();
+
+    return <a href={`${pathname}/${subject}#${category}`}>{category}</a>;
+}
