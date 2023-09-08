@@ -53,5 +53,6 @@ export default {
     'subject.categoryTitle': '{subjectName} Book Categories',
     'subject.learnMoreTitle': 'Learn more',
     'subject.introText': 'Open textbooks',
+    'subject.viewAll': 'View all {subject} books',
     'resources.available': 'Only available for verified instructors.'
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import useSubjectsContext, {SubjectData} from './context';
 import useSubjectCategoryContext from '~/contexts/subject-category';
+import {FormattedMessage} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import {useLocation} from 'react-router-dom';
@@ -39,7 +40,11 @@ function BookList({name, data}: {name: string; data: SubjectData}) {
             ))}
             {data.categories.length > 1 && subdir ? (
                 <a href={`${pathname}/${subdir}`} className='all-link'>
-                    {`View all ${name} books `}
+                    <FormattedMessage
+                        id='subject.viewAll'
+                        defaultMessage='View'
+                        values={{subject: name}}
+                    />
                     <FontAwesomeIcon icon={faArrowRight} />
                 </a>
             ) : null}
