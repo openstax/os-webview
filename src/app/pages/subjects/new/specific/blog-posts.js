@@ -3,6 +3,7 @@ import CarouselSection from './components/carousel-section';
 import useSpecificSubjectContext from './context';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useOptimizedImage from '~/helpers/use-optimized-image';
+import useEnglishSubject from './use-english-subject';
 import './blog-posts.scss';
 
 function Card({article_image: image, title: linkText, slug}) {
@@ -19,10 +20,10 @@ function Card({article_image: image, title: linkText, slug}) {
 
 function BlogPosts() {
     const {
-        title,
         blogHeader: {content: {heading, blogDescription, linkText, linkHref}}
     } = useSpecificSubjectContext();
-    const blurbs = useDataFromSlug(`search/?subjects=${title}`) || [];
+    const cms = useEnglishSubject();
+    const blurbs = useDataFromSlug(`search/?subjects=${cms}`) || [];
 
     return (
         blurbs.length ?

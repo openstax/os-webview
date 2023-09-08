@@ -1,6 +1,5 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
-import useSubjectCategoryContext from '~/contexts/subject-category';
 import useSpecificSubjectContext, {SpecificSubjectContextProvider} from './context';
 import JITLoad from '~/helpers/jit-load';
 import Navigator from './navigator';
@@ -8,9 +7,11 @@ import {NavigatorContextProvider} from './navigator-context';
 import {WindowContextProvider} from '~/contexts/window';
 import TranslationSelector from './translation-selector';
 import SubjectIntro from './subject-intro';
+import useTranslations from './use-translations';
 import BookViewer from './book-viewer';
 import {TutorAdThatTakesData} from '../tutor-ad';
 import LazyLoad from 'react-lazyload';
+import useFoundSubject from './use-found-subject';
 import AboutOpenStax from '../about-openstax';
 import {InfoBoxes} from '../info-boxes';
 import usePageData from '~/helpers/use-page-data';
@@ -25,13 +26,11 @@ const importBlogPosts = () => import('./blog-posts.js');
 
 // Had to make this layer to use the context
 function Translations() {
-    const ctx = useSpecificSubjectContext();
+    const translations = useTranslations();
 
-    if (!ctx?.translations) {
+    if (translations === null) {
         return null;
     }
-    const {translations: [translations]} = ctx;
-
     return (
         <TranslationSelector translations={translations} />
     );
@@ -137,17 +136,6 @@ function SubjectInContext({subject}) {
             </WindowContextProvider>
         </SpecificSubjectContextProvider>
     );
-}
-
-function useFoundSubject() {
-    const {subject} = useParams();
-    const categories = useSubjectCategoryContext();
-    const foundSubject = React.useMemo(
-        () => categories.find((c) => c.value === subject),
-        [subject, categories]
-    );
-
-    return foundSubject;
 }
 
 function useConsistentLanguage(subject, foundSubject) {

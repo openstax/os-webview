@@ -1,6 +1,9 @@
 import React from 'react';
+import { LocaleEntry } from '~/components/language-selector/language-selector';
 
-type SpecificSubjectPageData = unknown;
+type SpecificSubjectPageData = {
+    translations?: [LocaleEntry[]];
+};
 
 export default function (): SpecificSubjectPageData;
 
