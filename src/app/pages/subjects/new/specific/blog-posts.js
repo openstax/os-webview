@@ -17,7 +17,7 @@ function Card({article_image: image, title: linkText, slug}) {
     );
 }
 
-export default function BlogPosts() {
+function BlogPosts() {
     const {
         title,
         blogHeader: {content: {heading, blogDescription, linkText, linkHref}}
@@ -35,5 +35,17 @@ export default function BlogPosts() {
                 {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
             </CarouselSection> :
             <h2>No blog entries found (yet)</h2>
+    );
+}
+
+export default function MaybeBlogPosts() {
+    const ctx = useSpecificSubjectContext();
+
+    if (!ctx?.blogHeader) {
+        return null;
+    }
+
+    return (
+        <BlogPosts />
     );
 }

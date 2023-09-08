@@ -23,11 +23,9 @@ export function useLanguageText(locale) {
 export function LanguageLink({locale, slug}) {
     const {setLanguage} = useLanguageContext();
     const onClick = React.useCallback((event) => {
-        if (!slug) {
-            event.preventDefault();
-        }
+        event.preventDefault();
         setLanguage(locale);
-    }, [locale, setLanguage, slug]);
+    }, [locale, setLanguage]);
     const LanguageText = useLanguageText(locale);
     const href = slug ? `/subjects/${slug}/` : locale;
 

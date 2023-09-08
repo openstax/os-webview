@@ -25,7 +25,7 @@ function Card({
     );
 }
 
-export default function Webinars() {
+function Webinars() {
     const {
         title,
         webinarHeader: {content: {heading, webinarDescription, linkHref, linkText}}
@@ -43,4 +43,13 @@ export default function Webinars() {
             </CarouselSection> :
             <h2>No webinars found (yet)</h2>
     );
+}
+
+export default function MaybeWebinars() {
+    const ctx = useSpecificSubjectContext();
+
+    if (!ctx?.webinarHeader) {
+        return null;
+    }
+    return (<Webinars />);
 }
