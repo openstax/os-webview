@@ -5,11 +5,16 @@ import Breadcrumb from '~/components/breadcrumb/breadcrumb';
 import HeadingAndSearchBar from './heading-and-search-bar';
 import Section from '~/components/explore-page/section/section';
 import {useParams} from 'react-router-dom';
+import SimplePaginator, {
+    Showing
+} from '~/components/paginator/simple-paginator';
 import {WebinarGrid} from '../webinar-cards/latest-webinars';
 import './explore-page.scss';
 
 type ExploreType = 'subjects' | 'collections';
 type SectionKey = 'popular' | 'featured';
+
+const perPage = 9;
 
 export default function ExplorePage() {
     const {exploreType, topic} = useParams();
@@ -28,6 +33,14 @@ export default function ExplorePage() {
         exploreType as ExploreType,
         topic
     );
+    const [page, setPage] = React.useState(1);
+    const currentPageOfWebinars = React.useMemo(() => {
+        const numberNeeded = perPage * page;
+
+        return latestWebinars.slice((page - 1) * perPage, numberNeeded);
+    }, [page, latestWebinars]);
+    const totalCount = latestWebinars.length;
+    const totalPages = Math.ceil(totalCount / perPage);
 
     useDocumentHead({
         title: `${topic} Webinars`
@@ -47,8 +60,27 @@ export default function ExplorePage() {
                     <WebinarGrid webinars={popularWebinars.slice(0, 3)} />
                 </Section>
             )}
-            <Section name='Latest' topicHeading={topicHeading}>
-                <WebinarGrid webinars={latestWebinars.slice(0, 3)} />
+            <Section name='Latest' topicHeading={topicHeading} id='explore-latest-section'>
+                {totalCount < 1 ? (
+                    <div>No webinars associated with {topic}</div>
+                ) : (
+                    <React.Fragment>
+                        <Showing
+                            page={page}
+                            totalCount={totalCount}
+                            perPage={perPage}
+                            ofWhat='webinars'
+                        />
+                        <WebinarGrid webinars={currentPageOfWebinars} />
+                        {totalPages > 1 ? (
+                            <SimplePaginator
+                                currentPage={page}
+                                setPage={setPage}
+                                totalPages={totalPages}
+                            />
+                        ) : null}
+                    </React.Fragment>
+                )}
             </Section>
         </div>
     );

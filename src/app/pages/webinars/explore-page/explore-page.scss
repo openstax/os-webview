@@ -6,4 +6,14 @@
             gap: 1rem;
         }
     }
+
+    #explore-latest-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        h2 {
+            margin-bottom: 0;
+        }
+    }
 }
