@@ -30,6 +30,8 @@
 
         h3 {
             @include set-font(h4);
+
+            margin: 0;
         }
 
         &:not(:hover) {
