@@ -2,7 +2,7 @@ import React from 'react';
 import './byline.scss';
 import {formatDateForBlog} from '~/helpers/data';
 
-export default function Byline({date, author, source}) {
+export default function Byline({date, author, source=undefined}) {
     return (
         <div className="byline">
             {

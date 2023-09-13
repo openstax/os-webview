@@ -2,6 +2,7 @@ import React from 'react';
 import {Webinar} from '../types';
 import useWebinarContext from '../webinar-context';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
+import Byline from '~/components/byline/byline';
 import './latest-webinars.scss';
 
 type WebinarFilter = (w: Webinar) => boolean;
@@ -59,6 +60,7 @@ function PastWebinar({data}: {data: Webinar}) {
     return (
         <div className='card past'>
             <h3>{data.title}</h3>
+            <Byline author={data.speakers} date={data.start}/>
             <div>{data.description}</div>
             <LinkWithChevron href={data.registrationUrl}>
                 {data.registrationLinkText}
