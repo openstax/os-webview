@@ -11,7 +11,7 @@ function learnMoreDataToAccordionItem({heading: title, text: html}) {
     };
 }
 
-export default function LearnMore() {
+function LearnMore() {
     const {osTextbookHeading, osTextbookCategories} = useSpecificSubjectContext();
     const accordionItems = React.useMemo(
         () => osTextbookCategories[0].map(learnMoreDataToAccordionItem),
@@ -24,4 +24,13 @@ export default function LearnMore() {
             <AccordionGroup items={accordionItems} noScroll />
         </React.Fragment>
     );
+}
+
+export default function MaybeLearnMore() {
+    const ctx = useSpecificSubjectContext();
+
+    if (!ctx?.osTexbookHeading) {
+        return null;
+    }
+    return (<LearnMore />);
 }

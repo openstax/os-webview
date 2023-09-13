@@ -26,6 +26,8 @@ function useContextValue() {
     useEffect(() => {
         const viewAllEntry = {value: 'view-all', cms: '', html: intl.formatMessage({id: 'viewAll'})};
 
+        // Empty the language-incompatible entries right away
+        setValue([]);
         cmsFetch(`snippets/subjects?format=json&locale=${language}`)
             .then((data) => data.map(dataToEntry))
             .then((data) => [viewAllEntry, ...data])

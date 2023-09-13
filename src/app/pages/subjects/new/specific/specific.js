@@ -1,5 +1,5 @@
 import React from 'react';
-import {useParams, useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useSpecificSubjectContext, {SpecificSubjectContextProvider} from './context';
 import JITLoad from '~/helpers/jit-load';
@@ -25,7 +25,12 @@ const importBlogPosts = () => import('./blog-posts.js');
 
 // Had to make this layer to use the context
 function Translations() {
-    const {translations: [translations]} = useSpecificSubjectContext();
+    const ctx = useSpecificSubjectContext();
+
+    if (!ctx?.translations) {
+        return null;
+    }
+    const {translations: [translations]} = ctx;
 
     return (
         <TranslationSelector translations={translations} />
@@ -35,7 +40,7 @@ function Translations() {
 function TutorAd() {
     const {tutorAd} = useSpecificSubjectContext();
 
-    if (!tutorAd.content) {
+    if (!tutorAd?.content) {
         return null;
     }
     const {
@@ -50,6 +55,10 @@ function TutorAd() {
 function SpecificSubjectAboutOpenStax() {
     const {aboutOs} = useSpecificSubjectContext();
 
+    if (!aboutOs?.content) {
+        return null;
+    }
+
     return (
         <AboutOpenStax
             aboutOs={aboutOs.content}
@@ -60,8 +69,56 @@ function SpecificSubjectAboutOpenStax() {
 function SpecificSubjectInfoBoxes() {
     const {infoBoxes} = useSpecificSubjectContext();
 
+    if (!(infoBoxes instanceof Array)) {
+        return null;
+    }
+
     return (
         <InfoBoxes infoBoxes={infoBoxes[0]} />
+    );
+}
+
+function ContextDependentBlock({subject}) {
+    const ctx = useSpecificSubjectContext();
+
+    if (!ctx) {
+        return null;
+    }
+    return (
+        <React.Fragment>
+            <div className={cn('targets', `${subject?.color}-stripe`)}>
+                <Translations />
+                <SubjectIntro subjectName={subject.html} />
+                <BookViewer />
+                <LazyLoad once offset={100} height={400}>
+                    <TutorAd />
+                </LazyLoad>
+                <section id="blog-posts" className="blog-posts">
+                    <LazyLoad once offset={100} height={400} className="content">
+                        <JITLoad importFn={importBlogPosts} />
+                    </LazyLoad>
+                </section>
+                <section id="webinars" className="webinars">
+                    <LazyLoad once offset={100} height={400} className="content">
+                        <JITLoad importFn={importWebinars} />
+                    </LazyLoad>
+                </section>
+                <section id="learn" className="learn-more">
+                    <LazyLoad once offset={100} height={400} className="content">
+                        <JITLoad importFn={importLearnMore} />
+                    </LazyLoad>
+                </section>
+                <LazyLoad once offset={100} height={400}>
+                    <SpecificSubjectAboutOpenStax />
+                </LazyLoad>
+                <LazyLoad once offset={100} height={400}>
+                    <SpecificSubjectInfoBoxes />
+                </LazyLoad>
+                <LazyLoad once offset={100} height={400}>
+                    <JITLoad importFn={importPhilanthropicSupport} />
+                </LazyLoad>
+            </div>
+        </React.Fragment>
     );
 }
 
@@ -73,38 +130,7 @@ function SubjectInContext({subject}) {
                     <div className="subject-specific">
                         <div className="content">
                             <Navigator subject={subject} />
-                            <div className={cn('targets', `${subject?.color}-stripe`)}>
-                                <Translations />
-                                <SubjectIntro subjectName={subject.html} />
-                                <BookViewer />
-                                <LazyLoad once offset={100} height={400}>
-                                    <TutorAd />
-                                </LazyLoad>
-                                <section id="blog-posts" className="blog-posts">
-                                    <LazyLoad once offset={100} height={400} className="content">
-                                        <JITLoad importFn={importBlogPosts} />
-                                    </LazyLoad>
-                                </section>
-                                <section id="webinars" className="webinars">
-                                    <LazyLoad once offset={100} height={400} className="content">
-                                        <JITLoad importFn={importWebinars} />
-                                    </LazyLoad>
-                                </section>
-                                <section id="learn" className="learn-more">
-                                    <LazyLoad once offset={100} height={400} className="content">
-                                        <JITLoad importFn={importLearnMore} />
-                                    </LazyLoad>
-                                </section>
-                                <LazyLoad once offset={100} height={400}>
-                                    <SpecificSubjectAboutOpenStax />
-                                </LazyLoad>
-                                <LazyLoad once offset={100} height={400}>
-                                    <SpecificSubjectInfoBoxes />
-                                </LazyLoad>
-                                <LazyLoad once offset={100} height={400}>
-                                    <JITLoad importFn={importPhilanthropicSupport} />
-                                </LazyLoad>
-                            </div>
+                            <ContextDependentBlock subject={subject} />
                         </div>
                     </div>
                 </NavigatorContextProvider>
@@ -141,12 +167,10 @@ function useConsistentLanguage(subject, foundSubject) {
 export default function LoadSubject() {
     const {subject} = useParams();
     const foundSubject = useFoundSubject();
-    const navigate = useNavigate();
 
     useConsistentLanguage(subject, foundSubject);
 
     if (!foundSubject) {
-        navigate('/subjects');
         return null;
     }
 

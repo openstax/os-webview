@@ -1,4 +1,4 @@
-type Category = {
+export type Category = {
     value: string;
     cms: string;
     html: string;

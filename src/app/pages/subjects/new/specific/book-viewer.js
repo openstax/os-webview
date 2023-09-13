@@ -22,14 +22,13 @@ function Category({category: [heading, categoryData]}) {
 }
 
 export default function BookViewer() {
-    const {subjects, title} = useSpecificSubjectContext();
-    const cats = Object.entries(subjects[title].categories);
+    const {categories} = useSpecificSubjectContext();
 
     return (
         <ActiveElementContextProvider>
             <section className="book-viewer">
                 <div className="content">
-                    {cats.map((c) => <Category key={c[0]} category={c} />)}
+                    {categories.map((c) => <Category key={c[0]} category={c} />)}
                 </div>
             </section>
         </ActiveElementContextProvider>

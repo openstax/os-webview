@@ -57,12 +57,11 @@ function CategoryLink({category}) {
 }
 
 function CategorySectionLinks() {
-    const {subjects, title} = useSpecificSubjectContext();
-    const cats = Object.entries(subjects[title].categories);
+    const {categories} = useSpecificSubjectContext();
 
     return (
         <React.Fragment>
-            {cats.map(([c]) => <CategoryLink category={c} key={c.html} />)}
+            {categories.map(([c]) => <CategoryLink category={c} key={c.html} />)}
         </React.Fragment>
     );
 }
