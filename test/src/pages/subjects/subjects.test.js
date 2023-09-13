@@ -17,5 +17,5 @@ test('main subjects page', async () => {
     );
     await screen.findByText('Browse our subjects');
     await screen.findByText('We have textbooks in', {exact: false});
-    screen.getByText('View all Business books');
+    await screen.findByText('View all Business books');
 });
