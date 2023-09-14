@@ -151,7 +151,7 @@ export function PdfOption({model}) {
     );
 }
 
-function isRealPrintLink(url) {
+export function isRealPrintLink(url) {
     return typeof url === 'string' && !url.includes('stores/page');
 }
 

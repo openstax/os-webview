@@ -72,28 +72,34 @@ function DesktopBoxes({contentArray, ...otherProps}) {
 }
 
 export default function OrderPrintCopy({amazonDataLink, hideDialog}) {
-    const contentArray = [
-        {
-            headerText: 'Individual',
-            headerIcon: faUser,
-            disclosure: amazonDataLink.disclosure,
-            buttonText: 'Order a personal copy',
-            buttonUrl: amazonDataLink.url
-        },
-        {
-            headerText: 'Bookstore',
-            headerIcon: faUsers,
-            buttonText: 'Order options',
-            buttonUrl: 'https://buyprint.openstax.org/bookstore-suppliers'
-        }
-    ];
-    const otherProps = {
-        closeAfterDelay(event) {
-            if (event) {
-                window.requestAnimationFrame(hideDialog);
+    const contentArray = React.useMemo(
+        () => [
+            {
+                headerText: 'Individual',
+                headerIcon: faUser,
+                disclosure: amazonDataLink.disclosure,
+                buttonText: 'Order a personal copy',
+                buttonUrl: amazonDataLink.url
+            },
+            {
+                headerText: 'Bookstore',
+                headerIcon: faUsers,
+                buttonText: 'Order options',
+                buttonUrl: 'https://buyprint.openstax.org/bookstore-suppliers'
             }
-        }
-    };
+        ],
+        [amazonDataLink]
+    );
+    const otherProps = React.useMemo(
+        () => ({
+            closeAfterDelay(event) {
+                if (event) {
+                    window.requestAnimationFrame(hideDialog);
+                }
+            }
+        }),
+        [hideDialog]
+    );
 
     return (
         <nav className="order-print-copy">

@@ -5,7 +5,7 @@ import { faCaretUp } from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import { FormattedMessage, useIntl } from 'react-intl';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
-import { usePrintCopyDialog } from '~/pages/details/common/get-this-title-files/options';
+import { usePrintCopyDialog, isRealPrintLink } from '~/pages/details/common/get-this-title-files/options';
 import useActiveElementContext from '~/contexts/active-element';
 import bookPromise from '~/models/book-titles';
 import cn from 'classnames';
@@ -13,12 +13,16 @@ import './book-tile.scss';
 
 function PrintOption({ bookInfo }) {
     const { onClick, PCDialog } = usePrintCopyDialog();
-    const amazonDataLink = useAmazonAssociatesLink(bookInfo.slug);
+    const amazonDataLink = useAmazonAssociatesLink(bookInfo.slug.replace('books/', ''));
     const { formatMessage } = useIntl();
     const text = formatMessage({
         id: 'getit.print',
         defaultMessage: 'Order a print copy'
     });
+
+    if (!isRealPrintLink(amazonDataLink.url)) {
+        return null;
+    }
 
     return (
         <a role="menuitem" href="open a dialog" onClick={onClick}>
@@ -68,12 +72,15 @@ function GetTheBookDropdown({ bookInfo }) {
                         defaultMessage="View online"
                     />
                 </a>
-                <a role="menuitem" href={pdfLink}>
-                    <FormattedMessage
-                        id="getit.pdf.download"
-                        defaultMessage="Download a PDF"
-                    />
-                </a>
+                {
+                    pdfLink &&
+                    <a role="menuitem" href={pdfLink}>
+                        <FormattedMessage
+                            id="getit.pdf.download"
+                            defaultMessage="Download a PDF"
+                        />
+                    </a>
+                }
                 <PrintOption bookInfo={bookInfo} />
                 <hr />
                 <a
