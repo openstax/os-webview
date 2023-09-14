@@ -1,6 +1,6 @@
 import React from 'react';
 import useSubjectsContext, {SubjectData} from './context';
-import useSubjectCategoryContext from '~/contexts/subject-category';
+import useSubjectCategoryContext, {ContextValues} from '~/contexts/subject-category';
 import {FormattedMessage} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
@@ -56,7 +56,7 @@ function BookList({name, data}: {name: string; data: SubjectData}) {
 // When transitioning between languages, SubjectsContext and SubjectCategoryContext
 // both update, and if they are out of sync, subdir isn't found, causing flashing
 function useSubdir(name: string) {
-    const categories = useSubjectCategoryContext();
+    const categories = useSubjectCategoryContext() as ContextValues;
     const [subdir, setSubdir] = React.useState<string>('');
 
     React.useEffect(() => {

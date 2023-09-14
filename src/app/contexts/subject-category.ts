@@ -4,7 +4,23 @@ import useLanguageContext from '~/contexts/language';
 import {useIntl} from 'react-intl';
 import cmsFetch from '~/helpers/cms-fetch';
 
-function dataToEntry(item) {
+type InputItem = {
+    name: string;
+    seo_title: string;
+    subject_icon: string;
+    subject_color: string;
+};
+
+type Category = {
+    value: string;
+    cms: string;
+    html: string;
+    title: string;
+    icon: string;
+    color: string;
+};
+
+function dataToEntry(item: InputItem): Category {
     const name = item.name || '';
     const value = name.toLowerCase().replace(' ', '-').normalize('NFD').replace(/\p{Diacritic}/gu, '');
 
@@ -18,9 +34,16 @@ function dataToEntry(item) {
     };
 }
 
-function useContextValue() {
+export type ContextValues = Array<Category>;
+
+function useContextValue(): ContextValues {
     const {language} = useLanguageContext();
-    const [value, setValue] = useState([]);
+
+    return useSubjectCategoriesForLocale(language);
+}
+
+function useSubjectCategoriesForLocale(locale: string): ContextValues {
+    const [value, setValue] = useState<ContextValues>([]);
     const intl = useIntl();
 
     useEffect(() => {
@@ -28,11 +51,11 @@ function useContextValue() {
 
         // Empty the language-incompatible entries right away
         setValue([]);
-        cmsFetch(`snippets/subjects?format=json&locale=${language}`)
+        cmsFetch(`snippets/subjects?format=json&locale=${locale}`)
             .then((data) => data.map(dataToEntry))
             .then((data) => [viewAllEntry, ...data])
             .then(setValue);
-    }, [language, intl]);
+    }, [locale, intl]);
 
     return value;
 }
@@ -41,5 +64,6 @@ const {useContext, ContextProvider} = buildContext({useContextValue});
 
 export {
     useContext as default,
-    ContextProvider as SubjectCategoryContextProvider
+    ContextProvider as SubjectCategoryContextProvider,
+    useSubjectCategoriesForLocale
 };
