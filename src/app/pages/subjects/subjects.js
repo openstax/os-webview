@@ -20,8 +20,6 @@ function SelectedComponent({featureFlag}) {
         loading: LoadingPlaceholder
     });
 
-    console.info('Flag?', featureFlag);
-
     return (
         featureFlag ? <NewPage /> : <OldPage />
     );
