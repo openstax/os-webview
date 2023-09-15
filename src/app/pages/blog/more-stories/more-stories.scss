@@ -14,7 +14,7 @@ $image-height: 24rem;
     }
 
     @include wider-than($tablet-max) {
-        grid-gap: 6rem 9rem;
+        grid-gap: 6rem;
     }
 
     .card {
@@ -23,6 +23,7 @@ $image-height: 24rem;
         background-color: ui-color(white);
 
         .link-image {
+            background-color: ui-color(page-bg);
             height: $image-height;
             width: 100%;
         }
