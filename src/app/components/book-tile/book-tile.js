@@ -122,7 +122,9 @@ export default function BookTile({ book: [book] }) {
 
     return (
         <div className={classes}>
-            <img src={coverUrl} role="presentation" width="240" height="240" />
+            <a href={`/details/${slug}`}>
+                <img src={coverUrl} role="presentation" width="240" height="240" />
+            </a>
             <div className="text-block">
                 <a href={`/details/${slug}`}>{title}</a>
             </div>
