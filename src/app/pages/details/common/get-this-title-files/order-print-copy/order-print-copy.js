@@ -3,6 +3,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 import {faUsers} from '@fortawesome/free-solid-svg-icons/faUsers';
+import { useIntl } from 'react-intl';
 import './order-print-copy.scss';
 
 function Header({entry}) {
@@ -72,23 +73,47 @@ function DesktopBoxes({contentArray, ...otherProps}) {
 }
 
 export default function OrderPrintCopy({amazonDataLink, hideDialog}) {
+    const { formatMessage } = useIntl();
     const contentArray = React.useMemo(
-        () => [
-            {
-                headerText: 'Individual',
-                headerIcon: faUser,
-                disclosure: amazonDataLink.disclosure,
-                buttonText: 'Order a personal copy',
-                buttonUrl: amazonDataLink.url
-            },
-            {
-                headerText: 'Bookstore',
-                headerIcon: faUsers,
-                buttonText: 'Order options',
-                buttonUrl: 'https://buyprint.openstax.org/bookstore-suppliers'
-            }
-        ],
-        [amazonDataLink]
+        () => {
+            const individual = formatMessage({
+                id: 'printcopy.individual',
+                defaultMessage: 'Individual'
+            });
+            const bookstore = formatMessage({
+                id: 'printcopy.bookstore',
+                defaultMessage: 'Bookstore'
+            });
+            const disclosure = formatMessage({
+                id: 'printcopy.disclosure',
+                defaultMessage: '***'
+            });
+            const button1Text = formatMessage({
+                id: 'printcopy.button1',
+                defaultMessage: 'Order a personal copy'
+            });
+            const button2Text = formatMessage({
+                id: 'printcopy.button2',
+                defaultMessage: 'Order options'
+            });
+
+            return [
+                {
+                    headerText: individual,
+                    headerIcon: faUser,
+                    disclosure: disclosure === '***' ? amazonDataLink.disclosure : disclosure,
+                    buttonText: button1Text,
+                    buttonUrl: amazonDataLink.url
+                },
+                {
+                    headerText: bookstore,
+                    headerIcon: faUsers,
+                    buttonText: button2Text,
+                    buttonUrl: 'https://buyprint.openstax.org/bookstore-suppliers'
+                }
+            ];
+        },
+        [amazonDataLink, formatMessage]
     );
     const otherProps = React.useMemo(
         () => ({
