@@ -47,6 +47,15 @@ function MenusFromCMS() {
     );
 }
 
+function K12MenuItem() {
+    return (
+        <MenuItem
+            label='For K12 Teachers'
+            url='/k12'
+        />
+    );
+}
+
 function SubjectsMenu() {
     const categories = useSubjectCategoryContext();
     const {language} = useLanguageContext();
@@ -60,13 +69,14 @@ function SubjectsMenu() {
 
     return (
         <Dropdown className='subjects-dropdown' label='Subjects' navAnalytics="Main Menu (Subjects)">
-            {categories.map((obj) => (
+            {categories.filter((obj) => obj.html !== 'K12').map((obj) => (
                 <MenuItem
                     key={obj.value}
                     label={obj.html}
                     url={`/subjects/${obj.value}`}
                 />
             ))}
+            {language === 'en' ? <K12MenuItem /> : null}
             {pathname.startsWith('/details/books') ? null : (
                 <LanguageSelectorWrapper>
                     <FormattedMessage id='view' defaultMessage='View' />{' '}
