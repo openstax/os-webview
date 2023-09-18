@@ -58,6 +58,8 @@ export default {
     'subject.categoryTitle': 'Categorías de libros de {subjectName}',
     'subject.learnMoreTitle': 'Aprende más',
     'subject.introText': 'Libros de texto abiertos',
+    'subject.noBlog': 'No se encontraron entradas de blog (aún)',
+    'subject.noWebinars': 'No se encontraron seminarios web (aún)',
     'subject.viewAll': 'Ver todos los libros de {subject}',
     'resources.available': 'Solo está disponible para instructores verificados.'
 };

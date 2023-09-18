@@ -4,6 +4,7 @@ import useSpecificSubjectContext from './context';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import useEnglishSubject from './use-english-subject';
+import {useIntl} from 'react-intl';
 import './blog-posts.scss';
 
 function Card({article_image: image, title: linkText, slug}) {
@@ -24,6 +25,7 @@ function BlogPosts() {
     } = useSpecificSubjectContext();
     const cms = useEnglishSubject();
     const blurbs = useDataFromSlug(`search/?subjects=${cms}`) || [];
+    const intl = useIntl();
 
     return (
         blurbs.length ?
@@ -35,7 +37,7 @@ function BlogPosts() {
             >
                 {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
             </CarouselSection> :
-            <h2>No blog entries found (yet)</h2>
+            <h2>{intl.formatMessage({id: 'subject.noBlog'})}</h2>
     );
 }
 

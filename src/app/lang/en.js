@@ -58,6 +58,8 @@ export default {
     'subject.categoryTitle': '{subjectName} Book Categories',
     'subject.learnMoreTitle': 'Learn more',
     'subject.introText': 'Open textbooks',
+    'subject.noBlog': 'No blog entries found (yet)',
+    'subject.noWebinars': 'No webinars found (yet)',
     'subject.viewAll': 'View all {subject} books',
     'resources.available': 'Only available for verified instructors.'
 };

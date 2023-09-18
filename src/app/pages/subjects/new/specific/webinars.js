@@ -6,6 +6,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import useEnglishSubject from './use-english-subject';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
+import {useIntl} from 'react-intl';
 import './webinars.scss';
 
 function Card({
@@ -33,6 +34,7 @@ function Webinars() {
     } = useSpecificSubjectContext();
     const cms = useEnglishSubject();
     const blurbs = useDataFromSlug(`webinars/?subject=${cms}`) || [];
+    const intl = useIntl();
 
     return blurbs.length ? (
         <CarouselSection
@@ -46,7 +48,7 @@ function Webinars() {
             ))}
         </CarouselSection>
     ) : (
-        <h2>No webinars found (yet)</h2>
+        <h2>{intl.formatMessage({id: 'subject.noWebinars'})}</h2>
     );
 }
 
