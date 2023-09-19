@@ -3,14 +3,12 @@ import useWebinarContext from '../webinar-context';
 import WebinarGridSection from '../webinar-cards/webinar-grid-section';
 import {RetraceableLink} from '~/components/breadcrumb/breadcrumb';
 
-export default function LatestWebinars({filter = () => true, limit = 3}) {
+export default function PastWebinars() {
     const {past} = useWebinarContext();
 
     return (
         <WebinarGridSection
             heading='Past webinars'
-            filter={filter}
-            limit={limit}
             webinars={past}
         >
             <RetraceableLink

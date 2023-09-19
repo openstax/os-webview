@@ -7,8 +7,8 @@ type WebinarFilter = (w: Webinar) => boolean;
 type Args = {
     heading: string;
     webinars: Webinar[];
-    filter: WebinarFilter;
-    limit: number;
+    filter?: WebinarFilter;
+    limit?: number;
 };
 export default function LabeledWebinarGrid({
     heading,

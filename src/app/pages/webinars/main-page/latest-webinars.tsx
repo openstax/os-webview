@@ -2,13 +2,12 @@ import React from 'react';
 import useWebinarContext from '../webinar-context';
 import WebinarGridSection from '../webinar-cards/webinar-grid-section';
 
-export default function LatestWebinars({filter = () => true, limit = 3}) {
+export default function LatestWebinars({limit = 3}) {
     const {latestWebinars} = useWebinarContext();
 
     return (
         <WebinarGridSection
             heading='Latest webinars'
-            filter={filter}
             limit={limit}
             webinars={latestWebinars}
         >

@@ -3,14 +3,12 @@ import useWebinarContext from '../webinar-context';
 import WebinarGridSection from '../webinar-cards/webinar-grid-section';
 import {RetraceableLink} from '~/components/breadcrumb/breadcrumb';
 
-export default function UpcomingWebinars({filter = () => true, limit = 3}) {
+export default function UpcomingWebinars() {
     const {upcoming} = useWebinarContext();
 
     return (
         <WebinarGridSection
             heading='Upcoming webinars'
-            filter={filter}
-            limit={limit}
             webinars={upcoming}
         >
             <RetraceableLink
