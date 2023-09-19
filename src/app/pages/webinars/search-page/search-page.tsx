@@ -9,7 +9,7 @@ import SimplePaginator, {
     itemRangeOnPage,
     Showing
 } from '~/components/paginator/simple-paginator';
-import {WebinarGrid} from '../webinar-cards/latest-webinars';
+import WebinarGrid from '../webinar-cards/webinar-grid';
 import NoResults from './no-results';
 
 const perPage = 9;
@@ -34,7 +34,7 @@ function SearchResults() {
         return null;
     }
     if (webinars.length === 0) {
-        return (<NoResults />);
+        return <NoResults />;
     }
     const totalCount = webinars.length;
     const totalPages = Math.ceil(totalCount / perPage);
@@ -54,7 +54,6 @@ function SearchResults() {
                 setPage={setPage}
                 totalPages={totalPages}
             />
-
         </React.Fragment>
     );
 }

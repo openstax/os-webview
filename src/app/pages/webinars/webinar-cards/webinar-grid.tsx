@@ -1,45 +1,13 @@
 import React from 'react';
 import {Webinar} from '../types';
-import useWebinarContext from '../webinar-context';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import Byline from '~/components/byline/byline';
-import './latest-webinars.scss';
-
-type WebinarFilter = (w: Webinar) => boolean;
-type LatestWebinarsArgs = {
-    filter?: WebinarFilter;
-    limit?: number;
-};
-
-export default function LatestWebinars({
-    filter = () => true,
-    limit = 3
-}: LatestWebinarsArgs) {
-    const {latestWebinars} = useWebinarContext();
-    const filteredWebinars = React.useMemo(
-        () => latestWebinars.filter(filter).slice(0, limit),
-        [latestWebinars, filter, limit]
-    );
-
-    return (
-        <section className='latest-webinars'>
-            <h2>Latest webinars</h2>
-            <WebinarGrid webinars={filteredWebinars} />
-            <a
-                className='btn primary'
-                href='/webinars/latest'
-                data-analytics-link='webinars_latest'
-            >
-                View more of the latest
-            </a>
-        </section>
-    );
-}
+import './webinar-grid.scss';
 
 type WebinarGridArgs = {
     webinars: Webinar[];
 };
-export function WebinarGrid({webinars}: WebinarGridArgs) {
+export default function WebinarGrid({webinars}: WebinarGridArgs) {
     return (
         <div className='card-grid'>
             {webinars.map((w) => (

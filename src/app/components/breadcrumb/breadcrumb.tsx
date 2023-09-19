@@ -22,6 +22,22 @@ export default function Breadcrumb({name}: BreadcrumbArgs) {
     );
 }
 
+type LinkArgs = {
+    to: string;
+    className?: string;
+} & React.RefAttributes<HTMLAnchorElement>;
+type LinkParameters = React.PropsWithChildren<LinkArgs>;
+
+export function RetraceableLink({children, ...linkParameters}: LinkParameters) {
+    const {pathname} = useLocation();
+
+    return (
+        <Link {...linkParameters} state={{from: pathname}}>
+            {children}
+        </Link>
+    );
+}
+
 function useGoBack(path: string) {
     const navigate = useNavigate();
     const {state} = useLocation();

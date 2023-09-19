@@ -1,21 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .webinars.page {
-    .latest-webinars {
-        width: 100%;
-
-        .button-row {
-            padding-top: 2rem;
-        }
-
-        .btn.primary {
-            @include button();
-            @extend %primary;
-
-            margin-top: 3rem;
-        }
-    }
-
     .card-grid {
         display: grid;
         gap: 3rem;
@@ -50,6 +35,7 @@
 
         &.upcoming {
             gap: 3rem;
+            grid-template-rows: auto auto 1fr auto auto;
 
             h3 {
                 margin: 0;

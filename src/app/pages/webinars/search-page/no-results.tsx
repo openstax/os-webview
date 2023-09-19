@@ -1,5 +1,5 @@
 import React from 'react';
-import LatestWebinars from '../webinar-cards/latest-webinars';
+import LatestWebinars from '../main-page/latest-webinars';
 import './no-results.scss';
 
 export default function NoResults() {

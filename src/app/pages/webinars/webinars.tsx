@@ -6,7 +6,8 @@ import './webinars.scss';
 
 const importMain = () => import('./import-main-page.js');
 const importExplore = () => import('./import-explore-page.js');
-const importLatest = () => import('./import-latest-page');
+const importUpcoming = () => import('./latest-page/upcoming-page.js');
+const importPast = () => import('./latest-page/past-page.js');
 const importSearch = () => import('./import-search-page');
 
 export default function WebinarsLoader() {
@@ -23,8 +24,12 @@ export default function WebinarsLoader() {
                         element={<JITLoad importFn={importExplore} />}
                     />
                     <Route
-                        path='latest'
-                        element={<JITLoad importFn={importLatest} />}
+                        path='upcoming'
+                        element={<JITLoad importFn={importUpcoming} />}
+                    />
+                    <Route
+                        path='past'
+                        element={<JITLoad importFn={importPast} />}
                     />
                     <Route
                         path='search'
