@@ -14,5 +14,18 @@
 
             margin-top: 3rem;
         }
+
+        .card.upcoming {
+            gap: 1rem;
+
+            hr + div,
+            .spaces-remaining {
+                display: none;
+            }
+
+            .speakers-and-spaces {
+                align-self: end;
+            }
+        }
     }
 }
