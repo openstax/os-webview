@@ -1,23 +1,14 @@
 import React from 'react';
 import useWebinarContext from '../webinar-context';
-import WebinarGridSection from '../webinar-cards/webinar-grid-section';
-import {RetraceableLink} from '~/components/breadcrumb/breadcrumb';
+import PaginatedWebinarGrid from '../webinar-cards/paginated-webinar-grid';
 
 export default function PastWebinars() {
     const {past} = useWebinarContext();
 
     return (
-        <WebinarGridSection
-            heading='Past webinars'
-            webinars={past}
-        >
-            <RetraceableLink
-                className='btn primary'
-                to='/webinars/past'
-                data-analytics-link='webinars_past'
-            >
-                View all past webinars
-            </RetraceableLink>
-        </WebinarGridSection>
+        <section className='webinar-grid-section'>
+            <h2>Past webinars</h2>
+            <PaginatedWebinarGrid webinars={past} />
+        </section>
     );
 }

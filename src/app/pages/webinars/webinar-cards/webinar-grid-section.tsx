@@ -10,6 +10,7 @@ type Args = {
     filter?: WebinarFilter;
     limit?: number;
 };
+
 export default function LabeledWebinarGrid({
     heading,
     webinars,

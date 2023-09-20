@@ -7,7 +7,6 @@ import './webinars.scss';
 const importMain = () => import('./import-main-page.js');
 const importExplore = () => import('./import-explore-page.js');
 const importUpcoming = () => import('./view-webinars-page/upcoming-page.js');
-const importPast = () => import('./view-webinars-page/past-page.js');
 const importLatest = () => import('./view-webinars-page/latest-page.js');
 const importSearch = () => import('./import-search-page');
 
@@ -28,10 +27,6 @@ export default function WebinarsLoader() {
                     <Route
                         path='upcoming'
                         element={<JITLoad importFn={importUpcoming} />}
-                    />
-                    <Route
-                        path='past'
-                        element={<JITLoad importFn={importPast} />}
                     />
                     <Route
                         path='latest'
