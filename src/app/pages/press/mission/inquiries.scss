@@ -43,7 +43,7 @@
         color: os-color(green);
         display: grid;
         grid-gap: 1rem;
-        grid-template-columns: repeat(4, 3.1rem);
+        grid-template-columns: repeat(auto-fit, 3.1rem);
         height: 3.6rem;
 
         > a {
