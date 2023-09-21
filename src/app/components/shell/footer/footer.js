@@ -7,6 +7,7 @@ import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
 import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
 import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
 import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
+import {faYoutube} from '@fortawesome/free-brands-svg-icons/faYoutube';
 import './footer.scss';
 
 function Footer({
@@ -62,6 +63,9 @@ function Footer({
                         </a></li>
                         <li><a className="btn btn-social instagram" href="https://www.instagram.com/openstax/" title="Instagram">
                             <FontAwesomeIcon icon={faInstagram} title="Instagram" />
+                        </a></li>
+                        <li><a className="btn btn-social youtube" href="https://www.youtube.com/openstax/" title="YouTube">
+                            <FontAwesomeIcon icon={faYoutube} title="YouTube" />
                         </a></li>
                         <li><a className="rice-logo" href="http://www.rice.edu">
                             <img

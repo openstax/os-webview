@@ -6,6 +6,7 @@ import {faFacebook} from '@fortawesome/free-brands-svg-icons/faFacebook';
 import {faLinkedin} from '@fortawesome/free-brands-svg-icons/faLinkedin';
 import {faSquareXTwitter} from '@fortawesome/free-brands-svg-icons/faSquareXTwitter';
 import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
+import {faYoutube} from '@fortawesome/free-brands-svg-icons/faYoutube';
 import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 
 export default function Inquiries() {
@@ -43,6 +44,9 @@ export default function Inquiries() {
                     </a>
                     <a href='https://twitter.com/openstax'>
                         <FontAwesomeIcon icon={faSquareXTwitter} />
+                    </a>
+                    <a href='https://www.youtube.com/openstax'>
+                        <FontAwesomeIcon icon={faYoutube} />
                     </a>
                 </div>
             </div>
