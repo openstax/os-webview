@@ -61,5 +61,7 @@ export default {
     'subject.noBlog': 'No se encontraron entradas de blog (aún)',
     'subject.noWebinars': 'No se encontraron seminarios web (aún)',
     'subject.viewAll': 'Ver todos los libros de {subject}',
+    'subject.notAvailableText': 'Tema no disponible.',
+    'subject.notAvailableLinkText': 'Ver todo',
     'resources.available': 'Solo está disponible para instructores verificados.'
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import {useParams} from 'react-router-dom';
 import useSpecificSubjectContext, {SpecificSubjectContextProvider} from './context';
 import JITLoad from '~/helpers/jit-load';
 import Navigator from './navigator';
@@ -9,13 +8,13 @@ import TranslationSelector from './translation-selector';
 import SubjectIntro from './subject-intro';
 import useTranslations from './use-translations';
 import BookViewer from './book-viewer';
+import FindTranslation from './find-translation';
+import useDebounceTest from '~/helpers/use-debounce-test';
 import {TutorAdThatTakesData} from '../tutor-ad';
 import LazyLoad from 'react-lazyload';
 import useFoundSubject from './use-found-subject';
 import AboutOpenStax from '../about-openstax';
 import {InfoBoxes} from '../info-boxes';
-import usePageData from '~/helpers/use-page-data';
-import useLanguageContext from '~/contexts/language';
 import cn from 'classnames';
 import './specific.scss';
 
@@ -138,28 +137,17 @@ function SubjectInContext({subject}) {
     );
 }
 
-function useConsistentLanguage(subject, foundSubject) {
-    const pageData = usePageData(`pages/${subject}`);
-    const {setLanguage} = useLanguageContext();
-
-    React.useEffect(
-        () => {
-            if (!foundSubject && pageData?.meta?.locale) {
-                setLanguage(pageData.meta.locale);
-            }
-        },
-        [foundSubject, pageData, setLanguage]
-    );
-}
-
 export default function LoadSubject() {
-    const {subject} = useParams();
     const foundSubject = useFoundSubject();
-
-    useConsistentLanguage(subject, foundSubject);
+    const timedOut = useDebounceTest(!foundSubject);
 
     if (!foundSubject) {
-        return null;
+        // The timeout allows contexts that may just be in a transitional state
+        // to resolve (if they're going to) before trying alternatives
+        if (!timedOut) {
+            return null;
+        }
+        return <FindTranslation />;
     }
 
     return (
