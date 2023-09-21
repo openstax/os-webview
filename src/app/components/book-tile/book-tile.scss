@@ -1,5 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 @import 'mixins/coming-soon';
+@import 'mixins/assignable';
 
 .book-tile {
     display: grid;
@@ -13,7 +14,11 @@
         @include coming-soon;
     }
 
-    img {
+    &.assignable .badge {
+        @include assignable;
+    }
+
+    img:not(.badge) {
         height: auto;
         max-width: 100%;
     }

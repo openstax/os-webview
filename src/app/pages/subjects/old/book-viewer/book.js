@@ -3,6 +3,7 @@ import useActiveElementContext from '~/contexts/active-element';
 import {useIntl} from 'react-intl';
 import $ from '~/helpers/$';
 import cn from 'classnames';
+import AssignableBadge from '~/components/assignable-badge/assignable-badge';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import {faChalkboardTeacher} from '@fortawesome/free-solid-svg-icons/faChalkboardTeacher';
@@ -118,7 +119,8 @@ export default function BookCover({
     bookState: state,
     coverColor,
     hasFacultyResources,
-    hasStudentResources
+    hasStudentResources,
+    assignableBook
 }) {
     const details = {
         coverColor, hasFacultyResources, hasStudentResources
@@ -126,12 +128,14 @@ export default function BookCover({
     const comingSoon = state === 'coming_soon';
     const className = cn('cover', {
         'coming-soon': comingSoon,
+        'assignable': assignableBook,
         polish: $.isPolish(slug)
     });
 
     return (
         <div className={className}>
             {!comingSoon && <ThreeDotMenu slug={slug} details={details} />}
+            {assignableBook && <AssignableBadge />}
             <a
               href={`/details/${slug}`}
               data-analytics-select-content={title}

@@ -1,6 +1,8 @@
-import React, {lazy, Suspense} from 'react';
+import React from 'react';
 import useSharedDataContext from '~/contexts/shared-data';
 import {useLocation} from 'react-router-dom';
+import loadable from 'react-loadable';
+import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 
 function useFeatureFlag() {
     const {flags: {new_subjects: flag}} = useSharedDataContext();
@@ -8,37 +10,24 @@ function useFeatureFlag() {
     return flag;
 }
 
-function useSelectedVersion(featureFlag) {
-    const importFn = React.useCallback(
-        () => {
-            if (featureFlag === true) {
-                return import('./new/subjects.js');
-            }
-            return import('./old/subjects.js');
-        },
-        [featureFlag]
-    );
-    const Component = React.useMemo(
-        () => lazy(() => importFn()),
-        [importFn]
-    );
-
-    return Component;
-}
-
 function SelectedComponent({featureFlag}) {
-    const Component = useSelectedVersion(featureFlag);
+    const OldPage = loadable({
+        loader: () => import('./old/subjects.js'),
+        loading: LoadingPlaceholder
+    });
+    const NewPage = loadable({
+        loader: () => import('./new/subjects.js'),
+        loading: LoadingPlaceholder
+    });
 
     return (
-        <Suspense fallback={<h1>Loading...</h1>}>
-            <Component />
-        </Suspense>
+        featureFlag ? <NewPage /> : <OldPage />
     );
 }
 
 export default function PickVersion() {
-    const featureFlag = useFeatureFlag();
     const {pathname} = useLocation();
+    const featureFlag = useFeatureFlag();
     const override = pathname.includes('-preview');
 
     if (featureFlag === null) {

@@ -1,4 +1,5 @@
 @import 'mixins/coming-soon';
+@import 'mixins/assignable';
 @import 'pattern-library/core/pattern-library/headers';
 
 #main.subjects-main {
@@ -130,6 +131,10 @@
 
             &.coming-soon.polish::before {
                 background-image: url('/dist/images/subjects/coming-soon-polish.svg');
+            }
+
+            &.assignable > .badge {
+                @include assignable;
             }
 
             > a,

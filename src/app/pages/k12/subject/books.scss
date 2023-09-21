@@ -44,6 +44,30 @@
         }
     }
 
+    .book-tile {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        background-color: ui-color(white);
+        border-radius: 0.5rem;
+        box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+        height: 100%;
+
+        img:not(.badge) {
+            width: 100%;
+        }
+
+        .text-block {
+            padding: 1rem;
+
+            a {
+                @include set-font(helper-label);
+
+                font-weight: bold;
+                text-decoration: none;
+            }
+        }
+    }
+    
     .about-the-books {
         @include faq-section();
 

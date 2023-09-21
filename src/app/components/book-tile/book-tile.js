@@ -1,4 +1,5 @@
 import React from 'react';
+import AssignableBadge from '~/components/assignable-badge/assignable-badge';
 import { useToggle } from '~/helpers/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp } from '@fortawesome/free-solid-svg-icons/faCaretUp';
@@ -103,12 +104,12 @@ function GetTheBookDropdown({ bookInfo }) {
     );
 }
 
-function useBookState(id) {
+function useBookInfo(id) {
     const [state, setState] = React.useState();
 
     React.useEffect(
         () => bookPromise.then(
-            (items) => setState(items.find((i) => i.id === id)?.book_state)
+            (items) => setState(items.find((i) => i.id === id))
         ),
         [id]
     );
@@ -117,13 +118,16 @@ function useBookState(id) {
 
 export default function BookTile({ book: [book] }) {
     const { coverUrl, title, slug } = book;
-    const state = useBookState(book.id);
-    const classes = cn({'book-tile': true, 'coming-soon': state === 'coming_soon'});
+    const info = useBookInfo(book.id);
+    const comingSoon = info?.state === 'coming_soon';
+    const assignable = info?.assignable_book === true;
+    const classes = cn({'book-tile': true, 'coming-soon': comingSoon, assignable});
 
     return (
         <div className={classes}>
             <a href={`/details/${slug}`}>
                 <img src={coverUrl} role="presentation" width="240" height="240" />
+                {assignable && <AssignableBadge />}
             </a>
             <div className="text-block">
                 <a href={`/details/${slug}`}>{title}</a>
