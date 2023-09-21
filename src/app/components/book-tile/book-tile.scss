@@ -14,7 +14,7 @@
         @include coming-soon;
     }
 
-    &.assignable > .badge {
+    &.assignable .badge {
         @include assignable;
     }
 
