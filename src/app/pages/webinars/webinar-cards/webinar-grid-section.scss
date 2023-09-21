@@ -1,0 +1,31 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.webinars.page {
+    .webinar-grid-section {
+        width: 100%;
+
+        .button-row {
+            padding-top: 2rem;
+        }
+
+        .btn.primary {
+            @include button();
+            @extend %primary;
+
+            margin-top: 3rem;
+        }
+
+        .card.upcoming {
+            gap: 1rem;
+
+            hr + div,
+            .spaces-remaining {
+                display: none;
+            }
+
+            .speakers-and-spaces {
+                align-self: end;
+            }
+        }
+    }
+}

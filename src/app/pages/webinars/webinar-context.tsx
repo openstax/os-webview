@@ -69,12 +69,27 @@ function useContextValue() {
         },
         {}
     );
-    const latestWebinars = React.useMemo(
-        () => webinars.sort(byDate),
-        [webinars]
-    );
+    const [upcoming, past, latestWebinars] = React.useMemo(() => {
+        const now = new Date();
+        const future = webinars
+            .filter((w) => w.start > now)
+            .sort(byDate)
+            .reverse();
+        // eslint-disable-next-line no-shadow
+        const past = webinars.filter((w) => w.start < now).sort(byDate);
 
-    return {subjects, searchFor, pageData, collections, latestWebinars};
+        return [future, past, [...future, ...past]];
+    }, [webinars]);
+
+    return {
+        subjects,
+        searchFor,
+        pageData,
+        collections,
+        latestWebinars,
+        upcoming,
+        past
+    };
 }
 
 // Until build-context is converted to TS

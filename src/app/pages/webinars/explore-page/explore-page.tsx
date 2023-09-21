@@ -8,7 +8,7 @@ import {useParams} from 'react-router-dom';
 import SimplePaginator, {
     Showing
 } from '~/components/paginator/simple-paginator';
-import {WebinarGrid} from '../webinar-cards/latest-webinars';
+import WebinarGrid from '../webinar-cards/webinar-grid';
 import './explore-page.scss';
 
 type ExploreType = 'subjects' | 'collections';
@@ -60,7 +60,11 @@ export default function ExplorePage() {
                     <WebinarGrid webinars={popularWebinars.slice(0, 3)} />
                 </Section>
             )}
-            <Section name='Latest' topicHeading={topicHeading} id='explore-latest-section'>
+            <Section
+                name='Latest'
+                topicHeading={topicHeading}
+                id='explore-latest-section'
+            >
                 {totalCount < 1 ? (
                     <div>No webinars associated with {topic}</div>
                 ) : (
