@@ -61,5 +61,7 @@ export default {
     'subject.noBlog': 'No blog entries found (yet)',
     'subject.noWebinars': 'No webinars found (yet)',
     'subject.viewAll': 'View all {subject} books',
+    'subject.notAvailableText': 'Subject not found.',
+    'subject.notAvailableLinkText': 'View all',
     'resources.available': 'Only available for verified instructors.'
 };
