@@ -76,13 +76,13 @@ function SubjectsMenu() {
                     url={`/subjects/${obj.value}`}
                 />
             ))}
-            {language === 'en' ? <K12MenuItem /> : null}
             {pathname.startsWith('/details/books') ? null : (
                 <LanguageSelectorWrapper>
                     <FormattedMessage id='view' defaultMessage='View' />{' '}
                     <LanguageLink locale={otherLocale} />
                 </LanguageSelectorWrapper>
             )}
+            {language === 'en' ? <K12MenuItem /> : null}
         </Dropdown>
     );
 }
