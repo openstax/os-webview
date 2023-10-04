@@ -29,7 +29,7 @@ function LearnMore() {
 export default function MaybeLearnMore() {
     const ctx = useSpecificSubjectContext();
 
-    if (!ctx?.osTexbookHeading) {
+    if (!ctx?.osTextbookHeading) {
         return null;
     }
     return (<LearnMore />);
