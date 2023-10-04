@@ -50,7 +50,7 @@ function MenusFromCMS() {
 function K12MenuItem() {
     return (
         <MenuItem
-            label='For K12 Teachers'
+            label='&#127822; For K12 Teachers'
             url='/k12'
         />
     );
@@ -82,7 +82,7 @@ function SubjectsMenu() {
                     <LanguageLink locale={otherLocale} />
                 </LanguageSelectorWrapper>
             )}
-            {language === 'en' ? <K12MenuItem /> : null}
+            {language === 'en' ? <React.Fragment><hr /><K12MenuItem /></React.Fragment> : null}
         </Dropdown>
     );
 }
