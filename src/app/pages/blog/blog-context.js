@@ -36,7 +36,7 @@ function useTopicStories() {
             if (!topicType) {
                 return null;
             }
-            if (topicType === 'subject') {
+            if (topicType.startsWith('subj')) {
                 return `search/?subjects=${topic}`;
             }
             return `search/?collection=${topic}`;
