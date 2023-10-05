@@ -7,7 +7,6 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import { FormattedMessage, useIntl } from 'react-intl';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import { usePrintCopyDialog, isRealPrintLink } from '~/pages/details/common/get-this-title-files/options';
-import useActiveElementContext from '~/contexts/active-element';
 import bookPromise from '~/models/book-titles';
 import cn from 'classnames';
 import './book-tile.scss';
@@ -35,7 +34,6 @@ function PrintOption({ bookInfo }) {
 
 function GetTheBookDropdown({ bookInfo }) {
     const [isOpen, toggle] = useToggle();
-    const activeElement = useActiveElementContext();
     const ref = React.useRef();
     const { slug } = bookInfo;
     const buttonId = `${slug}-ddb`;
@@ -43,12 +41,25 @@ function GetTheBookDropdown({ bookInfo }) {
     const webviewLink = bookInfo.webviewRexLink || bookInfo.webviewLink;
     const pdfLink =
         bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
-
-    React.useLayoutEffect(() => {
-        if (isOpen && !ref.current.contains(activeElement)) {
+    const toggleMenu = React.useCallback(
+        () => {
             toggle();
-        }
-    }, [activeElement, isOpen, toggle]);
+        },
+        [toggle]
+    );
+
+    // This is supposed to close it when another opens
+    React.useEffect(() => {
+        const outsideClick = (e) => {
+            if (isOpen && !ref.current.contains(e.target)) {
+                toggle();
+            }
+        };
+
+        window.addEventListener('click', outsideClick);
+
+        return () => window.removeEventListener('click', outsideClick);
+    }, [isOpen, toggle]);
 
     return (
         <div className="navmenu" ref={ref}>
@@ -58,7 +69,7 @@ function GetTheBookDropdown({ bookInfo }) {
                 aria-haspopup="true"
                 aria-controls={menuId}
                 aria-expanded={isOpen}
-                onClick={() => toggle()}
+                onClick={toggleMenu}
             >
                 <FormattedMessage
                     id="getTheBook"
