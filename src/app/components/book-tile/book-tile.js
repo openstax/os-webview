@@ -8,6 +8,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import { usePrintCopyDialog, isRealPrintLink } from '~/pages/details/common/get-this-title-files/options';
 import bookPromise from '~/models/book-titles';
+import useGiveDialog from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-pdf';
+import {isMobileDisplay} from '~/helpers/device';
 import cn from 'classnames';
 import './book-tile.scss';
 
@@ -85,13 +87,7 @@ function GetTheBookDropdown({ bookInfo }) {
                     />
                 </a>
                 {
-                    pdfLink &&
-                    <a role="menuitem" href={pdfLink}>
-                        <FormattedMessage
-                            id="getit.pdf.download"
-                            defaultMessage="Download a PDF"
-                        />
-                    </a>
+                    pdfLink && <PDFLinkWithGiveDialog pdfLink={pdfLink} />
                 }
                 <PrintOption bookInfo={bookInfo} />
                 <hr />
@@ -112,6 +108,32 @@ function GetTheBookDropdown({ bookInfo }) {
                 </a>
             </div>
         </div>
+    );
+}
+
+function PDFLinkWithGiveDialog({pdfLink}) {
+    const {GiveDialog, open, enabled} = useGiveDialog();
+
+    const openGiveDialog = React.useCallback(
+        (event) => {
+            if (enabled && !isMobileDisplay()) {
+                event.preventDefault();
+                open();
+            }
+        },
+        [enabled, open]
+    );
+
+    return (
+        <React.Fragment>
+            <a role="menuitem" href={pdfLink} onClick={openGiveDialog}>
+                <FormattedMessage
+                    id="getit.pdf.download"
+                    defaultMessage="Download a PDF"
+                />
+            </a>
+            <GiveDialog link={pdfLink} />
+        </React.Fragment>
     );
 }
 
