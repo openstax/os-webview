@@ -119,7 +119,7 @@ function useBookInfo(id) {
 export default function BookTile({ book: [book] }) {
     const { coverUrl, title, slug } = book;
     const info = useBookInfo(book.id);
-    const comingSoon = info?.state === 'coming_soon';
+    const comingSoon = info?.book_state === 'coming_soon';
     const assignable = info?.assignable_book === true;
     const classes = cn({'book-tile': true, 'coming-soon': comingSoon, assignable});
 
