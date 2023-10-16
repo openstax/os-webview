@@ -67,6 +67,10 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: $normal-margin;
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 1fr;
+        }
     }
 
     .btn {
