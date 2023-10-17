@@ -33,7 +33,7 @@ function BookSelectorPage({selectedBooksRef}) {
                 limit="5"
                 additionalInstructions={instructions}
             />
-            <input type="hidden" name="subject" value={bookList} />
+            <input type="hidden" name="subject_interest" value={bookList} />
             <label>
                 <div className="control-group">
                     <HowUsing selectedBooks={selectedBooks} />
