@@ -2,8 +2,12 @@ import React from 'react';
 
 const buyprintServer = 'https://buyprint.openstax.org';
 
-export default function useAmazonAssociatesLink(slug) {
-    const [data, setData] = React.useState({});
+type AmazonAssociatesLink = {
+    url?: string;
+};
+
+export default function useAmazonAssociatesLink(slug: string) {
+    const [data, setData] = React.useState<AmazonAssociatesLink>({});
 
     React.useEffect(() => {
         fetch(`${buyprintServer}/${slug}.json`)

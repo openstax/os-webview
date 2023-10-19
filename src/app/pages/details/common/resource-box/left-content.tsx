@@ -10,6 +10,7 @@ import {useToggle} from '~/helpers/data';
 import linkHelper from '~/helpers/link';
 import useGiveDialog from '../get-this-title-files/give-before-pdf/give-before-pdf';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+import {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkHandler';
 
 type LeftContentModelType = {
     link?: {url?: string; text?: string};
@@ -22,10 +23,6 @@ type LeftContentModelType = {
 
 type LinkIsSet = {
     link: {url: string; text: string};
-};
-
-export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
-    trackingInfo: object;
 };
 
 // eslint-disable-next-line complexity
@@ -85,20 +82,11 @@ const iconLookup: {[key: string]: IconDefinition} = {
     'external-link-alt': faExternalLinkAlt
 };
 
-type UseGiveDialogTypes = {
-    GiveDialog: ({link, onDownload}: {
-        link: string;
-        onDownload: (event: TrackedMouseEvent) => void;
-    }) => React.JSX.Element;
-    open: () => null;
-    enabled: boolean;
-};
-
 function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
     const {userModel} = useUserContext();
-    const {GiveDialog, open, enabled} = useGiveDialog() as UseGiveDialogTypes;
+    const {GiveDialog, open, enabled} = useGiveDialog();
     const trackDownloadClick = React.useCallback((event: TrackedMouseEvent) => {
         if (model.bookModel) {
             interceptLinkClicks(event, model.bookModel.id, userModel);

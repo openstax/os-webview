@@ -3,7 +3,10 @@ import {useNavigate, NavigateOptions} from 'react-router-dom';
 import linkHelper from '~/helpers/link';
 import $ from '~/helpers/$';
 import retry from '~/helpers/retry';
-import {TrackedMouseEvent} from '~pages/details/common/resource-box/left-content';
+
+export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
+    trackingInfo: object;
+};
 
 function handleExternalLink(href: Location['href'], el: HTMLElement) {
     if (el.dataset.local === 'true') {
