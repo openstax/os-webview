@@ -9,14 +9,13 @@ import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
-import {isMobileDisplay} from '~/helpers/device';
 import {useIntl, FormattedMessage} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useAmazonAssociatesLink from './amazon-associates-link';
 import useTOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
-import useGiveDialog from './give-before-pdf/use-give-dialog';
+import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
 import useCalloutCounter from './recommended-callout/use-callout-counter';
 
 function IconAndText({icon, text}) {
@@ -96,6 +95,7 @@ export function WebviewOption({model}) {
         icon: faLaptop,
         text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : texts.link
     };
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
 
     return (
         <Option condition={!model.comingSoon && webviewLink}>
@@ -105,9 +105,11 @@ export function WebviewOption({model}) {
                     data-local={isRex}
                     data-track='Online'
                     rel='noreferrer'
+                    onClick={openGiveDialog}
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>
+                <GiveDialog link={webviewLink} variant='online' />
                 {showCallout && (
                     <div className='callout recommended-callout'>
                         <RecommendedCallout
@@ -133,17 +135,7 @@ export function PdfOption({model}) {
         : intl.formatMessage({id: 'getit.pdf.sample'});
     const text = pdfText + (model.comingSoon ? sampleText : '');
     const pdfLink = model.highResolutionPdfUrl || model.lowResolutionPdfUrl;
-    const {GiveDialog, open, enabled} = useGiveDialog();
-
-    const openGiveDialog = React.useCallback(
-        (event) => {
-            if (enabled && !isMobileDisplay()) {
-                event.preventDefault();
-                open();
-            }
-        },
-        [enabled, open]
-    );
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
 
     return (
         <React.Fragment>

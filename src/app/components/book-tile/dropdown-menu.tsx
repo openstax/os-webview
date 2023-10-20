@@ -5,10 +5,10 @@ import {
     isRealPrintLink
 } from '~/pages/details/common/get-this-title-files/options';
 import {FormattedMessage, useIntl} from 'react-intl';
-import useGiveDialog, {
+import {
+    useOpenGiveDialog,
     VariantOptions
 } from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
-import {isMobileDisplay} from '~/helpers/device';
 import {useToggle} from '~/helpers/data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
@@ -168,17 +168,7 @@ function MenuItemWithGiveDialog({
     variant,
     ...props
 }: MenuItemWithGiveDialogProps) {
-    const {GiveDialog, open, enabled} = useGiveDialog();
-
-    const openGiveDialog = React.useCallback(
-        (event: React.MouseEvent) => {
-            if (enabled && !isMobileDisplay()) {
-                event.preventDefault();
-                open();
-            }
-        },
-        [enabled, open]
-    );
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
 
     return (
         <React.Fragment>
