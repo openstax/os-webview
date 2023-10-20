@@ -4,7 +4,7 @@ import './thank-you-form.scss';
 
 function FormWithAfterSubmit({
     afterSubmit,
-    responseId='form-response',
+    responseId = 'form-response',
     children,
     onSubmit: firstOnSubmit,
     ...formProps
@@ -32,8 +32,13 @@ function FormWithAfterSubmit({
     return (
         <React.Fragment>
             <iframe
-                name={responseId} id={responseId} className="hidden"
-                src="" width="0" height="0" tabIndex="-1"
+                name={responseId}
+                id={responseId}
+                className='hidden'
+                src=''
+                width='0'
+                height='0'
+                tabIndex='-1'
                 ref={iframeRef}
             />
             <form target={responseId} {...formProps} onSubmit={onSubmit}>
@@ -48,58 +53,59 @@ export default function ThankYou({link, close}) {
     const first = userModel?.first_name;
     const last = userModel?.last_name;
     const school = userModel?.self_reported_school;
-    const afterSubmit = React.useCallback(
-        () => {
-            window.open(link);
-            close();
-        },
-        [link, close]
-    );
+    const afterSubmit = React.useCallback(() => {
+        window.open(link);
+        close();
+    }, [link, close]);
 
     return (
         <FormWithAfterSubmit
             action={`${process.env.API_ORIGIN}/apps/cms/api/donations/thankyounote/`}
-            method="post"
-            className="thank-you-form"
+            method='post'
+            className='thank-you-form'
             afterSubmit={afterSubmit}
         >
             <h1>Send us a thank you note</h1>
-            <div className="instructions">
-                <span className="asterisk" />
+            <div className='instructions'>
+                <span className='asterisk' />
                 indicates required field
             </div>
             <label>
-                Your message <span className="asterisk" />
+                Your message <span className='asterisk' />
                 <textarea
-                    name="thank_you_note" rows="4"
-                    placeholder="Start typing"
+                    name='thank_you_note'
+                    rows='4'
+                    placeholder='Start typing'
                     required
                 />
             </label>
-            <div className="names">
+            <div className='names'>
                 <label>
-                    First name <span className="asterisk" />
+                    First name <span className='asterisk' />
                     <input
-                        name="first_name" type="text"
-                        placeholder="Your first name"
+                        name='first_name'
+                        type='text'
+                        placeholder='Your first name'
                         required
                         defaultValue={first}
                     />
                 </label>
                 <label>
-                    Last name <span className="asterisk" />
+                    Last name <span className='asterisk' />
                     <input
-                        name="last_name" type="text"
-                        placeholder="Your last name"
+                        name='last_name'
+                        type='text'
+                        placeholder='Your last name'
                         required
                         defaultValue={last}
                     />
                 </label>
                 <label>
-                    Institution name <span className="asterisk" />
+                    Institution name <span className='asterisk' />
                     <input
-                        name="institution" type="text"
-                        placeholder="Your school"
+                        name='institution'
+                        type='text'
+                        placeholder='Your school'
                         required
                         defaultValue={school}
                     />
@@ -107,26 +113,41 @@ export default function ThankYou({link, close}) {
                 <label>
                     Email address
                     <input
-                        name="contact_email_address" type="email"
-                        placeholder="Your email (optional)"
+                        name='contact_email_address'
+                        type='email'
+                        placeholder='Your email (optional)'
                     />
                 </label>
             </div>
-            <div className="consent-checkbox">
+            <div className='consent-checkbox'>
                 <label>
-                    Consent <span className="asterisk" />
+                    Consent <span className='asterisk' />
                 </label>
-                <label className="cb-group">
+                <label className='cb-group'>
                     <input
-                        type="checkbox" name="consent_to_share_or_contact" value="True"
+                        type='checkbox'
+                        name='consent_to_share_or_contact'
+                        value='True'
                     />
-                    By clicking here I understand that OpenStax may include my story
-                    in publications and distribution in printed, electronic, and digital
-                    media.
+                    By clicking here I understand that OpenStax may include my
+                    story in publications and distribution in printed,
+                    electronic, and digital media.
                 </label>
             </div>
-            <button className="primary">Submit note and go to PDF</button>
-            <a className="never-mind" href={link}>Never mind, just go to the PDF</a>
+            <button className='primary'>Submit note and go to PDF</button>
+            <a className='never-mind' href={link}>
+                Never mind, just go to the PDF
+            </a>
         </FormWithAfterSubmit>
     );
+}
+
+export function useOnThankYouClick() {
+    const [showThankYou, setShowThankYou] = React.useState(false);
+    const onThankYouClick = React.useCallback((event) => {
+        event.preventDefault();
+        setShowThankYou(true);
+    }, []);
+
+    return {showThankYou, onThankYouClick};
 }

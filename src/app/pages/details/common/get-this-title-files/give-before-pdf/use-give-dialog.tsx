@@ -1,0 +1,47 @@
+import React from 'react';
+import {useDialog} from '~/components/dialog/dialog';
+import GiveBeforeOnline from './give-before-online';
+import GiveBeforePdf from './give-before-pdf';
+import useDonationPopupData from './use-donation-popup-data';
+
+export default function useGiveDialog() {
+    const [Dialog, open, close] = useDialog();
+    const data = useDonationPopupData();
+
+    const GiveDialog = React.useCallback(
+        ({
+            link,
+            onDownload,
+            variant
+        }: {
+            link: string;
+            onDownload?: (
+                e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+            ) => void;
+            variant?: VariantOptions;
+        }) => {
+            const Variant = lookupVariant(variant) as typeof GiveBeforeOnline;
+
+            return (
+                <Dialog>
+                    <Variant {...{link, close, data, onDownload}} />
+                </Dialog>
+            );
+        },
+        [close, data, Dialog]
+    );
+
+    return {
+        GiveDialog,
+        open,
+        enabled: !data.hide_donation_popup
+    };
+}
+
+export type VariantOptions = 'online' | undefined;
+function lookupVariant(variant: VariantOptions) {
+    if (variant === 'online') {
+        return GiveBeforeOnline;
+    }
+    return GiveBeforePdf;
+}

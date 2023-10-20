@@ -8,7 +8,7 @@ import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclama
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import {useToggle} from '~/helpers/data';
 import linkHelper from '~/helpers/link';
-import useGiveDialog from '../get-this-title-files/give-before-pdf/give-before-pdf';
+import useGiveDialog from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkHandler';
 
@@ -87,11 +87,14 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     const isDownload = icon === faDownload;
     const {userModel} = useUserContext();
     const {GiveDialog, open, enabled} = useGiveDialog();
-    const trackDownloadClick = React.useCallback((event: TrackedMouseEvent) => {
-        if (model.bookModel) {
-            interceptLinkClicks(event, model.bookModel.id, userModel);
-        }
-    }, [model.bookModel, userModel]);
+    const trackDownloadClick = React.useCallback(
+        (event: TrackedMouseEvent) => {
+            if (model.bookModel) {
+                interceptLinkClicks(event, model.bookModel.id, userModel);
+            }
+        },
+        [model.bookModel, userModel]
+    );
 
     function openDialog(event: TrackedMouseEvent) {
         if (isDownload && enabled) {
@@ -117,7 +120,11 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
             {isDownload && (
                 <GiveDialog
                     link={model.link.url}
-                    onDownload={trackDownloadClick}
+                    onDownload={
+                        trackDownloadClick as unknown as (
+                            e: React.MouseEvent
+                        ) => void
+                    }
                 />
             )}
         </React.Fragment>

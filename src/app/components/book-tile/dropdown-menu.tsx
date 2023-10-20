@@ -5,7 +5,9 @@ import {
     isRealPrintLink
 } from '~/pages/details/common/get-this-title-files/options';
 import {FormattedMessage, useIntl} from 'react-intl';
-import useGiveDialog from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-pdf';
+import useGiveDialog, {
+    VariantOptions
+} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import {isMobileDisplay} from '~/helpers/device';
 import {useToggle} from '~/helpers/data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -160,7 +162,7 @@ function MenuItem({
 }
 
 type MenuItemWithGiveDialogProps = {
-    variant?: string;
+    variant?: VariantOptions;
 } & Parameters<typeof MenuItem>[0];
 function MenuItemWithGiveDialog({
     variant,
