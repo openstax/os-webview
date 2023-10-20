@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes } from 'react';
+import React, {AnchorHTMLAttributes} from 'react';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import {
     usePrintCopyDialog,
@@ -30,23 +30,24 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
                 menuId={menuId}
             />
             <div id={menuId} role='menu' aria-labelledby={buttonId}>
-                <MenuItem
+                <MenuItemWithGiveDialog
                     defaultMessage='View online'
                     url={webviewLink}
-                    messageId='getit.webview.link'
+                    variant='online'
                 />
-                {pdfLink && <PDFLinkWithGiveDialog pdfLink={pdfLink} />}
+                <MenuItemWithGiveDialog
+                    defaultMessage='Download a PDF'
+                    url={pdfLink}
+                />
                 <PrintOption slug={bookInfo.slug} />
                 <hr />
                 <MenuItem
                     defaultMessage='Instructor resources'
                     url={`/details/${slug}?Instructor resources`}
-                    messageId='tabs.instructorResources'
                 />
                 <MenuItem
                     defaultMessage='Student resources'
                     url={`/details/${slug}?Student resources`}
-                    messageId='tabs.studentResources'
                 />
             </div>
         </div>
@@ -95,24 +96,76 @@ function ControlButton({
     );
 }
 
+// FormattedMessage requires static literals for its params
+type DefaultMessage =
+    | 'View online'
+    | 'Download a PDF'
+    | 'Instructor resources'
+    | 'Student resources';
+function FormattedMessageFor({
+    defaultMessage
+}: {
+    defaultMessage: DefaultMessage;
+}) {
+    if (defaultMessage === 'View online') {
+        return (
+            <FormattedMessage
+                id='getit.webview.link'
+                defaultMessage='View online'
+            />
+        );
+    }
+    if (defaultMessage === 'Download a PDF') {
+        return (
+            <FormattedMessage
+                id='getit.pdf.download'
+                defaultMessage='Download a PDF'
+            />
+        );
+    }
+    if (defaultMessage === 'Instructor resources') {
+        return (
+            <FormattedMessage
+                id='tabs.instructorResources'
+                defaultMessage='Instructor resources'
+            />
+        );
+    }
+    if (defaultMessage === 'Student resources') {
+        return (
+            <FormattedMessage
+                id='tabs.studentResources'
+                defaultMessage='Student resources'
+            />
+        );
+    }
+}
+
 function MenuItem({
     defaultMessage,
     url,
-    messageId,
     ...aProps
 }: {
-    defaultMessage: string;
+    defaultMessage: DefaultMessage;
     url: string;
-    messageId: string;
 } & AnchorHTMLAttributes<HTMLAnchorElement>) {
+    if (!url) {
+        return null;
+    }
     return (
         <a role='menuitem' href={url} {...aProps}>
-            <FormattedMessage id={messageId} defaultMessage={defaultMessage} />
+            <FormattedMessageFor defaultMessage={defaultMessage} />
         </a>
     );
 }
 
-function PDFLinkWithGiveDialog({pdfLink}: {pdfLink: string}) {
+type MenuItemWithGiveDialogProps = {
+    variant?: string;
+} & Parameters<typeof MenuItem>[0];
+function MenuItemWithGiveDialog({
+    variant,
+    ...props
+}: MenuItemWithGiveDialogProps) {
     const {GiveDialog, open, enabled} = useGiveDialog();
 
     const openGiveDialog = React.useCallback(
@@ -127,13 +180,8 @@ function PDFLinkWithGiveDialog({pdfLink}: {pdfLink: string}) {
 
     return (
         <React.Fragment>
-            <MenuItem
-                defaultMessage='Download a PDF'
-                url={pdfLink}
-                messageId='getit.pdf.download'
-                onClick={openGiveDialog}
-            />
-            <GiveDialog link={pdfLink} />
+            <MenuItem {...props} onClick={openGiveDialog} />
+            <GiveDialog link={props.url} variant={variant} />
         </React.Fragment>
     );
 }

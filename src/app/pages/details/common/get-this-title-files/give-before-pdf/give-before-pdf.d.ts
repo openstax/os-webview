@@ -3,10 +3,12 @@ import type {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkH
 type UseGiveDialogTypes = {
     GiveDialog: ({
         link,
-        onDownload
+        onDownload,
+        variant
     }: {
         link: string;
         onDownload?: (event: TrackedMouseEvent) => void;
+        variant?: string;
     }) => React.JSX.Element;
     open: () => null;
     enabled: boolean;
