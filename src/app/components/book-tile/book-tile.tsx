@@ -35,7 +35,13 @@ export default function BookTile({
             <div className='text-block'>
                 <a href={`/details/${slug}`}>{title}</a>
             </div>
-            <GetTheBookDropdown bookInfo={book} />
+            {
+                comingSoon ?
+                    <div className='navmenu'>
+                        <button type='button' disabled>Coming soon</button>
+                    </div> :
+                    <GetTheBookDropdown bookInfo={book} />
+            }
         </div>
     );
 }

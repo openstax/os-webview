@@ -44,6 +44,11 @@
             justify-content: space-between;
             padding: 0 $normal-margin;
             width: 100%;
+
+            &[disabled] {
+                font-style: italic;
+                pointer-events: none;
+            }
         }
     
         [role="menu"] {
