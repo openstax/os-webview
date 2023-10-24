@@ -8,8 +8,9 @@ import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclama
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import {useToggle} from '~/helpers/data';
 import linkHelper from '~/helpers/link';
-import useGiveDialog from '../get-this-title-files/give-before-pdf/give-before-pdf';
+import useGiveDialog from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+import {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkHandler';
 
 type LeftContentModelType = {
     link?: {url?: string; text?: string};
@@ -22,10 +23,6 @@ type LeftContentModelType = {
 
 type LinkIsSet = {
     link: {url: string; text: string};
-};
-
-export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
-    trackingInfo: object;
 };
 
 // eslint-disable-next-line complexity
@@ -85,25 +82,19 @@ const iconLookup: {[key: string]: IconDefinition} = {
     'external-link-alt': faExternalLinkAlt
 };
 
-type UseGiveDialogTypes = {
-    GiveDialog: ({link, onDownload}: {
-        link: string;
-        onDownload: (event: TrackedMouseEvent) => void;
-    }) => React.JSX.Element;
-    open: () => null;
-    enabled: boolean;
-};
-
 function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
     const {userModel} = useUserContext();
-    const {GiveDialog, open, enabled} = useGiveDialog() as UseGiveDialogTypes;
-    const trackDownloadClick = React.useCallback((event: TrackedMouseEvent) => {
-        if (model.bookModel) {
-            interceptLinkClicks(event, model.bookModel.id, userModel);
-        }
-    }, [model.bookModel, userModel]);
+    const {GiveDialog, open, enabled} = useGiveDialog();
+    const trackDownloadClick = React.useCallback(
+        (event: TrackedMouseEvent) => {
+            if (model.bookModel) {
+                interceptLinkClicks(event, model.bookModel.id, userModel);
+            }
+        },
+        [model.bookModel, userModel]
+    );
 
     function openDialog(event: TrackedMouseEvent) {
         if (isDownload && enabled) {
@@ -129,7 +120,11 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
             {isDownload && (
                 <GiveDialog
                     link={model.link.url}
-                    onDownload={trackDownloadClick}
+                    onDownload={
+                        trackDownloadClick as unknown as (
+                            e: React.MouseEvent
+                        ) => void
+                    }
                 />
             )}
         </React.Fragment>
