@@ -1,6 +1,4 @@
-// Until I translate the entire user.js file, this one will have the types
-
-import {UserModelType} from '~models/usermodel-types';
+import type {UserModelType} from '~models/usermodel';
 
 type UserType = {
     username: string;
