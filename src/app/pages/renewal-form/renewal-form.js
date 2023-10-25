@@ -64,7 +64,6 @@ function HiddenFields({email, uuid, counts}) {
             <input type="hidden" name="accounts_uuid" value={uuid} />
             <input type="hidden" name="application_source" value={source} />
             <input type="hidden" name="adoption_json" value={json} />
-            <input type="hidden" name="subject" value={subjects} />
             <input type="hidden" name="subject_interest" value={subjects} />
             { returnToValue ?
                 <input type="hidden" name="success_location" value={returnToValue} /> :
