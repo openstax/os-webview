@@ -17,4 +17,4 @@ export default function (args: LanguageSelectorArgs): React.ReactNode;
 
 export const LanguageLink: LinkPresentationType;
 
-export function useLanguageText(locale: string): () => React.ReactNode;
+export function LanguageText({locale}: Pick<LocaleEntry, 'locale'>): React.ReactNode;

@@ -1,9 +1,7 @@
 import React from 'react';
 import useDetailsContext, {LocaleType, TranslationType} from '../context';
 import {FormattedMessage} from 'react-intl';
-import LanguageSelector, {
-    useLanguageText
-} from '~/components/language-selector/language-selector';
+import LanguageSelector, {LanguageText} from '~/components/language-selector/language-selector';
 
 export default function LinksToTranslations() {
     const {
@@ -42,7 +40,6 @@ function AnotherLanguage({
     locale,
     translations
 }: LocaleType & {translations: TranslationType}) {
-    const LanguageText = useLanguageText(locale);
     const translation = React.useMemo(
         () => translations.find((t) => t.locale === locale),
         [translations, locale]
@@ -56,7 +53,7 @@ function AnotherLanguage({
     // is pulled from translations
     return (
         <a href={`/details/books/${translation.slug}`}>
-            <LanguageText />
+            <LanguageText locale={locale} />
         </a>
     );
 }

@@ -25,6 +25,7 @@ export type ContextValues = {
     communityResourceBlurb: string;
     communityResourceFeatureLinkUrl: string;
     communityResourceFeatureText: string;
+    amazonIframe: string;
     webinarContent?: WebinarContent;
 };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import {faListOl} from '@fortawesome/free-solid-svg-icons/faListOl';
 import {faCloudDownloadAlt} from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
@@ -11,7 +10,6 @@ import $ from '~/helpers/$';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {useIntl, FormattedMessage} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
-import useAmazonAssociatesLink from './amazon-associates-link';
 import useTOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
@@ -177,28 +175,6 @@ export function usePrintCopyDialog() {
     );
 
     return {onClick, PCDialog};
-}
-
-export function PrintOption({model, icon = faBook}) {
-    const slug = (model.slug || '').replace('books/', '');
-    const amazonDataLink = useAmazonAssociatesLink(slug);
-    const intl = useIntl();
-    const printText = intl.formatMessage({id: 'getit.print'});
-    const text = $.isPolish(model.title)
-        ? 'Zamów egzemplarz drukowany'
-        : printText;
-    const {onClick, PCDialog} = usePrintCopyDialog({});
-
-    return (
-        <SimpleLinkOption
-            link={isRealPrintLink(amazonDataLink.url)}
-            icon={icon}
-            text={text}
-            onClick={onClick}
-        >
-            <PCDialog text={text} amazonDataLink={amazonDataLink} />
-        </SimpleLinkOption>
-    );
 }
 
 export function BookshareOption({model}) {
