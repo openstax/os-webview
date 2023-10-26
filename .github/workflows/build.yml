@@ -10,7 +10,7 @@ jobs:
         name: "Setup NVM"
         uses: dcodeIO/setup-node-nvm@master
         with:
-          node-version: v14.20.0
+          node-version: v16.20.2
       -
         name: "Setup environment"
         run: ./script/setup
