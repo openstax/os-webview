@@ -1,0 +1,52 @@
+import React from 'react';
+import useDetailsContext from '../../../context';
+import useAmazonAssociatesLink from '../amazon-associates-link';
+import {IntlShape, useIntl} from 'react-intl';
+import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
+
+export default function useAmazonIframe(slug: string) {
+    const {amazonIframe} = useDetailsContext();
+    const amazonDataLink = useAmazonAssociatesLink(slug);
+    const {formatMessage} = useIntl();
+
+    const iframeCode = React.useMemo(
+        () => amazonIframe?.length > 0 ? (`
+            ${amazonIframe}
+            <div>
+                ${amazonDataLink.disclosure || 'disclosure: we make money from Amazon sales'}
+            </div>
+        `) : null,
+        [amazonIframe, amazonDataLink.disclosure]
+    );
+
+    return iframeCode ?? amazonButton(amazonDataLink, formatMessage);
+}
+
+function amazonButton(
+    amazonDataLink: ReturnType<typeof useAmazonAssociatesLink>,
+    formatMessage: IntlShape['formatMessage']
+) {
+    const individual = formatMessage({
+        id: 'printcopy.individual',
+        defaultMessage: 'Individual'
+    });
+    const disclosure = formatMessage({
+        id: 'printcopy.disclosure',
+        defaultMessage: '***'
+    });
+    const button1Text = formatMessage({
+        id: 'printcopy.button1',
+        defaultMessage: 'Order a personal copy'
+    });
+
+    return ({
+        headerText: individual,
+        headerIcon: faUser,
+        disclosure:
+            disclosure === '***'
+                ? amazonDataLink.disclosure
+                : disclosure,
+        buttonText: button1Text,
+        buttonUrl: amazonDataLink.url
+    });
+}

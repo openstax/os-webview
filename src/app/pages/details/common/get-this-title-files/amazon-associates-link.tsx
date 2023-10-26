@@ -4,6 +4,7 @@ const buyprintServer = 'https://buyprint.openstax.org';
 
 type AmazonAssociatesLink = {
     url?: string;
+    disclosure?: string;
 };
 
 export default function useAmazonAssociatesLink(slug: string) {
