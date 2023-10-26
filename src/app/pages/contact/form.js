@@ -7,7 +7,7 @@ const options = [
     'General',
     'Adopting OpenStax Textbooks',
     'OpenStax Kinetic',
-    'OpenStax CNX',
+    'Staxly, AI Study Coach',
     'Donations',
     'College/University Partnerships',
     'Media Inquiries',
