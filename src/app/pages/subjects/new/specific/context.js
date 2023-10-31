@@ -15,7 +15,7 @@ function useContextValue(slug) {
 
             const {subjects, title} = data;
 
-            if (subjects && title) {
+            if (subjects && title && subjects[title]) {
                 return Object.entries(subjects[title].categories);
             }
             console.warn('Specific subjects and title need to be defined');

@@ -8,8 +8,11 @@ import './language-selector.scss';
 // You can't use a variable for id
 const languageFromLocale = {
     en: () => <FormattedMessage id="en" defaultMessage="English" />,
-    es: () => <FormattedMessage id="es" defaultMessage="Spanish" />
+    es: () => <FormattedMessage id="es" defaultMessage="Spanish" />,
+    pl: () => <FormattedMessage id="pl" defaultMessage="Polish" />
 };
+
+const polishSite = 'https://openstax.pl/podreczniki';
 
 const NoLanguage = () => null;
 
@@ -28,6 +31,16 @@ export function LanguageLink({locale, slug}) {
     }, [locale, setLanguage]);
     const LanguageText = useLanguageText(locale);
     const href = slug ? `/subjects/${slug}/` : locale;
+
+    // Magic: handle Polish specially
+    if (locale === 'pl') {
+        return (
+            // eslint-disable-next-line react/jsx-no-target-blank
+            <a href={polishSite} target="_blank">
+                <LanguageText />
+            </a>
+        );
+    }
 
     return (
         <a href={href} onClick={onClick}>
@@ -59,11 +72,17 @@ export function LanguageSelectorWrapper({children}) {
     );
 }
 
-export default function LanguageSelector({LeadIn, otherLocales, LinkPresentation=LanguageLink}) {
+export default function LanguageSelector({
+    LeadIn, otherLocales=[], LinkPresentation=LanguageLink, addPolish=false
+}) {
     const {language} = useLanguageContext();
     const LanguageText = useLanguageText(language);
 
-    if (!otherLocales || otherLocales.length < 1) {
+    if (addPolish) {
+        otherLocales.push('pl');
+    }
+
+    if (otherLocales.length < 1) {
         return null;
     }
 
