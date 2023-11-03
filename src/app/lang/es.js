@@ -1,7 +1,4 @@
 export default {
-    en: 'inglés',
-    es: 'español',
-    pl: 'polaco',
     and: 'y',
     option: 'opción',
     options: 'opciones',

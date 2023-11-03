@@ -1,8 +1,5 @@
 export default {
-    en: 'English',
-    es: 'Spanish',
     and: 'and',
-    pl: 'Polish',
     option: 'option',
     options: 'options',
     fewer: 'fewer',
