@@ -5,7 +5,12 @@ import $ from '~/helpers/$';
 import retry from '~/helpers/retry';
 
 export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
-    trackingInfo: object;
+    trackingInfo: {
+        book: string;
+        account_uuid: string;
+        book_format: string;
+        contact_id: string;
+    };
 };
 
 function handleExternalLink(href: Location['href'], el: HTMLElement) {

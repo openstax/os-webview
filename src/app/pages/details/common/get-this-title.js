@@ -1,18 +1,11 @@
 import React from 'react';
 import {useToggle} from '~/helpers/data';
-import userModel from '~/models/usermodel';
 import {
     TocOption, WebviewOption, PdfOption, PrintOption, BookshareOption,
     IbooksOption, KindleOption, CheggOption, OptionExpander
 } from './get-this-title-files/options';
 import './get-this-title-files/get-this-title.scss';
-import linkhelper from '~/helpers/link';
-
-let userInfo;
-
-userModel.load().then((i) => {
-    userInfo = i;
-});
+import trackLink from './track-link';
 
 function AdditionalOptions({model}) {
     return (
@@ -31,23 +24,7 @@ export default function GetThisTitle({model}) {
     const [expanded, toggleExpanded] = useToggle(additionalOptions < 1);
     const interceptLinkClicks = React.useCallback(
         (event) => {
-            const el = linkhelper.validUrlClick(event);
-
-            if (!el) {
-                return;
-            }
-            const trackThis = userInfo?.accounts_id && el.dataset.track;
-
-            if (trackThis) {
-                /* eslint-disable camelcase */
-                event.trackingInfo = {
-                    book: model.id,
-                    account_uuid: userInfo.uuid,
-                    book_format: el.dataset.track,
-                    contact_id: userInfo.salesforce_contact_id
-                };
-                /* eslint-enable camelcase */
-            }
+            trackLink(event, model.id);
         },
         [model.id]
     );

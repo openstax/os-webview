@@ -7,7 +7,7 @@ import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import {useToggle} from '~/helpers/data';
-import linkHelper from '~/helpers/link';
+import trackLink from '../track-link';
 import useGiveDialog from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkHandler';
@@ -85,19 +85,16 @@ const iconLookup: {[key: string]: IconDefinition} = {
 function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
-    const {userModel} = useUserContext();
     const {GiveDialog, open, enabled} = useGiveDialog();
     const trackDownloadClick = React.useCallback(
         (event: TrackedMouseEvent) => {
-            if (model.bookModel) {
-                interceptLinkClicks(event, model.bookModel.id, userModel);
-            }
+            trackLink(event, model.bookModel?.id);
         },
-        [model.bookModel, userModel]
+        [model.bookModel]
     );
 
     function openDialog(event: TrackedMouseEvent) {
-        if (isDownload && enabled) {
+        if (isDownload && enabled && model.link.url.endsWith('pdf')) {
             event.preventDefault();
             open();
         }
@@ -138,29 +135,4 @@ function MissingLink() {
             <span>MISSING LINK</span>
         </span>
     );
-}
-
-// Adapted from get-this-title interceptLinkClicks
-function interceptLinkClicks(
-    event: TrackedMouseEvent,
-    book: string,
-    userModel: ReturnType<typeof useUserContext>['userModel']
-) {
-    const el = linkHelper.validUrlClick(event);
-
-    if (!el) {
-        return;
-    }
-    const trackThis = userModel?.accounts_id && el.dataset.track;
-
-    if (trackThis) {
-        /* eslint-disable camelcase */
-        event.trackingInfo = {
-            book,
-            account_uuid: userModel.uuid,
-            resource_name: el.dataset.track,
-            contact_id: userModel.salesforce_contact_id
-        };
-        /* eslint-enable camelcase */
-    }
 }

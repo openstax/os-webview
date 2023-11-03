@@ -20,3 +20,9 @@ export type UserModelType = {
     salesforce_contact_id: string;
     accountsModel: object;
 };
+
+declare const userModel: {
+    load(): Promise<UserModelType>;
+};
+
+export default userModel;
