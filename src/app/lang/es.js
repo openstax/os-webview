@@ -1,6 +1,4 @@
 export default {
-    en: 'inglés',
-    es: 'español',
     and: 'y',
     option: 'opción',
     options: 'opciones',
@@ -9,6 +7,7 @@ export default {
     pageAvailableIn: 'Esta página está disponible en',
     bookAvailableIn: 'Este libro de texto está disponible en',
     weHaveBooksIn: 'Tenemos libros de texto en',
+    weAlsoHave: 'También tenemos libros en',
     getTheBook: 'Obtener el libro',
     summary: 'Resumen',
     recommended: 'Recomendado',

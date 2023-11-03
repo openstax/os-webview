@@ -77,11 +77,17 @@ function SubjectsMenu() {
                 />
             ))}
             {pathname.startsWith('/details/books') ? null : (
-                <LanguageSelectorWrapper>
-                    <FormattedMessage id='view' defaultMessage='View' />{' '}
-                    <LanguageLink locale={otherLocale} />
-                </LanguageSelectorWrapper>
-            )}
+                <React.Fragment>
+                    <LanguageSelectorWrapper>
+                        <FormattedMessage id='view' defaultMessage='View' />{' '}
+                        <LanguageLink locale={otherLocale} />
+                    </LanguageSelectorWrapper>
+                    <LanguageSelectorWrapper>
+                        <FormattedMessage id='view' defaultMessage='View' />{' '}
+                        <LanguageLink locale='pl' />
+                    </LanguageSelectorWrapper>
+                </React.Fragment>
+        )}
             {language === 'en' ? <React.Fragment><hr /><K12MenuItem /></React.Fragment> : null}
         </Dropdown>
     );

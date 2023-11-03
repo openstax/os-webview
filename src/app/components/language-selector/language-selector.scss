@@ -4,7 +4,6 @@
     align-items: center;
     column-gap: 1rem;
     display: flex;
-    line-height: 1.9rem;
 
     @include wider-than($tablet-max) {
         justify-content: center;

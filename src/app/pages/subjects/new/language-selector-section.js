@@ -2,11 +2,11 @@ import React from 'react';
 import LanguageSelector from '~/components/language-selector/language-selector';
 import {FormattedMessage} from 'react-intl';
 
-export default function LanguageSelectorSection({otherLocales}) {
+export default function LanguageSelectorSection(props) {
     return (
         <section className='language-selector-section'>
             <div className='content'>
-                <LanguageSelector LeadIn={LeadIn} otherLocales={otherLocales} />
+                <LanguageSelector LeadIn={LeadIn} {...props} />
             </div>
         </section>
     );

@@ -5,20 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
 import './language-selector.scss';
 
-// You can't use a variable for id
-const languageFromLocale = {
-    en: () => <FormattedMessage id="en" defaultMessage="English" />,
-    es: () => <FormattedMessage id="es" defaultMessage="Spanish" />
-};
-
-const NoLanguage = () => null;
-
-export function useLanguageText(locale) {
-    return React.useMemo(
-        () => languageFromLocale[locale] || NoLanguage,
-        [locale]
-    );
-}
+const polishSite = 'https://openstax.pl/podreczniki';
 
 export function LanguageLink({locale, slug}) {
     const {setLanguage} = useLanguageContext();
@@ -26,13 +13,31 @@ export function LanguageLink({locale, slug}) {
         event.preventDefault();
         setLanguage(locale);
     }, [locale, setLanguage]);
-    const LanguageText = useLanguageText(locale);
     const href = slug ? `/subjects/${slug}/` : locale;
+    const props = locale === 'pl' ? {href: polishSite, target: '_blank'} : {href, onClick};
+
+    return (<a {...props}><LanguageText locale={locale} /></a>);
+}
+
+// Provide a fallback so ancient browsers don't outright fail
+function LanguageText({locale}) {
+    if (Intl.DisplayNames) {
+        return (<LanguageTextUsingIntl locale={locale} />);
+    }
+    return locale;
+}
+
+function LanguageTextUsingIntl({locale}) {
+    const {language} = useLanguageContext();
+    const languageName = React.useMemo(
+        () => new Intl.DisplayNames([language], {type: 'language'}),
+        [language]
+    );
 
     return (
-        <a href={href} onClick={onClick}>
-            <LanguageText />
-        </a>
+        <React.Fragment>
+            {languageName.of(locale)}
+        </React.Fragment>
     );
 }
 
@@ -59,11 +64,15 @@ export function LanguageSelectorWrapper({children}) {
     );
 }
 
-export default function LanguageSelector({LeadIn, otherLocales, LinkPresentation=LanguageLink}) {
+export default function LanguageSelector({
+    LeadIn, otherLocales=[], LinkPresentation=LanguageLink, addPolish=false
+}) {
+    if (addPolish) {
+        otherLocales.push('pl');
+    }
     const {language} = useLanguageContext();
-    const LanguageText = useLanguageText(language);
 
-    if (!otherLocales || otherLocales.length < 1) {
+    if (otherLocales.length < 1) {
         return null;
     }
 
@@ -71,7 +80,7 @@ export default function LanguageSelector({LeadIn, otherLocales, LinkPresentation
         <LanguageSelectorWrapper>
             <LeadIn />
             {' '}
-            <LanguageText />
+            <LanguageText locale={language} />
             {
                 otherLocales.map(
                     (lo) => <AnotherLanguage key={lo} locale={lo} LinkPresentation={LinkPresentation} />

@@ -45,8 +45,23 @@ export default function TranslationSelector({
                     otherLocales={otherLocales}
                     LinkPresentation={LinkPresentation}
                 />
+                <div className='language-selector'>
+                    <span>
+                        <PolishLeadIn />{' '}
+                        <LanguageLink locale='pl' slug='' />
+                    </span>
+                </div>
             </div>
         </section>
+    );
+}
+
+function PolishLeadIn() {
+    return (
+        <FormattedMessage
+            id='weAlsoHave'
+            defaultMessage='We also have books in'
+        />
     );
 }
 

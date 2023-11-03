@@ -47,6 +47,7 @@ export function SubjectsPage() {
             <JITLoad
                 importFn={importLanguageSelector}
                 otherLocales={otherLocales}
+                addPolish={true}
             />
             <JITLoad importFn={importSubjectsListing} />
             <JITLoad importFn={importTutorAd} />
