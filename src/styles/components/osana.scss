@@ -1,0 +1,31 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.osano-cm-window {
+    position: fixed;
+    bottom: 0;
+    top: auto;
+
+   [role="dialog"] {
+        box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
+        margin: auto;
+        padding: 1.5rem;
+        max-width: calc(100% - 3rem);
+
+        .osano-cm-content {
+            padding-right: 4rem;
+            max-width: 80rem;
+        }
+
+        .osano-cm-buttons {
+            justify-content: center;
+            margin: 0;
+            min-width: auto;
+            max-width: none;
+
+            button {
+                padding: 1rem 2rem;
+                flex: 0 0 auto;
+            }
+        }
+    }
+}
