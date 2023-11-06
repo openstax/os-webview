@@ -1,4 +1,5 @@
 import adoptionFormData from '../src/data/adoption-form';
+import amazonBlurb from '../src/data/amazon-blurb';
 import algebraData from '../src/data/details-college-algebra';
 import biologyData from '../src/data/details-biology-2e';
 import blogArticleData from '../src/data/blog-article';
@@ -46,6 +47,7 @@ import archiveData from '../src/data/archive';
 global.fetch = jest.fn().mockImplementation((...args) => {
     const isAdoption = (/pages\/adoption-form/).test(args[0]);
     const isAlgebra = (/v2\/pages\/39/).test(args[0]);
+    const isAmazonBlurb = args[0].endsWith('snippets/amazonbookblurb/');
     const isBiology = (/v2\/pages\/207/).test(args[0]);
     const isBlogPinned = (/pin_to_top=true/).test(args[0]);
     const isBlogMoreStories = (/pin_to_top=false/).test(args[0]);
@@ -91,11 +93,14 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSalesforcePartners = (/salesforce\/partners/).test(args[0]);
 
     return new Promise(
+        // eslint-disable-next-line complexity
         (resolve) => {
             let payload = {};
 
             if (isAdoption) {
                 payload = adoptionFormData;
+            } else if (isAmazonBlurb) {
+                payload = amazonBlurb;
             } else if (isPartner) {
                 payload = pageData;
             } else if (isBlogCollection) {
