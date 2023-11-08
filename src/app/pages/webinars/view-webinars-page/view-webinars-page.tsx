@@ -9,7 +9,7 @@ export default function ViewWebinarsPage({
     heading = 'Webinars',
     webinars
 }: {
-    heading: string;
+    heading?: string;
     webinars: Webinar[];
 }) {
     return (
