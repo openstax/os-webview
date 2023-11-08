@@ -3,7 +3,7 @@
     "version": "2.114.0",
     "description": "OpenStax webview",
     "scripts": {
-        "test": "jest ./test/src",
+        "test": "jest --coverage ./test/src",
         "stats": "webpack --profile --json=stats.json",
         "seestats": "webpack-bundle-analyzer stats.json",
         "lint:js": "eslint src",
@@ -99,12 +99,15 @@
             "^react-dom$": "preact/compat"
         },
         "collectCoverage": true,
-        "coverageReporters": [
-            "json",
-            "lcov"
+        "collectCoverageFrom": [
+            "src/**/*.{ts,tsx}",
+            "!<rootDir>/node_modules"
         ],
         "coveragePathIgnorePatterns": [
             "/analytics"
+        ],
+        "coverageReporters": [
+            ["text", {"skipFull": true}]
         ],
         "setupFiles": [
             "<rootDir>/test/setupFile.js"
