@@ -1,9 +1,10 @@
 import React from 'react';
 import {useToggle} from '~/helpers/data';
 import {
-    TocOption, WebviewOption, PdfOption, PrintOption, BookshareOption,
+    TocOption, WebviewOption, PdfOption, BookshareOption,
     IbooksOption, KindleOption, CheggOption, OptionExpander
 } from './get-this-title-files/options';
+import OrderPrintCopy from './get-this-title-files/order-print-copy/order-print-copy';
 import './get-this-title-files/get-this-title.scss';
 import trackLink from './track-link';
 
@@ -36,7 +37,6 @@ export default function GetThisTitle({model}) {
                     <TocOption model={model} />
                     <WebviewOption model={model} />
                     <PdfOption model={model} />
-                    <PrintOption model={model} />
                     <CheggOption model={model} />
                     {
                         expanded &&
@@ -45,6 +45,7 @@ export default function GetThisTitle({model}) {
                     <OptionExpander {...{expanded, additionalOptions}} toggle={toggleExpanded} />
                 </div>
             </div>
+            <OrderPrintCopy slug={model.slug} />
         </div>
     );
 }

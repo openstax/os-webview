@@ -20,7 +20,7 @@ export function LanguageLink({locale, slug}) {
 }
 
 // Provide a fallback so ancient browsers don't outright fail
-function LanguageText({locale}) {
+export function LanguageText({locale}) {
     if (Intl.DisplayNames) {
         return (<LanguageTextUsingIntl locale={locale} />);
     }

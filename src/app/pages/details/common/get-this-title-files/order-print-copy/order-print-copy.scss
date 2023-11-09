@@ -1,8 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .order-print-copy {
+    @include set-font(helper-label);
 
     background-color: ui-color(page-bg);
+    max-width: 26rem;
+
+    .blurb {
+        padding: 1rem $normal-margin 0;
+    }
 
     h1 {
         @include set-font(h4);
@@ -23,8 +29,6 @@
             @include wider-than($phone-max) {
                 display: grid;
                 grid-gap: 2rem;
-                max-width: 90rem; // Matches dialog width
-                overflow-x: auto;
             }
         }
 
@@ -38,7 +42,7 @@
         display: grid;
         grid-gap: 2rem;
         justify-items: center;
-        padding: 2rem;
+        padding: 2rem 0.5rem;
 
         @include width-up-to($phone-max) {
             width: 100%;
@@ -46,20 +50,8 @@
 
         @include wider-than($phone-max) {
             grid-gap: 4rem;
+            grid-template-columns: auto;
             margin: auto;
-            padding: 4rem;
-
-            &.boxes-1 {
-                grid-template-columns: auto;
-            }
-
-            &.boxes-2 {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            &.boxes-3 {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
         }
     }
 
