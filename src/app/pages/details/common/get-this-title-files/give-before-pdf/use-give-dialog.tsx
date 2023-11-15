@@ -12,10 +12,12 @@ export default function useGiveDialog() {
     const GiveDialog = React.useCallback(
         ({
             link,
+            track,
             onDownload,
             variant
         }: {
             link: string;
+            track?: string;
             onDownload?: (
                 e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
             ) => void;
@@ -25,7 +27,7 @@ export default function useGiveDialog() {
 
             return (
                 <Dialog>
-                    <Variant {...{link, close, data, onDownload}} />
+                    <Variant {...{link, track, close, data, onDownload}} />
                 </Dialog>
             );
         },

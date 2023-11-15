@@ -117,6 +117,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
             {isDownload && (
                 <GiveDialog
                     link={model.link.url}
+                    track={model.heading}
                     onDownload={
                         trackDownloadClick as unknown as (
                             e: React.MouseEvent
