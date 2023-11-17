@@ -29,6 +29,7 @@ async function expectOptions(value) {
     await user.click(expandLink);
 }
 
+// ** There aren't enough options to have them get hidden since Print is separated out
 // test('handles hiding and expanding non-preferred formats', async () => {
 //     render(<GTTinContext />);
 
