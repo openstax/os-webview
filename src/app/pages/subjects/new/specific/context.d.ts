@@ -27,10 +27,29 @@ type SubjectEntry = {
     }
 };
 
+type SectionInfo = {
+    content: {
+        image: string;
+        heading: string;
+        adHtml: string;
+        linkHref: string;
+        linkText: string;
+    }
+};
+
+type InfoBox = {
+    image: string;
+    heading: string;
+    text: string;
+}
+
 type SpecificSubjectPageData = {
     translations?: [LocaleEntry[]];
     title?: string;
-    subjects?: SubjectEntry
+    subjects?: SubjectEntry;
+    tutorAd: SectionInfo;
+    aboutOs: SectionInfo;
+    infoBoxes: [InfoBox[]];
 };
 
 export default function (): SpecificSubjectPageData;
