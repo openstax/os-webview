@@ -78,12 +78,7 @@ function SpecificSubjectInfoBoxes() {
 
 type FoundSubject = Exclude<ReturnType<typeof useFoundSubject>, undefined>;
 
-function ContextDependentBlock({subject}: {subject: FoundSubject}) {
-    const ctx = useSpecificSubjectContext();
-
-    if (!ctx) {
-        return null;
-    }
+function MainContent({subject}: {subject: FoundSubject}) {
     return (
         <React.Fragment>
             <div className={cn('targets', `${subject?.color}-stripe`)}>
@@ -145,7 +140,7 @@ function SubjectInContext({subject}: {subject: FoundSubject}) {
                     <div className='subject-specific'>
                         <div className='content'>
                             <Navigator subject={subject} />
-                            <ContextDependentBlock subject={subject} />
+                            <MainContent subject={subject} />
                         </div>
                     </div>
                 </NavigatorContextProvider>
