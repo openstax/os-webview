@@ -21,17 +21,17 @@ export default function ExplorePage() {
     const topicHeading = `OpenStax ${topic} webinars`;
     const featuredWebinars = useFilteredWebinars(
         exploreType as ExploreType,
-        topic,
+        topic as string,
         'featured'
     );
     const popularWebinars = useFilteredWebinars(
         exploreType as ExploreType,
-        topic,
+        topic as string,
         'popular'
     );
     const latestWebinars = useFilteredWebinars(
         exploreType as ExploreType,
-        topic
+        topic as string
     );
     const [page, setPage] = React.useState(1);
     const currentPageOfWebinars = React.useMemo(() => {
@@ -91,8 +91,8 @@ export default function ExplorePage() {
 }
 
 function useFilteredWebinars(
-    exploreType?: ExploreType,
-    topic?: string,
+    exploreType: ExploreType,
+    topic: string,
     sectionKey?: SectionKey
 ) {
     const {latestWebinars} = useWebinarContext();

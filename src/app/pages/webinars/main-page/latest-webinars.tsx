@@ -2,7 +2,7 @@ import React from 'react';
 import useWebinarContext from '../webinar-context';
 import WebinarGridSection from '../webinar-cards/webinar-grid-section';
 
-export default function LatestWebinars({limit = 3}) {
+export default function LatestWebinars({limit}: {limit: number}) {
     const {latestWebinars} = useWebinarContext();
 
     return (
