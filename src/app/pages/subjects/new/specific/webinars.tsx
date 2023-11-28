@@ -9,21 +9,21 @@ import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import {useIntl} from 'react-intl';
 import './webinars.scss';
 
-function Card({
-    title = '*No title given',
-    description,
-    registration_url: url,
-    registration_link_text: watchText
-}) {
-    return (
-        <div className='card'>
-            <h2>{title}</h2>
-            <RawHTML html={description} />
-            <a href={url}>
-                {watchText} <FontAwesomeIcon icon={faChevronRight} />
-            </a>
-        </div>
-    );
+export default function MaybeWebinars() {
+    const ctx = useSpecificSubjectContext();
+
+    if (!ctx?.webinarHeader) {
+        return null;
+    }
+    return <Webinars />;
+}
+
+type WebinarCardData = {
+    title: string;
+    description: string;
+    registration_url: string;
+    registration_link_text: string;
+    link: string;
 }
 
 function Webinars() {
@@ -33,7 +33,7 @@ function Webinars() {
         }
     } = useSpecificSubjectContext();
     const cms = useEnglishSubject();
-    const blurbs = useDataFromSlug(`webinars/?subject=${cms}`) || [];
+    const blurbs: WebinarCardData[] = useDataFromSlug(`webinars/?subject=${cms}`) || [];
     const intl = useIntl();
 
     return blurbs.length ? (
@@ -52,11 +52,19 @@ function Webinars() {
     );
 }
 
-export default function MaybeWebinars() {
-    const ctx = useSpecificSubjectContext();
-
-    if (!ctx?.webinarHeader) {
-        return null;
-    }
-    return <Webinars />;
+function Card({
+    title = '*No title given',
+    description,
+    registration_url: url,
+    registration_link_text: watchText
+}: WebinarCardData) {
+    return (
+        <div className='card'>
+            <h2>{title}</h2>
+            <RawHTML html={description} />
+            <a href={url}>
+                {watchText} <FontAwesomeIcon icon={faChevronRight} />
+            </a>
+        </div>
+    );
 }

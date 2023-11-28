@@ -44,7 +44,7 @@ jest.mock('~/pages/subjects/new/specific/book-viewer', () => jest.fn());
 jest.mock('~/pages/subjects/new/specific/translation-selector', () => jest.fn());
 jest.mock('react-lazyload', () => jest.fn());
 jest.mock('~/pages/subjects/new/specific/blog-posts.js', () => jest.fn());
-jest.mock('~/pages/subjects/new/specific/webinars.js', () => jest.fn());
+jest.mock('~/pages/subjects/new/specific/import-webinars.js', () => jest.fn());
 jest.mock('~/pages/subjects/new/specific/learn-more.js', () => jest.fn());
 
 describe('specific subject page', () => {

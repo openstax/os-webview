@@ -22,7 +22,7 @@ import './specific.scss';
 
 const importPhilanthropicSupport = () => import('../philanthropic-support.js');
 const importLearnMore = () => import('./learn-more.js');
-const importWebinars = () => import('./webinars.js');
+const importWebinars = () => import('./import-webinars.js');
 const importBlogPosts = () => import('./blog-posts.js');
 
 // Had to make this layer to use the context

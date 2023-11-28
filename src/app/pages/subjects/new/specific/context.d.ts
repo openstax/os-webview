@@ -27,13 +27,22 @@ type SubjectEntry = {
     }
 };
 
+type SectionContent = {
+    heading: string;
+    linkHref: string;
+    linkText: string;
+};
+
 type SectionInfo = {
-    content: {
+    content: SectionContent & {
         image: string;
-        heading: string;
         adHtml: string;
-        linkHref: string;
-        linkText: string;
+    }
+};
+
+type WebinarSectionInfo = {
+    content: SectionContent & {
+        webinarDescription: string;
     }
 };
 
@@ -49,6 +58,7 @@ type SpecificSubjectPageData = {
     subjects?: SubjectEntry;
     tutorAd: SectionInfo;
     aboutOs: SectionInfo;
+    webinarHeader: WebinarSectionInfo;
     infoBoxes: [InfoBox[]];
 };
 
