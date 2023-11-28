@@ -1,5 +1,6 @@
 import React, {AnchorHTMLAttributes} from 'react';
 import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
+import useAmazonIframe from '~/pages/details/common/get-this-title-files/order-print-copy/use-amazon-iframe';
 import {
     usePrintCopyDialog,
     isRealPrintLink
@@ -180,7 +181,8 @@ function MenuItemWithGiveDialog({
 
 function PrintOption({slug}: {slug: string}) {
     const {onClick, PCDialog} = usePrintCopyDialog();
-    const amazonDataLink = useAmazonAssociatesLink(slug.replace('books/', ''));
+    const amazonDataLink = useAmazonAssociatesLink(slug);
+    const iframeCode = useAmazonIframe(slug);
     const {formatMessage} = useIntl();
     const text = formatMessage({
         id: 'getit.print',
@@ -194,7 +196,7 @@ function PrintOption({slug}: {slug: string}) {
     return (
         <a role='menuitem' href='open a dialog' onClick={onClick}>
             {text}
-            <PCDialog text={text} amazonDataLink={amazonDataLink} />
+            <PCDialog text={text} amazonDataLink={amazonDataLink} iframeCode={iframeCode} />
         </a>
     );
 }
