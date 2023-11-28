@@ -21,10 +21,7 @@ function Header({entry}) {
 
 function PhoneBox({entry, closeAfterDelay}) {
     if (typeof entry === 'string') {
-        return <RawHTML html={entry} />;
-    }
-    if (typeof entry === 'undefined') {
-        return null;
+        return <RawHTML className='iframe-box' html={entry} />;
     }
 
     return (
@@ -66,10 +63,7 @@ function DesktopBox({index, entry}) {
     const buttonClass = ['primary', 'secondary'][index];
 
     if (typeof entry === 'string') {
-        return <RawHTML html={entry} />;
-    }
-    if (typeof entry === 'undefined') {
-        return null;
+        return <RawHTML className='iframe-box' html={entry} />;
     }
 
     return (

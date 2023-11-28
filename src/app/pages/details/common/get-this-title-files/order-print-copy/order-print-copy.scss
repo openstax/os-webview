@@ -55,6 +55,17 @@
         }
     }
 
+    .iframe-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        iframe {
+            scale: 1.2;
+            margin: 8% 0 12%;
+        }
+    }
+
     .box {
         background-color: ui-color(white);
         border: 0;
@@ -101,4 +112,17 @@
         color: text-color(helper);
     }
 
+}
+
+.main-region .order-print-copy {
+    @include wider-than($phone-max) {
+        max-width: none;
+        width: min-content;
+    }
+
+    .boxes.larger-version {
+        grid-template-columns: 1fr 1fr;
+        padding: $normal-margin;
+        width: max-content;
+    }
 }
