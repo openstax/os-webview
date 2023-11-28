@@ -30,14 +30,39 @@ export const aboutOs = {
         heading: 'About OpenStax textbooks',
         image: {
             file: 'https://assets.openstax.org/oscms-prod/media/original_images/about_OpenStax_textbooks.png',
-            title: 'about_OpenStax_textbooks',
+            title: 'about_OpenStax_textbooks'
         },
-        osText:
-            "OpenStax is part of Rice University, a 501(c)(3) nonprofit charitable corporation. As an educational initiative, it's our mission to improve educational access and learning for everyone. We provide access to education for millions of learners by publishing high-quality, peer-reviewed, openly licensed college and high school textbooks that are available free online. We currently offer 15 free math textbooks, and our library is only growing: <i>Algebra and Trigonometry</i>; <i>Algebra and Trigonometry 2e</i>; <i>Calculus (Volumes 1, 2, and 3)</i>; <i>College Algebra</i>; <i>College Algebra 2e</i>; <i>College Algebra with Corequisite Support</i>; <i>College Algebra with Corequisite Support 2e</i>; <i>Elementary Algebra 2e</i>; <i>High School Statistics</i>; <i>Intermediate Algebra 2e</i>; <i>Introductory Business Statistics</i>; <i>Introductory Statistics</i>; <i>Prealgebra 2e</i>; <i>Precalculus</i>; and <i>Precalculus 2e</i>.",
+        osText: "OpenStax is part of Rice University, a 501(c)(3) nonprofit charitable corporation. As an educational initiative, it's our mission to improve educational access and learning for everyone. We provide access to education for millions of learners by publishing high-quality, peer-reviewed, openly licensed college and high school textbooks that are available free online. We currently offer 15 free math textbooks, and our library is only growing: <i>Algebra and Trigonometry</i>; <i>Algebra and Trigonometry 2e</i>; <i>Calculus (Volumes 1, 2, and 3)</i>; <i>College Algebra</i>; <i>College Algebra 2e</i>; <i>College Algebra with Corequisite Support</i>; <i>College Algebra with Corequisite Support 2e</i>; <i>Elementary Algebra 2e</i>; <i>High School Statistics</i>; <i>Intermediate Algebra 2e</i>; <i>Introductory Business Statistics</i>; <i>Introductory Statistics</i>; <i>Prealgebra 2e</i>; <i>Precalculus</i>; and <i>Precalculus 2e</i>.",
         linkText: 'Learn about OpenStax',
         linkHref: 'https://openstax.org/about-us'
     }
 };
+
+export const webinarHeader = {
+    content: {
+        heading: 'Webinar section heading about OpenStax math textbooks',
+        webinarDescription: 'Learn how our free textbooks are made...',
+        linkText: 'View all webinars',
+        linkHref: 'https://openstax.org/webinars'
+    }
+};
+
+export const webinarItems = camelCaseKeys([
+    {
+        title: 'The webinar title',
+        description: 'Join this OpenStax Ally ',
+        registration_url:
+            'https://event.on24.com/wcc/r/4348563/895FB8389998E8F3F5366F97A306A87E',
+        registration_link_text: 'Register today',
+    },
+    {
+        description: 'Forgot a title this OpenStax Ally ',
+        registration_url:
+            'https://event.on24.com/wcc/r/4348563/895FB8389998E8F3F5366F97A306A87E',
+        registration_link_text: 'Register today',
+    }
+]);
+
 const mathBooksData = camelCaseKeys({
     id: 400,
     meta: {
@@ -68,23 +93,12 @@ const mathBooksData = camelCaseKeys({
     tutor_ad: [],
     blog_header: [
         {
-            content:{
+            content: {
                 heading: 'Blogs about OpenStax math textbooks',
                 blog_description:
                     'Read up on best practices for using our free math textbooks and instructor resources in your course in these blog posts.',
                 link_text: 'View all blog posts',
                 link_href: 'https://openstax.org/blogs'
-            }
-        }
-    ],
-    webinar_header: [
-        {
-            content: {
-                heading: 'Webinars about OpenStax math textbooks',
-                webinar_description:
-                    'Learn how our free textbooks are made, straight from the experts. Get tips and tricks for using an OpenStax book from everyday educators.',
-                link_text: 'View all webinars',
-                link_href: 'https://openstax.org/webinars'
             }
         }
     ],
