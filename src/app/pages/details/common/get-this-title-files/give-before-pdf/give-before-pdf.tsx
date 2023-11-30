@@ -91,7 +91,7 @@ function GiveBeforePdfAfterConditionals({
             <img className='download-icon' src={data.download_image} alt='' />
             <h1>{data.download_ready}</h1>
             <hr />
-            <CommonElements onThankYouClick={onThankYouClick} data={data} />
+            <CommonElements onThankYouClick={onThankYouClick} data={data} doExperiment />
             <a
                 href={link}
                 {...(track ? {'data-track': track} : {})}

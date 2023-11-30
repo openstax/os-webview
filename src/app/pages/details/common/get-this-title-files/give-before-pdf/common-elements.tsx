@@ -13,32 +13,36 @@ type Data = {
     thank_you_link_text: string;
     giving_optional: string;
 };
+
 export default function CommonElements({
     data,
-    onThankYouClick
+    onThankYouClick,
+    doExperiment = false
 }: {
     data: Data;
     onThankYouClick: (event: React.MouseEvent) => void;
+    doExperiment?: boolean;
 }) {
     const [controlLink, alternateLink] = useGiveLinks();
-    const donationExperiment = enroll({
+    const variants = [
+        {
+            name: 'control',
+            // eslint-disable-next-line camelcase
+            header_subtitle: data.header_subtitle,
+            giveLink: controlLink
+        },
+        {
+            name: 'public good',
+            // eslint-disable-next-line camelcase
+            header_subtitle:
+                'Join us in sustaining OpenStax as a public good for years to come by giving today.',
+            giveLink: alternateLink
+        }
+    ];
+    const donationExperiment = doExperiment ? enroll({
         name: 'Donation Experiment 2023',
-        variants: [
-            {
-                name: 'control',
-                // eslint-disable-next-line camelcase
-                header_subtitle: data.header_subtitle,
-                giveLink: controlLink
-            },
-            {
-                name: 'public good',
-                // eslint-disable-next-line camelcase
-                header_subtitle:
-                    'Join us in sustaining OpenStax as a public good for years to come by giving today.',
-                giveLink: alternateLink
-            }
-        ]
-    });
+        variants
+    }) : variants[0];
 
     return (
         <React.Fragment>
