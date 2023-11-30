@@ -98,10 +98,10 @@ export default function MainMenu() {
         <ul className='nav-menu main-menu no-bullets' role='menubar' data-analytics-nav="Main Menu">
             <SubjectsMenu />
             <MenusFromCMS />
-            <LoginMenu />
             <li className='give-button-item' role='presentation'>
                 <GiveButton />
             </li>
+            <LoginMenu />
         </ul>
     );
 }

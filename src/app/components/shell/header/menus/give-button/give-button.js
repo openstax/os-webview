@@ -10,6 +10,6 @@ export default function GiveButton() {
     }
 
     return (
-        <a href={giveData.give_link} className="give-button medium">Give</a>
+        <a href={giveData.give_link} className="give-button medium" data-analytics-link>Give</a>
     );
 }

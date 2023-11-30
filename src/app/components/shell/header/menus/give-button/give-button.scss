@@ -2,10 +2,17 @@
 
 .give-button {
     @include button();
-    @extend %primary;
+    background-color: os-color(gold);
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    box-shadow: none;
+    border-radius: 0;
+    border: 0;
 
-    &:active,
-    &:hover {
+    &:hover,
+    &:focus {
+        background-color: darken(os-color(gold), 20%);
         color: text-color(white);
     }
 }
