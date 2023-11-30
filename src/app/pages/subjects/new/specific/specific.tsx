@@ -1,5 +1,7 @@
 import React from 'react';
-import useSpecificSubjectContext, {SpecificSubjectContextProvider} from './context';
+import useSpecificSubjectContext, {
+    SpecificSubjectContextProvider
+} from './context';
 import JITLoad from '~/helpers/jit-load';
 import Navigator from './navigator';
 import {NavigatorContextProvider} from './navigator-context';
@@ -20,7 +22,7 @@ import './specific.scss';
 
 const importPhilanthropicSupport = () => import('../philanthropic-support.js');
 const importLearnMore = () => import('./learn-more.js');
-const importWebinars = () => import('./webinars.js');
+const importWebinars = () => import('./import-webinars.js');
 const importBlogPosts = () => import('./blog-posts.js');
 
 // Had to make this layer to use the context
@@ -30,9 +32,7 @@ function Translations() {
     if (translations === null) {
         return null;
     }
-    return (
-        <TranslationSelector translations={translations} />
-    );
+    return <TranslationSelector translations={translations} />;
 }
 
 function TutorAd() {
@@ -42,7 +42,13 @@ function TutorAd() {
         return null;
     }
     const {
-        content: {image, heading, adHtml: html, linkHref: ctaLink, linkText: ctaText}
+        content: {
+            image,
+            heading,
+            adHtml: html,
+            linkHref: ctaLink,
+            linkText: ctaText
+        }
     } = tutorAd;
 
     return (
@@ -57,11 +63,7 @@ function SpecificSubjectAboutOpenStax() {
         return null;
     }
 
-    return (
-        <AboutOpenStax
-            aboutOs={aboutOs.content}
-        />
-    );
+    return <AboutOpenStax aboutOs={aboutOs.content} />;
 }
 
 function SpecificSubjectInfoBoxes() {
@@ -71,17 +73,12 @@ function SpecificSubjectInfoBoxes() {
         return null;
     }
 
-    return (
-        <InfoBoxes infoBoxes={infoBoxes[0]} />
-    );
+    return <InfoBoxes infoBoxes={infoBoxes[0]} />;
 }
 
-function ContextDependentBlock({subject}) {
-    const ctx = useSpecificSubjectContext();
+type FoundSubject = Exclude<ReturnType<typeof useFoundSubject>, undefined>;
 
-    if (!ctx) {
-        return null;
-    }
+function MainContent({subject}: {subject: FoundSubject}) {
     return (
         <React.Fragment>
             <div className={cn('targets', `${subject?.color}-stripe`)}>
@@ -91,18 +88,33 @@ function ContextDependentBlock({subject}) {
                 <LazyLoad once offset={100} height={400}>
                     <TutorAd />
                 </LazyLoad>
-                <section id="blog-posts" className="blog-posts">
-                    <LazyLoad once offset={100} height={400} className="content">
+                <section id='blog-posts' className='blog-posts'>
+                    <LazyLoad
+                        once
+                        offset={100}
+                        height={400}
+                        className='content'
+                    >
                         <JITLoad importFn={importBlogPosts} />
                     </LazyLoad>
                 </section>
-                <section id="webinars" className="webinars">
-                    <LazyLoad once offset={100} height={400} className="content">
+                <section id='webinars' className='webinars'>
+                    <LazyLoad
+                        once
+                        offset={100}
+                        height={400}
+                        className='content'
+                    >
                         <JITLoad importFn={importWebinars} />
                     </LazyLoad>
                 </section>
-                <section id="learn" className="learn-more">
-                    <LazyLoad once offset={100} height={400} className="content">
+                <section id='learn' className='learn-more'>
+                    <LazyLoad
+                        once
+                        offset={100}
+                        height={400}
+                        className='content'
+                    >
                         <JITLoad importFn={importLearnMore} />
                     </LazyLoad>
                 </section>
@@ -120,15 +132,15 @@ function ContextDependentBlock({subject}) {
     );
 }
 
-function SubjectInContext({subject}) {
+function SubjectInContext({subject}: {subject: FoundSubject}) {
     return (
         <SpecificSubjectContextProvider contextValueParameters={subject.value}>
             <WindowContextProvider>
                 <NavigatorContextProvider>
-                    <div className="subject-specific">
-                        <div className="content">
+                    <div className='subject-specific'>
+                        <div className='content'>
                             <Navigator subject={subject} />
-                            <ContextDependentBlock subject={subject} />
+                            <MainContent subject={subject} />
                         </div>
                     </div>
                 </NavigatorContextProvider>
@@ -150,7 +162,5 @@ export default function LoadSubject() {
         return <FindTranslation />;
     }
 
-    return (
-        <SubjectInContext subject={foundSubject} />
-    );
+    return <SubjectInContext subject={foundSubject} />;
 }

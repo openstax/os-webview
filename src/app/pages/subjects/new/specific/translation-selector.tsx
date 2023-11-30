@@ -10,7 +10,7 @@ import {useNavigate} from 'react-router-dom';
 type Translations = Array<LocaleEntry>;
 
 export default function TranslationSelector({
-    translations = []
+    translations
 }: {
     translations: Translations;
 }) {

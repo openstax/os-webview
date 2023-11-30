@@ -4,7 +4,11 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import './about-openstax.scss';
 
-export default function AboutOpenStax({forceButtonUrl, forceButtonText, aboutOs}) {
+export default function AboutOpenStax({
+    forceButtonUrl='',
+    forceButtonText='',
+    aboutOs
+}) {
     const {
         heading, osText: paragraph, linkText: buttonText, linkHref: buttonUrl, image: {file: imgSrc}
     } = aboutOs;
