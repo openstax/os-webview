@@ -1,6 +1,7 @@
 import React from 'react';
 import useDetailsContext from '../../../context';
 import useAmazonAssociatesLink from '../amazon-associates-link';
+import {isRealPrintLink} from '~/pages/details/common/get-this-title-files/options';
 import {IntlShape, useIntl} from 'react-intl';
 import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 
@@ -38,6 +39,10 @@ function amazonButton(
         id: 'printcopy.button1',
         defaultMessage: 'Order a personal copy'
     });
+
+    if (!isRealPrintLink(amazonDataLink.url)) {
+        return null;
+    }
 
     return ({
         headerText: individual,

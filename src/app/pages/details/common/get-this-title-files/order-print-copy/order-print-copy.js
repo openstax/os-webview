@@ -112,6 +112,10 @@ export default function OrderPrintCopy({iframeCode}) {
     }, [formatMessage, iframeCode]);
     const blurb = usePromise(amazonSnippet, '');
 
+    if (!iframeCode) {
+        return null;
+    }
+
     return (
         <nav className='order-print-copy'>
             <div className='blurb'>
