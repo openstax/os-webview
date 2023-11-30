@@ -4,9 +4,11 @@ import {
     TocOption, WebviewOption, PdfOption, BookshareOption,
     IbooksOption, KindleOption, CheggOption, OptionExpander
 } from './get-this-title-files/options';
+import useAmazonAssociatesLink from '~/pages/details/common/get-this-title-files//amazon-associates-link';
 import OrderPrintCopy from './get-this-title-files/order-print-copy/order-print-copy';
 import './get-this-title-files/get-this-title.scss';
 import trackLink from './track-link';
+import useAmazonIframe from './get-this-title-files/order-print-copy/use-amazon-iframe';
 
 function AdditionalOptions({model}) {
     return (
@@ -29,6 +31,8 @@ export default function GetThisTitle({model}) {
         },
         [model.id]
     );
+    const amazonDataLink = useAmazonAssociatesLink(model.slug);
+    const iframeCode = useAmazonIframe(model.slug);
 
     return (
         <div className="get-the-book">
@@ -45,7 +49,7 @@ export default function GetThisTitle({model}) {
                     <OptionExpander {...{expanded, additionalOptions}} toggle={toggleExpanded} />
                 </div>
             </div>
-            <OrderPrintCopy slug={model.slug} />
+            <OrderPrintCopy amazonDataLink={amazonDataLink} iframeCode={iframeCode} />
         </div>
     );
 }

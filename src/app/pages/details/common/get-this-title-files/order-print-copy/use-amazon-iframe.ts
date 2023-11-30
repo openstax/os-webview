@@ -12,8 +12,8 @@ export default function useAmazonIframe(slug: string) {
     const iframeCode = React.useMemo(
         () => amazonIframe?.length > 0 ? (`
             ${amazonIframe}
-            <div>
-                ${amazonDataLink.disclosure || 'disclosure: we make money from Amazon sales'}
+            <div class='blurb'>
+                ${amazonDataLink.disclosure || 'As an Amazon Associate we earn from qualifying purchases.'}
             </div>
         `) : null,
         [amazonIframe, amazonDataLink.disclosure]

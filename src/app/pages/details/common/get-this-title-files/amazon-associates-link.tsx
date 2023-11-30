@@ -11,7 +11,9 @@ export default function useAmazonAssociatesLink(slug: string) {
     const [data, setData] = React.useState<AmazonAssociatesLink>({});
 
     React.useEffect(() => {
-        fetch(`${buyprintServer}/${slug}.json`)
+        const strippedSlug = slug.replace('books/', '');
+
+        fetch(`${buyprintServer}/${strippedSlug}.json`)
             .then((response) => response.json())
             .then(({buy_urls: urls}) => {
                 if (urls.length > 0) {

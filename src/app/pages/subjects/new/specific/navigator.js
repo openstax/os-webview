@@ -33,7 +33,9 @@ function SectionLink({id, text}) {
     // Handle scrolling here initially if the hash is set
     React.useEffect(
         () => {
-            if (hash.substr(1) === id) {
+            const decodedHash = decodeURIComponent(hash).substring(1);
+
+            if (decodedHash === id) {
                 goTo(id);
             }
         },

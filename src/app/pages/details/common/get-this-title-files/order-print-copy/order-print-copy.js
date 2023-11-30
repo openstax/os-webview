@@ -6,7 +6,6 @@ import {useIntl} from 'react-intl';
 import './order-print-copy.scss';
 import amazonSnippet from '~/models/amazon-snippet';
 import {usePromise} from '~/helpers/use-data';
-import useAmazonIframe from './use-amazon-iframe';
 
 function Header({entry}) {
     return (
@@ -21,6 +20,10 @@ function Header({entry}) {
 }
 
 function PhoneBox({entry, closeAfterDelay}) {
+    if (typeof entry === 'string') {
+        return <RawHTML className='iframe-box' html={entry} />;
+    }
+
     return (
         <a
             className='box'
@@ -60,7 +63,7 @@ function DesktopBox({index, entry}) {
     const buttonClass = ['primary', 'secondary'][index];
 
     if (typeof entry === 'string') {
-        return <RawHTML html={entry} />;
+        return <RawHTML className='iframe-box' html={entry} />;
     }
 
     return (
@@ -85,10 +88,8 @@ function DesktopBoxes({contentArray}) {
     );
 }
 
-export default function OrderPrintCopy({slug}) {
+export default function OrderPrintCopy({iframeCode}) {
     const {formatMessage} = useIntl();
-    const iframeCode = useAmazonIframe(slug);
-
     const contentArray = React.useMemo(() => {
         const bookstore = formatMessage({
             id: 'printcopy.bookstore',

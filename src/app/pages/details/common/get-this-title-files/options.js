@@ -156,10 +156,11 @@ export function isRealPrintLink(url) {
 export function usePrintCopyDialog() {
     const [Dialog, open, close] = useDialog();
     const PCDialog = React.useCallback(
-        ({text, amazonDataLink}) => (
+        ({text, amazonDataLink, iframeCode}) => (
             <Dialog title={text}>
                 <OrderPrintCopy
                     amazonDataLink={amazonDataLink}
+                    iframeCode={iframeCode}
                     hideDialog={() => close()}
                 />
             </Dialog>

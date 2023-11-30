@@ -6,11 +6,13 @@ import './give-before-pdf.scss';
 
 export default function GiveBeforePdf({
     link,
+    track,
     close,
     data,
     onDownload
 }: {
     link: string;
+    track?: string;
     close: () => void;
     data: DonationPopupData;
     onDownload: () => void;
@@ -32,7 +34,7 @@ export default function GiveBeforePdf({
 
     return (
         <GiveBeforePdfAfterConditionals
-            {...{onThankYouClick, link, data, close, onDownload}}
+            {...{onThankYouClick, link, track, data, close, onDownload}}
         />
     );
 }
@@ -49,12 +51,14 @@ function Downloading({data}: {data: DonationPopupData}) {
 function GiveBeforePdfAfterConditionals({
     onThankYouClick,
     link,
+    track,
     data,
     close,
     onDownload
 }: {
     onThankYouClick: ReturnType<typeof useOnThankYouClick>['onThankYouClick'];
     link: string;
+    track: string | undefined;
     data: DonationPopupData;
     close: () => void;
     onDownload: (event: React.MouseEvent) => void;
@@ -88,7 +92,10 @@ function GiveBeforePdfAfterConditionals({
             <h1>{data.download_ready}</h1>
             <hr />
             <CommonElements onThankYouClick={onThankYouClick} data={data} />
-            <a href={link} onClick={closeAfterDelay} className='btn go-to'>
+            <a
+                href={link}
+                {...(track ? {'data-track': track} : {})}
+                onClick={closeAfterDelay} className='btn go-to'>
                 Go to your file
             </a>
         </div>
