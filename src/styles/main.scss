@@ -10,6 +10,10 @@ html {
 body {
     display: flex;
     flex-direction: column;
+
+    &.hide-osano .osano-cm-widget {
+        display: none;
+    }
 }
 
 #app {
