@@ -1,8 +1,6 @@
 import React from 'react';
-import {enroll} from '@openstax/experiments';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
-import useGiveLinks from './use-give-links';
 
 type Data = {
     header_subtitle: string;
@@ -17,33 +15,14 @@ type Data = {
 export default function CommonElements({
     data,
     onThankYouClick,
-    doExperiment = false
+    headerSubtitle = data.header_subtitle,
+    giveLink
 }: {
     data: Data;
     onThankYouClick: (event: React.MouseEvent) => void;
-    doExperiment?: boolean;
+    headerSubtitle?: string;
+    giveLink: string;
 }) {
-    const [controlLink, alternateLink] = useGiveLinks();
-    const variants = [
-        {
-            name: 'control',
-            // eslint-disable-next-line camelcase
-            header_subtitle: data.header_subtitle,
-            giveLink: controlLink
-        },
-        {
-            name: 'public good',
-            // eslint-disable-next-line camelcase
-            header_subtitle:
-                'Join us in sustaining OpenStax as a public good for years to come by giving today.',
-            giveLink: alternateLink
-        }
-    ];
-    const donationExperiment = doExperiment ? enroll({
-        name: 'Donation Experiment 2023',
-        variants
-    }) : variants[0];
-
     return (
         <React.Fragment>
             <img
@@ -56,11 +35,11 @@ export default function CommonElements({
             <p>
                 <span className='header-title'>{data.header_title}</span>
                 <br />
-                <span>{donationExperiment.header_subtitle}</span>
+                <span>{headerSubtitle}</span>
             </p>
             <div className='button-row'>
                 <a
-                    href={donationExperiment.giveLink}
+                    href={giveLink}
                     className='btn primary'
                     onClick={OpenGiveInNewWindow}
                     data-nudge-action='interacted'

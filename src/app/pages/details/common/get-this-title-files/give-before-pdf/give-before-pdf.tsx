@@ -2,6 +2,8 @@ import React from 'react';
 import ThankYou, {useOnThankYouClick} from './thank-you-form';
 import CommonElements from './common-elements';
 import type {DonationPopupData} from './use-donation-popup-data';
+import {enroll} from '@openstax/experiments';
+import useGiveLinks from './use-give-links';
 import './give-before-pdf.scss';
 
 export default function GiveBeforePdf({
@@ -63,6 +65,25 @@ function GiveBeforePdfAfterConditionals({
     close: () => void;
     onDownload: (event: React.MouseEvent) => void;
 }) {
+    const [controlLink, alternateLink] = useGiveLinks();
+    const variants = [
+        {
+            name: 'control',
+            headerSubtitle: data.header_subtitle,
+            giveLink: controlLink
+        },
+        {
+            name: 'public good',
+            headerSubtitle:
+                'Join us in sustaining OpenStax as a public good for years to come by giving today.',
+            giveLink: alternateLink
+        }
+    ];
+    const donationExperiment = enroll({
+        name: 'Donation Experiment 2023',
+        variants
+    });
+
     React.useEffect(() => {
         if ('dataLayer' in window) {
             (window.dataLayer as Array<object>).push({
@@ -91,11 +112,18 @@ function GiveBeforePdfAfterConditionals({
             <img className='download-icon' src={data.download_image} alt='' />
             <h1>{data.download_ready}</h1>
             <hr />
-            <CommonElements onThankYouClick={onThankYouClick} data={data} doExperiment />
+            <CommonElements
+                onThankYouClick={onThankYouClick}
+                data={data}
+                giveLink={donationExperiment.giveLink}
+                headerSubtitle={donationExperiment.headerSubtitle}
+            />
             <a
                 href={link}
                 {...(track ? {'data-track': track} : {})}
-                onClick={closeAfterDelay} className='btn go-to'>
+                onClick={closeAfterDelay}
+                className='btn go-to'
+            >
                 Go to your file
             </a>
         </div>
