@@ -41,14 +41,15 @@ function LanguageTextUsingIntl({locale}) {
     );
 }
 
-function AnotherLanguage({locale, LinkPresentation}) {
+function AnotherLanguage({locale, LinkPresentation, position, listLength}) {
     return (
         <React.Fragment>
-            {' '}
-            <FormattedMessage
-                id="and"
-                defaultMessage="and"
-            />
+            {listLength > 1 ? ', ' : ' '}
+            {position === listLength ?
+                <FormattedMessage
+                    id="and"
+                    defaultMessage="and"
+                /> : null}
             {' '}
             <LinkPresentation locale={locale} />
         </React.Fragment>
@@ -83,7 +84,10 @@ export default function LanguageSelector({
             <LanguageText locale={language} />
             {
                 otherLocales.map(
-                    (lo) => <AnotherLanguage key={lo} locale={lo} LinkPresentation={LinkPresentation} />
+                    (lo, i) => <AnotherLanguage
+                        key={lo} locale={lo} LinkPresentation={LinkPresentation}
+                        position={i+1} listLength={otherLocales.length}
+                    />
                 )
             }
         </LanguageSelectorWrapper>
