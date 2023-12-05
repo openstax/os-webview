@@ -95,7 +95,13 @@ function OsanoToggle() {
 
     document.body.classList.add('hide-osano');
     return (
-        <a href='//' role='button' onClick={showOsanoDrawer}>Manage cookies</a>
+        <button
+            type='button'
+            className="small"
+            onClick={showOsanoDrawer}
+        >
+            Manage cookies
+        </button>
     );
 }
 

@@ -1,15 +1,12 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .osano-cm-window {
-    position: fixed;
-    bottom: 0;
-    top: auto;
-
    [role="dialog"] {
         box-shadow: 0 0.2rem 0.6rem rgba(ui-color(black), 0.25);
         margin: auto;
-        padding: 1.5rem;
         max-width: calc(100% - 3rem);
+        padding: 1.5rem;
+        position: fixed;
 
         .osano-cm-content {
             padding-right: 4rem;

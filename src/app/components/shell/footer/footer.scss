@@ -97,6 +97,17 @@ $lower-footer: #3b3b3b;
                 }
             }
 
+            button {
+                background-color: transparent;
+                color: inherit;
+                display: inline;
+                font-size: inherit;
+                font-weight: inherit;
+                line-height: inherit;
+                padding: inherit;
+                text-align: inherit;
+            }
+
             &.col1 {
                 grid-area: col1;
             }
