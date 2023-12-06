@@ -180,6 +180,7 @@
         // stylelint-disable-next-line no-descending-specificity
         img {
             margin-top: $normal-margin;
+            max-width: 100%;
         }
 
         figcaption {

@@ -27,7 +27,12 @@
 
         padding: 0;
         position: relative;
+
+        img {
+            max-width: 100%;
+        }
     }
+
 }
 
 .press.page .article,
