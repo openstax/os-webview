@@ -1,5 +1,4 @@
 import React from 'react';
-import CookieDialog from '../cookie-notice/cookie-notice';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -20,7 +19,6 @@ function Footer({
 
     return (
         <React.Fragment>
-            <CookieDialog />
             <div className="top">
                 <div className="boxed">
                     <RawHTML html={supporters} />
@@ -42,6 +40,7 @@ function Footer({
                         <a href="/tos">Terms of Use</a>
                         <a href="/license">Licensing</a>
                         <a href="/privacy">Privacy Notice</a>
+                        <OsanoToggle />
                     </div>
                 </div>
             </div>
@@ -76,6 +75,33 @@ function Footer({
                 </div>
             </div>
         </React.Fragment>
+    );
+}
+
+function OsanoToggle() {
+    const osano = typeof window === 'undefined' ? undefined : window.Osano;
+    const showOsanoDrawer = React.useCallback(
+        (e) => {
+            e.preventDefault();
+            osano.cm.showDrawer('osano-cm-dom-info-dialog-open');
+        },
+        [osano]
+    );
+
+    if (osano === undefined || osano.cm.mode === 'debug') {
+        document.body.classList.remove('hide-osano');
+        return null;
+    }
+
+    document.body.classList.add('hide-osano');
+    return (
+        <button
+            type='button'
+            className="small"
+            onClick={showOsanoDrawer}
+        >
+            Manage cookies
+        </button>
     );
 }
 

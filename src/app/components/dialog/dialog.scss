@@ -15,7 +15,8 @@ dialog,
     position: relative;
     width: max-content;
 
-    &.footer-dialog {
+    &.footer-dialog,
+    &.osano-cm-dialog {
         align-self: flex-end;
         border-radius: 0;
         bottom: 0;
@@ -25,6 +26,17 @@ dialog,
         position: fixed;
         width: calc(100% - #{2 * $normal-margin});
         z-index: 3;
+    }
+
+    &.osano-cm-dialog {
+        padding: $normal-margin;
+        max-width: $text-content-max;
+        margin: $normal-margin auto;
+
+        .osano-cm-buttons {
+            max-width: none;
+            justify-content: center;
+        }
     }
 
     .title-bar {
