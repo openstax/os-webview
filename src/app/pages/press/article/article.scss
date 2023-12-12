@@ -29,8 +29,21 @@
         position: relative;
 
         img {
+            margin-top: $normal-margin;
             max-width: 100%;
         }
+
+        figcaption {
+            @include set-font(helper-label);
+
+            color: text-color(helper);
+            font-style: italic;
+
+            :first-child {
+                margin-top: 0.5rem;
+            }
+        }
+
     }
 
 }
