@@ -29,7 +29,7 @@ const importBlogPosts = () => import('./blog-posts.js');
 function Translations() {
     const translations = useTranslations();
 
-    if (translations === null) {
+    if (!translations) {
         return null;
     }
     return <TranslationSelector translations={translations} />;
