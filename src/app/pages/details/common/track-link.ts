@@ -14,8 +14,7 @@ export default function trackLink(event: TrackedMouseEvent, id?: string) {
     const trackThis =
         userInfo?.accounts_id &&
         el?.dataset?.track &&
-        id &&
-        userInfo?.salesforce_contact_id;
+        id;
 
     if (trackThis) {
         /* eslint-disable camelcase */
@@ -23,7 +22,7 @@ export default function trackLink(event: TrackedMouseEvent, id?: string) {
             book: id,
             account_uuid: userInfo.uuid,
             book_format: el.dataset.track,
-            contact_id: userInfo.salesforce_contact_id
+            contact_id: userInfo?.salesforce_contact_id
         };
         /* eslint-enable camelcase */
     }
