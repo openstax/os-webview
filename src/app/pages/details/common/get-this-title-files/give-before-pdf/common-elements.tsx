@@ -1,8 +1,6 @@
 import React from 'react';
-import {enroll} from '@openstax/experiments';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
-import useGiveLinks from './use-give-links';
 
 type Data = {
     header_subtitle: string;
@@ -13,33 +11,18 @@ type Data = {
     thank_you_link_text: string;
     giving_optional: string;
 };
+
 export default function CommonElements({
     data,
-    onThankYouClick
+    onThankYouClick,
+    headerSubtitle = data.header_subtitle,
+    giveLink
 }: {
     data: Data;
     onThankYouClick: (event: React.MouseEvent) => void;
+    headerSubtitle?: string;
+    giveLink: string;
 }) {
-    const [controlLink, alternateLink] = useGiveLinks();
-    const donationExperiment = enroll({
-        name: 'Donation Experiment 2023',
-        variants: [
-            {
-                name: 'control',
-                // eslint-disable-next-line camelcase
-                header_subtitle: data.header_subtitle,
-                giveLink: controlLink
-            },
-            {
-                name: 'public good',
-                // eslint-disable-next-line camelcase
-                header_subtitle:
-                    'Join us in sustaining OpenStax as a public good for years to come by giving today.',
-                giveLink: alternateLink
-            }
-        ]
-    });
-
     return (
         <React.Fragment>
             <img
@@ -52,11 +35,11 @@ export default function CommonElements({
             <p>
                 <span className='header-title'>{data.header_title}</span>
                 <br />
-                <span>{donationExperiment.header_subtitle}</span>
+                <span>{headerSubtitle}</span>
             </p>
             <div className='button-row'>
                 <a
-                    href={donationExperiment.giveLink}
+                    href={giveLink}
                     className='btn primary'
                     onClick={OpenGiveInNewWindow}
                     data-nudge-action='interacted'
