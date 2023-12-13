@@ -7,6 +7,7 @@ import {faDownload} from '@fortawesome/free-solid-svg-icons/faDownload';
 import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import {useToggle} from '~/helpers/data';
+import {useLocation} from 'react-router-dom';
 import trackLink from '../track-link';
 import useGiveDialog from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
@@ -82,6 +83,18 @@ const iconLookup: {[key: string]: IconDefinition} = {
     'external-link-alt': faExternalLinkAlt
 };
 
+function useVariant() {
+    const {search} = useLocation();
+
+    if (search.includes('Instructor')) {
+        return 'Instructor resource';
+    }
+    if (search.includes('Student')) {
+        return 'Student resource';
+    }
+    return '? resource';
+}
+
 function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
@@ -92,6 +105,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
         },
         [model.bookModel]
     );
+    const variant = useVariant();
 
     function openDialog(event: TrackedMouseEvent) {
         if (isDownload && enabled && model.link.url.endsWith('pdf')) {
@@ -123,6 +137,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
                             e: React.MouseEvent
                         ) => void
                     }
+                    variant={variant}
                 />
             )}
         </React.Fragment>

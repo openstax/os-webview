@@ -107,7 +107,7 @@ export function WebviewOption({model}) {
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>
-                <GiveDialog link={webviewLink} variant='online' />
+                <GiveDialog link={webviewLink} variant='View online' />
                 {showCallout && (
                     <div className='callout recommended-callout'>
                         <RecommendedCallout
