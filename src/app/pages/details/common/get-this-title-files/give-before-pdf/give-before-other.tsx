@@ -8,15 +8,28 @@ export default function GiveBeforeOther({
     link,
     close,
     data,
-    variant
+    track,
+    variant,
+    onDownload
 }: {
     link: string;
     close: () => void;
     data: DonationPopupData;
+    track?: string;
     variant?: string;
+    onDownload?: (event: React.MouseEvent) => void;
 }) {
     const {showThankYou, onThankYouClick} = useOnThankYouClick();
     const [controlLink] = useGiveLinks();
+    const beforeOpen = React.useCallback(
+        (e: React.MouseEvent) => {
+            close();
+            if (onDownload) {
+                onDownload(e);
+            }
+        },
+        [close, onDownload]
+    );
 
     if (showThankYou) {
         return <ThankYou link={link} close={close} source={variant} />;
@@ -33,7 +46,13 @@ export default function GiveBeforeOther({
                 onThankYouClick={onThankYouClick}
                 giveLink={controlLink}
             />
-            <a href={link} onClick={close} className='btn go-to'>
+            <a
+                href={link}
+                onClick={beforeOpen}
+                className='btn go-to'
+                {...(track ? {'data-track': track} : {})}
+                data-variant={lookupVariant(variant)}
+            >
                 Go to your {lookupVariant(variant)}
             </a>
         </div>

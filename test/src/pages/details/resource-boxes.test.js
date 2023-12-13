@@ -36,7 +36,7 @@ function LangWrapResourceBoxes({models}) {
                 <ResourceBoxes models={models} />
             </BookDetailsLoader>
         </MemoryRouter>
-    )
+    );
 }
 
 function instructorModels(resDelta, userDelta={}) {

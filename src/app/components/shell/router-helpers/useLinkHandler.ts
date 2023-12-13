@@ -8,8 +8,9 @@ export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> 
     trackingInfo: {
         book: string;
         account_uuid: string;
-        book_format: string;
-        contact_id: string;
+        book_format?: string;
+        contact_id?: string;
+        resource_name?: string;
     };
 };
 

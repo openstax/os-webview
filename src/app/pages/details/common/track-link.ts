@@ -10,7 +10,7 @@ userModel.load().then((i) => {
 
 export default function trackLink(event: TrackedMouseEvent, id?: string) {
     const el = linkhelper.validUrlClick(event);
-
+    const isResource = el.dataset.variant === 'resource';
     const trackThis =
         userInfo?.accounts_id &&
         el?.dataset?.track &&
@@ -21,7 +21,7 @@ export default function trackLink(event: TrackedMouseEvent, id?: string) {
         event.trackingInfo = {
             book: id,
             account_uuid: userInfo.uuid,
-            book_format: el.dataset.track,
+            [isResource ? 'resource_name' : 'book_format']: el.dataset.track,
             contact_id: userInfo?.salesforce_contact_id
         };
         /* eslint-enable camelcase */
