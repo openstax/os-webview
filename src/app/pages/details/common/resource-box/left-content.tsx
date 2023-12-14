@@ -94,7 +94,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     );
 
     function openDialog(event: TrackedMouseEvent) {
-        if (isDownload && enabled && model.link.url.endsWith('pdf')) {
+        if (isDownload && enabled) {
             event.preventDefault();
             open();
         }
