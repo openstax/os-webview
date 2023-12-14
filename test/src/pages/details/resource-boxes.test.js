@@ -1,6 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import BookDetailsLoader from './book-details-context';
+import {MemoryRouter} from 'react-router-dom';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {
     instructorResourceBoxPermissions,
@@ -28,11 +29,13 @@ const payload = {
 }
 
 function LangWrapResourceBoxes({models}) {
-    console.info('*** MODELS', models);
+    // console.info('*** MODELS', models);
     return (
-        <BookDetailsLoader slug={'books/college-algebra'}>
-            <ResourceBoxes models={models} />
-        </BookDetailsLoader>
+        <MemoryRouter initialEntries={['/details/books/sometitle?Instructor%20resources']}>
+            <BookDetailsLoader slug='books/college-algebra'>
+                <ResourceBoxes models={models} />
+            </BookDetailsLoader>
+        </MemoryRouter>
     )
 }
 

@@ -6,10 +6,7 @@ import {
     isRealPrintLink
 } from '~/pages/details/common/get-this-title-files/options';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {
-    useOpenGiveDialog,
-    VariantOptions
-} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
+import { useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import {useToggle} from '~/helpers/data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
@@ -36,7 +33,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
                 <MenuItemWithGiveDialog
                     defaultMessage='View online'
                     url={webviewLink}
-                    variant='online'
+                    variant='View online'
                 />
                 <MenuItemWithGiveDialog
                     defaultMessage='Download a PDF'
@@ -163,7 +160,7 @@ function MenuItem({
 }
 
 type MenuItemWithGiveDialogProps = {
-    variant?: VariantOptions;
+    variant?: string;
 } & Parameters<typeof MenuItem>[0];
 function MenuItemWithGiveDialog({
     variant,

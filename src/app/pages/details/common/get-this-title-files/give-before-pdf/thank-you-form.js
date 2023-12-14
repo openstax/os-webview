@@ -48,7 +48,7 @@ function FormWithAfterSubmit({
     );
 }
 
-export default function ThankYou({link, close}) {
+export default function ThankYou({link, close, source}) {
     const {userModel} = useUserContext();
     const first = userModel?.first_name;
     const last = userModel?.last_name;
@@ -65,6 +65,7 @@ export default function ThankYou({link, close}) {
             className='thank-you-form'
             afterSubmit={afterSubmit}
         >
+            <input type='hidden' name='source' value={source} />
             <h1>Send us a thank you note</h1>
             <div className='instructions'>
                 <span className='asterisk' />

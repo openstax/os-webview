@@ -4,20 +4,22 @@ import useGiveLinks from './use-give-links';
 import CommonElements from './common-elements';
 import type {DonationPopupData} from './use-donation-popup-data';
 
-export default function GiveBeforeOnline({
+export default function GiveBeforeOther({
     link,
     close,
-    data
+    data,
+    variant
 }: {
     link: string;
     close: () => void;
     data: DonationPopupData;
+    variant?: string;
 }) {
     const {showThankYou, onThankYouClick} = useOnThankYouClick();
     const [controlLink] = useGiveLinks();
 
     if (showThankYou) {
-        return <ThankYou link={link} close={close} />;
+        return <ThankYou link={link} close={close} source={variant} />;
     }
 
     return (
@@ -32,8 +34,18 @@ export default function GiveBeforeOnline({
                 giveLink={controlLink}
             />
             <a href={link} onClick={close} className='btn go-to'>
-                Go to your book
+                Go to your {lookupVariant(variant)}
             </a>
         </div>
     );
+}
+
+function lookupVariant(variant?: string) {
+    if (variant === 'View online') {
+        return 'book';
+    }
+    if (variant?.includes('resource')) {
+        return 'resource';
+    }
+    return 'item';
 }
