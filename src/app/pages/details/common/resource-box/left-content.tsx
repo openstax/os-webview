@@ -99,11 +99,14 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
     const {GiveDialog, open, enabled} = useGiveDialog();
+    const {userStatus} = useUserContext();
     const trackDownloadClick = React.useCallback(
         (event: TrackedMouseEvent) => {
-            trackLink(event, model.bookModel?.id);
+            if (userStatus?.isInstructor) {
+                trackLink(event, model.bookModel?.id);
+            }
         },
-        [model.bookModel]
+        [model.bookModel, userStatus]
     );
     const variant = useVariant();
 
