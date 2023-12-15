@@ -18,9 +18,7 @@ export default function useGiveDialog() {
         }: {
             link: string;
             track?: string;
-            onDownload?: (
-                e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-            ) => void;
+            onDownload?: (e: React.MouseEvent) => void;
             variant?: string;
         }) => {
             const Variant = lookupVariant(variant) as typeof GiveBeforeOther;
