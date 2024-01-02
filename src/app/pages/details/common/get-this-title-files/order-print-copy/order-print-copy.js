@@ -14,7 +14,7 @@ function Header({entry}) {
                 <FontAwesomeIcon icon={entry.headerIcon} />
                 {entry.headerText}
             </h1>
-            <RawHTML html={entry.disclosure} />
+            <RawHTML html={entry.disclosure ?? ''} />
         </React.Fragment>
     );
 }
