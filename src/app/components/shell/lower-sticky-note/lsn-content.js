@@ -8,7 +8,7 @@ import './lower-sticky-note.scss';
 
 function NoteWithImage({bannerInfo}) {
     return (
-        <div className="content with-image">
+        <div className="content with-image" role='marquee' aria-label='sticky note'>
             <img src={bannerInfo.banner_thumbnail} height="70" width="70" alt="" />
             <div className="text-side">
                 <RawHTML className="blurb" html={bannerInfo.html_message} />
@@ -23,7 +23,7 @@ function NoteWithImage({bannerInfo}) {
 
 function NoteWithoutImage({bannerInfo}) {
     return (
-        <div className="content">
+        <div className="content" role='marquee' aria-label='sticky note'>
             <RawHTML className="blurb" html={bannerInfo.html_message} />
             <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
                 <FontAwesomeIcon icon={faHeart} className="red-heart" />
