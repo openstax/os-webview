@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import cmsFetch from '~/helpers/cms-fetch';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
+import PutAway from '~/components/put-away/put-away';
 import './shared.scss';
 
 // Shim for incognito windows that disable localStorage
@@ -34,13 +35,7 @@ export function useSeenCounter(seenEnough) {
     return [hasBeenSeenEnough, increment];
 }
 
-export function PutAway({onClick}) {
-    return (
-        <div className="put-away" role="button" onClick={onClick} data-nudge-action="dismissed">
-            &times;
-        </div>
-    );
-}
+export {PutAway};
 
 export function usePutAway() {
     const [closed, setClosed] = useState(false);
