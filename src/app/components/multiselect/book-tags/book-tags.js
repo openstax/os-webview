@@ -23,7 +23,7 @@ function Tag({item}) {
     return (
         <span className="removable-tag">
             {item.label || item.text}
-            <PutAway onClick={onClick} />
+            <PutAway onClick={onClick} ariaLabel='remove' />
         </span>
     );
 }
