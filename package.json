@@ -65,8 +65,8 @@
         "eslint-webpack-plugin": "^4.0.0",
         "fast-css-loader": "^1.0.2",
         "fast-sass-loader": "^2.0.0",
-        "favicons": "^7.1.1",
-        "favicons-webpack-plugin": "6.0.0",
+        "favicons": "7.1.4",
+        "favicons-webpack-plugin": "6.0.1",
         "html-webpack-plugin": "^5.5.0",
         "ignore-loader": "^0.1.2",
         "jest": "27",
@@ -126,8 +126,12 @@
         "testEnvironment": "jsdom"
     },
     "engines": {
-        "node": ">=14.20.0"
+        "node": ">=16.20.2"
     },
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "prettier": {
         "bracketSpacing": false,
         "singleQuote": true,
