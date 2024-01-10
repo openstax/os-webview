@@ -6,9 +6,19 @@ import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import cn from 'classnames';
 import './lower-sticky-note.scss';
 
+function NoteContainer({withImage, children}) {
+    const classes = cn('content', {'with-image': withImage});
+
+    return (
+        <div className={classes}>
+            {children}
+        </div>
+    );
+}
+
 function NoteWithImage({bannerInfo}) {
     return (
-        <div className="content with-image">
+        <NoteContainer withImage={true}>
             <img src={bannerInfo.banner_thumbnail} height="70" width="70" alt="" />
             <div className="text-side">
                 <RawHTML className="blurb" html={bannerInfo.html_message} />
@@ -17,20 +27,20 @@ function NoteWithImage({bannerInfo}) {
                     <FontAwesomeIcon icon={faChevronRight} />
                 </a>
             </div>
-        </div>
+        </NoteContainer>
     );
 }
 
 function NoteWithoutImage({bannerInfo}) {
     return (
-        <div className="content">
+        <NoteContainer withImage={false}>
             <RawHTML className="blurb" html={bannerInfo.html_message} />
             <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
                 <FontAwesomeIcon icon={faHeart} className="red-heart" />
                 {bannerInfo.link_text}
                 <FontAwesomeIcon icon={faChevronRight} />
             </a>
-        </div>
+        </NoteContainer>
     );
 }
 
@@ -46,6 +56,8 @@ export default function LowerStickyNote({stickyData, PutAway}) {
             data-analytics-view
             data-analytics-nudge="donate"
             data-nudge-placement="banner"
+            role="dialog"
+            aria-label="sticky note"
         >
             <PutAway />
             {
