@@ -1,5 +1,4 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import '../../components/sticky-footer/button-group-mixin';
 
 $near-white: #f8f8f8;
 
@@ -37,15 +36,6 @@ $near-white: #f8f8f8;
     .green {
         background-color: os-color(deep-green);
         color: text-color(white);
-    }
-
-    .sticky-footer {
-        background-color: $near-white;
-        grid-template-columns: auto;
-        max-height: none;
-        padding: 1.5rem 3rem;
-
-        @include button-group-mixin();
     }
 
     [data-html] > p {
