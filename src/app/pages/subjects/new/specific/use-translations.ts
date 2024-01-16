@@ -8,5 +8,5 @@ export default function useTranslations() {
     }
     const {translations: [translations]} = ctx;
 
-    return translations;
+    return translations ?? null;
 }
