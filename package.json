@@ -1,6 +1,6 @@
 {
     "name": "@openstax/os-webview",
-    "version": "2.117.0",
+    "version": "2.118.0",
     "description": "OpenStax webview",
     "scripts": {
         "test": "jest --coverage ./test/src",
