@@ -9,12 +9,11 @@ import './dropdown.scss';
 
 export function MenuItem({label, url, local}) {
     const {innerWidth: _} = useWindowContext();
-    const tabIndex = isMobileDisplay() ? 0 : -1;
 
     return (
         <RawHTML
             Tag="a" html={label}
-            href={url} tabIndex={tabIndex} data-local={local} role="menuitem"
+            href={url} tabIndex={0} data-local={local} role="menuitem"
         />
     );
 }
@@ -102,8 +101,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
             onMouseEnter={openDesktopMenu}
             onMouseLeave={closeDesktopMenu}
             onKeyDown={navigateByKey}
-            role="menuitem" aria-haspopup="true"
-            labelledby={labelId}
+            role="none"
         >
             <OptionalWrapper isWrapper={!excludeWrapper}>
                 <a
