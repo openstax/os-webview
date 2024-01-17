@@ -4,16 +4,25 @@ import useDropdownContext from '../../dropdown-context';
 import useWindowContext from '~/contexts/window';
 import {isMobileDisplay} from '~/helpers/device';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
+import {useLocation} from 'react-router-dom';
 import cn from 'classnames';
 import './dropdown.scss';
 
+// Using ARIA Disclosure pattern rather than Menubar pattern
+// because menubar requires complexity that is not necessary
+// for ordinary website navigations, per
+// https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/
+
 export function MenuItem({label, url, local}) {
     const {innerWidth: _} = useWindowContext();
+    const urlPath = url.replace('/view-all', '');
+    const {pathname} = useLocation();
 
     return (
         <RawHTML
             Tag="a" html={label}
-            href={url} tabIndex={0} data-local={local} role="menuitem"
+            href={url} tabIndex={0} data-local={local}
+            {...(urlPath === pathname ? {'aria-current': 'page'} : {})}
         />
     );
 }
@@ -21,7 +30,7 @@ export function MenuItem({label, url, local}) {
 function OptionalWrapper({isWrapper=true, children}) {
     return (
         isWrapper ?
-            <div className="nav-menu-item dropdown" role="menu">
+            <div className="nav-menu-item dropdown">
                 {children}
             </div> : children
     );
@@ -33,6 +42,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
     const dropdownCtx = useDropdownContext();
     const isOpen = dropdownCtx.activeDropdown === topRef;
     const labelId = `menulabel-${label}`;
+    const ddId = `ddId-${label}`;
 
     function closeMenu() {
         dropdownCtx.setActiveDropdown({});
@@ -42,6 +52,13 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
         if (!isMobileDisplay()) {
             closeMenu();
         }
+    }
+
+    function closeOnBlur({currentTarget, relatedTarget}) {
+        if (currentTarget.parentNode.contains(relatedTarget)) {
+            return;
+        }
+        closeDesktopMenu();
     }
 
     function openMenu(event) {
@@ -68,6 +85,9 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
 
     // eslint-disable-next-line complexity
     function navigateByKey(event) {
+        if (isMobileDisplay()) {
+            return;
+        }
         switch (event.key) {
         case 'ArrowDown':
             event.preventDefault();
@@ -106,9 +126,10 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
             <OptionalWrapper isWrapper={!excludeWrapper}>
                 <a
                     href="."
-                    role="menuitem"
-                    aria-haspopup="true"
+                    aria-expanded={isOpen}
+                    aria-controls={ddId}
                     onFocus={openDesktopMenu}
+                    onBlur={closeOnBlur}
                     ref={topRef}
                     onClick={openMenu}
                     onKeyDown={treatSpaceOrEnterAsClick}
@@ -125,8 +146,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                 <div className="dropdown-container">
                     <div
                         className="dropdown-menu"
-                        role="menu"
-                        aria-expanded={isOpen}
+                        id={ddId}
                         aria-label={`${label} menu`}
                         ref={dropdownRef}
                         data-analytics-nav={navAnalytics || undefined}

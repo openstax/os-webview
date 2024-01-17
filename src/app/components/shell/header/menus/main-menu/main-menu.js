@@ -93,9 +93,26 @@ function SubjectsMenu() {
     );
 }
 
+function navigateWithArrows(event) {
+    switch (event.key) {
+        case 'ArrowRight':
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.closest('li').nextElementSibling?.querySelector('a').focus();
+            break;
+        case 'ArrowLeft':
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.closest('li').previousElementSibling?.querySelector('a').focus();
+            break;
+        default:
+            break;
+    }
+}
+
 export default function MainMenu() {
     return (
-        <ul className='nav-menu main-menu no-bullets' role='menubar' data-analytics-nav="Main Menu">
+        <ul className='nav-menu main-menu no-bullets' data-analytics-nav="Main Menu" onKeyDown={navigateWithArrows}>
             <SubjectsMenu />
             <MenusFromCMS />
             <li className='give-button-item' role='presentation'>
