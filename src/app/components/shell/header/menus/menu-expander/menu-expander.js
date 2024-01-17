@@ -19,12 +19,11 @@ function useCloseOnLocationChange(onClick, active) {
     }, [location, onClick, setActiveDropdown]);
 }
 
-export default function MenuExpander({active, onClick}) {
-    const ref = React.useRef();
+export default function MenuExpander({active, onClick, ...props}) {
     const onClickAndBlur = React.useCallback(
         (event) => {
             onClick(event);
-            ref.current.blur();
+            event.currentTarget.blur();
         },
         [onClick]
     );
@@ -38,8 +37,8 @@ export default function MenuExpander({active, onClick}) {
             aria-haspopup="true" aria-label="Toggle Meta Navigation Menu"
             tabIndex="0"
             onClick={onClickAndBlur}
-            ref={ref}
             onKeyDown={treatSpaceOrEnterAsClick}
+            {...props}
         >
             <span />
         </button>
