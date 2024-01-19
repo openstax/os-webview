@@ -110,15 +110,23 @@ function navigateWithArrows(event) {
     }
 }
 
-export default function MainMenu() {
+export function MainMenuItems() {
     return (
-        <ul className='nav-menu main-menu no-bullets' data-analytics-nav="Main Menu" onKeyDown={navigateWithArrows}>
+        <React.Fragment>
             <SubjectsMenu />
             <MenusFromCMS />
             <li className='give-button-item' role='presentation'>
                 <GiveButton />
             </li>
             <LoginMenu />
+        </React.Fragment>
+    );
+}
+
+export default function MainMenu() {
+    return (
+        <ul className='nav-menu main-menu no-bullets' data-analytics-nav="Main Menu" onKeyDown={navigateWithArrows}>
+            <MainMenuItems />
         </ul>
     );
 }

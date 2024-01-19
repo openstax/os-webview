@@ -3,7 +3,7 @@ import {DropdownContextProvider} from './dropdown-context';
 import MenuExpander from './menu-expander/menu-expander';
 import UpperMenu from './upper-menu/upper-menu';
 import Logo from './logo/logo';
-import MainMenu from './main-menu/main-menu';
+import MainMenu, {MainMenuItems} from './main-menu/main-menu';
 import {useToggle} from '~/helpers/data';
 import cn from 'classnames';
 import trapTab from '~/helpers/trapTab';
@@ -30,19 +30,16 @@ export default function Menus({open}: {open: string;}) {
         [active, expandMenu]
     );
 
-    React.useEffect(
-        () => {
-            const tabListener = trapTab(ref.current);
+    React.useEffect(() => {
+        const tabListener = trapTab(ref.current);
 
-            if (active) {
-                document.addEventListener('keydown', tabListener, true);
-            } else {
-                document.removeEventListener('keydown', tabListener, true);
-            }
-            return () => window.removeEventListener('keydown', tabListener, true);
-        },
-        [active]
-    );
+        if (active) {
+            document.addEventListener('keydown', tabListener, true);
+        } else {
+            document.removeEventListener('keydown', tabListener, true);
+        }
+        return () => window.removeEventListener('keydown', tabListener, true);
+    }, [active]);
 
     return (
         <DropdownContextProvider>
@@ -72,8 +69,10 @@ export default function Menus({open}: {open: string;}) {
                 <div className='menu-popover-overlay' onClick={clickOverlay}>
                     <div id='menu-popover' className='menu-popover'>
                         <div className='menu-title'>Menu</div>
-                        <MainMenu />
-                        <UpperMenu />
+                        <ul className='no-bullets'>
+                            <MainMenuItems />
+                            <UpperMenu />
+                        </ul>
                     </div>
                 </div>
             </div>

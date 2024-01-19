@@ -86,6 +86,16 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
     // eslint-disable-next-line complexity
     function navigateByKey(event) {
         if (isMobileDisplay()) {
+            if (event.key === 'Escape' && dropdownCtx.activeDropdown.current) {
+                const focusReturnsTo = dropdownCtx.activeDropdown.current;
+
+                closeMenu();
+                focusReturnsTo.focus();
+                event.stopPropagation();
+            }
+            if (event.key.startsWith('Arrow') || ['Home', 'End'].includes(event.key)) {
+                event.preventDefault();
+            }
             return;
         }
         switch (event.key) {
@@ -107,6 +117,7 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
             break;
         case 'Escape':
             event.preventDefault();
+            event.stopPropagation();
             event.target.blur();
             closeDesktopMenu();
             break;

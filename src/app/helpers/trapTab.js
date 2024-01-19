@@ -25,8 +25,6 @@ export default function trapTab(el) {
         } else if (document?.activeElement === lastEl) {
             firstEl.focus();
             event.preventDefault();
-        } else {
-            console.info('** Normal navigation');
         }
     };
 }
