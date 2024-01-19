@@ -13,7 +13,7 @@ export function TutorAdThatTakesData({heading, image, html, ctaLink, ctaText}) {
                 <h2>{heading}</h2>
                 <img role="presentation" src={optimizedImage} />
                 <RawHTML html={html} />
-                <a className="btn primary" href={ctaLink}>{ctaText}</a>
+                <a data-analytics-link className="btn primary" href={ctaLink}>{ctaText}</a>
             </div>
         </section>
     );

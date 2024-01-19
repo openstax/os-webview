@@ -40,6 +40,7 @@ export default function GiveBeforeOther({
             className='give-before-pdf'
             data-analytics-view
             data-analytics-nudge='donate'
+            data-nudge-placement={variant}
         >
             <CommonElements
                 data={data}
