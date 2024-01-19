@@ -9,12 +9,12 @@ import cn from 'classnames';
 import trapTab from '~/helpers/trapTab';
 import './menus.scss';
 
-export default function Menus({open}) {
-    const ref = React.useRef();
+export default function Menus({open}: {open: string;}) {
+    const ref = React.useRef<HTMLDivElement>(null);
     const [active, toggle] = useToggle();
     const expandMenu = React.useCallback(() => toggle(), [toggle]);
     const clickOverlay = React.useCallback(
-        (event) => {
+        (event: React.MouseEvent) => {
             if (event.currentTarget === event.target) {
                 expandMenu();
             }
@@ -22,7 +22,7 @@ export default function Menus({open}) {
         [expandMenu]
     );
     const closeOnEsc = React.useCallback(
-        (event) => {
+        (event: React.KeyboardEvent) => {
             if (active && event.key === 'Escape') {
                 expandMenu();
             }
