@@ -12,7 +12,6 @@ import Results from './sections/results/results';
 import Participants from './sections/participants/participants';
 import SmallQuote from './sections/small-quote/small-quote';
 import SignUp from './sections/sign-up/sign-up';
-import StickyFooter from '~/components/sticky-footer/sticky-footer';
 import './institutional-partnership.scss';
 
 function unprefixKey(newObject, oldKey, prefix, data) {
@@ -43,12 +42,6 @@ function quoteData(data) {
 }
 
 function InstitutionalPartnership({data}) {
-    const leftButton = {
-        descriptionHtml: data.section_1_description,
-        text: data.section_1_link_text,
-        link: data.section_1_link
-    };
-
     return (
         <React.Fragment>
             <Banner {...sectionData(data, 1)} />
@@ -73,7 +66,6 @@ function InstitutionalPartnership({data}) {
             </LazyLoad>
             <LazyLoad>
                 <SignUp {...sectionData(data, 9)} />
-                <StickyFooter leftButton={leftButton} />
             </LazyLoad>
         </React.Fragment>
     );
