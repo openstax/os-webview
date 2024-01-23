@@ -25,6 +25,7 @@ function checkUserForProblems(user) {
 function getUserStatus(user={}) {
     const isInstructor = user.username && 'groups' in user && user.groups.includes('Faculty');
     const isStudent = user.username && !isInstructor;
+    const trackDownloads = user.accountsModel?.faculty_status === 'confirmed_faculty';
 
     checkUserForProblems();
     return {
@@ -36,7 +37,8 @@ function getUserStatus(user={}) {
         email: user.email,
         userInfo: user,
         school: user.accountsModel?.school_name,
-        uuid: user.uuid
+        uuid: user.uuid,
+        trackDownloads
     };
 }
 
