@@ -32,9 +32,13 @@ function isCanonical(slug) {
     return slug.includes('kinetic') || slug.endsWith('partner-program');
 }
 
+function getCanonicalPath(slug) {
+    return `${slug.replace(/.*\/(?!$)/, '/')}${slug.endsWith('/') ? '' : '/'}`;
+}
+
 export function GeneralPageFromSlug({slug, fallback}) {
     const {head, text: html} = useTextFromSlug(slug);
-    const canonicalPath = slug.replace(/.*\//, '/');
+    const canonicalPath = getCanonicalPath(slug);
     const putCanonicalLinkInPage = isCanonical(slug);
 
     useDocumentHead({
