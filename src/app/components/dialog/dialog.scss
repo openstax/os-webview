@@ -2,21 +2,22 @@
 
 dialog,
 [role="dialog"] {
-    background-color: ui-color(white);
-    border: 0;
-    border-radius: 0.4rem;
-    color: text-color(normal);
-    display: block;
-    grid-template-rows: auto auto 1fr;
-    height: auto;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-    position: relative;
-    width: max-content;
+    &:not([class *= 'osano']) {
+        background-color: ui-color(white);
+        border: 0;
+        border-radius: 0.4rem;
+        color: text-color(normal);
+        display: block;
+        grid-template-rows: auto auto 1fr;
+        height: auto;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        position: relative;
+        width: max-content;
+    }
 
-    &.footer-dialog,
-    &.osano-cm-dialog {
+    &.footer-dialog {
         align-self: flex-end;
         border-radius: 0;
         bottom: 0;
@@ -26,17 +27,6 @@ dialog,
         position: fixed;
         width: calc(100% - #{2 * $normal-margin});
         z-index: 3;
-    }
-
-    &.osano-cm-dialog {
-        padding: $normal-margin;
-        max-width: $text-content-max;
-        margin: $normal-margin auto;
-
-        .osano-cm-buttons {
-            max-width: none;
-            justify-content: center;
-        }
     }
 
     .title-bar {
