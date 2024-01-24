@@ -16,6 +16,7 @@ type UserContextType = {
         userInfo: UserType;
         school: string;
         uuid: string;
+        trackDownloads: boolean;
     };
     userModel?: UserModelType;
 };
