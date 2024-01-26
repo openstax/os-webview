@@ -11,6 +11,7 @@ import { useDataFromSlug } from '~/helpers/page-data-utils';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
 function DropdownOrMenuItem({item}) {
@@ -108,6 +109,7 @@ function navigateWithArrows(event) {
         default:
             break;
     }
+    treatSpaceOrEnterAsClick(event);
 }
 
 export function MainMenuItems() {

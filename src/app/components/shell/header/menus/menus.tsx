@@ -8,6 +8,7 @@ import {useToggle} from '~/helpers/data';
 import cn from 'classnames';
 import trapTab from '~/helpers/trapTab';
 import './menus.scss';
+import { treatSpaceOrEnterAsClick } from '~/helpers/events';
 
 export default function Menus({open}: {open: string;}) {
     const ref = React.useRef<HTMLDivElement>(null);
@@ -69,7 +70,7 @@ export default function Menus({open}: {open: string;}) {
                 <div className='menu-popover-overlay' onClick={clickOverlay}>
                     <div id='menu-popover' className='menu-popover'>
                         <div className='menu-title'>Menu</div>
-                        <ul className='no-bullets'>
+                        <ul className='no-bullets' onKeyDown={treatSpaceOrEnterAsClick}>
                             <MainMenuItems />
                             <UpperMenu />
                         </ul>
