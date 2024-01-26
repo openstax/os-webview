@@ -6,8 +6,7 @@ import ArrowToggle from '~/components/toggle/arrow-toggle';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import useNavigatorContext from './navigator-context';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useLocation, Link} from 'react-router-dom';
-import throttle from 'lodash/throttle';
+import {Link} from 'react-router-dom';
 import './navigator.scss';
 
 const LEARN_MORE_IDS = ['blog-posts', 'webinars', 'learn'];
@@ -48,33 +47,6 @@ function CategoryLink({category}) {
 
 function CategorySectionLinks() {
     const {categories} = useSpecificSubjectContext();
-    const {hash} = useLocation();
-    const {goTo} = useNavigatorContext();
-
-    // Image loads screw up the scroll-to location, so we listen for them
-    // and re-scroll when images complete loading
-    // throttled to reduce possible jitter
-    React.useEffect(
-        () => {
-            const throttleGoTo = throttle((target) => goTo(target), 500);
-            const initialScroll = () => {
-                throttleGoTo(hash.substring(1));
-            };
-
-            document.body.addEventListener(
-                'load',
-                initialScroll,
-                true
-            );
-            initialScroll();
-            return () => document.body.removeEventListener(
-                'load',
-                initialScroll,
-                true
-            );
-        },
-        [goTo, hash]
-    );
 
     return (
         <React.Fragment>
