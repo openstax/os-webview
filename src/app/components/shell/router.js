@@ -36,7 +36,8 @@ function ImportedPage({name}) {
             function Loading({error, pastDelay, retry}) {
                 if (error) {
                     if (error.code === 'MODULE_NOT_FOUND') {
-                        return <FallbackToGeneralPage name={name} />;
+                        return pathname.endsWith('/') ? <FallbackToGeneralPage name={name} />
+                        : <Navigate to={`${pathname}/`} replace />;
                     }
                     return <div>Error! <button onClick={ retry }>Retry</button></div>;
                 }
@@ -51,7 +52,7 @@ function ImportedPage({name}) {
                 loading: Loading
             });
         },
-        [name]
+        [name, pathname]
     );
 
     useAnalyticsPageView();
