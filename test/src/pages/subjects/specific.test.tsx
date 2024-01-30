@@ -43,7 +43,7 @@ jest.mock('~/contexts/subject-category', () => jest.fn(() => [mathCategories]));
 jest.mock('~/pages/subjects/new/specific/context', () =>
     jest.fn(() => ({categories: []}))
 );
-jest.mock('~/components/assignable-badge/assignable-badge', () => jest.fn());
+jest.mock('~/components/promote-badge/promote-badge', () => jest.fn());
 jest.mock('~/helpers/use-debounce-test', () => jest.fn(() => false));
 jest.mock('~/pages/subjects/new/specific/find-translation', () => jest.fn());
 jest.mock('~/pages/subjects/new/specific/navigator', () => jest.fn());
