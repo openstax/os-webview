@@ -5,8 +5,6 @@ import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
 import SavingsBlurb from '../../common/savings-blurb';
-import assignableSnippetPromise from '~/models/assignable-snippet';
-import {usePromise} from '~/helpers/use-data';
 import './details-tab.scss';
 
 function PolishTab({model}) {
@@ -34,18 +32,19 @@ function PolishTab({model}) {
     );
 }
 
-function AssignablePromo() {
-    const data = usePromise(assignableSnippetPromise);
-
+function Promo({data}) {
     if (!data) {
+        console.info('**No data');
         return null;
     }
+
     return (
-        <RawHTML html={data.assignableDescription} />
+        <RawHTML html={data.content.description} />
     );
 }
 
 function EnglishTab({model}) {
+    console.info('**MODEL', model);
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -60,7 +59,7 @@ function EnglishTab({model}) {
                 </div>
             </div>
             <div className="main">
-                { model.assignableBook && <AssignablePromo /> }
+                <Promo data={model.promoteSnippet} />
                 <div className="loc-summary-text">
                     <h3>
                         <FormattedMessage id="summary" defaultMessage="Summary" />
