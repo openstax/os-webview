@@ -17,7 +17,11 @@ const menuData = Object.entries(menuStructure).map(
     ([key, value]) => ({label: key, url: value})
 );
 
-function MenuItem({label, url, showButton}) {
+function MenuItem({label, url, showButton}: {
+    label: string;
+    url: string;
+    showButton: boolean;
+}) {
     if (label === 'Give') {
         return showButton ?
             null :

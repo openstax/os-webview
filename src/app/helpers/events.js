@@ -1,5 +1,7 @@
 export function treatKeydownAsClick(event, keyList) {
     if (keyList.includes(event.key)) {
+        const saveActiveElement = document.activeElement;
+
         event.target.dispatchEvent(new window.MouseEvent('click', {
             'view': window,
             'bubbles': true,
@@ -7,6 +9,7 @@ export function treatKeydownAsClick(event, keyList) {
         }));
         event.preventDefault();
         event.stopPropagation();
+        saveActiveElement.focus();
     }
 }
 

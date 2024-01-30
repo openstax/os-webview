@@ -1,20 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.dropdown {
-    position: relative;
-
-    // Keeps rightmost menu from hanging off the screen
-    &.rightmost .dropdown-container {
-        right: -1rem;
-    }
-
-    .chevron {
-        height: 1em;
-        margin-left: 0.5em;
-        width: 0.8rem;
-    }
-}
-
 .dropdown-menu {
     @include set-font(body-regular);
 
@@ -24,14 +9,6 @@
     display: none;
     padding: 1rem;
     width: auto;
-
-    // inline-block allows width control
-    &[aria-expanded="true"] {
-        display: inline-block;
-        height: auto;
-        opacity: 1;
-        transition: opacity 0.3s;
-    }
 
     a {
         color: os-color(gray);
@@ -54,6 +31,28 @@
             }
         }
     }
-
-
 }
+
+.dropdown {
+    position: relative;
+
+    // Keeps rightmost menu from hanging off the screen
+    &.rightmost .dropdown-container {
+        right: -1rem;
+    }
+
+    .chevron {
+        height: 1em;
+        margin-left: 0.5em;
+        width: 0.8rem;
+    }
+
+    // inline-block allows width control
+    > [aria-expanded="true"] + .dropdown-container > .dropdown-menu {
+        display: inline-block;
+        height: auto;
+        opacity: 1;
+        transition: opacity 0.3s;
+    }
+}
+

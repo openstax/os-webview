@@ -11,6 +11,7 @@ import { useDataFromSlug } from '~/helpers/page-data-utils';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
 function DropdownOrMenuItem({item}) {
@@ -93,15 +94,41 @@ function SubjectsMenu() {
     );
 }
 
-export default function MainMenu() {
+function navigateWithArrows(event) {
+    switch (event.key) {
+        case 'ArrowRight':
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.closest('li').nextElementSibling?.querySelector('a').focus();
+            break;
+        case 'ArrowLeft':
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.closest('li').previousElementSibling?.querySelector('a').focus();
+            break;
+        default:
+            break;
+    }
+    treatSpaceOrEnterAsClick(event);
+}
+
+export function MainMenuItems() {
     return (
-        <ul className='nav-menu main-menu no-bullets' role='menubar' data-analytics-nav="Main Menu">
+        <React.Fragment>
             <SubjectsMenu />
             <MenusFromCMS />
             <li className='give-button-item' role='presentation'>
                 <GiveButton />
             </li>
             <LoginMenu />
+        </React.Fragment>
+    );
+}
+
+export default function MainMenu() {
+    return (
+        <ul className='nav-menu main-menu no-bullets' data-analytics-nav="Main Menu" onKeyDown={navigateWithArrows}>
+            <MainMenuItems />
         </ul>
     );
 }
