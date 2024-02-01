@@ -34,7 +34,6 @@ function PolishTab({model}) {
 
 function Promo({data}) {
     if (!data) {
-        console.info('**No data');
         return null;
     }
 
@@ -44,7 +43,6 @@ function Promo({data}) {
 }
 
 function EnglishTab({model}) {
-    console.info('**MODEL', model);
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -59,7 +57,7 @@ function EnglishTab({model}) {
                 </div>
             </div>
             <div className="main">
-                <Promo data={model.promoteSnippet} />
+                <Promo data={model.promoteSnippet[0]} />
                 <div className="loc-summary-text">
                     <h3>
                         <FormattedMessage id="summary" defaultMessage="Summary" />
