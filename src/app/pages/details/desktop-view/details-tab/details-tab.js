@@ -33,7 +33,7 @@ function PolishTab({model}) {
 }
 
 function Promo({data}) {
-    if (!data) {
+    if (!data?.content) {
         return null;
     }
 
@@ -43,6 +43,10 @@ function Promo({data}) {
 }
 
 function EnglishTab({model}) {
+    // promoteSnippet may or may not be in an array
+    const obj = model.promoteSnippet;
+    const promoData = obj.length ? obj[0] : obj;
+
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -57,7 +61,7 @@ function EnglishTab({model}) {
                 </div>
             </div>
             <div className="main">
-                <Promo data={model.promoteSnippet[0]} />
+                <Promo data={promoData} />
                 <div className="loc-summary-text">
                     <h3>
                         <FormattedMessage id="summary" defaultMessage="Summary" />
