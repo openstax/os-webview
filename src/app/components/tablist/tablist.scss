@@ -1,0 +1,45 @@
+.tabs {
+    display: flex;
+    flex-direction: column;
+
+    .vertical {
+        flex-direction: row;
+    }
+}
+
+[role='tab'] {
+    [aria-disabled] {
+        opacity: 0.5;
+    }
+}
+
+[role='tablist'] {
+    display: flex;
+
+    // Other selectors that might be styled on the individual instance
+
+    // &[aria-orientation='horizontal'] {
+    //     border-bottom: 1px solid gray;
+
+    //     [role='tab'] {
+    //         border-bottom: 3px solid transparent;
+    //     }
+    // }
+
+    &[aria-orientation='vertical'] {
+        flex-direction: column;
+        // border-right: 1px solid gray;
+
+        // [role='tab'] {
+        //     border-right: 3px solid transparent;
+        // }
+    }
+}
+
+//   [role=tablist] [role=tab][aria-selected=true] {
+//     border-color: var(--blue);
+//   }
+
+//   [role=tabpanel] {
+//     padding: 10px;
+//   }
