@@ -15,7 +15,7 @@ function useCollapsedState() {
     return scrollY < 100 || distanceFromBottom < 100;
 }
 
-function StickyFooterBody({leftButton, rightButton}) {
+export function StickyFooterBody({leftButton, rightButton}) {
     const collapsed = useCollapsedState();
     const {stickyFooterState: [_, setSFS]} = useSharedDataContext();
 
