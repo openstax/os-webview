@@ -64,7 +64,7 @@ function useTopicStories() {
     return ({topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular});
 }
 
-function useContextValue({displayFooter, footerText, footerButtonText, footerLink, meta}) {
+function useContextValue({footerText, footerButtonText, footerLink, meta}) {
     const navigate = useNavigate();
     const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} = useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
@@ -94,7 +94,7 @@ function useContextValue({displayFooter, footerText, footerButtonText, footerLin
         setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet,
         topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular,
         pageDescription: meta.searchDescription,
-        displayFooter, footerText, footerButtonText, footerLink,
+        footerText, footerButtonText, footerLink,
         searchFor
     };
 }
