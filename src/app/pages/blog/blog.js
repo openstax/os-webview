@@ -3,6 +3,7 @@ import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Routes, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject';
 import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
 import ExplorePage from './explore-page/explore-page';
@@ -14,8 +15,16 @@ import SearchResults from './search-results/search-results';
 import LatestBlogPosts from './latest-blog-posts/latest-blog-posts';
 import {ArticleFromSlug} from './article/article';
 import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
-import StickyFooter from '../../components/sticky-footer/sticky-footer';
 import './blog.scss';
+
+function WriteForUs({descriptionHtml, text, link}) {
+    return (
+        <section className='boxed'>
+            <RawHTML Tag='h2' className="description" html={descriptionHtml} />
+            <a href={link} className="btn primary">{text}</a>
+        </section>
+    );
+}
 
 export function SearchResultsPage() {
     const {pageDescription, searchFor} = useBlogContext();
@@ -42,9 +51,9 @@ export function MainBlogPage() {
         pinnedStory, pageDescription, searchFor,
         subjectSnippet: categories,
         collectionSnippet: collections,
-        displayFooter, footerText, footerButtonText, footerLink
+        footerText, footerButtonText, footerLink
     } = useBlogContext();
-    const leftButton = {
+    const writeForUsData = {
         descriptionHtml: footerText || 'Interested in sharing your story?',
         text: footerButtonText || 'Write for us',
         link: footerLink || '/write-for-us'
@@ -66,8 +75,9 @@ export function MainBlogPage() {
                 <PinnedArticle />
                 <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
             </div>
-            { displayFooter && <StickyFooter leftButton={leftButton} /> }
-
+            <div className="write-for-us">
+                <WriteForUs {...writeForUsData} />
+            </div>
         </WindowContextProvider>
     );
 }

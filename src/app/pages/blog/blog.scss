@@ -69,9 +69,22 @@
         }
     }
 
-    .sticky-footer {
-        grid-template-columns: auto;
+    .write-for-us {
+        background-color: ui-color(page-bg);
 
-        @include button-group-mixin();
+        > section {
+            padding: 4rem $normal-margin;
+            align-items: start;
+            gap: 2rem;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        .btn {
+            @include button();
+            @extend %primary;
+        }
     }
 }
