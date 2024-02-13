@@ -1,25 +1,26 @@
 import React from 'react';
-import AssignableBadge from '~/components/assignable-badge/assignable-badge';
+import PromoteBadge from '~/components/promote-badge/promote-badge';
 import bookPromise, {Item} from '~/models/book-titles';
 import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import GetTheBookDropdown from './dropdown-menu';
 import cn from 'classnames';
 import './book-tile.scss';
 
-export default function BookTile({
-    book: [book]
-}: {
-    book: [book: BookInfo];
-}) {
+export default function BookTile({book: [book]}: {book: [book: BookInfo]}) {
     const {coverUrl, title, slug} = book;
     const info = useBookInfo(book.id);
     const comingSoon = info?.book_state === 'coming_soon';
-    const assignable = info?.assignable_book === true;
+    const snippets = info?.promote_snippet.filter((s) => s.value.image);
+    const promoteSnippet = snippets?.find((s) => s.value.image);
     const classes = cn({
         'book-tile': true,
         'coming-soon': comingSoon,
-        assignable
+        promote: Boolean(promoteSnippet)
     });
+
+    if (info?.promote_snippet.length) {
+        console.info('Snippet', info.promote_snippet);
+    }
 
     return (
         <div className={classes}>
@@ -30,18 +31,25 @@ export default function BookTile({
                     width='240'
                     height='240'
                 />
-                {assignable && <AssignableBadge />}
+                {promoteSnippet && (
+                    <PromoteBadge
+                        name={promoteSnippet.value.name}
+                        image={promoteSnippet.value.image}
+                    />
+                )}
             </a>
             <div className='text-block'>
                 <a href={`/details/${slug}`}>{title}</a>
             </div>
-            {
-                comingSoon ?
-                    <div className='navmenu'>
-                        <button type='button' disabled>Coming soon</button>
-                    </div> :
-                    <GetTheBookDropdown bookInfo={book} />
-            }
+            {comingSoon ? (
+                <div className='navmenu'>
+                    <button type='button' disabled>
+                        Coming soon
+                    </button>
+                </div>
+            ) : (
+                <GetTheBookDropdown bookInfo={book} />
+            )}
         </div>
     );
 }
@@ -49,14 +57,9 @@ export default function BookTile({
 function useBookInfo(id: number) {
     const [state, setState] = React.useState<Item | undefined>();
 
-    React.useEffect(
-        () => {
-            bookPromise.then((items) =>
-                setState(items.find((i) => i.id === id))
-            );
-        },
-        [id]
-    );
+    React.useEffect(() => {
+        bookPromise.then((items) => setState(items.find((i) => i.id === id)));
+    }, [id]);
 
     return state;
 }
