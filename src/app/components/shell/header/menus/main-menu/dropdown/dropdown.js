@@ -76,6 +76,14 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
         }
     }
 
+    function toggleMenu(event) {
+        if (dropdownCtx.activeDropdown === topRef) {
+            closeMenu();
+        } else {
+            openMenu(event);
+        }
+    }
+
     function openDesktopMenu(event) {
         event.preventDefault();
         if (!isMobileDisplay()) {
@@ -139,10 +147,9 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                     href="."
                     aria-expanded={isOpen}
                     aria-controls={ddId}
-                    onFocus={openDesktopMenu}
                     onBlur={closeOnBlur}
                     ref={topRef}
-                    onClick={openMenu}
+                    onClick={toggleMenu}
                     onKeyDown={treatSpaceOrEnterAsClick}
                     className={cn({'is-open': isOpen})}
                     data-analytics-link={isOpen ? 'false' : ''}
