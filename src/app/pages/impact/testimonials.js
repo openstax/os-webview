@@ -88,7 +88,7 @@ export default function Testimonials({
             <div className="boxed">
                 <h2>{heading}</h2>
                 <RawHTML html={description} />
-                <Carousel atATime="3" mobileSlider>
+                <Carousel atATime="3" mobileSlider hoverTextThing='stories'>
                     {
                         stories.map((c, i) =>
                             <Card cards={stories} position={i} key={c.description} />

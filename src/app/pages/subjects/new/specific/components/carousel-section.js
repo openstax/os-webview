@@ -3,7 +3,7 @@ import Carousel from '~/components/carousel/carousel';
 import './carousel-section.scss';
 
 export default function CarouselSection({
-    heading, description, linkUrl, linkText, children
+    heading, description, linkUrl, linkText, children, thing
 }) {
     return (
         <React.Fragment>
@@ -14,7 +14,7 @@ export default function CarouselSection({
             <a className="btn primary" href={linkUrl}>
                 {linkText}
             </a>
-            <Carousel mobileSlider>
+            <Carousel mobileSlider hoverTextThing={thing}>
                 {children}
             </Carousel>
         </React.Fragment>

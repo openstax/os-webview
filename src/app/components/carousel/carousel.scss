@@ -28,9 +28,9 @@
         transform: translateY(-50%);
 
         .hover-text {
-            display: none;
             overflow: hidden;
-            padding: 0 1rem;
+            padding: 0;
+            max-width: 0.1rem;
         }
 
         @media(hover: hover) and (pointer: fine) {
@@ -43,14 +43,13 @@
 
                 .hover-text {
                     max-width: 9rem;
+                    padding: 0 1rem;
                 }
             }
 
             &:not(:hover) {
                 .hover-text {
                     color: transparent;
-                    max-width: 0;
-                    padding: 0;
                     transition: max-width 0.3s;
                 }
             }

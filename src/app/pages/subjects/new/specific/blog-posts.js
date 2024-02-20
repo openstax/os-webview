@@ -34,6 +34,7 @@ function BlogPosts() {
                 heading={heading}
                 description={blogDescription}
                 linkUrl={linkHref} linkText={linkText}
+                thing='blog entries'
             >
                 {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
             </CarouselSection> :
