@@ -5,7 +5,6 @@ import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from '../dropdown/dropdown';
 
 const settings = window.SETTINGS;
-const facultySignupStep4 = `${settings.accountHref}/i/signup/educator/profile_form`;
 const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
 const profileLink = `${settings.accountHref}/profile`;
 
@@ -27,27 +26,17 @@ export default function LoginMenuWithDropdown() {
     // updates logoutLink
     useLocation();
     const label = `Hi ${userModel.first_name || userModel.username}`;
-    const incomplete = (
-        !(userModel.groups || []).includes('Student') &&
-        userModel.needsProfileCompleted &&
-        userModel.is_newflow &&
-        !userModel.stale_verification
-    );
-    const instructorEligible = !(
-        (userModel.groups || []).includes('Faculty') ||
-        (!userModel.stale_verification && userModel.pending_verification) ||
-        userModel.pendingInstructorAccess ||
-        userModel.emailUnverified ||
-        userModel.rejectedFaculty
-    );
 
     return (
         <Dropdown className="login-menu nav-menu-item rightmost dropdown" label={label} excludeWrapper>
             <AccountItem />
-            {incomplete && <MenuItem label="Finish signing up" url={facultySignupStep4} />}
             {
-                instructorEligible &&
+                userModel.instructorEligible &&
                     <MenuItem label="Request instructor access" url={reqFacultyAccessLink} />
+            }
+            {
+                userModel.incompleteSignup &&
+                    <MenuItem label="Complete your profile" url={settings.accountHref} />
             }
             {
                 userModel.pendingInstructorAccess &&
