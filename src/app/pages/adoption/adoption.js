@@ -37,9 +37,6 @@ function BookSelectorPage({selectedBooksRef}) {
             <label>
                 <div className="control-group">
                     <HowUsing selectedBooks={selectedBooks} />
-                    <input type="checkbox" name="have_xanedu" />
-                    Have Xanedu, the OpenStax print partner, contact me about how to
-                    get print copies for my students.
                 </div>
             </label>
         </React.Fragment>
