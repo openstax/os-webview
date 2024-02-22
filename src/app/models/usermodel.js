@@ -126,7 +126,10 @@ function oldUserModel(sfUserModel) {
     })();
     // // May be confirmed_faculty, rejected_by_sheerid, incomplete_signup
     // faculty_status: 'rejected_by_sheerid',
-    const pendingInstructorAccess = sfUserModel.faculty_status === 'rejected_by_sheerid';
+    const pendingInstructorAccess = [
+        'rejected_by_sheerid',
+        'pending_faculty'
+    ].includes(sfUserModel.faculty_status);
     const incompleteSignup = sfUserModel.faculty_status === 'incomplete_signup';
     const emailUnverified = !sfUserModel.contact_infos.some((i) => i.is_verified);
     const instructorEligible = sfUserModel.faculty_status === 'no_faculty_info';
