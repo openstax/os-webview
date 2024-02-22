@@ -39,7 +39,7 @@ export default function Banner({data}) {
                     <Buttons data={data} />
                 </div>
             </div>
-            <ClippedImage className="right-bg" src={rightImage} alt />
+            <ClippedImage className="right-bg" src={rightImage} alt="" />
         </section>
     );
 }

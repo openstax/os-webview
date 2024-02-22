@@ -22,7 +22,7 @@ export default function AboutOpenStax({
                 <h2>{heading}</h2>
                 <RawHTML html={paragraph} />
                 <a className="btn primary" href={url}>{text}</a>
-                <img src={optimizedImage} />
+                <img src={optimizedImage} alt="" />
             </div>
         </section>
     );

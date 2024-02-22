@@ -149,7 +149,12 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                     data-analytics-label={label}
                 >
                     <span id={labelId}>{label}</span>
-                    <svg className="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 30">
+                    <svg
+                        className="chevron"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 18 30"
+                        aria-hidden="true"
+                    >
                         <title>arrow</title>
                         <path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)" />
                     </svg>
