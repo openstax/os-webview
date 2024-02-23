@@ -91,6 +91,36 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
         }
     }
 
+    function findNext() {
+        const nextSib = document.activeElement.nextElementSibling;
+
+        if (nextSib?.matches('a')) {
+            return nextSib;
+        }
+        const targets = Array.from(dropdownRef.current.querySelectorAll('a'));
+        const idx = targets.indexOf(document.activeElement);
+        const nextIdx = (idx + 1) % targets.length;
+
+        return targets[nextIdx];
+    }
+
+    function findPrev() {
+        const prevSib = document.activeElement.previousElementSibling;
+
+        if (prevSib?.matches('a')) {
+            return prevSib;
+        }
+        const targets = Array.from(dropdownRef.current.querySelectorAll('a'));
+        const idx = targets.indexOf(document.activeElement);
+
+        if (idx === 0) {
+            return topRef.current;
+        }
+        const prevIdx = (idx + targets.length - 1) % targets.length;
+
+        return targets[prevIdx];
+    }
+
     // eslint-disable-next-line complexity
     function navigateByKey(event) {
         if (isMobileDisplay()) {
@@ -112,15 +142,13 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
             if (document.activeElement === topRef.current) {
                 dropdownRef.current.firstChild.focus();
             } else {
-                document.activeElement.nextElementSibling?.focus();
+                findNext().focus();
             }
             break;
         case 'ArrowUp':
             event.preventDefault();
             if (document.activeElement !== topRef.current) {
-                const focusOn = document.activeElement.previousElementSibling || topRef.current;
-
-                focusOn.focus();
+                findPrev().focus();
             }
             break;
         case 'Escape':
