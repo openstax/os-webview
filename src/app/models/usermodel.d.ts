@@ -12,7 +12,6 @@ export type UserModelType = {
     incompleteSignup: boolean;
     pendingInstructorAccess: boolean;
     emailUnverified: boolean;
-    is_newflow: boolean; // Obsolete?
     username: string;
     self_reported_role: string;
     self_reported_school: string;

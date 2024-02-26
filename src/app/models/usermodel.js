@@ -39,7 +39,6 @@ const accountsModel = {
         //     salesforce_contact_id: '0037h00000SEXNqAAP',
         //     // May be confirmed_faculty, rejected_by_sheerid, incomplete_signup
         //     faculty_status: 'no_faculty_info',
-        //     is_newflow: true,
         //     is_instructor_verification_stale: false,
         //     needs_complete_edu_profile: false,
         //     self_reported_role: 'instructor',
@@ -149,7 +148,6 @@ function oldUserModel(sfUserModel) {
         incompleteSignup,
         pendingInstructorAccess,
         emailUnverified,
-        is_newflow: sfUserModel.is_newflow,
         username: sfUserModel.id,
         self_reported_role: sfUserModel.self_reported_role,
         self_reported_school: sfUserModel.self_reported_school,
