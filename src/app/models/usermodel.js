@@ -38,8 +38,7 @@ const accountsModel = {
         //     using_openstax: false,
         //     salesforce_contact_id: '0037h00000SEXNqAAP',
         //     // May be confirmed_faculty, rejected_by_sheerid, incomplete_signup
-        //     faculty_status: 'confirmed_faculty',
-        //     is_newflow: true,
+        //     faculty_status: 'no_faculty_info',
         //     is_instructor_verification_stale: false,
         //     needs_complete_edu_profile: false,
         //     self_reported_role: 'instructor',
@@ -53,7 +52,7 @@ const accountsModel = {
         //             id: 61694,
         //             type: 'EmailAddress',
         //             value: 'rej2+mos1@rice.edu',
-        //             is_verified: true,
+        //             is_verified: false,
         //             is_guessed_preferred: true
         //         }
         //     ],
@@ -126,9 +125,13 @@ function oldUserModel(sfUserModel) {
     })();
     // // May be confirmed_faculty, rejected_by_sheerid, incomplete_signup
     // faculty_status: 'rejected_by_sheerid',
-    const pendingInstructorAccess = sfUserModel.faculty_status === 'rejected_by_sheerid';
-    const emailUnverified = sfUserModel.faculty_status === 'incomplete_signup';
-    const rejectedFaculty = sfUserModel.faculty_status === 'rejected_faculty';
+    const pendingInstructorAccess = [
+        'rejected_by_sheerid',
+        'pending_faculty'
+    ].includes(sfUserModel.faculty_status);
+    const incompleteSignup = sfUserModel.faculty_status === 'incomplete_signup';
+    const emailUnverified = !sfUserModel.contact_infos.some((i) => i.is_verified);
+    const instructorEligible = sfUserModel.faculty_status === 'no_faculty_info';
 
     /* eslint camelcase: 0 */
     return {
@@ -139,13 +142,12 @@ function oldUserModel(sfUserModel) {
         first_name: sfUserModel.first_name,
         groups,
         last_name: sfUserModel.last_name,
+        instructorEligible,
         pending_verification: isVerificationPending,
         stale_verification: isVerificationStale,
-        needsProfileCompleted: sfUserModel.needs_complete_edu_profile,
+        incompleteSignup,
         pendingInstructorAccess,
         emailUnverified,
-        rejectedFaculty,
-        is_newflow: sfUserModel.is_newflow,
         username: sfUserModel.id,
         self_reported_role: sfUserModel.self_reported_role,
         self_reported_school: sfUserModel.self_reported_school,

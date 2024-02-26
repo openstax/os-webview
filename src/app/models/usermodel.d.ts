@@ -6,13 +6,12 @@ export type UserModelType = {
     first_name: string;
     groups: string[];
     last_name: string;
+    instructorEligible: boolean;
     pending_verification: boolean;
     stale_verification: boolean;
-    needsProfileCompleted: boolean;
+    incompleteSignup: boolean;
     pendingInstructorAccess: boolean;
     emailUnverified: boolean;
-    rejectedFaculty: boolean;
-    is_newflow: boolean; // Obsolete?
     username: string;
     self_reported_role: string;
     self_reported_school: string;
