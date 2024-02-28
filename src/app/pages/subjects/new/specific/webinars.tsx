@@ -42,6 +42,7 @@ function Webinars() {
             description={webinarDescription}
             linkUrl={linkHref}
             linkText={linkText}
+            thing='webinars'
         >
             {blurbs.map((blurb) => (
                 <Card {...blurb} key={blurb.link} />
