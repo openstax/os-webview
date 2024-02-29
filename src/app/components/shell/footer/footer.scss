@@ -10,6 +10,10 @@ $lower-footer: #3b3b3b;
     .bottom {
         a {
             color: inherit;
+
+            &.btn-social {
+                color: text-color(white);
+            }
         }
     }
 
@@ -161,10 +165,6 @@ $lower-footer: #3b3b3b;
             grid-gap: 1rem;
             justify-content: left;
             list-style-type: none;
-
-            > .btn {
-                background-color: os-color(light-gray);
-            }
 
             > .rice-logo > img {
                 height: 4rem;
