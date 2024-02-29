@@ -62,7 +62,7 @@ export default function ExplorePage() {
     return (
         <WindowContextProvider>
             <div className="boxed left">
-                <Breadcrumb name="Main Blog" />
+                <Breadcrumb name="Blog" />
                 <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
                     <HeadingForExplorePage {...{subject, heading}} />
                 </HeadingAndSearchBar>
