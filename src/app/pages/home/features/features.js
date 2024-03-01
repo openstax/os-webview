@@ -2,44 +2,28 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import useOptimizedImage from '~/helpers/use-optimized-image';
+import {Tabs, Item} from '~/components/tablist/tablist';
 import './features.scss';
 
-function RadioItem({item, selectedItem, changeItem}) {
-    const checked = selectedItem === item;
-
-    return (
-        <React.Fragment>
-            <span className="item-separator">|</span>
-            <div role="radio" onClick={() => changeItem(item)} aria-checked={checked}>
-                {item}
-            </div>
-        </React.Fragment>
-    );
+function Feature({name}) {
+    return <div className="feature">{name}</div>;
 }
 
-function RadioGroup({items, selectedItem, changeItem}) {
+function FeatureList({featureList, exploreLink}) {
     return (
-        <div role="radiogroup" className="custom">
-            {
-                items.map((item) =>
-                    <RadioItem key={item} {...{item, selectedItem, changeItem}} />
-                )
-            }
+        <div className="feature-list">
+            {featureList?.map((f) => (
+                <Feature key={f} name={f} />
+            ))}
+            <a className="feature explore" href={exploreLink}>
+                <span>Explore now</span>&nbsp;
+                <FontAwesomeIcon icon={faArrowRight} />
+            </a>
         </div>
     );
 }
 
-function Feature({name}) {
-    return (
-        <div className="feature">{name}</div>
-    );
-}
-
 export default function Features({data}) {
-    const [selectedItem, setSelectedItem] = React.useState(data.tab1Heading);
-    const [featureList, exploreLink] = selectedItem === data.tab1Heading ?
-        [data.tab1Features, data.tab1ExploreUrl] :
-        [data.tab2Features, data.tab2ExploreUrl];
     const bgImage = useOptimizedImage(data.bgImage, 570);
 
     return (
@@ -47,18 +31,20 @@ export default function Features({data}) {
             <img className="right-bg" src={bgImage} alt />
             <div className="boxed text-block">
                 <h2>{data.headline}</h2>
-                <RadioGroup
-                    selectedItem={selectedItem}
-                    items={[data.tab1Heading, data.tab2Heading]}
-                    changeItem={setSelectedItem}
-                />
-                <div className="feature-list">
-                    {featureList?.map((f) => <Feature key={f} name={f} />)}
-                    <a className="feature explore" href={exploreLink}>
-                        <span>Explore now</span>&nbsp;
-                        <FontAwesomeIcon icon={faArrowRight} />
-                    </a>
-                </div>
+                <Tabs aria-label="Features" defaultSelectedKey="instructors">
+                    <Item key="instructors" title={data.tab1Heading}>
+                        <FeatureList
+                            featureList={data.tab1Features}
+                            exploreLink={data.tab1ExploreUrl}
+                        />
+                    </Item>
+                    <Item key="students" title={data.tab2Heading}>
+                        <FeatureList
+                            featureList={data.tab2Features}
+                            exploreLink={data.tab2ExploreUrl}
+                        />
+                    </Item>
+                </Tabs>
             </div>
         </section>
     );
