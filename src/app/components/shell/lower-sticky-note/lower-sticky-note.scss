@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 #lower-sticky-note .lower-sticky-note-content {
-    background-color: #dbf3f8;
+    background-color: os-color(baby-blue);
     box-shadow: 0 0.2rem 0.6rem 0 rgba(ui-color(black), 0.25);
     padding: 2rem $normal-margin;
     position: relative;

@@ -1,7 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$focus-color: lighten(os-color(medium-blue), 9%);
-
 .page-header {
     align-items: center;
     background-color: rgba(ui-color(white), 0.98);
@@ -32,7 +30,7 @@ $focus-color: lighten(os-color(medium-blue), 9%);
 
     :focus {
         border-radius: 0.3rem;
-        box-shadow: 0 0 0.5rem 0.3rem $focus-color;
+        box-shadow: 0 0 0.5rem 0.3rem ui-color(focus-outline);
         padding: 0.2rem;
         margin: -0.2rem;
     }
@@ -57,7 +55,7 @@ $focus-color: lighten(os-color(medium-blue), 9%);
             background-color: os-color(red);
             color: text-color(white);
             padding: 0.5rem $normal-margin;
-            outline: thick solid $focus-color;
+            outline: thick solid ui-color(focus-outline);
             box-shadow: none;
         }
     }

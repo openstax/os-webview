@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 @import 'mixins/triangle';
 
-$baby-blue: #dbf3f8;
+$baby-blue: os-color(baby-blue);
 
 .errata-summary .hero {
     background-color: $baby-blue;
