@@ -8,7 +8,7 @@ export function useCurrentSearchParameter() {
     return new window.URLSearchParams(search).get('q') ?? '';
 }
 
-type SearchFunction = (term: string) => Array<unknown>;
+export type SearchFunction = (term: string) => unknown;
 
 function useContextValue({searchFor}: {searchFor: SearchFunction}) {
     const [searchString, setSearchString] = useState(
@@ -22,6 +22,14 @@ function useContextValue({searchFor}: {searchFor: SearchFunction}) {
     return {searchString, setSearchString, doSearch};
 }
 
-const {useContext, ContextProvider} = buildContext({useContextValue});
+type Returns = {
+    useContext: () => ReturnType<typeof useContextValue>;
+    ContextProvider: ({ children, contextValueParameters }: {
+        children: unknown;
+        contextValueParameters?: Parameters<typeof useContextValue>[0];
+    }) => React.JSX.Element | null;
+}
+
+const {useContext, ContextProvider} = buildContext({useContextValue}) as Returns;
 
 export {useContext as default, ContextProvider as SearchContextProvider};
