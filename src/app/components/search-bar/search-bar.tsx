@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
+import cn from 'classnames';
 import './search-bar.scss';
 
 type SearchBarParams = {
@@ -31,10 +32,7 @@ export default function SearchBar({searchFor, amongWhat}: SearchBarParams) {
     return (
         <SearchContextProvider contextValueParameters={{searchFor}}>
             <div className="search-bar">
-                <div className="input-with-clear-button">
-                    <SearchInput amongWhat={amongWhat} />
-                    <ClearButton />
-                </div>
+                <SearchInput amongWhat={amongWhat} />
                 <SearchButton />
             </div>
         </SearchContextProvider>
@@ -58,26 +56,53 @@ function SearchInput({amongWhat}: Pick<SearchBarParams, 'amongWhat'>) {
         },
         [doSearch]
     );
+    const inputId = `search-${amongWhat}`;
 
     return (
-        <input
-            type="text"
-            placeholder={`Search all ${amongWhat}`}
-            name="search-input"
-            value={searchString}
-            onChange={onChange}
-            onKeyDown={searchOnEnter}
-        />
+        <PlaceholderLabel forId={inputId} text={`Search all ${amongWhat}`}>
+            <div className="input-with-clear-button">
+                <input
+                    id={inputId}
+                    type="text"
+                    placeholder=""
+                    name="search-input"
+                    value={searchString}
+                    onChange={onChange}
+                    onKeyDown={searchOnEnter}
+                />
+                <ClearButton />
+            </div>
+        </PlaceholderLabel>
+    );
+}
+
+type PlaceholderLabelProps = {
+    forId: string;
+    text: string;
+};
+
+function PlaceholderLabel({
+    forId,
+    children,
+    text
+}: React.PropsWithChildren<PlaceholderLabelProps>) {
+    const {searchString} = useSearchContext();
+    const empty = searchString === '';
+
+    return (
+        <label className={cn('placeholder-label', {empty})} htmlFor={forId}>
+            {children}
+            <div className="floating-label">{text}</div>
+        </label>
     );
 }
 
 function ClearButton() {
-    const {searchString, setSearchString} = useSearchContext();
+    const {setSearchString} = useSearchContext();
     const clearSearch = React.useCallback(
         () => setSearchString(''),
         [setSearchString]
     );
-    const clearHidden = searchString.length === 0;
 
     return (
         <span
@@ -85,7 +110,6 @@ function ClearButton() {
             role="button"
             aria-label="clear search"
             tabIndex={0}
-            hidden={clearHidden}
             onClick={clearSearch}
             onKeyDown={treatSpaceOrEnterAsClick}
         >

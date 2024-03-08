@@ -25,7 +25,7 @@ describe('view webinars page', () => {
 
         render(<Component {...testData} />);
         expect(screen.queryAllByText('Register today')).toHaveLength(9);
-        expect(screen.queryAllByRole('button')).toHaveLength(3);
+        expect(screen.queryAllByRole('button')).toHaveLength(4);
     });
 
     it('has no paginator on short pages', () => {
@@ -35,6 +35,6 @@ describe('view webinars page', () => {
 
         render(<Component {...testData} />);
         expect(screen.queryAllByText('Register today')).toHaveLength(5);
-        expect(screen.queryAllByRole('button')).toHaveLength(1);
+        expect(screen.queryAllByRole('button')).toHaveLength(2);
     });
 });
