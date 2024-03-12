@@ -2,26 +2,27 @@
 
 .subject-specific {
     .carousel {
+        width: calc(100% - 4rem);
+
         @include wider-than($phone-max) {
             margin: 0 6rem;
         }
 
-        .items {
-            gap: 3rem;
-            width: 100%;
+        .carousel__inner-slide {
+            padding: 0 $normal-margin;
         }
-
+        
         .frame-changer {
             background-color: ui-color(secondary);
 
             &.right {
                 border-radius: 0 0.5rem 0.5rem 0;
-                right: -7rem;
+                right: -4rem;
             }
 
             &.left {
                 border-radius: 0.5rem 0 0 0.5rem;
-                left: -7rem;
+                left: -4rem;
             }
         }
     }

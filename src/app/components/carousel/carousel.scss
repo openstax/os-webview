@@ -3,6 +3,8 @@
 .carousel {
     display: grid;
     position: relative;
+    width: 100%;
+    max-width: calc(100vw - 3rem);
 
     &.mobile-slider {
         @include width-up-to($phone-max) {
@@ -27,7 +29,12 @@
         top: 50%;
         transform: translateY(-50%);
 
+        @include width-up-to($phone-max) {
+            display: none;
+        }
+
         .hover-text {
+            opacity: 0;
             overflow: hidden;
             padding: 0;
             max-width: 0.1rem;
@@ -36,72 +43,36 @@
         @media(hover: hover) and (pointer: fine) {
             .hover-text {
                 display: block;
+                transition: max-width 0.2s, opacity 0.1s;
             }
 
-            &:hover {
+            &:hover,
+            &:focus {
                 background-color: rgba(ui-color(black), 0.7);
 
                 .hover-text {
+                    opacity: 1;
                     max-width: 9rem;
                     padding: 0 1rem;
-                }
-            }
-
-            &:not(:hover) {
-                .hover-text {
-                    color: transparent;
-                    transition: max-width 0.3s;
                 }
             }
         }
 
         &.left {
-            border-bottom-right-radius: 0.3rem;
-            border-top-right-radius: 0.3rem;
+            border-bottom-left-radius: 0.3rem;
+            border-top-left-radius: 0.3rem;
             left: 0;
         }
 
         &.right {
-            border-bottom-left-radius: 0.3rem;
-            border-top-left-radius: 0.3rem;
+            border-bottom-right-radius: 0.3rem;
+            border-top-right-radius: 0.3rem;
             right: 0;
 
             .hover-text {
                 order: -1;
             }
         }
-        // }
-        /*
-            @include width-up-to($phone-max) {
-                align-items: center;
-                appearance: none;
-                background-color: ui-color(white);
-                border-top: thin solid ui-color(form-border);
-                color: text-color(link);
-                display: grid;
-                grid-auto-flow: column;
-                grid-gap: 1rem;
-                height: 5rem;
-                position: fixed;
-                bottom: 0;
-                width: 50%;
-
-                &.left {
-                    justify-content: left;
-                    left: 0;
-                }
-
-                &.right {
-                    right: 0;
-                    text-align: right;
-                    justify-content: right;
-
-                    .hover-text {
-                        order: -1;
-                    }
-                }
-            }
-        */
     }
 
     .viewport {
