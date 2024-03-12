@@ -4,7 +4,7 @@
     display: grid;
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
-    grid-template: 'input button' / 1fr min-content;
+    grid-template: 'input button' 100% / 1fr min-content;
     justify-items: left;
 
     @include width-up-to($phone-max) {
