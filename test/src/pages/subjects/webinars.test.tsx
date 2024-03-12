@@ -15,6 +15,7 @@ function Component() {
     );
 }
 
+jest.mock('pure-react-carousel/dist/react-carousel.es.css', () => null);
 jest.mock('~/pages/subjects/new/specific/context', () => jest.fn());
 jest.mock('~/helpers/page-data-utils', () => ({
     ...jest.requireActual('~/helpers/page-data-utils'),

@@ -30,6 +30,11 @@
         display: grid;
         grid-template-rows: 26rem 1fr;
         min-width: 26rem;
+        margin: 0 $normal-margin;
+
+        &:first-child {
+            margin-left: #{$normal-margin / 2};
+        }
 
         img {
             align-self: center;

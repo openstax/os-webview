@@ -43,6 +43,7 @@ function Webinars() {
             linkUrl={linkHref}
             linkText={linkText}
             thing='webinars'
+            minWidth={290}
         >
             {blurbs.map((blurb) => (
                 <Card {...blurb} key={blurb.link} />

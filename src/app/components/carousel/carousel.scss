@@ -3,6 +3,7 @@
 .carousel {
     display: grid;
     position: relative;
+    width: 100%;
 
     &.mobile-slider {
         @include width-up-to($phone-max) {

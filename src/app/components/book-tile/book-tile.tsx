@@ -18,10 +18,6 @@ export default function BookTile({book: [book]}: {book: [book: BookInfo]}) {
         promote: Boolean(promoteSnippet)
     });
 
-    if (info?.promote_snippet.length) {
-        console.info('Snippet', info.promote_snippet);
-    }
-
     return (
         <div className={classes}>
             <a href={`/details/${slug}`}>

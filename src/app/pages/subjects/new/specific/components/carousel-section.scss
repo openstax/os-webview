@@ -2,6 +2,8 @@
 
 .subject-specific {
     .carousel {
+        width: calc(100% - 4rem);
+
         @include wider-than($phone-max) {
             margin: 0 6rem;
         }
@@ -16,12 +18,12 @@
 
             &.right {
                 border-radius: 0 0.5rem 0.5rem 0;
-                right: -7rem;
+                right: -4rem;
             }
 
             &.left {
                 border-radius: 0.5rem 0 0 0.5rem;
-                left: -7rem;
+                left: -4rem;
             }
         }
     }
