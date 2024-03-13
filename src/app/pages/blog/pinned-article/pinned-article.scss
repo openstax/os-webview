@@ -8,7 +8,7 @@
     width: 100%;
 
     @include width-up-to($tablet-max) {
-        .link-image {
+        .clipped-image {
             height: 32rem;
         }
     }
@@ -17,7 +17,7 @@
         grid-template-columns: minmax(47%, auto) minmax(auto, $text-content-max);
         grid-template-rows: min-content;
 
-        .link-image {
+        .clipped-image {
             height: 100%;
         }
     }

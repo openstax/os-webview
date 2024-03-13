@@ -1,6 +1,7 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import Byline from '~/components/byline/byline';
+import ClippedImage from '~/components/clipped-image/clipped-image';
 
 export function blurbModel(data) {
     if (!data) {
@@ -29,8 +30,8 @@ export function blurbModel(data) {
 }
 
 export default function ArticleSummary({
-    articleSlug, altText, image, headline, subheading, body, date, author, collectionNames, articleSubjectNames,
-    forwardRef={}, setPath, openInNewWindow, HeadTag='h2'
+    articleSlug, image, headline, subheading, body, date, author, collectionNames, articleSubjectNames,
+    setPath, openInNewWindow, HeadTag='h2'
 }) {
     const tabTarget = openInNewWindow ? '_blank' : null;
     const SubTag = HeadTag.replace(/\d/, (n) => +n + 1);
@@ -58,14 +59,7 @@ export default function ArticleSummary({
 
     return (
         <React.Fragment>
-            <a
-                {...analytics}
-                className="link-image" href={`/blog/${articleSlug}`}
-                ref={forwardRef}
-                aria-label={altText || headline}
-                style={`background-image: url("${image}")`}
-                target={tabTarget} rel="noreferrer"
-            />
+            <ClippedImage src={image} />
             <div className="text-block">
                 <HeadTag className="article-headline">
                     <a {...analytics} href={`/blog/${articleSlug}`} onClick={onClick} target={tabTarget}>
