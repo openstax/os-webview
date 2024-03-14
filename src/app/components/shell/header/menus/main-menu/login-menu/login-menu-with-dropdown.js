@@ -36,7 +36,7 @@ export default function LoginMenuWithDropdown() {
             }
             {
                 userModel.incompleteSignup &&
-                    <MenuItem label="Complete your profile" url={settings.accountHref} />
+                    <MenuItem label="Complete your profile" url={profileLink} />
             }
             {
                 userModel.pendingInstructorAccess &&
