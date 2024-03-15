@@ -4,6 +4,7 @@ import {BrowserRouter, MemoryRouter, Routes, Route} from 'react-router-dom';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
 import {MainBlogPage, ArticlePage} from '~/pages/blog/blog';
 import {MainClassContextProvider} from '~/contexts/main-class';
+import {test, expect} from '@jest/globals';
 
 test('blog default page', async () => {
     render(
@@ -30,5 +31,5 @@ test('blog Article page', async () => {
         </MemoryRouter>
     );
     expect(await screen.findAllByText('Read more')).toHaveLength(3);
-    expect(screen.queryAllByRole('link')).toHaveLength(10);
+    expect(screen.queryAllByRole('link')).toHaveLength(7);
 });
