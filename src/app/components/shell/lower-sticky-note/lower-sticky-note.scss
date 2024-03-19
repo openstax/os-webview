@@ -47,6 +47,7 @@
         background-color: ui-color(white);
         max-width: #{$content-max - 2 * $normal-margin};
         margin: $normal-margin;
+        width: calc(100% - 3rem);
 
         .content {
             @include width-up-to($phone-max) {
