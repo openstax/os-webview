@@ -23,6 +23,12 @@ export default function CommonElements({
     headerSubtitle?: string;
     giveLink: string;
 }) {
+    const initialItem = React.useRef<HTMLAnchorElement>(null);
+
+    React.useEffect(
+        () => initialItem.current?.focus(),
+        []
+    );
     return (
         <React.Fragment>
             <img
@@ -43,6 +49,7 @@ export default function CommonElements({
                     className='btn primary'
                     onClick={OpenGiveInNewWindow}
                     data-nudge-action='interacted'
+                    ref={initialItem}
                 >
                     {data.give_link_text}
                     <FontAwesomeIcon icon={faHeart} />
