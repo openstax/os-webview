@@ -63,7 +63,6 @@ function Carousel({
             const viewportWidth = ref.current.base.getBoundingClientRect().width;
 
             setWidth(viewportWidth / atATime - (atATime - 1) * 15);
-            console.info('CarouselWidth is', viewportWidth);
         },
         [innerWidth, atATime]
     );
