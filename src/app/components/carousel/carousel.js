@@ -1,9 +1,10 @@
 import React from 'react';
+import {CarouselProvider, Slider, Slide, ButtonBack, ButtonNext} from 'pure-react-carousel';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
-import cn from 'classnames';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 import './carousel.scss';
 
 export function FrameChanger({
@@ -30,64 +31,13 @@ export function FrameChanger({
     );
 }
 
-function LeftFrameChanger({
-    frameNumber,
-    setFrameNumber,
-    step = 1,
-    hoverTextThing
-}) {
-    const destFrame = frameNumber - step;
-    const hoverText = hoverTextThing ? `Previous ${hoverTextThing}` : null;
-
-    return (
-        destFrame >= 0 && (
-            <FrameChanger
-                chevronDirection='left'
-                onClick={() => setFrameNumber(destFrame)}
-                hoverText={hoverText}
-            />
-        )
-    );
-}
-
-function RightFrameChanger({
-    frameNumber,
-    frameCount,
-    setFrameNumber,
-    step = 1,
-    hoverTextThing
-}) {
-    const destFrame = frameNumber + step;
-    const hoverText = hoverTextThing ? `Next ${hoverTextThing}` : null;
-
-    return (
-        destFrame <= frameCount - 1 && (
-            <FrameChanger
-                chevronDirection='right'
-                onClick={() => setFrameNumber(destFrame)}
-                hoverText={hoverText}
-            />
-        )
-    );
-}
-
-// How many whole items are in the viewport?
-function getStep(atATime, containerEl, frameNumber) {
-    if (!containerEl) {
-        return Number(atATime);
+function HoverText({which, thing}) {
+    if (!thing) {
+        return null;
     }
-    const {width: vpWidth} = containerEl.getBoundingClientRect();
-    const itemsFromCurrent = Array.from(
-        containerEl.querySelectorAll('.items > *')
-    ).slice(frameNumber);
-    const {left} = itemsFromCurrent[0].getBoundingClientRect();
-    const wholeItems = itemsFromCurrent.filter((i) => {
-        const {right} = i.getBoundingClientRect();
-
-        return right - left <= vpWidth;
-    });
-
-    return Math.max(Number(atATime), wholeItems.length);
+    return (
+        <span className='hover-text'>{`${which} ${thing}`}</span>
+    );
 }
 
 function Carousel({
@@ -95,48 +45,61 @@ function Carousel({
     atATime = 1,
     mobileSlider = false,
     initialFrame = 0,
-    hoverTextThing,
-    frameCount = React.Children.count(children)
+    hoverTextThing
 }) {
-    const [frameNumber, setFrameNumber] = React.useState(initialFrame);
+    const slides = React.useMemo(
+        () => {
+            return React.Children.toArray(children).map((child, i) => <Slide index={i} key={i}>{child}</Slide>);
+        },
+        [children]
+    );
     const ref = React.useRef();
-    const firstTimeRef = React.useRef(true);
-    const wcx = useWindowContext();
-    // Not useMemo because it has to update when children render
-    const step = getStep(atATime, ref.current, frameNumber);
+    const [width, setWidth] = React.useState(260);
+    const [height, setHeight] = React.useState(260);
+    const {innerWidth} = useWindowContext();
 
-    React.useLayoutEffect(() => {
-        const targetItem =
-            ref.current.querySelectorAll('.items > *')[frameNumber];
-        const {left: viewportLeft} = ref.current.getBoundingClientRect();
-        const {left: targetLeft} = targetItem.getBoundingClientRect();
-        const left = targetLeft - viewportLeft + ref.current.scrollLeft;
+    React.useEffect(
+        () => {
+            const viewportWidth = ref.current.base.getBoundingClientRect().width;
 
-        ref.current.scrollTo({
-            left,
-            behavior: firstTimeRef.current ? 'auto' : 'smooth'
-        });
-        firstTimeRef.current = false;
-    }, [frameNumber, wcx.innerWidth]);
+            setWidth(viewportWidth / atATime - (atATime - 1) * 15);
+        },
+        [innerWidth, atATime]
+    );
+
+    React.useEffect(
+        () => {
+            const slideContents = Array.from(ref.current.base.querySelectorAll('.carousel__inner-slide > *'));
+            const heights = slideContents.map((c) => c.getBoundingClientRect().height);
+
+            setHeight(Math.max(...heights));
+        },
+        [width]
+    );
 
     return (
-        <div className={cn('carousel', {'mobile-slider': mobileSlider})}>
-            <div className='viewport' ref={ref}>
-                <div className='items'>{children}</div>
-            </div>
-            <LeftFrameChanger
-                {...{frameNumber, setFrameNumber, step, hoverTextThing}}
-            />
-            <RightFrameChanger
-                {...{
-                    frameNumber,
-                    setFrameNumber,
-                    frameCount,
-                    step,
-                    hoverTextThing
-                }}
-            />
-        </div>
+        <CarouselProvider
+            naturalSlideWidth={width}
+            naturalSlideHeight={height}
+            visibleSlides={atATime}
+            step={atATime}
+            totalSlides={slides.length}
+            currentSlide={initialFrame}
+            ref={ref}
+            className={mobileSlider ? 'mobile-slider' : ''}
+        >
+            <Slider>
+                {slides}
+            </Slider>
+            <ButtonBack className="frame-changer left">
+                <FontAwesomeIcon icon={faChevronLeft} />
+                <HoverText which='Previous' thing={hoverTextThing} />
+            </ButtonBack>
+            <ButtonNext className="frame-changer right">
+                <FontAwesomeIcon icon={faChevronRight} />
+                <HoverText which='Next' thing={hoverTextThing} />
+            </ButtonNext>
+        </CarouselProvider>
     );
 }
 
