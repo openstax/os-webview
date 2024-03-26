@@ -10,7 +10,7 @@ userModel.load().then((i) => {
 
 export default function trackLink(event: TrackedMouseEvent, id?: string) {
     const el = linkhelper.validUrlClick(event);
-    const isResource = el.dataset.variant === 'resource';
+    const isResource = el.dataset?.variant === 'resource';
     const trackThis =
         userInfo?.accounts_id &&
         el?.dataset?.track &&
