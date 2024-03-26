@@ -83,7 +83,7 @@ function ErrataStatusNotification({errataId}) {
 
     return (
         notifyByEmail ?
-            `We'll be sending submission updates to ${email}.` :
+            ` We'll be sending submission updates to ${email}.` :
             <React.Fragment>
                 <br />
                 <a className="header-link" href={`/errata/${errataId}`}>
