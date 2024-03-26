@@ -9,6 +9,14 @@ import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
 import {faYoutube} from '@fortawesome/free-brands-svg-icons/faYoutube';
 import './footer.scss';
 
+function ListOfLinks({children}) {
+    return (
+        <ul className="list-of-links">
+            {React.Children.toArray(children).map((c) => (<li key={c}>{c}</li>))}
+        </ul>
+    );
+}
+
 function Footer({
     data: {
         supporters, copyright, apStatement,
@@ -24,23 +32,29 @@ function Footer({
                     <RawHTML html={supporters} />
                     <div className="column col1">
                         <h3>Help</h3>
-                        <a href="/contact">Contact Us</a>
-                        <a href="https://help.openstax.org/s/">Support Center</a>
-                        <a href="/faq">FAQ</a>
+                        <ListOfLinks>
+                            <a href="/contact">Contact Us</a>
+                            <a href="https://help.openstax.org/s/">Support Center</a>
+                            <a href="/faq">FAQ</a>
+                        </ListOfLinks>
                     </div>
                     <div className="column col2">
                         <h3>OpenStax</h3>
-                        <a href="/press">Press</a>
-                        <a href="http://www2.openstax.org/l/218812/2016-10-04/lvk">Newsletter</a>
-                        <a href="/careers">Careers</a>
+                        <ListOfLinks>
+                            <a href="/press">Press</a>
+                            <a href="http://www2.openstax.org/l/218812/2016-10-04/lvk">Newsletter</a>
+                            <a href="/careers">Careers</a>
+                        </ListOfLinks>
                     </div>
                     <div className="column col3">
                         <h3>Policies</h3>
-                        <a href="/accessibility-statement">Accessibility Statement</a>
-                        <a href="/tos">Terms of Use</a>
-                        <a href="/license">Licensing</a>
-                        <a href="/privacy">Privacy Notice</a>
-                        <OsanoToggle />
+                        <ListOfLinks>
+                            <a href="/accessibility-statement">Accessibility Statement</a>
+                            <a href="/tos">Terms of Use</a>
+                            <a href="/license">Licensing</a>
+                            <a href="/privacy">Privacy Notice</a>
+                            <OsanoToggle />
+                        </ListOfLinks>
                     </div>
                 </div>
             </div>
