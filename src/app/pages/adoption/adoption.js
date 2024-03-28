@@ -32,6 +32,7 @@ function BookSelectorPage({selectedBooksRef}) {
                 toggleBook={toggleBook}
                 limit="5"
                 additionalInstructions={instructions}
+                includeFilter={(b) => !b.comingSoon}
             />
             <input type="hidden" name="subject_interest" value={bookList} />
             <label>
