@@ -3,3 +3,7 @@
 export function useToggle(
     initialState?: boolean
 ): [boolean, (state?: boolean) => boolean];
+
+export function htmlToText(
+    html: string
+): string;
