@@ -3,7 +3,8 @@ import {render, screen} from '@testing-library/preact';
 import {within} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import ErrataSummaryLoader from '~/pages/errata-summary/errata-summary';
-import Table from '~/pages/errata-summary/table/table';
+import {MemoryRouter} from 'react-router-dom';
+import {test, expect} from '@jest/globals';
 
 const searchStr = '/errata/?book=Anatomy%20and%20Physiology';
 
@@ -21,11 +22,19 @@ async function getTableRows() {
 }
 
 test('shows all items in table', async () => {
-    render(<ErrataSummaryLoader />)
+    render(
+        <MemoryRouter>
+            <ErrataSummaryLoader />
+        </MemoryRouter>
+    );
     expect(await getTableRows()).toHaveLength(54);
 });
 test('filters', async () => {
-    render(<ErrataSummaryLoader />)
+    render(
+        <MemoryRouter>
+            <ErrataSummaryLoader />
+        </MemoryRouter>
+    );
     const filters = await screen.findByRole('radiogroup');
     const user = userEvent.setup({delay: null});
     const reviewButton = within(filters).queryByText('In Review');
