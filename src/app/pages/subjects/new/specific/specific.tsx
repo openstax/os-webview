@@ -17,6 +17,7 @@ import LazyLoad from 'react-lazyload';
 import useFoundSubject from './use-found-subject';
 import AboutOpenStax from '../about-openstax';
 import {InfoBoxes} from '../info-boxes';
+import { useCanonicalLink } from '~/helpers/use-document-head';
 import cn from 'classnames';
 import './specific.scss';
 
@@ -152,6 +153,8 @@ function SubjectInContext({subject}: {subject: FoundSubject}) {
 export default function LoadSubject() {
     const foundSubject = useFoundSubject();
     const timedOut = useDebounceTest(!foundSubject);
+
+    useCanonicalLink();
 
     if (!foundSubject) {
         // The timeout allows contexts that may just be in a transitional state

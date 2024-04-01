@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import useBlogContext, {BlogContextProvider} from './blog-context';
 import {Routes, Route, useLocation, useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
-import useDocumentHead from '~/helpers/use-document-head';
+import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject';
 import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
@@ -107,6 +107,8 @@ export function ArticlePage() {
 export default function LoadBlog() {
     const location = useLocation();
     const TopLevelPage = location.search ? SearchResultsPage : MainBlogPage;
+
+    useCanonicalLink();
 
     return (
         <main className="blog page">
