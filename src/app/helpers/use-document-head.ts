@@ -33,10 +33,7 @@ function noindexMeta() {
     return el;
 }
 
-export function useCanonicalLink(
-    controlsHeader = true,
-    path?: string
-) {
+export function useCanonicalLink(controlsHeader = true, path?: string) {
     const defaultPath = useLocation().pathname;
     const newPath = (path || defaultPath).replace(/\/$/, '');
 
@@ -179,12 +176,9 @@ export default function useDocumentHead({
     description?: string;
     noindex?: boolean;
 }) {
-    useEffect(
-        () => {
-            setPageTitleAndDescription(title, description);
-        },
-        [title, description]
-    );
+    useEffect(() => {
+        setPageTitleAndDescription(title, description);
+    }, [title, description]);
 
     useEffect(() => {
         if (noindex) {
