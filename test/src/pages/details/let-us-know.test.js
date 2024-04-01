@@ -8,7 +8,7 @@ const polishTitle = 'Fizyka dla szkół wyższych. Tom 1';
 
 test('handles English title', async () => {
     render(
-        <BookDetailsLoader slug={'books/college-algebra'}>
+        <BookDetailsLoader slug='books/college-algebra'>
             <LetUsKnow title={englishTitle} />
         </BookDetailsLoader>
     );
@@ -16,7 +16,7 @@ test('handles English title', async () => {
 });
 test('handles Polish title', async () => {
     render(
-        <BookDetailsLoader slug={'books/college-algebra'}>
+        <BookDetailsLoader slug='books/college-algebra'>
             <LetUsKnow title={polishTitle} />
         </BookDetailsLoader>
     );

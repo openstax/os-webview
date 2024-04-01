@@ -2,6 +2,7 @@ import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import ShellContextProvider from '../../../helpers/shell-context';
 import {DetailsContextProvider} from '~/pages/details/context';
+import {MemoryRouter} from 'react-router-dom';
 
 function BookDetailsWithContext({data, children}) {
     return (
@@ -15,6 +16,8 @@ function BookDetailsWithContext({data, children}) {
 
 export default function BookDetailsLoader({slug, children}) {
     return (
-        <LoaderPage slug={slug} Child={BookDetailsWithContext} doDocumentSetup props={{children}} />
+        <MemoryRouter initialEntries={[slug]}>
+            <LoaderPage slug={slug} Child={BookDetailsWithContext} doDocumentSetup props={{children}} />
+        </MemoryRouter>
     );
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import BookDetailsLoader from './book-details-context';
-import {MemoryRouter} from 'react-router-dom';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {
     instructorResourceBoxPermissions,
     studentResourceBoxPermissions
 } from '~/pages/details/common/resource-box/resource-box';
+import {test, expect} from '@jest/globals';
 
 // Test all the conditions in here:
 // userStatus: isInstructor: true|false
@@ -25,17 +25,15 @@ const userStatus = {
 };
 const payload = {
     heading: 'This is the heading',
-    description: 'This is <b>a description</b> in HTML',
-}
+    description: 'This is <b>a description</b> in HTML'
+};
 
 function LangWrapResourceBoxes({models}) {
     // console.info('*** MODELS', models);
     return (
-        <MemoryRouter initialEntries={['/details/books/sometitle?Instructor%20resources']}>
-            <BookDetailsLoader slug='books/college-algebra'>
-                <ResourceBoxes models={models} />
-            </BookDetailsLoader>
-        </MemoryRouter>
+        <BookDetailsLoader slug='books/college-algebra'>
+            <ResourceBoxes models={models} />
+        </BookDetailsLoader>
     );
 }
 

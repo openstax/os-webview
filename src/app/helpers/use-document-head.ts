@@ -3,6 +3,7 @@ import {htmlToText} from '~/helpers/data';
 import {setContentTags} from '~/helpers/tag-manager';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 import announcePageTitle from '~/components/shell/header/announce-page-title';
+import {useLocation} from 'react-router-dom';
 import $ from '~/helpers/$';
 
 function setCanonicalPath(newPath: string) {
@@ -32,18 +33,18 @@ function noindexMeta() {
     return el;
 }
 
-export function useCanonicalLink(
-    controlsHeader = true,
-    path = window.location.pathname
-) {
+export function useCanonicalLink(controlsHeader = true, path?: string) {
+    const defaultPath = useLocation().pathname;
+    const newPath = (path || defaultPath).replace(/\/$/, '');
+
     useEffect(() => {
         if (!controlsHeader) {
             return () => null;
         }
-        const linkController = setCanonicalPath(path);
+        const linkController = setCanonicalPath(newPath);
 
         return () => linkController.remove();
-    }, [controlsHeader, path]);
+    }, [controlsHeader, newPath]);
 }
 
 export function useNoIndex(controlsHeader: boolean) {
@@ -175,12 +176,9 @@ export default function useDocumentHead({
     description?: string;
     noindex?: boolean;
 }) {
-    useEffect(
-        () => {
-            setPageTitleAndDescription(title, description);
-        },
-        [title, description]
-    );
+    useEffect(() => {
+        setPageTitleAndDescription(title, description);
+    }, [title, description]);
 
     useEffect(() => {
         if (noindex) {

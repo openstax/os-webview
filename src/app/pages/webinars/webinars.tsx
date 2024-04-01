@@ -1,6 +1,7 @@
 import React from 'react';
 import {WebinarContextProvider} from './webinar-context';
 import {Routes, Route} from 'react-router-dom';
+import {useCanonicalLink} from '~/helpers/use-document-head';
 import JITLoad from '~/helpers/jit-load';
 import './webinars.scss';
 
@@ -12,6 +13,8 @@ const importSearch = () => import('./import-search-page');
 
 
 export default function WebinarsLoader() {
+    useCanonicalLink();
+
     return (
         <main className='webinars page'>
             <WebinarContextProvider>
