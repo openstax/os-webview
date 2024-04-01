@@ -3,16 +3,15 @@ import JITLoad from '~/helpers/jit-load';
 import {useStickyData} from '../shared.js';
 import Menus from './menus/menus';
 import $ from '~/helpers/$';
+import { PageTitleConfirmation } from './announce-page-title';
 import './header.scss';
 
 function doSkipToContent(event) {
     event.preventDefault();
     const mainEl = document.getElementById('main');
-    const focusableItems = Array.from(mainEl.querySelectorAll($.focusable));
+    const target = mainEl.querySelector($.focusable);
 
-    if (focusableItems.length > 0) {
-        const target = focusableItems[0];
-
+    if (target) {
         $.scrollTo(target);
         target.focus();
     }
@@ -24,12 +23,14 @@ function SkipToContent() {
     );
 }
 
+
 export default function Header() {
     const stickyData = useStickyData();
 
     return (
         <div className="page-header">
             <SkipToContent />
+            <PageTitleConfirmation />
             <JITLoad importFn={() => import('./sticky-note/sticky-note.js')} stickyData={stickyData} />
             <Menus />
         </div>
