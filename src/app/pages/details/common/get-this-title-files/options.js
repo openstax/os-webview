@@ -15,6 +15,7 @@ import {useDialog} from '~/components/dialog/dialog';
 import RecommendedCallout from './recommended-callout/recommended-callout';
 import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
 import useCalloutCounter from './recommended-callout/use-callout-counter';
+import trackLink from '../track-link';
 
 function IconAndText({icon, text}) {
     return (
@@ -94,6 +95,12 @@ export function WebviewOption({model}) {
         text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : texts.link
     };
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+    const trackDownload = React.useCallback(
+        (event) => {
+            trackLink(event, model.id);
+        },
+        [model.id]
+    );
 
     return (
         <Option condition={!model.comingSoon && webviewLink}>
@@ -101,13 +108,15 @@ export function WebviewOption({model}) {
                 <a
                     href={webviewLink}
                     data-local={isRex}
-                    data-track='Online'
                     rel='noreferrer'
                     onClick={openGiveDialog}
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>
-                <GiveDialog link={webviewLink} variant='View online' />
+                <GiveDialog
+                    link={webviewLink} variant='View online' track='Online'
+                    onDownload={trackDownload}
+                />
                 {showCallout && (
                     <div className='callout recommended-callout'>
                         <RecommendedCallout
@@ -134,6 +143,12 @@ export function PdfOption({model}) {
     const text = pdfText + (model.comingSoon ? sampleText : '');
     const pdfLink = model.highResolutionPdfUrl || model.lowResolutionPdfUrl;
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+    const trackDownload = React.useCallback(
+        (event) => {
+            trackLink(event, model.id);
+        },
+        [model.id]
+    );
 
     return (
         <React.Fragment>
@@ -141,10 +156,12 @@ export function PdfOption({model}) {
                 link={pdfLink}
                 icon={faCloudDownloadAlt}
                 text={text}
-                data-track='PDF'
                 onClick={openGiveDialog}
             />
-            <GiveDialog link={pdfLink} />
+            <GiveDialog
+                link={pdfLink} track='PDF'
+                onDownload={trackDownload}
+            />
         </React.Fragment>
     );
 }
