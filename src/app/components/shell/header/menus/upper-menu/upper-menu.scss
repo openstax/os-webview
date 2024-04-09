@@ -28,6 +28,7 @@
     .container {
         align-items: center;
         display: grid;
+        margin: 0;
 
         @include width-up-to($tablet-max) {
             justify-items: left;
@@ -91,8 +92,9 @@
         overflow: hidden;
         width: 0;
 
-        > img {
+        img {
             max-height: 3rem;
+            vertical-align: middle;
         }
 
         @media (max-height: #{39em * $scale-factor}) {
