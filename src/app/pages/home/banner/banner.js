@@ -31,7 +31,7 @@ export default function Banner({data}) {
 
     return (
         <section className="banner">
-            <img className="left-bg" src={leftImage} alt />
+            <img className="left-bg" src={leftImage} alt="" />
             <div className="boxed">
                 <div className="text-block">
                     <h1>{data.headline}</h1>
@@ -39,7 +39,7 @@ export default function Banner({data}) {
                     <Buttons data={data} />
                 </div>
             </div>
-            <ClippedImage className="right-bg" src={rightImage} alt="" />
+            <ClippedImage className="right-bg" src={rightImage} />
         </section>
     );
 }
