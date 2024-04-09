@@ -65,26 +65,61 @@ function Footer({
                         <RawHTML Tag="ap-html" html={apStatement} />
                     </div>
                     <ul className="social">
-                        <li><a className="btn btn-social facebook" href={facebookLink}>
-                            <FontAwesomeIcon icon={faFacebookF} alt="Facebook" aria-hidden={false} />
-                        </a></li>
-                        <li><a className="btn btn-social twitter" href={twitterLink}>
-                            <FontAwesomeIcon icon={faXTwitter} alt="Twitter" aria-hidden={false} />
-                        </a></li>
-                        <li><a className="btn btn-social linkedin" href={linkedinLink}>
-                            <FontAwesomeIcon icon={faLinkedinIn} alt="LinkedIn" aria-hidden={false} />
-                        </a></li>
-                        <li><a className="btn btn-social instagram" href="https://www.instagram.com/openstax/" title="Instagram">
-                            <FontAwesomeIcon icon={faInstagram} alt="Instagram" aria-hidden={false} />
-                        </a></li>
-                        <li><a className="btn btn-social youtube" href="https://www.youtube.com/openstax/">
-                            <FontAwesomeIcon icon={faYoutube} alt="YouTube" aria-hidden={false} />
-                        </a></li>
-                        <li><a className="rice-logo" href="http://www.rice.edu">
-                            <img
-                                src="/dist/images/rice-white-text.webp" alt="Rice University logo"
-                                width="99" height="40" />
-                        </a></li>
+                        <li>
+                            <a
+                                className="btn btn-social facebook"
+                                href={facebookLink}
+                                title="OpenStax on Facebook"
+                            >
+                                <FontAwesomeIcon icon={faFacebookF} />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className="btn btn-social twitter"
+                                href={twitterLink}
+                                title="OpenStax on X"
+                            >
+                                <FontAwesomeIcon icon={faXTwitter} />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className="btn btn-social linkedin"
+                                href={linkedinLink}
+                                title="OpenStax on LinkedIn"
+                            >
+                                <FontAwesomeIcon icon={faLinkedinIn} />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className="btn btn-social instagram"
+                                href="https://www.instagram.com/openstax/"
+                                title="OpenStax on Instagram"
+                            >
+                                <FontAwesomeIcon icon={faInstagram} />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className="btn btn-social youtube"
+                                href="https://www.youtube.com/openstax/"
+                                title="OpenStax on YouTube"
+                            >
+                                <FontAwesomeIcon icon={faYoutube} />
+                            </a>
+                        </li>
+                        <li>
+                            <a className="rice-logo" href="http://www.rice.edu">
+                                <img
+                                    src="/dist/images/rice-white-text.webp"
+                                    alt="Rice University logo"
+                                    width="99"
+                                    height="40"
+                                />
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
