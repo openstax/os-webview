@@ -1,9 +1,9 @@
-import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
+import {useState} from 'react';
 
 function useContextValue({prefix} = {prefix: 'menulabel'}) {
-    const [activeDropdown, setActiveDropdown] = React.useState({});
-    const [submenuLabel, setSubmenuLabel] = React.useState();
+    const [activeDropdown, setActiveDropdown] = useState({});
+    const [submenuLabel, setSubmenuLabel] = useState();
 
     return {
         activeDropdown,
@@ -16,14 +16,7 @@ function useContextValue({prefix} = {prefix: 'menulabel'}) {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-type Arg = {
-    prefix: string;
+export {
+    useContext as default,
+    ContextProvider as DropdownContextProvider
 };
-type DDCPArgs = React.PropsWithChildren<{
-    contextValueParameters?: Arg;
-}>;
-const DropdownContextProvider = ContextProvider as (
-    args: DDCPArgs
-) => JSX.Element;
-
-export {useContext as default, DropdownContextProvider};
