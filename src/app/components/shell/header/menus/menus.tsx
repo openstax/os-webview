@@ -43,40 +43,44 @@ export default function Menus({open}: {open: string;}) {
     }, [active]);
 
     return (
-        <DropdownContextProvider>
-            <div className={cn('menus desktop', {open})}>
-                <nav className='meta-nav'>
-                    <UpperMenu />
-                </nav>
-                <nav className='nav' aria-label='Main menu'>
-                    <div className='container'>
-                        <Logo />
-                        <MainMenu />
-                    </div>
-                </nav>
-            </div>
-            <div
-                className={cn('menus mobile', {active})}
-                ref={ref}
-                onKeyDown={closeOnEsc}
-            >
-                <Logo />
-                <MenuExpander
-                    active={active}
-                    onClick={expandMenu}
-                    aria-controls='menu-popover'
-                    aria-expanded={active}
-                />
-                <div className='menu-popover-overlay' onClick={clickOverlay}>
-                    <div id='menu-popover' className='menu-popover'>
-                        <div className='menu-title'>Menu</div>
-                        <ul className='no-bullets' onKeyDown={treatSpaceOrEnterAsClick}>
-                            <MainMenuItems />
-                            <UpperMenu />
-                        </ul>
+        <React.Fragment>
+            <DropdownContextProvider>
+                <div className={cn('menus desktop', {open})}>
+                    <nav className='meta-nav'>
+                        <UpperMenu />
+                    </nav>
+                    <nav className='nav' aria-label='Main menu'>
+                        <div className='container'>
+                            <Logo />
+                            <MainMenu />
+                        </div>
+                    </nav>
+                </div>
+            </DropdownContextProvider>
+            <DropdownContextProvider contextValueParameters={{prefix: 'mobile'}}>
+                <div
+                    className={cn('menus mobile', {active})}
+                    ref={ref}
+                    onKeyDown={closeOnEsc}
+                >
+                    <Logo />
+                    <MenuExpander
+                        active={active}
+                        onClick={expandMenu}
+                        aria-controls='menu-popover'
+                        aria-expanded={active}
+                    />
+                    <div className='menu-popover-overlay' onClick={clickOverlay}>
+                        <div id='menu-popover' className='menu-popover'>
+                            <div className='menu-title'>Menu</div>
+                            <ul className='no-bullets' onKeyDown={treatSpaceOrEnterAsClick}>
+                                <MainMenuItems />
+                                <UpperMenu />
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </DropdownContextProvider>
+            </DropdownContextProvider>
+        </React.Fragment>
     );
 }
