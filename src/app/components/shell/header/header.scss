@@ -21,18 +21,7 @@
 
     a {
         text-decoration: none;
-
-        &:active,
-        &:focus {
-            outline: none;
-        }
-    }
-
-    :focus {
         border-radius: 0.3rem;
-        box-shadow: 0 0 0.5rem 0.3rem ui-color(focus-outline);
-        padding: 0.2rem;
-        margin: -0.2rem;
     }
 
     @at-root .active#{&} {

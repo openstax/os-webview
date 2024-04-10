@@ -27,6 +27,7 @@
 
     .container {
         align-items: center;
+        align-content: center;
         display: grid;
         margin: 0;
 
@@ -44,8 +45,10 @@
             max-width: $content-max;
             width: 100%;
 
-            a {
+            a:not(.logo-wrapper) {
                 color: inherit;
+                padding: 0.5rem;
+                margin: -0.5rem;
             }
         }
 
