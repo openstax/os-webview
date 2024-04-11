@@ -25,14 +25,14 @@ function MenuItem({label, url, showButton}: {
     if (label === 'Give') {
         return showButton ?
             null :
-            <a className="nav-menu" target="_blank" rel="noreferrer" href={url}>
+            <li className="nav-menu"><a target="_blank" rel="noreferrer" href={url}>
                 {label}
-            </a>
+            </a></li>
         ;
     }
 
     return (
-        <a className="nav-menu" href={url}>{label}</a>
+        <li className="nav-menu"><a href={url}>{label}</a></li>
     );
 }
 
@@ -43,16 +43,16 @@ export default function UpperMenu() {
     const riceLogo = useOptimizedImage('https://openstax.org/dist/images/rice.webp', 80);
 
     return (
-        <div className="container" data-analytics-nav="Upper Menu">
+        <menu className="container" data-analytics-nav="Upper Menu">
             {
                 menuData.map(
                     ({label, url}) => <MenuItem key={label} label={label} url={url} showButton={showButton} />
                 )
             }
-            <a className="logo rice-logo logo-wrapper" href="http://www.rice.edu">
+            <li className="logo rice-logo logo-wrapper"><a href="http://www.rice.edu">
                 <img src={riceLogo} alt="Rice University logo" height="30" width="79" />
-            </a>
+            </a></li>
             {showButton ? <JITLoad importFn={importGiveButton} /> : null}
-        </div>
+        </menu>
     );
 }
