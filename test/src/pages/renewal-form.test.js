@@ -13,6 +13,6 @@ test(`renders navigator`, async () => {
         </ShellContextProvider>
     );
 
-    screen.getByText('Reporting your use', {exact: false});
+    screen.getByText('logged in', {exact: false});
     await screen.findByRole('button');
 });
