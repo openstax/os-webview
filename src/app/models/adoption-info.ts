@@ -110,4 +110,4 @@ const testPromise = Promise.resolve(testData);
 
 export default (TESTING ? testPromise : fetch(url).then((r) => r.json())).then(
     camelCaseKeys
-);
+).catch(() => ({}));
