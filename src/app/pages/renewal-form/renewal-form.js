@@ -176,7 +176,7 @@ function EnsureLoggedIn() {
     const [adoptionInfo, setAdoptionInfo] = React.useState(defaultMsg);
 
     React.useEffect(
-        () => adoptionsPromise.then(setAdoptionInfo),
+        () => adoptionsPromise.then((info) => info && setAdoptionInfo(info)),
         []
     );
 
