@@ -8,7 +8,15 @@ export type AdoptionData = {
     }[];
 };
 
-const url = 'https://salesforce.openstax.org/api/v1/adoptions';
+type WindowWithSettings = typeof window & {
+    SETTINGS: {
+        accountHref: string;
+    };
+}
+const w = window as WindowWithSettings;
+const subdomains = ['staging.'];
+const subdomain = subdomains.find((sd) => w.SETTINGS.accountHref?.includes(sd)) || '';
+const url = `https://${subdomain}salesforce.openstax.org/api/v1/adoptions`;
 const TESTING = process.env.JEST_WORKER_ID !== undefined;
 /* eslint-disable camelcase */
 const testData = {
