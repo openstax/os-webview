@@ -27,15 +27,22 @@
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/v2/pages/openstax-homepage/?format=json">
         <!-- Prevent cookie flashing during page load -->
         <style>
+            .osano-cm-button:focus {
+                outline: 0.2rem auto Highlight;
+                outline: 0.2rem inset -webkit-focus-ring-color;
+            }
+            .osano-cm-toggle__switch {
+                background-color: #878787;
+            }
             .osano-cm-widget {
-              animation: fadeInAnimation 5s;
-              animation-iteration-count: 1;
-              animation-fill-mode: forwards;
+                animation: fadeInAnimation 5s;
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
             }
             @keyframes fadeInAnimation {
-              0% { opacity: 0; }
-              90% { opacity: 0; }
-              100% { opacity: 1; }
+                0% { opacity: 0; }
+                90% { opacity: 0; }
+                100% { opacity: 1; }
             }
         </style>
         <script src="https://cmp.osano.com/AzZqbXTbzhHsU3cv1/68d8e8ae-4024-4489-a000-72766ad284a6/osano.js"></script>
