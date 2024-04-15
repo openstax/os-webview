@@ -197,7 +197,8 @@ sup {
 
     @include width-up-to($phone-max) {
         bottom: 0;
-        position: fixed;
+        position: sticky;
+        order: 4;
     }
 
     @include wider-than($phone-max) {
