@@ -45,6 +45,8 @@ function hintText(selectedCount, limit) {
     return `Maximum ${limit} selected`;
 }
 
+const defaultIncludeFilter = () => true;
+
 function BookSelector({
     data,
     prompt,
@@ -54,7 +56,7 @@ function BookSelector({
     preselectedTitle,
     limit,
     additionalInstructions,
-    includeFilter = () => true
+    includeFilter = defaultIncludeFilter
 }) {
     const books = React.useMemo(
         () => salesforceTitles(data.books).filter(includeFilter),
