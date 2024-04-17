@@ -20,6 +20,10 @@ function BookSelectorPage({selectedBooksRef}) {
         [selectedBooks]
     );
     const instructions = 'Select titles you are using even if the edition number is different.';
+    const includeFilter = React.useCallback(
+        (b) => !b.comingSoon,
+        []
+    );
 
     selectedBooksRef.current = selectedBooks;
     return (
@@ -32,7 +36,7 @@ function BookSelectorPage({selectedBooksRef}) {
                 toggleBook={toggleBook}
                 limit="5"
                 additionalInstructions={instructions}
-                includeFilter={(b) => !b.comingSoon}
+                includeFilter={includeFilter}
             />
             <input type="hidden" name="subject_interest" value={bookList} />
             <label>
