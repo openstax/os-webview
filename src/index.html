@@ -25,15 +25,8 @@
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/books/?format=json">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/footer/?format=json">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/v2/pages/openstax-homepage/?format=json">
-        <!-- Prevent cookie flashing during page load -->
+        <link rel="stylesheet" href="https://ram.openstax.org/osano/accessible.css">
         <style>
-            .osano-cm-button:focus {
-                outline: 0.2rem auto Highlight;
-                outline: 0.2rem inset -webkit-focus-ring-color;
-            }
-            .osano-cm-toggle__switch {
-                background-color: #878787;
-            }
             .osano-cm-widget {
                 animation: fadeInAnimation 5s;
                 animation-iteration-count: 1;
