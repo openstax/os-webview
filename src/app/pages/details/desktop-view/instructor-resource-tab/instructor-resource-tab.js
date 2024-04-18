@@ -11,6 +11,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {usePartnerFeatures} from '../../common/hooks';
 import useUserContext from '~/contexts/user';
 import useDetailsContext from '~/pages/details/context';
+import Promo from '../promo';
 import './instructor-resource-tab.scss';
 
 function FreeStuff({freeStuffContent, userStatus}) {
@@ -96,6 +97,7 @@ function InstructorResourceTab({model, userStatus}) {
 
     return (
         <React.Fragment>
+            <Promo promoteSnippet={model.promoteSnippet} />
             <div>
                 <FreeStuff {...{freeStuffContent, userStatus}} />
                 {

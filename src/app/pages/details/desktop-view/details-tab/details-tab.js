@@ -5,6 +5,7 @@ import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
 import SavingsBlurb from '../../common/savings-blurb';
+import Promo from '../promo';
 import './details-tab.scss';
 
 function PolishTab({model}) {
@@ -32,21 +33,7 @@ function PolishTab({model}) {
     );
 }
 
-function Promo({data}) {
-    if (!data?.content) {
-        return null;
-    }
-
-    return (
-        <RawHTML html={data.content.description} />
-    );
-}
-
 function EnglishTab({model}) {
-    // promoteSnippet may or may not be in an array
-    const obj = model.promoteSnippet;
-    const promoData = obj.length ? obj[0] : obj;
-
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -61,7 +48,7 @@ function EnglishTab({model}) {
                 </div>
             </div>
             <div className="main">
-                <Promo data={promoData} />
+                <Promo promoteSnippet={model.promoteSnippet} />
                 <div className="loc-summary-text">
                     <h3>
                         <FormattedMessage id="summary" defaultMessage="Summary" />
