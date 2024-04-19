@@ -3,6 +3,7 @@ import {useLocation} from 'react-router-dom';
 import linkHelper from '~/helpers/link';
 import useUserContext from '~/contexts/user';
 import useAdoptions from '~/models/renewals';
+import adoptionsPromise from './salesforce-data';
 import BookTagsMultiselect, {BookTagsContextProvider, useBookTagsContext}
     from '~/components/multiselect/book-tags/book-tags';
 
@@ -170,6 +171,14 @@ function TheForm() {
 
 function EnsureLoggedIn() {
     const {userStatus: {uuid}} = useUserContext();
+    const defaultMsg = `Reporting your use of OpenStax helps us
+    secure additional funding for future titles!`;
+    const [adoptionInfo, setAdoptionInfo] = React.useState(defaultMsg);
+
+    React.useEffect(
+        () => adoptionsPromise.then((info) => info && setAdoptionInfo(info)),
+        []
+    );
 
     React.useEffect(
         () => {
@@ -194,6 +203,9 @@ function EnsureLoggedIn() {
 
     return (
         <BookTagsContextProvider maxSelections={MAX_SELECTIONS}>
+            <div>
+                {adoptionInfo}
+            </div>
             <TheForm />
         </BookTagsContextProvider>
     );
@@ -204,9 +216,6 @@ export default function RenewalForm() {
         <div className="renewal-form page">
             <div className="boxed">
                 <h1>What textbook(s) are you using?</h1>
-                <div>
-                    Reporting your use of OpenStax helps us secure additional funding for future titles!
-                </div>
                 <EnsureLoggedIn />
             </div>
         </div>
