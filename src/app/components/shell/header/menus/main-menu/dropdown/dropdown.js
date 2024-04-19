@@ -20,28 +20,37 @@ export function MenuItem({label, url, local}) {
 
     return (
         <RawHTML
-            Tag="a" html={label}
-            href={url} tabIndex={0} data-local={local}
+            Tag="a"
+            html={label}
+            href={url}
+            tabIndex={0}
+            data-local={local}
             {...(urlPath === pathname ? {'aria-current': 'page'} : {})}
         />
     );
 }
 
-function OptionalWrapper({isWrapper=true, children}) {
-    return (
-        isWrapper ?
-            <div className="nav-menu-item dropdown">
-                {children}
-            </div> : children
+function OptionalWrapper({isWrapper = true, children}) {
+    return isWrapper ? (
+        <div className="nav-menu-item dropdown">{children}</div>
+    ) : (
+        children
     );
 }
 
-export default function Dropdown({Tag='li', className, label, children, excludeWrapper=false, navAnalytics}) {
+export default function Dropdown({
+    Tag = 'li',
+    className,
+    label,
+    children,
+    excludeWrapper = false,
+    navAnalytics
+}) {
     const topRef = useRef();
     const dropdownRef = useRef();
     const dropdownCtx = useDropdownContext();
     const isOpen = dropdownCtx.activeDropdown === topRef;
-    const labelId = `menulabel-${label}`;
+    const labelId = `${dropdownCtx.prefix}-${label}`;
     const ddId = `ddId-${label}`;
 
     function closeMenu() {
@@ -131,34 +140,37 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                 focusReturnsTo.focus();
                 event.stopPropagation();
             }
-            if (event.key.startsWith('Arrow') || ['Home', 'End'].includes(event.key)) {
+            if (
+                event.key.startsWith('Arrow') ||
+                ['Home', 'End'].includes(event.key)
+            ) {
                 event.preventDefault();
             }
             return;
         }
         switch (event.key) {
-        case 'ArrowDown':
-            event.preventDefault();
-            if (document.activeElement === topRef.current) {
-                dropdownRef.current.firstChild.focus();
-            } else {
-                findNext().focus();
-            }
-            break;
-        case 'ArrowUp':
-            event.preventDefault();
-            if (document.activeElement !== topRef.current) {
-                findPrev().focus();
-            }
-            break;
-        case 'Escape':
-            event.preventDefault();
-            event.stopPropagation();
-            event.target.blur();
-            closeDesktopMenu();
-            break;
-        default:
-            break;
+            case 'ArrowDown':
+                event.preventDefault();
+                if (document.activeElement === topRef.current) {
+                    dropdownRef.current.firstChild.focus();
+                } else {
+                    findNext().focus();
+                }
+                break;
+            case 'ArrowUp':
+                event.preventDefault();
+                if (document.activeElement !== topRef.current) {
+                    findPrev().focus();
+                }
+                break;
+            case 'Escape':
+                event.preventDefault();
+                event.stopPropagation();
+                event.target.blur();
+                closeDesktopMenu();
+                break;
+            default:
+                break;
         }
     }
 
@@ -191,7 +203,10 @@ export default function Dropdown({Tag='li', className, label, children, excludeW
                         aria-hidden="true"
                     >
                         <title>arrow</title>
-                        <path d="M12,1L26,16,12,31,8,27,18,16,8,5Z" transform="translate(-8 -1)" />
+                        <path
+                            d="M12,1L26,16,12,31,8,27,18,16,8,5Z"
+                            transform="translate(-8 -1)"
+                        />
                     </svg>
                 </a>
                 <div className="dropdown-container">
