@@ -192,14 +192,6 @@ export default function ErrataForm() {
 
     return (
         <React.Fragment>
-            <div>
-                <b>Please note</b> form submissions have been returning errors
-                to the browser, but <strong>we are receiving the reports</strong>.
-                Please do not try to submit the same report multiple times due to
-                receiving an error.
-                <br />
-                We are working to correct the processing error.
-            </div>
             <form
                 className={cn('body-block', {'hide-errors': hideErrors})}
                 method="post" action={postEndpoint}
