@@ -1,7 +1,19 @@
 import React from 'react';
 import {Tabs, Item} from '~/components/tablist/tablist';
 import useUserContext from '~/contexts/user';
+import {useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import './resources.scss';
+
+function LinkWithGiveDialog({href, text}) {
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+
+    return (
+        <React.Fragment>
+            <a href={href} onClick={openGiveDialog}>{text}</a>
+            <GiveDialog link={href} variant='K12 resource' />
+        </React.Fragment>
+    );
+}
 
 function ResourceLink({ data }) {
     const url = data.linkExternal || data.linkDocumentUrl;
@@ -11,7 +23,7 @@ function ResourceLink({ data }) {
         <li>
             {
                 data.resourceUnlocked || isVerified ?
-                <a href={url}>{data.book}</a> :
+                <LinkWithGiveDialog href={url} text={data.book} /> :
                 <span>{data.book} (verified instructor only)</span>
             }
         </li>
