@@ -1,5 +1,6 @@
 import React from 'react';
 import useUserContext from '~/contexts/user';
+import trackLink from '../../track-link';
 import './thank-you-form.scss';
 
 function FormWithAfterSubmit({
@@ -48,7 +49,7 @@ function FormWithAfterSubmit({
     );
 }
 
-export default function ThankYou({link, close, source}) {
+export default function ThankYou({link, close, source, itemType='PDF', track, id}) {
     const {userModel} = useUserContext();
     const first = userModel?.first_name;
     const last = userModel?.last_name;
@@ -57,6 +58,12 @@ export default function ThankYou({link, close, source}) {
         window.open(link);
         close();
     }, [link, close]);
+    const trackDownload = React.useCallback(
+        (event) => {
+            trackLink(event, id);
+        },
+        [id]
+    );
 
     return (
         <FormWithAfterSubmit
@@ -135,9 +142,15 @@ export default function ThankYou({link, close, source}) {
                     electronic, and digital media.
                 </label>
             </div>
-            <button className='primary'>Submit note and go to PDF</button>
-            <a className='never-mind' href={link}>
-                Never mind, just go to the PDF
+            <button className='primary'>Submit note and go to {itemType}</button>
+            <a
+                className="never-mind"
+                href={link}
+                {...(track ? {'data-track': track} : {})}
+                data-variant={itemType}
+                onClick={trackDownload}
+            >
+                Never mind, just go to the {itemType}
             </a>
         </FormWithAfterSubmit>
     );

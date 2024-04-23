@@ -115,7 +115,7 @@ export function WebviewOption({model}) {
                 </a>
                 <GiveDialog
                     link={webviewLink} variant='View online' track='Online'
-                    onDownload={trackDownload}
+                    onDownload={trackDownload} id={model.id}
                 />
                 {showCallout && (
                     <div className='callout recommended-callout'>
@@ -161,6 +161,7 @@ export function PdfOption({model}) {
             <GiveDialog
                 link={pdfLink} track='PDF'
                 onDownload={trackDownload}
+                id={model.id}
             />
         </React.Fragment>
     );

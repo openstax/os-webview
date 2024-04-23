@@ -10,7 +10,8 @@ export default function GiveBeforeOther({
     data,
     track,
     variant,
-    onDownload
+    onDownload,
+    id
 }: {
     link: string;
     close: () => void;
@@ -18,6 +19,7 @@ export default function GiveBeforeOther({
     track?: string;
     variant?: string;
     onDownload?: (event: React.MouseEvent) => void;
+    id?: string;
 }) {
     const {showThankYou, onThankYouClick} = useOnThankYouClick();
     const [controlLink] = useGiveLinks();
@@ -32,7 +34,16 @@ export default function GiveBeforeOther({
     );
 
     if (showThankYou) {
-        return <ThankYou link={link} close={close} source={variant} />;
+        return (
+            <ThankYou
+                link={link}
+                close={close}
+                source={variant}
+                itemType={lookupVariant(variant)}
+                track={track}
+                id={id}
+            />
+        );
     }
 
     return (

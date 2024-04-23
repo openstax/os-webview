@@ -14,18 +14,20 @@ export default function useGiveDialog() {
             link,
             track,
             onDownload,
-            variant
+            variant,
+            id
         }: {
             link: string;
             track?: string;
             onDownload?: (e: React.MouseEvent) => void;
             variant?: string;
+            id?: string;
         }) => {
             const Variant = lookupVariant(variant) as typeof GiveBeforeOther;
 
             return (
                 <Dialog>
-                    <Variant {...{link, track, close, data, onDownload, variant}} />
+                    <Variant {...{link, track, close, data, onDownload, variant, id}} />
                 </Dialog>
             );
         },

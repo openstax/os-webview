@@ -11,13 +11,15 @@ export default function GiveBeforePdf({
     track,
     close,
     data,
-    onDownload
+    onDownload,
+    id
 }: {
     link: string;
     track?: string;
     close: () => void;
     data: DonationPopupData;
     onDownload: () => void;
+    id?: string;
 }) {
     const [doneDownloading, setDoneDownloading] = React.useState(false);
     const {showThankYou, onThankYouClick} = useOnThankYouClick();
@@ -31,7 +33,7 @@ export default function GiveBeforePdf({
     }
 
     if (showThankYou) {
-        return <ThankYou link={link} close={close} source='PDF download' />;
+        return <ThankYou link={link} close={close} source='PDF download' track={track} id={id} />;
     }
 
     return (
