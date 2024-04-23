@@ -37,6 +37,7 @@ $scheme-colors: (
         .takeover-content {
             background-size: cover;
             background-position: center;
+            max-width: calc(100vw - 6rem);
         }
     }
 
