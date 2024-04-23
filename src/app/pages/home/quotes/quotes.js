@@ -25,8 +25,8 @@ export default function QuotesSection({data}) {
                 <h2>{data.headline}</h2>
             </div>
             <div className="images">
-                <img className="left-bg" src={studentImage} alt width="500" height="500" />
-                <img className="right-bg" src={instructorImage} alt width="600" height="600" />
+                <img className="left-bg" src={studentImage} alt="" width="500" height="500" />
+                <img className="right-bg" src={instructorImage} alt="" width="600" height="600" />
             </div>
             <div className="boxed">
                 <div className="side-by-side">

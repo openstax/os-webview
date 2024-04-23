@@ -28,7 +28,7 @@ export default function Features({data}) {
 
     return (
         <section className="features">
-            <img className="right-bg" src={bgImage} alt />
+            <img className="right-bg" src={bgImage} alt="" />
             <div className="boxed text-block">
                 <h2>{data.headline}</h2>
                 <Tabs aria-label="Features" defaultSelectedKey="instructors">
