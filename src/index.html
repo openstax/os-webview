@@ -25,19 +25,7 @@
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/books/?format=json">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/footer/?format=json">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/v2/pages/openstax-homepage/?format=json">
-        <!-- Prevent cookie flashing during page load -->
-        <style>
-            .osano-cm-widget {
-              animation: fadeInAnimation 5s;
-              animation-iteration-count: 1;
-              animation-fill-mode: forwards;
-            }
-            @keyframes fadeInAnimation {
-              0% { opacity: 0; }
-              90% { opacity: 0; }
-              100% { opacity: 1; }
-            }
-        </style>
+        <link rel="stylesheet" href="https://ram.openstax.org/osano/osano.css">
         <script src="https://cmp.osano.com/AzZqbXTbzhHsU3cv1/68d8e8ae-4024-4489-a000-72766ad284a6/osano.js"></script>
         <script src="//script.crazyegg.com/pages/scripts/0084/9271.js" async="async"></script>
     </head>
