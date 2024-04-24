@@ -13,7 +13,7 @@ export const DesktopTabs = ({labels, initialSelection, children}) => {
                 TabTag="div" labels={labels}
                 {...{selectedLabel, setSelectedLabel}}
             />
-            <ContentGroup activeIndex={selectedIndex}>
+            <ContentGroup activeIndex={selectedIndex} labels={labels}>
                 {children}
             </ContentGroup>
         </div>

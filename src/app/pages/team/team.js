@@ -41,7 +41,7 @@ function TeamPage({data: {
                         selectedLabel={selectedLabel}
                         setSelectedLabel={setSelectedLabel}
                     />
-                    <ContentGroup activeIndex={tabLabels.indexOf(selectedLabel)}>
+                    <ContentGroup activeIndex={tabLabels.indexOf(selectedLabel)} labels={tabLabels}>
                         {tabContents}
                     </ContentGroup>
                 </div>

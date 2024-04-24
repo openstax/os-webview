@@ -75,7 +75,7 @@ export default function Resources({
             <div className="boxed">
                 <h1>{data.resourcesHeading}</h1>
                 <TabGroup {...{ labels, selectedLabel, setSelectedLabel }} />
-                <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
+                <ContentGroup activeIndex={labels.indexOf(selectedLabel)} labels={labels}>
                     <ResourceToContent resources={instructorResources} />
                     <ResourceToContent resources={studentResources} />
                 </ContentGroup>
