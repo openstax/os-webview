@@ -1,3 +1,5 @@
+@import 'pattern-library/core/pattern-library/headers';
+
 .tabs {
     display: flex;
     flex-direction: column;
@@ -7,13 +9,8 @@
     }
 }
 
-[role='tab'] {
-    [aria-disabled] {
-        opacity: 0.5;
-    }
-}
-
 [role='tablist'] {
+    @include tab-group;
     display: flex;
 
     // Other selectors that might be styled on the individual instance
@@ -26,6 +23,21 @@
     //     }
     // }
 
+    [role='tab'] {
+        @extend %tab;
+        [aria-disabled] {
+            opacity: 0.5;
+        }
+    
+        &[aria-selected='true'] {
+            @extend %active;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
     &[aria-orientation='vertical'] {
         flex-direction: column;
         // border-right: 1px solid gray;
@@ -35,10 +47,6 @@
         // }
     }
 }
-
-//   [role=tablist] [role=tab][aria-selected=true] {
-//     border-color: var(--blue);
-//   }
 
 //   [role=tabpanel] {
 //     padding: 10px;

@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Hero from '~/components/hero/hero';
-import TabGroup from '~/components/tab-group/tab-group';
-import ContentGroup from '~/components/content-group/content-group';
 import AccordionGroup from '~/components/accordion-group/accordion-group.js';
 import PeopleTab from './people-tab/people-tab';
+import {Tabs, Item} from '~/components/tablist/tablist';
 import './team.scss';
 
 function TeamPage({data: {
@@ -18,9 +17,6 @@ function TeamPage({data: {
         title: t.heading,
         contentComponent: <PeopleTab data={t.people} key={i} />
     }));
-    const tabLabels = accordionItems.map((i) => i.title);
-    const tabContents = accordionItems.map((i) => i.contentComponent);
-    const [selectedLabel, setSelectedLabel] = useState(tabLabels[0]);
 
     return (
         <React.Fragment>
@@ -36,14 +32,16 @@ function TeamPage({data: {
                     <AccordionGroup items={accordionItems} />
                 </div>
                 <div className="bigger-view">
-                    <TabGroup
-                        TabTag="h3" labels={tabLabels}
-                        selectedLabel={selectedLabel}
-                        setSelectedLabel={setSelectedLabel}
-                    />
-                    <ContentGroup activeIndex={tabLabels.indexOf(selectedLabel)} labels={tabLabels}>
-                        {tabContents}
-                    </ContentGroup>
+                    <Tabs aria-label="Sub-teams">
+                        {
+                            accordionItems.map(
+                                (i) =>
+                                <Item key={i.title} title={i.title}>
+                                    {i.contentComponent}
+                                </Item>
+                            )
+                        }
+                    </Tabs>
                 </div>
             </section>
         </React.Fragment>
