@@ -1,6 +1,7 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import {salesforceTitles, afterFormSubmit} from '~/models/books';
+import afterFormSubmit from './after-form-submit';
+import {salesforceTitles} from '~/helpers/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useNavigate, useLocation} from 'react-router-dom';
 import './book-selector.scss';
