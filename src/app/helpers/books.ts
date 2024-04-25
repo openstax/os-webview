@@ -1,10 +1,11 @@
 export type Book = {
-    salesforce_abbreviation: string;
     book_state: string;
-    salesforce_name: string;
     cover_url: string;
-    subjects: string[];
+    salesforce_abbreviation: string;
+    salesforce_name: string;
     slug: string;
+    subjects: string[];
+    title: string;
 };
 
 const statesToInclude = ['live', 'new_edition_available', 'coming_soon'];
@@ -24,11 +25,10 @@ function BookToSalesforceBook(book: Book) {
 
 export type SalesforceBook = ReturnType<typeof BookToSalesforceBook>;
 
-export function salesforceTitles(books: {[key: string]: Book}) {
+export function salesforceTitles(books: Book[]) {
     const seenTitles: {[key: string]: boolean} = {};
 
-    return Object.keys(books)
-        .map((key) => books[key])
+    return books
         .filter(filterLiveBooks)
         .filter((book) => {
             const abbrev = book.salesforce_abbreviation;
@@ -43,6 +43,6 @@ export function salesforceTitles(books: {[key: string]: Book}) {
 
 export function subjects(sfTitles: Book[]) {
     return sfTitles
-        .reduce<string[]>((a, b) => a.concat(b.subjects), [])
+        .reduce<string[]>((a, b) => a.concat(b.subjects || []), [])
         .reduce<string[]>((a, b) => (a.includes(b) ? a : a.concat(b)), []);
 }
