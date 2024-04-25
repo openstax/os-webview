@@ -14,8 +14,9 @@ type WindowWithSettings = typeof window & {
     };
 }
 const w = window as WindowWithSettings;
-const subdomains = ['staging.'];
-const subdomain = subdomains.find((sd) => w.SETTINGS.accountHref?.includes(sd)) || '';
+const subdomains = ['qa.', 'dev.'];
+const found = subdomains.some((sd) => w.SETTINGS.accountHref?.includes(sd));
+const subdomain = found ? 'staging.' : '';
 const url = `https://${subdomain}salesforce.openstax.org/api/v1/adoptions`;
 const TESTING = process.env.JEST_WORKER_ID !== undefined;
 /* eslint-disable camelcase */
