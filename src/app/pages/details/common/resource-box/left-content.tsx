@@ -109,6 +109,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
         [model.bookModel, userStatus]
     );
     const variant = useVariant();
+    const ariaLabel = isDownload ? `Download ${model.heading}` : undefined;
 
     function openDialog(event: TrackedMouseEvent) {
         if (isDownload && enabled) {
@@ -127,6 +128,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
                 data-track={model.heading}
                 data-analytics-select-content={model.heading}
                 data-content-type={`Book Resource (${model.resourceCategory})`}
+                aria-label={ariaLabel}
             >
                 <FontAwesomeIcon icon={icon} />
                 <span>{model.link.text}</span>
