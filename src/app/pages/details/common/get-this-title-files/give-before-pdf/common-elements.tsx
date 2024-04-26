@@ -1,6 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
+import {useLocation} from 'react-router-dom';
 
 type Data = {
     header_subtitle: string;
@@ -24,31 +25,38 @@ export default function CommonElements({
     giveLink: string;
 }) {
     const initialItem = React.useRef<HTMLAnchorElement>(null);
+    const {pathname} = useLocation();
 
-    React.useEffect(
-        () => initialItem.current?.focus(),
-        []
-    );
+    React.useEffect(() => initialItem.current?.focus(), []);
     return (
         <React.Fragment>
-            <img
-                className='header-image'
-                src={data.header_image}
-                alt=''
-                height='165'
-                width='165'
-            />
+            {pathname.startsWith('/k12') ? (
+                <img
+                    className="k12-header-image"
+                    src='/dist/images/k12/download-resource.jpg'
+                    alt=""
+                    width="240"
+                />
+            ) : (
+                <img
+                    className="header-image"
+                    src={data.header_image}
+                    alt=""
+                    height="165"
+                    width="165"
+                />
+            )}
             <p>
-                <span className='header-title'>{data.header_title}</span>
+                <span className="header-title">{data.header_title}</span>
                 <br />
                 <span>{headerSubtitle}</span>
             </p>
-            <div className='button-row'>
+            <div className="button-row">
                 <a
                     href={giveLink}
-                    className='btn primary'
+                    className="btn primary"
                     onClick={OpenGiveInNewWindow}
-                    data-nudge-action='interacted'
+                    data-nudge-action="interacted"
                     ref={initialItem}
                 >
                     {data.give_link_text}
@@ -56,14 +64,14 @@ export default function CommonElements({
                 </a>
                 <a
                     href={data.thank_you_link}
-                    className='btn secondary'
+                    className="btn secondary"
                     onClick={onThankYouClick}
-                    data-nudge-action='thank-you'
+                    data-nudge-action="thank-you"
                 >
                     {data.thank_you_link_text}
                 </a>
             </div>
-            <p className='giving-optional'>{data.giving_optional}</p>
+            <p className="giving-optional">{data.giving_optional}</p>
             <hr />
         </React.Fragment>
     );
