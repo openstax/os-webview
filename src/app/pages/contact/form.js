@@ -20,6 +20,16 @@ const options = [
 
 options[0].selected = true;
 
+const assignableOptions = [
+    'Getting Started',
+    'Assignment',
+    'Grade book',
+    'Error Message',
+    'Feature Request',
+    'Accessibility',
+    'Accounts & password',
+    'Privacy'
+].map((s) => ({label: s, value: s}));
 
 function LabeledInputWithInvalidMessage({
     className, children, eventType='input', showMessage
@@ -47,15 +57,21 @@ function LabeledInputWithInvalidMessage({
     );
 }
 
+// This is an interim site; normally we can leave postTo null and the default
+// in the salesforceForm will be right.
+const newPostSite = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
+
 export default function ContactForm() {
     const [postTo, setPostTo] = useState();
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
+    const [assignableSelected, setAssignableSelected] = useState(false);
     const navigate = useNavigate();
     const onChangeSubject = React.useCallback(
         (value) => {
             const isPolish = value === 'OpenStax Polska';
 
-            setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : null);
+            setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : newPostSite);
+            setAssignableSelected(value === 'OpenStax Assignable');
         },
         [setPostTo]
     );
@@ -74,10 +90,17 @@ export default function ContactForm() {
             <label>
                 What is your question about?
                 <DropdownSelect
-                    name="subject" options={options}
+                    name={assignableSelected ? '' : 'subject'} options={options}
                     onValueUpdate={onChangeSubject}
                 />
             </label>
+            {
+                assignableSelected && <label>What Assignable topic in particular?
+                <DropdownSelect
+                    name="subject" options={assignableOptions}
+                />
+                </label>
+            }
             <LabeledInputWithInvalidMessage showMessage={showInvalidMessages}>
                 Your Name
                 <input name="name" type="text" size="20" required />
