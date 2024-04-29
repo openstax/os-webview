@@ -37,6 +37,11 @@
         margin-block: 0 !important;
     }
 
+    // Adding changes from PM ticker - Mikayla
+    h1{
+        color: #151b2c;
+    }
+
     .content {
         @extend %content;
     }
