@@ -26,7 +26,7 @@ export default function Banner({data}) {
     const userModel = useUserContext();
     const Buttons = userModel?.accountId ? LoggedInButtons : NotLoggedInButtons;
     const leftImage = useOptimizedImage(data.leftImage, 570);
-    const targetWidth = Math.ceil(window.innerWidth/800) * 400;
+    const targetWidth = Math.max(Math.ceil(window.innerWidth/400) * 400, 600);
     const rightImage = useOptimizedImage(data.rightImage, targetWidth);
 
     return (
