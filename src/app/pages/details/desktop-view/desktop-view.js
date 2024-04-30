@@ -88,12 +88,16 @@ export default function DesktopView() {
     return (
         <React.Fragment>
             <div className="tab-controller">
-                <TabGroup {...{TabTag, labels, selectedLabel, setSelectedLabel}} data-analytics-nav="Book Details Tabs">
+                <TabGroup
+                    {...{TabTag, labels, selectedLabel, setSelectedLabel}}
+                    data-analytics-nav="Book Details Tabs"
+                    listLabel="Book Info Tabs"
+                >
                     <GiveLink />
                 </TabGroup>
             </div>
             <div className="tab-content">
-                <ContentGroup activeIndex={activeIndex}>
+                <ContentGroup activeIndex={activeIndex} labels={labels}>
                     <StubUntilSeen active={activeIndex===0} importFn={importDetailsTab} polish={polish} model={model} />
                     <StubUntilSeen active={activeIndex===1} importFn={importInstructorTab} model={model} />
                     <StubUntilSeen active={activeIndex===2} importFn={importStudentTab} model={model} />

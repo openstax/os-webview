@@ -122,7 +122,7 @@ function PartnerDetails({model}) {
             </div>
             <div className="scrolling-region boxed">
                 <div className="tab-content">
-                    <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
+                    <ContentGroup activeIndex={labels.indexOf(selectedLabel)} labels={labels}>
                         <Overview model={model} icon={icon} />
                         {
                             // ** Restore when using Reviews again

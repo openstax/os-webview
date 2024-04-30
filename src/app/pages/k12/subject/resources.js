@@ -1,6 +1,5 @@
 import React from 'react';
-import TabGroup from '~/components/tab-group/tab-group';
-import ContentGroup from '~/components/content-group/content-group';
+import {Tabs, Item} from '~/components/tablist/tablist';
 import useUserContext from '~/contexts/user';
 import './resources.scss';
 
@@ -58,15 +57,12 @@ function resourceHeadersToResources(resourceHeaders) {
 export default function Resources({
     data,
     labels,
-    selectedLabel,
-    setSelectedLabel
+    selectedLabel
 }) {
-    const studentResources = React.useMemo(
-        () => resourceHeadersToResources(data.studentResourceHeaders),
-        [data]
-    );
-    const instructorResources = React.useMemo(
-        () => resourceHeadersToResources(data.facultyResourceHeaders),
+    const resources = React.useMemo(
+        () => ['facultyResourceHeaders', 'studentResourceHeaders'].map(
+            (k) => resourceHeadersToResources(data[k])
+        ),
         [data]
     );
 
@@ -74,11 +70,15 @@ export default function Resources({
         <section id="resources">
             <div className="boxed">
                 <h1>{data.resourcesHeading}</h1>
-                <TabGroup {...{ labels, selectedLabel, setSelectedLabel }} />
-                <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
-                    <ResourceToContent resources={instructorResources} />
-                    <ResourceToContent resources={studentResources} />
-                </ContentGroup>
+                <Tabs aria-label="Resource tabs" selectedKey={selectedLabel}>
+                    {
+                        labels.map((label, i) =>
+                            <Item key={label} title={label}>
+                                <ResourceToContent resources={resources[i]} />
+                            </Item>
+                        )
+                    }
+                </Tabs>
             </div>
         </section>
     );

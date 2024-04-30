@@ -1,12 +1,19 @@
-import React, {useRef, useLayoutEffect} from 'react';
+import React from 'react';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './tab-group.scss';
 
-function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}) {
-    const ref = useRef();
+type TabArgs = {
+    label: string;
+    selectedLabel: string;
+    setSelectedLabel: (s: string) => void;
+    TabTag: keyof JSX.IntrinsicElements;
+    analytics: boolean;
+}
+
+function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}: TabArgs) {
     const blurAndSetLabel = React.useCallback(
-        (event) => {
-            event.currentTarget.blur();
+        (event: React.MouseEvent) => {
+            (event as React.MouseEvent<HTMLElement>).currentTarget.blur();
             setSelectedLabel(label);
         },
         [setSelectedLabel, label]
@@ -16,21 +23,13 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}) {
         label === selectedLabel
     , [label, selectedLabel]);
 
-    // Couldn't get this to work as a normal attribute expression;
-    // it would not remove the aria-current attribute, only its value
-    useLayoutEffect(() => {
-        if (isSelected) {
-            ref.current.setAttribute('aria-current', 'page');
-        } else {
-            ref.current.removeAttribute('aria-current');
-        }
-    }, [isSelected]);
-
     return (
         <TabTag
-            ref={ref}
-            className="tab"
-            role="link" tabIndex="0"
+            role="tab"
+            id={ariaTabId(label)}
+            aria-controls={ariaPanelId(label)}
+            tabIndex={0}
+            aria-selected={isSelected}
             onClick={blurAndSetLabel}
             onKeyDown={treatSpaceOrEnterAsClick}
             data-analytics-link={analytics && !isSelected ? '' : undefined}
@@ -40,16 +39,35 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}) {
     );
 }
 
+export function ariaTabId(label: string) {
+    return `${label}-tab`;
+}
+
+export function ariaPanelId(label: string) {
+    return `${label}-panel`;
+}
+
+type TabGroupArgs = React.PropsWithChildren<
+    Pick<TabArgs, 'selectedLabel' | 'setSelectedLabel' | 'TabTag'> &
+    {
+        labels: TabArgs['label'][];
+        'data-analytics-nav': string;
+        listLabel?: string;
+    }
+>
+
 export default function TabGroup({
     labels, selectedLabel, setSelectedLabel, TabTag='div', children, ...props
-}) {
+}: TabGroupArgs) {
     const analyticsNav = props['data-analytics-nav'];
+    const listLabel = props.listLabel ?? 'Tabs';
 
     return (
         <div className="tab-heading">
             <div className="tabs-and-extras">
-                <nav
-                  className="tab-group"
+                <div
+                  role="tablist"
+                  aria-label={listLabel}
                   data-analytics-nav={analyticsNav}
                 >
                     {labels.map((label) => <Tab
@@ -57,7 +75,7 @@ export default function TabGroup({
                         analytics={!!analyticsNav}
                         {...{label, selectedLabel, setSelectedLabel, TabTag}}
                     />)}
-                </nav>
+                </div>
                 {children}
             </div>
             <hr className="tab-baseline" />

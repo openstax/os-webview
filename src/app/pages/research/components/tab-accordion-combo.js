@@ -1,21 +1,17 @@
-import React, {useState} from 'react';
-import TabGroup from '~/components/tab-group/tab-group';
-import ContentGroup from '~/components/content-group/content-group';
+import React from 'react';
+import {Tabs, Item} from '~/components/tablist/tablist';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 
 export const DesktopTabs = ({labels, initialSelection, children}) => {
-    const [selectedLabel, setSelectedLabel] = useState(labels[initialSelection]);
-    const selectedIndex = labels.indexOf(selectedLabel);
-
     return (
         <div className="desktop-only">
-            <TabGroup
-                TabTag="div" labels={labels}
-                {...{selectedLabel, setSelectedLabel}}
-            />
-            <ContentGroup activeIndex={selectedIndex}>
-                {children}
-            </ContentGroup>
+            <Tabs aria-label="Research focus tabs" defaultSelectedKey={labels[initialSelection]}>
+                {labels.map((label, i) =>
+                <Item key={label} title={label}>
+                    {children[i]}
+                </Item>
+            )}
+            </Tabs>
         </div>
     );
 };

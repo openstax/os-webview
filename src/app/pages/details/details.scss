@@ -251,7 +251,7 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     .tab-controller {
         width: 100%;
 
-        .tab {
+        [role="tab"] {
             @include scale-feature(font-size, 1.8rem, 2.2rem);
 
             font-weight: normal;

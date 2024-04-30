@@ -71,7 +71,7 @@ function Subject({ data }) {
             <QuickLinks {...{ labels, setSelectedLabel }} />
             <Books data={data} />
             <WhatTeachersSay data={data} />
-            <Resources {...{ data, labels, selectedLabel, setSelectedLabel }} />
+            <Resources {...{ data, labels, selectedLabel }} />
             {/* <Blogs data={data} /> */}
             <Contact data={data} />
         </div>

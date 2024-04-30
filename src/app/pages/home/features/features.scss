@@ -42,12 +42,15 @@
 
     [role="tab"] {
         cursor: pointer;
+        display: block;
         letter-spacing: 0.1rem;
+        padding: 0;
         text-transform: uppercase;
 
         &:hover,
         &[aria-selected] {
             background-color: transparent;
+            border: 0;
 
             &:not(:last-child)::after {
                 content: '|';
@@ -57,6 +60,7 @@
         }
 
         &[aria-selected="true"]  {
+            border: 0;
             font-weight: bold;
             text-decoration-line: underline;
         }
