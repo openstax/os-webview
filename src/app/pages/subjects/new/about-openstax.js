@@ -17,7 +17,7 @@ export default function AboutOpenStax({
     const optimizedImage = useOptimizedImage(imgSrc, 400);
 
     return (
-        <section className="about-openstax" id="learn">
+        <section className="about-openstax">
             <div className="content">
                 <h2>{heading}</h2>
                 <RawHTML html={paragraph} />
