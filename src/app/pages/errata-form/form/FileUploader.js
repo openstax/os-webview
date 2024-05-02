@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import cn from 'classnames';
 
-function FileButton({name}) {
+export function FileButton({name}) {
     const [filePath, updateFilePath] = useState('');
     const empty = filePath === '';
 

@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
 import {useNavigate} from 'react-router-dom';
+import { FileButton } from '../errata-form/form/FileUploader';
 
 const options = [
     'General',
@@ -62,18 +63,24 @@ function LabeledInputWithInvalidMessage({
 const newPostSite = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
 
 export default function ContactForm() {
-    const [postTo, setPostTo] = useState();
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
-    const [assignableSelected, setAssignableSelected] = useState(false);
+    const [subject, setSubject] = useState('General');
+    const assignableSelected = React.useMemo(
+        () => subject === 'OpenStax Assignable',
+        [subject]
+    );
+    const product = React.useMemo(
+        () => assignableSelected ? 'Assignable' : '',
+        [assignableSelected]
+    );
+    const postTo = React.useMemo(
+        () => (subject === 'OpenStax Polska') ? '/apps/cms/api/mail/send_mail' : newPostSite,
+        [subject]
+    );
     const navigate = useNavigate();
     const onChangeSubject = React.useCallback(
-        (value) => {
-            const isPolish = value === 'OpenStax Polska';
-
-            setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : newPostSite);
-            setAssignableSelected(value === 'OpenStax Assignable');
-        },
-        [setPostTo]
+        (value) => setSubject(value),
+        []
     );
     const beforeSubmit = React.useCallback(
         () => setShowInvalidMessages(true),
@@ -87,17 +94,18 @@ export default function ContactForm() {
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>
             <input type="hidden" name="external" value="1" />
+            <input type="hidden" name="product" value={product} />
             <label>
                 What is your question about?
                 <DropdownSelect
-                    name={assignableSelected ? '' : 'subject'} options={options}
+                    name="subject" options={options}
                     onValueUpdate={onChangeSubject}
                 />
             </label>
             {
                 assignableSelected && <label>What Assignable topic in particular?
                 <DropdownSelect
-                    name="subject" options={assignableOptions}
+                    name="feature" options={assignableOptions}
                 />
                 </label>
             }
@@ -113,6 +121,7 @@ export default function ContactForm() {
                 Your Message
                 <textarea cols="50" name="description" rows="6" required />
             </LabeledInputWithInvalidMessage>
+            <FileButton name="attachment" />
             <input type="submit" value="Send" className="btn btn-orange" onClick={beforeSubmit} />
         </SalesforceForm>
     );
