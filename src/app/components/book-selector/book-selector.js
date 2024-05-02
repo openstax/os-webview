@@ -1,6 +1,9 @@
 import React from 'react';
-import LoaderPage from '~/components/jsx-helpers/loader-page';
-import {salesforceTitles, afterFormSubmit} from '~/models/books';
+import {useDataFromPromise} from '~/helpers/page-data-utils';
+import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import {fetchAllBooks} from '~/models/books';
+import afterFormSubmit from './after-form-submit';
+import {salesforceTitles} from '~/helpers/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useNavigate, useLocation} from 'react-router-dom';
 import './book-selector.scss';
@@ -146,12 +149,7 @@ export function useAfterSubmit(selectedBooksRef) {
 }
 
 export default function BookSelectorLoader(props) {
-    return (
-        <LoaderPage
-            slug="books"
-            props={props}
-            Child={BookSelector}
-            noCamelCase
-        />
-    );
+    const books = useDataFromPromise(fetchAllBooks);
+
+    return books ? <BookSelector {...props} data={{books}} /> : <LoadingPlaceholder />;
 }

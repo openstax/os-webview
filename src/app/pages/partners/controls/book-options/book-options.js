@@ -1,5 +1,6 @@
 import React from 'react';
-import booksPromise, {salesforceTitles as getTitles, subjects as getSubjects} from '~/models/books';
+import booksPromise from '~/models/books';
+import {salesforceTitles as getTitles, subjects as getSubjects} from '~/helpers/books';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 import Checkboxes from '../checkboxes-linked-to-store/checkboxes-linked-to-store';
 import './book-options.scss';
