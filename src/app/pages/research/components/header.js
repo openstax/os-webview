@@ -21,7 +21,7 @@ export const Header = ({data: { missionBody }}) => {
     return (
         <Section backgroundColor={colors.lightBlue}>
             <Box direction={{ mobile: 'column', tablet: 'column', desktop: 'row' }} align='center'>
-                <h1 css={{ color: colors.white, flex: 5 }} className='fw-bolder'>
+                <h1 css={{ color: colors.darkText, flex: 5 }} className='fw-bolder'>
                     {missionBody}
                 </h1>
                 <HeaderImage
