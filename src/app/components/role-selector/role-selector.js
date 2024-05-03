@@ -1,6 +1,7 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
+import {FormattedMessage} from 'react-intl';
 import './role-selector.scss';
 
 export function RoleDropdown({ options, setValue, name = 'subject' }) {
@@ -26,7 +27,7 @@ function RoleSelector({
     value,
     setValue,
     children,
-    hidden = false,
+    hidden = false
 }) {
     const [studentContent, facultyContent] = children;
 
@@ -34,7 +35,7 @@ function RoleSelector({
         <div className="role-selector">
             <form data-region="selector">
                 <label hidden={hidden}>
-                    I am a
+                    <FormattedMessage id="role-selector:i-am" defaultMessage='I am a' />
                     <RoleDropdown options={options} setValue={setValue} />
                 </label>
             </form>

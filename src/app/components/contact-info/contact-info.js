@@ -3,6 +3,7 @@ import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
+import {useIntl} from 'react-intl';
 import './contact-info.scss';
 
 function SchoolHiddenInfo({school}) {
@@ -70,6 +71,7 @@ function SchoolSelector() {
         ({target}) => setValue(target.value),
         []
     );
+    const {formatMessage} = useIntl();
 
     React.useLayoutEffect(() => {
         if (showSchoolInfo) {
@@ -84,7 +86,7 @@ function SchoolSelector() {
     return (
         <React.Fragment>
             <FormInput
-                label="School name"
+                label={formatMessage({id: 'contact-info:school'})}
                 suggestions={schoolNames}
                 inputProps={{
                     type: 'text',
@@ -102,10 +104,12 @@ function SchoolSelector() {
 }
 
 export default function ContactInfo({children}) {
+    const {formatMessage} = useIntl();
+
     return (
         <div className="contact-info">
             <FormInput
-                label="First name"
+                label={formatMessage({id: 'contact-info:first-name'})}
                 inputProps={{
                     type: 'text',
                     name: 'first_name',
@@ -115,7 +119,7 @@ export default function ContactInfo({children}) {
                 }}
             />
             <FormInput
-                label="Last name"
+                label={formatMessage({id: 'contact-info:last-name'})}
                 inputProps={{
                     type: 'text',
                     name: 'last_name',
@@ -125,7 +129,7 @@ export default function ContactInfo({children}) {
                 }}
             />
             <FormInput
-                label="Email address"
+                label={formatMessage({id: 'contact-info:email'})}
                 inputProps={{
                     type: 'email',
                     name: 'email',
@@ -135,7 +139,7 @@ export default function ContactInfo({children}) {
                 }}
             />
             <FormInput
-                label="Phone number"
+                label={formatMessage({id: 'contact-info:phone'})}
                 inputProps={{
                     type: 'tel',
                     name: 'phone',

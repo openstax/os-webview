@@ -1,8 +1,12 @@
+@import 'pattern-library/core/pattern-library/headers';
+
 .student-form {
     margin-bottom: 8rem;
     margin-top: 2rem;
 
     .cta .btn {
+        @include button();
         margin: 2rem auto;
+        text-transform: none;
     }
 }

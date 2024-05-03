@@ -19,6 +19,11 @@ export default {
     'tabs.videos': 'Videos',
     'authors.senior': 'Senior Contributing Authors',
     'authors.contributing': 'Contributing Authors',
+    'contact-info:first-name': 'First name',
+    'contact-info:last-name': 'Last name',
+    'contact-info:email': 'Email address',
+    'contact-info:phone': 'Phone number',
+    'contact-info:school': 'School name',
     'errata.header': 'Errata',
     'errata.suggest': 'Suggest a correction',
     'errata.list': 'Errata list',
@@ -54,6 +59,8 @@ export default {
     'pubInfo.pub.hard': 'Hardcover',
     'pubInfo.pub.paper': 'Paperback',
     'pubInfo.pub.dig': 'Digital',
+    'student-form:message': 'Students don&apos;t need to fill out any forms to use our books. Access them free now!',
+    'student-form:go-back': 'Go back',
     'subject.categoryTitle': '{subjectName} Book Categories',
     'subject.learnMoreTitle': 'Learn more',
     'subject.introText': 'Open textbooks',
@@ -62,5 +69,6 @@ export default {
     'subject.viewAll': 'View all {subject} books',
     'subject.notAvailableText': 'Subject not found.',
     'subject.notAvailableLinkText': 'View all',
-    'resources.available': 'Only available for verified instructors.'
+    'resources.available': 'Only available for verified instructors.',
+    'role-selector:i-am': 'I am a'
 };
