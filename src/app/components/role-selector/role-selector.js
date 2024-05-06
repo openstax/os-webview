@@ -1,7 +1,7 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import './role-selector.scss';
 
 export function RoleDropdown({ options, setValue, name = 'subject' }) {
@@ -9,13 +9,14 @@ export function RoleDropdown({ options, setValue, name = 'subject' }) {
         label: opt.displayName,
         value: opt.salesforceName
     }));
+    const {formatMessage} = useIntl();
 
     return (
         <DropdownSelect
             name={name}
             required
             options={optionsAsOptions}
-            placeholder="Please select one"
+            placeholder={formatMessage({id: 'selector.select-one'})}
             onValueUpdate={setValue}
         />
     );
@@ -35,7 +36,7 @@ function RoleSelector({
         <div className="role-selector">
             <form data-region="selector">
                 <label hidden={hidden}>
-                    <FormattedMessage id="role-selector:i-am" defaultMessage='I am a' />
+                    <FormattedMessage id="role-selector.i-am" defaultMessage='I am a' />
                     <RoleDropdown options={options} setValue={setValue} />
                 </label>
             </form>
