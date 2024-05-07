@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
 import {useNavigate} from 'react-router-dom';
+import { FileButton } from '../errata-form/form/FileUploader';
 
 const options = [
     'General',
@@ -20,6 +21,16 @@ const options = [
 
 options[0].selected = true;
 
+const assignableOptions = [
+    'Getting Started',
+    'Assignment',
+    'Grade book',
+    'Error Message',
+    'Feature Request',
+    'Accessibility',
+    'Accounts & password',
+    'Privacy'
+].map((s) => ({label: s, value: s}));
 
 function LabeledInputWithInvalidMessage({
     className, children, eventType='input', showMessage
@@ -47,17 +58,29 @@ function LabeledInputWithInvalidMessage({
     );
 }
 
+// This is an interim site; normally we can leave postTo null and the default
+// in the salesforceForm will be right.
+const newPostSite = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
+
 export default function ContactForm() {
-    const [postTo, setPostTo] = useState();
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
+    const [subject, setSubject] = useState('General');
+    const assignableSelected = React.useMemo(
+        () => subject === 'OpenStax Assignable',
+        [subject]
+    );
+    const product = React.useMemo(
+        () => assignableSelected ? 'Assignable' : '',
+        [assignableSelected]
+    );
+    const postTo = React.useMemo(
+        () => (subject === 'OpenStax Polska') ? '/apps/cms/api/mail/send_mail' : newPostSite,
+        [subject]
+    );
     const navigate = useNavigate();
     const onChangeSubject = React.useCallback(
-        (value) => {
-            const isPolish = value === 'OpenStax Polska';
-
-            setPostTo(isPolish ? '/apps/cms/api/mail/send_mail' : null);
-        },
-        [setPostTo]
+        (value) => setSubject(value),
+        []
     );
     const beforeSubmit = React.useCallback(
         () => setShowInvalidMessages(true),
@@ -71,6 +94,7 @@ export default function ContactForm() {
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>
             <input type="hidden" name="external" value="1" />
+            <input type="hidden" name="product" value={product} />
             <label>
                 What is your question about?
                 <DropdownSelect
@@ -78,6 +102,13 @@ export default function ContactForm() {
                     onValueUpdate={onChangeSubject}
                 />
             </label>
+            {
+                assignableSelected && <label>What Assignable topic in particular?
+                <DropdownSelect
+                    name="feature" options={assignableOptions}
+                />
+                </label>
+            }
             <LabeledInputWithInvalidMessage showMessage={showInvalidMessages}>
                 Your Name
                 <input name="name" type="text" size="20" required />
@@ -90,6 +121,7 @@ export default function ContactForm() {
                 Your Message
                 <textarea cols="50" name="description" rows="6" required />
             </LabeledInputWithInvalidMessage>
+            <FileButton name="attachment" />
             <input type="submit" value="Send" className="btn btn-orange" onClick={beforeSubmit} />
         </SalesforceForm>
     );
