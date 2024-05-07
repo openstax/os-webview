@@ -175,12 +175,12 @@ function EnsureLoggedIn() {
     const {userStatus: {uuid}} = useUserContext();
     const defaultMsg = `Reporting your use of OpenStax helps us
     secure additional funding for future titles!`;
-    const [adoptionInfo, _setAdoptionInfo] = React.useState(defaultMsg);
+    const [adoptionInfo, setAdoptionInfo] = React.useState(defaultMsg);
 
-    // React.useEffect(
-    //     () => adoptionsPromise.then((info) => info && setAdoptionInfo(info)),
-    //     []
-    // );
+    React.useEffect(
+        () => adoptionsPromise.then((info) => info && setAdoptionInfo(info)),
+        []
+    );
 
     React.useEffect(
         () => {
