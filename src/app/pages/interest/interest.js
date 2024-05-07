@@ -14,6 +14,7 @@ import useFormTarget from '~/components/form-target/form-target';
 import useSalesforceContext from '~/contexts/salesforce';
 import FormInput from '~/components/form-input/form-input';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
+import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
 import './interest.scss';
 
 function useBundledValues() {
@@ -127,11 +128,7 @@ function FacultyForm({ position, onPageChange, role }) {
                 target="form-target"
             >
                 <React.Fragment>
-                    <input
-                        type="hidden"
-                        name="application_source"
-                        value="OS Web"
-                    />
+                    <TrackingParameters />
                     <input type="hidden" name="position" value={position} />
                     <input type="hidden" name="role" value={role} />
                     <input
