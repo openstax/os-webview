@@ -38,7 +38,7 @@ export default {
     'expander.fewer': 'ver {optionCount} {options} menos',
     'expander.more': '+ {optionCount} más {options}...',
     'letusknow.text1': 'Suscríbase<br>para más información',
-    'letusknow.text2': '¿Utiliza este libro? Háganoslo saber.',
+    'letusknow.text2': '¿Utiliza este libro?<br>Háganoslo saber.',
     'printcopy.individual': 'Individuo',
     'printcopy.disclosure': 'Como afiliados de Amazon ganamos con compras calificadas',
     'printcopy.bookstore': 'Libreria',

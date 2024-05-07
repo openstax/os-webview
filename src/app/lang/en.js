@@ -38,7 +38,7 @@ export default {
     'expander.fewer': 'See {optionCount} fewer {options}',
     'expander.more': '+ {optionCount} more {options}...',
     'letusknow.text1': 'Sign up to<br>learn more',
-    'letusknow.text2': 'Using this book? Let us know.',
+    'letusknow.text2': 'Using this book?<br>Let us know.',
     'printcopy.individual': 'Individual',
     'printcopy.disclosure': '***',
     'printcopy.bookstore': 'Bookstore',
