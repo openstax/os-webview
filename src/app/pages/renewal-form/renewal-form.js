@@ -3,7 +3,8 @@ import {useLocation} from 'react-router-dom';
 import linkHelper from '~/helpers/link';
 import useUserContext from '~/contexts/user';
 import useAdoptions from '~/models/renewals';
-import adoptionsPromise from './salesforce-data';
+// -- We'll be trying to do this for the next release.
+// import _adoptionsPromise from './salesforce-data';
 import BookTagsMultiselect, {BookTagsContextProvider, useBookTagsContext}
     from '~/components/multiselect/book-tags/book-tags';
 
@@ -173,12 +174,12 @@ function EnsureLoggedIn() {
     const {userStatus: {uuid}} = useUserContext();
     const defaultMsg = `Reporting your use of OpenStax helps us
     secure additional funding for future titles!`;
-    const [adoptionInfo, setAdoptionInfo] = React.useState(defaultMsg);
+    const [adoptionInfo, _setAdoptionInfo] = React.useState(defaultMsg);
 
-    React.useEffect(
-        () => adoptionsPromise.then((info) => info && setAdoptionInfo(info)),
-        []
-    );
+    // React.useEffect(
+    //     () => adoptionsPromise.then((info) => info && setAdoptionInfo(info)),
+    //     []
+    // );
 
     React.useEffect(
         () => {
