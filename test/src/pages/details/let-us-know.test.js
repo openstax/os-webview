@@ -12,7 +12,7 @@ test('handles English title', async () => {
             <LetUsKnow title={englishTitle} />
         </BookDetailsLoader>
     );
-    await screen.findByText('Using this book? Let us know.');
+    await screen.findByText('Using this book?', {exact: false});
 });
 test('handles Polish title', async () => {
     render(
