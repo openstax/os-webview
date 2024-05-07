@@ -79,6 +79,10 @@
 
     .btn {
         @include button();
+        margin-bottom: $form-element-height;
+    }
+
+    [type="submit"] {
         @extend %primary;
 
         float: none;
