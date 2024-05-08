@@ -3,6 +3,7 @@ import {useLocation} from 'react-router-dom';
 import linkHelper from '~/helpers/link';
 import useUserContext from '~/contexts/user';
 import useAdoptions from '~/models/renewals';
+import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
 // -- We'll be trying to do this for the next release.
 // import _adoptionsPromise from './salesforce-data';
 import BookTagsMultiselect, {BookTagsContextProvider, useBookTagsContext}
@@ -61,10 +62,10 @@ function HiddenFields({email, uuid, counts}) {
 
     return (
         <React.Fragment>
+            <TrackingParameters source={source} />
             <input type="hidden" name="email" value={email} />
             <input type="hidden" name="renewal_date" value={new Date(Date.now()).toLocaleDateString()} />
             <input type="hidden" name="accounts_uuid" value={uuid} />
-            <input type="hidden" name="application_source" value={source} />
             <input type="hidden" name="adoption_json" value={json} />
             <input type="hidden" name="subject_interest" value={subjects} />
             { returnToValue ?
