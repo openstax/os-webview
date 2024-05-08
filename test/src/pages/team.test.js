@@ -10,6 +10,6 @@ it('creates with a big chunk of data', async () => {
             <TeamLoader />
         </MemoryRouter>
     );
-    expect(await screen.findByRole('navigation'));
+    expect(await screen.findByRole('tablist'));
     expect(screen.queryAllByRole('heading').length).toBeGreaterThan(3);
 });

@@ -49,13 +49,20 @@
 
     .blurbs {
         max-height: calc(100vh - 16rem);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        > li {
+            background-color: ui-color(white);
+            border-bottom: thin solid ui-color(form-border);
+            padding: 0.5rem;
+        }
     }
 
     .blurb {
         align-content: center;
         align-items: center;
-        background-color: ui-color(white);
-        border-bottom: thin solid ui-color(form-border);
         color: inherit;
         display: grid;
         grid-column-gap: $normal-margin;

@@ -1,8 +1,19 @@
 import React from 'react';
-import TabGroup from '~/components/tab-group/tab-group';
-import ContentGroup from '~/components/content-group/content-group';
+import {Tabs, Item} from '~/components/tablist/tablist';
 import useUserContext from '~/contexts/user';
+import {useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import './resources.scss';
+
+function LinkWithGiveDialog({href, text}) {
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+
+    return (
+        <React.Fragment>
+            <a href={href} onClick={openGiveDialog}>{text}</a>
+            <GiveDialog link={href} variant='K12 resource' />
+        </React.Fragment>
+    );
+}
 
 function ResourceLink({ data }) {
     const url = data.linkExternal || data.linkDocumentUrl;
@@ -12,7 +23,7 @@ function ResourceLink({ data }) {
         <li>
             {
                 data.resourceUnlocked || isVerified ?
-                <a href={url}>{data.book}</a> :
+                <LinkWithGiveDialog href={url} text={data.book} /> :
                 <span>{data.book} (verified instructor only)</span>
             }
         </li>
@@ -58,15 +69,12 @@ function resourceHeadersToResources(resourceHeaders) {
 export default function Resources({
     data,
     labels,
-    selectedLabel,
-    setSelectedLabel
+    selectedLabel
 }) {
-    const studentResources = React.useMemo(
-        () => resourceHeadersToResources(data.studentResourceHeaders),
-        [data]
-    );
-    const instructorResources = React.useMemo(
-        () => resourceHeadersToResources(data.facultyResourceHeaders),
+    const resources = React.useMemo(
+        () => ['facultyResourceHeaders', 'studentResourceHeaders'].map(
+            (k) => resourceHeadersToResources(data[k])
+        ),
         [data]
     );
 
@@ -74,11 +82,15 @@ export default function Resources({
         <section id="resources">
             <div className="boxed">
                 <h1>{data.resourcesHeading}</h1>
-                <TabGroup {...{ labels, selectedLabel, setSelectedLabel }} />
-                <ContentGroup activeIndex={labels.indexOf(selectedLabel)}>
-                    <ResourceToContent resources={instructorResources} />
-                    <ResourceToContent resources={studentResources} />
-                </ContentGroup>
+                <Tabs aria-label="Resource tabs" selectedKey={selectedLabel}>
+                    {
+                        labels.map((label, i) =>
+                            <Item key={label} title={label}>
+                                <ResourceToContent resources={resources[i]} />
+                            </Item>
+                        )
+                    }
+                </Tabs>
             </div>
         </section>
     );

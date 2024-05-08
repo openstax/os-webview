@@ -1,7 +1,8 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useMultiselectContext from '../multiselect-context.js';
-import fetchBooks, {salesforceTitles, subjects as getSubjects} from '~/models/books';
+import fetchBooks from '~/models/books';
+import {salesforceTitles, subjects as getSubjects} from '~/helpers/books';
 
 function useSFBooks() {
     const [books, setBooks] = React.useState([]);

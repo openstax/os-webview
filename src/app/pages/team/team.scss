@@ -30,7 +30,7 @@
             padding: 6rem $normal-margin 8rem;
         }
 
-        .tab {
+        [role="tab"] {
             @include set-font(body-large);
 
             margin: 0 #{2 * $normal-margin} 0 0;

@@ -8,17 +8,17 @@
         justify-content: space-between;
     }
 
-    .tab-group {
+    [role="tablist"] {
         @include tab-group();
 
-        .tab {
+        [role="tab"] {
             @extend %tab;
 
             @include width-up-to($phone-max) {
                 padding-top: 1rem;
             }
 
-            &[aria-current] {
+            &[aria-selected="true"] {
                 @extend %active;
             }
         }

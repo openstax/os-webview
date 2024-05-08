@@ -17,17 +17,22 @@ $gradient-end: (
 @mixin set-color-items($color) {
     @at-root .#{$color} {
         .hero,
-        .book-icon,
+        .book-icon:not(.reverse),
         .title-bar,
         .webinars .icon-cell {
             background-color: os-color($color);
+        }
+
+        .book-icon.reverse {
+            color: os-color($color);
+            background-color: ui-color(white);
         }
 
         .hero {
             background-image: linear-gradient(to right, os-color($color), get-color($gradient-end, $color));
         }
 
-        .book-icon,
+        .book-icon:not(.reverse),
         .title-bar,
         .webinars .icon-cell {
             @if ($color == yellow) {
@@ -251,7 +256,7 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
     .tab-controller {
         width: 100%;
 
-        .tab {
+        [role="tab"] {
             @include scale-feature(font-size, 1.8rem, 2.2rem);
 
             font-weight: normal;

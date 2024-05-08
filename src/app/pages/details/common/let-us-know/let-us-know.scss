@@ -7,13 +7,17 @@ $icon-size: 5.5rem;
     display: grid;
     grid-gap: 2rem;
     margin-bottom: 4rem;
+    width: max-content;
 
-    .top {
+    .button-with-icon {
         align-items: center;
+        background-color: ui-color(page-bg);
+        border-radius: 0.5rem;
         color: inherit;
         display: grid;
         grid-gap: $normal-margin;
         grid-template-columns: $icon-size auto;
+        padding: 1rem;
         text-decoration: none;
     }
 
@@ -26,6 +30,11 @@ $icon-size: 5.5rem;
         height: $icon-size;
         justify-content: center;
         width: $icon-size;
+
+        &.reverse {
+            border-radius: 0;
+            font-size: $icon-size;
+        }
     }
 
     .text {

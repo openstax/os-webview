@@ -6,6 +6,9 @@ const asUSD = new Intl.NumberFormat('en-US', {
 });
 
 function createThanksStatement({adoptions}: AdoptionData) {
+    if (!adoptions) {
+        return null;
+    }
     const firstYear = Math.min(...adoptions.map((a) => a.baseYear));
     const sumStudents = adoptions
         .map((a) => a.students)

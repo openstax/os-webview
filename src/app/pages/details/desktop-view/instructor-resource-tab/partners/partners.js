@@ -10,41 +10,51 @@ function Blurb({blurb, badgeImage, onClick}) {
     const {count: ratingCount, average: rating} = blurb;
 
     return (
-        <a
-          className="blurb"
-          href={blurb.url}
-          onClick={onClick}
-          data-analytics-select-content={blurb.name}
-          data-content-type="Partner Profile"
-          data-content-tags={`,category=${blurb.type},`}
-        >
-            <div className="logo">
-                <img src={blurb.image} alt="" />
-                {
-                    blurb.verifiedFeatures &&
+        <li>
+            <a
+                className="blurb"
+                href={blurb.url}
+                onClick={onClick}
+                data-analytics-select-content={blurb.name}
+                data-content-type="Partner Profile"
+                data-content-tags={`,category=${blurb.type},`}
+            >
+                <div className="logo">
+                    <img src={blurb.image} alt="" />
+                    {blurb.verifiedFeatures && (
                         <div className="badge">
-                            <img className="background" src={badgeImage} alt="verified" />
-                            <FontAwesomeIcon className="checkmark" icon={faCheck} />
+                            <img
+                                className="background"
+                                src={badgeImage}
+                                alt="verified"
+                            />
+                            <FontAwesomeIcon
+                                className="checkmark"
+                                icon={faCheck}
+                            />
                             <div className="tooltip right">
                                 {blurb.verifiedFeatures}
                             </div>
                         </div>
-                }
-            </div>
-            <div className="info">
-                <div className="name">{blurb.name}</div>
-                <div className="tags">
-                    {
-                        tags.map((value) =>
+                    )}
+                </div>
+                <div className="info">
+                    <div className="name">{blurb.name}</div>
+                    <div className="tags">
+                        {tags.map((value) => (
                             <span className="tag" key={value}>
                                 {value}
                             </span>
-                        )
-                    }
+                        ))}
+                    </div>
+                    <StarsAndCount
+                        rating={rating}
+                        count={ratingCount}
+                        showNumber
+                    />
                 </div>
-                <StarsAndCount rating={rating} count={ratingCount} showNumber />
-            </div>
-        </a>
+            </a>
+        </li>
     );
 }
 
@@ -68,23 +78,28 @@ export default function Partners({bookAbbreviation, model}) {
         <div className="partners">
             <div className="callout"></div>
             <div className="title-bar" data-analytics-nav={title}>
-                {title}
-                <a className="filter-for-book" href="/partners" onClick={onClick}>{seeMoreText}</a>
+                <span role="heading" aria-level="3">
+                    {title}
+                </span>
+                <a
+                    className="filter-for-book"
+                    href="/partners"
+                    onClick={onClick}
+                >
+                    {seeMoreText}
+                </a>
             </div>
-            <div
-              className="blurb-scroller"
-              data-analytics-content-list={title}
-            >
-                <div className="blurbs">
-                    {
-                        blurbs.map((blurb) =>
-                            <Blurb
-                                blurb={blurb} onClick={onClick} badgeImage={badgeImage}
-                                key={blurb.url}
-                            />
-                        )
-                    }
-                </div>
+            <div className="blurb-scroller" data-analytics-content-list={title}>
+                <ul className="blurbs">
+                    {blurbs.map((blurb) => (
+                        <Blurb
+                            blurb={blurb}
+                            onClick={onClick}
+                            badgeImage={badgeImage}
+                            key={blurb.url}
+                        />
+                    ))}
+                </ul>
             </div>
         </div>
     );

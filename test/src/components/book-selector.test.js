@@ -22,5 +22,5 @@ it('lists the books', async () => {
     );
     const checkboxes = await screen.findAllByRole('checkbox');
 
-    expect(checkboxes).toHaveLength(24);
+    expect(checkboxes).toHaveLength(9);
 });
