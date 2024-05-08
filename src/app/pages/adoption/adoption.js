@@ -10,6 +10,7 @@ import BookSelector, {useSelectedBooks, useAfterSubmit, useFirstSearchArgument}
 import HowUsing from './how-using/how-using';
 import useSalesforceContext from '~/contexts/salesforce';
 import useFormTarget from '~/components/form-target/form-target';
+import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
 import './adoption.scss';
 
 function BookSelectorPage({selectedBooksRef}) {
@@ -65,7 +66,6 @@ function FacultyForm({position, onPageChange}) {
         },
         [position]
     );
-
     const doSubmit = React.useCallback(
         (form) => {
             if (selectedBooksRef.current?.length > 0) {
@@ -85,7 +85,7 @@ function FacultyForm({position, onPageChange}) {
                 submitting={submitting} target="form-target"
             >
                 <React.Fragment>
-                    <input type="hidden" name="application_source" value="OS Web" />
+                    <TrackingParameters />
                     <input type="hidden" name="position" value={position} />
                     <input type="hidden" name="role" value="Instructor" />
                     <input type="hidden" name="lead_source" value="Adoption Form" />
