@@ -1,7 +1,7 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import usePaginatorContext, {PaginatorContextProvider} from '~/components/paginator/paginator-context';
 import usePagesContext, {PagesContextProvider} from './pages-context';
-import {FormattedMessage} from 'react-intl';
+import ButtonRow from './buttons';
 import './multi-page-form.scss';
 
 function pass() {
@@ -43,92 +43,9 @@ function PageCount() {
     );
 }
 
-function BackButton({disabled}) {
-    const {currentPage, setCurrentPage} = usePaginatorContext();
-    const previousPage = useCallback(
-        () => setCurrentPage(currentPage - 1),
-        [setCurrentPage, currentPage]
-    );
-
-    return (
-        <button
-            type="button" className="secondary back"
-            hidden={currentPage === 1}
-            onClick={previousPage}
-            disabled={disabled}
-        >
-            <FormattedMessage id="form.back" />
-        </button>
-    );
-}
-
-function SubmitButton({disabled, formRef, onSubmit}) {
-    const {currentPage} = usePaginatorContext();
-    const {pages, validateCurrentPage} = usePagesContext();
-    const validateAndSubmit = useCallback(
-        (event) => {
-            if (validateCurrentPage()) {
-                onSubmit(formRef.current);
-            }
-            event.preventDefault();
-        },
-        [validateCurrentPage, onSubmit, formRef]
-    );
-
-    return (
-        <button
-            type="submit" className="primary"
-            hidden={currentPage < pages}
-            onClick={validateAndSubmit}
-            disabled={disabled}
-        >
-            <FormattedMessage id="form.submit" />
-        </button>
-    );
-}
-
-function NextButton({disabled}) {
-    const {currentPage, setCurrentPage} = usePaginatorContext();
-    const {pages, validateCurrentPage} = usePagesContext();
-    const nextPage = useCallback(
-        () => {
-            if (validateCurrentPage()) {
-                setCurrentPage(currentPage + 1);
-            }
-        },
-        [validateCurrentPage, setCurrentPage, currentPage]
-    );
-
-    return (
-        <button
-            type="button" className="primary next"
-            hidden={currentPage === pages}
-            onClick={nextPage}
-            disabled={disabled}
-        >
-            <FormattedMessage id="form.next" />
-        </button>
-    );
-}
-
-function ButtonRow({
-    formRef, onSubmit, disabled=false
-}) {
-    return (
-        <div className="button-row">
-            <BackButton disabled={disabled} />
-            <SubmitButton
-                disabled={disabled} onSubmit={onSubmit}
-                formRef={formRef}
-            />
-            <NextButton disabled={disabled} />
-        </div>
-    );
-}
-
 function MultiPageFormInContext({
     children,
-    validatePage=pass, onPageChange=pass, onSubmit=pass,
+    validatePage=pass, onPageChange=pass, onSubmit,
     submitting, ...formParams
 }) {
     const formRef = React.useRef();

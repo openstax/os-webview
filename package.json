@@ -111,14 +111,7 @@
         "coveragePathIgnorePatterns": [
             "/analytics"
         ],
-        "coverageReporters": [
-            [
-                "text",
-                {
-                    "skipFull": true
-                }
-            ]
-        ],
+        "coverageReporters": ["json", "html"],
         "setupFiles": [
             "<rootDir>/test/setupFile.js"
         ],
