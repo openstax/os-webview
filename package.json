@@ -32,6 +32,7 @@
         "boxible": "^1.7.1",
         "classnames": "^2.3.2",
         "esbuild-loader": "^3.0.1",
+        "lodash": "^4.17.21",
         "pure-react-carousel": "^1.30.1",
         "react-accessible-accordion": "^4.0.0",
         "react-aria": "^3.31.1",
@@ -52,6 +53,7 @@
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/preact": "^3.2.3",
         "@testing-library/user-event": "^14.4.3",
+        "@types/lodash": "^4.17.1",
         "@types/react": "^18.2.15",
         "@types/react-dom": "^18.2.7",
         "@types/react-lazyload": "^3.2.3",
@@ -111,7 +113,10 @@
         "coveragePathIgnorePatterns": [
             "/analytics"
         ],
-        "coverageReporters": ["json", "html"],
+        "coverageReporters": [
+            "json",
+            "html"
+        ],
         "setupFiles": [
             "<rootDir>/test/setupFile.js"
         ],
