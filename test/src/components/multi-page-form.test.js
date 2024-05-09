@@ -23,7 +23,11 @@ const props = {
 it('handles next, previous and submit', async () => {
     const user = userEvent.setup();
 
-    render(<LanguageContextProvider><MultiPageForm {...props} /></LanguageContextProvider>)
+    render(
+        <LanguageContextProvider>
+            <MultiPageForm {...props} />
+        </LanguageContextProvider>
+    );
     expect(screen.queryByText('Back')).toHaveAttribute('hidden');
     expect(screen.queryAllByRole('button')).toHaveLength(1);
     await user.click(screen.getByText('Next'));
@@ -41,7 +45,11 @@ it('handles validate page failure', async () => {
     const user = userEvent.setup();
     let isValid = false;
 
-    render(<LanguageContextProvider><MultiPageForm {...props} validatePage={() => isValid} /></LanguageContextProvider>);
+    render(
+        <LanguageContextProvider>
+            <MultiPageForm {...props} validatePage={() => isValid} />
+        </LanguageContextProvider>
+    );
     await user.click(screen.getByText('Next'));
     // Still on first page
     expect(screen.queryByText('Back')).toHaveAttribute('hidden');
@@ -52,4 +60,3 @@ it('handles validate page failure', async () => {
     await user.click(screen.getByText('Submit'));
     expect(submitted).toBe(true);
 });
-
