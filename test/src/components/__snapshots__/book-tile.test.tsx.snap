@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`book-tile renders 1`] = `
+<body>
+  <div>
+    <div
+      class="book-tile"
+    >
+      <a
+        href="/details/sample"
+      >
+        <img
+          height="240"
+          role="presentation"
+          src="cover.jpg"
+          width="240"
+        />
+      </a>
+      <div
+        class="text-block"
+      >
+        <a
+          href="/details/sample"
+        >
+          Sample Title
+        </a>
+      </div>
+      <div
+        class="navmenu"
+      >
+        <button
+          aria-controls="sample-ddm"
+          aria-haspopup="true"
+          id="sample-ddb"
+          type="button"
+        >
+          Get the book
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-caret-down "
+            data-icon="caret-down"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 320 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+        <div
+          aria-labelledby="sample-ddb"
+          id="sample-ddm"
+          role="menu"
+        >
+          <a
+            href="link-to-rex"
+            role="menuitem"
+          >
+            View online
+          </a>
+          <a
+            href="hi-res.pdf"
+            role="menuitem"
+          >
+             Download a PDF
+          </a>
+          <hr />
+          <a
+            href="/details/sample?Instructor resources"
+            role="menuitem"
+          >
+            Instructor resources
+          </a>
+          <a
+            href="/details/sample?Student resources"
+            role="menuitem"
+          >
+            Student resources
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ReactModalPortal"
+  />
+  <div
+    class="ReactModalPortal"
+  />
+</body>
+`;

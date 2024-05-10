@@ -131,14 +131,12 @@ function FormattedMessageFor({
             />
         );
     }
-    if (defaultMessage === 'Student resources') {
-        return (
-            <FormattedMessage
-                id='tabs.studentResources'
-                defaultMessage='Student resources'
-            />
-        );
-    }
+    return (
+        <FormattedMessage
+            id='tabs.studentResources'
+            defaultMessage='Student resources'
+        />
+    );
 }
 
 function MenuItem({
@@ -149,9 +147,6 @@ function MenuItem({
     defaultMessage: DefaultMessage;
     url: string;
 } & AnchorHTMLAttributes<HTMLAnchorElement>) {
-    if (!url) {
-        return null;
-    }
     return (
         <a role='menuitem' href={url} {...aProps}>
             <FormattedMessageFor defaultMessage={defaultMessage} />
