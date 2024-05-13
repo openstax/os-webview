@@ -89,6 +89,7 @@ function ControlButton({
             aria-controls={menuId}
             aria-expanded={isOpen}
             onClick={toggleMenu}
+            data-analytics-nav="Get the book"
         >
             <FormattedMessage id='getTheBook' defaultMessage='Get the book' />
             <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
