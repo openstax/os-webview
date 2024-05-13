@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
 import usePaginatorContext, {PaginatorContextProvider} from '~/components/paginator/paginator-context';
 import usePagesContext, {PagesContextProvider} from './pages-context';
+import {FormattedMessage} from 'react-intl';
 import './multi-page-form.scss';
 
 function pass() {
@@ -37,7 +38,7 @@ function PageCount() {
 
     return (
         <div className="page-count">
-            Step {currentPage} of {pages}
+            <FormattedMessage id="form.step-of" values={{current: currentPage, total: pages}} />
         </div>
     );
 }
@@ -56,7 +57,7 @@ function BackButton({disabled}) {
             onClick={previousPage}
             disabled={disabled}
         >
-            Back
+            <FormattedMessage id="form.back" />
         </button>
     );
 }
@@ -81,7 +82,7 @@ function SubmitButton({disabled, formRef, onSubmit}) {
             onClick={validateAndSubmit}
             disabled={disabled}
         >
-            Submit
+            <FormattedMessage id="form.submit" />
         </button>
     );
 }
@@ -105,7 +106,7 @@ function NextButton({disabled}) {
             onClick={nextPage}
             disabled={disabled}
         >
-            Next
+            <FormattedMessage id="form.next" />
         </button>
     );
 }

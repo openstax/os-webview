@@ -3,6 +3,7 @@ import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
+import {useIntl, FormattedMessage} from 'react-intl';
 import './contact-info.scss';
 
 function SchoolHiddenInfo({school}) {
@@ -22,7 +23,7 @@ function SchoolHiddenInfo({school}) {
     );
 }
 
-const schoolTypeOptions = [
+const schoolTypeValues = [
     'College/University (4)',
     'Technical/Community College (2)',
     'Career School/For-Profit (2)',
@@ -30,29 +31,47 @@ const schoolTypeOptions = [
     'K-12 School',
     'Home School',
     'Other'
-].map((name) => ({label: name, value: name}));
+];
 
 function SchoolInfo() {
     const [schoolLocation, setSchoolLocation] = React.useState();
+    const {formatMessage} = useIntl();
+    // Because they have to be statically evaluate-able
+    const schoolTypeLabels = {
+        'College/University (4)': formatMessage({id: 'College/University (4)'}),
+        'Technical/Community College (2)': formatMessage({id: 'Technical/Community College (2)'}),
+        'Career School/For-Profit (2)': formatMessage({id: 'Career School/For-Profit (2)'}),
+        'High School': formatMessage({id: 'High School'}),
+        'K-12 School': formatMessage({id: 'K-12 School'}),
+        'Home School': formatMessage({id: 'Home School'}),
+        'Other': formatMessage({id: 'Other'})
+    };
+    const schoolTypeOptions = schoolTypeValues.map(
+        (value) => ({
+            label: schoolTypeLabels[value],
+            value
+        })
+    );
+    const schoolTypeLabel = formatMessage({id: 'contact-info.school-type-label'});
+    const schoolLocationLabel = formatMessage({id: 'contact-info.school-location-label'});
 
     return (
         <div className="school-info">
             <div className="instructions">
-                We don&apos;t have that school in our system. Please tell us a little
-                more about it:
+               <FormattedMessage id="contact-info.school-not-found" />
             </div>
             <FormSelect
-                label="What type of school is it?"
+                label={schoolTypeLabel}
                 name="school_type"
                 selectAttributes={{required: true}}
                 options={schoolTypeOptions}
             />
             <FormRadioGroup
-                longLabel="Is it located in the United States?"
+                longLabel={schoolLocationLabel}
                 name="school_location"
                 options={[
-                    {label: 'Yes', value: 'Domestic'},
-                    {label: 'No', value: 'Foreign'}
+                    {label: formatMessage({id: 'Yes'}), value: 'Domestic'},
+                    {label: formatMessage({id: 'No'}), value: 'Foreign'}
                 ]}
                 selectedValue={schoolLocation}
                 setSelectedValue={setSchoolLocation}
@@ -70,6 +89,7 @@ function SchoolSelector() {
         ({target}) => setValue(target.value),
         []
     );
+    const {formatMessage} = useIntl();
 
     React.useLayoutEffect(() => {
         if (showSchoolInfo) {
@@ -84,7 +104,7 @@ function SchoolSelector() {
     return (
         <React.Fragment>
             <FormInput
-                label="School name"
+                label={formatMessage({id: 'contact-info.school'})}
                 suggestions={schoolNames}
                 inputProps={{
                     type: 'text',
@@ -102,10 +122,12 @@ function SchoolSelector() {
 }
 
 export default function ContactInfo({children}) {
+    const {formatMessage} = useIntl();
+
     return (
         <div className="contact-info">
             <FormInput
-                label="First name"
+                label={formatMessage({id: 'contact-info.first-name'})}
                 inputProps={{
                     type: 'text',
                     name: 'first_name',
@@ -115,7 +137,7 @@ export default function ContactInfo({children}) {
                 }}
             />
             <FormInput
-                label="Last name"
+                label={formatMessage({id: 'contact-info.last-name'})}
                 inputProps={{
                     type: 'text',
                     name: 'last_name',
@@ -125,7 +147,7 @@ export default function ContactInfo({children}) {
                 }}
             />
             <FormInput
-                label="Email address"
+                label={formatMessage({id: 'contact-info.email'})}
                 inputProps={{
                     type: 'email',
                     name: 'email',
@@ -135,7 +157,7 @@ export default function ContactInfo({children}) {
                 }}
             />
             <FormInput
-                label="Phone number"
+                label={formatMessage({id: 'contact-info.phone'})}
                 inputProps={{
                     type: 'tel',
                     name: 'phone',

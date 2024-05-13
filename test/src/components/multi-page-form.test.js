@@ -3,6 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
+import {LanguageContextProvider} from '~/contexts/language';
 
 let wrapper;
 let submitted = false;
@@ -18,7 +19,7 @@ const props = {
 it('handles next and submit', async () => {
     const user = userEvent.setup();
 
-    render(<MultiPageForm {...props} />)
+    render(<LanguageContextProvider><MultiPageForm {...props} /></LanguageContextProvider>)
     expect(screen.queryByText('Back')).toHaveAttribute('hidden');
     expect(screen.queryAllByRole('button')).toHaveLength(1);
     await user.click(screen.getByText('Next'));

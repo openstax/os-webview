@@ -6,20 +6,16 @@ const adoptionName = '[name="Adoption_Status__c"]';
 
 export const adoptionOptions = [{
     key: 'core',
-    value: 'As the core textbook for my course',
-    text: 'As the core textbook for my course'
+    value: 'As the core textbook for my course'
 }, {
     key: 'recommended',
-    value: 'As an optional/recommended textbook for my course',
-    text: 'As an optional/recommended textbook for my course'
+    value: 'As an optional/recommended textbook for my course'
 }, {
     key: 'outside',
-    value: 'To teach, tutor, or support students outside of a course setting',
-    text: 'To teach, tutor, or support students outside of a course setting'
+    value: 'To teach, tutor, or support students outside of a course setting'
 }, {
     key: 'self',
-    value: 'For my own knowledge or other work',
-    text: 'For my own knowledge or other work'
+    value: 'For my own knowledge or other work'
 }];
 
 function adoption(options) {
