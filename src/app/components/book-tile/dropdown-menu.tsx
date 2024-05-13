@@ -23,7 +23,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
         bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
 
     return (
-        <div className='navmenu' ref={ref}>
+        <div className='navmenu' ref={ref} data-analytics-nav="Get the book">
             <ControlButton
                 parentRef={ref}
                 buttonId={buttonId}
@@ -89,7 +89,6 @@ function ControlButton({
             aria-controls={menuId}
             aria-expanded={isOpen}
             onClick={toggleMenu}
-            data-analytics-nav="Get the book"
         >
             <FormattedMessage id='getTheBook' defaultMessage='Get the book' />
             <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
