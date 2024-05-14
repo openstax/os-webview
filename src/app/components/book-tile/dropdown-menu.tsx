@@ -23,7 +23,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
         bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
 
     return (
-        <div className='navmenu' ref={ref}>
+        <div className='navmenu' ref={ref} data-analytics-nav="Get the book dropdown">
             <ControlButton
                 parentRef={ref}
                 buttonId={buttonId}
