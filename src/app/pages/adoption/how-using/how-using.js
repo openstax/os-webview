@@ -2,6 +2,7 @@ import React from 'react';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import {adoptionOptions} from '~/contexts/salesforce';
+import {FormattedMessage, useIntl} from 'react-intl';
 import './how-using.scss';
 
 function HowManyStudents({book, dispatch}) {
@@ -14,8 +15,10 @@ function HowManyStudents({book, dispatch}) {
 
     return (
         <div>
-            How many students are using {book.text} each semester?
-            <div className="hint">Include sections taught by TAs that you oversee</div>
+            <FormattedMessage id="how-using.how-many" values={{title: book.text}} />
+            <div className="hint">
+                <FormattedMessage id="how-using.hint" />
+            </div>
             <input type="hidden" value={book.value} />
             <FormInput
                 inputProps={{
@@ -34,14 +37,27 @@ function HowUsingBook({book, dispatch}) {
         (value) => dispatch({[book.value]: value}),
         [book, dispatch]
     );
+    const {formatMessage} = useIntl();
+    const adoptionTexts = {
+        core: formatMessage({id: 'how-using.core'}),
+        recommended: formatMessage({id: 'how-using.recommended'}),
+        outside: formatMessage({id: 'how-using.outside'}),
+        self: formatMessage({id: 'how-using.self'})
+    };
+
+    adoptionOptions.forEach(
+        (opt) => {
+            opt.text = adoptionTexts[opt.key];
+        }
+    );
 
     return (
         <FormSelect
-            label={`How are you using ${book.text}?`}
+            label={formatMessage({id: 'how-using.how-using'}, {title: book.text})}
             options={adoptionOptions}
             selectAttributes={{
                 name: `hu_${book.text}`,
-                placeholder: 'Please select one',
+                placeholder: formatMessage({id: 'selector.select-one'}),
                 required: true
             }}
             onValueUpdate={updateBookValue}

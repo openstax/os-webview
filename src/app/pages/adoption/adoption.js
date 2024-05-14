@@ -11,6 +11,7 @@ import HowUsing from './how-using/how-using';
 import useSalesforceContext from '~/contexts/salesforce';
 import useFormTarget from '~/components/form-target/form-target';
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
+import {useIntl} from 'react-intl';
 import './adoption.scss';
 
 function BookSelectorPage({selectedBooksRef}) {
@@ -20,7 +21,8 @@ function BookSelectorPage({selectedBooksRef}) {
         () => selectedBooks.map((b) => b.value).join('; '),
         [selectedBooks]
     );
-    const instructions = 'Select titles you are using even if the edition number is different.';
+    const {formatMessage} = useIntl();
+    const instructions = formatMessage({id: 'adoption.instructions'});
     const includeFilter = React.useCallback(
         (b) => !b.comingSoon,
         []
@@ -30,7 +32,7 @@ function BookSelectorPage({selectedBooksRef}) {
     return (
         <React.Fragment>
             <BookSelector
-                prompt="Which textbook(s) are you currently using?"
+                prompt={formatMessage({id: 'adoption.book-prompt'})}
                 required
                 selectedBooks={selectedBooks}
                 preselectedTitle={preselectedTitle}
