@@ -1,6 +1,7 @@
 import React from 'react';
 import usePaginatorContext, {PaginatorContextProvider} from '~/components/paginator/paginator-context';
 import usePagesContext, {PagesContextProvider} from './pages-context';
+import {FormattedMessage} from 'react-intl';
 import ButtonRow from './buttons';
 import './multi-page-form.scss';
 

@@ -27,6 +27,7 @@ exports[`book-tile renders 1`] = `
       </div>
       <div
         class="navmenu"
+        data-analytics-nav="Get the book dropdown"
       >
         <button
           aria-controls="sample-ddm"

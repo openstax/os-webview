@@ -41,7 +41,7 @@ it('handles validate page failure', async () => {
     const user = userEvent.setup();
     let isValid = false;
 
-    render(<MultiPageForm {...props} validatePage={() => isValid} />);
+    render(<LanguageContextProvider><MultiPageForm {...props} validatePage={() => isValid} /></LanguageContextProvider>);
     await user.click(screen.getByText('Next'));
     // Still on first page
     expect(screen.queryByText('Back')).toHaveAttribute('hidden');
