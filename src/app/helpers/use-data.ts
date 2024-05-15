@@ -6,7 +6,7 @@ import {getUrlFor, camelCaseKeys, transformData} from './page-data-utils';
 // we can use to make such a Promise
 type UrlSource = {url: string};
 type SlugSource = {slug: string};
-type PromiseSource = {promise: Promise<Response>};
+type PromiseSource = {promise: Promise<Response> | null};
 type SourceOption = UrlSource | SlugSource | PromiseSource;
 // Fetched data has a resolveTo step, to extract json or text
 // Others are available but not currently used
@@ -42,15 +42,15 @@ export default function useFetchedData<T>(
     }, [url]);
     const promiseOption: Promise<Response> | null = (options as PromiseSource)
         .promise;
-    const promise: Promise<Response> = React.useMemo(
+    const promise: Promise<Response> | null = React.useMemo(
         () => slugPromise ?? urlPromise ?? promiseOption,
         [slugPromise, urlPromise, promiseOption]
     );
     const processedPromise = React.useMemo(
         () =>
-            promise
-                .then((resp) => resp[resolveTo]())
-                .then((rawData) => processRawData<T>(rawData, options)),
+            promise ? promise.then((resp) => resp[resolveTo]())
+                .then((rawData) => processRawData<T>(rawData, options))
+                : Promise.resolve(defaultValue),
         [promise, resolveTo] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
