@@ -84,10 +84,7 @@ export function setPageDescription(description?: string) {
 function setPageTitleAndDescription(title = 'OpenStax', description?: string) {
     setPageDescription(description);
     document.title = title.includes('OpenStax') ? title : `${title} - OpenStax`;
-    document
-        .getElementById('main')
-        ?.querySelector<HTMLElement>($.focusable)
-        ?.focus();
+    document.getElementById('main')?.focus();
     announcePageTitle(document.title);
 }
 

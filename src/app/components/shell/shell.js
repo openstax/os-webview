@@ -41,7 +41,7 @@ function Main() {
     }, []);
 
     return (
-        <div id="main" className={cn('lang', language, classes)} ref={ref}>
+        <div id="main" className={cn('lang', language, classes)} ref={ref} tabIndex={-1}>
             <Welcome />
             <TakeoverDialog />
             <Router />
