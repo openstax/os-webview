@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {FormattedMessage} from 'react-intl';
 import './student-form.scss';
 
 export default function StudentForm() {
@@ -11,9 +12,11 @@ export default function StudentForm() {
 
     return (
         <div className="student-form text-content">
-            Students don&apos;t need to fill out any forms to use our books. Access them free now!
+            <FormattedMessage id="student-form:message" />
             <div className="cta">
-                <button className="btn" tabIndex="0" onClick={goBack}>Go back</button>
+                <button className="btn" tabIndex="0" onClick={goBack}>
+                    <FormattedMessage id="student-form:go-back" />
+                </button>
             </div>
         </div>
     );

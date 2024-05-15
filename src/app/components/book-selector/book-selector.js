@@ -6,6 +6,7 @@ import afterFormSubmit from './after-form-submit';
 import {salesforceTitles} from '~/helpers/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useNavigate, useLocation} from 'react-router-dom';
+import {useIntl} from 'react-intl';
 import './book-selector.scss';
 
 function Subject({
@@ -35,15 +36,17 @@ function Subject({
     );
 }
 
-function hintText(selectedCount, limit) {
+function useHintText(selectedCount, limit) {
+    const {formatMessage} = useIntl();
+
     if (!limit) {
         return 'Select all that apply';
     }
     if (selectedCount === 0) {
-        return `Select up to ${limit}`;
+        return formatMessage({id: 'book-selector.select'}, {limit});
     }
     if (selectedCount < limit) {
-        return `Select up to ${limit - selectedCount} more`;
+        return formatMessage({id: 'book-selector.select-more'}, {limit: limit - selectedCount});
     }
     return `Maximum ${limit} selected`;
 }
@@ -89,7 +92,7 @@ function BookSelector({
             <div>
                 <h2 className="prompt">{prompt}</h2>
                 <div className="hint">
-                    {hintText(selectedBooks.length, limit)}
+                    {useHintText(selectedBooks.length, limit)}
                 </div>
                 {additionalInstructions && (
                     <div className="hint">{additionalInstructions}</div>

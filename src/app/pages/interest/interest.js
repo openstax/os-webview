@@ -15,6 +15,7 @@ import useSalesforceContext from '~/contexts/salesforce';
 import FormInput from '~/components/form-input/form-input';
 import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgroup';
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
+import {useIntl} from 'react-intl';
 import './interest.scss';
 
 function useBundledValues() {
@@ -38,23 +39,24 @@ function useBundledValues() {
 }
 
 function HowDidYouHear() {
+    const {formatMessage} = useIntl();
     const options = [
-        { value: 'Web search', label: 'Web search' },
-        { value: 'Colleague', label: 'Colleague' },
-        { value: 'Conference', label: 'Conference' },
-        { value: 'Email', label: 'Email' },
-        { value: 'Facebook', label: 'Facebook' },
-        { value: 'Twitter', label: 'Twitter' },
-        { value: 'Webinar', label: 'Webinar' },
-        { value: 'Partner organization', label: 'Partner organization' }
+        { value: 'Web search', label: formatMessage({id: 'interest.option.Web search'}) },
+        { value: 'Colleague', label: formatMessage({id: 'interest.option.Colleague'}) },
+        { value: 'Conference', label: formatMessage({id: 'interest.option.Conference'}) },
+        { value: 'Email', label: formatMessage({id: 'interest.option.Email'}) },
+        { value: 'Facebook', label: formatMessage({id: 'interest.option.Facebook'}) },
+        { value: 'Twitter', label: formatMessage({id: 'interest.option.Twitter'}) },
+        { value: 'Webinar', label: formatMessage({id: 'interest.option.Webinar'}) },
+        { value: 'Partner organization', label: formatMessage({id: 'interest.option.Partner organization'}) }
     ];
     const { onChange, BundledValuesInput } = useBundledValues();
 
     return (
         <React.Fragment>
             <FormCheckboxgroup
-                longLabel="How did you hear about OpenStax?"
-                instructions="Select all that apply (optional)."
+                longLabel={formatMessage({id: 'interest.how'})}
+                instructions={formatMessage({id: 'interest.select-instruction'})}
                 options={options}
                 onChange={onChange}
             />
@@ -67,13 +69,14 @@ function BookSelectorPage({ selectedBooksRef }) {
     const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = selectedBooks.map((b) => b.value).join('; ');
+    const {formatMessage} = useIntl();
 
     selectedBooksRef.current = selectedBooks;
 
     return (
         <div className="page-2">
             <BookSelector
-                prompt="Which textbook(s) are you interested in using?"
+                prompt={formatMessage({id: 'interest.books-prompt'})}
                 required
                 selectedBooks={selectedBooks}
                 preselectedTitle={preselectedTitle}
@@ -81,7 +84,7 @@ function BookSelectorPage({ selectedBooksRef }) {
                 limit="5"
             />
             <FormInput
-                longLabel="How many students do you teach each semester?"
+                longLabel={formatMessage({id: 'interest.students-prompt'})}
                 inputProps={{
                     name: 'number_of_students',
                     type: 'number',

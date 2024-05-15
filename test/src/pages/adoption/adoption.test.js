@@ -5,18 +5,21 @@ import AdoptionForm from '~/pages/adoption/adoption';
 import {MemoryRouter} from 'react-router-dom';
 import {MainClassContextProvider} from '~/contexts/main-class';
 import {SharedDataContextProvider} from '~/contexts/shared-data';
+import {LanguageContextProvider} from '~/contexts/language';
 
 beforeEach(async () => {
     render(
-        <SharedDataContextProvider>
-            <MemoryRouter
-                initialEntries={['/details/books/college-algebra', '/adoption']}
-            >
-                <MainClassContextProvider>
-                    <AdoptionForm />
-                </MainClassContextProvider>
-            </MemoryRouter>
-        </SharedDataContextProvider>
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <MemoryRouter
+                    initialEntries={['/details/books/college-algebra', '/adoption']}
+                >
+                    <MainClassContextProvider>
+                        <AdoptionForm />
+                    </MainClassContextProvider>
+                </MemoryRouter>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
     );
     await screen.findByText(/Let us know you're using/);
 });
