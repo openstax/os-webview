@@ -2,7 +2,7 @@ import cmsFetch from '~/helpers/cms-fetch';
 import {cnxFetch} from './table-of-contents-html';
 import memoize from 'lodash/memoize';
 
-export function bookToc(slug) {
+export function bookToc(slug: string) {
     if (!slug) {
         return Promise.reject(new Error('No slug to fetch'));
     }

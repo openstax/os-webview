@@ -5,7 +5,7 @@ const fields = [
     'subheading', 'body_blurb', 'date', 'author', 'article_subjects', 'collections'
 ].join(',');
 
-export default function useLatestBlogEntries(limit) {
+export default function useLatestBlogEntries(limit: number) {
     const lsData = useDataFromSlug(
         `pages?type=news.newsArticle&fields=${fields}` +
         `&order=-date&pin_to_top=false&limit=${limit}`

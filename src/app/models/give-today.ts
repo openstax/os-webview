@@ -3,10 +3,10 @@ import {useDataFromPromise} from '~/helpers/page-data-utils';
 
 const promise = cmsFetch('give-today');
 
-function testDates(startDateStr, endDateStr) {
+function testDates(startDateStr: string, endDateStr: string) {
     const now = Date.now();
-    const start = new Date(startDateStr);
-    const end = new Date(endDateStr);
+    const start = new Date(startDateStr).valueOf();
+    const end = new Date(endDateStr).valueOf();
 
     return start && end && now >= start && now <= end;
 }
