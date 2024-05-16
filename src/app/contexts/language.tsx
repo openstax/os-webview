@@ -5,7 +5,9 @@ import English from '~/lang/en';
 import Spanish from '~/lang/es';
 
 function useContextValue() {
-    const [language, setLanguage] = React.useState(window.localStorage?.getItem('oswebLanguage') || 'en');
+    const [language, setLanguage] = React.useState(
+        window.localStorage?.getItem('oswebLanguage') || 'en'
+    );
 
     // Copy it to localStorage for later defaulting
     React.useEffect(
@@ -18,17 +20,16 @@ function useContextValue() {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-function ReactIntlUsingLanguage({children}) {
+function ReactIntlUsingLanguage({children}: React.PropsWithChildren) {
     const {language} = useContext();
-    const messages = React.useMemo(
-        () => {
-            switch (language) {
-            case 'es': return Spanish;
-            default: return English;
-            }
-        },
-        [language]
-    );
+    const messages = React.useMemo(() => {
+        switch (language) {
+            case 'es':
+                return Spanish;
+            default:
+                return English;
+        }
+    }, [language]);
 
     return (
         <IntlProvider locale={language} messages={messages}>
@@ -37,17 +38,12 @@ function ReactIntlUsingLanguage({children}) {
     );
 }
 
-function WrapReactIntl({children}) {
+function WrapReactIntl({children}: React.PropsWithChildren) {
     return (
         <ContextProvider>
-            <ReactIntlUsingLanguage>
-                {children}
-            </ReactIntlUsingLanguage>
+            <ReactIntlUsingLanguage>{children}</ReactIntlUsingLanguage>
         </ContextProvider>
     );
 }
 
-export {
-    useContext as default,
-    WrapReactIntl as LanguageContextProvider
-};
+export {useContext as default, WrapReactIntl as LanguageContextProvider};
