@@ -15,7 +15,7 @@ export default function Breadcrumb({name}: BreadcrumbArgs) {
     const goBack = useGoBack(topLevel);
 
     return (
-        <Link to={topLevel} onClick={goBack} className='breadcrumb'>
+        <Link to={topLevel} onClick={goBack} className="breadcrumb">
             <FontAwesomeIcon icon={faChevronLeft} />
             <span>Back to Main {name}</span>
         </Link>

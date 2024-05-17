@@ -1,46 +1,30 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useLocation} from 'react-router-dom';
-import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
-import uniqBy from 'lodash/uniqBy';
 import useBlogContext from '../blog-context';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
+import ArticleSummary, {
+    ArticleSummaryData
+} from '../article-summary/article-summary';
 import usePaginatorContext, {
     PaginatorContextProvider
 } from '~/components/paginator/paginator-context';
 import {PaginatorControls} from '~/components/paginator/search-results/paginator.js';
 import NoResults from './no-results';
+import useAllArticles from './use-all-articles';
 import './search-results.scss';
 
-function useAllArticles() {
-    const {search} = useLocation();
-    const searchParam = new window.URLSearchParams(search).get('q');
-    const [allArticles, setAllArticles] = useState([]);
-
-    useEffect(() => {
-        const slug = `search/?q=${searchParam}`;
-
-        setAllArticles([]);
-        fetchFromCMS(slug, true).then((results) => {
-            setAllArticles(
-                uniqBy(results, 'id').map((data) => {
-                    data.heading = data.title;
-                    delete data.subheading;
-                    return blurbModel(camelCaseKeys(data));
-                })
-            );
-        });
-    }, [searchParam]);
-
-    return allArticles;
-}
-
-function ArticleCard({article, isFirst}) {
+function ArticleCard({
+    article,
+    isFirst
+}: {
+    article: ArticleSummaryData;
+    isFirst: boolean;
+}) {
     const {setPath} = useBlogContext();
-    const ref = React.useRef();
+    const ref = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (isFirst) {
-            ref.current.querySelector('a').focus();
+            ref?.current?.querySelector<HTMLAnchorElement>('a')?.focus();
         }
     }, [isFirst]);
 
@@ -51,12 +35,12 @@ function ArticleCard({article, isFirst}) {
     );
 }
 
-function VisibleArticles({articles}) {
+function VisibleArticles({articles}: {articles: ArticleSummaryData[]}) {
     const {setCurrentPage, visibleChildren, firstOnPage} =
         usePaginatorContext();
     const location = useLocation();
 
-    useEffect(() => setCurrentPage(1), [location, setCurrentPage]);
+    React.useEffect(() => setCurrentPage(1), [location, setCurrentPage]);
 
     return visibleChildren(
         articles.map((article, i) => (

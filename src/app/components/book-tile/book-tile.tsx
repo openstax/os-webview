@@ -6,7 +6,7 @@ import GetTheBookDropdown from './dropdown-menu';
 import cn from 'classnames';
 import './book-tile.scss';
 
-export default function BookTile({book: [book]}: {book: [book: BookInfo]}) {
+export default function BookTile({book: [book]}: {book: [BookInfo]}) {
     const {coverUrl, title, slug} = book;
     const info = useBookInfo(book.id);
     const comingSoon = info?.book_state === 'coming_soon';
