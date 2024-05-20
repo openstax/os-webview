@@ -60,7 +60,7 @@ export function blurbModel(data: BlurbData) {
     };
 }
 
-type ArticleSummaryData = {
+export type ArticleSummaryData = {
     articleSlug: string;
     image: string;
     headline: string;
