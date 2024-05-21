@@ -18,7 +18,7 @@ function BookSelectorPage({selectedBooksRef}) {
     const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = React.useMemo(
-        () => selectedBooks.map((b) => b.value).join('; '),
+    () => selectedBooks.map((b) => b.value.replace(/ *\[.*/, '')).join('; '),
         [selectedBooks]
     );
     const {formatMessage} = useIntl();
