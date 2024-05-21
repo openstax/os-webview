@@ -38,13 +38,13 @@ function SchoolInfo() {
     const {formatMessage} = useIntl();
     // Because they have to be statically evaluate-able
     const schoolTypeLabels = {
-        'College/University (4)': formatMessage({id: 'College/University (4)'}),
-        'Technical/Community College (2)': formatMessage({id: 'Technical/Community College (2)'}),
-        'Career School/For-Profit (2)': formatMessage({id: 'Career School/For-Profit (2)'}),
-        'High School': formatMessage({id: 'High School'}),
-        'K-12 School': formatMessage({id: 'K-12 School'}),
-        'Home School': formatMessage({id: 'Home School'}),
-        'Other': formatMessage({id: 'Other'})
+        'College/University (4)': formatMessage({id: 'school-type.College/University (4)'}),
+        'Technical/Community College (2)': formatMessage({id: 'school-type.Technical/Community College (2)'}),
+        'Career School/For-Profit (2)': formatMessage({id: 'school-type.Career School/For-Profit (2)'}),
+        'High School': formatMessage({id: 'school-type.High School'}),
+        'K-12 School': formatMessage({id: 'school-type.K-12 School'}),
+        'Home School': formatMessage({id: 'school-type.Home School'}),
+        'Other': formatMessage({id: 'school-type.Other'})
     };
     const schoolTypeOptions = schoolTypeValues.map(
         (value) => ({
@@ -70,8 +70,8 @@ function SchoolInfo() {
                 longLabel={schoolLocationLabel}
                 name="school_location"
                 options={[
-                    {label: formatMessage({id: 'Yes'}), value: 'Domestic'},
-                    {label: formatMessage({id: 'No'}), value: 'Foreign'}
+                    {label: formatMessage({id: 'yes'}), value: 'Domestic'},
+                    {label: formatMessage({id: 'no'}), value: 'Foreign'}
                 ]}
                 selectedValue={schoolLocation}
                 setSelectedValue={setSchoolLocation}
