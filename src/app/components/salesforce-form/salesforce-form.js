@@ -41,12 +41,14 @@ function SfForm({children, postTo, afterSubmit}) {
         <React.Fragment>
             <iframe
                 name="form-response" id="form-response" className="hidden"
-                src="" width="0" height="0" tabIndex="-1" onLoad={onLoad} />
+                src="" width="0" height="0" tabIndex="-1" onLoad={onLoad}
+            />
             <form
                 acceptCharset="UTF-8" className="form"
                 target={debug ? undefined : 'form-response'}
                 action={postTo || webtocaseUrl} method="post"
                 onSubmit={onSubmit}
+                encType="multipart/form-data"
             >
                 <input type="hidden" name="orgid" value={oid} />
                 {
