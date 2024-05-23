@@ -37,7 +37,7 @@ function FoundationGroup({data}) {
             <h2>{data.groupTitle}</h2>
             <div className="description">{data.description}</div>
             {
-                data.image ?
+                data.image?.file ?
                     <FundersWithImage data={data.funders} image={data.image} /> :
                     <Funders data={data.funders} />
             }
