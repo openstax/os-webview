@@ -138,7 +138,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
                     link={model.link.url}
                     track={model.heading}
                     onDownload={
-                        trackDownloadClick as unknown as (
+                        trackDownloadClick as (
                             e: React.MouseEvent
                         ) => void
                     }
