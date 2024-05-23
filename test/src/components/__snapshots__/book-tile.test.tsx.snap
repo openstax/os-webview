@@ -20,6 +20,7 @@ exports[`book-tile renders 1`] = `
         class="text-block"
       >
         <a
+          aria-label="Sample Title book"
           href="/details/sample"
         >
           Sample Title

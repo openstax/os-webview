@@ -35,7 +35,7 @@ export default function BookTile({book: [book]}: {book: [BookInfo]}) {
                 )}
             </a>
             <div className='text-block'>
-                <a href={`/details/${slug}`}>{title}</a>
+                <a href={`/details/${slug}`} aria-label={`${title} book`}>{title}</a>
             </div>
             {comingSoon ? (
                 <div className='navmenu'>
