@@ -103,17 +103,17 @@ export default function Navigator({subject}) {
         <nav className="navigator">
             <div style="position: sticky; top: 9rem;">
                 <img src={subject.icon} role="presentation" />
-                <div className="heading">
+                <h2>
                     <FormattedMessage
                         id="subject.categoryTitle"
                         defaultMessage="{subjectName} Book Categories"
                         values={{subjectName: subject.html}}
                     />
-                </div>
+                </h2>
                 <CategorySectionLinks />
-                <div className="heading">
+                <h2>
                     <FormattedMessage id="subject.learnMoreTitle" defaultMessage="Learn more" />
-                </div>
+                </h2>
                 <OtherSectionLinks />
             </div>
         </nav>
