@@ -19,6 +19,7 @@ type UserContextType = {
         trackDownloads: boolean;
     };
     userModel?: UserModelType;
+    isVerified: boolean;
 };
 
 export default function useUserContext(): UserContextType;
