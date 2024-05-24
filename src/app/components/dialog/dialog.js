@@ -99,8 +99,6 @@ export function useDialog(initiallyOpen=false) {
                 afterClose();
             };
 
-            console.info('*** Bound Dialog aria', aria);
-
             return (
                 <Modal
                     isOpen={showDialog}
