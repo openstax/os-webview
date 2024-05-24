@@ -8,7 +8,23 @@ type WebinarContent = {
         link: string;
         content: string;
     };
-};
+}
+type StuffContent = {
+    content: {
+        id: number;
+        buttonText: string | null;
+        buttonUrl: string | null;
+        content: string;
+        contentLoggedIn: string;
+        heading: string;
+    };
+
+}
+type VideoContent = {
+    title: string;
+    description: string;
+    embed: string;
+}
 export type ContextValues = {
     slug: string;
     translations: Array<TranslationType>;
@@ -27,6 +43,10 @@ export type ContextValues = {
     communityResourceFeatureText: string;
     amazonIframe: string;
     webinarContent?: WebinarContent;
+    freeStuffStudent: StuffContent;
+    freeStuffInstructor: StuffContent;
+    videos: [VideoContent[]];
+    setUseCardBackground: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function (): ContextValues;

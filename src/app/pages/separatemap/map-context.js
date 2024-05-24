@@ -2,7 +2,7 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import Map from './map-api';
 import {isMobileDisplay} from '~/helpers/device';
-import {queryById} from '~/models/querySchools';
+import {queryById} from '~/models/query-schools';
 
 function useMap(id) {
     const mapZoom = isMobileDisplay() ? 2 : 3;

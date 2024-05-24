@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function formatDateForBlog(date) {
+export function formatDateForBlog(date: string) {
     if (!date) {
         return null;
     }
@@ -9,41 +9,30 @@ export function formatDateForBlog(date) {
     return `${d[2]} ${d[1]}, ${d[3]}`;
 }
 
-export function useToggle(initialState) {
-    return React.useReducer((state, newValue=!state) => newValue, initialState);
+export function useToggle(initialState = false): [boolean, (v?: boolean) => void] {
+    return React.useReducer((state, newValue = !state) => newValue, initialState);
 }
 
 // Returns [value, refresh]
-export function useRefreshable(getter) {
+export function useRefreshable<T>(getter: () => T) {
     return React.useReducer(getter, getter());
-}
-
-// Returns [value, updateValue]
-export function useSettable(getter, setter) {
-    return React.useReducer(
-        (_, payload) => {
-            setter(payload);
-            return getter();
-        },
-        getter()
-    );
 }
 
 // Each time the Set is updated, the handle is refreshed
 // That way, the Set doesn't have to be rebuilt
-export function useSet(initialValue=[]) {
+export function useSet<T>(initialValue:T[]=[]) {
     const {current: set} = React.useRef(new window.Set(initialValue));
     const [handle, refresh] = useRefreshable(
         () => ({
-            add(newValue) {
+            add(newValue: T) {
                 set.add(newValue);
                 refresh();
             },
-            delete(oldValue) {
+            delete(oldValue: T) {
                 set.delete(oldValue);
                 refresh();
             },
-            has: (v) => set.has(v),
+            has: (v: T) => set.has(v),
             values: () => set.values()
         })
     );
@@ -51,7 +40,7 @@ export function useSet(initialValue=[]) {
     return handle;
 }
 
-export function htmlToText(html) {
+export function htmlToText(html: string) {
     const temp = document.createElement('div');
 
     temp.innerHTML = html;

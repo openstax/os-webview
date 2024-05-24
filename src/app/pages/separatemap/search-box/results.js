@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import querySchools from '~/models/querySchools';
+import querySchools from '~/models/query-schools';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 
 function useSchoolsPromise(searchString, filters, institution) {
