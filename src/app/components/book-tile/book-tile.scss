@@ -26,12 +26,13 @@
     .text-block {
         padding: 1rem;
 
-        a {
-            @include set-font(helper-label);
+    }
 
-            font-weight: bold;
-            text-decoration: none;
-        }
+    a:not([role="menuitem"]) {
+        @include set-font(helper-label);
+
+        font-weight: bold;
+        text-decoration: none;
     }
 
     .navmenu {

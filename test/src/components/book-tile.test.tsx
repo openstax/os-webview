@@ -90,10 +90,9 @@ describe('book-tile', () => {
 
         const links = screen.getAllByRole('link');
 
-        expect(links).toHaveLength(2);
+        expect(links).toHaveLength(1);
 
         await user.click(screen.getAllByRole('link')[0]);
-        await user.click(screen.getAllByRole('link')[1]);
 
         bookData.webviewRexLink = save;
     });
@@ -109,10 +108,9 @@ describe('book-tile', () => {
 
         const links = screen.getAllByRole('link');
 
-        expect(links).toHaveLength(2);
+        expect(links).toHaveLength(1);
 
         await user.click(screen.getAllByRole('link')[0]);
-        await user.click(screen.getAllByRole('link')[1]);
 
         bookData.highResolutionPdfUrl = save;
     });

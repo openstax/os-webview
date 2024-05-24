@@ -20,7 +20,7 @@ export default function BookTile({book: [book]}: {book: [BookInfo]}) {
 
     return (
         <div className={classes}>
-            <a href={`/details/${slug}`}>
+            <a href={`/details/${slug}`} aria-label={`${title} book`}>
                 <img
                     src={coverUrl}
                     role='presentation'
@@ -33,10 +33,10 @@ export default function BookTile({book: [book]}: {book: [BookInfo]}) {
                         image={promoteSnippet.value.image}
                     />
                 )}
+                <div className='text-block'>
+                    {title}
+                </div>
             </a>
-            <div className='text-block'>
-                <a href={`/details/${slug}`} aria-label={`${title} book`}>{title}</a>
-            </div>
             {comingSoon ? (
                 <div className='navmenu'>
                     <button type='button' disabled>
