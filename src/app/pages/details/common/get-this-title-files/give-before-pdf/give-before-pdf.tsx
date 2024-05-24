@@ -112,7 +112,7 @@ function GiveBeforePdfAfterConditionals({
             data-nudge-placement='PDF download'
         >
             <img className='download-icon' src={data.download_image} alt='' />
-            <h1>{data.download_ready}</h1>
+            <h1 id="dialog-heading">{data.download_ready}</h1>
             <hr />
             <CommonElements
                 onThankYouClick={onThankYouClick}

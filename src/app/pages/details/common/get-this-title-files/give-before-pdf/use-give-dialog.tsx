@@ -24,9 +24,10 @@ export default function useGiveDialog() {
             id?: string;
         }) => {
             const Variant = lookupVariant(variant) as typeof GiveBeforeOther;
+            const aria = Variant === GiveBeforePdf ? {labelledby: 'dialog-heading'} : {label: 'Before you go there'};
 
             return (
-                <Dialog>
+                <Dialog aria={aria}>
                     <Variant {...{link, track, close, data, onDownload, variant, id}} />
                 </Dialog>
             );
