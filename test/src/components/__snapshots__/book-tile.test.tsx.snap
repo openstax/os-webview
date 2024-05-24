@@ -7,6 +7,7 @@ exports[`book-tile renders 1`] = `
       class="book-tile"
     >
       <a
+        aria-label="Sample Title book"
         href="/details/sample"
       >
         <img
@@ -15,17 +16,12 @@ exports[`book-tile renders 1`] = `
           src="cover.jpg"
           width="240"
         />
-      </a>
-      <div
-        class="text-block"
-      >
-        <a
-          aria-label="Sample Title book"
-          href="/details/sample"
+        <div
+          class="text-block"
         >
           Sample Title
-        </a>
-      </div>
+        </div>
+      </a>
       <div
         class="navmenu"
         data-analytics-nav="Get the book dropdown"
