@@ -4,7 +4,6 @@ import {setContentTags} from '~/helpers/tag-manager';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 import announcePageTitle from '~/components/shell/header/announce-page-title';
 import {useLocation} from 'react-router-dom';
-import $ from '~/helpers/$';
 
 function setCanonicalPath(newPath: string) {
     const el = document.createElement('link');
