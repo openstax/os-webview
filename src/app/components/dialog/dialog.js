@@ -10,6 +10,7 @@ function PutAway({noTitle, onClick}) {
             className={cn('put-away', {'no-title-bar': noTitle})}
             hidden={!onClick}
             onClick={() => onClick()}
+            aria-label="close"
         >
             ×
         </button>
@@ -48,7 +49,8 @@ export function FooterDialog({
 }
 
 export default function Dialog({
-    isOpen, title, onPutAway, children, className = undefined, closeOnOutsideClick=false
+    isOpen, title, onPutAway, children, className = undefined, closeOnOutsideClick=false,
+    aria=title ? {labelledby: 'modal-dialog-title'} : {label: 'missing label'}
 }) {
     const overlayClassName = className ? `modal-overlay-${className}` : '';
 
@@ -61,20 +63,19 @@ export default function Dialog({
             onRequestClose={onPutAway}
             shouldCloseOnOverlayClick={closeOnOutsideClick}
             shouldCloseOnEsc={closeOnOutsideClick}
+            aria={aria}
         >
-            <dialog>
-                {
-                    title ?
-                        <div className="title-bar">
-                            <RawHTML Tag="span" html={title} />
-                            <PutAway onClick={onPutAway} />
-                        </div> :
-                        <PutAway noTitle onClick={onPutAway} />
-                }
-                <div className="main-region">
-                    {children}
-                </div>
-            </dialog>
+            {
+                title ?
+                    <div className="title-bar" id="modal-dialog-title">
+                        <RawHTML Tag="span" html={title} />
+                        <PutAway onClick={onPutAway} />
+                    </div> :
+                    <PutAway noTitle onClick={onPutAway} />
+            }
+            <div className="main-region">
+                {children}
+            </div>
         </ReactModal>
     );
 }
@@ -89,6 +90,7 @@ export function useDialog(initiallyOpen=false) {
         function BoundDialog({
             title, children, modal = true, className,
             showPutAway=true, afterClose=() => null,
+            aria,
             ...otherProps
         }) {
             const Modal = modal ? ReactModal : React.Fragment;
@@ -108,6 +110,7 @@ export function useDialog(initiallyOpen=false) {
                     <Dialog
                         title={title} className={className} isOpen={showDialog}
                         onPutAway={showPutAway && closeAndAfterClose}
+                        aria={aria}
                     >
                         {children}
                     </Dialog>

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactModal from 'react-modal';
 
 export default function Dialog({
     isOpen,
@@ -6,7 +7,7 @@ export default function Dialog({
     onPutAway,
     children,
     className,
-    closeOnOutsideClick = false
+    closeOnOutsideClick
 }: React.PropsWithChildren<{
     isOpen: boolean;
     title: string;
@@ -20,7 +21,7 @@ export function useDialog(
 ): [
     BoundDialog: ({
         children
-    }: React.PropsWithChildren<object>) => React.ReactNode,
+    }: React.PropsWithChildren<object & {aria: ReactModal.Aria}>) => React.ReactNode,
     open: () => void,
     close: () => void,
     showDialog: boolean
