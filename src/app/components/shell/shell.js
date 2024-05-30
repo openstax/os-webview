@@ -1,82 +1,53 @@
-import React, {Suspense} from 'react';
-import useLanguageContext, {LanguageContextProvider} from '~/contexts/language';
+import React from 'react';
+import {LanguageContextProvider} from '~/contexts/language';
 import {SubjectCategoryContextProvider} from '~/contexts/subject-category';
 import {UserContextProvider} from '~/contexts/user';
-import {SalesforceContextProvider} from '~/contexts/salesforce';
-import useMainClassContext, {MainClassContextProvider} from '~/contexts/main-class';
-import {BrowserRouter} from 'react-router-dom';
-import Router from './router';
-import retry from '~/helpers/retry';
-import ReactModal from 'react-modal';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {SharedDataContextProvider} from '../../contexts/shared-data';
-import Welcome from './welcome/welcome';
-import TakeoverDialog from './takeover-dialog/takeover-dialog';
-import cn from 'classnames';
+import JITLoad from '~/helpers/jit-load';
+import {SalesforceContextProvider} from '~/contexts/salesforce';
 
-function ImportedComponent({name}) {
-    const Component = React.useMemo(
-        () => React.lazy(() => retry(() => import(`./${name}/${name}`))),
-        [name]
-    );
+import Error404 from '~/pages/404/404';
 
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <Component />
-        </Suspense>
-    );
-}
-
-const Microsurvey = () => <ImportedComponent name="microsurvey-popup" />;
-const Header = () => <ImportedComponent name="header" />;
-const LowerStickyNote = () => <ImportedComponent name="lower-sticky-note" />;
-const Footer = () => <ImportedComponent name="footer" />;
-
-function Main() {
-    const {language} = useLanguageContext();
-    const ref = React.useRef();
-    const {classes} = useMainClassContext();
-
-    React.useEffect(() => {
-        ReactModal.setAppElement(ref.current);
-    }, []);
-
-    return (
-        <div id="main" className={cn('lang', language, classes)} ref={ref} tabIndex={-1}>
-            <Welcome />
-            <TakeoverDialog />
-            <Router />
-        </div>
-    );
-}
-
-function App() {
-    // BrowserRouter has to include everything that uses useLocation
+function AppContext({children}) {
     return (
         <SharedDataContextProvider>
             <UserContextProvider>
                 <LanguageContextProvider>
                     <SubjectCategoryContextProvider>
-                        <BrowserRouter>
-                            <Microsurvey />
-                            <header id="header">
-                                <Header />
-                            </header>
-                            <div id="lower-sticky-note">
-                                <LowerStickyNote />
-                            </div>
-                            <SalesforceContextProvider>
-                                <MainClassContextProvider>
-                                    <Main />
-                                </MainClassContextProvider>
-                            </SalesforceContextProvider>
-                            <footer id="footer">
-                                <Footer />
-                            </footer>
-                        </BrowserRouter>
+                        {children}
                     </SubjectCategoryContextProvider>
                 </LanguageContextProvider>
             </UserContextProvider>
         </SharedDataContextProvider>
+    );
+}
+
+const importContact = () => import('~/pages/contact/contact.js');
+
+function EmbeddedApp() {
+    return (
+        <SalesforceContextProvider>
+            <Routes>
+                <Route path="contact" element={<JITLoad importFn={importContact} />} />
+                <Route path="*" element={<Error404 />} />
+            </Routes>
+        </SalesforceContextProvider>
+    );
+}
+
+const importNormalApp = () => import('./import-normal-app.js');
+
+function App() {
+    return (
+        <AppContext>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/embedded/*" element={<EmbeddedApp />} />
+                    <Route path="*" element={<JITLoad importFn={importNormalApp} />} />
+                </Routes>
+            </BrowserRouter>
+        </AppContext>
     );
 }
 
