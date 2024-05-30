@@ -109,7 +109,7 @@ function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
         [model.bookModel, userStatus]
     );
     const variant = useVariant();
-    const ariaLabel = isDownload ? `Download ${model.heading}` : undefined;
+    const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
         if (isDownload && enabled) {
