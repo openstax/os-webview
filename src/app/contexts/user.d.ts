@@ -22,4 +22,12 @@ type UserContextType = {
     isVerified: boolean;
 };
 
+type ProviderArgs = React.PropsWithChildren<{
+    contextValueParameters?: unknown;
+}>;
+
 export default function useUserContext(): UserContextType;
+export function UserContextProvider({
+    children,
+    contextValueParameters
+}: ProviderArgs): React.JSX.Element | null;

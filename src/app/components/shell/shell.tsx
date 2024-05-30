@@ -9,7 +9,7 @@ import {SalesforceContextProvider} from '~/contexts/salesforce';
 
 import Error404 from '~/pages/404/404';
 
-function AppContext({children}) {
+function AppContext({children}: React.PropsWithChildren<object>) {
     return (
         <SharedDataContextProvider>
             <UserContextProvider>
