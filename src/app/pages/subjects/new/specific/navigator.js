@@ -100,22 +100,29 @@ export function JumpToSection({subjectName}) {
 
 export default function Navigator({subject}) {
     return (
-        <nav className="navigator">
+        <div className="navigator">
             <div style="position: sticky; top: 9rem;">
-                <img src={subject.icon} role="presentation" />
-                <h2>
-                    <FormattedMessage
-                        id="subject.categoryTitle"
-                        defaultMessage="{subjectName} Book Categories"
-                        values={{subjectName: subject.html}}
-                    />
-                </h2>
-                <CategorySectionLinks />
-                <h2>
-                    <FormattedMessage id="subject.learnMoreTitle" defaultMessage="Learn more" />
-                </h2>
-                <OtherSectionLinks />
+                <nav aria-labelledby="category-section-links-header">
+                    <img src={subject.icon} role="presentation" />
+                    <h2 id="category-section-links-header">
+                        <FormattedMessage
+                            id="subject.categoryTitle"
+                            defaultMessage="{subjectName} Book Categories"
+                            values={{subjectName: subject.html}}
+                        />
+                    </h2>
+                    <CategorySectionLinks />
+                </nav>
+                <nav aria-labelledby="other-section-links-header">
+                    <h2 id="other-section-links-header">
+                        <FormattedMessage
+                            id="subject.learnMoreTitle"
+                            defaultMessage="Learn more"
+                        />
+                    </h2>
+                    <OtherSectionLinks />
+                </nav>
             </div>
-        </nav>
+        </div>
     );
 }
