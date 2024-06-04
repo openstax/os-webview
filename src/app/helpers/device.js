@@ -4,5 +4,5 @@ export function isMobileDisplay() {
 
 // If the browser supports grid layout, it's probably ok
 export default function isSupported() {
-    return window.CSS.supports('( display: grid )');
+    return window.CSS?.supports('( display: grid )') ?? false;
 }
