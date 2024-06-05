@@ -15,8 +15,21 @@
     .button-bar {
         @extend %button-bar;
 
-        > button {
+        li {
             padding: 0;
+
+            > button {
+                background-color: inherit;
+                color: inherit;
+                height: 100%;
+                padding: 0;
+                width: 100%;
+
+                &[aria-current="page"] {
+                    background-color: text-color(link);
+                    color: text-color(white);
+                }
+            }
 
             &:not(:first-child):not(:last-child) {
                 width: 4.9rem;
@@ -37,11 +50,6 @@
                         width: 6.5rem;
                     }
                 }
-            }
-
-            &[aria-selected="true"] {
-                background-color: text-color(link);
-                color: text-color(white);
             }
         }
 

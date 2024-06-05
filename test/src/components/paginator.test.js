@@ -1,11 +1,12 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
-import usePaginatorContext, {PaginatorContextProvider} from '~/components/paginator/paginator-context';
+import {PaginatorContextProvider} from '~/components/paginator/paginator-context';
 import {PaginatorControls} from '~/components/paginator/search-results/paginator.js';
+import {test, expect} from '@jest/globals';
 
 function activePage() {
-    const activeButton = screen.getByRole('option', {selected: true});
+    const activeButton = screen.getByRole('button', {current: 'page'});
 
     return activeButton.textContent;
 }

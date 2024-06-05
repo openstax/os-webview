@@ -37,22 +37,22 @@ function PageButtonBar({pages}) {
     }
 
     return (
-        <div className="button-bar" role="listbox">
-            <button disabled={disablePrevious} onClick={prevPage}>Previous</button>
-            {
-                pageIndicators.map((indicator) =>
-                    <button
-                        role="option"
-                        key={indicator}
-                        disabled={indicator.disabled}
-                        aria-selected={indicator.selected}
-                        aria-label={indicator.page}
-                        onClick={() => setCurrentPage(indicator.label)}
-                    >{indicator.label}</button>
-                )
-            }
-            <button disabled={disableNext} onClick={nextPage}>Next</button>
-        </div>
+        <nav aria-label='pagination'>
+            <ul className='no-bullets button-bar'>
+                <li><button disabled={disablePrevious} onClick={prevPage}>Previous</button></li>
+                {
+                    pageIndicators.map((indicator) =>
+                        <li key={indicator.page}><button
+                            disabled={indicator.disabled}
+                            aria-current={indicator.selected ? 'page' : 'false'}
+                            aria-label={indicator.page}
+                            onClick={() => setCurrentPage(indicator.label)}
+                        >{indicator.label}</button></li>
+                    )
+                }
+                <li><button disabled={disableNext} onClick={nextPage}>Next</button></li>
+            </ul>
+        </nav>
     );
 }
 
