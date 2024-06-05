@@ -225,6 +225,10 @@ sup {
     &.with-modal {
         z-index: 2;
     }
+
+    &:focus-visible {
+        outline: none;
+    }
 }
 
 #footer {
