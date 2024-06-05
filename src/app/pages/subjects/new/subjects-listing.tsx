@@ -1,6 +1,8 @@
 import React from 'react';
 import useSubjectsContext, {SubjectData} from './context';
-import useSubjectCategoryContext, {ContextValues} from '~/contexts/subject-category';
+import useSubjectCategoryContext, {
+    ContextValues
+} from '~/contexts/subject-category';
 import {FormattedMessage} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
@@ -12,8 +14,8 @@ export default function SubjectsListing() {
     const names = Reflect.ownKeys(subjects) as Array<string>;
 
     return (
-        <section className='subjects-listing'>
-            <div className='content'>
+        <section className="subjects-listing">
+            <div className="content">
                 {names.map((name) => (
                     <BookList name={name} data={subjects[name]} key={name} />
                 ))}
@@ -32,22 +34,26 @@ function BookList({name, data}: {name: string; data: SubjectData}) {
     const labelId = `${name}-nav`;
 
     return (
-        <nav className='book-list' aria-labelledby={labelId}>
-            <img className='subject-icon' src={data.icon} role='presentation' />
+        <nav className="book-list" aria-labelledby={labelId}>
+            <img className="subject-icon" src={data.icon} role="presentation" />
             <h2 id={labelId}>{name}</h2>
-            {data.categories.map((c) => (
-                <CategoryLink key={c} subject={subdir} category={c} />
-            ))}
-            {data.categories.length > 1 && subdir ? (
-                <a href={`${pathname}/${subdir}`} className='all-link'>
-                    <FormattedMessage
-                        id='subject.viewAll'
-                        defaultMessage='View'
-                        values={{subject: name}}
-                    />
-                    <FontAwesomeIcon icon={faArrowRight} />
-                </a>
-            ) : null}
+            <menu>
+                {data.categories.map((c) => (
+                    <CategoryLink key={c} subject={subdir} category={c} />
+                ))}
+                {data.categories.length > 1 && subdir ? (
+                    <li>
+                        <a href={`${pathname}/${subdir}`} className="all-link">
+                            <FormattedMessage
+                                id="subject.viewAll"
+                                defaultMessage="View"
+                                values={{subject: name}}
+                            />
+                            <FontAwesomeIcon icon={faArrowRight} />
+                        </a>
+                    </li>
+                ) : null}
+            </menu>
         </nav>
     );
 }
@@ -79,5 +85,14 @@ function CategoryLink({
 }) {
     const {pathname} = useLocation();
 
-    return <a href={`${pathname}/${subject}#${category}`}>{category}</a>;
+    return (
+        <li>
+            <a
+                href={`${pathname}/${subject}#${category}`}
+                aria-label={`${category} books in ${subject}`}
+            >
+                {category}
+            </a>
+        </li>
+    );
 }
