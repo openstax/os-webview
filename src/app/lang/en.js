@@ -78,7 +78,7 @@ export default {
     'printcopy.individual': 'Individual',
     'printcopy.disclosure': '***',
     'printcopy.bookstore': 'Bookstore',
-    'printcopy.button1': 'Order a personal copy',
+    'printcopy.button1': 'Buy a print copy',
     'printcopy.button2': 'Order options',
     'pubInfo.pdf.heading': 'PDF Version Last Updated:',
     'pubInfo.pdf.see': 'See changes in the',

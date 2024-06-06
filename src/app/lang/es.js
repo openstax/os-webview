@@ -78,7 +78,7 @@ export default {
     'printcopy.individual': 'Individuo',
     'printcopy.disclosure': 'Como afiliados de Amazon ganamos con compras calificadas',
     'printcopy.bookstore': 'Libreria',
-    'printcopy.button1': 'Solicitar una copia personal',
+    'printcopy.button1': 'Comprar una copia impresa',
     'printcopy.button2': 'Opciones para solicitar',
     'pubInfo.pdf.heading': 'Última actualización de la versión PDF:',
     'pubInfo.pdf.see': 'Ver las modificaciones en las',
