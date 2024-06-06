@@ -1,8 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCanadianMapleLeaf} from '@fortawesome/free-brands-svg-icons/faCanadianMapleLeaf';
 import './bookstore-suppliers.scss';
 
 const slug = 'pages/print-order';
@@ -31,36 +29,20 @@ function CardFeatures({supplier}) {
     );
 }
 
-function CanadaFlagCard() {
-    return (
-        <div className="flag-card">
-            <div className="canada-flag">
-                <div className="white-field">
-                    <FontAwesomeIcon icon={faCanadianMapleLeaf} />
-                </div>
-            </div>
-        </div>
-    );
-}
-
 export function BookstorePage({data}) {
     const [
-        suppliers,
         featuredSupplier,
         headline,
         subhead,
         subhead2,
-        featuredSuppliersBlurb,
-        suppliersBlurb
+        featuredSuppliersBlurb
     ] = React.useMemo(
         () => [
-            data.providers.map(providerToModel),
             data.featuredProviders.map(providerToModel),
             data.title,
             data.introHeading,
             data.introDescription,
-            data.featuredProviderIntroBlurb,
-            data.otherProvidersIntroBlurb
+            data.featuredProviderIntroBlurb
         ],
         [data]
     );
@@ -95,19 +77,6 @@ export function BookstorePage({data}) {
                         </div>
                     )
                 }
-                <div className="intro-blurb">{suppliersBlurb}</div>
-                <div className="swipable-row">
-                    <div className="cards">
-                        {
-                            suppliers.map((supplier) =>
-                                <div className="card" key={supplier}>
-                                    {Boolean(supplier.isCanadian) && <CanadaFlagCard />}
-                                    <CardFeatures supplier={supplier} />
-                                </div>
-                            )
-                        }
-                    </div>
-                </div>
             </div>
         </React.Fragment>
     );
