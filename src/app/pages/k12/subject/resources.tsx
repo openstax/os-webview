@@ -1,32 +1,39 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import {Tabs, Item} from '~/components/tablist/tablist';
 import useUserContext from '~/contexts/user';
 import {useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import trackLink from '~/pages/details/common/track-link';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkHandler';
+import bookTitles from '~/models/book-titles';
 import './resources.scss';
 
-function LinkWithGiveDialog({href, text, track}: {
+function LinkWithGiveDialog({href, book, track}: {
     href: string;
-    text: string;
+    book: string;
     track: string;
 }) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
     const {userStatus} = useUserContext();
-    const {pathname} = useLocation();
     const trackDownloadClick = React.useCallback(
         (event: React.MouseEvent) => {
             if (userStatus?.isInstructor) {
-                trackLink(event as TrackedMouseEvent, pathname);
+                bookTitles.then((items) => {
+                    const b = items.find((i) => i.title === book);
+
+                    if (b) {
+                        trackLink(event as TrackedMouseEvent, b.id.toString());
+                    } else {
+                        trackLink(event as TrackedMouseEvent);
+                    }
+                });
             }
         },
-        [userStatus, pathname]
+        [userStatus, book]
     );
 
     return (
         <React.Fragment>
-            <a href={href} onClick={openGiveDialog} data-track={track}>{text}</a>
+            <a href={href} onClick={openGiveDialog} data-track={track}>{book}</a>
             <GiveDialog
             link={href} variant='K12 resource' track={track}
             onDownload={trackDownloadClick}
@@ -37,6 +44,7 @@ function LinkWithGiveDialog({href, text, track}: {
 
 function ResourceLink({ data, track }: {
     data: {
+        id: string;
         book: string;
         resourceUnlocked: boolean;
         linkExternal: string;
@@ -51,7 +59,7 @@ function ResourceLink({ data, track }: {
         <li>
             {
                 data.resourceUnlocked || isVerified ?
-                <LinkWithGiveDialog href={url} text={data.book} track={track} /> :
+                <LinkWithGiveDialog href={url} book={data.book} track={track} /> :
                 <span>{data.book} (verified instructor only)</span>
             }
         </li>
