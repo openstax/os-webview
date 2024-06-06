@@ -5,7 +5,7 @@ import useOptimizedImage from '~/helpers/use-optimized-image';
 import './upper-menu.scss';
 
 const menuStructure = {
-    Bookstores: '/bookstore-suppliers',
+    Bookstores: 'https://he.kendallhunt.com/product/openstax-organizational-behavior',
     'Our Impact': '/impact',
     Supporters: '/foundation',
     Blog: '/blog',
