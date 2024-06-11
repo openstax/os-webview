@@ -4,8 +4,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUsers} from '@fortawesome/free-solid-svg-icons/faUsers';
 import {useIntl} from 'react-intl';
 import './order-print-copy.scss';
-import amazonSnippet from '~/models/amazon-snippet';
-import {usePromise} from '~/helpers/use-data';
 
 function Header({entry}) {
     return (
@@ -110,7 +108,6 @@ export default function OrderPrintCopy({iframeCode}) {
             }
         ];
     }, [formatMessage, iframeCode]);
-    const blurb = usePromise(amazonSnippet, '');
 
     if (!iframeCode) {
         return null;
@@ -118,9 +115,6 @@ export default function OrderPrintCopy({iframeCode}) {
 
     return (
         <nav className='order-print-copy'>
-            <div className='blurb'>
-                {blurb}
-            </div>
             <PhoneBoxes {...{contentArray}} />
             <DesktopBoxes {...{contentArray}} />
         </nav>
