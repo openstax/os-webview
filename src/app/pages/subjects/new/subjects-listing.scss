@@ -10,11 +10,14 @@
     }
 
     nav {
-        display: flex;
-        flex-direction: column;
-        line-height: 2.2rem;
-        max-width: 28rem;
-        row-gap: 1rem;
+        menu {
+            display: flex;
+            flex-direction: column;
+            line-height: 2.2rem;
+            max-width: 28rem;
+            padding: 0;
+            row-gap: 1rem;
+        }
 
         h2 {
             @include title-font(2.4rem);
