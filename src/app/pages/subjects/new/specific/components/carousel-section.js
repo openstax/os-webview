@@ -12,7 +12,7 @@ export default function CarouselSection({
 
     React.useEffect(
         () => {
-            const carouselWidth = ref.current.base.getBoundingClientRect().width;
+            const carouselWidth = ref.current.base?.getBoundingClientRect().width ?? 0;
 
             setAtATime(Math.max(1, Math.floor(carouselWidth / minWidth)));
         },
