@@ -37,7 +37,7 @@ function amazonButton(
     });
     const button1Text = formatMessage({
         id: 'printcopy.button1',
-        defaultMessage: 'Order a personal copy'
+        defaultMessage: 'Buy a print copy'
     });
 
     if (!isRealPrintLink(amazonDataLink.url)) {
