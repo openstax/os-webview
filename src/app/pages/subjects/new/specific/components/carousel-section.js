@@ -28,7 +28,7 @@ export default function CarouselSection({
             <a className="btn primary" href={linkUrl}>
                 {linkText}
             </a>
-            <Carousel mobileSlider hoverTextThing={thing} ref={ref} atATime={atATime}>
+            <Carousel hoverTextThing={thing} ref={ref} atATime={atATime}>
                 {children}
             </Carousel>
         </React.Fragment>
