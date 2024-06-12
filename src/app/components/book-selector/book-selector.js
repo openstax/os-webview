@@ -2,10 +2,8 @@ import React from 'react';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import {fetchAllBooks} from '~/models/books';
-import afterFormSubmit from './after-form-submit';
 import {salesforceTitles} from '~/helpers/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
-import {useNavigate, useLocation} from 'react-router-dom';
 import {useIntl} from 'react-intl';
 import './book-selector.scss';
 
@@ -128,27 +126,6 @@ export function useSelectedBooks() {
     );
 
     return [selectedBooks, toggleBook];
-}
-
-export function useFirstSearchArgument() {
-    const {search} = useLocation();
-
-    return decodeURIComponent(search.substr(1).replace(/&.*/, ''));
-}
-
-export function useAfterSubmit(selectedBooksRef) {
-    const navigate = useNavigate();
-    const preselectedTitle = useFirstSearchArgument();
-
-    return React.useCallback(
-        () =>
-            afterFormSubmit(
-                navigate,
-                preselectedTitle,
-                selectedBooksRef.current
-            ),
-        [navigate, selectedBooksRef, preselectedTitle]
-    );
 }
 
 export default function BookSelectorLoader(props) {

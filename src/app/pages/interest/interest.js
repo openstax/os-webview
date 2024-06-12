@@ -5,10 +5,12 @@ import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import ContactInfo from '~/components/contact-info/contact-info';
-import BookSelector, {
-    useSelectedBooks,
+import {
     useAfterSubmit,
     useFirstSearchArgument
+} from '~/components/book-selector/after-form-submit';
+import BookSelector, {
+    useSelectedBooks
 } from '~/components/book-selector/book-selector';
 import useFormTarget from '~/components/form-target/form-target';
 import useSalesforceContext from '~/contexts/salesforce';
