@@ -1,5 +1,5 @@
 import React from 'react';
-import CarouselSection from './components/carousel-section';
+import JITLoad from '~/helpers/jit-load';
 import useSpecificSubjectContext from './context';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import RawHTML from '~/components/jsx-helpers/raw-html';
@@ -26,6 +26,8 @@ type WebinarCardData = {
     link: string;
 }
 
+const importCarouselSection = () => import('./components/carousel-section');
+
 function Webinars() {
     const {
         webinarHeader: {
@@ -37,7 +39,8 @@ function Webinars() {
     const intl = useIntl();
 
     return blurbs.length ? (
-        <CarouselSection
+        <JITLoad
+            importFn={importCarouselSection}
             heading={heading}
             description={webinarDescription}
             linkUrl={linkHref}
@@ -48,7 +51,7 @@ function Webinars() {
             {blurbs.map((blurb) => (
                 <Card {...blurb} key={blurb.link} />
             ))}
-        </CarouselSection>
+        </JITLoad>
     ) : (
         <h2>{intl.formatMessage({id: 'subject.noWebinars'})}</h2>
     );

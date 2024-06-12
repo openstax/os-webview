@@ -75,10 +75,12 @@
         }
     }
 
-    .viewport {
-        overflow-x: hidden;
-        width: 100%;
-        height: max-content;
+    .scroller {
+        display: grid;
+        overflow: auto;
+        scroll-snap-type: x mandatory;
+        grid-auto-flow: column;
+        scrollbar-width: none;
     }
 
     .items {
