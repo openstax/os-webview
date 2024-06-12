@@ -106,7 +106,7 @@ export default function OrderPrintCopy({iframeCode}) {
                 headerText: bookstore,
                 headerIcon: faUsers,
                 buttonText: button2Text,
-                buttonUrl: 'https://buyprint.openstax.org/bookstore-suppliers'
+                buttonUrl: 'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf'
             }
         ];
     }, [formatMessage, iframeCode]);
