@@ -4,7 +4,6 @@ import {render, screen} from '@testing-library/preact';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
 import Webinars from '~/pages/subjects/new/specific/webinars';
 import useSpecificSubjectContext from '~/pages/subjects/new/specific/context';
-import {Carousel, CarouselItem, CarouselScroller} from 'react-aria-carousel';
 import {webinarHeader, webinarItems} from '../../data/specific-subject';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 
@@ -51,9 +50,6 @@ describe('new subjects webinars page', () => {
             webinarHeader,
             translations: [[{locale: 'en', slug: 'math-books'}]]
         });
-        (Carousel as jest.Mock).mockImplementation(
-            ({children}) => (<div>{children}</div>)
-        );
         (useDataFromSlug as jest.Mock).mockReturnValue(webinarItems);
         render(<Component />);
         expect(screen.queryAllByText('No webinars found (yet)')).toHaveLength(
