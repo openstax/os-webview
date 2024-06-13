@@ -5,10 +5,7 @@ import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import ContactInfo from '~/components/contact-info/contact-info';
-import {
-    useAfterSubmit,
-    useFirstSearchArgument
-} from '~/components/book-selector/after-form-submit';
+import {useAfterSubmit} from '~/components/book-selector/after-form-submit';
 import BookSelector, {
     useSelectedBooks
 } from '~/components/book-selector/book-selector';
@@ -68,7 +65,6 @@ function HowDidYouHear() {
 }
 
 function BookSelectorPage({ selectedBooksRef }) {
-    const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = selectedBooks.map((b) => b.value).join('; ');
     const {formatMessage} = useIntl();
@@ -81,7 +77,6 @@ function BookSelectorPage({ selectedBooksRef }) {
                 prompt={formatMessage({id: 'interest.books-prompt'})}
                 required
                 selectedBooks={selectedBooks}
-                preselectedTitle={preselectedTitle}
                 toggleBook={toggleBook}
                 limit="5"
             />

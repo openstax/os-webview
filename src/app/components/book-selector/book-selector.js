@@ -5,6 +5,7 @@ import {fetchAllBooks} from '~/models/books';
 import {salesforceTitles} from '~/helpers/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useIntl} from 'react-intl';
+import {useFirstSearchArgument} from './after-form-submit';
 import './book-selector.scss';
 
 function Subject({
@@ -57,7 +58,6 @@ function BookSelector({
     name,
     selectedBooks,
     toggleBook,
-    preselectedTitle,
     limit,
     additionalInstructions,
     includeFilter = defaultIncludeFilter
@@ -74,6 +74,7 @@ function BookSelector({
     const validationMessage =
         selectedBooks.length > 0 ? '' : 'Please select at least one book';
     const limitReached = selectedBooks.length >= limit;
+    const preselectedTitle = useFirstSearchArgument();
     const preselectedBook = React.useMemo(
         () => books.find((book) => preselectedTitle === book.value),
         [books, preselectedTitle]
