@@ -6,18 +6,6 @@
     width: 100%;
     max-width: calc(100vw - 3rem);
 
-    &.mobile-slider {
-        @include width-up-to($phone-max) {
-            .frame-changer {
-                display: none;
-            }
-
-            .items {
-                overflow-x: auto;
-            }
-        }
-    }
-
     .frame-changer {
         align-items: center;
         background-color: rgba(ui-color(black), 0.4);
@@ -28,10 +16,6 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-
-        @include width-up-to($phone-max) {
-            display: none;
-        }
 
         .hover-text {
             opacity: 0;
@@ -81,6 +65,16 @@
         scroll-snap-type: x mandatory;
         grid-auto-flow: column;
         scrollbar-width: none;
+
+        > [role="group"] {
+            display: grid;
+            grid-template-columns: 1fr;
+            justify-items: center;
+
+            > * {
+                width: 100%;
+            }
+        }
     }
 
     .items {
