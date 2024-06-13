@@ -74,10 +74,10 @@ describe('book-tile', () => {
 
         expect(baseElement).toMatchSnapshot();
     });
-    it('renders coming soon', () => {
+    it('renders coming soon', async () => {
         render(<Component book={[{...bookData, id: 130}]} />);
-        // This should happen, but doesn't. But the relevant section of code does get coverage.
-        // screen.getByText('Coming soon');
+
+        await screen.findByText('Coming soon');
     });
     it('falls back on webviewLink', async () => {
         const save = bookData.webviewRexLink;

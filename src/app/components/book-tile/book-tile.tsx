@@ -27,7 +27,7 @@ export default function BookTile({book: [book]}: {book: [BookInfo]}) {
                     width='240'
                     height='240'
                 />
-                {promoteSnippet && (
+                {promoteSnippet?.value.image && (
                     <PromoteBadge
                         name={promoteSnippet.value.name}
                         image={promoteSnippet.value.image}
