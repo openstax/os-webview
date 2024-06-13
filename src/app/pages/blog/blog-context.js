@@ -44,6 +44,14 @@ function useTopicStories() {
         [topic, topicType]
     );
     const topicStories = camelCaseKeys(useDataFromSlug(slug) || []);
+
+    // Until search returns the heading field
+    topicStories.forEach((s) => {
+        if (!s.heading) {
+            s.heading = s.title;
+        }
+    });
+
     const topicFeatured = React.useMemo(
         () => {
             const fieldFromType = topicType === 'subject' ? 'articleSubjects' : 'collections';

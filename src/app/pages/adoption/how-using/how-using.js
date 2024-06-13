@@ -15,7 +15,10 @@ function HowManyStudents({book, dispatch}) {
 
     return (
         <div>
-            <FormattedMessage id="how-using.how-many" values={{title: book.text}} />
+            <FormattedMessage
+                id="how-using.how-many"
+                values={{title: book.text}}
+            />
             <div className="hint">
                 <FormattedMessage id="how-using.hint" />
             </div>
@@ -27,7 +30,8 @@ function HowManyStudents({book, dispatch}) {
                     max: '999',
                     required: true,
                     onChange: updateBookValue
-                }} />
+                }}
+            />
         </div>
     );
 }
@@ -45,15 +49,16 @@ function HowUsingBook({book, dispatch}) {
         self: formatMessage({id: 'how-using.self'})
     };
 
-    adoptionOptions.forEach(
-        (opt) => {
-            opt.text = adoptionTexts[opt.key];
-        }
-    );
+    adoptionOptions.forEach((opt) => {
+        opt.text = adoptionTexts[opt.key];
+    });
 
     return (
         <FormSelect
-            label={formatMessage({id: 'how-using.how-using'}, {title: book.text})}
+            label={formatMessage(
+                {id: 'how-using.how-using'},
+                {title: book.text}
+            )}
             options={adoptionOptions}
             selectAttributes={{
                 name: `hu_${book.text}`,
@@ -65,7 +70,6 @@ function HowUsingBook({book, dispatch}) {
     );
 }
 
-
 function reducer(state, action) {
     return {...state, ...action};
 }
@@ -73,29 +77,32 @@ function reducer(state, action) {
 export default function HowUsing({selectedBooks}) {
     const [bookData, dispatch] = React.useReducer(reducer, {});
     const [useData, udDispatch] = React.useReducer(reducer, {});
-    const json = React.useMemo(
-        () => {
-            const rewrittenBookData = selectedBooks.map(
-                ({value: name}) => ({name, students: Number(bookData[name]), howUsing: useData[name]})
-            );
+    const json = React.useMemo(() => {
+        const rewrittenBookData = selectedBooks.map(({value: name}) => {
+            const match = name.match(/(.*?) *\[(.*)\]/);
+            const [title, language] = match ? match.slice(1) : [name, 'English'];
 
-            return JSON.stringify({
-                'Books': rewrittenBookData
+            return ({
+                name: title,
+                students: Number(bookData[name]),
+                howUsing: useData[name],
+                language
             });
-        },
-        [bookData, useData, selectedBooks]
-    );
+        });
+
+        return JSON.stringify({
+            Books: rewrittenBookData
+        });
+    }, [bookData, useData, selectedBooks]);
 
     return (
         <div className="how-using">
-            {
-                selectedBooks.map((book) =>
-                    <React.Fragment key={book.value}>
-                        <HowManyStudents book={book} dispatch={dispatch} />
-                        <HowUsingBook book={book} dispatch={udDispatch} />
-                    </React.Fragment>
-                )
-            }
+            {selectedBooks.map((book) => (
+                <React.Fragment key={book.value}>
+                    <HowManyStudents book={book} dispatch={dispatch} />
+                    <HowUsingBook book={book} dispatch={udDispatch} />
+                </React.Fragment>
+            ))}
             <input type="hidden" name="adoption_json" value={json} />
         </div>
     );
