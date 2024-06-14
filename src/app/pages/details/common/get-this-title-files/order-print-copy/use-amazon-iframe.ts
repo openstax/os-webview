@@ -13,11 +13,8 @@ export default function useAmazonIframe(slug: string) {
     const iframeCode = React.useMemo(
         () => amazonIframe?.length > 0 ? (`
             ${amazonIframe}
-            <div class='blurb'>
-                ${amazonDataLink.disclosure || 'As an Amazon Associate we earn from qualifying purchases.'}
-            </div>
         `) : null,
-        [amazonIframe, amazonDataLink.disclosure]
+        [amazonIframe]
     );
 
     return iframeCode ?? amazonButton(amazonDataLink, formatMessage);
@@ -31,10 +28,6 @@ function amazonButton(
         id: 'printcopy.individual',
         defaultMessage: 'Individual'
     });
-    const disclosure = formatMessage({
-        id: 'printcopy.disclosure',
-        defaultMessage: '***'
-    });
     const button1Text = formatMessage({
         id: 'printcopy.button1',
         defaultMessage: 'Buy a print copy'
@@ -47,10 +40,6 @@ function amazonButton(
     return ({
         headerText: individual,
         headerIcon: faUser,
-        disclosure:
-            disclosure === '***'
-                ? amazonDataLink.disclosure
-                : disclosure,
         buttonText: button1Text,
         buttonUrl: amazonDataLink.url
     });
