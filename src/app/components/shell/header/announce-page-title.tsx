@@ -10,11 +10,11 @@ export default function announcePageTitle(title: string) {
 
 export function PageTitleConfirmation() {
     const [docTitle, setDocTitle] = React.useState('');
-    const ref = React.useRef(null);
+    const ref = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(
         () => {
-            const el = ref.current as unknown as Element; // it's not null
+            const el = ref.current as HTMLDivElement;
             const listener = ((e: CustomEvent) => {
                 setDocTitle(e.detail);
             }) as EventListener;
