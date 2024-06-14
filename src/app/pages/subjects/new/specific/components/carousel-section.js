@@ -12,7 +12,7 @@ export default function CarouselSection({
 
     React.useEffect(
         () => {
-            const carouselWidth = ref.current.base.getBoundingClientRect().width;
+            const carouselWidth = ref.current.base?.getBoundingClientRect().width ?? 0;
 
             setAtATime(Math.max(1, Math.floor(carouselWidth / minWidth)));
         },
@@ -28,7 +28,7 @@ export default function CarouselSection({
             <a className="btn primary" href={linkUrl}>
                 {linkText}
             </a>
-            <Carousel mobileSlider hoverTextThing={thing} ref={ref} atATime={atATime}>
+            <Carousel hoverTextThing={thing} ref={ref} atATime={atATime}>
                 {children}
             </Carousel>
         </React.Fragment>

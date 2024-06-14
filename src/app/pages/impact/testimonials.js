@@ -3,10 +3,11 @@ import Carousel from '~/components/carousel/carousel';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import Dialog from '~/components/dialog/dialog';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
-import {useToggle} from '~/helpers/data';
+import {useToggle, useRefreshable} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {Article} from '~/pages/blog/article/article';
 import ClippedImage from '~/components/clipped-image/clipped-image';
+import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import './testimonials.scss';
 
 function LightboxContent({cards, initialPosition, articleDataArr}) {
@@ -78,23 +79,57 @@ function Card({position, cards}) {
     );
 }
 
+function useAtATime(container) {
+    const {innerWidth} = useWindowContext();
+    const containerWidth = React.useMemo(
+        () => container?.getBoundingClientRect().width,
+        [innerWidth, container] // eslint-disable-line react-hooks/exhaustive-deps
+    );
+
+    if (containerWidth > 900) {
+        return 3;
+    }
+    if (containerWidth > 600) {
+        return 2;
+    }
+    return 1;
+}
+
+function TestimonialCarousel({stories, container}) {
+    const atATime = useAtATime(container);
+
+    return (
+        <Carousel atATime={atATime} hoverTextThing='stories'>
+        {
+            stories.map((c, i) =>
+                <Card cards={stories} position={i} key={c.description} />
+            )
+        }
+        </Carousel>
+    );
+}
+
 export default function Testimonials({
     model: {
         heading, description, stories
     }
 }) {
+    const ref = React.useRef();
+    const [container, refreshContainer] = useRefreshable(() => ref.current);
+
+    React.useEffect(
+        () => refreshContainer(),
+        [refreshContainer]
+    );
+
     return (
         <section className="testimonials off-white">
-            <div className="boxed">
+            <div className="boxed" ref={ref}>
                 <h2>{heading}</h2>
                 <RawHTML html={description} />
-                <Carousel atATime="3" mobileSlider hoverTextThing='stories'>
-                    {
-                        stories.map((c, i) =>
-                            <Card cards={stories} position={i} key={c.description} />
-                        )
-                    }
-                </Carousel>
+                <WindowContextProvider>
+                    <TestimonialCarousel stories={stories} container={container} />
+                </WindowContextProvider>
             </div>
         </section>
     );

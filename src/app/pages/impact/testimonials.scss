@@ -25,10 +25,6 @@
             width: calc(100vw - 10rem);
         }
 
-        @include wider-than($phone-max) {
-            width: 38rem;
-        }
-
         .picture-part {
             display: block;
             height: 38rem;

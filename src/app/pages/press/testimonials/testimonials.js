@@ -23,7 +23,7 @@ export default function Testimonials() {
     return (
         <div className='content-block'>
             <h2>Making an impact</h2>
-            <Carousel atATime={2} mobileSlider hoverTextThing='testimonials'>
+            <Carousel atATime={2} hoverTextThing='testimonials'>
                 {testimonials.map((c) => (
                     <Card data={c} key={c.description} />
                 ))}
