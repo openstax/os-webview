@@ -1,4 +1,5 @@
 import cmsFetch from '~/helpers/cms-fetch';
+import {render} from 'preact';
 
 const GLOBAL_SETTINGS = ['piAId', 'piCId', 'piHostname'];
 
@@ -24,7 +25,6 @@ window.SETTINGS = {};
 
     const isSupported = (await import('./helpers/device')).default;
     const appElement = (await import('/src/app/components/shell/shell')).default;
-    const ReactDOM = (await import('react-dom')).default;
 
     await import('../styles/main.scss');
 
@@ -38,6 +38,5 @@ window.SETTINGS = {};
       ' Firefox, Edge and Safari. It may not work in your browser.');
     }
 
-    // eslint-disable-next-line react/no-deprecated
-    ReactDOM.render(appElement, document.getElementById('app'));
+    render(appElement, document.getElementById('app'));
 })();
