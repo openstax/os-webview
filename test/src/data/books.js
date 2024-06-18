@@ -53,18 +53,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168380",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "7e6cb60f-0809-499b-af00-490d4bde633a"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "fa12ab1a-049c-4c10-a70f-68020a7d3909"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "College Algebra",
             "salesforce_name": "College Algebra",
@@ -96,18 +84,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168372",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "6e3b62cb-81c5-460b-86e9-36dbb29f69d6"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "88514590-d904-487d-9cc4-16471c695205"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "Algebra and Trigonometry",
             "salesforce_name": "Algebra and Trigonometry",
@@ -139,18 +115,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168348",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "ba13c462-c8ac-456e-b616-8c38208f56d2"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "c33ab46c-da62-4d6c-a662-396e8dc41873"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Precalc",
             "salesforce_name": "Precalculus",
@@ -182,18 +146,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/193816802X",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "251724d0-20a1-45a2-9ce4-c9d0c94785d9"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "0de2d1e4-4215-47b4-aa82-2c4499726254"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "Calculus",
             "salesforce_name": "Calculus",
@@ -225,18 +177,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168062",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "34e7da92-dffa-4d93-b424-8fa9e2bae158"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "1c17c2ac-c8b0-4c82-9237-44c94966fbbf"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "Calculus",
             "salesforce_name": "Calculus",
@@ -268,18 +208,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168070",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "3c3c64ba-977e-410b-9c58-d4b67349571f"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "3c2869c4-52c3-4dc3-8b39-311becc1abf1"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "Calculus",
             "salesforce_name": "Calculus",
@@ -311,18 +239,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168208",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "0af66caf-3101-4aeb-b642-50bb3c3ff0e7"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "6cee393f-8231-48e6-85c6-e8a1fcfb9324"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Introductory Statistics",
             "salesforce_name": "Introductory Statistics",
@@ -355,18 +271,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/s?me=A1540JPBBI3F06&merchant=A1540JPBBI3F06&qid=1517336719",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "02a63761-a1bb-480c-8794-580cd7a76ea4"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "2e6c83ff-606a-4c3a-b9c4-63ccec4a50a3"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "Business Statistics",
             "salesforce_name": "Introductory Business Statistics",
@@ -398,18 +302,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168135",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "4afea256-42bd-4bc3-a3c3-6bd2638616ef"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "a924f8a5-0b7b-477c-a10e-e5ed8a689754"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Anatomy & Physiology",
             "salesforce_name": "Anatomy & Physiology",
@@ -441,18 +333,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168283",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "797107e2-1bbf-448d-b560-e6259fb60d6c"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "78b723c5-8b21-4826-9037-9cabc3b90335"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "Astronomy",
             "salesforce_name": "Astronomy",
@@ -484,18 +364,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1947172514",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "3ed1c6f6-9bda-4399-a06d-8685255657d9"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "1903a17a-a7bf-4f59-ab67-aab707d4ef6c"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Biology",
             "salesforce_name": "Biology 2e",
@@ -527,18 +395,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168119",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "f34c98a9-0334-4143-91fe-541c575c5fec"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "5587581e-5c80-4691-8c81-339836c6cb4d"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Concepts of Bio (non-majors)",
             "salesforce_name": "Concepts of Biology",
@@ -570,18 +426,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168143",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "f424e2c3-2033-4c86-8996-9abd2d003ca3"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "b4c11f5a-5f3b-4a9e-b613-d36f7099e3cf"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Microbiology",
             "salesforce_name": "Microbiology",
@@ -613,18 +457,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/194717262X",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "f051a9bc-273c-4e6f-a10c-647261c094b8"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "fb264a55-ed8f-4d5e-a045-c6fd4c84b4df"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "Chemistry",
             "salesforce_name": "Chemistry 2e",
@@ -656,18 +488,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1947172646",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "88c2067c-287f-4595-9f89-e9a92739c973"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "5d74a540-694b-4446-a6f1-7eb5ff2f220c"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "Chem: Atoms First",
             "salesforce_name": "Chemistry: Atoms First 2e",
@@ -699,18 +519,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168003",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "27a513a2-c605-455a-aa5d-76f2ae314cbd"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "6ded6566-5866-42f8-94b0-85ffbcc00b5b"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "College Physics (Algebra)",
             "salesforce_name": "College Physics",
@@ -742,18 +550,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168275",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "224c8bac-133c-4377-9928-f6841ec59d6c"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "b5533c6e-e346-4389-994b-d7a10365d03c"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "University Physics (Calc)",
             "salesforce_name": "University Physics",
@@ -785,18 +581,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/193816816X",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "93491b14-1e74-4963-9c06-47fc116f829e"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "0d174970-a034-4170-9b16-83c4d7cc499f"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "University Physics (Calc)",
             "salesforce_name": "University Physics",
@@ -828,18 +612,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168186",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "db951f83-ae55-45ce-91fe-8e0e3cf3ac46"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "5e5e004a-09dc-48b6-8364-00b002535666"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "University Physics (Calc)",
             "salesforce_name": "University Physics",
@@ -872,18 +644,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1947172409",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "f215a7f2-717d-46dc-bb15-825f13c4b313"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "a1c7bcff-9acc-45db-aed0-f5532dd8698e"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": "AP Bio",
             "salesforce_name": "AP Biology",
@@ -916,18 +676,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1938168933",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "d98f1f7e-ba88-415b-9e68-dc741114c6f0"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "13a4dd7d-812d-49df-8f92-5f54f9743b5b"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "AP Physics",
             "salesforce_name": "AP Physics",
@@ -959,13 +707,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 5,
-                    "id": "df21ea8c-c21b-4ab8-9d89-9625aefee2af"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": null,
             "salesforce_name": null,
@@ -997,13 +738,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 5,
-                    "id": "02d3dac8-4ca6-4d00-b10f-d4f2044ff7ba"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": null,
             "salesforce_name": "Polska University Physics",
@@ -1035,13 +769,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 5,
-                    "id": "02d3dac8-4ca6-4d00-b10f-d4f2044ff7ba"
-                }
-            ],
             "comp_copy_available": false,
             "salesforce_abbreviation": null,
             "salesforce_name": "Polska University Physics",
@@ -1073,18 +800,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1947172654",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "2564ca78-58ee-41d3-aeda-c2b4bf46d300"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "2162a622-c2b2-479f-8f1f-c310420c3f4c"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "American Government",
             "salesforce_name": "American Government 2e",
@@ -1116,18 +831,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1947172360",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "3042058f-89f5-4583-bd66-bf30e43760db"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "5bd9b02a-ef54-40f8-9735-e6c92c96c381"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Economics",
             "salesforce_name": "Principles of Economics 2e",
@@ -1159,18 +862,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1947172387",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "584446c9-c5f7-4213-bc7f-03b4592fbd4a"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "dcf8f855-dde7-4864-803e-de36c2be00a7"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Macro Econ",
             "salesforce_name": "Principles of Macroeconomics 2e",
@@ -1202,18 +893,6 @@ export default {
             "amazon_coming_soon": false,
             "amazon_link": "https://www.amazon.com/dp/1947172344",
             "bookstore_coming_soon": false,
-            "bookstore_content": [
-                {
-                    "type": "content",
-                    "value": 9,
-                    "id": "3e7bcf1c-f237-481a-9dca-0d2ff8aae16a"
-                },
-                {
-                    "type": "content",
-                    "value": 10,
-                    "id": "623cb664-deeb-43eb-8de4-f2bd7d118d06"
-                }
-            ],
             "comp_copy_available": true,
             "salesforce_abbreviation": "Micro Econ",
             "salesforce_name": "Principles of Microeconomics 2e",
