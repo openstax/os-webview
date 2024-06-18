@@ -167,18 +167,13 @@ export function PdfOption({model}) {
     );
 }
 
-export function isRealPrintLink(url) {
-    return typeof url === 'string' && !url.includes('stores/page');
-}
-
 export function usePrintCopyDialog() {
     const [Dialog, open, close] = useDialog();
     const PCDialog = React.useCallback(
-        ({text, amazonDataLink, iframeCode}) => (
+        ({text, slug}) => (
             <Dialog title={text}>
                 <OrderPrintCopy
-                    amazonDataLink={amazonDataLink}
-                    iframeCode={iframeCode}
+                    slug={slug}
                     hideDialog={() => close()}
                 />
             </Dialog>
