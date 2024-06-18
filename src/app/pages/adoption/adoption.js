@@ -5,8 +5,10 @@ import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import ContactInfo from '~/components/contact-info/contact-info';
-import BookSelector, {useSelectedBooks, useAfterSubmit, useFirstSearchArgument}
-    from '~/components/book-selector/book-selector';
+import {useAfterSubmit} from '~/components/book-selector/after-form-submit';
+import BookSelector, {
+    useSelectedBooks
+} from '~/components/book-selector/book-selector';
 import HowUsing from './how-using/how-using';
 import useSalesforceContext from '~/contexts/salesforce';
 import useFormTarget from '~/components/form-target/form-target';
@@ -15,7 +17,6 @@ import {useIntl} from 'react-intl';
 import './adoption.scss';
 
 function BookSelectorPage({selectedBooksRef}) {
-    const preselectedTitle = useFirstSearchArgument();
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = React.useMemo(
     () => selectedBooks.map((b) => b.value.replace(/ *\[.*/, '')).join('; '),
@@ -35,7 +36,6 @@ function BookSelectorPage({selectedBooksRef}) {
                 prompt={formatMessage({id: 'adoption.book-prompt'})}
                 required
                 selectedBooks={selectedBooks}
-                preselectedTitle={preselectedTitle}
                 toggleBook={toggleBook}
                 limit="5"
                 additionalInstructions={instructions}

@@ -43,9 +43,7 @@ function Main() {
     const {classes} = useMainClassContext();
 
     React.useEffect(() => {
-        if (ref.current) {
-            ReactModal.setAppElement(ref.current);
-        }
+        ReactModal.setAppElement(ref.current as HTMLDivElement);
     }, []);
 
     return (

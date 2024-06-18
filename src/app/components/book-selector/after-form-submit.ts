@@ -1,8 +1,9 @@
+import React from 'react';
 import fetchBooks from '~/models/books';
 import {filterLiveBooks, SalesforceBook} from '~/helpers/books';
-import type {NavigateFunction} from 'react-router-dom';
+import {useNavigate, NavigateFunction, useLocation} from 'react-router-dom';
 
-export default function afterFormSubmit(
+function afterFormSubmit(
     navigate: NavigateFunction,
     preselectedTitle: string,
     selectedBooks: SalesforceBook[]
@@ -24,4 +25,25 @@ export default function afterFormSubmit(
             }
         });
     });
+}
+
+export function useFirstSearchArgument() {
+    const {search} = useLocation();
+
+    return decodeURIComponent(search.substring(1).replace(/&.*/, ''));
+}
+
+export function useAfterSubmit(selectedBooksRef: React.MutableRefObject<SalesforceBook[]>) {
+    const navigate = useNavigate();
+    const preselectedTitle = useFirstSearchArgument();
+
+    return React.useCallback(
+        () =>
+            afterFormSubmit(
+                navigate,
+                preselectedTitle,
+                selectedBooksRef.current
+            ),
+        [navigate, selectedBooksRef, preselectedTitle]
+    );
 }

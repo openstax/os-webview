@@ -6,6 +6,7 @@ import {MemoryRouter} from 'react-router-dom';
 import {MainClassContextProvider} from '~/contexts/main-class';
 import {SharedDataContextProvider} from '~/contexts/shared-data';
 import {LanguageContextProvider} from '~/contexts/language';
+import {test, expect, beforeEach} from '@jest/globals';
 
 beforeEach(async () => {
     render(
@@ -36,6 +37,7 @@ test('form appears when role is selected', async () => {
     const instructorOption = options.find(
         (o) => o.textContent === 'Instructor'
     );
+
     await user.click(instructorOption);
     await screen.findByRole('form');
 });
