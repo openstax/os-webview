@@ -3,7 +3,10 @@ import {
     usePrintCopyDialog
 } from '~/pages/details/common/get-this-title-files/options';
 import {FormattedMessage, useIntl} from 'react-intl';
-import { useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
+import {
+    useOpenGiveDialog,
+    VariantValue
+} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import {useToggle} from '~/helpers/data';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
@@ -20,30 +23,34 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
         bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
 
     return (
-        <div className='navmenu' ref={ref} data-analytics-nav="Get the book dropdown">
+        <div
+            className="navmenu"
+            ref={ref}
+            data-analytics-nav="Get the book dropdown"
+        >
             <ControlButton
                 parentRef={ref}
                 buttonId={buttonId}
                 menuId={menuId}
             />
-            <div id={menuId} role='menu' aria-labelledby={buttonId}>
+            <div id={menuId} role="menu" aria-labelledby={buttonId}>
                 <MenuItemWithGiveDialog
-                    defaultMessage='View online'
+                    defaultMessage="View online"
                     url={webviewLink}
-                    variant='View online'
+                    variant="content-warning"
                 />
                 <MenuItemWithGiveDialog
-                    defaultMessage='Download a PDF'
+                    defaultMessage="Download a PDF"
                     url={pdfLink}
                 />
                 <PrintOption slug={bookInfo.slug} />
                 <hr />
                 <MenuItem
-                    defaultMessage='Instructor resources'
+                    defaultMessage="Instructor resources"
                     url={`/details/${slug}?Instructor resources`}
                 />
                 <MenuItem
-                    defaultMessage='Student resources'
+                    defaultMessage="Student resources"
                     url={`/details/${slug}?Student resources`}
                 />
             </div>
@@ -81,13 +88,13 @@ function ControlButton({
     return (
         <button
             id={buttonId}
-            type='button'
-            aria-haspopup='true'
+            type="button"
+            aria-haspopup="true"
             aria-controls={menuId}
             aria-expanded={isOpen}
             onClick={toggleMenu}
         >
-            <FormattedMessage id='getTheBook' defaultMessage='Get the book' />
+            <FormattedMessage id="getTheBook" defaultMessage="Get the book" />
             <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
         </button>
     );
@@ -107,31 +114,31 @@ function FormattedMessageFor({
     if (defaultMessage === 'View online') {
         return (
             <FormattedMessage
-                id='getit.webview.link'
-                defaultMessage='View online'
+                id="getit.webview.link"
+                defaultMessage="View online"
             />
         );
     }
     if (defaultMessage === 'Download a PDF') {
         return (
             <FormattedMessage
-                id='getit.pdf.download'
-                defaultMessage='Download a PDF'
+                id="getit.pdf.download"
+                defaultMessage="Download a PDF"
             />
         );
     }
     if (defaultMessage === 'Instructor resources') {
         return (
             <FormattedMessage
-                id='tabs.instructorResources'
-                defaultMessage='Instructor resources'
+                id="tabs.instructorResources"
+                defaultMessage="Instructor resources"
             />
         );
     }
     return (
         <FormattedMessage
-            id='tabs.studentResources'
-            defaultMessage='Student resources'
+            id="tabs.studentResources"
+            defaultMessage="Student resources"
         />
     );
 }
@@ -145,14 +152,14 @@ function MenuItem({
     url: string;
 } & AnchorHTMLAttributes<HTMLAnchorElement>) {
     return (
-        <a role='menuitem' href={url} {...aProps}>
+        <a role="menuitem" href={url} {...aProps}>
             <FormattedMessageFor defaultMessage={defaultMessage} />
         </a>
     );
 }
 
 type MenuItemWithGiveDialogProps = {
-    variant?: string;
+    variant?: VariantValue;
 } & Parameters<typeof MenuItem>[0];
 function MenuItemWithGiveDialog({
     variant,
@@ -177,7 +184,7 @@ function PrintOption({slug}: {slug: string}) {
     });
 
     return (
-        <a role='menuitem' href='open a dialog' onClick={onClick}>
+        <a role="menuitem" href="open a dialog" onClick={onClick}>
             {text}
             <PCDialog text={text} slug={slug} />
         </a>

@@ -9,7 +9,7 @@ import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLin
 import {useToggle} from '~/helpers/data';
 import {useLocation} from 'react-router-dom';
 import trackLink from '../track-link';
-import useGiveDialog from '../get-this-title-files/give-before-pdf/use-give-dialog';
+import useGiveDialog, { VariantValue } from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
@@ -83,7 +83,7 @@ const iconLookup: {[key: string]: IconDefinition} = {
     'external-link-alt': faExternalLinkAlt
 };
 
-function useVariant() {
+function useVariant(): VariantValue {
     const {search} = useLocation();
 
     if (search.includes('Instructor')) {

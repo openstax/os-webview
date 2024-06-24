@@ -114,7 +114,7 @@ export function WebviewOption({model}) {
                     <IconAndText {...iconAndTextArgs} />
                 </a>
                 <GiveDialog
-                    link={webviewLink} variant='View online' track='Online'
+                    link={webviewLink} variant='content-warning' track='Online'
                     onDownload={trackDownload} id={model.id}
                 />
                 {showCallout && (
