@@ -1,6 +1,6 @@
 import linkhelper from '~/helpers/link';
 import userModel, {UserModelType} from '~/models/usermodel';
-import type {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkHandler';
+import type {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
 let userInfo: UserModelType;
 

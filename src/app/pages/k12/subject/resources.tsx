@@ -3,7 +3,7 @@ import {Tabs, Item} from '~/components/tablist/tablist';
 import useUserContext from '~/contexts/user';
 import {useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import trackLink from '~/pages/details/common/track-link';
-import {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkHandler';
+import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 import bookTitles from '~/models/book-titles';
 import './resources.scss';
 

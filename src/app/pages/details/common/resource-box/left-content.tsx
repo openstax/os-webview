@@ -11,7 +11,7 @@ import {useLocation} from 'react-router-dom';
 import trackLink from '../track-link';
 import useGiveDialog from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {TrackedMouseEvent} from '~/components/shell/router-helpers/useLinkHandler';
+import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
 type LeftContentModelType = {
     link?: {url?: string; text?: string};

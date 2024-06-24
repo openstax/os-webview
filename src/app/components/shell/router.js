@@ -6,7 +6,7 @@ import {
     useLocation,
     useParams
 } from 'react-router-dom';
-import useLinkHandler from './router-helpers/useLinkHandler';
+import useLinkHandler from './router-helpers/use-link-handler';
 import useRouterContext, {RouterContextProvider} from './router-context';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
