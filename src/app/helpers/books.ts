@@ -1,4 +1,5 @@
 export type Book = {
+    id: number;
     book_state: string;
     cover_url: string;
     salesforce_abbreviation: string;
@@ -6,6 +7,7 @@ export type Book = {
     slug: string;
     subjects: string[];
     title: string;
+    content_warning_text: string;
 };
 
 const statesToInclude = ['live', 'new_edition_available', 'coming_soon'];

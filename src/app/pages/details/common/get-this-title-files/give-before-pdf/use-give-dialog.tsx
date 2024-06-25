@@ -24,15 +24,17 @@ export default function useGiveDialog() {
             track,
             onDownload,
             variant,
+            warning='',
             id
         }: {
             link: string;
             track?: string;
             onDownload?: (e: React.MouseEvent) => void;
             variant?: VariantValue;
+            warning?: string;
             id?: string;
         }) => {
-            const Variant = lookupVariant(variant) as typeof GiveBeforeOther;
+            const Variant = lookupVariant(warning, variant) as typeof GiveBeforeOther;
             const aria =
                 Variant === GiveBeforePdf
                     ? {labelledby: 'dialog-heading'}
@@ -41,7 +43,7 @@ export default function useGiveDialog() {
             return (
                 <Dialog aria={aria}>
                     <Variant
-                        {...{link, track, close, data, onDownload, variant, id}}
+                        {...{link, track, close, data, onDownload, variant, warning, id}}
                     />
                 </Dialog>
             );
@@ -71,8 +73,8 @@ export function useOpenGiveDialog() {
     return {GiveDialog, openGiveDialog};
 }
 
-function lookupVariant(variant?: VariantValue) {
-    if (variant === 'content-warning') {
+function lookupVariant(warning: string, variant?: VariantValue) {
+    if (warning) {
         return ContentWarning;
     }
     if (variant !== undefined) {

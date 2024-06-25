@@ -8,6 +8,7 @@ import {
     VariantValue
 } from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import {useToggle} from '~/helpers/data';
+import { fetchAllBooks } from '~/models/books';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
@@ -21,6 +22,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
     const webviewLink = bookInfo.webviewRexLink || bookInfo.webviewLink;
     const pdfLink =
         bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
+    const warning = useWarning(bookInfo.id);
 
     return (
         <div
@@ -37,11 +39,13 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
                 <MenuItemWithGiveDialog
                     defaultMessage="View online"
                     url={webviewLink}
-                    variant="content-warning"
+                    variant="View online"
+                    warning={warning}
                 />
                 <MenuItemWithGiveDialog
                     defaultMessage="Download a PDF"
                     url={pdfLink}
+                    warning={warning}
                 />
                 <PrintOption slug={bookInfo.slug} />
                 <hr />
@@ -56,6 +60,28 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
             </div>
         </div>
     );
+}
+
+function useWarning(id: number) {
+    const [text, setText] = React.useState('');
+
+    React.useEffect(
+        () => {
+            fetchAllBooks.then((books) => {
+                const entry = books.find((b) => b.id === id);
+
+                if (!entry) {
+                    return;
+                }
+                if (entry.content_warning_text) {
+                    setText(entry.content_warning_text);
+                }
+            });
+        },
+        [id]
+    );
+
+    return text;
 }
 
 function ControlButton({
@@ -158,11 +184,14 @@ function MenuItem({
     );
 }
 
+
 type MenuItemWithGiveDialogProps = {
     variant?: VariantValue;
+    warning: string;
 } & Parameters<typeof MenuItem>[0];
 function MenuItemWithGiveDialog({
     variant,
+    warning,
     ...props
 }: MenuItemWithGiveDialogProps) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
@@ -170,7 +199,7 @@ function MenuItemWithGiveDialog({
     return (
         <React.Fragment>
             <MenuItem {...props} onClick={openGiveDialog} />
-            <GiveDialog link={props.url} variant={variant} />
+            <GiveDialog link={props.url} variant={variant} warning={warning} />
         </React.Fragment>
     );
 }

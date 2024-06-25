@@ -1,12 +1,13 @@
 import React from 'react';
 
 export default function ContentWarning({
-    link, track, close, onDownload
+    link, track, close, onDownload, warning
 }: {
     link: string;
     track: string | undefined;
     close: () => void;
     onDownload: (event: React.MouseEvent) => void;
+    warning: string;
 }) {
     const closeAfterDelay = React.useCallback(
         (event: React.MouseEvent) => {
@@ -19,25 +20,18 @@ export default function ContentWarning({
     );
 
     return (
-        <div>
-            <div>
-                This material is intended for a post-secondary student audience,
-                and includes descriptions and/or images of severe injury,
-                assault, abuse, and exploitation. This content has been
-                developed and extensively reviewed by nursing faculty and other
-                experts, and aligns to course competencies regarding
-                comprehensive, sensitive, patient-centered care.
+        <div className="give-before-pdf">
+            <div className="text-content">
+                {warning}
             </div>
-            <div className="button-row">
-                <a
-                    href={link}
-                    {...(track ? {'data-track': track} : {})}
-                    onClick={closeAfterDelay}
-                    className="btn go-to"
-                >
-                    Go to your file
-                </a>
-            </div>
+            <a
+                href={link}
+                {...(track ? {'data-track': track} : {})}
+                onClick={closeAfterDelay}
+                className="btn go-to"
+            >
+                Go to your file
+            </a>
         </div>
     );
 }
