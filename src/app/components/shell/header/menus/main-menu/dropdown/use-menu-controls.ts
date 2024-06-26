@@ -24,16 +24,11 @@ export default function useMenuControls({
         }
 
         function openMenu(event: React.MouseEvent) {
-            const previousActiveDropdown = activeDropdown;
-
             event.preventDefault();
             setActiveDropdown(topRef);
             setSubmenuLabel(label);
             if (isMobileDisplay()) {
                 (event.target as HTMLElement).blur();
-                if (previousActiveDropdown === topRef) {
-                    closeMenu();
-                }
             }
         }
 
@@ -50,5 +45,5 @@ export default function useMenuControls({
             openMenu,
             openDesktopMenu
         };
-    }, [activeDropdown, label, setActiveDropdown, setSubmenuLabel, topRef]);
+    }, [label, setActiveDropdown, setSubmenuLabel, topRef]);
 }

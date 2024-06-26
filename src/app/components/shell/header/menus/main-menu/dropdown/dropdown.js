@@ -3,18 +3,18 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import useDropdownContext from '../../dropdown-context';
 import useWindowContext from '~/contexts/window';
 import useNavigateByKey from './use-navigate-by-key';
+import useMenuControls from './use-menu-controls';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {useLocation} from 'react-router-dom';
 import cn from 'classnames';
 import './dropdown.scss';
-import useMenuControls from './use-menu-controls';
 
 // Using ARIA Disclosure pattern rather than Menubar pattern
 // because menubar requires complexity that is not necessary
 // for ordinary website navigations, per
 // https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/
 
-export function MenuItem({label, url, local}) {
+export function MenuItem({label, url, local=undefined}) {
     const {innerWidth: _} = useWindowContext();
     const urlPath = url.replace('/view-all', '');
     const {pathname} = useLocation();
@@ -41,7 +41,7 @@ function OptionalWrapper({isWrapper = true, children}) {
 
 export default function Dropdown({
     Tag = 'li',
-    className,
+    className = undefined,
     label,
     children,
     excludeWrapper = false,
@@ -103,6 +103,7 @@ function DropdownController({
     const toggleMenu = React.useCallback(
         (event) => {
             if (activeDropdown === topRef) {
+                event.preventDefault();
                 closeMenu();
             } else {
                 openMenu(event);
