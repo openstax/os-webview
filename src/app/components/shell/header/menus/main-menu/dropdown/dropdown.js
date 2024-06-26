@@ -142,7 +142,7 @@ function DropdownController({
                 viewBox="0 0 18 30"
                 aria-hidden="true"
             >
-                <title>arrow</title>
+                <title> arrow</title>
                 <path
                     d="M12,1L26,16,12,31,8,27,18,16,8,5Z"
                     transform="translate(-8 -1)"
