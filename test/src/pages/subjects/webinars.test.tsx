@@ -6,6 +6,7 @@ import Webinars from '~/pages/subjects/new/specific/webinars';
 import useSpecificSubjectContext from '~/pages/subjects/new/specific/context';
 import {webinarHeader, webinarItems} from '../../data/specific-subject';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
+import * as JLpkg from '~/helpers/jit-load';
 
 function Component() {
     return (
@@ -25,6 +26,12 @@ jest.mock('react-aria-carousel', () => ({
     Carousel: jest.fn()
 }));
 Element.prototype.scrollTo = jest.fn();
+
+function MockJITLoad({
+    children
+}: React.PropsWithChildren<Parameters<typeof JLpkg.default>[0]>) {
+    return <div>{children}</div>;
+}
 
 describe('new subjects webinars page', () => {
     it('renders nothing when it has not context', () => {
@@ -57,6 +64,9 @@ describe('new subjects webinars page', () => {
         );
     });
     it('renders webinars (and finds no English translation)', () => {
+        jest.spyOn(JLpkg, 'default').mockImplementation((props) => (
+            <MockJITLoad {...props} />
+        ));
         (useSpecificSubjectContext as jest.Mock).mockReturnValue({
             webinarHeader,
             translations: [[{locale: 'es', slug: 'math-books'}]]

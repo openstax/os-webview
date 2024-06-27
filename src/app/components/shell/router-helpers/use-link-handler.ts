@@ -17,12 +17,12 @@ export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> 
 function handleExternalLink(href: Location['href'], el: HTMLElement) {
     if (el.dataset.local === 'true') {
         // REX books open in the current window; track them
-        document.location.href = href;
+        window.location.href = href;
     } else {
         const newWindow = window.open(href, '_blank');
 
         if (newWindow === null) {
-            document.location.href = href;
+            window.location.href = href;
         }
     }
 }
@@ -74,7 +74,7 @@ export default function useLinkHandler() {
                     )
                 )
                     .catch((err) => {
-                        throw new Error(`Unable to download-track: ${err}`);
+                        console.error(`Unable to download-track: ${err}`);
                     })
                     .finally(followLink);
             } else {

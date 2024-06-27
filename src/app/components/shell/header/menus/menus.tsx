@@ -10,7 +10,7 @@ import trapTab from '~/helpers/trapTab';
 import './menus.scss';
 import { treatSpaceOrEnterAsClick } from '~/helpers/events';
 
-export default function Menus({open}: {open: string;}) {
+export default function Menus() {
     const ref = React.useRef<HTMLDivElement>(null);
     const [active, toggle] = useToggle();
     const expandMenu = React.useCallback(() => toggle(), [toggle]);
@@ -45,7 +45,7 @@ export default function Menus({open}: {open: string;}) {
     return (
         <React.Fragment>
             <DropdownContextProvider>
-                <div className={cn('menus desktop', {open})}>
+                <div className='menus desktop'>
                     <nav className='meta-nav'>
                         <UpperMenu />
                     </nav>

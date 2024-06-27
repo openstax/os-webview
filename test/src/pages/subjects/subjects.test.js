@@ -4,6 +4,7 @@ import ShellContextProvider from '../../../helpers/shell-context';
 import {MemoryRouter} from 'react-router-dom';
 import {SubjectsContextProvider} from '~/pages/subjects/new/context';
 import {SubjectsPage} from '~/pages/subjects/new/subjects';
+import {test} from '@jest/globals';
 
 test('main subjects page', async () => {
     render(

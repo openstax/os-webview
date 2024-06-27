@@ -51,7 +51,7 @@ describe('use-data', () => {
         (global.fetch as jest.Mock).mockImplementationOnce(() =>
             Promise.resolve({
                 json() {
-                    return {silly_key: 'silly_value'};
+                    return {silly_key: 'silly_value'}; // eslint-disable-line camelcase
                 }
             })
         );

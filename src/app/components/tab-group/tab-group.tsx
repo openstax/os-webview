@@ -48,7 +48,8 @@ export function ariaPanelId(label: string) {
 }
 
 type TabGroupArgs = React.PropsWithChildren<
-    Pick<TabArgs, 'selectedLabel' | 'setSelectedLabel' | 'TabTag'> &
+    Pick<TabArgs, 'selectedLabel' | 'setSelectedLabel'> &
+    Pick<Partial<TabArgs>, 'TabTag'> &
     {
         labels: TabArgs['label'][];
         'data-analytics-nav': string;
