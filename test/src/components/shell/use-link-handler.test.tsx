@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 describe('use-link-handler', () => {
     const user = userEvent.setup();
     const notPrevented = jest.fn();
-    const Component = ({track = false}) => {
+    const InnerComponent = ({track = false}) => {
         const linkHandler = useLinkHandler();
         const onClick = React.useCallback(
             (e: React.MouseEvent & {trackingInfo?: {[key:string]: string}}) => {
@@ -35,29 +35,27 @@ describe('use-link-handler', () => {
 
         return <a href="https://dev.openstax.org/some-url" onClick={onClick} />;
     };
+    const Component = (props: Parameters<typeof InnerComponent>[0]) => (
+        <MemoryRouter initialEntries={['/']}>
+            <InnerComponent {...props} />
+        </MemoryRouter>
+    );
+
+    afterEach(jest.resetAllMocks);
 
     jest.spyOn(window, 'open').mockImplementation(() => null);
 
     it('short-circuits if not a valid URL click', async () => {
         jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue(false);
 
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Component />
-            </MemoryRouter>
-        );
+        render(<Component />);
         await user.click(screen.getByRole('link'));
         expect(notPrevented).toBeCalledWith(true);
-        jest.resetAllMocks();
     });
     it('short-circuits if not left mouse button', () => {
         jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue(true);
 
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Component />
-            </MemoryRouter>
-        );
+        render(<Component />);
         fireEvent(
             screen.getByRole('link'),
             new MouseEvent('click', {
@@ -65,7 +63,6 @@ describe('use-link-handler', () => {
             })
         );
         expect(notPrevented).toBeCalledWith(true);
-        jest.resetAllMocks();
     });
     it('goes on when left click on valid URL', async () => {
         const navigate = jest.fn();
@@ -76,15 +73,10 @@ describe('use-link-handler', () => {
         );
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Component />
-            </MemoryRouter>
-        );
+        render(<Component />);
         await user.click(screen.getByRole('link'));
         expect(notPrevented).not.toBeCalled();
         expect(navigate).toBeCalledWith('whatever', {x: 0, y: 0});
-        jest.resetAllMocks();
     });
     it('calls piTracker if available', async () => {
         type WindowWithPiTracker = (typeof window) & {
@@ -107,15 +99,10 @@ describe('use-link-handler', () => {
         );
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Component />
-            </MemoryRouter>
-        );
+        render(<Component />);
         await user.click(screen.getByRole('link'));
         expect(notPrevented).not.toBeCalled();
         expect(piTracker).toBeCalledWith('clickHref');
-        jest.resetAllMocks();
     });
     it('handles external URL opening local', async () => {
         const navigate = jest.fn();
@@ -132,15 +119,10 @@ describe('use-link-handler', () => {
         jest.spyOn(linkHelper, 'isExternal').mockReturnValue(true);
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Component />
-            </MemoryRouter>
-        );
+        render(<Component />);
         await user.click(screen.getByRole('link'));
         expect(notPrevented).not.toBeCalled();
         expect(navigate).not.toBeCalled();
-        jest.resetAllMocks();
     });
     it('handles external URL opening in current tab when new window fails', async () => {
         const navigate = jest.fn();
@@ -158,15 +140,10 @@ describe('use-link-handler', () => {
         jest.spyOn(window, 'open').mockReturnValue(null);
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Component />
-            </MemoryRouter>
-        );
+        render(<Component />);
         await user.click(screen.getByRole('link'));
         expect(notPrevented).not.toBeCalled();
         expect(navigate).not.toBeCalled();
-        jest.resetAllMocks();
     });
     it('does the tracking info fetch', async () => {
         const navigate = jest.fn();
@@ -182,16 +159,11 @@ describe('use-link-handler', () => {
         );
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Component track />
-            </MemoryRouter>
-        );
+        render(<Component track />);
         jest.spyOn(window, 'fetch').mockImplementation(
             () => Promise.resolve({} as Response)
         );
         await user.click(screen.getByRole('link'));
-        jest.resetAllMocks();
     });
     it('catches tracking fetch failure', async () => {
         const navigate = jest.fn();
@@ -208,11 +180,7 @@ describe('use-link-handler', () => {
         jest.spyOn(console, 'error').mockImplementation(() => null);
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Component track />
-            </MemoryRouter>
-        );
+        render(<Component track />);
         jest.spyOn(window, 'fetch').mockImplementation(
             () => {
                 throw new Error('oops');
@@ -220,6 +188,5 @@ describe('use-link-handler', () => {
         );
         await user.click(screen.getByRole('link'));
         expect(console.error).toBeCalled();
-        jest.resetAllMocks();
     });
 });

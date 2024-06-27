@@ -238,7 +238,9 @@ describe('useCanonicalLink', () => {
     it('handles fails gracefully if there is no title', () => {
         const titleEl = document.head.querySelector('title');
 
-        document.head.removeChild(titleEl as Node);
+        if (titleEl) {
+            document.head.removeChild(titleEl);
+        }
         const canonicalPath = '/canonical/path';
         const Component = () => {
             useCanonicalLink();

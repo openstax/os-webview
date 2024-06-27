@@ -93,9 +93,6 @@ export function setPageTitleAndDescriptionFromBookData(data: BookData = {}) {
         ? htmlToText(data.description)
         : '';
 
-    if (data.bookSubjects && data.bookCategories) {
-        console.info('*** BOOK SUBJECTS AND CATEGORIES FOUND!!!! ');
-    }
     // setPageTitleAndDescriptionFromBookData is actually called with a variety
     // of page data types, not just books
     const contentTags =
