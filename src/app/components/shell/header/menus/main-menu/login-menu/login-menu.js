@@ -17,7 +17,7 @@ function LoginLink() {
     );
 
     return (
-        <li className="login-menu nav-menu-item rightmost" role="presentation">
+        <li className="login-menu nav-menu-item rightmost">
             <a
                 href={linkHelper.loginLink()} className="pardotTrackClick"
                 data-local="true" role="menuitem" onClick={addressHinkyQAIssue}
