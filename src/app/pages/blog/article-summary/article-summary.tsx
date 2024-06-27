@@ -141,6 +141,7 @@ export default function ArticleSummary({
                     className="read-more"
                     href={`/blog/${articleSlug}`}
                     onClick={onClick}
+                    aria-label={`Read more about ${headline}`}
                     {...tabTarget}
                 >
                     Read more

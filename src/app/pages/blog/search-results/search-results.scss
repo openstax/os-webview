@@ -36,11 +36,10 @@ $image-height: 15rem;
 
         @include wider-than($phone-max) {
             grid-template-columns: 21rem 1fr;
-            height: $image-height;
         }
 
         .clipped-image {
-            height: $image-height;
+            min-height: $image-height;
             width: 100%;
         }
 
