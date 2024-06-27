@@ -80,9 +80,6 @@ $image-height: 15rem;
 
     h2 {
         @include title-font(2.4rem);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .paginator {
