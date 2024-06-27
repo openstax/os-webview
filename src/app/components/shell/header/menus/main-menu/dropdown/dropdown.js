@@ -66,7 +66,6 @@ export default function Dropdown({
             onMouseEnter={openDesktopMenu}
             onMouseLeave={closeDesktopMenu}
             onKeyDown={navigateByKey}
-            role="none"
         >
             <OptionalWrapper isWrapper={!excludeWrapper}>
                 <DropdownController
