@@ -391,32 +391,6 @@ export default {
     "chegg_link": "https://www.chegg.com/etextbooks/biology-2nd-edition-9781630180904-1630180904?trackid=e6d8b8250742&strackid=7d8b4b80b36d",
     "chegg_link_text": "Read on Chegg",
     "bookstore_coming_soon": false,
-    "bookstore_content": [
-        {
-            "type": "content",
-            "value": {
-                "id": 9,
-                "heading": "Individual",
-                "content": "<p>Order a personal copy</p>",
-                "content_logged_in": null,
-                "button_text": "Order on Amazon",
-                "button_url": null
-            },
-            "id": "3ed1c6f6-9bda-4399-a06d-8685255657d9"
-        },
-        {
-            "type": "content",
-            "value": {
-                "id": 10,
-                "heading": "Bookstore",
-                "content": "<p>Place a bulk order</p>",
-                "content_logged_in": null,
-                "button_text": "Order options",
-                "button_url": "https://openstax.org/bookstore-suppliers"
-            },
-            "id": "1903a17a-a7bf-4f59-ab67-aab707d4ef6c"
-        }
-    ],
     "comp_copy_available": true,
     "comp_copy_content": [
         {

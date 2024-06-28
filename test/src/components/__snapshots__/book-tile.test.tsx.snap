@@ -67,6 +67,12 @@ exports[`book-tile renders 1`] = `
           >
              Download a PDF
           </a>
+          <a
+            href="open a dialog"
+            role="menuitem"
+          >
+            Order a print copy
+          </a>
           <hr />
           <a
             href="/details/sample?Instructor resources"
@@ -84,6 +90,9 @@ exports[`book-tile renders 1`] = `
       </div>
     </div>
   </div>
+  <div
+    class="ReactModalPortal"
+  />
   <div
     class="ReactModalPortal"
   />

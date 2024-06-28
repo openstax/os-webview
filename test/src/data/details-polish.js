@@ -645,20 +645,6 @@ export default {
     "chegg_link": null,
     "chegg_link_text": null,
     "bookstore_coming_soon": false,
-    "bookstore_content": [
-        {
-            "value": {
-                "id": 5,
-                "heading": "Bookstore",
-                "content": "<p>and need to place a bulk order</p>",
-                "button_text": null,
-                "content_logged_in": null,
-                "button_url": null
-            },
-            "type": "content",
-            "id": "df21ea8c-c21b-4ab8-9d89-9625aefee2af"
-        }
-    ],
     "comp_copy_available": true,
     "comp_copy_content": [
         {

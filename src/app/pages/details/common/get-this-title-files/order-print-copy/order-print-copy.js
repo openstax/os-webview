@@ -1,9 +1,11 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 import {faUsers} from '@fortawesome/free-solid-svg-icons/faUsers';
 import {useIntl} from 'react-intl';
 import './order-print-copy.scss';
+import cmsFetch from '~/helpers/cms-fetch';
 
 function Header({entry}) {
     return (
@@ -85,9 +87,29 @@ function DesktopBoxes({contentArray}) {
     );
 }
 
-export default function OrderPrintCopy({iframeCode}) {
+function useBookstoreContentLink(slug) {
+    const [url, setUrl] = React.useState(null);
+
+    React.useEffect(
+        () => cmsFetch(slug).then((data) => setUrl(data.amazon_link)),
+        [slug]
+    );
+
+    return url;
+}
+
+export default function OrderPrintCopy({slug}) {
     const {formatMessage} = useIntl();
+    const bookstoreLink = useBookstoreContentLink(slug);
     const contentArray = React.useMemo(() => {
+        const individual = formatMessage({
+            id: 'printcopy.individual',
+            defaultMessage: 'Individual'
+        });
+        const button1Text = formatMessage({
+            id: 'printcopy.button1',
+            defaultMessage: 'Buy a print copy'
+        });
         const bookstore = formatMessage({
             id: 'printcopy.bookstore',
             defaultMessage: 'Bookstore'
@@ -98,7 +120,12 @@ export default function OrderPrintCopy({iframeCode}) {
         });
 
         return [
-            iframeCode,
+            {
+                headerText: individual,
+                headerIcon: faUser,
+                buttonText: button1Text,
+                buttonUrl: bookstoreLink
+            },
             {
                 headerText: bookstore,
                 headerIcon: faUsers,
@@ -106,9 +133,9 @@ export default function OrderPrintCopy({iframeCode}) {
                 buttonUrl: 'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf'
             }
         ];
-    }, [formatMessage, iframeCode]);
+    }, [formatMessage, bookstoreLink]);
 
-    if (!iframeCode) {
+    if (!bookstoreLink) {
         return null;
     }
 

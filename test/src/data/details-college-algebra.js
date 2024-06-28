@@ -463,32 +463,6 @@ const details = {
     "chegg_link": null,
     "chegg_link_text": null,
     "bookstore_coming_soon": false,
-    "bookstore_content": [
-        {
-            "type": "content",
-            "value": {
-                "id": 9,
-                "heading": "Individual",
-                "content": "<p>Order a personal copy</p>",
-                "content_logged_in": null,
-                "button_text": "Order on Amazon",
-                "button_url": null
-            },
-            "id": "7e6cb60f-0809-499b-af00-490d4bde633a"
-        },
-        {
-            "type": "content",
-            "value": {
-                "id": 10,
-                "heading": "Bookstore",
-                "content": "<p>Place a bulk order</p>",
-                "content_logged_in": null,
-                "button_text": "Order options",
-                "button_url": "https://openstax.org/bookstore-suppliers"
-            },
-            "id": "fa12ab1a-049c-4c10-a70f-68020a7d3909"
-        }
-    ],
     "comp_copy_available": false,
     "comp_copy_content": [
         {
