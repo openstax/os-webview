@@ -70,10 +70,7 @@ function useWarning(id: number) {
             fetchAllBooks.then((books) => {
                 const entry = books.find((b) => b.id === id);
 
-                if (!entry) {
-                    return;
-                }
-                if (entry.content_warning_text) {
+                if (entry?.content_warning_text) {
                     setText(entry.content_warning_text);
                 }
             });

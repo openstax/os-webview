@@ -1,12 +1,13 @@
 import React from 'react';
 
 export default function ContentWarning({
-    link, track, close, onDownload, warning
+    link, track, close, onDownload, variant, warning
 }: {
     link: string;
     track: string | undefined;
     close: () => void;
     onDownload: (event: React.MouseEvent) => void;
+    variant?: string;
     warning: string;
 }) {
     const closeAfterDelay = React.useCallback(
@@ -30,7 +31,7 @@ export default function ContentWarning({
                 onClick={closeAfterDelay}
                 className="btn go-to"
             >
-                Go to your file
+                Go to your {variant === 'View online' ? 'book' : 'file'}
             </a>
         </div>
     );
