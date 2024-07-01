@@ -2,8 +2,10 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import {useState} from 'react';
 
 function useContextValue({prefix} = {prefix: 'menulabel'}) {
-    const [activeDropdown, setActiveDropdown] = useState({});
-    const [submenuLabel, setSubmenuLabel] = useState();
+    const [activeDropdown, setActiveDropdown] = useState<
+        React.MutableRefObject<HTMLAnchorElement> | Record<string, never>
+    >({});
+    const [submenuLabel, setSubmenuLabel] = useState<string>();
 
     return {
         activeDropdown,
@@ -16,7 +18,4 @@ function useContextValue({prefix} = {prefix: 'menulabel'}) {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as DropdownContextProvider
-};
+export {useContext as default, ContextProvider as DropdownContextProvider};
