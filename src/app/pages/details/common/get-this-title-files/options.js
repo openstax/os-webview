@@ -114,7 +114,10 @@ export function WebviewOption({model}) {
                     <IconAndText {...iconAndTextArgs} />
                 </a>
                 <GiveDialog
-                    link={webviewLink} variant='View online' track='Online'
+                    link={webviewLink}
+                    variant='View online'
+                    warning={model.contentWarningText}
+                    track='Online'
                     onDownload={trackDownload} id={model.id}
                 />
                 {showCallout && (
@@ -162,6 +165,7 @@ export function PdfOption({model}) {
                 link={pdfLink} track='PDF'
                 onDownload={trackDownload}
                 id={model.id}
+                warning={model.contentWarningText}
             />
         </React.Fragment>
     );

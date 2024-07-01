@@ -2,8 +2,17 @@ import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import GiveBeforePdf from './give-before-pdf';
 import GiveBeforeOther from './give-before-other';
+import ContentWarning from './content-warning';
 import useDonationPopupData from './use-donation-popup-data';
 import {isMobileDisplay} from '~/helpers/device';
+
+export type VariantValue =
+    | 'content-warning'
+    | 'Instructor resource'
+    | 'Student resource'
+    | 'View online'
+    | 'K12 resource'
+    | '? resource';
 
 export default function useGiveDialog() {
     const [Dialog, open, close] = useDialog();
@@ -15,20 +24,27 @@ export default function useGiveDialog() {
             track,
             onDownload,
             variant,
+            warning='',
             id
         }: {
             link: string;
             track?: string;
             onDownload?: (e: React.MouseEvent) => void;
-            variant?: string;
+            variant?: VariantValue;
+            warning?: string;
             id?: string;
         }) => {
-            const Variant = lookupVariant(variant) as typeof GiveBeforeOther;
-            const aria = Variant === GiveBeforePdf ? {labelledby: 'dialog-heading'} : {label: 'Before you go there'};
+            const Variant = lookupVariant(warning, variant) as typeof GiveBeforeOther;
+            const aria =
+                Variant === GiveBeforePdf
+                    ? {labelledby: 'dialog-heading'}
+                    : {label: 'Before you go there'};
 
             return (
                 <Dialog aria={aria}>
-                    <Variant {...{link, track, close, data, onDownload, variant, id}} />
+                    <Variant
+                        {...{link, track, close, data, onDownload, variant, warning, id}}
+                    />
                 </Dialog>
             );
         },
@@ -57,7 +73,10 @@ export function useOpenGiveDialog() {
     return {GiveDialog, openGiveDialog};
 }
 
-function lookupVariant(variant: string | undefined) {
+function lookupVariant(warning: string, variant?: VariantValue) {
+    if (warning) {
+        return ContentWarning;
+    }
     if (variant !== undefined) {
         return GiveBeforeOther;
     }

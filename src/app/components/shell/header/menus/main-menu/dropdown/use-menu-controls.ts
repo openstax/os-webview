@@ -9,8 +9,7 @@ export default function useMenuControls({
     topRef: React.MutableRefObject<HTMLAnchorElement>;
     label: string;
 }) {
-    const {setSubmenuLabel, activeDropdown, setActiveDropdown} =
-        useDropdownContext();
+    const {setSubmenuLabel, setActiveDropdown} = useDropdownContext();
 
     return React.useMemo(() => {
         function closeMenu() {

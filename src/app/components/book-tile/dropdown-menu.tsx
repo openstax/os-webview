@@ -3,8 +3,12 @@ import {
     usePrintCopyDialog
 } from '~/pages/details/common/get-this-title-files/options';
 import {FormattedMessage, useIntl} from 'react-intl';
-import { useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
+import {
+    useOpenGiveDialog,
+    VariantValue
+} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import {useToggle} from '~/helpers/data';
+import { fetchAllBooks } from '~/models/books';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
@@ -18,37 +22,63 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
     const webviewLink = bookInfo.webviewRexLink || bookInfo.webviewLink;
     const pdfLink =
         bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
+    const warning = useWarning(bookInfo.id);
 
     return (
-        <div className='navmenu' ref={ref} data-analytics-nav="Get the book dropdown">
+        <div
+            className="navmenu"
+            ref={ref}
+            data-analytics-nav="Get the book dropdown"
+        >
             <ControlButton
                 parentRef={ref}
                 buttonId={buttonId}
                 menuId={menuId}
             />
-            <div id={menuId} role='menu' aria-labelledby={buttonId}>
+            <div id={menuId} role="menu" aria-labelledby={buttonId}>
                 <MenuItemWithGiveDialog
-                    defaultMessage='View online'
+                    defaultMessage="View online"
                     url={webviewLink}
-                    variant='View online'
+                    variant="View online"
+                    warning={warning}
                 />
                 <MenuItemWithGiveDialog
-                    defaultMessage='Download a PDF'
+                    defaultMessage="Download a PDF"
                     url={pdfLink}
+                    warning={warning}
                 />
                 <PrintOption slug={bookInfo.slug} />
                 <hr />
                 <MenuItem
-                    defaultMessage='Instructor resources'
+                    defaultMessage="Instructor resources"
                     url={`/details/${slug}?Instructor resources`}
                 />
                 <MenuItem
-                    defaultMessage='Student resources'
+                    defaultMessage="Student resources"
                     url={`/details/${slug}?Student resources`}
                 />
             </div>
         </div>
     );
+}
+
+function useWarning(id: number) {
+    const [text, setText] = React.useState('');
+
+    React.useEffect(
+        () => {
+            fetchAllBooks.then((books) => {
+                const entry = books.find((b) => b.id === id);
+
+                if (entry?.content_warning_text) {
+                    setText(entry.content_warning_text);
+                }
+            });
+        },
+        [id]
+    );
+
+    return text;
 }
 
 function ControlButton({
@@ -81,13 +111,13 @@ function ControlButton({
     return (
         <button
             id={buttonId}
-            type='button'
-            aria-haspopup='true'
+            type="button"
+            aria-haspopup="true"
             aria-controls={menuId}
             aria-expanded={isOpen}
             onClick={toggleMenu}
         >
-            <FormattedMessage id='getTheBook' defaultMessage='Get the book' />
+            <FormattedMessage id="getTheBook" defaultMessage="Get the book" />
             <FontAwesomeIcon icon={isOpen ? faCaretUp : faCaretDown} />
         </button>
     );
@@ -107,31 +137,31 @@ function FormattedMessageFor({
     if (defaultMessage === 'View online') {
         return (
             <FormattedMessage
-                id='getit.webview.link'
-                defaultMessage='View online'
+                id="getit.webview.link"
+                defaultMessage="View online"
             />
         );
     }
     if (defaultMessage === 'Download a PDF') {
         return (
             <FormattedMessage
-                id='getit.pdf.download'
-                defaultMessage='Download a PDF'
+                id="getit.pdf.download"
+                defaultMessage="Download a PDF"
             />
         );
     }
     if (defaultMessage === 'Instructor resources') {
         return (
             <FormattedMessage
-                id='tabs.instructorResources'
-                defaultMessage='Instructor resources'
+                id="tabs.instructorResources"
+                defaultMessage="Instructor resources"
             />
         );
     }
     return (
         <FormattedMessage
-            id='tabs.studentResources'
-            defaultMessage='Student resources'
+            id="tabs.studentResources"
+            defaultMessage="Student resources"
         />
     );
 }
@@ -145,17 +175,20 @@ function MenuItem({
     url: string;
 } & AnchorHTMLAttributes<HTMLAnchorElement>) {
     return (
-        <a role='menuitem' href={url} {...aProps}>
+        <a role="menuitem" href={url} {...aProps}>
             <FormattedMessageFor defaultMessage={defaultMessage} />
         </a>
     );
 }
 
+
 type MenuItemWithGiveDialogProps = {
-    variant?: string;
+    variant?: VariantValue;
+    warning: string;
 } & Parameters<typeof MenuItem>[0];
 function MenuItemWithGiveDialog({
     variant,
+    warning,
     ...props
 }: MenuItemWithGiveDialogProps) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
@@ -163,7 +196,7 @@ function MenuItemWithGiveDialog({
     return (
         <React.Fragment>
             <MenuItem {...props} onClick={openGiveDialog} />
-            <GiveDialog link={props.url} variant={variant} />
+            <GiveDialog link={props.url} variant={variant} warning={warning} />
         </React.Fragment>
     );
 }
@@ -177,7 +210,7 @@ function PrintOption({slug}: {slug: string}) {
     });
 
     return (
-        <a role='menuitem' href='open a dialog' onClick={onClick}>
+        <a role="menuitem" href="open a dialog" onClick={onClick}>
             {text}
             <PCDialog text={text} slug={slug} />
         </a>

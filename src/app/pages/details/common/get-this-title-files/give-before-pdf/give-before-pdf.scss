@@ -16,6 +16,10 @@
         }
     }
 
+    .text-content {
+        text-wrap: balance;
+    }
+
     &.loading {
         @include title-font(1.8rem);
 

@@ -18,7 +18,8 @@ const bookFields = [
     'salesforce_abbreviation',
     'salesforce_name',
     'title',
-    'slug'
+    'slug',
+    'content_warning_text'
 ].join(',');
 
 type RawBook = Omit<Book, 'subjects'> & {book_subjects: {subject_name: string}[];};
