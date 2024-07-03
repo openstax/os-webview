@@ -1,7 +1,8 @@
 import React from 'react';
+import cookie from '~/helpers/cookie';
 
 export default function ContentWarning({
-    link, track, close, onDownload, variant, warning
+    link, track, close, onDownload, variant, warning, id
 }: {
     link: string;
     track: string | undefined;
@@ -9,15 +10,19 @@ export default function ContentWarning({
     onDownload: (event: React.MouseEvent) => void;
     variant?: string;
     warning: string;
+    id: string;
 }) {
     const closeAfterDelay = React.useCallback(
         (event: React.MouseEvent) => {
+            const key = cookieKey(id);
+
             if (onDownload) {
                 onDownload(event);
             }
+            cookie.setKey(key, 'true', inAWeek());
             window.setTimeout(close, 200);
         },
-        [close, onDownload]
+        [close, onDownload, id]
     );
 
     return (
@@ -35,4 +40,16 @@ export default function ContentWarning({
             </a>
         </div>
     );
+}
+
+function cookieKey(id: string) {
+    return `content-warning-${id}`;
+}
+
+export function checkWarningCookie(id: string) {
+    return cookieKey(id) in cookie.hash;
+}
+
+function inAWeek() {
+    return new Date(Date.now() + 7 * 24 * 3600 * 1000);
 }

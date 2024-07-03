@@ -2,7 +2,7 @@ import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import GiveBeforePdf from './give-before-pdf';
 import GiveBeforeOther from './give-before-other';
-import ContentWarning from './content-warning';
+import ContentWarning, {checkWarningCookie} from './content-warning';
 import useDonationPopupData from './use-donation-popup-data';
 import {isMobileDisplay} from '~/helpers/device';
 
@@ -34,7 +34,7 @@ export default function useGiveDialog() {
             warning?: string;
             id?: string;
         }) => {
-            const Variant = lookupVariant(warning, variant) as typeof GiveBeforeOther;
+            const Variant = lookupVariant(warning, variant, id) as typeof GiveBeforeOther;
             const aria =
                 Variant === GiveBeforePdf
                     ? {labelledby: 'dialog-heading'}
@@ -73,8 +73,8 @@ export function useOpenGiveDialog() {
     return {GiveDialog, openGiveDialog};
 }
 
-function lookupVariant(warning: string, variant?: VariantValue) {
-    if (warning) {
+function lookupVariant(warning: string, variant?: VariantValue, id?: string) {
+    if (warning && id && !checkWarningCookie(id)) {
         return ContentWarning;
     }
     if (variant !== undefined) {
