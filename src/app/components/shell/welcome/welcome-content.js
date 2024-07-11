@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
-import cookie from '~/helpers/cookie';
+import Cookies from 'js-cookie';
 import useAccount from '~/helpers/use-account';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useNavigate} from 'react-router-dom';
@@ -17,7 +17,7 @@ function WalkthroughButtons({welcomeDone}) {
     }
 
     function skipWalkthrough() {
-        cookie.setKey('walkthroughDone');
+        Cookies.set('walkthroughDone', 'true');
         goToMyOpenStax();
     }
 
@@ -89,8 +89,8 @@ function CustomDialog({data, welcomeDone}) {
 
 export default function Welcome() {
     const [showWelcome, welcomeDone] = React.useReducer(
-        () => cookie.setKey('hasBeenWelcomed'),
-        !cookie.hash.hasBeenWelcomed
+        () => Cookies.set('hasBeenWelcomed', 'true'),
+        !Cookies.get('hasBeenWelcomed')
     );
     const {createdAt, firstName, role} = useAccount();
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import cookie from '~/helpers/cookie';
+import Cookies from 'js-cookie';
 
 export default function ContentWarning({
     link, track, close, onDownload, variant, warning, id
@@ -19,7 +19,7 @@ export default function ContentWarning({
             if (onDownload) {
                 onDownload(event);
             }
-            cookie.setKey(key, 'true', inAWeek());
+            Cookies.set(key, 'true', {expires: 28});
             window.setTimeout(close, 200);
         },
         [close, onDownload, id]
@@ -47,9 +47,5 @@ function cookieKey(id: string) {
 }
 
 export function checkWarningCookie(id: string) {
-    return cookieKey(id) in cookie.hash;
-}
-
-function inAWeek() {
-    return new Date(Date.now() + 7 * 24 * 3600 * 1000);
+    return Cookies.get(id);
 }
