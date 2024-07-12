@@ -1,5 +1,5 @@
 import React from 'react';
-import RawHTML from '~/components/jsx-helpers/raw-html';
+import { RichTextContent } from './RichTextBlock';
 import './CardsBlock.scss';
 
 type CardConfig = {
@@ -8,35 +8,43 @@ type CardConfig = {
     value: 'rounded' | 'square';
 };
 
+export type CardBlockConfig = {
+    id: string;
+    type: 'card';
+    value: {
+        text: string;
+    };
+};
+
 export type CardsBlockConfig = {
     id: string;
     type: 'cards';
     value: {
-        text: string;
-        image: {
-            file: string;
-            title: string;
-        };
-        cta: {
-            text: string;
-            link: [string];
-            linkAriaLabel: string;
-        };
+        cards: CardBlockConfig[];
         config: CardConfig[];
     };
 };
+
+const fakeCards: CardBlockConfig[] = [
+    {type: 'card', value: {text: '<p>hello</p>'}, id: 'asdf1'},
+    {type: 'card', value: {text: '<p>hello</p>'}, id: 'asdf2'},
+    {type: 'card', value: {text: '<p>hello</p>'}, id: 'asdf3'}
+];
 
 export function CardsBlock({data}: {data: CardsBlockConfig}) {
     const cornerStyle = data.value.config.find(
         (entry) => entry.type === 'corner_style'
     );
-    const {image, cta} = data.value;
 
     return (
         <div className={`content-block-cards ${cornerStyle?.value}`}>
-            <RawHTML html={data.value.text} />
-            {image.file && <img src={image.file} title={image.title} />}
-            {cta.text && <a href={cta.link[0]}>{cta.text}</a>}
+            {fakeCards.map((card) => <CardBlock key={card.id} data={card} />)}
         </div>
     );
+}
+
+export function CardBlock({data}: {data: CardBlockConfig}) {
+    return <div className="content-block-card">
+        <RichTextContent html={data.value.text} />
+    </div>;
 }
