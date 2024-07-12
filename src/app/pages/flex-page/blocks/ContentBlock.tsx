@@ -3,8 +3,8 @@ import { RichTextBlock, RichTextBlockConfig } from './RichTextBlock';
 import { SectionBlock, SectionBlockConfig } from './SectionBlock';
 
 export type ContentBlockConfig =
-  SectionBlockConfig |
-  RichTextBlockConfig;
+    SectionBlockConfig |
+    RichTextBlockConfig;
 
 export function ContentBlocks({data}: {data: ContentBlockConfig[]}) {
     return <>

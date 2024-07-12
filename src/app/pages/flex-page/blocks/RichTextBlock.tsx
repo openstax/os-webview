@@ -1,9 +1,9 @@
 import React from 'react';
 
 export interface RichTextBlockConfig {
-  id: string;
-  type: 'text';
-  value: string;
+    id: string;
+    type: 'text';
+    value: string;
 }
 
 export function RichTextBlock({data}: {data: RichTextBlockConfig}) {

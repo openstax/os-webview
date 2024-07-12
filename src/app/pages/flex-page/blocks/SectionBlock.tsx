@@ -2,9 +2,9 @@ import React from 'react';
 import { ContentBlocks, ContentBlockConfig } from './ContentBlock';
 
 export interface SectionBlockConfig {
-  id: string;
-  type: 'section';
-  value: ContentBlockConfig[];
+    id: string;
+    type: 'section';
+    value: ContentBlockConfig[];
 }
 
 export function SectionBlock({data}: {data: SectionBlockConfig}) {
