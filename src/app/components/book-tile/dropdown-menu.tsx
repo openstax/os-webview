@@ -41,11 +41,13 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
                     url={webviewLink}
                     variant="View online"
                     warning={warning}
+                    id={bookInfo.id.toString()}
                 />
                 <MenuItemWithGiveDialog
                     defaultMessage="Download a PDF"
                     url={pdfLink}
                     warning={warning}
+                    id={bookInfo.id.toString()}
                 />
                 <PrintOption slug={bookInfo.slug} />
                 <hr />
@@ -185,10 +187,12 @@ function MenuItem({
 type MenuItemWithGiveDialogProps = {
     variant?: VariantValue;
     warning: string;
+    id: string;
 } & Parameters<typeof MenuItem>[0];
 function MenuItemWithGiveDialog({
     variant,
     warning,
+    id,
     ...props
 }: MenuItemWithGiveDialogProps) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
@@ -196,7 +200,7 @@ function MenuItemWithGiveDialog({
     return (
         <React.Fragment>
             <MenuItem {...props} onClick={openGiveDialog} />
-            <GiveDialog link={props.url} variant={variant} warning={warning} />
+            <GiveDialog link={props.url} variant={variant} warning={warning} id={id} />
         </React.Fragment>
     );
 }

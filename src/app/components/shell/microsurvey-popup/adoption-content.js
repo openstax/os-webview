@@ -1,7 +1,7 @@
 import React from 'react';
 import useUserContext from '~/contexts/user';
 import {useLocation} from 'react-router-dom';
-import cookie from '~/helpers/cookie';
+import Cookies from 'js-cookie';
 
 const DISMISSED_KEY = 'renewal_dialog_dismissed';
 // const YESTERDAY = Date.now() - 60 * 60 * 24 * 1000;
@@ -9,10 +9,10 @@ const DISMISSED_KEY = 'renewal_dialog_dismissed';
 function useCookieKey(key) {
     return React.useReducer(
         (_, value) => {
-            cookie.setKey(key, value);
+            Cookies.set(key, value);
             return value ? value : '0';
         },
-        cookie.hash[key]
+        Cookies.get(key)
     );
 }
 
