@@ -20,9 +20,9 @@ function useAnalyticsPageView() {
     }, [isRedirect]);
 }
 
-const FallbackToGeneralPage = loadable({
-    loader: () => import('./router-helpers/fallback-to-general.js'),
-    loading: () => <h1>...General</h1>
+const Fallback = loadable({
+    loader: () => import('./router-helpers/fallback-to.js'),
+    loading: () => <h1>...Loading</h1>
 });
 const Error404 = loadable({
     loader: () => import('~/pages/404/404'),
@@ -36,7 +36,7 @@ function ImportedPage({name}) {
             function Loading({error, pastDelay, retry}) {
                 if (error) {
                     if (error.code === 'MODULE_NOT_FOUND') {
-                        return pathname.endsWith('/') ? <FallbackToGeneralPage name={name} />
+                        return pathname.endsWith('/') ? <Fallback name={name} />
                         : <Navigate to={`${pathname}/`} replace />;
                     }
                     return <div>Error! <button onClick={ retry }>Retry</button></div>;
