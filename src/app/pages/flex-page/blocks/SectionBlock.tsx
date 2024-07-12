@@ -1,5 +1,6 @@
 import React from 'react';
 import { ContentBlocks, ContentBlockConfig } from './ContentBlock';
+import './SectionBlock.scss';
 
 export interface SectionBlockConfig {
     id: string;
@@ -9,6 +10,8 @@ export interface SectionBlockConfig {
 
 export function SectionBlock({data}: {data: SectionBlockConfig}) {
     return <section className="content-block-section">
-        <ContentBlocks data={data.value} />
+        <div className="section-content">
+          <ContentBlocks data={data.value} />
+        </div>
     </section>;
 }

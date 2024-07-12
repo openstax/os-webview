@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.flex-page.page > section.content-block-section {
+    width: 100%;
+    margin: 0;
+
+    > div.section-content {
+        margin: auto;
+        width: 100%;
+        padding: 0 $normal-margin;
+
+        @include wider-than($media-content-max) {
+            max-width: $content-max;
+        }
+    }
+}
