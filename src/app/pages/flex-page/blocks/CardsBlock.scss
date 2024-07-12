@@ -1,0 +1,17 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.content-block-cards {
+    border: thin solid ui-color(black);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: $normal-margin;
+    margin: $normal-margin;
+    min-height: 12rem;
+    min-width: 12rem;
+    max-width: 32rem;
+
+    &.rounded {
+        border-radius: 1rem;
+    }
+}

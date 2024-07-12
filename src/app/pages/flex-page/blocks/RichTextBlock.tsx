@@ -1,4 +1,5 @@
 import React from 'react';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 
 export interface RichTextBlockConfig {
     id: string;
@@ -7,5 +8,5 @@ export interface RichTextBlockConfig {
 }
 
 export function RichTextBlock({data}: {data: RichTextBlockConfig}) {
-    return <div className='content-block-rich-text' dangerouslySetInnerHTML={{ __html: data.value }} />;
+    return <RawHTML className='content-block-rich-text' html={data.value} />;
 }
