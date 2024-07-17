@@ -1,0 +1,23 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.flex-page.page > div.content-block-divider {
+    height: 0;
+    overflow: visible;
+
+    width: 100%;
+    margin: 0;
+
+    &.align_content_left, &.align_content_right {
+        margin: auto;
+        width: 100%;
+        padding: 0 $normal-margin;
+
+        @include wider-than($media-content-max) {
+            max-width: $content-max;
+        }
+    }
+
+    &.align_content_right, &.align_body_right {
+      text-align: right;
+    }
+}

@@ -1,17 +1,27 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.content-block-cards {
-    border: thin solid ui-color(black);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: $normal-margin;
-    margin: $normal-margin;
-    min-height: 12rem;
-    min-width: 12rem;
-    max-width: 32rem;
+.flex-page.page div.content-block-cards {
+    display: grid;
+    margin: 0 auto;
+    grid-gap: 1rem;
 
-    &.rounded {
-        border-radius: 1rem;
+    /* needs responsive design */
+    grid-template: repeat(1fr);
+    grid-template-columns: repeat(auto-fit, 27rem);
+    justify-content: center;
+
+    > .content-block-card {
+      padding: $normal-margin;
+      margin: $normal-margin;
+      background-color: #fff;
+
+      /* to show above divider images */
+      position: relative;
+      z-index: 1;
+    }
+
+    &.card_style_rounded > .content-block-card {
+      border-radius: 1rem;
+      border: thin solid ui-color(black);
     }
 }

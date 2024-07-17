@@ -5,9 +5,13 @@
     margin: 0;
 
     > div.section-content {
+        /* to show above divider images */
+        position: relative;
+        z-index: 1;
+
         margin: auto;
         width: 100%;
-        padding: 0 $normal-margin;
+        padding: calc( #{$normal-margin} * var(--padding-multiplier, 0)) $normal-margin;
 
         @include wider-than($media-content-max) {
             max-width: $content-max;

@@ -1,12 +1,15 @@
 import React from 'react';
 
-export interface LinkProps {
+export interface LinkFields {
     text: string;
     ariaLabel?: string;
-    target: [{value: string}]
+    target: string;
+}
+export interface LinkProps {
+    link: LinkFields;
 }
 
 export function Link(props: LinkProps) {
-    return <a href={props.target[0].value} aria-label={props.ariaLabel}>{props.text}</a>;
+    return <a href={props.link.target} aria-label={props.link.ariaLabel}>{props.link.text}</a>;
 }
 
