@@ -10,33 +10,23 @@ import ClippedImage from '~/components/clipped-image/clipped-image';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import './testimonials.scss';
 
-function LightboxContent({cards, initialPosition, articleDataArr}) {
-    function ArticleCard({position}) {
-        const articleData = articleDataArr[position];
-        const {embeddedVideo} = cards[position];
+function LightboxContent({cards, position, articleDataArr}) {
+    const articleData = articleDataArr[position];
+    const {embeddedVideo} = cards[position];
 
-        if (!articleData) {
-            return <div className="text-content"><h2>Loading</h2></div>;
-        }
-        // eslint-disable-next-line camelcase
-        articleData.article_image = embeddedVideo ? null : articleData.featured_image.meta.download_url;
-
-        return (
-            <div className="lightbox-article">
-                {
-                    embeddedVideo &&
-                        <RawHTML className="embedded-video" html={embeddedVideo} embed />
-                }
-                <Article data={articleData} />
-            </div>
-        );
+    if (!articleData) {
+        return <div className="text-content"><h2>Loading</h2></div>;
     }
+    // eslint-disable-next-line camelcase
+    articleData.article_image = embeddedVideo ? null : articleData.featured_image.meta.download_url;
 
     return (
-        <div className="lightbox-testimonial">
-            <Carousel initialFrame={initialPosition} hoverTextThing="story">
-                {cards.map((c, position) => <ArticleCard position={position} key={position} />)}
-            </Carousel>
+        <div className="lightbox-article">
+            {
+                embeddedVideo &&
+                    <RawHTML className="embedded-video" html={embeddedVideo} embed />
+            }
+            <Article data={articleData} />
         </div>
     );
 }
@@ -73,7 +63,9 @@ function Card({position, cards}) {
             <Dialog
                 isOpen={isOpen} onPutAway={toggle} className="impact-testimonial"
             >
-                <LightboxContent {...{cards, initialPosition: position, articleDataArr}} />
+                <div className="lightbox-testimonial">
+                    <LightboxContent {...{cards, position, articleDataArr}} />
+                </div>
             </Dialog>
         </div>
     );
