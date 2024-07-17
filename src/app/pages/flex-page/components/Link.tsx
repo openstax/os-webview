@@ -5,11 +5,11 @@ export interface LinkFields {
     ariaLabel?: string;
     target: string;
 }
-export interface LinkProps {
+
+type LinkProps = {
     link: LinkFields;
-}
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>
 
-export function Link(props: LinkProps) {
-    return <a href={props.link.target} aria-label={props.link.ariaLabel}>{props.link.text}</a>;
+export function Link({link, ...props}: LinkProps) {
+    return <a aria-label={link.ariaLabel} {...props} href={link.target}>{link.text}</a>;
 }
-
