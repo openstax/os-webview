@@ -13,7 +13,6 @@
     > .content-block-card {
       padding: $normal-margin;
       margin: $normal-margin;
-      background-color: #fff;
 
       /* to show above divider images */
       position: relative;
@@ -23,10 +22,16 @@
     &.card_style_rounded > .content-block-card {
       border-radius: 1rem;
       border: thin solid ui-color(black);
+
+      /* is this the right color for default background? */
+      background-color: #fff;
     }
 
     &.card_style_square > .content-block-card {
       border: thin solid ui-color(black);
       border-top: 0.5rem solid ui-color(black);
+
+      /* is this the right color for default background? */
+      background-color: #fff;
     }
 }
