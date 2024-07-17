@@ -1,19 +1,17 @@
 import React from 'react';
 import cn from 'classnames';
 import { RichTextContent } from './RichTextBlock';
-import { Link, LinkFields } from '../components/Link';
 import { findByType } from '../utils';
 import './CardsBlock.scss';
 
 type CardConfig = {
-    type: 'corner_style';
+    type: 'card_style';
     id: string;
     value: 'rounded' | 'square';
 };
 
 export type CardBlockConfig = {
   text: string;
-  cta: Array<LinkFields>;
 };
 
 export type CardsBlockConfig = {
@@ -26,7 +24,7 @@ export type CardsBlockConfig = {
 };
 
 export function CardsBlock({data}: {data: CardsBlockConfig}) {
-    const cardStyle = findByType(data.value.config, 'corner_style')?.value;
+    const cardStyle = findByType(data.value.config, 'card_style')?.value;
     const styleClass = cardStyle ? `card_style_${cardStyle}` : undefined;
 
     return (
@@ -39,6 +37,5 @@ export function CardsBlock({data}: {data: CardsBlockConfig}) {
 export function CardBlock({data}: {data: CardBlockConfig}) {
     return <div className="content-block-card">
         <RichTextContent html={data.text} />
-        {data.cta[0] ? <Link link={data.cta[0]} /> : null}
     </div>;
 }

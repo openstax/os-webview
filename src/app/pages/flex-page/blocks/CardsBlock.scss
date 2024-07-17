@@ -24,4 +24,9 @@
       border-radius: 1rem;
       border: thin solid ui-color(black);
     }
+
+    &.card_style_square > .content-block-card {
+      border: thin solid ui-color(black);
+      border-top: 0.5rem solid ui-color(black);
+    }
 }
