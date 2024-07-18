@@ -8,6 +8,10 @@ type CardConfig = {
     type: 'card_style';
     id: string;
     value: 'rounded' | 'square';
+} | {
+    type: 'card_size';
+    id: string;
+    value: string;
 };
 
 export type CardBlockConfig = {
@@ -26,9 +30,13 @@ export type CardsBlockConfig = {
 export function CardsBlock({data}: {data: CardsBlockConfig}) {
     const cardStyle = findByType(data.value.config, 'card_style')?.value;
     const styleClass = cardStyle ? `card_style_${cardStyle}` : undefined;
+    const cardSize = findByType(data.value.config, 'card_size')?.value;
 
     return (
-        <div className={cn('content-block-cards', styleClass)}>
+        <div
+            className={cn('content-block-cards', styleClass)}
+            style={{'--card-size': cardSize} as React.CSSProperties}
+        >
             {data.value.cards.map((card, i) => <CardBlock key={i} data={card} />)}
         </div>
     );

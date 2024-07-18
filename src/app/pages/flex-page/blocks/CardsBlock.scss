@@ -3,16 +3,14 @@
 .flex-page.page div.content-block-cards {
     display: grid;
     margin: 0 auto;
-    grid-gap: 1rem;
 
     /* needs responsive design */
-    grid-template: repeat(1fr);
-    grid-template-columns: repeat(auto-fit, 27rem);
+    grid-template-columns: repeat(auto-fit, calc(var(--card-size, 27) * 1rem));
+    grid-gap: ($normal-margin * 2);
     justify-content: center;
 
     > .content-block-card {
       padding: $normal-margin;
-      margin: $normal-margin;
 
       /* to show above divider images */
       position: relative;

@@ -7,6 +7,9 @@ import './HeroBlock.scss';
 export type HeroConfigOptions = {
     type: 'padding';
     value: string;
+} | {
+    type: 'background_color';
+    value: string;
 };
 
 export interface HeroBlockConfig {
@@ -22,10 +25,11 @@ export interface HeroBlockConfig {
 
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
+    const backgroundColor = findByType(data.value.config, 'background_color')?.value;
 
     return <section
         className="content-block-hero"
-        style={{'--padding-multiplier': padding} as React.CSSProperties}
+        style={{backgroundColor, '--padding-multiplier': padding} as React.CSSProperties}
     >
         <div className="hero-inner-wrapper">
           {/* the order of these children should change based on the image alignment config */}
