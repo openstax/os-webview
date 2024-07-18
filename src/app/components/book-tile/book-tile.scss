@@ -25,7 +25,6 @@
 
     .text-block {
         padding: 1rem;
-
     }
 
     a:not([role="menuitem"]) {
@@ -33,6 +32,10 @@
 
         font-weight: bold;
         text-decoration: none;
+    }
+
+    > :last-child {
+        align-self: end;
     }
 
     .navmenu {
