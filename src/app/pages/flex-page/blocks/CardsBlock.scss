@@ -21,15 +21,13 @@
       border-radius: 1rem;
       border: thin solid ui-color(black);
 
-      /* is this the right color for default background? */
-      background-color: #fff;
+      background-color: ui-color(white);
     }
 
     &.card_style_square > .content-block-card {
       border: thin solid ui-color(black);
       border-top: 0.5rem solid ui-color(black);
 
-      /* is this the right color for default background? */
-      background-color: #fff;
+      background-color: ui-color(white);
     }
 }
