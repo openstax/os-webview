@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .flex-page.page div.content-block-cta-block {
-  margin: $normal-margin 0;
+  margin: ($normal-margin * 2) 0;
 
   > a:nth-of-type(1) {
     @include button();
