@@ -3,7 +3,10 @@ import React from 'react';
 export interface LinkFields {
     text: string;
     ariaLabel?: string;
-    target: string;
+    target: {
+      type: string;
+      value: string;
+    };
 }
 
 type LinkProps = {
@@ -11,5 +14,5 @@ type LinkProps = {
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>
 
 export function Link({link, ...props}: LinkProps) {
-    return <a aria-label={link.ariaLabel} {...props} href={link.target}>{link.text}</a>;
+    return <a aria-label={link.ariaLabel} {...props} href={link.target.value}>{link.text}</a>;
 }
