@@ -9,6 +9,10 @@
     grid-gap: ($normal-margin * 2);
     justify-content: center;
 
+    @include width-up-to($phone-max) {
+      grid-template-columns: 100%;
+    }
+
     > .content-block-card {
       padding: $normal-margin;
 

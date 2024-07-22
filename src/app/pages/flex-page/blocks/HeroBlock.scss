@@ -21,6 +21,19 @@
             max-width: $content-max;
         }
 
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+
+        .hero-content {
+            max-width: $text-content-max;
+
+            @include width-up-to($phone-max) {
+                margin: 0 auto 2rem;
+                text-align: center;
+            }
+        }
+
         > div.hero-image-container {
             display: flex;
             flex-direction: row;
