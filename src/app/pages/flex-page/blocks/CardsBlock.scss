@@ -40,6 +40,7 @@
       }
     }
 
+    // stylelint-disable-next-line no-descending-specificity
     &.card_style_square > .content-block-card {
       border: thin solid ui-color(form-border);
       border-top: none;
