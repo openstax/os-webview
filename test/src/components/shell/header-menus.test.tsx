@@ -28,7 +28,7 @@ describe('shell/header/menus', () => {
                 <Menus />
             </MemoryRouter>
         );
-        expect(screen.getAllByRole('listitem')).toHaveLength(14);
+        expect(screen.getAllByRole('listitem')).toHaveLength(16);
         const button = screen.getByRole('button');
 
         expect(screen.getAllByRole('menuitem')).toHaveLength(2);
@@ -63,6 +63,6 @@ describe('shell/header/menus', () => {
                 <Menus />
             </MemoryRouter>
         );
-        expect(screen.getAllByRole('listitem')).toHaveLength(16);
+        expect(screen.getAllByRole('listitem')).toHaveLength(18);
     });
 });
