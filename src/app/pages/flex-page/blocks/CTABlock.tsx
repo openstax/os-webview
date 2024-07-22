@@ -14,8 +14,6 @@ export function CTABlock({data}: {data: CTABlockConfig}) {
     const [primaryLink, secondaryLink] = data.value.actions;
 
     return <div className="content-block-cta-block">
-
-        {/* need to style primary and secondary cta */}
         {primaryLink ? <Link link={primaryLink} /> : null}
         {secondaryLink ? <Link link={secondaryLink} /> : null}
     </div>;
