@@ -27,6 +27,9 @@
 
         .hero-content {
             max-width: $text-content-max;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
 
             @include width-up-to($phone-max) {
                 margin: 0 auto 2rem;

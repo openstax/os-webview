@@ -14,8 +14,6 @@
     }
 
     > .content-block-card {
-      padding: $normal-margin;
-
       /* to show above divider images */
       position: relative;
       z-index: 1;
@@ -23,15 +21,42 @@
 
     &.card_style_rounded > .content-block-card {
       border-radius: 1rem;
-      border: thin solid ui-color(black);
-
+      border-width: thin;
+      border-style: solid;
+      padding: $normal-margin;
       background-color: ui-color(white);
+
+      &:nth-child(4n+1) {
+        border-color: os-color(yellow);
+      }
+      &:nth-child(4n+2) {
+        border-color: os-color(red);
+      }
+      &:nth-child(4n+3) {
+        border-color: os-color(orange);
+      }
+      &:nth-child(4n+4) {
+        border-color: os-color(green);
+      }
     }
 
     &.card_style_square > .content-block-card {
-      border: thin solid ui-color(black);
-      border-top: 0.5rem solid ui-color(black);
-
+      border: thin solid ui-color(form-border);
+      border-top: none;
+      padding: $normal-margin;
       background-color: ui-color(white);
+
+      &:nth-child(4n+1) {
+        box-shadow: 0 -1rem 0 os-color(blue);
+      }
+      &:nth-child(4n+2) {
+        box-shadow: 0 -1rem 0 os-color(green);
+      }
+      &:nth-child(4n+3) {
+        box-shadow: 0 -1rem 0 os-color(light-blue);
+      }
+      &:nth-child(4n+4) {
+        box-shadow: 0 -1rem 0 os-color(red);
+      }
     }
 }

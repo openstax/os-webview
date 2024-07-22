@@ -1,8 +1,30 @@
+@import 'pattern-library/core/pattern-library/headers';
 
 .flex-page.page div.content-block-rich-text {
 
   img.richtext-image.full-width {
     width: 100%;
     height: auto;
+  }
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  h1 {
+    @include title-font(4.8rem);
+  }
+  h2 {
+    @include title-font(2.6rem);
+  }
+  h3 {
+    @include title-font(1.8rem);
+  }
+  h4, h5, h6 {
+    @include title-font(1.6rem);
+  }
+
+  p {
+    @include body-font(1.6rem);
   }
 }
