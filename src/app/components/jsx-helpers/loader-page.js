@@ -5,7 +5,7 @@ import {setPageTitleAndDescriptionFromBookData, useCanonicalLink} from '~/helper
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import Error404 from '~/pages/404/404';
 
-function LoadedPage({
+export function LoadedPage({
     Child, data, props, doDocumentSetup, noCamelCase
 }) {
     const camelCaseData = React.useMemo(
