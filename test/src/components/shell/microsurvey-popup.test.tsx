@@ -7,7 +7,7 @@ import MicroSurvey from '~/layouts/default/microsurvey-popup/microsurvey-popup';
 import useMSQueue from '~/layouts/default/microsurvey-popup/queue';
 import useSharedDataContext from '~/contexts/shared-data';
 
-jest.mock('~/components/shell/microsurvey-popup/queue', () => jest.fn());
+jest.mock('~/layouts/default/microsurvey-popup/queue', () => jest.fn());
 jest.mock('~/contexts/shared-data', () => jest.fn());
 
 jest.useFakeTimers();
