@@ -74,10 +74,8 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
 
     try {
         data = await fetch(apiUrl).then((response) => {
-          if (response.status === 404) {
+            if (response.status === 404) {
                 return {error: new Error('page not found')};
-            } else if (response.status !== 200) {
-                throw new Error('Error loading page');
             }
 
             return response.json();
