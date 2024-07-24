@@ -58,7 +58,7 @@ function ImportedPage({name}) {
                 loader: () => import(`~/pages/${name}/${name}`),
                 loading: Loading,
                 render(loaded, props) {
-                    const Component = loaded.namedExport;
+                    const Component = loaded.default;
 
                     return <DefaultLayout><Component {...props} /></DefaultLayout>;
                 }
