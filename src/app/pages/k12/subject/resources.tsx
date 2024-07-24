@@ -42,14 +42,16 @@ function LinkWithGiveDialog({href, book, track}: {
     );
 }
 
+type LinkData = {
+    id: string;
+    book: string;
+    resourceUnlocked: boolean;
+    linkExternal: string;
+    linkDocumentUrl: string;
+};
+
 function ResourceLink({ data, track }: {
-    data: {
-        id: string;
-        book: string;
-        resourceUnlocked: boolean;
-        linkExternal: string;
-        linkDocumentUrl: string;
-    };
+    data: LinkData;
     track: string;
 }) {
     const url = data.linkExternal || data.linkDocumentUrl;
@@ -66,8 +68,7 @@ function ResourceLink({ data, track }: {
     );
 }
 
-type ResourceHeader = {
-    id: string;
+type ResourceHeader = LinkData & {
     heading: string;
     resourceCategory: string;
     description: string;
@@ -77,11 +78,7 @@ type ResourceHeader = {
     videoReferenceNumber: number;
     trackResource: boolean;
     printLink: string;
-    book: string;
     icon: string;
-    resourceUnlocked: boolean;
-    linkExternal: string;
-    linkDocumentUrl: string;
 };
 type ResourceDict = {
     [name: string]: ResourceHeader[];
