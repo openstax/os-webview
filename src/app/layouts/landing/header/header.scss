@@ -29,6 +29,13 @@
           li {
             margin: 0 1rem;
           }
+
+          a {
+            line-height: 4rem;
+            text-decoration: none;
+            color: text-color(normal);
+            white-space: nowrap;
+          }
         }
 
         .give-button {
@@ -47,6 +54,19 @@
                 background-color: darken(os-color(gold), 20%);
                 color: text-color(white);
             }
+        }
+    }
+
+    @include width-up-to($tablet-max) {
+        menu {
+            width: 100%;
+        }
+        menu li:last-child {
+            width: 100%;
+            text-align: right;
+        }
+        menu:first-child {
+            display: none;
         }
     }
 }

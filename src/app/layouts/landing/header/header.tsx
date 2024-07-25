@@ -1,8 +1,9 @@
 import React from 'react';
 import useOptimizedImage from '~/helpers/use-optimized-image';
+import { LinkFields, Link } from '../../../pages/flex-page/components/Link';
 import './header.scss';
 
-export default function Header() {
+export default function Header({links}: {links: LinkFields[]}) {
     const riceLogo = useOptimizedImage('https://openstax.org/dist/images/rice.webp', 150);
 
     return (
@@ -20,6 +21,7 @@ export default function Header() {
                 </li>
             </menu>
             <menu data-analytics-nav="Landing Menu">
+                {links.map((link, i) => <li key={i}><Link link={link} /></li>)}
                 <li>
                     <a href="/give" className="give-button" data-analytics-link>Give</a>
                 </li>
