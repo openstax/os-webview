@@ -1,0 +1,7 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#main.layout-default main {
+  @include wider-than($media-content-max) {
+      --max-content-width: #{$content-max};
+  }
+}

@@ -12,9 +12,6 @@
         margin: auto;
         width: 100%;
         padding: calc( #{$normal-margin} * var(--padding-multiplier, 0)) $normal-margin;
-
-        @include wider-than($media-content-max) {
-            max-width: $content-max;
-        }
+        max-width: var(--max-content-width);
     }
 }

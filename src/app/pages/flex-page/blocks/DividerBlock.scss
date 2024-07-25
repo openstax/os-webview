@@ -11,10 +11,7 @@
         margin: auto;
         width: 100%;
         padding: 0 $normal-margin;
-
-        @include wider-than($media-content-max) {
-            max-width: $content-max;
-        }
+        max-width: var(--max-content-width);
     }
 
     &.align_content_right, &.align_body_right {

@@ -1,0 +1,53 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.landing-page-header {
+    background-color: ui-color(white);
+
+    .container {
+        margin: auto;
+        max-width: 94rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        img {
+            height: 100%;
+            width: auto;
+        }
+
+        menu {
+          height: 4rem;
+          padding: 0;
+          margin: 2rem 0;
+          display: flex;
+          flex-direction: row;
+          font-size: 1.8rem;
+          font-weight: bold;
+          letter-spacing: -0.072rem;
+          line-height: 2.5rem;
+
+          li {
+            margin: 0 1rem;
+          }
+        }
+
+        .give-button {
+            @include button();
+            background-color: os-color(gold);
+            color: inherit;
+            height: 100%;
+            font-size: inherit;
+            font-weight: inherit;
+            box-shadow: none;
+            border-radius: 0.3rem;
+            border: 0;
+
+            &:hover,
+            &:focus {
+                background-color: darken(os-color(gold), 20%);
+                color: text-color(white);
+            }
+        }
+    }
+}
+
