@@ -33,7 +33,7 @@ export default function FallbackTo({name}) {
     }
 
     if (['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)) {
-        return <Layout name={data.layout[0].type || 'default'}>
+        return <Layout name={data.layout[0]?.type || 'default'}>
             <FlexPage data={data} />
         </Layout>;
     }
