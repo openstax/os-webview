@@ -1,0 +1,55 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.flex-page.page div.content-block-quote {
+    margin: ($normal-margin * 2) 0;
+    overflow: auto;
+    
+    > img {
+        float: left;
+        margin: 3rem;
+        border-radius: 50%;
+        width: 30rem;
+        max-width: 100%;
+        height: auto;
+    }
+    
+    > .content-block-rich-text {
+        margin-top: 5rem;
+
+        &:before {
+            color: os-color(orange);
+            content: '“';
+            font-size: 6rem;
+            font-weight: bold;
+            position: relative;
+            top: 0.5rem;
+            left: -4rem;
+            display: block;
+            height: 0;
+            text-align: left;
+        }
+    }
+    > .quotee {
+      .name {
+          font-weight: bold;
+      }
+      .title {
+          &:before {
+              content: ' ';
+          }
+          font-style: italic;
+      }
+    }
+
+    @include width-up-to($tablet-max) {
+        text-align: center;
+        
+        > img {
+            float: none;
+        }
+        .content-block-rich-text {
+            margin-top: 0;
+            padding: 0 5rem;
+        }
+    }
+}

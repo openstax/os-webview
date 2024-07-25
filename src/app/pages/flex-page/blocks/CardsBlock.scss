@@ -24,6 +24,25 @@
       > .content-block-rich-text {
         flex: 1;
       }
+
+      hr {
+        border: none;
+        height: 1rem;
+        margin: 2rem 5rem;
+      }
+
+      &:nth-child(4n+1) hr {
+        background-color: os-color(yellow);
+      }
+      &:nth-child(4n+2) hr {
+        background-color: os-color(light-blue);
+      }
+      &:nth-child(4n+3) hr {
+        background-color: os-color(orange);
+      }
+      &:nth-child(4n+4) hr {
+        background-color: os-color(green);
+      }
     }
 
     &.card_style_rounded > .content-block-card {

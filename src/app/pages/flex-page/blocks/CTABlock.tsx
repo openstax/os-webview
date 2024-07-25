@@ -9,16 +9,18 @@ type CTALinkConfig = {
   value: 'string';
 }
 
-interface CTALinkFields extends LinkFields {
+export interface CTALinkFields extends LinkFields {
     config: CTALinkConfig[];
 }
 
-function CTALink({link}: {link: CTALinkFields}) {
+export function CTALink({link}: {link: CTALinkFields}) {
     const style = findByType(link.config, 'style')?.value;
     const styleClass = style ? `style-${style}` : style;
-    return <Link link={link}
-        className={cn(styleClass, styleClass ? 'styled-button' : undefined)}
-    />
+
+    return <Link
+        link={link}
+        className={cn('cta-link', styleClass, styleClass ? 'styled-button' : undefined)}
+    />;
 }
 
 export interface CTABlockConfig {

@@ -3,7 +3,8 @@
 .flex-page.page div.content-block-cta-block {
   margin: ($normal-margin * 2) 0;
 
-  > a + a {
+  /* nth-child hack to raise speceficity */
+  > a + a:nth-child(n) {
       margin-left: $normal-margin;
   }
 
@@ -15,14 +16,27 @@
       @include button();
       background-color: ui-color(white);
   }
+}
 
-  > a.style-blue_outline {
+.flex-page.page a.cta-link {
+
+  &.style-orange {
+      @include button();
+      @extend %primary;
+  }
+
+  &.style-white {
+      @include button();
+      background-color: ui-color(white);
+  }
+
+  &.style-blue_outline {
       @include button();
       background-color: ui-color(white);
       border-color: os-color(blue);
   }
-  
-  > a.style-deep_green_outline {
+
+  &.style-deep_green_outline {
       @include button();
       background-color: ui-color(white);
       border-color: os-color(deep-green);

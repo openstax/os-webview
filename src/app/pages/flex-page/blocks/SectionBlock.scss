@@ -9,9 +9,8 @@
         position: relative;
         z-index: 1;
 
-        margin: auto;
         width: 100%;
-        padding: calc( #{$normal-margin} * var(--padding-multiplier, 0)) $normal-margin;
         max-width: var(--max-content-width);
+        margin: calc( #{$normal-margin} * var(--padding-multiplier, 0)) auto;
     }
 }
