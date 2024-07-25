@@ -36,7 +36,7 @@ function EmbeddedApp() {
     );
 }
 
-const importNormalApp = () => import('./import-normal-app.js');
+const importRouter = () => import('./import-router.js');
 
 function App() {
     return (
@@ -44,7 +44,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/embedded/*" element={<EmbeddedApp />} />
-                    <Route path="*" element={<JITLoad importFn={importNormalApp} />} />
+                    <Route path="*" element={<JITLoad importFn={importRouter} />} />
                 </Routes>
             </BrowserRouter>
         </AppContext>

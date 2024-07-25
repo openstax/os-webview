@@ -23,7 +23,7 @@ function Footer({
         facebookLink, twitterLink, linkedinLink
     }
 }) {
-    const updatedCopyright = copyright.replace(/-\d+/, `-${new Date().getFullYear()}`);
+    const updatedCopyright = copyright ? copyright.replace(/-\d+/, `-${new Date().getFullYear()}`) : copyright;
 
     return (
         <React.Fragment>

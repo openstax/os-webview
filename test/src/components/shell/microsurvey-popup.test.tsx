@@ -3,11 +3,11 @@ import {describe, expect, it} from '@jest/globals';
 import {render} from '@testing-library/preact';
 import ShellContextProvider from '../../../helpers/shell-context';
 import {MemoryRouter} from 'react-router-dom';
-import MicroSurvey from '~/components/shell/microsurvey-popup/microsurvey-popup';
-import useMSQueue from '~/components/shell/microsurvey-popup/queue';
+import MicroSurvey from '~/layouts/default/microsurvey-popup/microsurvey-popup';
+import useMSQueue from '~/layouts/default/microsurvey-popup/queue';
 import useSharedDataContext from '~/contexts/shared-data';
 
-jest.mock('~/components/shell/microsurvey-popup/queue', () => jest.fn());
+jest.mock('~/layouts/default/microsurvey-popup/queue', () => jest.fn());
 jest.mock('~/contexts/shared-data', () => jest.fn());
 
 jest.useFakeTimers();

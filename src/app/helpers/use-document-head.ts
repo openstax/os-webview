@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {htmlToText} from '~/helpers/data';
 import {setContentTags} from '~/helpers/tag-manager';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
-import announcePageTitle from '~/components/shell/header/announce-page-title';
+import announcePageTitle from '~/components/shell/announce-page-title';
 import {useLocation} from 'react-router-dom';
 
 function setCanonicalPath(newPath: string) {

@@ -29,7 +29,6 @@ global.scrollTo = jest.fn();
 jest.mock('react-modal', () => ({
     setAppElement: jest.fn()
 }));
-jest.mock('~/components/shell/footer/footer', () => null);
 
 describe('shell', () => {
     it('Delivers embedded contact page', async () => {

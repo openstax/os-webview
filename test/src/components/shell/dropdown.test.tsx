@@ -3,8 +3,8 @@ import {describe, it, expect} from '@jest/globals';
 import {render, screen, fireEvent} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {MemoryRouter} from 'react-router-dom';
-import { DropdownContextProvider } from '~/components/shell/header/menus/dropdown-context';
-import Dropdown, {MenuItem} from '~/components/shell/header/menus/main-menu/dropdown/dropdown';
+import { DropdownContextProvider } from '~/layouts/default/header/menus/dropdown-context';
+import Dropdown, {MenuItem} from '~/layouts/default/header/menus/main-menu/dropdown/dropdown';
 import * as deviceHelpers from '~/helpers/device';
 
 const mobileSpy = jest.spyOn(deviceHelpers, 'isMobileDisplay');
