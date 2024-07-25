@@ -1,7 +1,14 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-#main.layout-default main {
-  @include wider-than($media-content-max) {
-      --max-content-width: #{$content-max};
+#main.layout-default {
+
+  @include width-up-to($tablet-max) {
+      padding-top: 5rem;
+  }
+
+  main {
+      @include wider-than($media-content-max) {
+          --max-content-width: #{$content-max};
+      }
   }
 }

@@ -214,10 +214,6 @@ sup {
     min-height: 50vh;
     z-index: 0;
 
-    @include width-up-to($tablet-max) {
-        padding-top: 5rem;
-    }
-
     &.with-sticky:not(.with-modal) {
         z-index: 1;
     }
