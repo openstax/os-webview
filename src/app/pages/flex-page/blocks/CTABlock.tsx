@@ -1,20 +1,36 @@
 import React from 'react';
+import cn from 'classnames';
+import { findByType } from '../utils';
 import { Link, LinkFields } from '../components/Link';
 import './CTABlock.scss';
+
+type CTALinkConfig = {
+  type: 'style';
+  value: 'string';
+}
+
+interface CTALinkFields extends LinkFields {
+    config: CTALinkConfig[];
+}
+
+function CTALink({link}: {link: CTALinkFields}) {
+    const style = findByType(link.config, 'style')?.value;
+    const styleClass = style ? `style-${style}` : style;
+    return <Link link={link}
+        className={cn(styleClass, styleClass ? 'styled-button' : undefined)}
+    />
+}
 
 export interface CTABlockConfig {
     id: string;
     type: 'cta_block';
     value: {
-        actions: LinkFields[];
+        actions: CTALinkFields[];
     };
 }
 
 export function CTABlock({data}: {data: CTABlockConfig}) {
-    const [primaryLink, secondaryLink] = data.value.actions;
-
     return <div className="content-block-cta-block">
-        {primaryLink ? <Link link={primaryLink} /> : null}
-        {secondaryLink ? <Link link={secondaryLink} /> : null}
+        {data.value.actions.map((action, i) => <CTALink key={i} link={action} />)}
     </div>;
 }
