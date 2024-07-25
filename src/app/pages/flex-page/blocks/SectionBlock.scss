@@ -12,5 +12,6 @@
         width: 100%;
         max-width: var(--max-content-width);
         margin: calc( #{$normal-margin} * var(--padding-multiplier, 0)) auto;
+        padding: 0 $normal-margin;
     }
 }

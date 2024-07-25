@@ -2,17 +2,17 @@
 
 .flex-page.page div.content-block-quote {
     margin: ($normal-margin * 2) 0;
-    overflow: auto;
-    
+    overflow: auto hidden;
+
     > img {
         float: left;
-        margin: 3rem;
+        padding: 3rem;
         border-radius: 50%;
         width: 30rem;
         max-width: 100%;
         height: auto;
     }
-    
+
     > .content-block-rich-text {
         margin-top: 5rem;
 
@@ -43,7 +43,7 @@
 
     @include width-up-to($tablet-max) {
         text-align: center;
-        
+
         > img {
             float: none;
         }
