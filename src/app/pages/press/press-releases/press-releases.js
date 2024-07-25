@@ -4,7 +4,7 @@ import MoreFewer from '~/components/more-fewer/more-fewer';
 import {convertedDate, asDate, PressExcerpt} from '../helpers';
 import './press-releases.scss';
 
-export default function PressReleases({excludeSlug, Container = MoreFewer}) {
+export default function PressReleases({excludeSlug='', Container = MoreFewer}) {
     const pageData = usePageContext();
 
     if (!pageData?.releases) {
