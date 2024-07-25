@@ -1,0 +1,55 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.flex-page.page > section.content-block-hero {
+    width: 100%;
+    margin: 0;
+
+    > div.hero-inner-wrapper {
+        /* to show above divider images */
+        position: relative;
+        z-index: 1;
+
+        display: grid;
+        grid-template: 1fr / 1fr 1fr;
+        grid-gap: $normal-margin;
+
+        margin: auto;
+        width: 100%;
+        padding: calc( #{$normal-margin} * var(--padding-multiplier, 0)) $normal-margin;
+
+        @include wider-than($media-content-max) {
+            max-width: $content-max;
+        }
+
+        @include width-up-to($phone-max) {
+            grid-template-columns: 100%;
+        }
+
+        .hero-content {
+            max-width: $text-content-max;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            @include width-up-to($phone-max) {
+                margin: 0 auto 2rem;
+                text-align: center;
+            }
+        }
+
+        > div.hero-image-container {
+            display: flex;
+            flex-direction: row;
+            
+            /* should change these based on the desired image alignment (if set) */
+            justify-content: center;
+            align-items: center;
+
+            /* this assumes the image is wide, we can handle it better we know the image dimensions */
+            img {
+              width: 100%;
+              height: auto;
+            }
+        }
+    }
+}

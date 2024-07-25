@@ -73,7 +73,13 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
     let data;
 
     try {
-        data = await (await fetch(apiUrl)).json();
+        data = await fetch(apiUrl).then((response) => {
+            if (response.status === 404) {
+                return {error: new Error('page not found')};
+            }
+
+            return response.json();
+        });
     } catch (err) {
         console.warn(`ERROR fetching slug ${slug}: ${err}`);
         data = {error: err};

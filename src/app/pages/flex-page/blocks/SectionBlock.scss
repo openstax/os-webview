@@ -1,0 +1,20 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.flex-page.page > section.content-block-section {
+    width: 100%;
+    margin: 0;
+
+    > div.section-content {
+        /* to show above divider images */
+        position: relative;
+        z-index: 1;
+
+        margin: auto;
+        width: 100%;
+        padding: calc( #{$normal-margin} * var(--padding-multiplier, 0)) $normal-margin;
+
+        @include wider-than($media-content-max) {
+            max-width: $content-max;
+        }
+    }
+}

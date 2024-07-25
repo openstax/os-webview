@@ -2,7 +2,7 @@ import React from 'react';
 import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
 import type {LocaleEntry} from '~/components/language-selector/language-selector';
 
-type Data = {
+export type Data = {
     translations: [Array<LocaleEntry>];
     error?: string;
     image: number | object;

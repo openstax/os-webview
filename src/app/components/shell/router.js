@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import $ from '~/helpers/$';
+import { PageTitleConfirmation } from './announce-page-title';
 import {
     Routes,
     Route,
@@ -10,6 +12,7 @@ import useLinkHandler from './router-helpers/use-link-handler';
 import useRouterContext, {RouterContextProvider} from './router-context';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import './skip-to-content.scss';
 
 function useAnalyticsPageView() {
     const location = useLocation();
@@ -20,13 +23,17 @@ function useAnalyticsPageView() {
     }, [isRedirect]);
 }
 
-const FallbackToGeneralPage = loadable({
-    loader: () => import('./router-helpers/fallback-to-general.js'),
-    loading: () => <h1>...General</h1>
+const Fallback = loadable({
+    loader: () => import('./router-helpers/fallback-to.js'),
+    loading: () => <h1>...Loading</h1>
 });
 const Error404 = loadable({
     loader: () => import('~/pages/404/404'),
     loading: () => <h1>404</h1>
+});
+const DefaultLayout = loadable({
+    loader: () => import('~/layouts/default/default'),
+    loading: LoadingPlaceholder
 });
 
 function ImportedPage({name}) {
@@ -36,7 +43,7 @@ function ImportedPage({name}) {
             function Loading({error, pastDelay, retry}) {
                 if (error) {
                     if (error.code === 'MODULE_NOT_FOUND') {
-                        return pathname.endsWith('/') ? <FallbackToGeneralPage name={name} />
+                        return pathname.endsWith('/') ? <Fallback name={name} />
                         : <Navigate to={`${pathname}/`} replace />;
                     }
                     return <div>Error! <button onClick={ retry }>Retry</button></div>;
@@ -49,7 +56,12 @@ function ImportedPage({name}) {
 
             return loadable({
                 loader: () => import(`~/pages/${name}/${name}`),
-                loading: Loading
+                loading: Loading,
+                render(loaded, props) {
+                    const Component = loaded.default;
+
+                    return <DefaultLayout><Component {...props} /></DefaultLayout>;
+                }
             });
         },
         [name, pathname]
@@ -128,6 +140,24 @@ function MainRoutes() {
     );
 }
 
+function doSkipToContent(event) {
+    event.preventDefault();
+    const mainEl = document.getElementById('main');
+    const target = mainEl.querySelector($.focusable);
+
+    if (target) {
+        $.scrollTo(target);
+        target.focus();
+    }
+}
+
+function SkipToContent() {
+    return (
+        <a className="skiptocontent" href="#main" onClick={doSkipToContent}>skip to main content</a>
+    );
+}
+
+
 export default function Router() {
     const linkHandler = useLinkHandler();
     const {origin, pathname} = useLocation();
@@ -148,6 +178,8 @@ export default function Router() {
 
     return (
         <RouterContextProvider>
+            <PageTitleConfirmation />
+            <SkipToContent />
             <MainRoutes />
         </RouterContextProvider>
     );

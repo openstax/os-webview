@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, it, expect} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
-import Menus from '~/components/shell/header/menus/menus';
+import Menus from '~/layouts/default/header/menus/menus';
 import {MemoryRouter} from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import useGiveToday from '~/models/give-today';
