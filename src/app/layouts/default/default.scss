@@ -12,10 +12,3 @@
       }
   }
 }
-
-#main.layout-default .page:not([hidden]) {
-    display: flex;
-    flex-flow: column nowrap;
-    max-width: 100vw;
-    overflow: hidden;
-}

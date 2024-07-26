@@ -247,6 +247,13 @@ sup {
 
 // Boxed Page
 
+.page:not([hidden]) {
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: 100vw;
+    overflow: hidden;
+}
+
 .boxed,
 .text-content {
     align-items: center;
