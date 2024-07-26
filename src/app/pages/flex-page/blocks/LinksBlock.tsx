@@ -6,7 +6,10 @@ import './LinksBlock.scss';
 
 type LinksConfig = {
   type: 'color';
-  value: 'string';
+  value: string;
+} | {
+  type: 'analytics_label';
+  value: string;
 }
 
 export interface LinksBlockConfig {
@@ -19,10 +22,14 @@ export interface LinksBlockConfig {
 }
 
 export function LinksBlock({data}: {data: LinksBlockConfig}) {
+    const analytics = findByType(data.value.config, 'color')?.value;
     const color = findByType(data.value.config, 'color')?.value ?? 'white';
     const colorClass = `color-${color}`;
 
-    return <div className={cn('content-block-links', colorClass)}>
+    return <div
+        className={cn('content-block-links', colorClass)}
+        data-analytics-nav={analytics}
+    >
         {data.value.links.map((action, i) => <Link key={i} link={action} />)}
     </div>;
 }

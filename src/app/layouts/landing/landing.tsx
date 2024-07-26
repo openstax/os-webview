@@ -13,6 +13,7 @@ import './landing.scss';
 
 type Props = {
     data: {
+        title: string;
         layout: Array<{
             value: {
                 navLinks: LinkFields[];
@@ -21,8 +22,9 @@ type Props = {
     }
 }
 
-export default function DefaultLayout({children, data}: React.PropsWithChildren<Props>) {
+export default function LandingLayout({children, data}: React.PropsWithChildren<Props>) {
     // BrowserRouter has to include everything that uses useLocation
+
     return (
         <React.Fragment>
             <header className="landing-page-header">
@@ -30,7 +32,7 @@ export default function DefaultLayout({children, data}: React.PropsWithChildren<
             </header>
             <SalesforceContextProvider>
                 <MainClassContextProvider>
-                    <Main>{children}</Main>
+                    <Main data={data}>{children}</Main>
                 </MainClassContextProvider>
             </SalesforceContextProvider>
             <footer id="footer">
@@ -40,7 +42,7 @@ export default function DefaultLayout({children, data}: React.PropsWithChildren<
     );
 }
 
-function Main({children}: React.PropsWithChildren<object>) {
+function Main({children, data}: React.PropsWithChildren<Props>) {
     const {language} = useLanguageContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const {classes} = useMainClassContext();
@@ -53,6 +55,7 @@ function Main({children}: React.PropsWithChildren<object>) {
         <div
             id="main"
             className={cn('lang', 'layout-landing', language, classes)}
+            data-analytics-nav={`Landing page (${data.title})`}
             ref={ref}
             tabIndex={-1}
         >

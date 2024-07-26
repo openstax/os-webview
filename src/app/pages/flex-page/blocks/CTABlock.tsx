@@ -23,16 +23,24 @@ export function CTALink({link}: {link: CTALinkFields}) {
     />;
 }
 
+type CTAConfig = {
+  type: 'analytics_label';
+  value: string;
+}
+
 export interface CTABlockConfig {
     id: string;
     type: 'cta_block';
     value: {
         actions: CTALinkFields[];
+        config: CTAConfig[];
     };
 }
 
 export function CTABlock({data}: {data: CTABlockConfig}) {
-    return <div className="content-block-cta-block">
+    const analytics = findByType(data.value.config, 'analytics_label')?.value;
+
+    return <div className="content-block-cta-block" data-analyitcs-nav={analyitcs}>
         {data.value.actions.map((action, i) => <CTALink key={i} link={action} />)}
     </div>;
 }

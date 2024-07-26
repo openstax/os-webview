@@ -7,7 +7,7 @@ export default function Header({links}: {links: LinkFields[]}) {
     const riceLogo = useOptimizedImage('https://openstax.org/dist/images/rice.webp', 150);
 
     return (
-        <div className="container">
+        <div className="container" data-analytics-label="Header">
             <menu data-analytics-nav="Landing Menu">
                 <li>
                     <a href="/" aria-label="Home Page" data-analytics-link>
