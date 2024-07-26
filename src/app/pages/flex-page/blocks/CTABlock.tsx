@@ -40,7 +40,7 @@ export interface CTABlockConfig {
 export function CTABlock({data}: {data: CTABlockConfig}) {
     const analytics = findByType(data.value.config, 'analytics_label')?.value;
 
-    return <div className="content-block-cta-block" data-analyitcs-nav={analyitcs}>
+    return <div className="content-block-cta-block" data-analytics-nav={analytics}>
         {data.value.actions.map((action, i) => <CTALink key={i} link={action} />)}
     </div>;
 }
