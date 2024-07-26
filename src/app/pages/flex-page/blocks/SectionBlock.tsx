@@ -13,6 +13,12 @@ export type SectionConfigOptions = {
     type: 'padding';
     value: string;
 } | {
+    type: 'padding_top';
+    value: string;
+} | {
+    type: 'padding_bottom';
+    value: string;
+} | {
     type: 'id';
     value: string;
 };
@@ -31,11 +37,17 @@ export function SectionBlock({data}: {data: SectionBlockConfig}) {
     const textAlign = findByType(data.value.config, 'text_alignment')?.value;
     const backgroundColor = findByType(data.value.config, 'background_color')?.value;
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
+    const paddingTop = findByType(data.value.config, 'padding_top')?.value;
+    const paddingBottom = findByType(data.value.config, 'padding_bottom')?.value;
 
     return <section
         id={id}
         className="content-block-section"
-        style={{backgroundColor, '--padding-multiplier': padding} as React.CSSProperties}
+        style={{backgroundColor,
+            '--padding-multiplier': padding,
+            '--padding-top-multiplier': paddingTop,
+            '--padding-bottom-multiplier': paddingBottom
+        } as React.CSSProperties}
     >
         <div className="section-content" style={{textAlign}}>
           <ContentBlocks data={data.value.content} />
