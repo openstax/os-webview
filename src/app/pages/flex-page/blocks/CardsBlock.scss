@@ -9,10 +9,6 @@
     grid-gap: ($normal-margin * 2);
     justify-content: center;
 
-    @include width-up-to($phone-max) {
-      grid-template-columns: 100%;
-    }
-
     > .content-block-card {
       /* to show above divider images */
       position: relative;
@@ -23,6 +19,25 @@
 
       > .content-block-rich-text {
         flex: 1;
+      }
+
+      hr {
+        border: none;
+        height: 1rem;
+        margin: 2rem 5rem;
+      }
+
+      &:nth-child(4n+1) hr {
+        background-color: os-color(yellow);
+      }
+      &:nth-child(4n+2) hr {
+        background-color: os-color(light-blue);
+      }
+      &:nth-child(4n+3) hr {
+        background-color: os-color(orange);
+      }
+      &:nth-child(4n+4) hr {
+        background-color: os-color(green);
       }
     }
 
