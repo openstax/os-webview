@@ -1,33 +1,38 @@
 import React from 'react';
-import Microsurvey from './microsurvey-popup/microsurvey-popup';
 import Header from './header/header';
-import LowerStickyNote from './lower-sticky-note/lower-sticky-note';
-import Footer from './footer/footer';
+import Footer from '../default/footer/footer';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import useMainClassContext, {
     MainClassContextProvider
 } from '~/contexts/main-class';
 import useLanguageContext from '~/contexts/language';
 import ReactModal from 'react-modal';
-import Welcome from './welcome/welcome';
-import TakeoverDialog from './takeover-dialog/takeover-dialog';
 import cn from 'classnames';
-import './default.scss';
+import { LinkFields } from '../../pages/flex-page/components/Link';
+import './landing.scss';
 
-export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
+type Props = {
+    data: {
+        title: string;
+        layout: Array<{
+            value: {
+                navLinks: LinkFields[];
+            }
+        }>
+    }
+}
+
+export default function LandingLayout({children, data}: React.PropsWithChildren<Props>) {
     // BrowserRouter has to include everything that uses useLocation
+
     return (
         <React.Fragment>
-            <Microsurvey />
-            <header id="header">
-                <Header />
+            <header className="landing-page-header">
+                <Header links={data.layout[0]?.value.navLinks ?? []} />
             </header>
-            <div id="lower-sticky-note">
-                <LowerStickyNote />
-            </div>
             <SalesforceContextProvider>
                 <MainClassContextProvider>
-                    <Main>{children}</Main>
+                    <Main data={data}>{children}</Main>
                 </MainClassContextProvider>
             </SalesforceContextProvider>
             <footer id="footer">
@@ -37,7 +42,7 @@ export default function DefaultLayout({children}: React.PropsWithChildren<object
     );
 }
 
-function Main({children}: React.PropsWithChildren<object>) {
+function Main({children, data}: React.PropsWithChildren<Props>) {
     const {language} = useLanguageContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const {classes} = useMainClassContext();
@@ -49,12 +54,11 @@ function Main({children}: React.PropsWithChildren<object>) {
     return (
         <div
             id="main"
-            className={cn('lang', 'layout-default', language, classes)}
+            className={cn('lang', 'layout-landing', language, classes)}
+            data-analytics-nav={`Landing page (${data.title})`}
             ref={ref}
             tabIndex={-1}
         >
-            <Welcome />
-            <TakeoverDialog />
             {children}
         </div>
     );

@@ -9,13 +9,13 @@ const FallbackToGeneralPage = loadable({
     loader: () => import('./fallback-to-general.js'),
     loading: () => <h1>...General</h1>
 });
-const Layout = ({name, children}) => {
+const Layout = ({name, children, data}) => {
     const LoadableLayout = loadable({
         loader: () => import(`~/layouts/${name}/${name}`),
         loading: LoadingPlaceholder
     });
 
-    return <LoadableLayout>{children}</LoadableLayout>;
+    return <LoadableLayout data={data}>{children}</LoadableLayout>;
 };
 
 export default function FallbackTo({name}) {
@@ -33,7 +33,9 @@ export default function FallbackTo({name}) {
     }
 
     if (['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)) {
-        return <Layout name={data.layout.layout}><FlexPage data={data} /></Layout>;
+        return <Layout data={data} name={data.layout[0]?.type || 'default'}>
+            <FlexPage data={data} />
+        </Layout>;
     }
 
     return <Layout name="default">

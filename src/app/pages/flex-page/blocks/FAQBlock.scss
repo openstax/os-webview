@@ -1,0 +1,10 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../../../components/faq-section/faq-section';
+
+.flex-page.page div.content-block-faq {
+    @include faq-section();
+
+    .articles .accordion-item .content-pane {
+        padding: 1rem 2rem 2rem;
+    }
+}

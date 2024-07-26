@@ -16,10 +16,7 @@
         margin: auto;
         width: 100%;
         padding: calc( #{$normal-margin} * var(--padding-multiplier, 0)) $normal-margin;
-
-        @include wider-than($media-content-max) {
-            max-width: $content-max;
-        }
+        max-width: var(--max-content-width);
 
         @include width-up-to($phone-max) {
             grid-template-columns: 100%;
@@ -40,7 +37,7 @@
         > div.hero-image-container {
             display: flex;
             flex-direction: row;
-            
+
             /* should change these based on the desired image alignment (if set) */
             justify-content: center;
             align-items: center;
