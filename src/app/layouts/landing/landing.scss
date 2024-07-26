@@ -1,0 +1,7 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+#main.layout-landing main {
+  @include wider-than(94em * $scale-factor) {
+      --max-content-width: 94rem;
+  }
+}
