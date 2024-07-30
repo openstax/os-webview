@@ -16,7 +16,7 @@ export interface QuoteBlockConfig {
 
 export function QuoteBlock({data}: {data: QuoteBlockConfig}) {
     return <div className="content-block-quote">
-        <Image image={data.value.image} />
+        <Image alt="" image={data.value.image} />
         <RichTextContent html={data.value.content} />
         <div className="quotee">
             <span className="name">{data.value.name}</span>
