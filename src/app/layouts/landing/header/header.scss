@@ -17,9 +17,9 @@
 
         menu {
           overflow: hidden;
-          height: 4rem;
+          height: 8rem;
+          margin: 0;
           padding: 0;
-          margin: 2rem 0;
           font-size: 1.8rem;
           font-weight: bold;
           letter-spacing: -0.072rem;
@@ -29,6 +29,7 @@
             display: inline-block;
             height: 100%;
             margin: 0 1rem;
+            padding: 2rem 0;
           }
 
           a {
