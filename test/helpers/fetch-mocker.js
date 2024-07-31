@@ -75,8 +75,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isOsNews = (/openstax-news/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
     const isPolishPhysics = (/fizyka/).test(args[0]);
-    const isPress = (/api\/press\/?$/).test(args[0]);
-    const isPressArticle = (/api\/press\/./).test(args[0]);
+    const isPress = (/api\/press\/\?/).test(args[0]);
+    const isPressArticle = (/api\/press\/[a-z]/).test(args[0]);
     const isPrintOrder = (/pages\/print-order/).test(args[0]);
     const isRenewal = args[0].includes('renewal?account_uuid');
     const isRoles = (/snippets\/roles/).test(args[0]);

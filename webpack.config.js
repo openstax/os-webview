@@ -96,6 +96,7 @@ const config = {
             react: 'preact/compat',
             'react-dom/test-utils': 'preact/test-utils',
             'react-dom': 'preact/compat',
+            'react/jsx-runtime': 'preact/jsx-runtime',
             '~': path.resolve(__dirname, 'src/app')
         },
         modules: [path.resolve(__dirname, 'src/app'), 'node_modules'],

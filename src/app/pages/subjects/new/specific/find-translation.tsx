@@ -5,9 +5,14 @@ import type {LocaleEntry} from '~/components/language-selector/language-selector
 import useLanguageContext from '~/contexts/language';
 import {useIntl} from 'react-intl';
 
+type PageData = {
+    error?: string;
+    translations: LocaleEntry[][];
+}
+
 export default function FindTranslation() {
     const subject = useParams().subject;
-    const pageData = usePageData(`pages/${subject}-books`);
+    const pageData = usePageData<PageData>(`pages/${subject}-books`);
 
     if (!pageData) {
         return null;

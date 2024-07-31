@@ -45,6 +45,6 @@ export function salesforceTitles(books: Book[]) {
 
 export function subjects(sfTitles: Book[]) {
     return sfTitles
-        .reduce<string[]>((a, b) => a.concat(b.subjects || []), [])
+        .reduce<string[]>((a, b) => a.concat(b.subjects), [])
         .reduce<string[]>((a, b) => (a.includes(b) ? a : a.concat(b)), []);
 }

@@ -21,7 +21,7 @@ type Category = {
 };
 
 function dataToEntry(item: InputItem): Category {
-    const name = item.name || '';
+    const name = item.name;
     const value = name.toLowerCase().replace(' ', '-').normalize('NFD').replace(/\p{Diacritic}/gu, '');
 
     return {
