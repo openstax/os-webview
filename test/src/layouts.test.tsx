@@ -1,8 +1,8 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
-import LandingLayout from '~/layouts/landing/landing';
 import { MemoryRouter } from 'react-router-dom';
+import LandingLayout from '~/layouts/landing/landing';
 
 describe('layouts/landing', () => {
     const data: Parameters<typeof LandingLayout>[0]['data'] = {
