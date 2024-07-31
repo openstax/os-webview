@@ -2,7 +2,6 @@
 
 .flex-page.page div.content-block-cards {
     display: grid;
-    margin: 0 auto;
 
     /* needs responsive design */
     grid-template-columns: repeat(auto-fit, calc(var(--card-size, 27) * 1rem));

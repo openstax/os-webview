@@ -26,6 +26,7 @@
 
   p {
     @include body-font(1.6rem);
+    line-height: 2.5rem;
   }
 }
 
