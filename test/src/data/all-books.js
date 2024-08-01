@@ -31,7 +31,8 @@ export default {
                 }
             ],
             cover_url:
-                'https://assets.openstax.org/oscms-dev/media/documents/prealgebra_1.svg'
+                'https://assets.openstax.org/oscms-dev/media/documents/prealgebra_1.svg',
+            content_warning_text: 'Warning text'
         },
         {
             id: 130,
