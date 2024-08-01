@@ -15,6 +15,12 @@ jest.mock('~/contexts/window', () => ({
 jest.mock('~/pages/details/common/links-to-translations', () => jest.fn());
 
 describe('details/dual-view', () => {
+    beforeAll(() => {
+        const el = document.createElement('meta');
+
+        el.setAttribute('name', 'description');
+        document.head.appendChild(el);
+    });
     it('renders at phone width', async () => {
         mockUseWindowContext.mockReturnValue({innerWidth: 480});
         render(
