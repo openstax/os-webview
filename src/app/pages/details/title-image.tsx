@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 export default function TitleImage() {
     const {reverseGradient, title, titleImageUrl} = useDetailsContext();
-    const titleLogo = ''; // For future use
+    // const titleLogo = ''; // For future use
 
     if (!title || !titleImageUrl) {
         return null;
@@ -21,9 +21,11 @@ export default function TitleImage() {
                         height='130'
                         width='392'
                     />
-                    {titleLogo && (
-                        <img className='title-logo' src={titleLogo} alt='' />
-                    )}
+                    {/*
+                        titleLogo && (
+                            <img className='title-logo' src={titleLogo} alt='' />
+                        )
+                    */}
                 </h1>
             </div>
         </div>

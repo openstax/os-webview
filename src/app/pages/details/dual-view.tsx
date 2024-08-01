@@ -24,7 +24,7 @@ export default function DualView() {
 }
 
 function useViewsUsed() {
-    const {innerWidth} = useWindowContext() as typeof window;
+    const {innerWidth} = useWindowContext();
     const [phone, setPhone] = React.useState<boolean>(false);
     const [desktop, setDesktop] = React.useState<boolean>(false);
 
