@@ -43,7 +43,11 @@ function CommonsHubBox() {
     );
 }
 
-export default function ResourceBoxes({ models, includeCommonsHub = false }) {
+export default function ResourceBoxes({ models, includeCommonsHub = false }: {
+    models: {heading: string;
+    }[]; // Will be a real type when other stuff becomes TS
+    includeCommonsHub?: boolean;
+}) {
     return (
         <React.Fragment>
             {includeCommonsHub && <CommonsHubBox />}
