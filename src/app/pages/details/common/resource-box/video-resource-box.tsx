@@ -20,8 +20,8 @@ type BoxModel = { heading: string };
 
 type VideoResourceBoxesArgs = {
     models: VideoResourceBoxModelType[];
-    blogLinkModels: BoxModel[];
-    referenceModels: BoxModel[];
+    blogLinkModels?: BoxModel[];
+    referenceModels?: BoxModel[];
 };
 
 export default function VideoResourceBoxes({
@@ -37,7 +37,7 @@ export default function VideoResourceBoxes({
             {blogLinkModels?.map((model) => (
                 <ResourceBox model={model} key={model.heading} />
             ))}
-            {referenceModels.map((model) => (
+            {referenceModels?.map((model) => (
                 <ResourceBox model={model} key={model.heading} />
             ))}
         </React.Fragment>
