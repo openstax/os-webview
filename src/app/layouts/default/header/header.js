@@ -14,6 +14,13 @@ export default function Header() {
         [stickyData]
     );
 
+    React.useEffect(
+        () => {
+            return () => console.info('** Destroying Header');
+        },
+        []
+    );
+
     return (
         <div className="page-header">
             <JITLoad importFn={() => import('./sticky-note/sticky-note.js')} stickyData={stickyData} />

@@ -35,6 +35,10 @@ const DefaultLayout = loadable({
     loader: () => import('~/layouts/default/default'),
     loading: LoadingPlaceholder
 });
+const DefaultLayoutWrapper = loadable({
+    loader: () => import('~/layouts/default/default-wrapper'),
+    loading: LoadingPlaceholder
+});
 
 function ImportedPage({name}) {
     const {pathname} = useLocation();
@@ -60,7 +64,7 @@ function ImportedPage({name}) {
                 render(loaded, props) {
                     const Component = loaded.default;
 
-                    return <DefaultLayout><Component {...props} /></DefaultLayout>;
+                    return <DefaultLayout key="preserve"><Component {...props} /></DefaultLayout>;
                 }
             });
         },
@@ -76,8 +80,11 @@ function ImportedPage({name}) {
         [name, pathname]
     );
 
-
-    return (<Page />);
+    return (
+        <DefaultLayoutWrapper>
+            <Page />
+        </DefaultLayoutWrapper>
+    );
 }
 
 const FOOTER_PAGES = [

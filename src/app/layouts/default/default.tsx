@@ -1,8 +1,4 @@
 import React from 'react';
-import Microsurvey from './microsurvey-popup/microsurvey-popup';
-import Header from './header/header';
-import LowerStickyNote from './lower-sticky-note/lower-sticky-note';
-import Footer from './footer/footer';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import useMainClassContext, {
     MainClassContextProvider
@@ -19,27 +15,20 @@ export default function DefaultLayout({children}: React.PropsWithChildren<object
     console.info('** DefaultLayout');
 
     React.useEffect(
-        () => console.info('(updated children)'),
+        () => console.info('(**updated children)'),
         [children]
     );
+
+    React.useEffect(
+        () => () => console.info('** Destroying DefaultLayout'),
+        []
+    );
     return (
-        <React.Fragment>
-            <Microsurvey />
-            <header id="header">
-                <Header key="default-header" />
-            </header>
-            <div id="lower-sticky-note">
-                <LowerStickyNote />
-            </div>
-            <SalesforceContextProvider>
-                <MainClassContextProvider>
-                    <Main>{children}</Main>
-                </MainClassContextProvider>
-            </SalesforceContextProvider>
-            <footer id="footer">
-                <Footer />
-            </footer>
-        </React.Fragment>
+        <SalesforceContextProvider>
+            <MainClassContextProvider>
+                <Main>{children}</Main>
+            </MainClassContextProvider>
+        </SalesforceContextProvider>
     );
 }
 
