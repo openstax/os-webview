@@ -64,7 +64,7 @@ function ImportedPage({name}) {
                 render(loaded, props) {
                     const Component = loaded.default;
 
-                    return <DefaultLayout key="preserve"><Component {...props} /></DefaultLayout>;
+                    return <DefaultLayout><Component {...props} /></DefaultLayout>;
                 }
             });
         },

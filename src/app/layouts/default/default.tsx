@@ -12,17 +12,6 @@ import './default.scss';
 
 export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
     // BrowserRouter has to include everything that uses useLocation
-    console.info('** DefaultLayout');
-
-    React.useEffect(
-        () => console.info('(**updated children)'),
-        [children]
-    );
-
-    React.useEffect(
-        () => () => console.info('** Destroying DefaultLayout'),
-        []
-    );
     return (
         <SalesforceContextProvider>
             <MainClassContextProvider>
