@@ -16,11 +16,17 @@ import './default.scss';
 
 export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
     // BrowserRouter has to include everything that uses useLocation
+    console.info('** DefaultLayout');
+
+    React.useEffect(
+        () => console.info('(updated children)'),
+        [children]
+    );
     return (
         <React.Fragment>
             <Microsurvey />
             <header id="header">
-                <Header />
+                <Header key="default-header" />
             </header>
             <div id="lower-sticky-note">
                 <LowerStickyNote />

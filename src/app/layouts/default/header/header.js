@@ -7,10 +7,17 @@ import './header.scss';
 export default function Header() {
     const stickyData = useStickyData();
 
+    console.info('** Rendering header');
+
+    React.useEffect(
+        () => console.info('** sticky data', stickyData),
+        [stickyData]
+    );
+
     return (
         <div className="page-header">
             <JITLoad importFn={() => import('./sticky-note/sticky-note.js')} stickyData={stickyData} />
-            <Menus />
+            <Menus key="header" />
         </div>
     );
 }
