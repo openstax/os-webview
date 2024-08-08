@@ -82,8 +82,12 @@ export default function ContactForm() {
         (value) => setSubject(value),
         []
     );
+    const textAreaRef = React.useRef(null);
     const beforeSubmit = React.useCallback(
-        () => setShowInvalidMessages(true),
+        () => {
+            setShowInvalidMessages(true);
+            prependBodyParams(textAreaRef.current);
+        },
         [setShowInvalidMessages]
     );
     const afterSubmit = React.useCallback(
@@ -121,10 +125,16 @@ export default function ContactForm() {
             </LabeledInputWithInvalidMessage>
             <LabeledInputWithInvalidMessage className="auto-height" showMessage={showInvalidMessages}>
                 Your Message
-                <textarea cols="50" name="description" rows="6" required />
+                <textarea cols="50" name="description" rows="6" required ref={textAreaRef} />
             </LabeledInputWithInvalidMessage>
             <FileButton name="attachment" />
             <input type="submit" value="Send" className="btn btn-orange" onClick={beforeSubmit} />
         </SalesforceForm>
     );
+}
+
+function prependBodyParams(el) {
+    const params = new window.URLSearchParams(window.location.search).getAll('body');
+
+    el.value = params.concat(el.value).join('\n');
 }
