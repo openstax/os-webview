@@ -84,10 +84,7 @@ export default function ContactForm() {
     );
     const textAreaRef = React.useRef(null);
     const beforeSubmit = React.useCallback(
-        () => {
-            setShowInvalidMessages(true);
-            prependBodyParams(textAreaRef.current);
-        },
+        () => setShowInvalidMessages(true),
         [setShowInvalidMessages]
     );
     const afterSubmit = React.useCallback(
@@ -95,12 +92,14 @@ export default function ContactForm() {
         [navigate]
     );
     const searchParams = new window.URLSearchParams(window.location.search);
+    const bodyParams = searchParams.getAll('body').join('\n');
 
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>
             <input type="hidden" name="external" value="1" />
             <input type="hidden" name="product" value={product} />
             <input type="hidden" name="user_id" value={searchParams.get('user_id')} />
+            <input type="hidden" name="support_context" value={bodyParams} />
             <label>
                 What is your question about?
                 <DropdownSelect
@@ -131,10 +130,4 @@ export default function ContactForm() {
             <input type="submit" value="Send" className="btn btn-orange" onClick={beforeSubmit} />
         </SalesforceForm>
     );
-}
-
-function prependBodyParams(el) {
-    const params = new window.URLSearchParams(window.location.search).getAll('body');
-
-    el.value = params.concat(el.value).join('\n');
 }
