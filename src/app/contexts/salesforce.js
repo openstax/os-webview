@@ -31,8 +31,6 @@ export function useContextValue() {
     useEffect(() => {
         fetchPromise
             .then((sfData) => {
-                if (sfData[0] === undefined) {return;}
-
                 const {
                     oid, debug, posting_url: webtoleadUrl,
                     adoption_form_posting_url: adoptionUrl,
