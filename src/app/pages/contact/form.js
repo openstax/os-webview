@@ -90,11 +90,13 @@ export default function ContactForm() {
         () => navigate('/confirmation/contact'),
         [navigate]
     );
+    const searchParams = new window.URLSearchParams(window.location.search);
 
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>
             <input type="hidden" name="external" value="1" />
             <input type="hidden" name="product" value={product} />
+            <input type="hidden" name="user_id" value={searchParams.get('user_id')} />
             <label>
                 What is your question about?
                 <DropdownSelect
