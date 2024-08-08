@@ -22,7 +22,7 @@ export interface LinksBlockConfig {
 }
 
 export function LinksBlock({data}: {data: LinksBlockConfig}) {
-    const analytics = findByType(data.value.config, 'color')?.value;
+    const analytics = findByType(data.value.config, 'analytics_label')?.value;
     const color = findByType(data.value.config, 'color')?.value ?? 'white';
     const colorClass = `color-${color}`;
 
