@@ -4,7 +4,7 @@
     display: grid;
 
     /* needs responsive design */
-    grid-template-columns: repeat(auto-fit, calc(var(--card-size, 27) * 1rem));
+    grid-template-columns: repeat(auto-fit, minmax(min-content, calc(var(--card-size, 27) * 1rem)));
     grid-gap: ($normal-margin * 2);
     justify-content: center;
 
