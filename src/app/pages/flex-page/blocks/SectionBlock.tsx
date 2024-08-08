@@ -1,5 +1,7 @@
 import React from 'react';
+import cn from 'classnames';
 import { ContentBlocks, ContentBlockConfig } from './ContentBlock';
+import Color from 'color';
 import { findByType } from '../utils';
 import './SectionBlock.scss';
 
@@ -39,10 +41,11 @@ export function SectionBlock({data}: {data: SectionBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const paddingTop = findByType(data.value.config, 'padding_top')?.value;
     const paddingBottom = findByType(data.value.config, 'padding_bottom')?.value;
+    const isDark = Color(backgroundColor).isDark();
 
     return <section
         id={id}
-        className="content-block-section"
+        className={cn('content-block-section', {'dark-background': isDark})}
         style={{backgroundColor,
             '--padding-multiplier': padding,
             '--padding-top-multiplier': paddingTop,
