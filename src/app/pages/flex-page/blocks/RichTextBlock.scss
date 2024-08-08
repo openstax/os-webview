@@ -25,14 +25,12 @@
   }
 
   p {
-    @include body-font(1.6rem);
-    line-height: 2.5rem;
+    @include set-font(body-regular)
   }
 }
 
 #main.layout-landing .flex-page.page div.content-block-rich-text {
   p {
-    @include body-font(2rem);
-    line-height: 3rem;
+    @include set-font(body-large)
   }
 }
