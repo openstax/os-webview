@@ -41,7 +41,7 @@ export function SectionBlock({data}: {data: SectionBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const paddingTop = findByType(data.value.config, 'padding_top')?.value;
     const paddingBottom = findByType(data.value.config, 'padding_bottom')?.value;
-    const isDark = Color(backgroundColor).isDark();
+    const isDark = backgroundColor && Color(backgroundColor).isDark();
 
     return <section
         id={id}

@@ -28,7 +28,7 @@ export interface HeroBlockConfig {
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const backgroundColor = findByType(data.value.config, 'background_color')?.value;
-    const isDark = Color(backgroundColor).isDark();
+    const isDark = backgroundColor && Color(backgroundColor).isDark();
 
     return <section
         className={cn('content-block-hero', {'dark-background': isDark})}
