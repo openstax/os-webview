@@ -81,4 +81,8 @@
         box-shadow: 0 -1rem 0 os-color(red);
       }
     }
+
+    h2, h3 {
+      @include scale-set-font(h4, h3);
+    }
 }

@@ -10,6 +10,7 @@
 
   > a {
       @include button();
+      @include body-font(2rem);
       white-space: break-spaces;
       padding: 1.5rem;
       height: auto;
