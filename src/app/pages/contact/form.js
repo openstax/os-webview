@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import { FileButton } from '../errata-form/form/FileUploader';
 
 const options = [
@@ -78,6 +78,7 @@ export default function ContactForm() {
         [subject]
     );
     const navigate = useNavigate();
+    const {pathname} = useLocation();
     const onChangeSubject = React.useCallback(
         (value) => setSubject(value),
         []
@@ -88,8 +89,14 @@ export default function ContactForm() {
         [setShowInvalidMessages]
     );
     const afterSubmit = React.useCallback(
-        () => navigate('/confirmation/contact'),
-        [navigate]
+        () => {
+            if (pathname.includes('embedded')) {
+                window.parent.postMessage('contact form submitted');
+            } else {
+                navigate('/confirmation/contact');
+            }
+        },
+        [navigate, pathname]
     );
     const searchParams = new window.URLSearchParams(window.location.search);
     const bodyParams = searchParams.getAll('body').join('\n');
