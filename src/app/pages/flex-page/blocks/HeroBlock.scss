@@ -4,6 +4,10 @@
     width: 100%;
     margin: 0;
 
+    &.dark-background .hero-content {
+        color: text-color(white);        
+    }
+
     > div.hero-inner-wrapper {
         /* to show above divider images */
         position: relative;

@@ -16,4 +16,8 @@
         margin-bottom: calc( #{$normal-margin} * var(--padding-bottom-multiplier, var(--padding-multiplier, 0)));
         padding: 0 $normal-margin;
     }
+
+    &.dark-background > div.section-content {
+        color: text-color(white);
+    }
 }
