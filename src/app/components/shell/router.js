@@ -42,12 +42,15 @@ const DefaultLayoutWrapper = loadable({
 
 function ImportedPage({name}) {
     const {pathname} = useLocation();
+    const [isDefaultLayout, setIsDefaultLayout] = React.useState(true);
+
     const Page = React.useMemo(
         () => {
             function Loading({error, pastDelay, retry}) {
                 if (error) {
                     if (error.code === 'MODULE_NOT_FOUND') {
-                        return pathname.endsWith('/') ? <Fallback name={name} />
+                        return pathname.endsWith('/')
+                        ? <Fallback name={name} setIsDefaultLayout={setIsDefaultLayout} />
                         : <Navigate to={`${pathname}/`} replace />;
                     }
                     return <div>Error! <button onClick={ retry }>Retry</button></div>;
@@ -80,11 +83,11 @@ function ImportedPage({name}) {
         [name, pathname]
     );
 
-    return (
+    return isDefaultLayout ? (
         <DefaultLayoutWrapper>
             <Page />
         </DefaultLayoutWrapper>
-    );
+    ) : <Page />;
 }
 
 const FOOTER_PAGES = [

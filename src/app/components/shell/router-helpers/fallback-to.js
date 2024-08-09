@@ -18,7 +18,7 @@ const Layout = ({name, children, data}) => {
     return <LoadableLayout data={data}>{children}</LoadableLayout>;
 };
 
-export default function FallbackTo({name}) {
+export default function FallbackTo({name, setIsDefaultLayout}) {
     const data = usePageData(`pages/${name}`, true);
 
     if (!data) {
@@ -33,7 +33,10 @@ export default function FallbackTo({name}) {
     }
 
     if (['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)) {
-        return <Layout data={data} name={data.layout[0]?.type || 'default'}>
+        const layoutName = data.layout[0]?.type || 'default';
+
+        setIsDefaultLayout(layoutName === 'default');
+        return <Layout data={data} name={layoutName}>
             <FlexPage data={data} />
         </Layout>;
     }
