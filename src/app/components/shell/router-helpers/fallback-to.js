@@ -9,16 +9,8 @@ const FallbackToGeneralPage = loadable({
     loader: () => import('./fallback-to-general.js'),
     loading: () => <h1>...General</h1>
 });
-const Layout = ({name, children, data}) => {
-    const LoadableLayout = loadable({
-        loader: () => import(`~/layouts/${name}/${name}`),
-        loading: LoadingPlaceholder
-    });
 
-    return <LoadableLayout data={data}>{children}</LoadableLayout>;
-};
-
-export default function FallbackTo({name, setIsDefaultLayout}) {
+export default function FallbackTo({name, setLayoutParameters}) {
     const data = usePageData(`pages/${name}`, true);
 
     if (!data) {
@@ -29,19 +21,13 @@ export default function FallbackTo({name, setIsDefaultLayout}) {
     // i think page-data-utils:fetchFromCMS would have to be updated
     // to do something special on a 404 status
     if ('error' in data) {
-        return <Layout name="default"><Error404 /></Layout>;
+        return <Error404 />;
     }
 
     if (['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)) {
-        const layoutName = data.layout[0]?.type || 'default';
-
-        setIsDefaultLayout(layoutName === 'default');
-        return <Layout data={data} name={layoutName}>
-            <FlexPage data={data} />
-        </Layout>;
+        setLayoutParameters({data, name: data.layout[0]?.type || 'default'});
+        return <FlexPage data={data} />;
     }
 
-    return <Layout name="default">
-        <FallbackToGeneralPage name={name} />
-    </Layout>;
+    return <FallbackToGeneralPage name={name} />;
 }

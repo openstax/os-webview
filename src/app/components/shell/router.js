@@ -31,48 +31,66 @@ const Error404 = loadable({
     loader: () => import('~/pages/404/404'),
     loading: () => <h1>404</h1>
 });
-const DefaultLayout = loadable({
-    loader: () => import('~/layouts/default/default'),
-    loading: LoadingPlaceholder
-});
-const DefaultLayoutWrapper = loadable({
-    loader: () => import('~/layouts/default/default-wrapper'),
-    loading: LoadingPlaceholder
-});
+
+function useLoading(name, setLayoutParameters) {
+    const {pathname} = useLocation();
+
+    return React.useCallback(
+        ({error, pastDelay, retry}) => {
+            if (error) {
+                if (error.code === 'MODULE_NOT_FOUND') {
+                    return pathname.endsWith('/')
+                    ? <Fallback name={name} setLayoutParameters={setLayoutParameters} />
+                    : <Navigate to={`${pathname}/`} replace />;
+                }
+                return <div>Error! <button onClick={ retry }>Retry</button></div>;
+            }
+            if (pastDelay) {
+                return <LoadingPlaceholder />;
+            }
+            return null;
+        },
+        [name, pathname, setLayoutParameters]
+    );
+}
+
+function usePage(name, setLayoutParameters) {
+    const loading = useLoading(name, setLayoutParameters);
+
+    return React.useMemo(
+        () => loadable({
+            loader: () => import(`~/pages/${name}/${name}`),
+            loading,
+            render(loaded, props) {
+                const Component = loaded.default;
+
+                return <Component {...props} />;
+            }
+        }),
+        [name, loading]
+    );
+}
 
 function ImportedPage({name}) {
     const {pathname} = useLocation();
-    const [isDefaultLayout, setIsDefaultLayout] = React.useState(true);
-
-    const Page = React.useMemo(
-        () => {
-            function Loading({error, pastDelay, retry}) {
-                if (error) {
-                    if (error.code === 'MODULE_NOT_FOUND') {
-                        return pathname.endsWith('/')
-                        ? <Fallback name={name} setIsDefaultLayout={setIsDefaultLayout} />
-                        : <Navigate to={`${pathname}/`} replace />;
-                    }
-                    return <div>Error! <button onClick={ retry }>Retry</button></div>;
-                }
-                if (pastDelay) {
-                    return <LoadingPlaceholder />;
-                }
-                return null;
-            }
-
-            return loadable({
-                loader: () => import(`~/pages/${name}/${name}`),
-                loading: Loading,
-                render(loaded, props) {
-                    const Component = loaded.default;
-
-                    return <DefaultLayout><Component {...props} /></DefaultLayout>;
-                }
-            });
-        },
-        [name, pathname]
+    const [layoutName, setLayoutName] = React.useState('default');
+    const [layoutData, setLayoutData] = React.useState(undefined);
+    const LoadableLayout = React.useMemo(
+        () => loadable({
+            loader: () => import(`~/layouts/${layoutName}/${layoutName}`),
+            loading: LoadingPlaceholder
+        }),
+        [layoutName]
     );
+    const setLayoutParameters = React.useCallback(
+        // eslint-disable-next-line no-shadow
+        ({name, data}) => {
+            setLayoutName(name);
+            setLayoutData(data);
+        },
+        []
+    );
+    const Page = usePage(name, setLayoutParameters);
 
     useAnalyticsPageView();
 
@@ -83,11 +101,11 @@ function ImportedPage({name}) {
         [name, pathname]
     );
 
-    return isDefaultLayout ? (
-        <DefaultLayoutWrapper>
+    return (
+        <LoadableLayout data={layoutData}>
             <Page />
-        </DefaultLayoutWrapper>
-    ) : <Page />;
+        </LoadableLayout>
+    );
 }
 
 const FOOTER_PAGES = [
