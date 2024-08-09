@@ -59,6 +59,22 @@ function LabeledInputWithInvalidMessage({
     );
 }
 
+function useAfterSubmit() {
+    const navigate = useNavigate();
+    const {pathname} = useLocation();
+
+    return React.useCallback(
+        () => {
+            if (pathname.includes('embedded')) {
+                window.parent.postMessage('contact form submitted');
+            } else {
+                navigate('/confirmation/contact');
+            }
+        },
+        [navigate, pathname]
+    );
+}
+
 // This is an interim site; normally we can leave postTo null and the default
 // in the salesforceForm will be right.
 const newPostSite = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
@@ -78,8 +94,6 @@ export default function ContactForm() {
         () => (subject === 'OpenStax Polska') ? '/apps/cms/api/mail/send_mail' : newPostSite,
         [subject]
     );
-    const navigate = useNavigate();
-    const {pathname} = useLocation();
     const onChangeSubject = React.useCallback(
         (value) => setSubject(value),
         []
@@ -88,16 +102,7 @@ export default function ContactForm() {
         () => setShowInvalidMessages(true),
         [setShowInvalidMessages]
     );
-    const afterSubmit = React.useCallback(
-        () => {
-            if (pathname.includes('embedded')) {
-                window.parent.postMessage('contact form submitted');
-            } else {
-                navigate('/confirmation/contact');
-            }
-        },
-        [navigate, pathname]
-    );
+    const afterSubmit = useAfterSubmit();
     const searchParams = new window.URLSearchParams(window.location.search);
     const bodyParams = searchParams.getAll('body').join('\n');
     const {userStatus} = useUserContext();
