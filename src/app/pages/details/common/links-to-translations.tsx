@@ -45,14 +45,11 @@ function AnotherLanguage({
         [translations, locale]
     );
 
-    if (!translation) {
-        return null;
-    }
-
     // translation is guaranteed to have a valid value, because the locale
     // is pulled from translations
     return (
-        <a href={`/details/books/${translation.slug}`}>
+         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+         <a href={`/details/books/${translation!.slug}`}>
             <LanguageText locale={locale} />
         </a>
     );

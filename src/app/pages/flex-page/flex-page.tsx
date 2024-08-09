@@ -1,10 +1,13 @@
 import React from 'react';
 import { LoadedPage } from '~/components/jsx-helpers/loader-page';
-import { Data } from '~/helpers/use-page-data';
 import { ContentBlocks, ContentBlockConfig } from './blocks/ContentBlock';
 
+type Data = {
+    body: ContentBlockConfig[];
+}
+
 function FlexPageBody({data}: {data: Data}) {
-    return <ContentBlocks data={data.body as ContentBlockConfig[]} />;
+    return <ContentBlocks data={data.body} />;
 }
 
 export default function FlexPage({data}: {data: Data}) {

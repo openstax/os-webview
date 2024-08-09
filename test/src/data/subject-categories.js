@@ -3,7 +3,8 @@ export default [
         "id": 1,
         "name": "Math",
         "seo_title": "Math SEO Title",
-        "search_description": "This is math search meta"
+        "search_description": "This is math search meta",
+        "subject_icon": "/images/subject-icon"
     },
     {
         "id": 2,

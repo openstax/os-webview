@@ -7,7 +7,7 @@ export default function ContentWarning({
     link: string;
     track: string | undefined;
     close: () => void;
-    onDownload: (event: React.MouseEvent) => void;
+    onDownload?: (event: React.MouseEvent) => void;
     variant?: string;
     warning: string;
     id: string;

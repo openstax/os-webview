@@ -18,7 +18,7 @@ export default function GiveBeforePdf({
     track?: string;
     close: () => void;
     data: DonationPopupData;
-    onDownload: () => void;
+    onDownload?: () => void;
     id?: string;
 }) {
     const [doneDownloading, setDoneDownloading] = React.useState(false);
@@ -65,7 +65,7 @@ function GiveBeforePdfAfterConditionals({
     track: string | undefined;
     data: DonationPopupData;
     close: () => void;
-    onDownload: (event: React.MouseEvent) => void;
+    onDownload?: (event: React.MouseEvent) => void;
 }) {
     const [controlLink, alternateLink] = useGiveLinks();
     const variants = [
