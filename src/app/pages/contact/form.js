@@ -3,6 +3,7 @@ import SalesforceForm from '~/components/salesforce-form/salesforce-form';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
 import {useNavigate, useLocation} from 'react-router-dom';
 import { FileButton } from '../errata-form/form/FileUploader';
+import useUserContext from '~/contexts/user';
 
 const options = [
     'General',
@@ -83,7 +84,6 @@ export default function ContactForm() {
         (value) => setSubject(value),
         []
     );
-    const textAreaRef = React.useRef(null);
     const beforeSubmit = React.useCallback(
         () => setShowInvalidMessages(true),
         [setShowInvalidMessages]
@@ -100,12 +100,14 @@ export default function ContactForm() {
     );
     const searchParams = new window.URLSearchParams(window.location.search);
     const bodyParams = searchParams.getAll('body').join('\n');
+    const {userStatus} = useUserContext();
+    const userUuid = searchParams.get('user_id') ?? userStatus.uuid;
 
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>
             <input type="hidden" name="external" value="1" />
             <input type="hidden" name="product" value={product} />
-            <input type="hidden" name="user_id" value={searchParams.get('user_id')} />
+            <input type="hidden" name="user_id" value={userUuid} />
             <input type="hidden" name="support_context" value={bodyParams} />
             <label>
                 What is your question about?
@@ -131,7 +133,7 @@ export default function ContactForm() {
             </LabeledInputWithInvalidMessage>
             <LabeledInputWithInvalidMessage className="auto-height" showMessage={showInvalidMessages}>
                 Your Message
-                <textarea cols="50" name="description" rows="6" required ref={textAreaRef} />
+                <textarea cols="50" name="description" rows="6" required />
             </LabeledInputWithInvalidMessage>
             <FileButton name="attachment" />
             <input type="submit" value="Send" className="btn btn-orange" onClick={beforeSubmit} />
