@@ -1,4 +1,8 @@
 import React from 'react';
+import Microsurvey from './microsurvey-popup/microsurvey-popup';
+import Header from './header/header';
+import LowerStickyNote from './lower-sticky-note/lower-sticky-note';
+import Footer from './footer/footer';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import useMainClassContext, {
     MainClassContextProvider
@@ -13,11 +17,23 @@ import './default.scss';
 export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
     // BrowserRouter has to include everything that uses useLocation
     return (
-        <SalesforceContextProvider>
-            <MainClassContextProvider>
-                <Main>{children}</Main>
-            </MainClassContextProvider>
-        </SalesforceContextProvider>
+        <React.Fragment>
+            <Microsurvey />
+            <header id="header">
+                <Header />
+            </header>
+            <div id="lower-sticky-note">
+                <LowerStickyNote />
+            </div>
+            <SalesforceContextProvider>
+                <MainClassContextProvider>
+                    <Main>{children}</Main>
+                </MainClassContextProvider>
+            </SalesforceContextProvider>
+            <footer id="footer">
+                <Footer />
+            </footer>
+        </React.Fragment>
     );
 }
 
