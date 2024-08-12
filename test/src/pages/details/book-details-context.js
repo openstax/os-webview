@@ -23,7 +23,7 @@ function BookDetailsWithContext({data, children}) {
 }
 
 export default function BookDetailsLoader({slug, children}) {
-    const absoluteSlug = slug.startsWith('/') ? slug : `/${slug}`;
+    const absoluteSlug = `/${slug}`;
 
     return (
         <MemoryRouter initialEntries={[absoluteSlug]}>
