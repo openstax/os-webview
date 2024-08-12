@@ -1,8 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
 import SalesforceForm from '~/components/salesforce-form/salesforce-form';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import { FileButton } from '../errata-form/form/FileUploader';
+import useUserContext from '~/contexts/user';
 
 const options = [
     'General',
@@ -58,6 +59,22 @@ function LabeledInputWithInvalidMessage({
     );
 }
 
+function useAfterSubmit() {
+    const navigate = useNavigate();
+    const {pathname} = useLocation();
+
+    return React.useCallback(
+        () => {
+            if (pathname.includes('embedded')) {
+                window.parent.postMessage('contact form submitted');
+            } else {
+                navigate('/confirmation/contact');
+            }
+        },
+        [navigate, pathname]
+    );
+}
+
 // This is an interim site; normally we can leave postTo null and the default
 // in the salesforceForm will be right.
 const newPostSite = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
@@ -77,7 +94,6 @@ export default function ContactForm() {
         () => (subject === 'OpenStax Polska') ? '/apps/cms/api/mail/send_mail' : newPostSite,
         [subject]
     );
-    const navigate = useNavigate();
     const onChangeSubject = React.useCallback(
         (value) => setSubject(value),
         []
@@ -86,15 +102,18 @@ export default function ContactForm() {
         () => setShowInvalidMessages(true),
         [setShowInvalidMessages]
     );
-    const afterSubmit = React.useCallback(
-        () => navigate('/confirmation/contact'),
-        [navigate]
-    );
+    const afterSubmit = useAfterSubmit();
+    const searchParams = new window.URLSearchParams(window.location.search);
+    const bodyParams = searchParams.getAll('body').join('\n');
+    const {userStatus} = useUserContext();
+    const userUuid = searchParams.get('user_id') ?? userStatus.uuid;
 
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>
             <input type="hidden" name="external" value="1" />
             <input type="hidden" name="product" value={product} />
+            <input type="hidden" name="user_id" value={userUuid} />
+            <input type="hidden" name="support_context" value={bodyParams} />
             <label>
                 What is your question about?
                 <DropdownSelect
