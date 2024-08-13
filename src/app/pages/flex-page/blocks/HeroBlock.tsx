@@ -28,7 +28,7 @@ export interface HeroBlockConfig {
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const backgroundColor = findByType(data.value.config, 'background_color')?.value;
-    const isDark = backgroundColor && Color(backgroundColor).isDark();
+    const isDark = backgroundColor && Color(backgroundColor).isDark(); // eslint-disable-line new-cap
 
     return <section
         className={cn('content-block-hero', {'dark-background': isDark})}

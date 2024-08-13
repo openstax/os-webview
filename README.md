@@ -43,9 +43,7 @@ To build the site for development and load it in your default web browser with [
 script/dev
 ```
 
-That will create a new `dev` directory from which the site is served.  Changes should be made to files in the `src` directory.  Gulp will automatically watch for changes in `src`, perform any compilation and transpilation necessary, and update the result in `dev`.
-
-You can also run individual tasks.  Enter `$(npm bin)/gulp --tasks` to see the full list.
+That will create a new `dev` directory from which the site is served.  Changes should be made to files in the `src` directory.  Webpack will automatically watch for changes in `src`, perform any compilation and transpilation necessary, and update the result in `dev`.
 
 ## Testing
 
@@ -56,7 +54,11 @@ script/build
 script/test
 ```
 
-You can also just run the linters (`$(npm bin)/gulp lint`) individually without rebuilding.
+You can also just run the linters (`yarn lint`) individually without rebuilding.
+You can run individual tests by name (`yarn jest layout.test`).
+
+Check code coverage by loading into your browser `/coverage/index.html` from the
+root of the git repository.
 
 **Note:** The unit tests require the dev build to be built (in the `dev` directory).
 
