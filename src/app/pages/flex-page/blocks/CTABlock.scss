@@ -3,13 +3,48 @@
 .flex-page.page div.content-block-cta-block {
   margin: ($normal-margin * 2) 0;
 
-  > a:nth-of-type(1) {
-    @include button();
-    @extend %primary;
+  /* nth-child hack to raise speceficity */
+  > a + a:nth-child(n) {
+      margin-left: $normal-margin;
   }
-  > a:nth-of-type(2) {
-    @include button();
-    background-color: ui-color(white);
-    margin-left: $normal-margin;
+
+  > a:nth-of-type(1):not(.styled-button) {
+      @include button();
+      @extend %primary;
+      @include body-font(2rem);
+  }
+  > a:nth-of-type(2):not(.styled-button) {
+      @include button();
+      background-color: ui-color(white);
+      @include body-font(2rem);
+  }
+}
+
+.flex-page.page a.cta-link {
+
+  &.style-orange {
+      @include button();
+      @extend %primary;
+      @include body-font(2rem);
+  }
+
+  &.style-white {
+      @include button();
+      background-color: ui-color(white);
+      @include body-font(2rem);
+  }
+
+  &.style-blue_outline {
+      @include button();
+      background-color: ui-color(white);
+      border-color: os-color(blue);
+      @include body-font(2rem);
+  }
+
+  &.style-deep_green_outline {
+      @include button();
+      background-color: ui-color(white);
+      border-color: os-color(deep-green);
+      @include body-font(2rem);
   }
 }

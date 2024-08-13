@@ -2,16 +2,11 @@
 
 .flex-page.page div.content-block-cards {
     display: grid;
-    margin: 0 auto;
 
     /* needs responsive design */
     grid-template-columns: repeat(auto-fit, calc(var(--card-size, 27) * 1rem));
     grid-gap: ($normal-margin * 2);
     justify-content: center;
-
-    @include width-up-to($phone-max) {
-      grid-template-columns: 100%;
-    }
 
     > .content-block-card {
       /* to show above divider images */
@@ -23,6 +18,25 @@
 
       > .content-block-rich-text {
         flex: 1;
+      }
+
+      hr {
+        border: none;
+        height: 1rem;
+        margin: 2rem 5rem;
+      }
+
+      &:nth-child(4n+1) hr {
+        background-color: os-color(yellow);
+      }
+      &:nth-child(4n+2) hr {
+        background-color: os-color(light-blue);
+      }
+      &:nth-child(4n+3) hr {
+        background-color: os-color(orange);
+      }
+      &:nth-child(4n+4) hr {
+        background-color: os-color(green);
       }
     }
 
@@ -66,5 +80,9 @@
       &:nth-child(4n+4) {
         box-shadow: 0 -1rem 0 os-color(red);
       }
+    }
+
+    h2, h3 {
+      @include scale-set-font(h4, h3);
     }
 }

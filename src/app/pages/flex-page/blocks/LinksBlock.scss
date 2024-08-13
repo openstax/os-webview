@@ -1,0 +1,31 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.flex-page.page div.content-block-links {
+  margin: ($normal-margin * 2) 0;
+
+  display: grid;
+  grid-gap: 3rem 5rem;
+  grid-template-columns: repeat(auto-fit, 30rem);
+  justify-content: center;
+
+  > a {
+      @include button();
+      @include body-font(2rem);
+      white-space: break-spaces;
+      padding: 1.5rem;
+      height: auto;
+  }
+
+  &.color-white > a {
+      background-color: ui-color(white);
+      color: text-color(normal);
+  }
+  &.color-deep-green > a {
+      background-color: os-color(deep-green);
+      color: text-color(white);
+  }
+  &.color-blue > a {
+      background-color: os-color(blue);
+      color: text-color(white);
+  }
+}

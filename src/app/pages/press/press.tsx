@@ -22,13 +22,12 @@ function MainPage() {
 
     useCanonicalLink(true);
     React.useEffect(() => {
-        if (pageData) {
-            setPageTitleAndDescriptionFromBookData(pageData);
-        }
+        setPageTitleAndDescriptionFromBookData(pageData);
     }, [pageData]);
 
     return (
         <React.Fragment>
+            <div>In the press</div>
             <section id='in-the-press'>
                 <Banner />
             </section>

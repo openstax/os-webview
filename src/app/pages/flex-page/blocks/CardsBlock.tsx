@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { RichTextContent } from './RichTextBlock';
 import { findByType } from '../utils';
-import { LinkFields, Link } from '../components/Link';
+import { CTALinkFields, CTALink } from './CTABlock';
 import './CardsBlock.scss';
 
 type CardConfig = {
@@ -17,7 +17,7 @@ type CardConfig = {
 
 export type CardBlockConfig = {
   text: string;
-  ctaBlock: LinkFields[];
+  ctaBlock: CTALinkFields[];
 };
 
 export type CardsBlockConfig = {
@@ -49,6 +49,6 @@ export function CardBlock({data}: {data: CardBlockConfig}) {
 
     return <div className="content-block-card">
         <RichTextContent html={data.text} />
-        {cta ? <Link link={cta} /> : null}
+        {cta ? <CTALink link={cta} /> : null}
     </div>;
 }

@@ -11,20 +11,17 @@
     margin-top: 0;
   }
 
-  h1 {
-    @include title-font(4.8rem);
-  }
-  h2 {
-    @include title-font(2.6rem);
-  }
-  h3 {
-    @include title-font(1.8rem);
-  }
-  h4, h5, h6 {
-    @include title-font(1.6rem);
+  h5, h6 {
+    @extend %text-h4;
   }
 
   p {
-    @include body-font(1.6rem);
+    @include set-font(body-regular)
+  }
+}
+
+#main.layout-landing .flex-page.page div.content-block-rich-text {
+  p {
+    @include set-font(body-large)
   }
 }

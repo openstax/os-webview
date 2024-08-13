@@ -1,4 +1,6 @@
 import React from 'react';
+import cn from 'classnames';
+import Color from 'color';
 import { ContentBlocks, ContentBlockConfig } from './ContentBlock';
 import { ImageFields, Image } from '../components/Image';
 import { findByType } from '../utils';
@@ -26,9 +28,10 @@ export interface HeroBlockConfig {
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const backgroundColor = findByType(data.value.config, 'background_color')?.value;
+    const isDark = backgroundColor && Color(backgroundColor).isDark(); // eslint-disable-line new-cap
 
     return <section
-        className="content-block-hero"
+        className={cn('content-block-hero', {'dark-background': isDark})}
         style={{backgroundColor, '--padding-multiplier': padding} as React.CSSProperties}
     >
         <div className="hero-inner-wrapper">

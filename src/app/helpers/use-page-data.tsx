@@ -35,11 +35,11 @@ async function fetchDataAndExpandImages(
     return data;
 }
 
-export function fetchPageData(
+export function fetchPageData<T>(
     slug: string,
     preserveWrapping: boolean,
     noCamelCase: boolean
-): Promise<Data> {
+): Promise<T> {
     const camelCaseOrNot = noCamelCase ? (obj: object) => obj : camelCaseKeys;
 
     return fetchDataAndExpandImages(slug, preserveWrapping).then(
@@ -47,15 +47,15 @@ export function fetchPageData(
     );
 }
 
-export default function usePageData(
+export default function usePageData<T>(
     slug: string,
     preserveWrapping = false,
     noCamelCase = false
 ) {
-    const [data, setData] = React.useState<Data>();
+    const [data, setData] = React.useState<T>();
 
     React.useEffect(() => {
-        fetchPageData(slug, preserveWrapping, noCamelCase).then(setData);
+        fetchPageData<T>(slug, preserveWrapping, noCamelCase).then(setData);
     }, [slug, preserveWrapping, noCamelCase]);
 
     return data;

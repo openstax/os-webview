@@ -11,10 +11,10 @@ import useLanguageContext from '~/contexts/language';
 import ReactModal from 'react-modal';
 import Welcome from './welcome/welcome';
 import TakeoverDialog from './takeover-dialog/takeover-dialog';
-import Router from './router';
 import cn from 'classnames';
+import './default.scss';
 
-export default function NormalApp() {
+export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
     // BrowserRouter has to include everything that uses useLocation
     return (
         <React.Fragment>
@@ -27,7 +27,7 @@ export default function NormalApp() {
             </div>
             <SalesforceContextProvider>
                 <MainClassContextProvider>
-                    <Main />
+                    <Main>{children}</Main>
                 </MainClassContextProvider>
             </SalesforceContextProvider>
             <footer id="footer">
@@ -37,7 +37,7 @@ export default function NormalApp() {
     );
 }
 
-function Main() {
+function Main({children}: React.PropsWithChildren<object>) {
     const {language} = useLanguageContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const {classes} = useMainClassContext();
@@ -49,13 +49,13 @@ function Main() {
     return (
         <div
             id="main"
-            className={cn('lang', language, classes)}
+            className={cn('lang', 'layout-default', language, classes)}
             ref={ref}
             tabIndex={-1}
         >
             <Welcome />
             <TakeoverDialog />
-            <Router />
+            {children}
         </div>
     );
 }
