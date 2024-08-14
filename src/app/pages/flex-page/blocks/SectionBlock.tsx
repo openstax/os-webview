@@ -21,6 +21,9 @@ export type SectionConfigOptions = {
     type: 'padding_bottom';
     value: string;
 } | {
+    type: 'analytics_label';
+    value: string;
+} | {
     type: 'id';
     value: string;
 };
@@ -41,11 +44,13 @@ export function SectionBlock({data}: {data: SectionBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const paddingTop = findByType(data.value.config, 'padding_top')?.value;
     const paddingBottom = findByType(data.value.config, 'padding_bottom')?.value;
+    const analytics = findByType(data.value.config, 'analytics_label')?.value;
     const isDark = backgroundColor && Color(backgroundColor).isDark(); // eslint-disable-line new-cap
 
     return <section
         id={id}
         className={cn('content-block-section', {'dark-background': isDark})}
+        data-analytics-nav={analytics}
         style={{backgroundColor,
             '--padding-multiplier': padding,
             '--padding-top-multiplier': paddingTop,

@@ -21,6 +21,12 @@ export type HeroConfigOptions = {
 } | {
     type: 'image_alignment';
     value: string;
+} | {
+    type: 'analytics_label';
+    value: string;
+} | {
+    type: 'id';
+    value: string;
 };
 
 export interface HeroBlockConfig {
@@ -41,18 +47,22 @@ const parseAlignment = (alignment: string) => {
 };
 
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
+    const id = findByType(data.value.config, 'id')?.value;
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const paddingTop = findByType(data.value.config, 'padding_top')?.value;
     const paddingBottom = findByType(data.value.config, 'padding_bottom')?.value;
     const backgroundColor = findByType(data.value.config, 'background_color')?.value;
     const isDark = backgroundColor && Color(backgroundColor).isDark(); // eslint-disable-line new-cap
+    const analytics = findByType(data.value.config, 'analytics_label')?.value;
     const alignment = findByType(data.value.config, 'image_alignment')?.value.toLowerCase() ?? 'right';
 
     const imageRight = alignment.includes('right');
     const imageVerticalAlign = parseAlignment(alignment);
 
     return <section
+        id={id}
         className={cn('content-block-hero', {'dark-background': isDark})}
+        data-analytics-nav={analytics}
         style={{backgroundColor,
             '--padding-multiplier': padding,
             '--padding-top-multiplier': paddingTop,
