@@ -3,11 +3,6 @@
 .flex-page.page div.content-block-cta-block {
   margin: ($normal-margin * 2) 0;
 
-  /* nth-child hack to raise speceficity */
-  > a + a:nth-child(n) {
-      margin-left: $normal-margin;
-  }
-
   > a:nth-of-type(1):not(.styled-button) {
       @include button();
       @extend %primary;
@@ -17,6 +12,11 @@
       @include button();
       background-color: ui-color(white);
       @include body-font(2rem);
+  }
+
+  /* nth-child hack to raise speceficity */
+  > a + a:nth-child(n):nth-child(n) {
+      margin-left: $normal-margin;
   }
 }
 
