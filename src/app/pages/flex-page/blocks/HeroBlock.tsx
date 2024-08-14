@@ -10,6 +10,12 @@ export type HeroConfigOptions = {
     type: 'padding';
     value: string;
 } | {
+    type: 'padding_top';
+    value: string;
+} | {
+    type: 'padding_bottom';
+    value: string;
+} | {
     type: 'background_color';
     value: string;
 };
@@ -27,12 +33,18 @@ export interface HeroBlockConfig {
 
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
+    const paddingTop = findByType(data.value.config, 'padding_top')?.value;
+    const paddingBottom = findByType(data.value.config, 'padding_bottom')?.value;
     const backgroundColor = findByType(data.value.config, 'background_color')?.value;
     const isDark = backgroundColor && Color(backgroundColor).isDark(); // eslint-disable-line new-cap
 
     return <section
         className={cn('content-block-hero', {'dark-background': isDark})}
-        style={{backgroundColor, '--padding-multiplier': padding} as React.CSSProperties}
+        style={{backgroundColor,
+            '--padding-multiplier': padding,
+            '--padding-top-multiplier': paddingTop,
+            '--padding-bottom-multiplier': paddingBottom
+        } as React.CSSProperties}
     >
         <div className="hero-inner-wrapper">
           {/* the order of these children should change based on the image alignment config */}

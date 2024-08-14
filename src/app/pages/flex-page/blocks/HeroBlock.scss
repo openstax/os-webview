@@ -17,10 +17,12 @@
         grid-template: 1fr / 1fr 1fr;
         grid-gap: $normal-margin;
 
-        margin: auto;
         width: 100%;
-        padding: calc( #{$normal-margin} * var(--padding-multiplier, 0)) $normal-margin;
         max-width: var(--max-content-width);
+        margin: 0 auto;
+        padding: 0 $normal-margin;
+        margin-top: calc( #{$normal-margin} * var(--padding-top-multiplier, var(--padding-multiplier, 0)));
+        margin-bottom: calc( #{$normal-margin} * var(--padding-bottom-multiplier, var(--padding-multiplier, 0)));
 
         @include width-up-to($phone-max) {
             grid-template-columns: 100%;
@@ -34,7 +36,6 @@
 
             @include width-up-to($phone-max) {
                 margin: 0 auto 2rem;
-                text-align: center;
             }
         }
 
