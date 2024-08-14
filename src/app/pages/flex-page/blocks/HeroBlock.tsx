@@ -18,6 +18,9 @@ export type HeroConfigOptions = {
 } | {
     type: 'background_color';
     value: string;
+} | {
+    type: 'image_alignment';
+    value: string;
 };
 
 export interface HeroBlockConfig {
@@ -31,33 +34,56 @@ export interface HeroBlockConfig {
     };
 }
 
+const parseAlignment = (alignment: string) => {
+    if (alignment.includes('top')) {return 'flex-start';}
+    if (alignment.includes('bottom')) {return 'flex-end';}
+    return 'center';
+};
+
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const paddingTop = findByType(data.value.config, 'padding_top')?.value;
     const paddingBottom = findByType(data.value.config, 'padding_bottom')?.value;
     const backgroundColor = findByType(data.value.config, 'background_color')?.value;
     const isDark = backgroundColor && Color(backgroundColor).isDark(); // eslint-disable-line new-cap
+    const alignment = findByType(data.value.config, 'image_alignment')?.value.toLowerCase() ?? 'right';
+
+    const imageRight = alignment.includes('right');
+    const imageVerticalAlign = parseAlignment(alignment);
 
     return <section
         className={cn('content-block-hero', {'dark-background': isDark})}
         style={{backgroundColor,
             '--padding-multiplier': padding,
             '--padding-top-multiplier': paddingTop,
-            '--padding-bottom-multiplier': paddingBottom
+            '--padding-bottom-multiplier': paddingBottom,
+            '--image-vertical-align': imageVerticalAlign
         } as React.CSSProperties}
     >
         <div className="hero-inner-wrapper">
-          {/* the order of these children should change based on the image alignment config */}
-          <div className="hero-content">
-              <ContentBlocks data={data.value.content} />
-          </div>
-          <div className="hero-image-container">
-              <Image
-                  className="hero-image"
-                  image={data.value.image}
-                  alt={data.value.imageAlt}
-              />
-          </div>
+          {imageRight ? <>
+            <div className="hero-content">
+                <ContentBlocks data={data.value.content} />
+            </div>
+            <div className="hero-image-container">
+                <Image
+                    className="hero-image"
+                    image={data.value.image}
+                    alt={data.value.imageAlt}
+                />
+            </div>
+          </> : <>
+            <div className="hero-image-container">
+                <Image
+                    className="hero-image"
+                    image={data.value.image}
+                    alt={data.value.imageAlt}
+                />
+            </div>
+            <div className="hero-content">
+                <ContentBlocks data={data.value.content} />
+            </div>
+          </>}
         </div>
     </section>;
 }

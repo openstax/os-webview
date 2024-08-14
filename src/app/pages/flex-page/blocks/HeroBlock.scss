@@ -5,7 +5,7 @@
     margin: 0;
 
     &.dark-background .hero-content {
-        color: text-color(white);        
+        color: text-color(white);
     }
 
     > div.hero-inner-wrapper {
@@ -45,7 +45,7 @@
 
             /* should change these based on the desired image alignment (if set) */
             justify-content: center;
-            align-items: center;
+            align-items: var(--image-vertical-align);
 
             /* this assumes the image is wide, we can handle it better we know the image dimensions */
             img {
