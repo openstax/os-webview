@@ -1,13 +1,25 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .flex-page.page div.content-block-rich-text {
+  overflow: auto;
+	width: 100%;
 
   img.richtext-image.full-width {
     width: 100%;
     height: auto;
   }
+  
+  img.richtext-image.left {
+    float: left;
+    margin-right: $normal-margin;
+  }
+  
+  img.richtext-image.right {
+    float: right;
+    margin-left: $normal-margin;
+  }
 
-  > *:first-child {
+  > *:first-child:is(h1,h2,h3,h4,h5,h6) {
     margin-top: 0;
   }
 
