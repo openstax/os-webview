@@ -7,6 +7,12 @@ import { findByType } from '../utils';
 import './HeroBlock.scss';
 
 export type HeroConfigOptions = {
+    type: 'text_alignment';
+    value: 'left' | 'right' | 'center';
+} | {
+    type: 'background_color';
+    value: string;
+} | {
     type: 'padding';
     value: string;
 } | {
@@ -16,16 +22,13 @@ export type HeroConfigOptions = {
     type: 'padding_bottom';
     value: string;
 } | {
-    type: 'background_color';
-    value: string;
-} | {
-    type: 'image_alignment';
-    value: string;
-} | {
     type: 'analytics_label';
     value: string;
 } | {
     type: 'id';
+    value: string;
+} | {
+    type: 'image_alignment';
     value: string;
 };
 
@@ -48,14 +51,15 @@ const parseAlignment = (alignment: string) => {
 
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
     const id = findByType(data.value.config, 'id')?.value;
+    const textAlign = findByType(data.value.config, 'text_alignment')?.value;
+    const backgroundColor = findByType(data.value.config, 'background_color')?.value;
     const padding = findByType(data.value.config, 'padding')?.value ?? 0;
     const paddingTop = findByType(data.value.config, 'padding_top')?.value;
     const paddingBottom = findByType(data.value.config, 'padding_bottom')?.value;
-    const backgroundColor = findByType(data.value.config, 'background_color')?.value;
-    const isDark = backgroundColor && Color(backgroundColor).isDark(); // eslint-disable-line new-cap
     const analytics = findByType(data.value.config, 'analytics_label')?.value;
-    const alignment = findByType(data.value.config, 'image_alignment')?.value.toLowerCase() ?? 'right';
+    const isDark = backgroundColor && Color(backgroundColor).isDark(); // eslint-disable-line new-cap
 
+    const alignment = findByType(data.value.config, 'image_alignment')?.value.toLowerCase() ?? 'right';
     const imageRight = alignment.includes('right');
     const imageVerticalAlign = parseAlignment(alignment);
 
@@ -72,7 +76,7 @@ export function HeroBlock({data}: {data: HeroBlockConfig}) {
     >
         <div className="hero-inner-wrapper">
           {imageRight ? <>
-            <div className="hero-content">
+            <div className="hero-content" style={{textAlign}}>
                 <ContentBlocks data={data.value.content} />
             </div>
             <div className="hero-image-container">
@@ -90,7 +94,7 @@ export function HeroBlock({data}: {data: HeroBlockConfig}) {
                     alt={data.value.imageAlt}
                 />
             </div>
-            <div className="hero-content">
+            <div className="hero-content" style={{textAlign}}>
                 <ContentBlocks data={data.value.content} />
             </div>
           </>}
