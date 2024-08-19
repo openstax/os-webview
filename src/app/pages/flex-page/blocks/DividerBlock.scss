@@ -17,6 +17,10 @@
     &.align_content_right, &.align_body_right {
       text-align: right;
     }
+    
+    &.align_center {
+      text-align: center;
+    }
 
     img {
       height: auto;

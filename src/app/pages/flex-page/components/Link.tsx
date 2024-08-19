@@ -5,8 +5,8 @@ export interface LinkFields {
     text: string;
     ariaLabel?: string;
     target: {
-      type: string;
-      value: string;
+        type: string;
+        value: string;
     };
 }
 
@@ -26,5 +26,10 @@ export function Link({link, ...props}: LinkProps) {
         }
     }, [link]);
 
-    return <a aria-label={link.ariaLabel} {...props} href={link.target.value} onClick={onClick}>{link.text}</a>;
+    return <a
+        aria-label={link.ariaLabel || undefined}
+        {...props}
+        href={link.target.value}
+        onClick={onClick}
+    >{link.text}</a>;
 }
