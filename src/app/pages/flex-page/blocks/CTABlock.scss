@@ -14,7 +14,7 @@
       @include body-font(2rem);
   }
 
-  /* nth-child hack to raise speceficity */
+  /* nth-child hack to raise specificity */
   > a + a:nth-child(n):nth-child(n) {
       margin-left: $normal-margin;
   }
