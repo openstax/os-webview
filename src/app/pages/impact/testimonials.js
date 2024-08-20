@@ -54,10 +54,11 @@ function Card({position, cards}) {
             <div className="text-part">
                 <div>{description}</div>
                 {articleData ? <LinkWithChevron
-{...(openInLightbox
-                    ? {href: 'lightbox-more', onClick: openDialog}
-                    : {href: articleData.meta.html_url}
-                )}>
+                    {...(openInLightbox
+                        ? {href: 'lightbox-more', onClick: openDialog}
+                        : {href: articleData.meta.html_url}
+                    )}
+                >
                     Read more
                 </LinkWithChevron> : null}
             </div>
