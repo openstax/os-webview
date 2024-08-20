@@ -29,5 +29,6 @@ export default function FallbackTo({name, setLayoutParameters}) {
         return <FlexPage data={data} />;
     }
 
+    setLayoutParameters({data: undefined, name: 'default'});
     return <FallbackToGeneralPage name={name} />;
 }
