@@ -40,7 +40,7 @@ function Card({position, cards}) {
     const {image, storyText: description} = cards[position];
     const articleData = useDataFromCard(cards[position]);
     const [isOpen, toggle] = useToggle();
-    const openInLightbox = articleData?.meta?.type === 'pages.ImpactStory';
+    const readMoreLink = articleData?.meta?.html_url;
     const openDialog = React.useCallback((event) => {
         event.preventDefault();
         toggle();
@@ -54,9 +54,9 @@ function Card({position, cards}) {
             <div className="text-part">
                 <div>{description}</div>
                 {articleData ? <LinkWithChevron
-                    {...(openInLightbox
-                        ? {href: 'lightbox-more', onClick: openDialog}
-                        : {href: articleData.meta.html_url}
+                    {...(readMoreLink
+                        ? {href: articleData.meta.html_url}
+                        : {href: 'lightbox-more', onClick: openDialog}
                     )}
                 >
                     Read more
