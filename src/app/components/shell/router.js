@@ -12,6 +12,7 @@ import useLinkHandler from './router-helpers/use-link-handler';
 import useRouterContext, {RouterContextProvider} from './router-context';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import useLayoutParameters from './router-helpers/use-layout-parameters';
 import './skip-to-content.scss';
 
 function useAnalyticsPageView() {
@@ -73,22 +74,13 @@ function usePage(name, setLayoutParameters) {
 
 function ImportedPage({name}) {
     const {pathname} = useLocation();
-    const [layoutName, setLayoutName] = React.useState('default');
-    const [layoutData, setLayoutData] = React.useState(undefined);
+    const {layoutName, layoutData, setLayoutParameters} = useLayoutParameters();
     const LoadableLayout = React.useMemo(
         () => loadable({
             loader: () => import(`~/layouts/${layoutName}/${layoutName}`),
             loading: LoadingPlaceholder
         }),
         [layoutName]
-    );
-    const setLayoutParameters = React.useCallback(
-        // eslint-disable-next-line no-shadow
-        ({name, data}) => {
-            setLayoutName(name);
-            setLayoutData(data);
-        },
-        []
     );
     const Page = usePage(name, setLayoutParameters);
 
