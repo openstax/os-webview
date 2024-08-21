@@ -27,6 +27,10 @@ export function transformData(data) {
     return data;
 }
 
+const draftParams = new window.URLSearchParams(window.location.search).has('preview')
+    ? `&draft=${Date.now()}`
+    : '';
+
 export async function getUrlFor(initialSlug) {
     let apiUrl = urlFromSlug(initialSlug);
 
@@ -46,7 +50,7 @@ export async function getUrlFor(initialSlug) {
 
     const qsChar = ((/\?/).test(apiUrl)) ? '&' : '?';
 
-    return `${apiUrl}${qsChar}format=json`;
+    return `${apiUrl}${qsChar}format=json${draftParams}`;
 }
 
 function camelCase(underscored) {
