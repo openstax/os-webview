@@ -10,8 +10,7 @@ import ClippedImage from '~/components/clipped-image/clipped-image';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import './testimonials.scss';
 
-function LightboxContent({cards, position, articleDataArr}) {
-    const articleData = articleDataArr[position];
+function LightboxContent({cards, position, articleData}) {
     const {embeddedVideo} = cards[position];
 
     if (!articleData) {
@@ -39,15 +38,13 @@ function useDataFromCard(card) {
 
 function Card({position, cards}) {
     const {image, storyText: description} = cards[position];
-    const articleDataArr = cards.map(useDataFromCard);
+    const articleData = useDataFromCard(cards[position]);
     const [isOpen, toggle] = useToggle();
-    const openDialog = React.useCallback(
-        (event) => {
-            event.preventDefault();
-            toggle();
-        },
-        [toggle]
-    );
+    const readMoreLink = articleData?.meta?.html_url;
+    const openDialog = React.useCallback((event) => {
+        event.preventDefault();
+        toggle();
+    }, [toggle]);
 
     return (
         <div className="card">
@@ -56,15 +53,20 @@ function Card({position, cards}) {
             </div>
             <div className="text-part">
                 <div>{description}</div>
-                <LinkWithChevron href="lightbox-more" onClick={openDialog}>
+                {articleData ? <LinkWithChevron
+                    {...(readMoreLink
+                        ? {href: articleData.meta.html_url}
+                        : {href: 'lightbox-more', onClick: openDialog}
+                    )}
+                >
                     Read more
-                </LinkWithChevron>
+                </LinkWithChevron> : null}
             </div>
             <Dialog
                 isOpen={isOpen} onPutAway={toggle} className="impact-testimonial"
             >
                 <div className="lightbox-testimonial">
-                    <LightboxContent {...{cards, position, articleDataArr}} />
+                    <LightboxContent cards={cards} position={position} articleData={articleData} />
                 </div>
             </Dialog>
         </div>
