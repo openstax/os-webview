@@ -12,7 +12,7 @@ import useLinkHandler from './router-helpers/use-link-handler';
 import useRouterContext, {RouterContextProvider} from './router-context';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
-import useLayoutParameters from './router-helpers/use-layout-parameters';
+import useLayoutContext, { LayoutContextProvider } from '~/contexts/layout';
 import './skip-to-content.scss';
 
 function useAnalyticsPageView() {
@@ -33,7 +33,7 @@ const Error404 = loadable({
     loading: () => <h1>404</h1>
 });
 
-function useLoading(name, setLayoutParameters) {
+function useLoading(name) {
     const {pathname} = useLocation();
 
     return React.useCallback(
@@ -41,7 +41,7 @@ function useLoading(name, setLayoutParameters) {
             if (error) {
                 if (error.code === 'MODULE_NOT_FOUND') {
                     return pathname.endsWith('/')
-                    ? <Fallback name={name} setLayoutParameters={setLayoutParameters} />
+                    ? <Fallback name={name} />
                     : <Navigate to={`${pathname}/`} replace />;
                 }
                 return <div>Error! <button onClick={ retry }>Retry</button></div>;
@@ -51,12 +51,13 @@ function useLoading(name, setLayoutParameters) {
             }
             return null;
         },
-        [name, pathname, setLayoutParameters]
+        [name, pathname]
     );
 }
 
-function usePage(name, setLayoutParameters) {
-    const loading = useLoading(name, setLayoutParameters);
+function usePage(name) {
+    const loading = useLoading(name);
+    const {setLayoutParameters} = useLayoutContext();
 
     return React.useMemo(
         () => loadable({
@@ -65,24 +66,17 @@ function usePage(name, setLayoutParameters) {
             render(loaded, props) {
                 const Component = loaded.default;
 
+                setLayoutParameters({name: 'default'});
                 return <Component {...props} />;
             }
         }),
-        [name, loading]
+        [name, loading, setLayoutParameters]
     );
 }
 
 function ImportedPage({name}) {
     const {pathname} = useLocation();
-    const {layoutName, layoutData, setLayoutParameters} = useLayoutParameters();
-    const LoadableLayout = React.useMemo(
-        () => loadable({
-            loader: () => import(`~/layouts/${layoutName}/${layoutName}`),
-            loading: LoadingPlaceholder
-        }),
-        [layoutName]
-    );
-    const Page = usePage(name, setLayoutParameters);
+    const Page = usePage(name);
 
     useAnalyticsPageView();
 
@@ -93,11 +87,7 @@ function ImportedPage({name}) {
         [name, pathname]
     );
 
-    return (
-        <LoadableLayout data={layoutData}>
-            <Page />
-        </LoadableLayout>
-    );
+    return <Page />;
 }
 
 const FOOTER_PAGES = [
@@ -126,37 +116,41 @@ function RedirectToCanonicalDetailsPage() {
 }
 
 function MainRoutes() {
+    const {Layout} = useLayoutContext();
+
     return (
-        <Routes>
-            <Route path="/" element={<ImportedPage name="home" />} />
-            {
-                FOOTER_PAGES.map(
-                    (path) => <Route path={path} key={path} element={<ImportedPage name="footer-page" />} />
-                )
-            }
-            <Route path="/errata/" element={<ImportedPage name="errata-summary" />} />
-            <Route path="/errata/form/" element={<ImportedPage name="errata-form" />} />
-            <Route path="/errata/*" element={<ImportedPage name="errata-detail" />} />
-            <Route path="/details/books/:title" element={<ImportedPage name="details" />} />
-            <Route path="/details/:title" element={<RedirectToCanonicalDetailsPage />} />
-            <Route path="/details/" element={<Navigate to="/subjects" replace />} />
-            <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
-            <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
-            <Route path="/subjects-preview/*" element={<ImportedPage name="subjects" />} />
-            <Route path="/k12/*" element={<ImportedPage name="k12" />} />
-            <Route path="/blog/*" element={<ImportedPage name="blog" />} />
-            <Route path="/webinars/*" element={<ImportedPage name="webinars" />} />
-            <Route path="/general/*" element={<ImportedPage name="general" />} />
-            <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
-            <Route path="/campaign/*" element={<ImportedPage name="campaign" />} />
-            <Route path="/press/*" element={<ImportedPage name="press" />} />
-            <Route
-                path="/edtech-partner-program"
-                element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
-            />
-            <Route path="/:name/*" element={<TopLevelPage />} />
-            <Route element={<h1>Fell through</h1>} />
-        </Routes>
+        <Layout>
+            <Routes>
+                <Route path="/" element={<ImportedPage name="home" />} />
+                {
+                    FOOTER_PAGES.map(
+                        (path) => <Route path={path} key={path} element={<ImportedPage name="footer-page" />} />
+                    )
+                }
+                <Route path="/errata/" element={<ImportedPage name="errata-summary" />} />
+                <Route path="/errata/form/" element={<ImportedPage name="errata-form" />} />
+                <Route path="/errata/*" element={<ImportedPage name="errata-detail" />} />
+                <Route path="/details/books/:title" element={<ImportedPage name="details" />} />
+                <Route path="/details/:title" element={<RedirectToCanonicalDetailsPage />} />
+                <Route path="/details/" element={<Navigate to="/subjects" replace />} />
+                <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
+                <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
+                <Route path="/subjects-preview/*" element={<ImportedPage name="subjects" />} />
+                <Route path="/k12/*" element={<ImportedPage name="k12" />} />
+                <Route path="/blog/*" element={<ImportedPage name="blog" />} />
+                <Route path="/webinars/*" element={<ImportedPage name="webinars" />} />
+                <Route path="/general/*" element={<ImportedPage name="general" />} />
+                <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
+                <Route path="/campaign/*" element={<ImportedPage name="campaign" />} />
+                <Route path="/press/*" element={<ImportedPage name="press" />} />
+                <Route
+                    path="/edtech-partner-program"
+                    element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
+                />
+                <Route path="/:name/*" element={<TopLevelPage />} />
+                <Route element={<h1>Fell through</h1>} />
+            </Routes>
+        </Layout>
     );
 }
 
@@ -200,7 +194,9 @@ export default function Router() {
         <RouterContextProvider>
             <PageTitleConfirmation />
             <SkipToContent />
-            <MainRoutes />
+            <LayoutContextProvider>
+                <MainRoutes />
+            </LayoutContextProvider>
         </RouterContextProvider>
     );
 }

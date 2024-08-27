@@ -4,14 +4,16 @@ import FlexPage from '~/pages/flex-page/flex-page';
 import usePageData from '~/helpers/use-page-data';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import useLayoutContext from '~/contexts/layout';
 
 const FallbackToGeneralPage = loadable({
     loader: () => import('./fallback-to-general.js'),
     loading: () => <h1>...General</h1>
 });
 
-export default function FallbackTo({name, setLayoutParameters}) {
+export default function FallbackTo({name}) {
     const data = usePageData(`pages/${name}`, true);
+    const {setLayoutParameters} = useLayoutContext();
 
     if (!data) {
         return <LoadingPlaceholder />;
