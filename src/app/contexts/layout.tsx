@@ -6,7 +6,7 @@ import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeho
 // Webpack wasn't able to make the dynamic strings work in the Context value.
 type LayoutName = 'default' | 'landing';
 const loaders = {
-    'default': () => import('~/layouts/default/default'),
+    default: () => import('~/layouts/default/default'),
     landing: () => import('~/layouts/landing/landing')
 };
 
@@ -15,26 +15,30 @@ function useContextValue() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [layoutData, setLayoutData] = React.useState<any>(undefined);
     const LoadableLayout = React.useMemo(
-        () => loadable({
-            loader: () => loaders[layoutName](),
-            loading: LoadingPlaceholder
-        }),
+        () =>
+            loadable({
+                loader: () => loaders[layoutName](),
+                loading: LoadingPlaceholder
+            }),
         [layoutName]
     );
     const Layout = React.useCallback(
         ({children}: React.PropsWithChildren<object>) => (
-            <LoadableLayout data={layoutData}>
-                {children}
-            </LoadableLayout>
+            <LoadableLayout data={layoutData}>{children}</LoadableLayout>
         ),
         [LoadableLayout, layoutData]
     );
     const setLayoutParameters = React.useCallback(
         // eslint-disable-next-line no-shadow
-        ({name, data}: { name: LayoutName; data: unknown;}) => {
+        (
+            {name, data}: {name: LayoutName; data?: unknown} = {name: 'default'}
+        ) => {
             setLayoutName(name);
             // Optimization: it doesn't matter whether data gets reset if it is undefined
-            if (JSON.stringify(data) !== JSON.stringify(layoutData) && data !== undefined) {
+            if (
+                JSON.stringify(data) !== JSON.stringify(layoutData) &&
+                data !== undefined
+            ) {
                 setLayoutData(data);
             }
         },
@@ -46,7 +50,4 @@ function useContextValue() {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as LayoutContextProvider
-};
+export {useContext as default, ContextProvider as LayoutContextProvider};

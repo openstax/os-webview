@@ -13,24 +13,42 @@ const FallbackToGeneralPage = loadable({
 
 export default function FallbackTo({name}) {
     const data = usePageData(`pages/${name}`, true);
-    const {setLayoutParameters} = useLayoutContext();
 
     if (!data) {
         return <LoadingPlaceholder />;
     }
 
+    return <LoadedPage name={name} data={data} />;
+}
+
+function LoadedPage({data, name}) {
+    const {setLayoutParameters} = useLayoutContext();
+    const hasError = 'error' in data;
+    const isFlex =
+        !hasError &&
+        ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type);
+
+    React.useEffect(() => {
+        if (isFlex) {
+            setLayoutParameters({
+                data,
+                name: data.layout[0]?.type || 'default'
+            });
+            return;
+        }
+        setLayoutParameters();
+    }, [data, isFlex, setLayoutParameters]);
+
     // can we correctly identify missing pages here?
     // i think page-data-utils:fetchFromCMS would have to be updated
     // to do something special on a 404 status
-    if ('error' in data) {
+    if (hasError) {
         return <Error404 />;
     }
 
-    if (['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)) {
-        setLayoutParameters({data, name: data.layout[0]?.type || 'default'});
+    if (isFlex) {
         return <FlexPage data={data} />;
     }
 
-    setLayoutParameters({data: undefined, name: 'default'});
     return <FallbackToGeneralPage name={name} />;
 }

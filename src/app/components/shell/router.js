@@ -66,7 +66,7 @@ function usePage(name) {
             render(loaded, props) {
                 const Component = loaded.default;
 
-                setLayoutParameters({name: 'default'});
+                setLayoutParameters();
                 return <Component {...props} />;
             }
         }),
