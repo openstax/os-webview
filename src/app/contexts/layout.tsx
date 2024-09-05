@@ -10,39 +10,45 @@ const loaders = {
     landing: () => import('~/layouts/landing/landing')
 };
 
+type LayoutParameters = {
+    name: LayoutName;
+    data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+}
+const defaultLayoutParameters: LayoutParameters = {name: 'default'};
+
 function useContextValue() {
-    const [layoutName, setLayoutName] = React.useState<LayoutName>('default');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [layoutData, setLayoutData] = React.useState<any>(undefined);
+    const [layoutParameters, setLayoutParameters] = React.useReducer(
+        (state: LayoutParameters, newState: LayoutParameters) => {
+            if (newState === undefined) {
+                return defaultLayoutParameters;
+            }
+            if (state.name === newState.name && (
+                JSON.stringify(state.data) === JSON.stringify(newState.data) ||
+                state.name === 'default'
+            )) {
+                return state;
+            }
+            return newState;
+        },
+        defaultLayoutParameters
+    );
+    const layoutData = React.useMemo(
+        () => layoutParameters.name === 'default' ? undefined : layoutParameters.data,
+        [layoutParameters]
+    );
     const LoadableLayout = React.useMemo(
         () =>
             loadable({
-                loader: () => loaders[layoutName](),
+                loader: () => loaders[layoutParameters.name](),
                 loading: LoadingPlaceholder
             }),
-        [layoutName]
+        [layoutParameters.name]
     );
     const Layout = React.useCallback(
         ({children}: React.PropsWithChildren<object>) => (
             <LoadableLayout data={layoutData}>{children}</LoadableLayout>
         ),
         [LoadableLayout, layoutData]
-    );
-    const setLayoutParameters = React.useCallback(
-        // eslint-disable-next-line no-shadow
-        (
-            {name, data}: {name: LayoutName; data?: unknown} = {name: 'default'}
-        ) => {
-            setLayoutName(name);
-            // Optimization: it doesn't matter whether data gets reset if it is undefined
-            if (
-                JSON.stringify(data) !== JSON.stringify(layoutData) &&
-                data !== undefined
-            ) {
-                setLayoutData(data);
-            }
-        },
-        [layoutData]
     );
 
     return {Layout, setLayoutParameters};
