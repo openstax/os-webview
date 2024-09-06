@@ -21,8 +21,9 @@ export default function FallbackTo({name}) {
     return <LoadedPage name={name} data={data} />;
 }
 
+// eslint-disable-next-line complexity
 function LoadedPage({data, name}) {
-    const {setLayoutParameters} = useLayoutContext();
+    const {setLayoutParameters, layoutParameters} = useLayoutContext();
     const hasError = 'error' in data;
     const isFlex =
         !hasError &&
@@ -43,12 +44,14 @@ function LoadedPage({data, name}) {
     // i think page-data-utils:fetchFromCMS would have to be updated
     // to do something special on a 404 status
     if (hasError) {
-        return <Error404 />;
+        return layoutParameters.name === 'default' ? <Error404 /> : null;
     }
 
     if (isFlex) {
-        return <FlexPage data={data} />;
+        const expectName = data.layout[0]?.type || 'default';
+
+        return layoutParameters.name === expectName ? <FlexPage data={data} /> : null;
     }
 
-    return <FallbackToGeneralPage name={name} />;
+    return layoutParameters.name === 'default' ? <FallbackToGeneralPage name={name} /> : null;
 }

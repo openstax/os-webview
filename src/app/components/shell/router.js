@@ -56,14 +56,14 @@ function useLoading(name) {
 }
 
 function DefaultLayout({children}) {
-    const {setLayoutParameters} = useLayoutContext();
+    const {setLayoutParameters, layoutParameters} = useLayoutContext();
 
     React.useEffect(
         () => setLayoutParameters(),
         [setLayoutParameters]
     );
 
-    return children;
+    return layoutParameters.name === 'default' ? children : null;
 }
 
 function usePage(name) {

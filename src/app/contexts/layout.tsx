@@ -45,7 +45,7 @@ function useContextValue() {
         [LoadableLayout, layoutParameters.data]
     );
 
-    return {Layout, setLayoutParameters};
+    return {Layout, setLayoutParameters, layoutParameters};
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
