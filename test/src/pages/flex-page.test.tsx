@@ -6,6 +6,7 @@ import {MemoryRouter} from 'react-router-dom';
 import FlexPage from '~/pages/flex-page/flex-page';
 import {CTALinkFields} from '~/pages/flex-page/blocks/CTABlock';
 import {ContentBlockConfig} from '~/pages/flex-page/blocks/ContentBlock';
+import { HeroBlockConfig } from '~/pages/flex-page/blocks/HeroBlock';
 
 const emptyTarget = {
     type: '',
@@ -43,6 +44,13 @@ function Component() {
     );
 }
 
+const mockColor = jest.fn();
+
+jest.mock('color', () => (() => mockColor()));
+mockColor.mockReturnValue({
+    isDark: () => true
+});
+
 describe('flex-page', () => {
     beforeAll(() => {
         const el = document.createElement('meta');
@@ -54,6 +62,45 @@ describe('flex-page', () => {
         body = [heroBlock()];
         render(<Component />);
         expect(screen.getAllByRole('img')).toHaveLength(1);
+    });
+    it('renders heroBlock with top image alignment', () => {
+        const modBlock = heroBlock();
+
+        modBlock.value.config.push({
+            type: 'image_alignment',
+            value: 'top'
+        });
+        body = [modBlock];
+        render(<Component />);
+        expect(
+            document.querySelector('section[style*="--image-vertical-align: flex-start"]')
+        ).not.toBe(null);
+    });
+    it('renders heroBlock with bottom image alignment', () => {
+        const modBlock = heroBlock();
+
+        modBlock.value.config.push({
+            type: 'image_alignment',
+            value: 'bottom'
+        });
+        body = [modBlock];
+        render(<Component />);
+        expect(
+            document.querySelector('section[style*="--image-vertical-align: flex-end"]')
+        ).not.toBe(null);
+    });
+    it('renders heroBlock with background color', () => {
+        const modBlock = heroBlock();
+
+        modBlock.value.config.push({
+            type: 'background_color',
+            value: '#242424'
+        });
+        body = [modBlock];
+        render(<Component />);
+        expect(
+            document.querySelector('section.dark-background')
+        ).not.toBe(null);
     });
     it('renders ctaBlock', () => {
         body = [ctaBlock()];
@@ -120,7 +167,7 @@ function imageBlock(name: string) {
     };
 }
 
-function heroBlock(): ContentBlockConfig {
+function heroBlock(): HeroBlockConfig {
     return {
         id: 'hero-id',
         type: 'hero',
