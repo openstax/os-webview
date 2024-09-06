@@ -2,6 +2,7 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import deepEqual from 'deep-equal';
 
 // Webpack wasn't able to make the dynamic strings work in the Context value.
 type LayoutName = 'default' | 'landing';
@@ -22,19 +23,12 @@ function useContextValue() {
             if (newState === undefined) {
                 return defaultLayoutParameters;
             }
-            if (state.name === newState.name && (
-                JSON.stringify(state.data) === JSON.stringify(newState.data) ||
-                state.name === 'default'
-            )) {
+            if (state.name === newState.name && deepEqual(state.data, newState.data)) {
                 return state;
             }
             return newState;
         },
         defaultLayoutParameters
-    );
-    const layoutData = React.useMemo(
-        () => layoutParameters.name === 'default' ? undefined : layoutParameters.data,
-        [layoutParameters]
     );
     const LoadableLayout = React.useMemo(
         () =>
@@ -46,9 +40,9 @@ function useContextValue() {
     );
     const Layout = React.useCallback(
         ({children}: React.PropsWithChildren<object>) => (
-            <LoadableLayout data={layoutData}>{children}</LoadableLayout>
+            <LoadableLayout data={layoutParameters.data}>{children}</LoadableLayout>
         ),
-        [LoadableLayout, layoutData]
+        [LoadableLayout, layoutParameters.data]
     );
 
     return {Layout, setLayoutParameters};
