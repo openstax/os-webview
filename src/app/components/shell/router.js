@@ -55,9 +55,19 @@ function useLoading(name) {
     );
 }
 
+function DefaultLayout({children}) {
+    const {setLayoutParameters} = useLayoutContext();
+
+    React.useEffect(
+        () => setLayoutParameters(),
+        [setLayoutParameters]
+    );
+
+    return children;
+}
+
 function usePage(name) {
     const loading = useLoading(name);
-    const {setLayoutParameters} = useLayoutContext();
 
     return React.useMemo(
         () => loadable({
@@ -66,11 +76,12 @@ function usePage(name) {
             render(loaded, props) {
                 const Component = loaded.default;
 
-                setLayoutParameters();
-                return <Component {...props} />;
+                return <DefaultLayout>
+                    <Component {...props} />
+                </DefaultLayout>;
             }
         }),
-        [name, loading, setLayoutParameters]
+        [name, loading]
     );
 }
 

@@ -23,7 +23,7 @@ function useContextValue() {
             if (newState === undefined) {
                 return defaultLayoutParameters;
             }
-            if (state.name === newState.name && deepEqual(state.data, newState.data)) {
+            if (deepEqual(state, newState)) {
                 return state;
             }
             return newState;
