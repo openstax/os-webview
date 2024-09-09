@@ -98,7 +98,7 @@ export default {
     'school-type.Home School': 'Home School',
     'school-type.Other': 'Other',
     'selector.select-one': 'Please select one',
-    'student-form:message': 'Students don&apos;t need to fill out any forms to use our books. Access them free now!',
+    'student-form:message': 'Students don\'t need to fill out any forms to use our books. Access them free now!',
     'student-form:go-back': 'Go back',
     'subject.categoryTitle': '{subjectName} Book Categories',
     'subject.learnMoreTitle': 'Learn more',
