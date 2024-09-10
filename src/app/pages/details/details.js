@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import useTOCContext, {TOCContextProvider} from './common/toc-slideout/context';
 import TOCSlideout from './common/toc-slideout/toc-slideout';
 import $ from '~/helpers/$';
@@ -97,23 +97,6 @@ export function BookDetails() {
     );
 }
 
-function getSlugFromLocation(pathname) {
-    const bookTitle = pathname.replace(/.*details\//, '');
-    let slug;
-
-    if ((/^books/).test(bookTitle)) {
-        slug = bookTitle;
-    } else {
-        slug = `books/${bookTitle}`;
-    }
-    // Special handling for books whose slugs have changed
-    if ((/university-physics$/).test(slug)) {
-        slug += '-volume-1';
-    }
-
-    return slug;
-}
-
 function BookDetailsWithContext({data}) {
     return (
         <DetailsContextProvider contextValueParameters={{data}}>
@@ -123,8 +106,8 @@ function BookDetailsWithContext({data}) {
 }
 
 export default function BookDetailsLoader() {
-    const {pathname} = useLocation();
-    const slug = getSlugFromLocation(pathname);
+    const {title} = useParams();
+    const slug = `books/${title}`;
 
     return (
         <LoaderPage slug={slug} Child={BookDetailsWithContext} doDocumentSetup />
