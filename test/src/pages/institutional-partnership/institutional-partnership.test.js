@@ -13,6 +13,6 @@ describe('InstitutionalPartnership', () => {
         );
 
         await screen.findByText('About the program');
-        expect(screen.queryAllByRole('link')).toHaveLength(2);
+        expect(screen.queryAllByRole('link')).toHaveLength(8);
     });
 });
