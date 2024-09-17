@@ -15,7 +15,7 @@ type CardConfig = {
     value: string;
 };
 
-export type CardBlockConfig = {
+type CardBlockConfig = {
   text: string;
   ctaBlock: CTALinkFields[];
 };
@@ -44,7 +44,7 @@ export function CardsBlock({data}: {data: CardsBlockConfig}) {
     );
 }
 
-export function CardBlock({data}: {data: CardBlockConfig}) {
+function CardBlock({data}: {data: CardBlockConfig}) {
     const [cta] = data.ctaBlock;
 
     return <div className="content-block-card">

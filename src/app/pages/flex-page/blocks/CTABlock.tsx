@@ -17,6 +17,11 @@ export function CTALink({link}: {link: CTALinkFields}) {
     const style = findByType(link.config, 'style')?.value;
     const styleClass = style ? `style-${style}` : style;
 
+    // Adjust internal link path
+    if (link.target.value.startsWith('/openstax-homepage')) {
+        link.target.value = link.target.value.replace('/openstax-homepage', '');
+    }
+
     return <Link
         link={link}
         className={cn('cta-link', styleClass, styleClass ? 'styled-button' : undefined)}

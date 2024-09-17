@@ -23,7 +23,7 @@ const ctaActions: CTALinkFields[] = [
         text: 'cta-text',
         target: {
             type: 'cta-target-type',
-            value: 'cta-target-value'
+            value: '/openstax-homepage/cta-target-value'
         }
     },
     {

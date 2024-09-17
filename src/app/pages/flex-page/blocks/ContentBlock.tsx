@@ -29,7 +29,7 @@ export function ContentBlocks({data}: {data: ContentBlockConfig[]}) {
 }
 
 // eslint-disable-next-line complexity
-export function ContentBlock({data}: {data: ContentBlockConfig}) {
+function ContentBlock({data}: {data: ContentBlockConfig}) {
     switch (data.type) {
         case 'hero':
             return <HeroBlock data={data} />;
