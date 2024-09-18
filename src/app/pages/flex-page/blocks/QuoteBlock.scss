@@ -15,6 +15,7 @@
 
     > .content-block-rich-text {
         margin-top: 5rem;
+        overflow: visible;
 
         &:before {
             color: os-color(orange);
