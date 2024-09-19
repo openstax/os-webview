@@ -11,7 +11,6 @@ type Data = {
 };
 
 function Adopters({data}: {data: Data[]}) {
-    console.info('**** DATA', data.slice(0, 10));
     return (
         <main className="adopters-page text-content">
             <h1>Complete list of institutions that have adopted OpenStax</h1>
