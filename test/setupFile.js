@@ -1,5 +1,6 @@
 import 'settings';
 import './helpers/fetch-mocker';
+import './helpers/mock-lazyload';
 import {LocalStorage} from 'node-localstorage';
 import ReactModal from 'react-modal';
 

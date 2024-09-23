@@ -18,17 +18,19 @@ type LayoutParameters = {
 const defaultLayoutParameters: LayoutParameters = {name: 'default'};
 
 function useContextValue() {
-    const [layoutParameters, setLayoutParameters] = React.useReducer(
-        (state: LayoutParameters, newState: LayoutParameters) => {
-            if (newState === undefined) {
-                return defaultLayoutParameters;
+    const [layoutParameters, setLayoutParameters] = React.useState(defaultLayoutParameters);
+    const updateIfNotEqual = React.useCallback(
+        (newValue?: LayoutParameters) => {
+            if (newValue === undefined) {
+                setLayoutParameters(defaultLayoutParameters);
+                return;
             }
-            if (deepEqual(state, newState)) {
-                return state;
+            if (deepEqual(layoutParameters, newValue)) {
+                return;
             }
-            return newState;
+            setLayoutParameters(newValue);
         },
-        defaultLayoutParameters
+        [layoutParameters]
     );
     const LoadableLayout = React.useMemo(
         () =>
@@ -45,7 +47,7 @@ function useContextValue() {
         [LoadableLayout, layoutParameters.data]
     );
 
-    return {Layout, setLayoutParameters, layoutParameters};
+    return {Layout, setLayoutParameters: updateIfNotEqual, layoutParameters};
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});

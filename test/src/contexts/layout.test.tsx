@@ -1,24 +1,50 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import useLayoutContext, { LayoutContextProvider } from '~/contexts/layout';
+import {MemoryRouter} from 'react-router-dom';
 
 function Component() {
     const {Layout, setLayoutParameters} = useLayoutContext();
 
     React.useEffect(
-        () => setLayoutParameters({name: 'landing', data: {title: 'title', layout: [
-            {
-                value: {
-                    navLinks: [{
-                        text: 'Landing page link',
-                        target: {
-                            type: 'href',
-                            value: 'whatever'
+        () => {
+            setLayoutParameters({
+                name: 'landing',
+                data: {
+                    title: 'title', layout: [
+                    {
+                        value: {
+                            navLinks: [{
+                                text: 'Landing page link',
+                                target: {
+                                    type: 'href',
+                                    value: 'whatever'
+                                }
+                            }]
                         }
                     }]
                 }
-            }
-        ]}}),
+            });
+            // Exercise the code that tests for equal setting
+            setTimeout(() => setLayoutParameters({
+                name: 'landing',
+                data: {
+                    title: 'title', layout: [
+                    {
+                        value: {
+                            navLinks: [{
+                                text: 'Landing page link',
+                                target: {
+                                    type: 'href',
+                                    value: 'whatever'
+                                }
+                            }]
+                        }
+                    }]
+                }
+            }), 5);
+            setTimeout(() => setLayoutParameters(undefined), 10);
+        },
         [setLayoutParameters]
     );
 
@@ -29,13 +55,24 @@ function Component() {
     );
 }
 
+jest.useFakeTimers();
+jest.mock('~/layouts/default/microsurvey-popup/microsurvey-popup', () => jest.fn());
+jest.mock('~/layouts/default/header/header', () => jest.fn());
+jest.mock('~/layouts/default/lower-sticky-note/lower-sticky-note', () => jest.fn());
+jest.mock('~/layouts/default/welcome/welcome', () => jest.fn());
+jest.mock('~/layouts/default/footer/footer', () => jest.fn());
+jest.mock('~/layouts/default/takeover-dialog/takeover-dialog', () => jest.fn());
+
 describe('layout-context', () => {
     it('renders a landing page', async () => {
         render(
-            <LayoutContextProvider>
-                <Component />
-            </LayoutContextProvider>
+            <MemoryRouter>
+                <LayoutContextProvider>
+                    <Component />
+                </LayoutContextProvider>
+            </MemoryRouter>
         );
-        await screen.findByText('Landing page link');
+        jest.runAllTimers();
+        await screen.findByText('No menus');
     });
 });

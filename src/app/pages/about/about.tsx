@@ -7,9 +7,22 @@ import './about.scss';
 
 const slug = 'pages/about';
 
-function translateCard(c) {
-    const imgEntry = c.find((v) => v.type === 'image');
-    const textEntry = c.find((v) => v.type === 'paragraph');
+type ImageCard = {
+    type: 'image';
+    value: {
+        image: string;
+        link: string;
+    };
+};
+type TextCard = {
+    type: 'paragraph';
+    value: string;
+};
+type RawCard = [ImageCard, TextCard];
+
+function translateCard(c: RawCard) {
+    const imgEntry = c.find((v) => v.type === 'image') as ImageCard;
+    const textEntry = c.find((v) => v.type === 'paragraph') as TextCard;
 
     return {
         image: imgEntry.value.image,
@@ -18,29 +31,61 @@ function translateCard(c) {
     };
 }
 
-function Card({link, image, text}) {
+function Card({
+    link,
+    image,
+    text
+}: {
+    link: string;
+    image: string;
+    text: string;
+}) {
     const optimizedImage = useOptimizedImage(image);
 
     return (
         <a className="card" href={link}>
             <img src={optimizedImage} role="presentation" />
-            <div className="content">
-                {text}
-            </div>
+            <div className="content">{text}</div>
         </a>
     );
 }
 
-function About({data: {
-    whoHeading, whoParagraph, whoImageUrl,
-    whatHeading, whatParagraph, whatCards,
-    whereHeading, whereParagraph, whereMapUrl: map, whereMapAlt
-}}) {
+type AboutData = {
+    whoHeading: string;
+    whoParagraph: string;
+    whoImageUrl: string;
+    whatHeading: string;
+    whatParagraph: string;
+    whatCards: RawCard[];
+    whereHeading: string;
+    whereParagraph: string;
+    whereMapUrl: string;
+    whereMapAlt: string;
+};
+
+function About({
+    data: {
+        whoHeading,
+        whoParagraph,
+        whoImageUrl,
+        whatHeading,
+        whatParagraph,
+        whatCards,
+        whereHeading,
+        whereParagraph,
+        whereMapUrl: map,
+        whereMapAlt
+    }
+}: {
+    data: AboutData;
+}) {
     const cards = React.useMemo(
-        () => (whatCards || []).map(translateCard),
+        () => whatCards.map(translateCard),
         [whatCards]
     );
-    const mapAlt = whereMapAlt || 'animated map suggesting where our books are being adopted';
+    const mapAlt =
+        whereMapAlt ||
+        'animated map suggesting where our books are being adopted';
     const maxDim = window.innerWidth < 1920 ? 1015 : null;
     const optimizedWhoImage = useOptimizedImage(whoImageUrl, maxDim);
 
@@ -63,13 +108,14 @@ function About({data: {
                             <RawHTML html={whatParagraph} />
                         </div>
                         <div className="cards">
-                            {cards.map(
-                                ({link, image, text}) =>
-                                    <Card
-                                        key={text}
-                                        link={link} image={image} text={text}
-                                    />
-                            )}
+                            {cards.map(({link, image, text}) => (
+                                <Card
+                                    key={text}
+                                    link={link}
+                                    image={image}
+                                    text={text}
+                                />
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -92,7 +138,5 @@ function About({data: {
 }
 
 export default function AboutLoader() {
-    return (
-        <LoaderPage slug={slug} Child={About} doDocumentSetup />
-    );
+    return <LoaderPage slug={slug} Child={About} doDocumentSetup />;
 }
