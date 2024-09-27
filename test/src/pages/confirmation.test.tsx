@@ -2,20 +2,32 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import Confirmation from '~/pages/confirmation/confirmation';
 import {MemoryRouter} from 'react-router-dom';
-import {test, expect} from '@jest/globals';
 
-const referrers = {
-    'contact': 'Thanks for contacting us',
-    'errata?id=7199': 'Thanks for your help!'
-};
-
-Object.entries(referrers).forEach(([key, value]) => {
-    test(`does ${key} thanks`, () => {
+describe('confirmation', () => {
+    it('does a contact thank you', () => {
         render(
-            <MemoryRouter initialEntries={['confirmation', `/confirmation/${key}`]}>
+            <MemoryRouter initialEntries={['/confirmation/contact']}>
                 <Confirmation />
             </MemoryRouter>
         );
-        expect(screen.getByRole('heading').textContent).toBe(value);
+        expect(screen.getByRole('heading').textContent).toBe('Thanks for contacting us');
+    });
+    it('does an errata thank you', async () => {
+        render(
+            <MemoryRouter initialEntries={['/confirmation/errata?id=7199']}>
+                <Confirmation />
+            </MemoryRouter>
+        );
+        await screen.findByText('Date Submitted');
+        expect(screen.getByRole('heading').textContent).toBe('Thanks for your help!');
+    });
+    it('handles errata-confirmation', async () => {
+        render(
+            <MemoryRouter initialEntries={['/errata-confirmation?id=7199']}>
+                <Confirmation />
+            </MemoryRouter>
+        );
+        await screen.findByText('Date Submitted');
+        expect(screen.getByRole('heading').textContent).toBe('Thanks for your help!');
     });
 });

@@ -79,10 +79,6 @@ function ErrataStatusNotification({errataId}: {errataId: string}) {
     const email = useDefaultEmail();
     const notifyByEmail = email && email !== 'none@openstax.org';
 
-    if (!errataId) {
-        return null;
-    }
-
     return notifyByEmail ? (
         ` We'll be sending submission updates to ${email}.`
     ) : (
