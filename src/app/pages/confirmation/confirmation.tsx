@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useLocation } from 'react-router-dom';
 import userModel from '~/models/usermodel';
 import {useErrataDetail} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
@@ -22,11 +23,12 @@ const models = {
     }
 };
 
-function getReferringPage() {
-    let referringPage = window.location.pathname.replace('/confirmation/', '');
+function useReferringPage() {
+    const {pathname} = useLocation();
+    let referringPage = pathname.replace('/confirmation/', '');
 
-    if (referringPage === window.location.pathname) {
-        referringPage = window.location.pathname
+    if (referringPage === pathname) {
+        referringPage = pathname
             .replace('-confirmation', '')
             .replace(/^\//, '');
     }
@@ -116,9 +118,10 @@ function ErrataButtonsAndDetail({
 }
 
 export default function Confirmation() {
-    const referringPage = getReferringPage();
+    const referringPage = useReferringPage();
     const isErrata = referringPage === 'errata';
-    const id = new window.URLSearchParams(window.location.search).get(
+    const {search} = useLocation();
+    const id = new window.URLSearchParams(search).get(
         'id'
     ) as string;
     const {headline, adoptionQuestion} = models[referringPage];

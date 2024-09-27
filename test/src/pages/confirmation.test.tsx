@@ -5,18 +5,17 @@ import {MemoryRouter} from 'react-router-dom';
 import {test, expect} from '@jest/globals';
 
 const referrers = {
-    contact: 'Thanks for contacting us',
+    'contact': 'Thanks for contacting us',
     'errata?id=7199': 'Thanks for your help!'
 };
 
-Reflect.ownKeys(referrers).forEach((ref) => {
-    test(`does ${ref} thanks`, () => {
-        window.history.pushState({}, 'confirmation', `/confirmation/${ref}`);
+Object.entries(referrers).forEach(([key, value]) => {
+    test(`does ${key} thanks`, () => {
         render(
-            <MemoryRouter>
+            <MemoryRouter initialEntries={['confirmation', `/confirmation/${key}`]}>
                 <Confirmation />
             </MemoryRouter>
         );
-        expect(screen.getByRole('heading').textContent).toBe(referrers[ref]);
+        expect(screen.getByRole('heading').textContent).toBe(value);
     });
 });
