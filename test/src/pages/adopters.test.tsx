@@ -1,6 +1,5 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {describe, it} from '@jest/globals';
 import AdoptersPage from '~/pages/adopters/adopters';
 import {MemoryRouter} from 'react-router-dom';
 
