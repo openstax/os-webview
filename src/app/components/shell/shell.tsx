@@ -23,7 +23,7 @@ function AppContext({children}: React.PropsWithChildren<object>) {
     );
 }
 
-const importContact = () => import('~/pages/contact/contact.js');
+const importContact = () => import('~/pages/contact/embedded.js');
 
 function EmbeddedApp() {
     return (

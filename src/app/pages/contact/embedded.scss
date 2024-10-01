@@ -1,0 +1,30 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.embedded-contact {
+    max-width: calc(100vw - 6rem);
+    width: $text-content-max;
+    margin: 3rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    h1 {
+        @include set-font(h3);
+        margin: 0;
+    }
+
+    form {
+        @include wider-than($tablet-max) {
+            padding-left: 4rem;
+        }
+    }
+
+    button {
+        @include button();
+
+        &.primary {
+            @extend %primary;
+            align-self: flex-start;
+        }
+    }
+}
