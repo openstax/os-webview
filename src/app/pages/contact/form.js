@@ -66,7 +66,7 @@ function useAfterSubmit() {
     return React.useCallback(
         () => {
             if (pathname.includes('embedded')) {
-                window.parent.postMessage('contact form submitted');
+                window.parent.postMessage('contact form submitted', '*');
             } else {
                 navigate('/confirmation/contact');
             }
