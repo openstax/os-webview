@@ -6,7 +6,13 @@ import {faCopy} from '@fortawesome/free-regular-svg-icons/faCopy';
 import cn from 'classnames';
 import './ally-logos.scss';
 
-function AllyLogo({data: {file, title}}) {
+type AllyLogoData = {
+    id: number;
+    file: string;
+    title: string;
+};
+
+function AllyLogo({data: {file, title}}: {data: AllyLogoData}) {
     const copyToClipboard = React.useCallback(
         () => window.navigator.clipboard.writeText(file),
         [file]
@@ -18,7 +24,9 @@ function AllyLogo({data: {file, title}}) {
             <span className="url-field-and-button">
                 <span className="url">{file}</span>
                 <button
-                    type="button" aria-label="copy to clipboard" onClick={copyToClipboard}
+                    type="button"
+                    aria-label="copy to clipboard"
+                    onClick={copyToClipboard}
                 >
                     <FontAwesomeIcon icon={faCopy} />
                 </button>
@@ -27,27 +35,55 @@ function AllyLogo({data: {file, title}}) {
     );
 }
 
-function LogoSection({heading, description, logos, className}) {
+type LogoSectionArgs = {
+    heading: string;
+    description: string;
+    logos: {image: AllyLogoData}[];
+    className?: string;
+};
+
+function LogoSection({
+    heading,
+    description,
+    logos,
+    className
+}: LogoSectionArgs) {
     return (
         <section className={cn('boxed', className)}>
             <h2>{heading}</h2>
             <RawHTML html={description} />
             <div className="ally-logo-grid">
-                {
-                    logos.map(
-                        ({image}) => <AllyLogo key={image.id} data={image} />
-                    )
-                }
+                {logos.map(({image}) => (
+                    <AllyLogo key={image.id} data={image} />
+                ))}
             </div>
         </section>
     );
 }
 
-function AllyLogos({data: {
-    heading, description,
-    allyLogosHeading, allyLogosDescription, allyLogos: [allyLogos],
-    bookAllyLogosHeading, bookAllyLogosDescription, bookAllyLogos: [bookAllyLogos]
-}}) {
+type AllyLogosData = Pick<LogoSectionArgs, 'heading' | 'description'> & {
+    allyLogosHeading: string;
+    allyLogosDescription: string;
+    allyLogos: [LogoSectionArgs['logos']];
+    bookAllyLogosHeading: string;
+    bookAllyLogosDescription: string;
+    bookAllyLogos: [LogoSectionArgs['logos']];
+};
+
+function AllyLogos({
+    data: {
+        heading,
+        description,
+        allyLogosHeading,
+        allyLogosDescription,
+        allyLogos: [allyLogos],
+        bookAllyLogosHeading,
+        bookAllyLogosDescription,
+        bookAllyLogos: [bookAllyLogos]
+    }
+}: {
+    data: AllyLogosData;
+}) {
     return (
         <React.Fragment>
             <section className="text-content">
@@ -72,7 +108,11 @@ function AllyLogos({data: {
 export default function AllyLogosLoader() {
     return (
         <main className="ally-logos page">
-            <LoaderPage slug="pages/ally-logos" Child={AllyLogos} doDocumentSetup />
+            <LoaderPage
+                slug="pages/ally-logos"
+                Child={AllyLogos}
+                doDocumentSetup
+            />
         </main>
     );
 }
