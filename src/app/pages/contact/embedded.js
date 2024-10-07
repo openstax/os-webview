@@ -27,7 +27,7 @@ export default function EmbeddedForm() {
 
 function ThankYou() {
     const signalDone = React.useCallback(
-        () => window.parent.postMessage('contact form submitted', '*'),
+        () => window.parent.postMessage('CONTACT_FORM_SUBMITTED', '*'),
         []
     );
 
