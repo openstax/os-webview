@@ -1,4 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
+@import '../errata-form/form/FileUploader';
 
 form {
     textarea {
@@ -17,6 +18,11 @@ form {
 
     }
 
+    .file-button {
+        @include file-button();
+        margin-bottom: $normal-margin;
+    }
+
     .label-text {
         @include set-font(h4);
         margin-bottom: 0.5rem;
@@ -25,7 +31,6 @@ form {
     .btn,
     .btn[type="submit"] {
         @include button();
-        margin-bottom: $normal-margin;
         width: 12rem;
         padding: 0;
 

@@ -19,7 +19,7 @@
         }
     }
 
-    button {
+    button:not(.clear-file) {
         @include button();
 
         &.primary {
