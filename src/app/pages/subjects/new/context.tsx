@@ -2,6 +2,32 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import usePageData from '~/helpers/use-page-data';
 import useLanguageContext from '~/contexts/language';
+import type { LocaleEntry } from '~components/language-selector/language-selector';
+import { toNumber } from 'lodash';
+
+type DevStandardKeys = 'devStandard1Heading';
+type DevStandardPair = {[key in DevStandardKeys]: string};
+export type SubjectData = {
+    icon: string;
+    categories: string[];
+}
+type SubjectsPageData = {
+    title: string;
+    pageDescription: string;
+    subjects: { [key: string]: SubjectData}
+    translations?: Array<{value: LocaleEntry[]}>;
+    books?: {
+        bookState: string;
+    }[];
+    aboutBlurbs?: ReturnType<typeof aboutBlurbs>;
+    headingImage: {
+        meta: {
+            downloadUrl: string;
+        }
+    }
+};
+// The Page data before DevStandardPair is translated to aboutBlurbs
+type RawPageData = SubjectsPageData & DevStandardPair;
 
 const preserveWrapping = true;
 const icons = [
@@ -10,25 +36,25 @@ const icons = [
     '/dist/images/subjects/review-icon.svg'
 ];
 
-function aboutBlurbs(model) {
-    const textData = Reflect.ownKeys(model)
+function aboutBlurbs(model: RawPageData) {
+    const textData = (Reflect.ownKeys(model) as string[])
         .filter((k) => (/^devStandard\d/).test(k))
         .reduce((a, b) => {
-            const [_, num, textId] = b.match(/(\d+)(\w+)/);
-            const index = num - 1;
+            const [_, num, textId] = b.match(/(\d+)(\w+)/) as string[];
+            const index = toNumber(num) - 1;
 
             a[index] = a[index] || {};
-            a[index][textId.toLowerCase()] = model[b];
+            a[index][textId.toLowerCase()] = model[b as DevStandardKeys];
             a[index].iconUrl = icons[index];
             return a;
-        }, []);
+        }, [] as {[key: string]: string}[]);
 
     return textData;
 }
 
 function useContextValue() {
     const [slug, setSlug] = React.useState('new-subjects');
-    const data = usePageData(`pages/${slug}`, preserveWrapping);
+    const data = usePageData<RawPageData>(`pages/${slug}`, preserveWrapping);
     const {language} = useLanguageContext();
 
     React.useEffect(() => {

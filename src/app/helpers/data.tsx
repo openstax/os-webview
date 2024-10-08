@@ -1,5 +1,12 @@
 import React from 'react';
 
+export function assertDefined<T>(value: T | undefined): T {
+    if (typeof value === 'undefined') {
+        throw new Error('Value is undefined');
+    }
+    return value;
+}
+
 export function formatDateForBlog(date: string) {
     if (!date) {
         return null;
@@ -44,5 +51,5 @@ export function htmlToText(html: string) {
     const temp = document.createElement('div');
 
     temp.innerHTML = html;
-    return temp.textContent;
+    return temp.textContent as string;
 }
