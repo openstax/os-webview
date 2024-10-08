@@ -14,11 +14,12 @@ export default function EmbeddedForm() {
         <main id="maincontent" className="embedded-contact">
             <h1>Report an issue</h1>
             <div>
-                Need to suggest a content correction instead? Fill out the{' '}
-                <a href="/errata" target="_blank">
-                    errata form
-                </a>
-                .
+                Need to suggest a content correction instead? Find the book
+                on our{' '}
+                <a href="/subjects" target="_blank">
+                    subjects page
+                </a>.
+                {' '}You can submit errata from the details page for the book.
             </div>
             <Form setSubmitted={setSubmitted} />
         </main>
