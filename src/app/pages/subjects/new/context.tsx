@@ -3,6 +3,7 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import usePageData from '~/helpers/use-page-data';
 import useLanguageContext from '~/contexts/language';
 import type { LocaleEntry } from '~components/language-selector/language-selector';
+import type { InfoBox } from './info-boxes';
 import { toNumber } from 'lodash';
 
 type DevStandardKeys = 'devStandard1Heading';
@@ -15,16 +16,19 @@ type SubjectsPageData = {
     title: string;
     pageDescription: string;
     subjects: { [key: string]: SubjectData}
-    translations?: Array<{value: LocaleEntry[]}>;
+    translations: Array<{value: LocaleEntry[]}>;
     books?: {
         bookState: string;
     }[];
     aboutBlurbs?: ReturnType<typeof aboutBlurbs>;
+    heading: string;
+    description: string;
     headingImage: {
         meta: {
             downloadUrl: string;
         }
     }
+    infoBoxes: InfoBox[]
 };
 // The Page data before DevStandardPair is translated to aboutBlurbs
 type RawPageData = SubjectsPageData & DevStandardPair;
@@ -77,7 +81,7 @@ function useContextValue() {
         data.aboutBlurbs = aboutBlurbs(data);
     }
 
-    return data;
+    return data as SubjectsPageData;
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});

@@ -183,9 +183,18 @@ describe('subjects page', () => {
         await screen.findByText('We have textbooks in', {exact: false});
         await screen.findByText('Business');
     });
-    test('with pageDescription and without translations', async () => {
-        jest.spyOn(updParent, 'default').mockReturnValue(subjectPageData);
+    test('with pageDescription', async () => {
+        const adjustedData = {...subjectPageData, pageDescription: 'pd'};
+
+        jest.spyOn(updParent, 'default').mockReturnValue(adjustedData);
         render(<Component />);
         await screen.findByText('Browse our subjects');
+    });
+    test('without translations', async () => {
+        const adjustedData = {...subjectPageData, translations: []};
+
+        jest.spyOn(updParent, 'default').mockReturnValue(adjustedData);
+        render(<Component />);
+        await screen.findByText('View all Business books');
     });
 });
