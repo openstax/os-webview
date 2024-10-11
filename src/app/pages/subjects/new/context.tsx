@@ -2,20 +2,26 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import usePageData from '~/helpers/use-page-data';
 import useLanguageContext from '~/contexts/language';
-import type { LocaleEntry } from '~components/language-selector/language-selector';
-import type { InfoBox } from './info-boxes';
-import { toNumber } from 'lodash';
+import type {LocaleEntry} from '~/components/language-selector/language-selector';
+import type {InfoBox} from './info-boxes';
+import type {TutorValue} from './tutor-ad';
+import {toNumber} from 'lodash';
 
 type DevStandardKeys = 'devStandard1Heading';
 type DevStandardPair = {[key in DevStandardKeys]: string};
 export type SubjectData = {
     icon: string;
     categories: string[];
-}
+};
+export type ImageData = {
+    id: number;
+    title: string;
+    file: string;
+};
 type SubjectsPageData = {
     title: string;
     pageDescription: string;
-    subjects: { [key: string]: SubjectData}
+    subjects: {[key: string]: SubjectData};
     translations: Array<{value: LocaleEntry[]}>;
     books?: {
         bookState: string;
@@ -26,10 +32,16 @@ type SubjectsPageData = {
     headingImage: {
         meta: {
             downloadUrl: string;
+        };
+    };
+    infoBoxes: InfoBox[];
+    tutorAd: [
+        {
+            value: TutorValue;
         }
-    }
-    infoBoxes: InfoBox[]
+    ];
 };
+
 // The Page data before DevStandardPair is translated to aboutBlurbs
 type RawPageData = SubjectsPageData & DevStandardPair;
 
@@ -86,7 +98,4 @@ function useContextValue() {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as SubjectsContextProvider
-};
+export {useContext as default, ContextProvider as SubjectsContextProvider};

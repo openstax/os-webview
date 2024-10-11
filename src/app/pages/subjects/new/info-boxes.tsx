@@ -1,5 +1,5 @@
 import React from 'react';
-import useSubjectsContext from './context';
+import useSubjectsContext, {ImageData} from './context';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './info-boxes.scss';
 
@@ -7,13 +7,9 @@ export type InfoBox = {
     value: {
         heading: string;
         text: string;
-        image: {
-            id: number;
-            title: string;
-            file: string;
-        }
-    }[]
-}
+        image: ImageData;
+    }[];
+};
 
 function AboutBlurb({image, heading, text: description}: InfoBox['value'][0]) {
     return (
@@ -33,7 +29,9 @@ export function InfoBoxes({infoBoxes}: {infoBoxes: InfoBox['value']}) {
     return (
         <section className="info-boxes">
             <div className="content">
-                {infoBoxes.map((b, i) => <AboutBlurb {...b} key={i} />)}
+                {infoBoxes.map((b, i) => (
+                    <AboutBlurb {...b} key={i} />
+                ))}
             </div>
         </section>
     );
@@ -43,5 +41,5 @@ export default function InfoBoxesUsingContext() {
     const {infoBoxes} = useSubjectsContext();
     const unwrappedData = infoBoxes[0]?.value;
 
-    return (<InfoBoxes infoBoxes={unwrappedData} />);
+    return <InfoBoxes infoBoxes={unwrappedData} />;
 }
