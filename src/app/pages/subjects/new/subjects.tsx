@@ -12,7 +12,7 @@ import './subjects.scss';
 const importLanguageSelector = () => import('./language-selector-section.js');
 const importSubjectsListing = () => import('./import-subjects-listing.js');
 const importTutorAd = () => import('./tutor-ad.js');
-const importInfoBoxes = () => import('./info-boxes.js');
+const importInfoBoxes = () => import('./import-info-boxes.js');
 const importPhilanthropicSupport = () => import('./philanthropic-support.js');
 
 function SEOSetup() {
