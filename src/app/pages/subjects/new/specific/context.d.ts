@@ -1,5 +1,6 @@
 import React from 'react';
 import { LocaleEntry } from '~/components/language-selector/language-selector';
+import { ImageData } from '../context';
 import type { InfoBox } from '../info-boxes';
 
 // There will be more, but this is what I need for now
@@ -36,7 +37,7 @@ type SectionContent = {
 
 type SectionInfo = {
     content: SectionContent & {
-        image: string;
+        image: ImageData;
         adHtml: string;
     }
 };
