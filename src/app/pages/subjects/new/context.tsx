@@ -40,6 +40,7 @@ type SubjectsPageData = {
             value: TutorValue;
         }
     ];
+    philanthropicSupport: string;
 };
 
 // The Page data before DevStandardPair is translated to aboutBlurbs

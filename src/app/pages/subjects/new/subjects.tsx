@@ -13,7 +13,7 @@ const importLanguageSelector = () => import('./language-selector-section.js');
 const importSubjectsListing = () => import('./import-subjects-listing.js');
 const importTutorAd = () => import('./import-tutor-ad.js');
 const importInfoBoxes = () => import('./import-info-boxes.js');
-const importPhilanthropicSupport = () => import('./philanthropic-support.js');
+const importPhilanthropicSupport = () => import('./import-philanthropic-support.js');
 
 function SEOSetup() {
     const {title, pageDescription} = assertDefined(useSubjectsContext());
