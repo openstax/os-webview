@@ -2,20 +2,24 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import useSpecificSubjectContext from './context';
 import {JumpToSection} from './navigator';
-import useToggleContext, {ToggleContextProvider} from '~/components/toggle/toggle-context';
+import useToggleContext, {
+    ToggleContextProvider
+} from '~/components/toggle/toggle-context';
 import {FormattedMessage} from 'react-intl';
 import cn from 'classnames';
 import './subject-intro.scss';
 
-
-function IntroContent({subjectName}) {
-    const {pageDescription: introHtml} = useSpecificSubjectContext();
+function IntroContent({subjectName}: {subjectName: string}) {
+    const introHtml = useSpecificSubjectContext().pageDescription ?? '';
     const {isOpen} = useToggleContext();
 
     return (
         <div className={cn('content', {open: isOpen})}>
             <div>
-                <FormattedMessage id="subject.introText" defaultMessage="Open textbooks" />
+                <FormattedMessage
+                    id="subject.introText"
+                    defaultMessage="Open textbooks"
+                />
             </div>
             <h1>{subjectName}</h1>
             <RawHTML className="paragraph-html" html={introHtml} />
@@ -24,7 +28,7 @@ function IntroContent({subjectName}) {
     );
 }
 
-export default function SubjectIntro({subjectName}) {
+export default function SubjectIntro({subjectName}: {subjectName: string}) {
     return (
         <section className="subject-intro">
             <ToggleContextProvider>
