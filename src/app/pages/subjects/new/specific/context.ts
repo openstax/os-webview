@@ -5,6 +5,7 @@ import {setPageTitleAndDescriptionFromBookData} from '~/helpers/use-document-hea
 import {ImageData} from '../context';
 import type {InfoBox} from '../info-boxes';
 import {LocaleEntry} from '~/components/language-selector/language-selector';
+import type {OsTextbookCategory} from './learn-more';
 
 // There will be more, but this is what I need for now
 export type Book = {
@@ -67,6 +68,8 @@ type SpecificSubjectPageData = {
     webinarHeader: WebinarSectionInfo;
     infoBoxes: InfoBox;
     blogHeader: BlogSectionInfo;
+    osTextbookHeading: string;
+    osTextbookCategories: [OsTextbookCategory[]];
 };
 
 const preserveWrapping = false;
