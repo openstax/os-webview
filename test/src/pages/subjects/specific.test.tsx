@@ -53,7 +53,7 @@ jest.mock('~/pages/subjects/new/specific/translation-selector', () =>
 );
 jest.mock('react-lazyload', () => jest.fn());
 jest.mock('~/pages/subjects/new/specific/import-blog-posts.js', () => jest.fn());
-jest.mock('~/pages/subjects/new/specific/learn-more.js', () => jest.fn());
+jest.mock('~/pages/subjects/new/specific/import-learn-more.js', () => jest.fn());
 
 describe('specific subject page', () => {
     it('renders something', () => {
