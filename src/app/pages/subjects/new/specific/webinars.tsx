@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import {useIntl} from 'react-intl';
 import './webinars.scss';
+import {assertDefined} from '~/helpers/data';
 
 export default function MaybeWebinars() {
     const ctx = useSpecificSubjectContext();
@@ -24,18 +25,17 @@ type WebinarCardData = {
     registration_url: string;
     registration_link_text: string;
     link: string;
-}
+};
 
 const importCarouselSection = () => import('./components/carousel-section');
 
 function Webinars() {
     const {
-        webinarHeader: {
-            content: {heading, webinarDescription, linkHref, linkText}
-        }
-    } = useSpecificSubjectContext();
+        content: {heading, webinarDescription, linkHref, linkText}
+    } = assertDefined(useSpecificSubjectContext().webinarHeader);
     const cms = useEnglishSubject();
-    const blurbs: WebinarCardData[] = useDataFromSlug(`webinars/?subject=${cms}`) || [];
+    const blurbs: WebinarCardData[] =
+        useDataFromSlug(`webinars/?subject=${cms}`) || [];
     const intl = useIntl();
 
     return blurbs.length ? (
@@ -45,7 +45,7 @@ function Webinars() {
             description={webinarDescription}
             linkUrl={linkHref}
             linkText={linkText}
-            thing='webinars'
+            thing="webinars"
             minWidth={290}
         >
             {blurbs.map((blurb) => (
@@ -64,7 +64,7 @@ function Card({
     registration_link_text: watchText
 }: WebinarCardData) {
     return (
-        <div className='card'>
+        <div className="card">
             <h2>{title}</h2>
             <RawHTML html={description} />
             <a href={url}>

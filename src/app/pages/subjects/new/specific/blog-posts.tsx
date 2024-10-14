@@ -6,8 +6,16 @@ import useOptimizedImage from '~/helpers/use-optimized-image';
 import useEnglishSubject from './use-english-subject';
 import {useIntl} from 'react-intl';
 import './blog-posts.scss';
+import { assertDefined } from '~/helpers/data';
 
-function Card({article_image: image, title: linkText, slug}) {
+type Blurb = {
+    id: number;
+    article_image: string;
+    title: string;
+    slug: string;
+}
+
+function Card({article_image: image, title: linkText, slug}: Omit<Blurb, 'id'>) {
     const link = `/blog/${slug}`;
     const optimizedImage = useOptimizedImage(image, 400);
 
@@ -21,23 +29,22 @@ function Card({article_image: image, title: linkText, slug}) {
 
 function BlogPosts() {
     const {
-        blogHeader: {content: {heading, blogDescription, linkText, linkHref}}
-    } = useSpecificSubjectContext();
+        content: {heading, blogDescription, linkText, linkHref}
+    } = assertDefined(useSpecificSubjectContext().blogHeader);
     const cms = useEnglishSubject();
-    const blurbs = useDataFromSlug(`search/?subjects=${cms}`) || [];
+    const blurbs: Blurb[] = useDataFromSlug(`search/?subjects=${cms}`) || [];
     const intl = useIntl();
 
     return (
         blurbs.length ?
             <CarouselSection
-                id="blog-posts" className="blog-posts"
                 heading={heading}
                 description={blogDescription}
                 linkUrl={linkHref} linkText={linkText}
                 thing='blog entries'
                 minWidth={260}
             >
-                {blurbs.map((blurb) => <Card {...blurb} key={blurb.link} />)}
+                {blurbs.map((blurb) => <Card {...blurb} key={blurb.id} />)}
             </CarouselSection> :
             <h2>{intl.formatMessage({id: 'subject.noBlog'})}</h2>
     );
