@@ -70,6 +70,7 @@ type SpecificSubjectPageData = {
     blogHeader: BlogSectionInfo;
     osTextbookHeading: string;
     osTextbookCategories: [OsTextbookCategory[]];
+    pageDescription: string;
 };
 
 const preserveWrapping = false;
