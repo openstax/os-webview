@@ -69,6 +69,9 @@ type SpecificSubjectPageData = {
     osTextbookHeading: string;
     osTextbookCategories: [OsTextbookCategory[]];
     pageDescription: string;
+    learnMoreAboutBooks: string;
+    learnMoreBlogPosts: string;
+    learnMoreWebinars: string;
 };
 
 const preserveWrapping = false;
