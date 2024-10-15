@@ -19,18 +19,16 @@ export type Book = {
     coverUrl: string;
 };
 
-type Category = [
-    string,
-    {
-        books: {
-            [title: string]: [Book];
-        };
-    }
-];
+export type CategoryData = {
+    books: {
+        [title: string]: [Book];
+    };
+    categoryDescription: string;
+};
 
 type SubjectEntry = {
     [title: string]: {
-        categories: Category[];
+        categories: CategoryData[];
     };
 };
 
