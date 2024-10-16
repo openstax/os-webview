@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import {useLocation} from 'react-router-dom';
 import './subjects-listing.scss';
-import { assertDefined } from '~/helpers/data';
+import {assertDefined} from '~/helpers/data';
 
 export default function SubjectsListing() {
     const {subjects} = assertDefined(useSubjectsContext());

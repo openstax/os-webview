@@ -4,6 +4,7 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import {setPageTitleAndDescriptionFromBookData} from '~/helpers/use-document-head';
 import {ImageData} from '../context';
 import type {InfoBox} from '../info-boxes';
+import type { AboutOsData } from '../about-openstax';
 import {LocaleEntry} from '~/components/language-selector/language-selector';
 import type {OsTextbookCategory} from './learn-more';
 
@@ -62,7 +63,7 @@ type SpecificSubjectPageData = {
     title?: string;
     subjects?: SubjectEntry;
     tutorAd: SectionInfo;
-    aboutOs: SectionInfo;
+    aboutOs: {content: AboutOsData};
     webinarHeader: WebinarSectionInfo;
     infoBoxes: InfoBox;
     blogHeader: BlogSectionInfo;
