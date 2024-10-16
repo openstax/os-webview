@@ -10,7 +10,11 @@ export default function PhilanthropicSupport() {
         <section className="philanthropic-support">
             <div className="content">
                 <div className="text-content">
-                    <RawHTML Tag="p" className="savings-blurb" html={savingsBlurb} />
+                    <RawHTML
+                        Tag="p"
+                        className="savings-blurb"
+                        html={savingsBlurb}
+                    />
                 </div>
             </div>
         </section>

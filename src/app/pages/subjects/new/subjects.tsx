@@ -1,7 +1,7 @@
 import React from 'react';
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
 import useSubjectsContext, {SubjectsContextProvider} from './context';
-import {htmlToText} from '~/helpers/data';
+import {htmlToText, assertDefined} from '~/helpers/data';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import Hero from './hero';
 import JITLoad from '~/helpers/jit-load';
@@ -11,16 +11,17 @@ import './subjects.scss';
 
 const importLanguageSelector = () => import('./language-selector-section.js');
 const importSubjectsListing = () => import('./import-subjects-listing.js');
-const importTutorAd = () => import('./tutor-ad.js');
-const importInfoBoxes = () => import('./info-boxes.js');
-const importPhilanthropicSupport = () => import('./philanthropic-support.js');
+const importTutorAd = () => import('./import-tutor-ad.js');
+const importInfoBoxes = () => import('./import-info-boxes.js');
+const importPhilanthropicSupport = () =>
+    import('./import-philanthropic-support.js');
 
 function SEOSetup() {
-    const {title, pageDescription} = useSubjectsContext();
+    const {title, pageDescription} = assertDefined(useSubjectsContext());
 
     useDocumentHead({
         title,
-        description: htmlToText(pageDescription)
+        description: pageDescription ? htmlToText(pageDescription) : undefined
     });
     useCanonicalLink();
 
@@ -28,21 +29,21 @@ function SEOSetup() {
 }
 
 export function SubjectsPage() {
-    const {translations} = useSubjectsContext();
-    const otherLocales = translations.length ?
-        translations[0].value.map((t) => t.locale) :
-        [];
+    const {translations} = assertDefined(useSubjectsContext());
+    const otherLocales = translations?.length
+        ? translations[0].value.map((t) => t.locale)
+        : [];
 
     return (
-        <main className='subjects-page'>
+        <main className="subjects-page">
             <SEOSetup />
             <Hero />
             <img
-                className='strips'
-                src='/dist/images/components/strips.svg'
-                height='10'
-                alt=''
-                role='separator'
+                className="strips"
+                src="/dist/images/components/strips.svg"
+                height="10"
+                alt=""
+                role="separator"
             />
             <JITLoad
                 importFn={importLanguageSelector}
@@ -71,16 +72,16 @@ export default function SubjectsRouter() {
     return (
         <SubjectsContextProvider>
             <Routes>
-                <Route path='/' element={<RedirectSlash />} />
+                <Route path="/" element={<RedirectSlash />} />
                 <Route
-                    path='view-all'
-                    element={<Navigate to='/subjects' replace />}
+                    path="view-all"
+                    element={<Navigate to="/subjects" replace />}
                 />
                 <Route
-                    path='ap'
-                    element={<Navigate to='/subjects/high-school' replace />}
+                    path="ap"
+                    element={<Navigate to="/subjects/high-school" replace />}
                 />
-                <Route path=':subject' element={<LoadSubject />} />
+                <Route path=":subject" element={<LoadSubject />} />
             </Routes>
         </SubjectsContextProvider>
     );

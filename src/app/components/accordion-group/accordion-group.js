@@ -109,7 +109,7 @@ export default function AccordionGroup({
     items,
     accordionProps={allowZeroExpanded: true},
     noScroll=false,
-    forwardOnChange,
+    forwardOnChange=false,
     preExpanded=[],
     ...props
 }) {
