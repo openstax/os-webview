@@ -3,6 +3,8 @@ import useSharedDataContext from '~/contexts/shared-data';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 
+// Loaded using import(), so it must remain JS
+
 function useFeatureFlag() {
     const {flags: {new_subjects: flag}} = useSharedDataContext();
 
@@ -10,7 +12,7 @@ function useFeatureFlag() {
 }
 
 const NewPage = loadable({
-    loader: () => import('./new/subjects.js'),
+    loader: () => import('./new/load-subjects.js'),
     loading: LoadingPlaceholder
 });
 
