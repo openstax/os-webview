@@ -60,34 +60,6 @@
 
     form {
         color: os-color(blue);
-
-        textarea {
-            height: auto;
-            resize: none;
-        }
-
-        > .form-content > label {
-            display: block;
-            height: $form-element-height;
-            margin-bottom: $form-element-height;
-
-            &.auto-height {
-                height: auto;
-            }
-        }
-    }
-
-    .btn {
-        @include button();
-        margin-bottom: $form-element-height;
-    }
-
-    [type="submit"] {
-        @extend %primary;
-
-        float: none;
-        margin: 0;
-        padding: 0 5rem;
     }
 
     address {

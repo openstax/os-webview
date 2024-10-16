@@ -4,6 +4,7 @@ import DropdownSelect from '~/components/select/drop-down/drop-down';
 import {useNavigate, useLocation} from 'react-router-dom';
 import { FileButton } from '../errata-form/form/FileUploader';
 import useUserContext from '~/contexts/user';
+import './form.scss';
 
 const options = [
     'General',
@@ -19,8 +20,6 @@ const options = [
     'Website',
     'OpenStax Polska'
 ].map((s) => ({label: s, value: s}));
-
-options[0].selected = true;
 
 const assignableOptions = [
     'Getting Started',
@@ -59,29 +58,57 @@ function LabeledInputWithInvalidMessage({
     );
 }
 
-function useAfterSubmit() {
-    const navigate = useNavigate();
+function useIsEmbedded() {
     const {pathname} = useLocation();
+
+    return pathname.includes('embedded');
+}
+
+function useAfterSubmit(setSubmitted) {
+    const navigate = useNavigate();
+    const isEmbedded = useIsEmbedded();
 
     return React.useCallback(
         () => {
-            if (pathname.includes('embedded')) {
-                window.parent.postMessage('contact form submitted');
+            if (isEmbedded) {
+                setSubmitted(true);
             } else {
                 navigate('/confirmation/contact');
             }
         },
-        [navigate, pathname]
+        [navigate, isEmbedded, setSubmitted]
     );
+}
+
+function useSubjectWithInitialization() {
+    const isEmbedded = useIsEmbedded();
+    const initialValue = isEmbedded ? 'OpenStax Assignable' : 'General';
+    const subjectState = useState(initialValue);
+
+    // useEffect runs too late
+    React.useMemo(
+        () => {
+            for (const o of options) {
+                if (o.value === initialValue) {
+                    o.selected = true;
+                } else {
+                    delete o.selected;
+                }
+            }
+        },
+        [initialValue]
+    );
+
+    return subjectState;
 }
 
 // This is an interim site; normally we can leave postTo null and the default
 // in the salesforceForm will be right.
 const newPostSite = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
 
-export default function ContactForm() {
+export default function ContactForm({setSubmitted}) {
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
-    const [subject, setSubject] = useState('General');
+    const [subject, setSubject] = useSubjectWithInitialization();
     const assignableSelected = React.useMemo(
         () => subject === 'OpenStax Assignable',
         [subject]
@@ -94,15 +121,11 @@ export default function ContactForm() {
         () => (subject === 'OpenStax Polska') ? '/apps/cms/api/mail/send_mail' : newPostSite,
         [subject]
     );
-    const onChangeSubject = React.useCallback(
-        (value) => setSubject(value),
-        []
-    );
     const beforeSubmit = React.useCallback(
         () => setShowInvalidMessages(true),
         [setShowInvalidMessages]
     );
-    const afterSubmit = useAfterSubmit();
+    const afterSubmit = useAfterSubmit(setSubmitted);
     const searchParams = new window.URLSearchParams(window.location.search);
     const bodyParams = searchParams.getAll('body').join('\n');
     const {userStatus} = useUserContext();
@@ -115,33 +138,48 @@ export default function ContactForm() {
             <input type="hidden" name="user_id" value={userUuid} />
             <input type="hidden" name="support_context" value={bodyParams} />
             <label>
-                What is your question about?
+                <div className="label-text">
+                    What is your question about?
+                </div>
                 <DropdownSelect
-                    name="subject" options={options}
-                    onValueUpdate={onChangeSubject}
+                    name="subject"
+                    options={options}
+                    onValueUpdate={setSubject}
                 />
             </label>
             {
-                assignableSelected && <label>What Assignable topic in particular?
-                <DropdownSelect
-                    name="feature" options={assignableOptions}
-                />
+                assignableSelected && <label>
+                    <div className="label-text">
+                        What Assignable topic in particular?
+                    </div>
+                    <DropdownSelect
+                        name="feature" options={assignableOptions}
+                    />
                 </label>
             }
             <LabeledInputWithInvalidMessage showMessage={showInvalidMessages}>
-                Your Name
+                <div className="label-text">
+                    Your Name
+                </div>
                 <input name="name" type="text" size="20" required />
             </LabeledInputWithInvalidMessage>
             <LabeledInputWithInvalidMessage showMessage={showInvalidMessages}>
-                Your Email Address
+                <div className="label-text">
+                   Your Email Address
+                </div>
                 <input name="email" type="email" required />
             </LabeledInputWithInvalidMessage>
             <LabeledInputWithInvalidMessage className="auto-height" showMessage={showInvalidMessages}>
-                Your Message
+                <div className="label-text">
+                    Your Message
+                </div>
                 <textarea cols="50" name="description" rows="6" required />
             </LabeledInputWithInvalidMessage>
+            <div className="label-text">
+                Please add a screenshot or any other file that helps explain your request.
+            </div>
             <FileButton name="attachment" />
-            <input type="submit" value="Send" className="btn btn-orange" onClick={beforeSubmit} />
+            <input type="submit" className="btn btn-orange" onClick={beforeSubmit} />
         </SalesforceForm>
     );
 }

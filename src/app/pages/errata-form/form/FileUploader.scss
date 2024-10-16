@@ -1,0 +1,22 @@
+@mixin file-button() {
+    align-items: center;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(3, auto) 1fr;
+
+    &.empty {
+        order: 1;
+
+        + .file-button.empty {
+            display: none;
+        }
+    }
+
+    .clear-file {
+        appearance: none;
+        background-color: inherit;
+        color: inherit;
+        justify-self: left;
+
+    }
+}

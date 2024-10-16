@@ -1,0 +1,46 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import '../errata-form/form/FileUploader';
+
+form {
+    textarea {
+        height: auto;
+        resize: none;
+    }
+
+    > .form-content > label {
+        display: block;
+        height: $form-element-height;
+        margin-bottom: $form-element-height;
+
+        &.auto-height {
+            height: auto;
+        }
+
+    }
+
+    .file-button {
+        @include file-button();
+        margin-bottom: $normal-margin;
+    }
+
+    .label-text {
+        @include set-font(h4);
+        margin-bottom: 0.5rem;
+    }
+
+    .btn,
+    .btn[type="submit"] {
+        @include button();
+        width: 12rem;
+        padding: 0;
+
+    }
+
+    [type="submit"] {
+        @extend %primary;
+
+        float: none;
+        margin: 0;
+        padding: 0 5rem;
+    }
+}
