@@ -13,7 +13,8 @@ const importLanguageSelector = () => import('./language-selector-section.js');
 const importSubjectsListing = () => import('./import-subjects-listing.js');
 const importTutorAd = () => import('./import-tutor-ad.js');
 const importInfoBoxes = () => import('./import-info-boxes.js');
-const importPhilanthropicSupport = () => import('./import-philanthropic-support.js');
+const importPhilanthropicSupport = () =>
+    import('./import-philanthropic-support.js');
 
 function SEOSetup() {
     const {title, pageDescription} = assertDefined(useSubjectsContext());
@@ -29,20 +30,20 @@ function SEOSetup() {
 
 export function SubjectsPage() {
     const {translations} = assertDefined(useSubjectsContext());
-    const otherLocales = translations?.length ?
-        translations[0].value.map((t) => t.locale) :
-        [];
+    const otherLocales = translations?.length
+        ? translations[0].value.map((t) => t.locale)
+        : [];
 
     return (
-        <main className='subjects-page'>
+        <main className="subjects-page">
             <SEOSetup />
             <Hero />
             <img
-                className='strips'
-                src='/dist/images/components/strips.svg'
-                height='10'
-                alt=''
-                role='separator'
+                className="strips"
+                src="/dist/images/components/strips.svg"
+                height="10"
+                alt=""
+                role="separator"
             />
             <JITLoad
                 importFn={importLanguageSelector}
@@ -71,16 +72,16 @@ export default function SubjectsRouter() {
     return (
         <SubjectsContextProvider>
             <Routes>
-                <Route path='/' element={<RedirectSlash />} />
+                <Route path="/" element={<RedirectSlash />} />
                 <Route
-                    path='view-all'
-                    element={<Navigate to='/subjects' replace />}
+                    path="view-all"
+                    element={<Navigate to="/subjects" replace />}
                 />
                 <Route
-                    path='ap'
-                    element={<Navigate to='/subjects/high-school' replace />}
+                    path="ap"
+                    element={<Navigate to="/subjects/high-school" replace />}
                 />
-                <Route path=':subject' element={<LoadSubject />} />
+                <Route path=":subject" element={<LoadSubject />} />
             </Routes>
         </SubjectsContextProvider>
     );
