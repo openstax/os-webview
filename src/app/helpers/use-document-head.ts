@@ -76,7 +76,7 @@ type ArticleSubject = {name: string} | {value: {subject: {name: string}}[]};
 
 type Collection = {name: string} | {value: {collection: {name: string}}[]};
 
-type BookData = {
+export type BookData = {
     meta?: object;
     description?: string;
     bookSubjects?: Subject[];
@@ -84,6 +84,9 @@ type BookData = {
     title?: string;
     articleSubjects?: ArticleSubject[];
     collections?: Collection[];
+    error?: {
+        message: string;
+    }
 };
 
 // eslint-disable-next-line complexity
