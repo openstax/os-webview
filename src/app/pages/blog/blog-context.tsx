@@ -5,7 +5,52 @@ import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useLatestBlogEntries from '~/models/blog-entries';
 import useData from '~/helpers/use-data';
-const stayHere = {path: '/blog'};
+
+type NewsPageData = {
+    title: string;
+    interestBlock: {
+        type: string;
+        values: string;
+        id: string;
+    };
+    footerText: string;
+    footerButtonText: string;
+    footerLink: string;
+    meta: {
+        slug: string;
+        searchDescription: string;
+    };
+    displayFooter: boolean;
+}
+
+type SubjectEntry = {
+    name: string;
+    featured: boolean;
+};
+
+type CollectionEntry = {
+    name: string;
+    featured: boolean;
+    popular: boolean;
+};
+
+type Article = {
+    id: number;
+    slug: string;
+    title: string;
+    heading: string;
+    subheading?: string;
+    bodyBlurb: string;
+    articleImage?: string;
+    articleImageAlt?: string;
+    date: string;
+    author: string;
+    pinToTop: boolean;
+    collections: CollectionEntry[];
+    articleSubjects: SubjectEntry[];
+    seoTitle: string;
+    searchDescription: string;
+}
 
 function useEnglishSubjects() {
     return useData({
@@ -21,11 +66,13 @@ function useCollections() {
     }, []);
 }
 
+type TType = string | undefined;
+
 function useTopicStories() {
-    const [topicType, setTopicType] = React.useState();
-    const [topic, setTopic] = React.useState();
+    const [topicType, setTopicType] = React.useState<TType>();
+    const [topic, setTopic] = React.useState<TType>();
     const setTypeAndTopic = React.useCallback(
-        (typ, top) => {
+        (typ: TType, top: TType) => {
             setTopicType(typ);
             setTopic(top);
         },
@@ -43,7 +90,7 @@ function useTopicStories() {
         },
         [topic, topicType]
     );
-    const topicStories = camelCaseKeys(useDataFromSlug(slug) || []);
+    const topicStories: Article[] = camelCaseKeys(useDataFromSlug(slug) || []);
 
     // Until search returns the heading field
     topicStories.forEach((s) => {
@@ -55,7 +102,7 @@ function useTopicStories() {
     const topicFeatured = React.useMemo(
         () => {
             const fieldFromType = topicType === 'subject' ? 'articleSubjects' : 'collections';
-            const findFeatures = (story) =>
+            const findFeatures = (story: Article) =>
                 story[fieldFromType].some((s) => s.name === topic && s.featured);
 
             return topicStories.find(findFeatures);
@@ -64,7 +111,7 @@ function useTopicStories() {
     );
     const topicPopular = React.useMemo(
         () => topicStories.filter(
-            (story) => story.collections.some((c) => c.popular)
+            (story: Article) => story.collections.some((c) => c.popular)
         ),
         [topicStories]
     );
@@ -72,7 +119,7 @@ function useTopicStories() {
     return ({topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular});
 }
 
-function useContextValue({footerText, footerButtonText, footerLink, meta}) {
+function useContextValue({footerText, footerButtonText, footerLink, meta}: NewsPageData) {
     const navigate = useNavigate();
     const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} = useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
@@ -81,16 +128,16 @@ function useContextValue({footerText, footerButtonText, footerLink, meta}) {
     const subjectSnippet = useEnglishSubjects();
     const collectionSnippet = useCollections();
     const setPath = React.useCallback(
-        (href) => {
+        (href: string) => {
             const {pathname, search, hash} = new window.URL(href, window.location.href);
 
-            navigate(`${pathname}${search}${hash}`, stayHere);
+            navigate(`${pathname}${search}${hash}`);
             window.scrollTo(0, 0);
         },
         [navigate]
     );
     const searchFor = React.useCallback(
-        (searchString) => setPath(`/blog/?q=${searchString}`),
+        (searchString: string) => setPath(`/blog/?q=${searchString}`),
         [setPath]
     );
 
@@ -109,8 +156,8 @@ function useContextValue({footerText, footerButtonText, footerLink, meta}) {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-function BlogContextProvider({children}) {
-    const data = usePageData('news');
+function BlogContextProvider({children}: React.PropsWithChildren<object>) {
+    const data = usePageData<NewsPageData>('news');
 
     if (!data) {
         return null;
