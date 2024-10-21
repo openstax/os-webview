@@ -36,9 +36,7 @@ type CollectionEntry = {
 
 type ArticleSummary = {
     id: number;
-    slug: string;
     title: string;
-    heading: string;
     subheading?: string;
     bodyBlurb: string;
     articleImage?: string;
@@ -46,14 +44,28 @@ type ArticleSummary = {
     date: string;
     author: string;
     pinToTop: boolean;
+    tags: string[];
     collections: CollectionEntry[];
     articleSubjects: SubjectEntry[];
+    contentTypes: string[];
+    slug: string;
     seoTitle: string;
     searchDescription: string;
+    heading?: string;
+}
+
+export type SubjectSnippet = {
+    id: number;
+    name: string;
+    pageContent: string;
+    seoTitle: string;
+    searchDescription: string;
+    subjectIcon: string;
+    subjectColor: string;
 }
 
 function useEnglishSubjects() {
-    return useData({
+    return useData<SubjectSnippet[]>({
         slug: 'snippets/subjects?format=json&locale=en',
         camelCase: true
     }, []);
@@ -66,7 +78,7 @@ function useCollections() {
     }, []);
 }
 
-type TType = string | undefined;
+export type TType = string | undefined;
 
 function useTopicStories() {
     const [topicType, setTopicType] = React.useState<TType>();

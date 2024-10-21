@@ -71,7 +71,7 @@ export type ArticleSummaryData = {
     collectionNames: string[];
     articleSubjectNames: string[];
     setPath: (href: string) => void;
-    openInNewWindow: boolean;
+    openInNewWindow?: boolean;
     HeadTag?: keyof JSX.IntrinsicElements;
 };
 
