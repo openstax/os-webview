@@ -2,35 +2,35 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import Byline from '~/components/byline/byline';
 import ClippedImage from '~/components/clipped-image/clipped-image';
+import type {
+    ArticleSummary as BlurbDataBase,
+    CollectionEntry,
+    SubjectEntry
+} from '~/pages/blog/blog-context';
 
-type Collection = {
-    name?: string;
-    value: {collection: Collection}[];
-};
+type CollectionVariant =
+    | CollectionEntry
+    | {
+          value: {collection: CollectionEntry}[];
+      };
 
-type ArticleSubject = {
-    name?: string;
-    value: {subject: ArticleSubject}[];
-};
+type ArticleSubjectVariant =
+    | SubjectEntry
+    | {
+          value: {subject: SubjectEntry}[];
+      };
 
-type BlurbData = null | {
-    id: string;
-    collections: Collection[];
-    articleSubjects: ArticleSubject[];
-    heading: string;
-    subheading: string;
-    articleImage: string;
-    articleImageAlt: string;
-    bodyBlurb: string;
-    author: string;
-    date: string;
-    slug?: string;
-    meta: {slug: string};
-};
+type BlurbData =
+    | null
+    | (Omit<BlurbDataBase, 'collections' | 'articleSubjects'> & {
+          meta?: {slug: string};
+          collections: CollectionVariant[];
+          articleSubjects: ArticleSubjectVariant[];
+      });
 
 export function blurbModel(data: BlurbData) {
     if (!data) {
-        return {};
+        return {} as Record<string, never>;
     }
 
     return {
@@ -56,7 +56,7 @@ export function blurbModel(data: BlurbData) {
         body: data.bodyBlurb,
         author: data.author,
         date: data.date,
-        articleSlug: data.slug || data.meta.slug
+        articleSlug: data.slug || (data.meta?.slug as string)
     };
 }
 

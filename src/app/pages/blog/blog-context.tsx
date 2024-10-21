@@ -21,38 +21,38 @@ type NewsPageData = {
         searchDescription: string;
     };
     displayFooter: boolean;
-}
+};
 
-type SubjectEntry = {
+export type SubjectEntry = {
     name: string;
     featured: boolean;
 };
 
-type CollectionEntry = {
+export type CollectionEntry = {
     name: string;
     featured: boolean;
     popular: boolean;
 };
 
-type ArticleSummary = {
-    id: number;
-    title: string;
-    subheading?: string;
-    bodyBlurb: string;
-    articleImage?: string;
+export type ArticleSummary = {
+    articleImage: string;
     articleImageAlt?: string;
-    date: string;
-    author: string;
-    pinToTop: boolean;
-    tags: string[];
-    collections: CollectionEntry[];
     articleSubjects: SubjectEntry[];
+    author: string;
+    bodyBlurb: string;
+    collections: CollectionEntry[];
     contentTypes: string[];
-    slug: string;
-    seoTitle: string;
+    date: string;
+    heading: string;
+    id: number;
+    pinToTop: boolean;
     searchDescription: string;
-    heading?: string;
-}
+    seoTitle: string;
+    slug: string;
+    title: string;
+    subheading: string;
+    tags: string[];
+};
 
 export type SubjectSnippet = {
     id: number;
@@ -62,47 +62,56 @@ export type SubjectSnippet = {
     searchDescription: string;
     subjectIcon: string;
     subjectColor: string;
-}
+};
 
 function useEnglishSubjects() {
-    return useData<SubjectSnippet[]>({
-        slug: 'snippets/subjects?format=json&locale=en',
-        camelCase: true
-    }, []);
-}
-
-function useCollections() {
-    return useData({
-        slug: 'snippets/blogcollection?format=json',
-        camelCase: true
-    }, []);
-}
-
-export type TType = string | undefined;
-
-function useTopicStories() {
-    const [topicType, setTopicType] = React.useState<TType>();
-    const [topic, setTopic] = React.useState<TType>();
-    const setTypeAndTopic = React.useCallback(
-        (typ: TType, top: TType) => {
-            setTopicType(typ);
-            setTopic(top);
+    return useData<SubjectSnippet[]>(
+        {
+            slug: 'snippets/subjects?format=json&locale=en',
+            camelCase: true
         },
         []
     );
-    const slug = React.useMemo(
-        () => {
-            if (!topicType) {
-                return null;
-            }
-            if (topicType.startsWith('subj')) {
-                return `search/?subjects=${topic}`;
-            }
-            return `search/?collection=${topic}`;
+}
+
+function useCollections() {
+    return useData(
+        {
+            slug: 'snippets/blogcollection?format=json',
+            camelCase: true
         },
-        [topic, topicType]
+        []
     );
-    const topicStories: ArticleSummary[] = camelCaseKeys(useDataFromSlug(slug) || []);
+}
+
+export type TType = undefined | 'subjects' | 'collections';
+
+export function assertTType(s: string | undefined) {
+    if (s === undefined || ['subjects', 'collections'].includes(s)) {
+        return s as TType;
+    }
+    throw new Error(`Topic type is invalid: ${s}`);
+}
+
+function useTopicStories() {
+    const [topicType, setTopicType] = React.useState<TType>();
+    const [topic, setTopic] = React.useState<string>();
+    const setTypeAndTopic = React.useCallback((typ: TType, top?: string) => {
+        setTopicType(typ);
+        setTopic(top);
+    }, []);
+    const slug = React.useMemo(() => {
+        if (!topicType) {
+            return null;
+        }
+        if (topicType.startsWith('subj')) {
+            return `search/?subjects=${topic}`;
+        }
+        return `search/?collection=${topic}`;
+    }, [topic, topicType]);
+    const topicStories: ArticleSummary[] = camelCaseKeys(
+        useDataFromSlug(slug) || []
+    );
 
     // Until search returns the heading field
     topicStories.forEach((s) => {
@@ -111,29 +120,34 @@ function useTopicStories() {
         }
     });
 
-    const topicFeatured = React.useMemo(
-        () => {
-            const fieldFromType = topicType === 'subject' ? 'articleSubjects' : 'collections';
-            const findFeatures = (story: ArticleSummary) =>
-                story[fieldFromType].some((s) => s.name === topic && s.featured);
+    const topicFeatured = React.useMemo(() => {
+        const fieldFromType =
+            topicType === 'subjects' ? 'articleSubjects' : 'collections';
+        const findFeatures = (story: ArticleSummary) =>
+            story[fieldFromType].some((s) => s.name === topic && s.featured);
 
-            return topicStories.find(findFeatures);
-        },
-        [topicStories, topic, topicType]
-    );
+        return topicStories.find(findFeatures);
+    }, [topicStories, topic, topicType]);
     const topicPopular = React.useMemo(
-        () => topicStories.filter(
-            (story: ArticleSummary) => story.collections.some((c) => c.popular)
-        ),
+        () =>
+            topicStories.filter((story: ArticleSummary) =>
+                story.collections.some((c) => c.popular)
+            ),
         [topicStories]
     );
 
-    return ({topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular});
+    return {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular};
 }
 
-function useContextValue({footerText, footerButtonText, footerLink, meta}: NewsPageData) {
+function useContextValue({
+    footerText,
+    footerButtonText,
+    footerLink,
+    meta
+}: NewsPageData) {
     const navigate = useNavigate();
-    const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} = useTopicStories();
+    const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} =
+        useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
     const pinnedStory = topicFeatured || (pinnedData && pinnedData[0]);
     const totalCount = pinnedData?.totalCount;
@@ -141,7 +155,10 @@ function useContextValue({footerText, footerButtonText, footerLink, meta}: NewsP
     const collectionSnippet = useCollections();
     const setPath = React.useCallback(
         (href: string) => {
-            const {pathname, search, hash} = new window.URL(href, window.location.href);
+            const {pathname, search, hash} = new window.URL(
+                href,
+                window.location.href
+            );
 
             navigate(`${pathname}${search}${hash}`);
             window.scrollTo(0, 0);
@@ -158,10 +175,20 @@ function useContextValue({footerText, footerButtonText, footerLink, meta}: NewsP
     }
 
     return {
-        setPath, pinnedStory, totalCount, subjectSnippet, collectionSnippet,
-        topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular,
+        setPath,
+        pinnedStory,
+        totalCount,
+        subjectSnippet,
+        collectionSnippet,
+        topic,
+        setTypeAndTopic,
+        topicStories,
+        topicFeatured,
+        topicPopular,
         pageDescription: meta.searchDescription,
-        footerText, footerButtonText, footerLink,
+        footerText,
+        footerButtonText,
+        footerLink,
         searchFor
     };
 }
@@ -182,7 +209,4 @@ function BlogContextProvider({children}: React.PropsWithChildren<object>) {
     );
 }
 
-export {
-    useContext as default,
-    BlogContextProvider
-};
+export {useContext as default, BlogContextProvider};
