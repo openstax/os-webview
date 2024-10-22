@@ -17,6 +17,7 @@ export default function ToggleControlBar({ Indicator, children }) {
         [isOpen]
     );
     const focusRef = useRefToFocusAfterClose();
+    const listboxId = `lbid-${Math.floor(Math.random() * 1010101)}`;
 
     React.useEffect(() => {
         if (isOpen) {
@@ -41,8 +42,11 @@ export default function ToggleControlBar({ Indicator, children }) {
             onClick={() => toggle()}
             onKeyDown={onKeyDown}
             ref={focusRef}
+            role="combobox"
+            aria-controls={listboxId}
+            aria-haspopup={listboxId}
         >
-            <div>{children}</div>
+            <div role="listbox" id={listboxId}>{children}</div>
             <Indicator isOpen={isOpen} />
         </div>
     );

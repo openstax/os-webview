@@ -29,10 +29,10 @@ test('creates with role selector', () =>
     expect(screen.queryAllByRole('option', {hidden: true})).toHaveLength(8));
 
 test('form appears when role is selected', async () => {
-    const listBox = screen.queryByRole('listbox');
+    const listBoxes = screen.queryAllByRole('listbox');
     const user = userEvent.setup();
 
-    await user.click(listBox);
+    await user.click(listBoxes[1]);
     const options = await screen.findAllByRole('option', {hidden: true});
     const instructorOption = options.find(
         (o) => o.textContent === 'Instructor'
