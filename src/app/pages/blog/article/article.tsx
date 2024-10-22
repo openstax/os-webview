@@ -34,7 +34,7 @@ type BodyData = {
           };
     id: string;
 };
-type ArticleData = BookData & {
+export type ArticleData = BookData & {
     error?: {
         message: string;
     };
@@ -47,6 +47,7 @@ type ArticleData = BookData & {
     articleImage: string;
     featuredImageAltText: string;
     tags: string[];
+    gatedContent?: boolean;
 };
 
 function ArticleLoader({slug, onLoad}: ArticleArgs) {
