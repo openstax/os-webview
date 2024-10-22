@@ -8,7 +8,10 @@ import PinnedArticle from '../pinned-article/pinned-article';
 import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import MoreStories from '../more-stories/more-stories';
 import Section from '~/components/explore-page/section/section';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
+import ArticleSummary, {
+    blurbModel,
+    PopulatedBlurbModel
+} from '../article-summary/article-summary';
 
 export default function ExplorePage() {
     useParamsToSetTopic();
@@ -54,20 +57,20 @@ export default function ExplorePage() {
     );
 }
 
-type BlurbData = Exclude<ReturnType<typeof blurbModel>, Record<string, never>>;
-
 function PopularPosts() {
     const {topicPopular, setPath} = useBlogContext();
 
-    return (
-        topicPopular.map(blurbModel).map((article) => (
-            <div className="card" key={article.articleSlug}>
-                <ArticleSummary
-                    {...{...(article as BlurbData), setPath, HeadTag: 'h3'}}
-                />
-            </div>
-        ))
-    );
+    return topicPopular.map(blurbModel).map((article) => (
+        <div className="card" key={article.articleSlug}>
+            <ArticleSummary
+                {...{
+                    ...(article as PopulatedBlurbModel),
+                    setPath,
+                    HeadTag: 'h3'
+                }}
+            />
+        </div>
+    ));
 }
 
 // If it returns null, the topic is not a Subject

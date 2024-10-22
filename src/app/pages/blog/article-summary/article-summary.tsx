@@ -60,6 +60,11 @@ export function blurbModel(data: BlurbData) {
     };
 }
 
+export type PopulatedBlurbModel = Exclude<
+    ReturnType<typeof blurbModel>,
+    Record<string, never>
+>;
+
 export type ArticleSummaryData = {
     articleSlug: string;
     image: string;
