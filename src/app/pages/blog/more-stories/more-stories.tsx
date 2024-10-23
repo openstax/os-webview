@@ -1,11 +1,16 @@
 import React from 'react';
-import ArticleSummary, {blurbModel} from '../article-summary/article-summary';
+import ArticleSummary, {blurbModel, PopulatedBlurbModel} from '../article-summary/article-summary';
 import useLatestBlogEntries from '~/models/blog-entries';
 import useBlogContext from '../blog-context';
 import './more-stories.scss';
 import Section from '~/components/explore-page/section/section';
 
-export function LatestBlurbs({page, pageSize, exceptSlug='', openInNewWindow}) {
+export function LatestBlurbs({page, pageSize, exceptSlug='', openInNewWindow}: {
+    page: number;
+    pageSize: number;
+    exceptSlug?: string;
+    openInNewWindow?: boolean;
+}) {
     const numberNeeded = page * pageSize;
     const latestStories = useLatestBlogEntries(numberNeeded);
     const {setPath, topicStories} = useBlogContext();
@@ -16,7 +21,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug='', openInNewWindow}) {
 
     const articles = (topicStories.length ? topicStories : latestStories)
         .map(blurbModel)
-        .filter((article) => exceptSlug !== article.articleSlug)
+        .filter((article: PopulatedBlurbModel) => exceptSlug !== article.articleSlug)
         .slice((page - 1) * pageSize, numberNeeded);
 
     return (
@@ -25,7 +30,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug='', openInNewWindow}) {
             data-analytics-content-list="Latest Blog Posts"
         >
             {
-                articles.map((article) =>
+                articles.map((article: PopulatedBlurbModel) =>
                     <div className="card" key={article.articleSlug}>
                         <ArticleSummary {...{...article, setPath, openInNewWindow, HeadTag: 'h3'}} />
                     </div>
@@ -35,7 +40,12 @@ export function LatestBlurbs({page, pageSize, exceptSlug='', openInNewWindow}) {
     );
 }
 
-export default function MoreStories({exceptSlug, subhead}) {
+export default function MoreStories({exceptSlug, subhead}:
+    {
+        exceptSlug: string;
+        subhead?: Parameters<typeof Section>[0]['topicHeading'];
+    }
+) {
     return (
         <Section className="more-stories" name="Latest blog posts" topicHeading={subhead}>
             <LatestBlurbs page={1} pageSize={3} exceptSlug={exceptSlug} />
