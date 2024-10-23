@@ -1,7 +1,7 @@
 import React from 'react';
-import {describe, it} from '@jest/globals';
+import {describe, test, expect} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
-import {useSet} from '~/helpers/data';
+import {useSet, assertDefined} from '~/helpers/data';
 
 function Component() {
     const s = useSet([1]);
@@ -25,8 +25,13 @@ function Component() {
 }
 
 describe('helpers/data', () => {
-    it('useSet add/delete', async () => {
+    test('useSet add/delete', async () => {
         render(<Component />);
         await screen.findByText('ok', undefined, {timeout: 200});
+    });
+    test('assertDefined throws', () => {
+        const foo: string | undefined = undefined;
+
+        expect(() => assertDefined(foo)).toThrowError();
     });
 });
