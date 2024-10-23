@@ -28,7 +28,25 @@ type BlurbData =
           articleSubjects: ArticleSubjectVariant[];
       });
 
-export function blurbModel(data: BlurbData) {
+
+export type ArticleSummaryData = {
+    id?: number;
+    articleSlug: string;
+    image: string;
+    altText?: string;
+    headline: string;
+    subheading: string;
+    body: string;
+    date: string;
+    author: string;
+    collectionNames: string[];
+    articleSubjectNames: string[];
+    openInNewWindow?: boolean;
+    HeadTag?: keyof JSX.IntrinsicElements;
+    setPath?: (href: string) => void;
+};
+
+export function blurbModel(data: BlurbData): ArticleSummaryData | Record<string, never> {
     if (!data) {
         return {} as Record<string, never>;
     }
@@ -65,21 +83,6 @@ export type PopulatedBlurbModel = Exclude<
     Record<string, never>
 >;
 
-export type ArticleSummaryData = {
-    articleSlug: string;
-    image: string;
-    headline: string;
-    subheading: string;
-    body: string;
-    date: string;
-    author: string;
-    collectionNames: string[];
-    articleSubjectNames: string[];
-    setPath: (href: string) => void;
-    openInNewWindow?: boolean;
-    HeadTag?: keyof JSX.IntrinsicElements;
-};
-
 export default function ArticleSummary({
     articleSlug,
     image,
@@ -105,8 +108,10 @@ export default function ArticleSummary({
             if (target.getAttribute('target') === '_blank') {
                 return;
             }
-            event.preventDefault();
-            setPath(target.href);
+            if (setPath) {
+                event.preventDefault();
+                setPath(target.href);
+            }
         },
         [setPath]
     );

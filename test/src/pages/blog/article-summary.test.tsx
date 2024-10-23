@@ -1,7 +1,9 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import {describe, it, expect} from '@jest/globals';
-import ArticleSummary, {blurbModel} from '~/pages/blog/article-summary/article-summary';
+import ArticleSummary, {
+    blurbModel
+} from '~/pages/blog/article-summary/article-summary';
 import userEvent from '@testing-library/user-event';
 
 describe('article-summary', () => {
@@ -11,13 +13,13 @@ describe('article-summary', () => {
 
         render(
             <ArticleSummary
-                articleSlug='article-slug'
-                image='image-url'
-                headline='Article Headline'
-                subheading='Sub heading'
-                body='some text'
-                date='Today'
-                author='Jest'
+                articleSlug="article-slug"
+                image="image-url"
+                headline="Article Headline"
+                subheading="Sub heading"
+                body="some text"
+                date="Today"
+                author="Jest"
                 collectionNames={['tag1', 'tag2']}
                 articleSubjectNames={[]}
                 setPath={setPath}
@@ -27,7 +29,9 @@ describe('article-summary', () => {
         const links = await screen.findAllByRole('link');
 
         expect(links).toHaveLength(2);
-        expect(links.filter((l) => l.getAttribute('target') === '_blank')).toHaveLength(2);
+        expect(
+            links.filter((l) => l.getAttribute('target') === '_blank')
+        ).toHaveLength(2);
 
         await user.click(links[0]);
         expect(setPath).not.toBeCalled();
@@ -38,13 +42,13 @@ describe('article-summary', () => {
 
         render(
             <ArticleSummary
-                articleSlug='article-slug'
-                image='image-url'
-                headline='Article Headline'
-                subheading='Sub heading'
-                body='some text'
-                date='Today'
-                author='Jest'
+                articleSlug="article-slug"
+                image="image-url"
+                headline="Article Headline"
+                subheading="Sub heading"
+                body="some text"
+                date="Today"
+                author="Jest"
                 collectionNames={['tag1', 'tag2']}
                 articleSubjectNames={[]}
                 setPath={setPath}
@@ -54,10 +58,46 @@ describe('article-summary', () => {
         const links = await screen.findAllByRole('link');
 
         expect(links).toHaveLength(2);
-        expect(links.filter((l) => l.getAttribute('target') === '_blank')).toHaveLength(0);
+        expect(
+            links.filter((l) => l.getAttribute('target') === '_blank')
+        ).toHaveLength(0);
 
         await user.click(links[0]);
         expect(setPath).toBeCalled();
+    });
+    it('is ok with no setPath', async () => {
+        const user = userEvent.setup();
+        const originalError = console.error;
+
+        console.error = jest.fn();
+
+        render(
+            <ArticleSummary
+                articleSlug="article-slug"
+                image="image-url"
+                headline="Article Headline"
+                subheading="Sub heading"
+                body="some text"
+                date="Today"
+                author="Jest"
+                collectionNames={['tag1', 'tag2']}
+                articleSubjectNames={[]}
+                openInNewWindow={false}
+            />
+        );
+        const links = await screen.findAllByRole('link');
+
+        expect(links).toHaveLength(2);
+        expect(
+            links.filter((l) => l.getAttribute('target') === '_blank')
+        ).toHaveLength(0);
+
+        await user.click(links[0]);
+        expect(console.error).toHaveBeenCalledWith(
+            expect.stringContaining('Error: Not implemented: navigation'),
+            undefined
+        );
+        console.error = originalError;
     });
 });
 
@@ -70,16 +110,20 @@ describe('blurbModel', () => {
             slug: 'required',
             collections: [
                 {
-                    value: [{
-                        collection: {name: 'first collection', value: []}
-                    }]
+                    value: [
+                        {
+                            collection: {name: 'first collection', value: []}
+                        }
+                    ]
                 }
             ],
             articleSubjects: [
                 {
-                    value: [{
-                        subject: {name: 'first articleSubject', value: []}
-                    }]
+                    value: [
+                        {
+                            subject: {name: 'first articleSubject', value: []}
+                        }
+                    ]
                 }
             ]
         } as unknown as Parameters<typeof blurbModel>[0]);
