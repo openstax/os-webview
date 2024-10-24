@@ -72,7 +72,7 @@ function AutoFocusVerticalList({options}) {
     );
 }
 
-export default function DropDownSelect({options, placeholder, ...passThruProps}) {
+export default function DropDownSelect({options, placeholder='Please select', ...passThruProps}) {
     return (
         <Select {...passThruProps}>
             <ToggleContextProvider>
