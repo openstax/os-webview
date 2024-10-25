@@ -38,6 +38,7 @@ function RenderInContext({items, RenderItem, vListRef, onSelect, onCancel}) {
         <div
             className="vertical-list" tabIndex="0" ref={vListRef}
             onBlur={onCancel} onKeyDown={onKeyDown}
+            role="listbox"
         >
             {
                 items.map((item, i) =>

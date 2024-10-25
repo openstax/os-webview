@@ -49,13 +49,10 @@ function LabeledInputWithInvalidMessage({
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const el = ref?.current?.querySelector<HTMLInputElement & {
+        const el = ref?.current?.querySelector('[name]') as HTMLInputElement & {
             validationMessage: string;
-        }>('[name]');
+        };
 
-        if (!el) {
-            return () => null; // Get assertDefined() instead
-        }
         const updateMessage = () => setMessage(el.validationMessage);
 
         updateMessage();

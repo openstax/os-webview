@@ -25,7 +25,7 @@ export default function Select({name, required, onValueUpdate, children}) {
 
     return (
         <SelectContextProvider contextValueParameters={{onValueUpdate}}>
-            <div className="Select" role="listbox">
+            <div className="Select">
                 {name && <HiddenSelect {...{name, required, elementRef}} />}
                 {children}
             </div>
