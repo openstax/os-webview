@@ -21,6 +21,7 @@ describe('give-before-other', () => {
                     close={close}
                     data={data}
                     onDownload={onDownload}
+                    variant=''
                 />
             </MemoryRouter>
         );

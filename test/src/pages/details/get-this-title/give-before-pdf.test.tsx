@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {fireEvent, render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {MemoryRouter} from 'react-router-dom';
 import GiveBeforePdf from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-pdf';
@@ -19,7 +19,18 @@ const data: DonationPopupData = {
 } as unknown as DonationPopupData; // doesn't matter
 /* eslint-enable camelcase */
 
+function ShowThankYouButton({children}: React.PropsWithChildren<object>) {
+    const {showThankYou, onThankYouClick} = TY.useOnThankYouClick();
+
+    if (showThankYou) {
+        return children;
+    }
+    return <button onClick={onThankYouClick}>Show thank you</button>;
+}
+
 describe('give-before-pdf', () => {
+    const originalError = console.error;
+
     afterEach(() => {
         jest.resetAllMocks();
         jest.restoreAllMocks();
@@ -41,9 +52,27 @@ describe('give-before-pdf', () => {
         await screen.findByText('your download is ready');
     });
     it('shows Thank You', async () => {
+        render(
+            <ShowThankYouButton>
+                <MemoryRouter initialEntries={['']}>
+                    <GiveBeforePdf
+                        link="gbp-link"
+                        close={close}
+                        data={data}
+                        onDownload={onDownload}
+                    />
+                </MemoryRouter>
+            </ShowThankYouButton>
+        );
+        await user.click(await screen.findByRole('button'));
+        await screen.findByText('Go to your file');
+    });
+    it('Thank You note can be filled and submitted', async () => {
+        const thankYouClick = jest.fn(() => console.info('** Thank you'));
+
         jest.spyOn(TY, 'useOnThankYouClick').mockReturnValue({
             showThankYou: true,
-            onThankYouClick: () => null
+            onThankYouClick: () => thankYouClick()
         });
         render(
             <MemoryRouter initialEntries={['']}>
@@ -52,11 +81,34 @@ describe('give-before-pdf', () => {
                     close={close}
                     data={data}
                     onDownload={onDownload}
+                    track="thanks"
                 />
             </MemoryRouter>
         );
         jest.runAllTimers();
-        await screen.findByText('Send us a thank you note');
+        await screen.findByRole('heading', {
+            level: 1,
+            name: 'Send us a thank you note'
+        });
+        screen.getAllByRole('textbox').forEach((el) => {
+            fireEvent.input(el, {target: {value: 'something'}});
+        });
+        await user.click(screen.getByRole('checkbox'));
+        console.error = jest.fn();
+        // This is the submit button, but submit doesn't work in testing :(
+        await user.click(screen.getByRole('button'));
+        expect(console.error).toHaveBeenCalledWith(
+            expect.stringContaining(
+                'Not implemented: HTMLFormElement.prototype.submit'
+            ),
+            undefined
+        );
+        // So we can test the "never mind" link
+        await user.click(screen.getByRole('link'));
+        // Even firing the submit event doesn't cause anything to happen?
+        fireEvent.submit(screen.getByRole('form'));
+        // So we directly fire the load on the form target iframe
+        fireEvent.load(screen.getByTitle('form-response'));
     });
     it('Exercise data-track and datalayer effect', async () => {
         (window as unknown as Window & {dataLayer: object[]}).dataLayer = [];
@@ -67,7 +119,7 @@ describe('give-before-pdf', () => {
                     close={close}
                     data={data}
                     onDownload={onDownload}
-                    track='something'
+                    track="something"
                 />
             </MemoryRouter>
         );
@@ -83,11 +135,7 @@ describe('give-before-pdf', () => {
         expect(close).not.toHaveBeenCalled();
         render(
             <MemoryRouter initialEntries={['']}>
-                <GiveBeforePdf
-                    link="gbp-link"
-                    close={close}
-                    data={data}
-                />
+                <GiveBeforePdf link="gbp-link" close={close} data={data} />
             </MemoryRouter>
         );
         screen.getByText('Downloading...');
@@ -99,11 +147,7 @@ describe('give-before-pdf', () => {
     it('handles Give link click', async () => {
         render(
             <MemoryRouter initialEntries={['/k12/something']}>
-                <GiveBeforePdf
-                    link="gbp-link"
-                    close={close}
-                    data={data}
-                />
+                <GiveBeforePdf link="gbp-link" close={close} data={data} />
             </MemoryRouter>
         );
         screen.getByText('Downloading...');
@@ -113,6 +157,12 @@ describe('give-before-pdf', () => {
         const links = screen.getAllByRole('link');
 
         expect(links.length).toBe(2);
+        console.error = jest.fn();
         await user.click(links[0]);
+        expect(console.error).toHaveBeenCalledWith(
+            expect.stringContaining('Not implemented: window.open'),
+            undefined
+        );
+        console.error = originalError;
     });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import FeaturedResourcesSection from '../../common/featured-resources/featured-resources.js';
+import FeaturedResourcesSection from '../../common/featured-resources/featured-resources';
 import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import VideoResourceBoxes from '../../common/resource-box/video-resource-box';

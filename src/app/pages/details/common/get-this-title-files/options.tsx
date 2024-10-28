@@ -1,5 +1,8 @@
 import React from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+    FontAwesomeIcon,
+    FontAwesomeIconProps
+} from '@fortawesome/react-fontawesome';
 import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import {faListOl} from '@fortawesome/free-solid-svg-icons/faListOl';
 import {faCloudDownloadAlt} from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
@@ -16,25 +19,46 @@ import RecommendedCallout from './recommended-callout/recommended-callout';
 import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
 import useCalloutCounter from './recommended-callout/use-callout-counter';
 import trackLink from '../track-link';
+import type {Model} from '../get-this-title';
+import type {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
-function IconAndText({icon, text}) {
+type Icon = FontAwesomeIconProps['icon'];
+
+function IconAndText({icon, text}: {icon: Icon; text: string}) {
     return (
         <React.Fragment>
             <FontAwesomeIcon icon={icon} />
-            <span className='text'>{text}</span>
+            <span className="text">{text}</span>
         </React.Fragment>
     );
 }
 
-function Option({condition, children}) {
+function Option({
+    condition,
+    children
+}: React.PropsWithChildren<{
+    condition: string | false;
+}>) {
     if (!condition) {
         return null;
     }
 
-    return <div className='option' children={children} />;
+    return <div className="option" children={children} />;
 }
 
-export function SimpleLinkOption({link, icon, text, children, ...linkOptions}) {
+export function SimpleLinkOption({
+    link,
+    icon,
+    text,
+    children,
+    ...linkOptions
+}: React.PropsWithChildren<
+    {
+        link: string;
+        icon: Icon;
+        text: string;
+    } & React.AnchorHTMLAttributes<HTMLAnchorElement>
+>) {
     return (
         <Option condition={link}>
             <a href={link} {...linkOptions}>
@@ -45,7 +69,7 @@ export function SimpleLinkOption({link, icon, text, children, ...linkOptions}) {
     );
 }
 
-export function TocOption({model}) {
+export function TocOption({model}: {model: Model}) {
     const {toggle, isOpen} = useTOCContext();
     const includeTOC = ['live', 'deprecated', 'new_edition_available'].includes(
         model.bookState
@@ -59,31 +83,32 @@ export function TocOption({model}) {
         return null;
     }
 
-    function toggleToc(event) {
+    function toggleToc(event: React.MouseEvent) {
         toggle();
         event.preventDefault();
     }
 
     return (
-        <div className='option toc-option'>
+        <div className="option toc-option">
             <a
-                href='/'
-                role='button'
-                className='show-toc'
+                href="/"
+                role="button"
+                className="show-toc"
                 aria-pressed={isOpen}
                 onClick={toggleToc}
                 onKeyDown={treatSpaceOrEnterAsClick}
             >
                 <FontAwesomeIcon icon={faListOl} />
-                <span className='text'>{text}</span>
+                <span className="text">{text}</span>
             </a>
         </div>
     );
 }
 
 // eslint-disable-next-line complexity
-export function WebviewOption({model}) {
+export function WebviewOption({model}: {model: Model}) {
     const [showCallout, hideForever] = useCalloutCounter(model.slug);
+
     const intl = useIntl();
     const texts = {
         link: intl.formatMessage({id: 'getit.webview.link'})
@@ -96,7 +121,7 @@ export function WebviewOption({model}) {
     };
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
     const trackDownload = React.useCallback(
-        (event) => {
+        (event: TrackedMouseEvent) => {
             trackLink(event, model.id);
         },
         [model.id]
@@ -104,24 +129,25 @@ export function WebviewOption({model}) {
 
     return (
         <Option condition={!model.comingSoon && webviewLink}>
-            <div className='option-with-callout'>
+            <div className="option-with-callout">
                 <a
                     href={webviewLink}
                     data-local={isRex}
-                    rel='noreferrer'
+                    rel="noreferrer"
                     onClick={openGiveDialog}
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>
                 <GiveDialog
                     link={webviewLink}
-                    variant='View online'
+                    variant="View online"
                     warning={model.contentWarningText}
-                    track='Online'
-                    onDownload={trackDownload} id={model.id}
+                    track="Online"
+                    onDownload={trackDownload as (e: React.MouseEvent) => void}
+                    id={model.id}
                 />
                 {showCallout && (
-                    <div className='callout recommended-callout'>
+                    <div className="callout recommended-callout">
                         <RecommendedCallout
                             title={model.rexCalloutTitle}
                             blurb={model.rexCalloutBlurb}
@@ -134,7 +160,7 @@ export function WebviewOption({model}) {
     );
 }
 
-export function PdfOption({model}) {
+export function PdfOption({model}: {model: Model}) {
     const polish = $.isPolish(model.title);
     const intl = useIntl();
     const pdfText = polish
@@ -144,10 +170,10 @@ export function PdfOption({model}) {
         ? ' przykład'
         : intl.formatMessage({id: 'getit.pdf.sample'});
     const text = pdfText + (model.comingSoon ? sampleText : '');
-    const pdfLink = model.highResolutionPdfUrl || model.lowResolutionPdfUrl;
+    const pdfLink = model.highResolutionPdfUrl; // low res option is obsolete now
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
     const trackDownload = React.useCallback(
-        (event) => {
+        (event: TrackedMouseEvent) => {
             trackLink(event, model.id);
         },
         [model.id]
@@ -162,8 +188,9 @@ export function PdfOption({model}) {
                 onClick={openGiveDialog}
             />
             <GiveDialog
-                link={pdfLink} track='PDF'
-                onDownload={trackDownload}
+                link={pdfLink}
+                track="PDF"
+                onDownload={trackDownload as (e: React.MouseEvent) => void}
                 id={model.id}
                 warning={model.contentWarningText}
             />
@@ -172,20 +199,17 @@ export function PdfOption({model}) {
 }
 
 export function usePrintCopyDialog() {
-    const [Dialog, open, close] = useDialog();
+    const [Dialog, open] = useDialog();
     const PCDialog = React.useCallback(
-        ({text, slug}) => (
+        ({text, slug}: {text: string; slug: string}) => (
             <Dialog title={text}>
-                <OrderPrintCopy
-                    slug={slug}
-                    hideDialog={() => close()}
-                />
+                <OrderPrintCopy slug={slug} />
             </Dialog>
         ),
-        [close, Dialog]
+        [Dialog]
     );
     const onClick = React.useCallback(
-        (event) => {
+        (event: React.MouseEvent) => {
             event.preventDefault();
             open();
         },
@@ -195,43 +219,43 @@ export function usePrintCopyDialog() {
     return {onClick, PCDialog};
 }
 
-export function BookshareOption({model}) {
+export function BookshareOption({model}: {model: Model}) {
     return (
         <SimpleLinkOption
             link={model.bookshareLink}
             icon={faVolumeUp}
-            text='Bookshare'
-            data-track='Bookshare'
+            text="Bookshare"
+            data-track="Bookshare"
         />
     );
 }
 
-export function Ibooks2Volumes({model}) {
+export function Ibooks2Volumes({model}: {model: Model}) {
     const intl = useIntl();
     const download = intl.formatMessage({id: 'getit.ibooks.download'});
 
     return (
         <React.Fragment>
-            <span className='option-header'>
+            <span className="option-header">
                 <IconAndText icon={faApple} text={download} />
             </span>
-            <a href={model.ibookLink} data-track='iBooks'>
+            <a href={model.ibookLink} data-track="iBooks">
                 <FormattedMessage
-                    id='getit.ibooks.part1'
-                    defaultMessage='iBooks part 1'
+                    id="getit.ibooks.part1"
+                    defaultMessage="iBooks part 1"
                 />
             </a>
-            <a href={model.ibookLink2} data-track='iBooks'>
+            <a href={model.ibookLink2} data-track="iBooks">
                 <FormattedMessage
-                    id='getit.ibooks.part2'
-                    defaultMessage='iBooks part 2'
+                    id="getit.ibooks.part2"
+                    defaultMessage="iBooks part 2"
                 />
             </a>
         </React.Fragment>
     );
 }
 
-export function IbooksOption({model}) {
+export function IbooksOption({model}: {model: Model}) {
     const intl = useIntl();
     const download = intl.formatMessage({id: 'getit.ibooks.download'});
 
@@ -240,7 +264,7 @@ export function IbooksOption({model}) {
             {model.ibookLink2 ? (
                 <Ibooks2Volumes model={model} />
             ) : (
-                <a href={model.ibookLink} data-track='iBooks'>
+                <a href={model.ibookLink} data-track="iBooks">
                     <IconAndText icon={faApple} text={download} />
                 </a>
             )}
@@ -248,7 +272,7 @@ export function IbooksOption({model}) {
     );
 }
 
-export function KindleOption({model}) {
+export function KindleOption({model}: {model: Model}) {
     const intl = useIntl();
     const header = intl.formatMessage({id: 'getit.kindle.header'});
     const defaultDisclaimer =
@@ -259,11 +283,11 @@ export function KindleOption({model}) {
             link={model.kindleLink}
             icon={faAmazon}
             text={header}
-            data-track='Kindle'
+            data-track="Kindle"
         >
-            <div className='disclaimer'>
+            <div className="disclaimer">
                 <FormattedMessage
-                    id='getit.kindle.disclaimer'
+                    id="getit.kindle.disclaimer"
                     defaultMessage={defaultDisclaimer}
                 />
             </div>
@@ -271,22 +295,22 @@ export function KindleOption({model}) {
     );
 }
 
-export function CheggOption({model}) {
+export function CheggOption({model}: {model: Model}) {
     return (
         <Option condition={model.cheggLink}>
-            <a href={model.cheggLink} data-track='Chegg Reader'>
+            <a href={model.cheggLink} data-track="Chegg Reader">
                 <img
-                    className='logo-img'
-                    src='/dist/images/icons/Chegglogo.svg'
-                    alt=''
+                    className="logo-img"
+                    src="/dist/images/icons/Chegglogo.svg"
+                    alt=""
                 />
-                <span className='text'>{model.cheggLinkText}</span>
+                <span className="text">{model.cheggLinkText}</span>
             </a>
         </Option>
     );
 }
 
-function useExpanderText(optionCount) {
+function useExpanderText(optionCount: number) {
     const intl = useIntl();
     const options =
         optionCount > 1
@@ -302,11 +326,19 @@ function useExpanderText(optionCount) {
     };
 }
 
-export function OptionExpander({expanded, additionalOptions, toggle}) {
+export function OptionExpander({
+    expanded,
+    additionalOptions,
+    toggle
+}: {
+    expanded: boolean;
+    toggle: () => void;
+    additionalOptions: number;
+}) {
     const text =
         useExpanderText(additionalOptions)[expanded ? 'fewer' : 'more'];
     const doToggle = React.useCallback(
-        (event) => {
+        (event: React.MouseEvent) => {
             toggle();
             event.preventDefault();
         },
@@ -318,9 +350,9 @@ export function OptionExpander({expanded, additionalOptions, toggle}) {
     }
 
     return (
-        <div className='option expander'>
+        <div className="option expander">
             <a
-                href='.'
+                href="."
                 onClick={doToggle}
                 onKeyDown={treatSpaceOrEnterAsClick}
                 aria-expanded={expanded}

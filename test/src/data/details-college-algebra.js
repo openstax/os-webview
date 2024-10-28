@@ -1,7 +1,7 @@
 const details = {
     "id": 39,
     "meta": {
-        "slug": "college-algebra",
+        "slug": "books/college-algebra",
         "seo_title": "Free College Algebra Textbook Available for Download",
         "search_description": "Study algebra online free by downloading OpenStax's College Algebra book and using our accompanying online resources including an algebra study guide.",
         "type": "books.Book",

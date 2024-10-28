@@ -34,7 +34,8 @@ export default function useGiveDialog() {
             warning?: string;
             id?: string;
         }) => {
-            const Variant = lookupVariant(warning, variant, id) as typeof GiveBeforeOther;
+            const variantParams = {link, track, close, data, onDownload, variant, warning, id};
+            const [Variant, typedVariantParams] = lookupVariant(warning, variantParams);
             const aria =
                 Variant === GiveBeforePdf
                     ? {labelledby: 'dialog-heading'}
@@ -42,9 +43,7 @@ export default function useGiveDialog() {
 
             return (
                 <Dialog aria={aria}>
-                    <Variant
-                        {...{link, track, close, data, onDownload, variant, warning, id}}
-                    />
+                    <Variant {...typedVariantParams} />
                 </Dialog>
             );
         },
@@ -73,12 +72,21 @@ export function useOpenGiveDialog() {
     return {GiveDialog, openGiveDialog};
 }
 
-function lookupVariant(warning: string, variant?: VariantValue, id?: string) {
+// This was a little bit clever, so typing became a problem
+function lookupVariant(warning: string, variantParams: {
+    id?: string;
+    variant?: string;
+}): [
+    Variant: (p: any) => React.JSX.Element, // eslint-disable-line @typescript-eslint/no-explicit-any
+    p: object
+] {
+    const {id, variant} = variantParams;
+
     if (warning && id && !checkWarningCookie(id)) {
-        return ContentWarning;
+        return [ContentWarning, variantParams as Parameters<typeof ContentWarning>];
     }
     if (variant !== undefined) {
-        return GiveBeforeOther;
+        return [GiveBeforeOther, variantParams as Parameters<typeof GiveBeforeOther>];
     }
-    return GiveBeforePdf;
+    return [GiveBeforePdf, variantParams as Parameters<typeof GiveBeforePdf>];
 }

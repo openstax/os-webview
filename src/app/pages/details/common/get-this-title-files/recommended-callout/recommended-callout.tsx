@@ -5,7 +5,15 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import './recommended-callout.scss';
 
-export default function RecommendedCallout({title, blurb, onPutAway}) {
+export default function RecommendedCallout({
+    title,
+    blurb,
+    onPutAway
+}: {
+    title?: string;
+    blurb?: string;
+    onPutAway: () => void;
+}) {
     const intl = useIntl();
     const titleToUse = title || intl.formatMessage({id: 'recommended'});
 
@@ -13,12 +21,15 @@ export default function RecommendedCallout({title, blurb, onPutAway}) {
         <div className="triangle-attachment">
             <div className="container">
                 <span className="callout-title">{titleToUse}</span>
-                <button type="button" className="put-away" onClick={onPutAway} aria-label="close-popup">
+                <button
+                    type="button"
+                    className="put-away"
+                    onClick={onPutAway}
+                    aria-label="close-popup"
+                >
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
-                {
-                    blurb && <RawHTML className="callout-blurb" html={blurb} />
-                }
+                {blurb && <RawHTML className="callout-blurb" html={blurb} />}
             </div>
         </div>
     );

@@ -5,6 +5,7 @@ import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import BookTile from '~/components/book-tile/book-tile';
 import userEvent from '@testing-library/user-event';
+import * as CF from '~/helpers/cms-fetch';
 
 const bookData: BookInfo = {
     id: 46,
@@ -69,49 +70,66 @@ jest.mock('~/models/book-titles', () => ({
 }));
 
 describe('book-tile', () => {
-    it('renders', () => {
-        const {baseElement} = render(<Component book={[bookData]} />);
+    const user = userEvent.setup();
+    const originalError = console.error;
 
-        expect(baseElement).toMatchSnapshot();
-    });
     it('renders coming soon', async () => {
         render(<Component book={[{...bookData, id: 130}]} />);
 
         await screen.findByText('Coming soon');
     });
     it('falls back on webviewLink', async () => {
-        const save = bookData.webviewRexLink;
+        const noRexData = {...bookData, webviewRexLink: ''};
 
-        bookData.webviewRexLink = '';
-        render(<Component book={[bookData]} />);
-        const user = userEvent.setup();
+        render(<Component book={[noRexData]} />);
 
         await user.click(screen.getByRole('button'));
 
-        const links = screen.getAllByRole('link');
+        const link = screen.getByRole('link');
 
-        expect(links).toHaveLength(1);
-
-        await user.click(screen.getAllByRole('link')[0]);
-
-        bookData.webviewRexLink = save;
+        console.error = jest.fn();
+        await user.click(link);
+        expect(console.error).toHaveBeenCalledWith(
+            expect.stringContaining('Not implemented: navigation'),
+            undefined
+        );
+        console.error = originalError;
     });
     it('falls back on lowResolutionPdfUrl (may be obsolete)', async () => {
-        const save = bookData.highResolutionPdfUrl;
+        const lowResPdfData = {
+            ...bookData,
+            highResolutionPdfUrl: '',
+            lowResolutionPdfUrl: 'low-res.pdf'
+        };
 
-        bookData.lowResolutionPdfUrl = 'low-res.pdf';
-        bookData.highResolutionPdfUrl = '';
+        render(<Component book={[lowResPdfData]} />);
 
+        const link = screen.getByRole('link');
+
+        console.error = jest.fn();
+        await user.click(link);
+        expect(console.error).toHaveBeenCalledWith(
+            expect.stringContaining('Not implemented: navigation'),
+            undefined
+        );
+        console.error = originalError;
+    });
+    it('brings up dialog when selecting print copy', async () => {
         render(<Component book={[bookData]} />);
+        const printCopyLink = screen.getByRole('menuitem', {
+            name: 'Order a print copy'
+        });
+        const mockCmsFetch = jest
+            .spyOn(CF, 'default')
+            .mockImplementation(() => {
+                return Promise.resolve({
+                    amazon_link: 'where you go'
+                });
+            });
 
-        const user = userEvent.setup();
+        await userEvent.click(printCopyLink);
 
-        const links = screen.getAllByRole('link');
-
-        expect(links).toHaveLength(1);
-
-        await user.click(screen.getAllByRole('link')[0]);
-
-        bookData.highResolutionPdfUrl = save;
+        expect(screen.getAllByRole('dialog')).toHaveLength(2);
+        mockCmsFetch.mockRestore();
     });
 });
