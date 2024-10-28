@@ -1,7 +1,7 @@
 import React from 'react';
 import { LocaleEntry } from '~/components/language-selector/language-selector';
 import { ImageData } from '../context';
-import type { InfoBox } from '../info-boxes';
+import type { InfoBoxValues } from '../info-boxes';
 
 // There will be more, but this is what I need for now
 export type Book = {
@@ -55,7 +55,7 @@ type SpecificSubjectPageData = {
     tutorAd: SectionInfo;
     aboutOs: SectionInfo;
     webinarHeader: WebinarSectionInfo;
-    infoBoxes: InfoBox;
+    infoBoxes: InfoBoxValues;
 };
 
 export default function (): SpecificSubjectPageData;

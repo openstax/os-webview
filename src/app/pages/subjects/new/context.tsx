@@ -3,7 +3,7 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import usePageData from '~/helpers/use-page-data';
 import useLanguageContext from '~/contexts/language';
 import type {LocaleEntry} from '~/components/language-selector/language-selector';
-import type {InfoBox} from './info-boxes';
+import type {InfoBoxValues} from './info-boxes';
 import type {TutorValue} from './tutor-ad';
 import {toNumber} from 'lodash';
 
@@ -34,7 +34,7 @@ type SubjectsPageData = {
             downloadUrl: string;
         };
     };
-    infoBoxes: InfoBox[];
+    infoBoxes: [InfoBoxValues]
     tutorAd: [
         {
             value: TutorValue;

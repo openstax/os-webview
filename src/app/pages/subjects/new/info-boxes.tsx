@@ -3,7 +3,7 @@ import useSubjectsContext, {ImageData} from './context';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './info-boxes.scss';
 
-export type InfoBox = {
+export type InfoBoxValues = {
     value: {
         heading: string;
         text: string;
@@ -11,7 +11,7 @@ export type InfoBox = {
     }[];
 };
 
-function AboutBlurb({image, heading, text: description}: InfoBox['value'][0]) {
+function AboutBlurb({image, heading, text: description}: InfoBoxValues['value'][0]) {
     return (
         <div className="container">
             <div className="blurb">
@@ -25,7 +25,7 @@ function AboutBlurb({image, heading, text: description}: InfoBox['value'][0]) {
     );
 }
 
-export function InfoBoxes({infoBoxes}: {infoBoxes: InfoBox['value']}) {
+export function InfoBoxes({infoBoxes}: {infoBoxes: InfoBoxValues['value']}) {
     return (
         <section className="info-boxes">
             <div className="content">
