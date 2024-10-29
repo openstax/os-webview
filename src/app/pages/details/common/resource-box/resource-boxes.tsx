@@ -43,8 +43,14 @@ function CommonsHubBox() {
     );
 }
 
+// There's more, but this is all we need for now
 export type ResourceModel = {
     heading: string;
+    description?: string;
+    link: {
+        text: string;
+        url: string;
+    }
 };
 
 export default function ResourceBoxes({

@@ -15,11 +15,8 @@ function FeaturedResources({header, models, ...props}: ResourcesProps) {
         const seenTimes = 1 + Number(window.localStorage[storageKey] || 0);
         const model = Object.assign(
             {
-                isNew: seenTimes <= 3,
-                onClick: () => {
-                    window.localStorage[storageKey] = 5;
-                    model.isNew = false;
-                }
+                isNew: seenTimes <= 3
+                // There was an onClick defined here that nothing used
             },
             res
         );
