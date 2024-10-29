@@ -22,7 +22,7 @@ type WindowWithSettings = typeof window & {
 const formSubmitUrl = (window as WindowWithSettings).SETTINGS
     .gatedContentEndpoint;
 
-export default function WaitForData({articleData}: {articleData: ArticleData}) {
+export default function WaitForData({articleData}: {articleData?: ArticleData}) {
     return articleData?.gatedContent ? <GatedContentDialog /> : null;
 }
 

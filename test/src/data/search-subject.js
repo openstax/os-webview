@@ -12,6 +12,7 @@ export default [
         date: '2022-05-23',
         author: 'Ed',
         pin_to_top: false,
+        heading: 'future-test',
         tags: [],
         collections: [
             {

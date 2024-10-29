@@ -14,7 +14,7 @@ import './article.scss';
 
 type ArticleArgs = {
     slug: string;
-    onLoad: (data: unknown) => void;
+    onLoad: (data: ArticleData) => void;
 };
 
 export function ArticleFromSlug({slug, onLoad}: ArticleArgs) {

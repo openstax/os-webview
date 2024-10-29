@@ -43,7 +43,7 @@ export function LatestBlurbs({page, pageSize, exceptSlug='', openInNewWindow}: {
 export default function MoreStories({exceptSlug, subhead}:
     {
         exceptSlug: string;
-        subhead: Parameters<typeof Section>[0]['topicHeading'];
+        subhead?: Parameters<typeof Section>[0]['topicHeading'];
     }
 ) {
     return (
