@@ -34,7 +34,7 @@ type CollectionEntry = {
     popular: boolean;
 };
 
-type Article = {
+type ArticleSummary = {
     id: number;
     slug: string;
     title: string;
@@ -90,7 +90,7 @@ function useTopicStories() {
         },
         [topic, topicType]
     );
-    const topicStories: Article[] = camelCaseKeys(useDataFromSlug(slug) || []);
+    const topicStories: ArticleSummary[] = camelCaseKeys(useDataFromSlug(slug) || []);
 
     // Until search returns the heading field
     topicStories.forEach((s) => {
@@ -102,7 +102,7 @@ function useTopicStories() {
     const topicFeatured = React.useMemo(
         () => {
             const fieldFromType = topicType === 'subject' ? 'articleSubjects' : 'collections';
-            const findFeatures = (story: Article) =>
+            const findFeatures = (story: ArticleSummary) =>
                 story[fieldFromType].some((s) => s.name === topic && s.featured);
 
             return topicStories.find(findFeatures);
@@ -111,7 +111,7 @@ function useTopicStories() {
     );
     const topicPopular = React.useMemo(
         () => topicStories.filter(
-            (story: Article) => story.collections.some((c) => c.popular)
+            (story: ArticleSummary) => story.collections.some((c) => c.popular)
         ),
         [topicStories]
     );

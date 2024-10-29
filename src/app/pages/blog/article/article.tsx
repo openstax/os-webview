@@ -6,95 +6,98 @@ import {ShareJsx} from '~/components/share/share';
 import React, {useState, useRef} from 'react';
 import usePageData from '~/helpers/use-page-data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {setPageTitleAndDescriptionFromBookData} from '~/helpers/use-document-head';
+import {
+    setPageTitleAndDescriptionFromBookData,
+    BookData
+} from '~/helpers/use-document-head';
 import './article.scss';
 
-function normalUnits(unit) {return unit.value.alignment !== 'bottom';}
-function bottomUnits(unit) {return unit.value.alignment === 'bottom';}
+type ArticleArgs = {
+    slug: string;
+    onLoad: (data: unknown) => void;
+};
 
-function ArticleBody({bodyData, setReadTime, bodyRef}) {
+export function ArticleFromSlug({slug, onLoad}: ArticleArgs) {
+    return (
+        <div className="article">
+            <ArticleLoader slug={slug} onLoad={onLoad} />
+        </div>
+    );
+}
+
+type BodyData = {
+    type: string;
+    value:
+        | string
+        | {
+              alignment: string;
+          };
+    id: string;
+};
+type ArticleData = BookData & {
+    error?: {
+        message: string;
+    };
+    heading: string;
+    subheading: string;
+    date: string;
+    author: string;
+    body: BodyData[];
+    featuredVideo: [{value: string}];
+    articleImage: string;
+    featuredImageAltText: string;
+    tags: string[];
+};
+
+function ArticleLoader({slug, onLoad}: ArticleArgs) {
+    const data = usePageData<ArticleData>(slug, true);
+
+    React.useEffect(() => setPageTitleAndDescriptionFromBookData(data), [data]);
+
     React.useEffect(() => {
-        const div = bodyRef.current;
-        const words = div.textContent.split(/\W+/);
-        const WORDS_PER_MINUTE = 225;
+        if (onLoad && data) {
+            onLoad(data);
+        }
+    }, [data, onLoad]);
 
-        setReadTime(Math.round(words.length / WORDS_PER_MINUTE));
-    }, [bodyRef, setReadTime]);
+    if (!data) {
+        return null;
+    }
 
-    return (
-        <div className="body" ref={bodyRef}>
-            {
-                bodyData.filter(normalUnits)
-                    .map((unit) => <BodyUnit unit={unit} key={unit} />)
-            }
-            {
-                bodyData.filter(bottomUnits)
-                    .map((unit) => <BodyUnit unit={unit} key={unit} />)
-            }
-        </div>
-    );
-}
-
-function Tags({tagData=[]}) {
-    return tagData.length > 0 &&
-        <div className="tags">
-            {tagData.map((tag) => <div className="tag" key={tag}>{tag}</div>)}
-        </div>
-    ;
-}
-
-function ShareButtons() {
-    return (
-        <ShareJsx
-            pageUrl={encodeURIComponent(window.location.href)}
-            message={encodeURIComponent('Check out this OpenStax blog article!')}
-            minimal={true}
-        />
-    );
-}
-
-function FloatingSideBar({readTime, progress}) {
-    return (
-        <div className="floater">
-            <div className="sticky-bit">
-                <ProgressRing radius="45" progress={progress} stroke="4" message={readTime} />
-                <ShareButtons />
+    if (data.error) {
+        return (
+            <div className="text-content">
+                <h1>[Article not found]</h1>
+                <pre>
+                    {data.error.message} {slug}
+                </pre>
             </div>
-        </div>
-    );
+        );
+    }
+
+    return <Article data={data} />;
 }
 
-function TitleBlock({data}) {
-    const {
-        heading: title,
-        subheading,
-        date,
-        author
-    } = data;
+export function Article({data}: {data: ArticleData}) {
+    const ArticleContent = React.useMemo(() => {
+        const isPdf = data.body.some((block) => block.type === 'document');
 
-    return (
-        <div className="title-block">
-            <h1>{title}</h1>
-            <div>
-                {
-                    Boolean(subheading) &&
-                    <h2>{subheading}</h2>
-                }
-                <Byline date={date} author={author} />
-            </div>
-        </div>
-    );
+        if (isPdf) {
+            return PdfArticle;
+        } else if (data.featuredVideo?.length) {
+            return VideoArticle;
+        }
+        return NormalArticle;
+    }, [data]);
+
+    return <ArticleContent data={data} />;
 }
 
-function NormalArticle({data}) {
-    const [readTime, setReadTime] = useState();
-    const ref = useRef();
+function NormalArticle({data}: {data: ArticleData}) {
+    const [readTime, setReadTime] = useState<number>();
+    const ref = useRef<HTMLDivElement>(null);
     const [progress, bodyRef] = useScrollProgress(ref);
-    const {
-        articleImage: image,
-        featuredImageAltText: imageAlt,
-        tags
-    } = data;
+    const {articleImage: image, featuredImageAltText: imageAlt, tags} = data;
 
     return (
         <div className="content">
@@ -116,7 +119,7 @@ function NormalArticle({data}) {
     );
 }
 
-function PdfArticle({data}) {
+function PdfArticle({data}: {data: ArticleData}) {
     return (
         <div className="content">
             <div className="pdf-title-block">
@@ -124,17 +127,23 @@ function PdfArticle({data}) {
                 <TitleBlock data={data} />
             </div>
             <div className="body">
-                {data.body.map((unit) => <BodyUnit unit={unit} key={unit} />)}
+                {data.body.map((unit) => (
+                    <BodyUnit unit={unit} key={unit.id} />
+                ))}
             </div>
         </div>
     );
 }
 
-function VideoArticle({data}) {
-    const [readTime, setReadTime] = useState();
-    const ref = useRef();
+function VideoArticle({data}: {data: ArticleData}) {
+    const [readTime, setReadTime] = useState<number>();
+    const ref = useRef<HTMLDivElement>(null);
     const [progress, bodyRef] = useScrollProgress(ref);
-    const {featuredVideo: [{value: videoEmbed}], body, tags} = data;
+    const {
+        featuredVideo: [{value: videoEmbed}],
+        body,
+        tags
+    } = data;
 
     return (
         <div className="content">
@@ -156,61 +165,102 @@ function VideoArticle({data}) {
     );
 }
 
-export function Article({data}) {
-    const ArticleContent = React.useMemo(
-        () => {
-            const isPdf = data.body.some((block) => block.type === 'document');
-
-            if (isPdf) {
-                return PdfArticle;
-            } else if (data.featuredVideo?.length) {
-                return VideoArticle;
-            }
-            return NormalArticle;
-        },
-        [data]
-    );
-
-    return (<ArticleContent data={data} />);
+function normalUnits(unit: BodyData) {
+    return typeof unit.value === 'string' || unit.value.alignment !== 'bottom';
+}
+function bottomUnits(unit: BodyData) {
+    return typeof unit.value !== 'string' && unit.value.alignment === 'bottom';
 }
 
-function ArticleLoader({slug, onLoad}) {
-    const data = usePageData(slug, true);
+function ArticleBody({
+    bodyData,
+    setReadTime,
+    bodyRef
+}: {
+    bodyData: BodyData[];
+    setReadTime: (rt: number) => void;
+    bodyRef: React.MutableRefObject<HTMLDivElement | undefined>;
+}) {
+    React.useEffect(() => {
+        const words = bodyRef.current?.textContent?.split(/\W+/) as string[];
+        const WORDS_PER_MINUTE = 225;
 
-    React.useEffect(
-        () => setPageTitleAndDescriptionFromBookData(data),
-        [data]
-    );
+        setReadTime(Math.round(words.length / WORDS_PER_MINUTE));
+    }, [bodyRef, setReadTime]);
 
-    React.useEffect(
-        () => {
-            if (onLoad && data) {
-                onLoad(data);
-            }
-        },
-        [data, onLoad]
-    );
-
-    if (!data) {
-        return null;
-    }
-
-    if (data.error) {
-        return (
-            <div className="text-content">
-                <h1>[Article not found]</h1>
-                <pre>{data.error.message} {slug}</pre>
-            </div>
-        );
-    }
-
-    return (<Article data={data} />);
-}
-
-export function ArticleFromSlug({slug, onLoad}) {
     return (
-        <div className="article">
-            <ArticleLoader slug={slug} onLoad={onLoad} />
+        <div
+            className="body"
+            ref={bodyRef as React.MutableRefObject<HTMLDivElement>}
+        >
+            {bodyData.filter(normalUnits).map((unit) => (
+                <BodyUnit unit={unit} key={unit.id} />
+            ))}
+            {bodyData.filter(bottomUnits).map((unit) => (
+                <BodyUnit unit={unit} key={unit.id} />
+            ))}
+        </div>
+    );
+}
+
+function Tags({tagData}: {tagData: ArticleData['tags']}) {
+    return (
+        tagData.length > 0 && (
+            <div className="tags">
+                {tagData.map((tag) => (
+                    <div className="tag" key={tag}>
+                        {tag}
+                    </div>
+                ))}
+            </div>
+        )
+    );
+}
+
+function ShareButtons() {
+    return (
+        <ShareJsx
+            pageUrl={encodeURIComponent(window.location.href)}
+            message={encodeURIComponent(
+                'Check out this OpenStax blog article!'
+            )}
+            minimal={true}
+        />
+    );
+}
+
+function FloatingSideBar({
+    readTime,
+    progress
+}: {
+    readTime: number | undefined;
+    progress: number | React.MutableRefObject<undefined>;
+}) {
+    return (
+        <div className="floater">
+            <div className="sticky-bit">
+                <ProgressRing
+                    radius="45"
+                    progress={progress}
+                    stroke="4"
+                    message={readTime}
+                />
+                <ShareButtons />
+            </div>
+        </div>
+    );
+}
+
+function TitleBlock({data}: {data: ArticleData}) {
+    const {heading: title, subheading, date, author} = data;
+
+    return (
+        <div className="title-block">
+            <h1>{title}</h1>
+            <div>
+                {Boolean(subheading) && <h2>{subheading}</h2>}
+                <Byline date={date} author={author} />
+            </div>
         </div>
     );
 }
