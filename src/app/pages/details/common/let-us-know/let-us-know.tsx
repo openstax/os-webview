@@ -2,14 +2,13 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import $ from '~/helpers/$';
 import {useIntl} from 'react-intl';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {FontAwesomeIcon, FontAwesomeIconProps} from '@fortawesome/react-fontawesome';
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import cn from 'classnames';
 import './let-us-know.scss';
 
-
-function useDataStuffFor(title) {
+function useDataStuffFor(title:string) {
     const intl = useIntl();
     const [text1, text2] = [
         intl.formatMessage({id: 'letusknow.text1'}),
@@ -32,7 +31,12 @@ function useDataStuffFor(title) {
     };
 }
 
-function ButtonWithIcon({url, icon, text, reverse=false}) {
+function ButtonWithIcon({url, icon, text, reverse=false}: {
+    url: string;
+    icon: FontAwesomeIconProps['icon'];
+    text: string;
+    reverse?: boolean;
+}) {
     return (
         <a className="button-with-icon" href={url}>
             <span className={cn('book-icon', {reverse})}>
@@ -43,16 +47,20 @@ function ButtonWithIcon({url, icon, text, reverse=false}) {
     );
 }
 
-export default function LetUsKnow({title}) {
+function LetUsKnow({title}: {title: string}) {
     const {url1, url2, text1, text2} = useDataStuffFor(title);
 
-    if (!title) {
-        return null;
-    }
     return (
         <div className="let-us-know">
             <ButtonWithIcon url={url1} icon={faUserPlus} text={text1} />
             <ButtonWithIcon url={url2} icon={faBook} text={text2} reverse />
         </div>
     );
+}
+
+export default function MaybeLetUsKnow({title}: {title?: string}) {
+    if (!title) {
+        return null;
+    }
+    return (<LetUsKnow title={title} />);
 }
