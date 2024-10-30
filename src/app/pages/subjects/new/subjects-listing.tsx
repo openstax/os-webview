@@ -8,16 +8,16 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import {useLocation} from 'react-router-dom';
 import './subjects-listing.scss';
+import { assertDefined } from '~/helpers/data';
 
 export default function SubjectsListing() {
-    const {subjects} = useSubjectsContext();
-    const names = Reflect.ownKeys(subjects) as Array<string>;
+    const {subjects} = assertDefined(useSubjectsContext());
 
     return (
         <section className="subjects-listing">
             <div className="content">
-                {names.map((name) => (
-                    <BookList name={name} data={subjects[name]} key={name} />
+                {Object.entries(subjects).map(([name, data]) => (
+                    <BookList name={name} data={data} key={name} />
                 ))}
             </div>
         </section>

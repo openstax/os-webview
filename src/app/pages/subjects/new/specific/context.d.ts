@@ -1,5 +1,7 @@
 import React from 'react';
 import { LocaleEntry } from '~/components/language-selector/language-selector';
+import { ImageData } from '../context';
+import type { InfoBoxValues } from '../info-boxes';
 
 // There will be more, but this is what I need for now
 export type Book = {
@@ -35,7 +37,7 @@ type SectionContent = {
 
 type SectionInfo = {
     content: SectionContent & {
-        image: string;
+        image: ImageData;
         adHtml: string;
     }
 };
@@ -46,12 +48,6 @@ type WebinarSectionInfo = {
     }
 };
 
-type InfoBox = {
-    image: string;
-    heading: string;
-    text: string;
-}
-
 type SpecificSubjectPageData = {
     translations?: [LocaleEntry[]];
     title?: string;
@@ -59,7 +55,7 @@ type SpecificSubjectPageData = {
     tutorAd: SectionInfo;
     aboutOs: SectionInfo;
     webinarHeader: WebinarSectionInfo;
-    infoBoxes: [InfoBox[]];
+    infoBoxes: InfoBoxValues;
 };
 
 export default function (): SpecificSubjectPageData;

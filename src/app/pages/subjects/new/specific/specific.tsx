@@ -17,11 +17,11 @@ import LazyLoad from 'react-lazyload';
 import useFoundSubject from './use-found-subject';
 import AboutOpenStax from '../about-openstax';
 import {InfoBoxes} from '../info-boxes';
-import { useCanonicalLink } from '~/helpers/use-document-head';
+import {useCanonicalLink} from '~/helpers/use-document-head';
 import cn from 'classnames';
 import './specific.scss';
 
-const importPhilanthropicSupport = () => import('../philanthropic-support.js');
+const importPhilanthropicSupport = () => import('../import-philanthropic-support.js');
 const importLearnMore = () => import('./learn-more.js');
 const importWebinars = () => import('./import-webinars.js');
 const importBlogPosts = () => import('./blog-posts.js');
@@ -43,17 +43,13 @@ function TutorAd() {
         return null;
     }
     const {
-        content: {
-            image,
-            heading,
-            adHtml: html,
-            linkHref: ctaLink,
-            linkText: ctaText
-        }
+        content: {image, heading, adHtml, linkHref, linkText}
     } = tutorAd;
 
     return (
-        <TutorAdThatTakesData {...{heading, image, html, ctaLink, ctaText}} />
+        <TutorAdThatTakesData
+            {...{heading, image, adHtml, linkHref, linkText}}
+        />
     );
 }
 
@@ -89,32 +85,32 @@ function MainContent({subject}: {subject: FoundSubject}) {
                 <LazyLoad once offset={100} height={400}>
                     <TutorAd />
                 </LazyLoad>
-                <section id='blog-posts' className='blog-posts'>
+                <section id="blog-posts" className="blog-posts">
                     <LazyLoad
                         once
                         offset={100}
                         height={400}
-                        className='content'
+                        className="content"
                     >
                         <JITLoad importFn={importBlogPosts} />
                     </LazyLoad>
                 </section>
-                <section id='webinars' className='webinars'>
+                <section id="webinars" className="webinars">
                     <LazyLoad
                         once
                         offset={100}
                         height={400}
-                        className='content'
+                        className="content"
                     >
                         <JITLoad importFn={importWebinars} />
                     </LazyLoad>
                 </section>
-                <section id='learn' className='learn-more'>
+                <section id="learn" className="learn-more">
                     <LazyLoad
                         once
                         offset={100}
                         height={400}
-                        className='content'
+                        className="content"
                     >
                         <JITLoad importFn={importLearnMore} />
                     </LazyLoad>
@@ -138,8 +134,8 @@ function SubjectInContext({subject}: {subject: FoundSubject}) {
         <SpecificSubjectContextProvider contextValueParameters={subject.value}>
             <WindowContextProvider>
                 <NavigatorContextProvider>
-                    <div className='subject-specific'>
-                        <div className='content'>
+                    <div className="subject-specific">
+                        <div className="content">
                             <Navigator subject={subject} />
                             <MainContent subject={subject} />
                         </div>
