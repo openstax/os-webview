@@ -3,7 +3,7 @@ import usePageData from '~/helpers/use-page-data';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {setPageTitleAndDescriptionFromBookData} from '~/helpers/use-document-head';
 import {ImageData} from '../context';
-import type {InfoBox} from '../info-boxes';
+import type {InfoBoxValues} from '../info-boxes';
 import type { AboutOsData } from '../about-openstax';
 import {LocaleEntry} from '~/components/language-selector/language-selector';
 import type {OsTextbookCategory} from './learn-more';
@@ -65,7 +65,7 @@ type SpecificSubjectPageData = {
     tutorAd: SectionInfo;
     aboutOs: {content: AboutOsData};
     webinarHeader: WebinarSectionInfo;
-    infoBoxes: InfoBox;
+    infoBoxes: InfoBoxValues;
     blogHeader: BlogSectionInfo;
     osTextbookHeading: string;
     osTextbookCategories: [OsTextbookCategory[]];
