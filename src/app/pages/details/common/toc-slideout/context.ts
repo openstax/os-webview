@@ -12,7 +12,4 @@ function useContextValue() {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as TOCContextProvider
-};
+export {useContext as default, ContextProvider as TOCContextProvider};
