@@ -2,12 +2,13 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import VideoResourceBoxes from '~/pages/details/common/resource-box/video-resource-box';
+import {ResourceModel} from '~/pages/details/common/resource-box/resource-boxes';
 
 describe('VideoResourceBox', () => {
     type ModelsType = Parameters<typeof VideoResourceBoxes>[0]['models'];
 
     it('renders non-video resource boxes', () => {
-        const bm = [{heading: 'box-model-heading'}];
+        const bm = [{heading: 'box-model-heading'}] as ResourceModel[];
 
         render(
             <VideoResourceBoxes

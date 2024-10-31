@@ -6,6 +6,7 @@ import {faPlay} from '@fortawesome/free-solid-svg-icons/faPlay';
 import Dialog from '~/components/dialog/dialog';
 import ResourceBox from './resource-box';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {ResourceModel} from './resource-boxes';
 
 type VideoResourceBoxModelType = {
     heading: string;
@@ -16,12 +17,10 @@ type VideoResourceBoxModelType = {
     resourceCategory: string;
 };
 
-type BoxModel = { heading: string };
-
 type VideoResourceBoxesArgs = {
     models: VideoResourceBoxModelType[];
-    blogLinkModels?: BoxModel[];
-    referenceModels?: BoxModel[];
+    blogLinkModels?: ResourceModel[];
+    referenceModels?: ResourceModel[];
 };
 
 export default function VideoResourceBoxes({
