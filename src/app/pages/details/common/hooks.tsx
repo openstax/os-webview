@@ -3,28 +3,26 @@ import tableOfContentsHtml from '~/models/table-of-contents-html';
 import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
+import useDetailsContext from '../context';
 
-export function useTableOfContents(model) {
-    const webviewLink = model.webviewRexLink || model.webviewLink;
-    const isRex = Boolean(model.webviewRexLink);
-    const [tocHtml, setTocHtml] = useState('');
+export function useTableOfContents() {
+    const model = useDetailsContext();
+    const webviewLink = model.webviewRexLink;
+    const [tocHtml, setTocHtml] = useState<string | void>('');
 
     tableOfContentsHtml({
-        isRex,
         cnxId: model.cnxId,
-        bookSlug: model.slug,
         webviewLink
-    }).then(
-        setTocHtml,
-        (err) => {
-            console.warn(`Failed to generate table of contents HTML for ${model.cnxId}: ${err}`);
-        }
-    );
+    }).then(setTocHtml, (err) => {
+        console.warn(
+            `Failed to generate table of contents HTML for ${model.cnxId}: ${err}`
+        );
+    });
 
-    return tocHtml;
+    return tocHtml as string;
 }
 
-function toBlurb(partner) {
+function toBlurb(partner: object) {
     const pData = camelCaseKeys(partner);
 
     return {
@@ -36,28 +34,32 @@ function toBlurb(partner) {
         type: pData.partnerType,
         url: `/partners?${pData.partnerName}`,
         verifiedFeatures: pData.verifiedByInstructor ? tooltipText : false,
-        rating: pData.averageRating.ratingAvg,
+        rating: pData.averageRating?.ratingAvg,
         ratingCount: pData.ratingCount
     };
 }
 
-export function usePartnerFeatures(bookAbbreviation) {
-    const [blurbs, setBlurbs] = useState([]);
+type PartnerData = {
+    books: string;
+}
+
+export function usePartnerFeatures(bookAbbreviation: string) {
+    const [blurbs, setBlurbs] = useState<object[]>([]);
     const [includePartners, setIncludePartners] = useState('');
 
     useEffect(() => {
-        partnerFeaturePromise.then((pd) =>
-            pd.filter((p) => {
+        partnerFeaturePromise
+            .then((pd: PartnerData[]) => pd.filter((p) => {
                 const books = (p.books || '').split(';');
 
                 return books.includes(bookAbbreviation);
-            })
-        ).then((pd) => {
-            if (pd.length > 0) {
-                setIncludePartners('include-partners');
-            }
-            setBlurbs(shuffle(pd).map(toBlurb));
-        });
+            }))
+            .then((pd) => {
+                if (pd.length > 0) {
+                    setIncludePartners('include-partners');
+                }
+                setBlurbs(shuffle(pd).map(toBlurb));
+            });
     }, [bookAbbreviation]);
 
     return [blurbs, includePartners];

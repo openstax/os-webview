@@ -8,7 +8,7 @@ import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {
     instructorResourceBoxPermissions,
     studentResourceBoxPermissions
-} from '~/pages/details/common/resource-box/old-resource-box';
+} from '~/pages/details/common/resource-box/resource-box-utils';
 
 // Test all the conditions in here:
 // userStatus: isInstructor: true|false

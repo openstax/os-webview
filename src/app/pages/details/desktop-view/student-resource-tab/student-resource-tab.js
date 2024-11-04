@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {studentResourceBoxPermissions} from '../../common/resource-box/old-resource-box';
+import {studentResourceBoxPermissions} from '../../common/resource-box/resource-box-utils';
 import useUserContext from '~/contexts/user';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import './student-resource-tab.scss';

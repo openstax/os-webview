@@ -8,12 +8,18 @@ import $ from '~/helpers/$';
 import * as WC from '~/contexts/window';
 
 // Tamp down meaningless errors
-jest.mock('~/models/rex-release', () => jest.fn().mockReturnValue(Promise.resolve({
-    webviewRexLink: '',
-    contents: []
-})));
+jest.mock('~/models/rex-release', () =>
+    jest.fn().mockReturnValue(
+        Promise.resolve({
+            webviewRexLink: '',
+            contents: []
+        })
+    )
+);
 jest.mock('~/models/give-today', () => jest.fn().mockReturnValue({}));
-jest.mock('~/models/table-of-contents-html', () => jest.fn().mockReturnValue(Promise.resolve({})));
+jest.mock('~/models/table-of-contents-html', () =>
+    jest.fn().mockReturnValue(Promise.resolve({}))
+);
 
 jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue();
 const spyIsPolish = jest.spyOn($, 'isPolish');
@@ -24,7 +30,10 @@ function Component() {
         <ShellContextProvider>
             <MemoryRouter initialEntries={['/details/books/college-algebra']}>
                 <Routes>
-                    <Route path="/details/books/:title" element={<BookDetailsLoader />} />
+                    <Route
+                        path="/details/books/:title"
+                        element={<BookDetailsLoader />}
+                    />
                 </Routes>
             </MemoryRouter>
         </ShellContextProvider>
@@ -34,7 +43,9 @@ function Component() {
 async function finishedRendering() {
     const main = await screen.findByRole('main');
 
-    return await waitFor(() => expect(main.getAttribute('class')).toBe('details-page light-blue'));
+    return await waitFor(() =>
+        expect(main.getAttribute('class')).toBe('details-page light-blue')
+    );
 }
 
 function lengthOfView(phoneOrBigger: string) {
@@ -62,7 +73,9 @@ describe('Details page', () => {
 
         const jsonLdScript = document.head.querySelector('script');
 
-        expect(jsonLdScript?.textContent).toEqual(expect.stringContaining('mainEntity'));
+        expect(jsonLdScript?.textContent).toEqual(
+            expect.stringContaining('mainEntity')
+        );
     });
     it('renders Polish book', async () => {
         spyIsPolish.mockReturnValue(true);
@@ -71,7 +84,21 @@ describe('Details page', () => {
         spyIsPolish.mockReset();
         const jsonLdScript = document.head.querySelector('script');
 
-        expect(jsonLdScript?.textContent).toEqual(expect.stringContaining('Polish'));
+        expect(jsonLdScript?.textContent).toEqual(
+            expect.stringContaining('Polish')
+        );
+    });
+    it('renders Polish book at phone width', async () => {
+        spyWindowContext.mockReturnValue({innerWidth: 480} as any); // eslint-disable-line
+        spyIsPolish.mockReturnValue(true);
+        render(<Component />);
+        await finishedRendering();
+        spyIsPolish.mockReset();
+        const jsonLdScript = document.head.querySelector('script');
+
+        expect(jsonLdScript?.textContent).toEqual(
+            expect.stringContaining('Polish')
+        );
     });
     it('renders only phone-view at phone width', async () => {
         spyWindowContext.mockReturnValue({innerWidth: 480} as any); // eslint-disable-line
@@ -81,7 +108,9 @@ describe('Details page', () => {
         expect(lengthOfView('bigger')).toBeUndefined();
     });
     it('handles missing description', async () => {
-        document.head.removeChild(document.head.querySelector('meta[name="description"]') as Node);
+        document.head.removeChild(
+            document.head.querySelector('meta[name="description"]') as Node
+        );
         render(<Component />);
         await finishedRendering();
         expect(document.head.querySelector('script')).toBeNull();

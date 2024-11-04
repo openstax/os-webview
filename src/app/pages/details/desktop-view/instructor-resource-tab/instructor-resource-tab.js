@@ -1,6 +1,6 @@
 import React from 'react';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources';
-import {resourceBoxModel, useResources} from '../../common/resource-box/old-resource-box';
+import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box-utils';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import VideoResourceBoxes from '../../common/resource-box/video-resource-box';
 import Partners from './partners/partners';

@@ -10,7 +10,7 @@ type WebinarContent = {
         link: string;
         content: string;
     };
-}
+};
 type StuffContent = {
     content: {
         id: number;
@@ -20,17 +20,17 @@ type StuffContent = {
         contentLoggedIn: string;
         heading: string;
     };
-
-}
+};
 type VideoContent = {
     title: string;
     description: string;
     embed: string;
-}
+};
 type Author = {
     name: string;
     university: string;
-}
+    seniorAuthor?: boolean;
+};
 
 export type ContextValues = {
     slug: string;
@@ -60,8 +60,10 @@ export type ContextValues = {
     updated: string;
     coverUrl: string;
     digitalIsbn13: string;
-    rexWebviewLink: string;
+    webviewRexLink: string;
     webviewLink: string;
+    errataContent: string;
+    cnxId: string;
 };
 
 function useContextValue({data}: {data: ContextValues}) {
@@ -74,7 +76,4 @@ function useContextValue({data}: {data: ContextValues}) {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as DetailsContextProvider
-};
+export {useContext as default, ContextProvider as DetailsContextProvider};
