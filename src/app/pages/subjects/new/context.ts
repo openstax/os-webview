@@ -5,6 +5,7 @@ import useLanguageContext from '~/contexts/language';
 import type {LocaleEntry} from '~/components/language-selector/language-selector';
 import type {InfoBoxValues} from './info-boxes';
 import type {TutorValue} from './tutor-ad';
+import type {AboutOsData} from './about-openstax';
 import {toNumber} from 'lodash';
 
 type DevStandardKeys = 'devStandard1Heading';
@@ -41,6 +42,7 @@ type SubjectsPageData = {
         }
     ];
     philanthropicSupport: string;
+    aboutOs: [{value: AboutOsData}];
 };
 
 // The Page data before DevStandardPair is translated to aboutBlurbs

@@ -22,9 +22,9 @@ import cn from 'classnames';
 import './specific.scss';
 
 const importPhilanthropicSupport = () => import('../import-philanthropic-support.js');
-const importLearnMore = () => import('./learn-more.js');
+const importLearnMore = () => import('./import-learn-more.js');
 const importWebinars = () => import('./import-webinars.js');
-const importBlogPosts = () => import('./blog-posts.js');
+const importBlogPosts = () => import('./import-blog-posts.js');
 
 // Had to make this layer to use the context
 function Translations() {

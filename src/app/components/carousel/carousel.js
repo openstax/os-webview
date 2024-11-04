@@ -41,7 +41,8 @@ function HoverText({which, thing}) {
 export default function Carousel({
     atATime = 1,
     children,
-    hoverTextThing
+    hoverTextThing,
+    ref
 }) {
     const slides = React.useMemo(
         () => {
@@ -52,7 +53,7 @@ export default function Carousel({
     );
 
     return (
-        <BaseCarousel className="carousel" itemsPerPage={atATime}>
+        <BaseCarousel className="carousel" itemsPerPage={atATime} ref={ref}>
             <CarouselScroller className="scroller">
                 {slides}
             </CarouselScroller>

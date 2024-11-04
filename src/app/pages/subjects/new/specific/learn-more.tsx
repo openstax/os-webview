@@ -2,9 +2,15 @@ import React from 'react';
 import useSpecificSubjectContext from './context';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import {assertDefined} from '~/helpers/data';
 import './learn-more.scss';
 
-function learnMoreDataToAccordionItem({heading: title, text: html}) {
+export type OsTextbookCategory = {
+    heading: string;
+    text: string;
+}
+
+function learnMoreDataToAccordionItem({heading: title, text: html}: OsTextbookCategory) {
     return {
         title,
         contentComponent: <RawHTML html={html} />
@@ -14,7 +20,7 @@ function learnMoreDataToAccordionItem({heading: title, text: html}) {
 function LearnMore() {
     const {osTextbookHeading, osTextbookCategories} = useSpecificSubjectContext();
     const accordionItems = React.useMemo(
-        () => osTextbookCategories[0].map(learnMoreDataToAccordionItem),
+        () => assertDefined(osTextbookCategories)[0].map(learnMoreDataToAccordionItem),
         [osTextbookCategories]
     );
 
@@ -32,5 +38,5 @@ export default function MaybeLearnMore() {
     if (!ctx?.osTextbookHeading) {
         return null;
     }
-    return (<LearnMore />);
+    return <LearnMore />;
 }

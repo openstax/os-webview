@@ -17,7 +17,9 @@ export default function Hero() {
                 <img className="bg1" role="presentation" src={linesUrl} />
             </div>
             <ClippedImage
-                className="overlapping" src={headingImage.meta.downloadUrl} alt=""
+                className="overlapping"
+                src={headingImage.meta.downloadUrl}
+                alt=""
             />
             <div className="content">
                 <h1>{heading}</h1>
