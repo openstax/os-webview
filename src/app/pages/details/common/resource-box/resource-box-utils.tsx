@@ -2,17 +2,53 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import linkHelper from '~/helpers/link';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
-import useUserContext from '~/contexts/user';
+import useUserContext, {UserStatus} from '~/contexts/user';
+import type {BookModel} from './resource-boxes';
 
-const settings = window.SETTINGS;
+type WindowWithSettings = typeof window & {
+    SETTINGS: {accountHref: string};
+};
 
-function encodeLocation(search) {
+const settings = (window as WindowWithSettings).SETTINGS;
+
+function encodeLocation(search: string) {
     const pathWithoutSearch = `${window.location.origin}${window.location.pathname}`;
 
     return encodeURIComponent(`${pathWithoutSearch}?${search}`);
 }
 
-function resourceBoxPermissions({resourceData, resourceStatus, loginUrl}) {
+export type ResourceData = {
+    linkExternal: string;
+    linkDocumentUrl: string;
+    linkDocument?: {
+        file: string;
+    };
+    linkText: string;
+    resource: {
+        id: number;
+        heading: string;
+        resourceCategory: string;
+        resourceUnlocked: boolean;
+        creatorFestResource: boolean;
+        description: string;
+    };
+    comingSoonText: string;
+    videoReferenceNumber: number;
+    k12: boolean;
+    printLink: string;
+    resourceUnlocked: boolean;
+    lockedText: string;
+};
+
+function resourceBoxPermissions({
+    resourceData,
+    resourceStatus,
+    loginUrl
+}: {
+    resourceData: ResourceData;
+    resourceStatus: () => 'unlocked' | 'pending' | 'locked';
+    loginUrl: string;
+}) {
     const isExternal = Boolean(resourceData.linkExternal);
     const status = resourceStatus();
     const statusToPermissions = {
@@ -32,7 +68,7 @@ function resourceBoxPermissions({resourceData, resourceStatus, loginUrl}) {
         locked: {
             iconType: 'lock',
             link: {
-                text: <FormattedMessage id='resources.loginToUnlock' />,
+                text: <FormattedMessage id="resources.loginToUnlock" />,
                 url: loginUrl
             }
         }
@@ -44,9 +80,9 @@ function resourceBoxPermissions({resourceData, resourceStatus, loginUrl}) {
 // Utility function to set the values associated with whether the resource
 // is available to the user (instructor version)
 export function instructorResourceBoxPermissions(
-    resourceData,
-    userStatus,
-    search
+    resourceData: ResourceData,
+    userStatus: UserStatus,
+    search: string
 ) {
     const resourceStatus = () => {
         if (
@@ -61,9 +97,9 @@ export function instructorResourceBoxPermissions(
         return 'locked';
     };
     const encodedLocation = encodeLocation(search);
-    const loginUrl = userStatus.userInfo?.id ?
-        `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}` :
-        linkHelper.loginLink();
+    const loginUrl = userStatus.userInfo?.id
+        ? `${settings.accountHref}/faculty_access/apply?r=${encodedLocation}`
+        : linkHelper.loginLink();
 
     return resourceBoxPermissions({
         resourceData,
@@ -77,7 +113,7 @@ const emptyResources = {
     bookFacultyResources: []
 };
 
-export function useResources(slug) {
+export function useResources(slug: string) {
     const {isVerified} = useUserContext();
     const title = slug.replace('books/', '');
     const rawResources = useDataFromSlug(
@@ -91,7 +127,11 @@ export function useResources(slug) {
     return resources || emptyResources;
 }
 
-export function resourceBoxModel(resourceData, userStatus, bookModel) {
+export function resourceBoxModel(
+    resourceData: ResourceData,
+    userStatus: UserStatus,
+    bookModel: BookModel
+) {
     return Object.assign(
         {
             id: resourceData.resource.id,
@@ -122,7 +162,10 @@ export function resourceBoxModel(resourceData, userStatus, bookModel) {
 }
 
 // Utility function for student resources
-export function studentResourceBoxPermissions(resourceData, userStatus) {
+export function studentResourceBoxPermissions(
+    resourceData: ResourceData,
+    userStatus: UserStatus
+) {
     const resourceStatus = () => {
         if (
             resourceData.resourceUnlocked ||

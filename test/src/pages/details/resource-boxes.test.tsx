@@ -4,11 +4,13 @@ import ShellContextProvider from '../../../helpers/shell-context';
 import {MemoryRouter} from 'react-router-dom';
 
 import * as detailCtx from '~/pages/details/context';
-import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
+import ResourceBoxes, {ResourceModel} from '~/pages/details/common/resource-box/resource-boxes';
 import {
     instructorResourceBoxPermissions,
-    studentResourceBoxPermissions
+    studentResourceBoxPermissions,
+    ResourceData
 } from '~/pages/details/common/resource-box/resource-box-utils';
+import type {UserStatus} from '~/contexts/user';
 
 // Test all the conditions in here:
 // userStatus: isInstructor: true|false
@@ -21,10 +23,10 @@ const resourceData = {
     linkText: 'Click this',
     lockedText: 'Login to unlock',
     linkDocument: {file: '/download'}
-};
+} as unknown as ResourceData;
 const userStatus = {
     isInstructor: false
-};
+} as unknown as UserStatus;
 const payload = {
     heading: 'This is the heading',
     description: 'This is <b>a description</b> in HTML'
@@ -64,14 +66,14 @@ function instructorModels(resDelta: ResDelta, userDelta: ResDelta = {}) {
             payload,
             instructorResourceBoxPermissions(res, user, 'Instructor resources')
         )
-    ];
+    ] as [ResourceModel];
 }
 
 function studentModels(resDelta: ResDelta, userDelta = {}) {
     const res = Object.assign({}, resourceData, resDelta);
     const user = Object.assign({}, userStatus, userDelta);
 
-    return [Object.assign(payload, studentResourceBoxPermissions(res, user))];
+    return [Object.assign(payload, studentResourceBoxPermissions(res, user))] as [ResourceModel];
 }
 
 it('handles unlocked instructor resources', () => {

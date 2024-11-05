@@ -43,6 +43,8 @@ function CommonsHubBox() {
     );
 }
 
+export type BookModel = {id: string; customizationFormHeading: string};
+
 // There's more, but this is all we need for now
 export type ResourceModel = {
     heading: string;
@@ -59,7 +61,7 @@ export type ResourceModel = {
     isNew: boolean;
     creatorFest: boolean;
     iconType: string;
-    bookModel?: {id: string; customizationFormHeading: string};
+    bookModel?: BookModel;
     link?: {url?: string; text?: string};
 };
 
