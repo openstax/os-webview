@@ -53,7 +53,7 @@ function Top({model}: {model: ResourceModel}) {
     );
 }
 
-function ReferenceNumber({referenceNumber}: {referenceNumber: number}) {
+function ReferenceNumber({referenceNumber}: {referenceNumber: number | null}) {
     return (
         referenceNumber !== null && (
             <div className="reference-number">{referenceNumber}</div>

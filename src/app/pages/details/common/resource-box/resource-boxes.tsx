@@ -3,7 +3,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import ResourceBox from './resource-box';
-import useDetailsContext from '../../context';
+import useDetailsContext, {ContextValues} from '../../context';
 import './resource-box.scss';
 
 function CommonsHubBox() {
@@ -43,26 +43,24 @@ function CommonsHubBox() {
     );
 }
 
-export type BookModel = {id: string; customizationFormHeading: string};
-
 // There's more, but this is all we need for now
 export type ResourceModel = {
     heading: string;
     description?: string;
-    double: boolean;
+    double?: boolean;
     comingSoon: boolean;
     comingSoonText: string;
     resourceCategory?: string;
-    k12: boolean;
-    videoReferenceNumber: number;
-    trackResource: boolean;
+    k12?: boolean;
+    videoReferenceNumber: number | null;
+    trackResource?: boolean;
     printLink: string;
-    icon: string;
-    isNew: boolean;
-    creatorFest: boolean;
+    icon?: string;
+    isNew?: boolean;
+    creatorFest?: boolean;
     iconType: string;
-    bookModel?: BookModel;
-    link?: {url?: string; text?: string};
+    bookModel?: ContextValues;
+    link?: {url: string; text?: string};
 };
 
 export default function ResourceBoxes({

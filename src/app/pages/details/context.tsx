@@ -1,5 +1,7 @@
 import {useState} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
+import type {ResourceData} from './common/resource-box/resource-box-utils';
+
 export type LocaleType = {
     locale: string;
 };
@@ -35,6 +37,7 @@ type Author = {
 export type IsbnType = 'print' | 'printSoftcover' | 'digital' | 'ibook' | 'ibookVolume2';
 
 export type ContextValues = {
+    id: string;
     slug: string;
     translations: Array<TranslationType>;
     bookState: string;
@@ -83,6 +86,7 @@ export type ContextValues = {
     licenseTitle: string;
     licenseVersion: string;
     licenseIcon: string;
+    bookStudentResources: ResourceData[];
 };
 
 function useContextValue({data}: {data: ContextValues}) {

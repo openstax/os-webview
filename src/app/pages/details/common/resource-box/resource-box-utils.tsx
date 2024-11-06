@@ -3,7 +3,7 @@ import {FormattedMessage} from 'react-intl';
 import linkHelper from '~/helpers/link';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import useUserContext, {UserStatus} from '~/contexts/user';
-import type {BookModel} from './resource-boxes';
+import type {ContextValues} from '../../context';
 
 type WindowWithSettings = typeof window & {
     SETTINGS: {accountHref: string};
@@ -33,11 +33,13 @@ export type ResourceData = {
         description: string;
     };
     comingSoonText: string;
-    videoReferenceNumber: number;
+    videoReferenceNumber: number | null;
     k12: boolean;
     printLink: string;
     resourceUnlocked: boolean;
     lockedText: string;
+    resourceHeading: string;
+    resourceDescription: string;
 };
 
 function resourceBoxPermissions({
@@ -59,7 +61,7 @@ function resourceBoxPermissions({
                 url:
                     resourceData.linkExternal ||
                     resourceData.linkDocumentUrl ||
-                    resourceData.linkDocument?.file
+                    resourceData.linkDocument?.file || ''
             }
         },
         pending: {
@@ -68,7 +70,7 @@ function resourceBoxPermissions({
         locked: {
             iconType: 'lock',
             link: {
-                text: <FormattedMessage id="resources.loginToUnlock" />,
+                text: <FormattedMessage id="resources.loginToUnlock" /> as unknown as string,
                 url: loginUrl
             }
         }
@@ -130,7 +132,7 @@ export function useResources(slug: string) {
 export function resourceBoxModel(
     resourceData: ResourceData,
     userStatus: UserStatus,
-    bookModel: BookModel
+    bookModel: ContextValues
 ) {
     return Object.assign(
         {
