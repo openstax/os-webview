@@ -32,6 +32,8 @@ type Author = {
     seniorAuthor?: boolean;
 };
 
+export type IsbnType = 'print' | 'printSoftcover' | 'digital' | 'ibook' | 'ibookVolume2';
+
 export type ContextValues = {
     slug: string;
     translations: Array<TranslationType>;
@@ -59,11 +61,28 @@ export type ContextValues = {
     created: string;
     updated: string;
     coverUrl: string;
-    digitalIsbn13: string;
     webviewRexLink: string;
     webviewLink: string;
     errataContent: string;
     cnxId: string;
+    publishDate: string;
+    printIsbn10: string;
+    printIsbn13: string;
+    printSoftcoverIsbn10: string;
+    printSoftcoverIsbn13: string;
+    digitalIsbn10: string;
+    digitalIsbn13: string;
+    ibookIsbn10: string;
+    ibookIsbn13: string;
+    ibookVolume2Isbn10: string;
+    ibookVolume2Isbn13: string;
+    lastUpdatedWeb: string;
+    lastUpdatedPdf: string;
+    licenseName: string;
+    licenseText: string;
+    licenseTitle: string;
+    licenseVersion: string;
+    licenseIcon: string;
 };
 
 function useContextValue({data}: {data: ContextValues}) {
