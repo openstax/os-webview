@@ -2,35 +2,53 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import Byline from '~/components/byline/byline';
 import ClippedImage from '~/components/clipped-image/clipped-image';
+import type {
+    ArticleSummary as BlurbDataBase,
+    CollectionEntry,
+    SubjectEntry
+} from '~/pages/blog/blog-context';
 
-type Collection = {
-    name?: string;
-    value: {collection: Collection}[];
-};
+type CollectionVariant =
+    | CollectionEntry
+    | {
+          value: {collection: CollectionEntry}[];
+      };
 
-type ArticleSubject = {
-    name?: string;
-    value: {subject: ArticleSubject}[];
-};
+type ArticleSubjectVariant =
+    | SubjectEntry
+    | {
+          value: {subject: SubjectEntry}[];
+      };
 
-type BlurbData = null | {
-    id: string;
-    collections: Collection[];
-    articleSubjects: ArticleSubject[];
-    heading: string;
+type BlurbData =
+    | null
+    | (Omit<BlurbDataBase, 'collections' | 'articleSubjects'> & {
+          meta?: {slug: string};
+          collections: CollectionVariant[];
+          articleSubjects: ArticleSubjectVariant[];
+      });
+
+
+export type ArticleSummaryData = {
+    id?: number;
+    articleSlug: string;
+    image: string;
+    altText?: string;
+    headline: string;
     subheading: string;
-    articleImage: string;
-    articleImageAlt: string;
-    bodyBlurb: string;
-    author: string;
+    body: string;
     date: string;
-    slug?: string;
-    meta: {slug: string};
+    author: string;
+    collectionNames: string[];
+    articleSubjectNames: string[];
+    openInNewWindow?: boolean;
+    HeadTag?: keyof JSX.IntrinsicElements;
+    setPath?: (href: string) => void;
 };
 
-export function blurbModel(data: BlurbData) {
+export function blurbModel(data: BlurbData): ArticleSummaryData | Record<string, never> {
     if (!data) {
-        return {};
+        return {} as Record<string, never>;
     }
 
     return {
@@ -56,24 +74,14 @@ export function blurbModel(data: BlurbData) {
         body: data.bodyBlurb,
         author: data.author,
         date: data.date,
-        articleSlug: data.slug || data.meta.slug
+        articleSlug: data.slug || (data.meta?.slug as string)
     };
 }
 
-export type ArticleSummaryData = {
-    articleSlug: string;
-    image: string;
-    headline: string;
-    subheading: string;
-    body: string;
-    date: string;
-    author: string;
-    collectionNames: string[];
-    articleSubjectNames: string[];
-    setPath: (href: string) => void;
-    openInNewWindow: boolean;
-    HeadTag?: keyof JSX.IntrinsicElements;
-};
+export type PopulatedBlurbModel = Exclude<
+    ReturnType<typeof blurbModel>,
+    Record<string, never>
+>;
 
 export default function ArticleSummary({
     articleSlug,
@@ -100,8 +108,10 @@ export default function ArticleSummary({
             if (target.getAttribute('target') === '_blank') {
                 return;
             }
-            event.preventDefault();
-            setPath(target.href);
+            if (setPath) {
+                event.preventDefault();
+                setPath(target.href);
+            }
         },
         [setPath]
     );
