@@ -77,8 +77,6 @@ function PopularPosts() {
 function useSubjectSnippetForTopic(topic?: string) {
     const {subjectSnippet} = useBlogContext();
 
-    console.info('***', {subjectSnippet, topic});
-
     return subjectSnippet.find((s) => s.name === topic);
 }
 

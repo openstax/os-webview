@@ -12,7 +12,6 @@ jest.mock('~/pages/blog/pinned-article/pinned-article', () => jest.fn());
 jest.mock('~/pages/blog/more-stories/more-stories', () => ({
     LatestBlurbs: jest.fn()
 }));
-// jest.mock('~/pages/blog/search-results/use-all-articles', () => jest.fn());
 
 function Component() {
     return (

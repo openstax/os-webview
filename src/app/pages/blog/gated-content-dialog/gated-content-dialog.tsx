@@ -78,7 +78,6 @@ function GatedContentBody({
 
 function SubjectSelector() {
     const {subjectSnippet: data} = useBlogContext();
-    // const data = useDataFromSlug('snippets/subjects?locale=en');
     const options = React.useMemo(
         () =>
             camelCaseKeys(
