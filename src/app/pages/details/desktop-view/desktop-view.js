@@ -12,7 +12,7 @@ import {findSelectedTab, replaceSearchTerm} from '../common/tab-utils';
 import './desktop-view.scss';
 
 const importDetailsTab = () => import('./details-tab/details-tab.js');
-const importInstructorTab = () => import('./instructor-resource-tab/instructor-resource-tab.js');
+const importInstructorTab = () => import('./instructor-resource-tab/import-instructor-resource-tab.js');
 const importStudentTab = () => import('./student-resource-tab/import-student-resource-tab.js');
 
 // eslint-disable-next-line complexity

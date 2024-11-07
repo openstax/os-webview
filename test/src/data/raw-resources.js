@@ -1,0 +1,341 @@
+/* eslint-disable max-len, camelcase */
+export default {
+    book_video_faculty_resources: [],
+    book_orientation_faculty_resources: [],
+    book_faculty_resources: [
+        {
+            id: 2385,
+            link_external: '',
+            link_text: 'Download',
+            coming_soon_text: null,
+            video_reference_number: null,
+            updated: null,
+            featured: false,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 0,
+            resource: {
+                id: 1,
+                translation_key: '7868af7d-2b52-4a8e-9bd9-c9aee4dd0e6e',
+                heading: 'Instructor Getting Started Guide',
+                description:
+                    '<p data-block-key="wws7t">Download our helpful guide to all things OpenStax.<br/></p>',
+                unlocked_resource: true,
+                creator_fest_resource: false,
+                resource_category: 'getting started guide',
+                locale: 1,
+                icon: null,
+                resource_unlocked: true
+            },
+            link_page: null,
+            link_document: {
+                id: 855,
+                title: 'OpenStax Instructor Getting Started Guide',
+                file: 'https://assets.openstax.org/oscms-dev/media/documents/instructor_getting_started_guide_1.pdf',
+                created_at: '2020-05-27T11:09:07.387183-05:00',
+                file_size: 152012,
+                file_hash: 'a98ba6e140e6b9d76351b48bfe2875cfb622791d',
+                collection: 1,
+                uploaded_by_user: null
+            },
+            book_faculty_resource: {}
+        },
+        {
+            id: 2386,
+            link_external: '',
+            link_text: 'Download',
+            coming_soon_text: null,
+            video_reference_number: null,
+            updated: null,
+            featured: false,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 1,
+            resource: {
+                id: 7,
+                translation_key: '75eb1c4f-f593-4fca-a497-6501a6b32f1d',
+                heading: 'PowerPoint Slides',
+                description:
+                    '<p data-block-key="xugsc">Let us make lectures a little easier for you. We&#x27;ve got PowerPoint slides based on the chapter organization of your book.<br/></p>',
+                unlocked_resource: false,
+                creator_fest_resource: false,
+                resource_category: 'slides',
+                locale: 1,
+                icon: 859,
+                resource_unlocked: false
+            },
+            link_page: null,
+            link_document: {
+                id: 797,
+                title: 'PowerPoint_Slides_-_Calculus_Volume_1_lZAWXl0',
+                file: '',
+                created_at: '2020-02-28T10:40:43.458101-06:00',
+                file_size: 15633017,
+                file_hash: '2cc938b4d795b1cbe9234afe227ef3a1d3ad10a4',
+                collection: 1,
+                uploaded_by_user: null
+            },
+            book_faculty_resource: {}
+        },
+        {
+            id: 2387,
+            link_external: '',
+            link_text: 'Download',
+            coming_soon_text: null,
+            video_reference_number: null,
+            updated: null,
+            featured: false,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 2,
+            resource: {
+                id: 3,
+                translation_key: '0a4773dc-a7cf-4edb-9343-062abf4c90fe',
+                heading: 'Instructor Solutions Manual',
+                description:
+                    '<p data-block-key="y1ej1">The instructor solutions manual contains the instructor-facing answers to the problems and exercises within the textbook.<br/></p>',
+                unlocked_resource: false,
+                creator_fest_resource: false,
+                resource_category: 'answer guide',
+                locale: 1,
+                icon: 859,
+                resource_unlocked: false
+            },
+            link_page: null,
+            link_document: {
+                id: 798,
+                title: 'CalculusVol1-ISG',
+                file: '',
+                created_at: '2020-02-28T10:41:23.691451-06:00',
+                file_size: 32678232,
+                file_hash: '0eb077be29b053458a8db87c58cb3f0c20f296e1',
+                collection: 1,
+                uploaded_by_user: null
+            },
+            book_faculty_resource: {}
+        },
+        {
+            id: 2388,
+            link_external: '',
+            link_text: 'Download',
+            coming_soon_text: null,
+            video_reference_number: null,
+            updated: null,
+            featured: false,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 3,
+            resource: {
+                id: 8,
+                translation_key: '6c0337aa-4479-4a1e-a7a9-bf7c5d48b317',
+                heading: 'Sample Syllabus Language',
+                description:
+                    '<p data-block-key="pnhoo">You can opt to use this sample language in your syllabus to direct students to their FREE OpenStax textbook!</p>',
+                unlocked_resource: true,
+                creator_fest_resource: false,
+                resource_category: 'syllabus language',
+                locale: 1,
+                icon: 859,
+                resource_unlocked: true
+            },
+            link_page: null,
+            link_document: {
+                id: 799,
+                title: 'Syllabus_Language_-_Calculus_Volume_1_S61RGg0',
+                file: 'https://assets.openstax.org/oscms-dev/media/documents/Syllabus_Language_-_Calculus_Volume_1_S61RGg0_9s4tvwf.txt',
+                created_at: '2020-02-28T10:42:06.865424-06:00',
+                file_size: 682,
+                file_hash: 'bff910d4e2f86640a121c835a17233b8bc86f683',
+                collection: 1,
+                uploaded_by_user: null
+            },
+            book_faculty_resource: {}
+        },
+        {
+            id: 2389,
+            link_external: '',
+            link_text: 'Download',
+            coming_soon_text: null,
+            video_reference_number: null,
+            updated: '2020-06-25T13:49:00-05:00',
+            featured: false,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 4,
+            resource: {
+                id: 30,
+                translation_key: 'c5d315bf-e368-4aa0-8f6a-f10841b09d54',
+                heading: 'Errata Release Notes',
+                description:
+                    '<p data-block-key="nqamb">Throughout the year, subject matter experts comb through all queries from our readers. These release notes cover the errata updates in our most recent summer PDF release.</p>',
+                unlocked_resource: true,
+                creator_fest_resource: false,
+                resource_category: 'errata release notes',
+                locale: 1,
+                icon: null,
+                resource_unlocked: true
+            },
+            link_page: null,
+            link_document: {
+                id: 800,
+                title: 'Calculus Volume 1 Errata Release Notes',
+                file: 'https://assets.openstax.org/oscms-dev/media/documents/CalculusVolume1-ReleaseNotes_iUrwWgI.pdf',
+                created_at: '2020-02-28T10:42:59.814714-06:00',
+                file_size: 120078,
+                file_hash: 'ef003240bee4437e16f36156c20bc151705f33dc',
+                collection: 1,
+                uploaded_by_user: null
+            },
+            book_faculty_resource: {}
+        },
+        {
+            id: 2390,
+            link_external: '',
+            link_text: 'Go',
+            coming_soon_text: null,
+            video_reference_number: null,
+            updated: null,
+            featured: true,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 5,
+            resource: {
+                id: 42,
+                translation_key: 'e527c197-48f4-4d71-b5fc-28496194dc98',
+                heading: 'Canvas Course Cartridge',
+                description:
+                    '<p data-block-key="c4ns4">This course cartridge, created by the California Community Colleges&#x27; Online Education Initiative, integrates your OpenStax books and resources into the Canvas learning management system.</p>',
+                unlocked_resource: false,
+                creator_fest_resource: false,
+                resource_category: 'cartridge',
+                locale: 1,
+                icon: 859,
+                resource_unlocked: false
+            },
+            link_page: null,
+            link_document: null,
+            book_faculty_resource: {}
+        },
+        {
+            id: 2391,
+            link_external: '',
+            link_text: 'Download',
+            coming_soon_text: null,
+            video_reference_number: null,
+            updated: null,
+            featured: false,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 6,
+            resource: {
+                id: 56,
+                translation_key: 'f03b8b1e-994f-4654-ba5b-a87b6e80ecac',
+                heading: 'Previous PDF Version',
+                description:
+                    '<p data-block-key="bbu60">Click below to download the previous version of the Calculus Volume 1 PDF. This version was used beginning in March 2018. The only difference between this version and the one available under “Get the book” in the Book Details tab is the numbering of Tables. The version under “Get this book” corrects an issue with table numbering.</p>',
+                unlocked_resource: false,
+                creator_fest_resource: false,
+                resource_category: 'previous version pdf',
+                locale: 1,
+                icon: null,
+                resource_unlocked: false
+            },
+            link_page: null,
+            link_document: {
+                id: 796,
+                title: 'calc 1 previous',
+                file: '',
+                created_at: '2020-02-28T10:00:54.722805-06:00',
+                file_size: 41375116,
+                file_hash: '7a17323397dbc2f116249a795eebd9717543ddcf',
+                collection: 1,
+                uploaded_by_user: null
+            },
+            book_faculty_resource: {}
+        },
+        {
+            id: 2392,
+            link_external: '',
+            link_text: 'Download',
+            coming_soon_text: null,
+            video_reference_number: null,
+            updated: null,
+            featured: false,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 7,
+            resource: {
+                id: 53,
+                translation_key: '4d8e67df-c29c-4978-8b7d-e9b3a0dba07c',
+                heading: 'Diversity and Representation Development Guidelines',
+                description:
+                    '<p data-block-key="279kr">These guidelines support OpenStax efforts to ensure diverse representation in the development and improvement of our materials. These guidelines can be used to develop and improve all open educational resources.</p>',
+                unlocked_resource: true,
+                creator_fest_resource: false,
+                resource_category: 'diversity guidelines',
+                locale: 1,
+                icon: null,
+                resource_unlocked: true
+            },
+            link_page: null,
+            link_document: {
+                id: 792,
+                title: 'OpenStax Representation and Diversity Development Guidelines',
+                file: 'https://assets.openstax.org/oscms-dev/media/documents/OpenStax_Representation_and_Diversity_Development_Guidelines_2bb08eB.pdf',
+                created_at: '2020-02-27T10:44:12.316167-06:00',
+                file_size: 95547,
+                file_hash: 'd6f6d5318be07601a5dc1de29d26103539e63dcd',
+                collection: 1,
+                uploaded_by_user: null
+            },
+            book_faculty_resource: {}
+        },
+        {
+            id: 2393,
+            link_external: '',
+            link_text: 'View resources',
+            coming_soon_text: null,
+            video_reference_number: 1,
+            updated: null,
+            featured: true,
+            k12: false,
+            display_on_k12: false,
+            print_link: null,
+            sort_order: 8,
+            resource: {
+                id: 63,
+                translation_key: '15867e47-56e1-4b09-8414-bebc696401c5',
+                heading: 'Blackboard Course Cartridge',
+                description:
+                    '<p data-block-key="wb6cw">San Jacinto College created a course cartridge for this title to integrate your OpenStax books into the Blackboard learning management system. Download this file and work with your campus Blackboard administrator to add to your course.</p>',
+                unlocked_resource: false,
+                creator_fest_resource: false,
+                resource_category: 'cartridge',
+                locale: 1,
+                icon: null,
+                resource_unlocked: false
+            },
+            link_page: null,
+            link_document: {
+                id: 883,
+                title: 'Blackboard Course Cartridge - Calculus Volume 1',
+                file: '',
+                created_at: '2020-09-09T12:50:40.832237-05:00',
+                file_size: 7044,
+                file_hash: 'bf8a2ec429d5295942a950466bb695164f1e038f',
+                collection: 1,
+                uploaded_by_user: null
+            },
+            book_faculty_resource: {}
+        }
+    ],
+    slug: 'books/resources/?slug=calculus-volume-1&x=y'
+};

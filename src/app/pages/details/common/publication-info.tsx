@@ -6,7 +6,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import useDetailsContext, {ContextValues, IsbnType} from '../context';
 
 function PdfUpdateInfo({updateDate, url}: {
-    updateDate?: string;
+    updateDate?: string | null;
     url?: string;
 }) {
     if (!updateDate) {
@@ -88,7 +88,7 @@ function LicenseIcon({name}: {name: string}) {
 function LicenseInfo({name, text, title, version}: {
     name: string;
     text: string;
-    title: string;
+    title?: string;
     version: string;
 }) {
     if (!name) {
@@ -195,7 +195,7 @@ function PolishPublicationInfo() {
 
 function LabeledDate({label, date, className}: {
     label: string;
-    date: string;
+    date?: string;
     className?: string;
 }) {
     if (!date) {

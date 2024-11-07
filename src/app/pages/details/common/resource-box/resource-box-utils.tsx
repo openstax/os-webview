@@ -24,7 +24,7 @@ export type ResourceData = {
         file: string;
     };
     linkText: string;
-    resource: {
+    resource?: {
         id: number;
         heading: string;
         resourceCategory: string;
@@ -32,12 +32,12 @@ export type ResourceData = {
         creatorFestResource: boolean;
         description: string;
     };
-    comingSoonText: string;
-    videoReferenceNumber: number | null;
-    k12: boolean;
-    printLink: string;
+    comingSoonText: string | null;
+    videoReferenceNumber?: number | null;
+    k12?: boolean;
+    printLink: string | null;
     resourceUnlocked: boolean;
-    lockedText: string;
+    lockedText?: string;
     resourceHeading: string;
     resourceDescription: string;
 };
@@ -136,11 +136,8 @@ export function resourceBoxModel(
 ) {
     return Object.assign(
         {
-            id: resourceData.resource.id,
-            heading: resourceData.resource.heading,
-            resourceCategory: resourceData.resource.resourceCategory,
-            description: resourceData.resource.description,
-            creatorFest: resourceData.resource.creatorFestResource,
+            ...resourceData.resource,
+            creatorFest: Boolean(resourceData.resource?.creatorFestResource),
             comingSoon: Boolean(resourceData.comingSoonText),
             comingSoonText: resourceData.comingSoonText,
             k12: resourceData.k12,
@@ -150,7 +147,7 @@ export function resourceBoxModel(
                 // eslint-disable-next-line camelcase
                 account_id: userStatus.userInfo.accounts_id,
                 // eslint-disable-next-line camelcase
-                resource_name: resourceData.resource.heading
+                resource_name: resourceData.resource?.heading
             },
             printLink: resourceData.printLink,
             bookModel

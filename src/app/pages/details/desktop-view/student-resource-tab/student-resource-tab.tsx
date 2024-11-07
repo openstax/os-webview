@@ -6,18 +6,11 @@ import {
 } from '../../common/resource-box/resource-box-utils';
 import useUserContext, {UserStatus} from '~/contexts/user';
 import useDetailsContext, {ContextValues} from '../../context';
-import ResourceBoxes from '../../common/resource-box/resource-boxes';
+import ResourceBoxes, {ResourceModel} from '../../common/resource-box/resource-boxes';
 import './student-resource-tab.scss';
 
-type BookStudentResources = {
-    resourceHeading: string;
-    resourceDescription: string;
-    comingSoonText: string;
-    printLink: string;
-} & ResourceData;
-
 function resourceBoxModel(
-    resourceData: BookStudentResources,
+    resourceData: ResourceData,
     userStatus: UserStatus,
     bookModel: ContextValues
 ) {
@@ -52,7 +45,7 @@ function StudentResourceTab({userStatus}: {userStatus: UserStatus}) {
                 className="resources"
                 data-analytics-content-list="Student Resources"
             >
-                <ResourceBoxes models={models} />
+                <ResourceBoxes models={models as ResourceModel[]} />
             </div>
         </div>
     );

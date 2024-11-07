@@ -96,7 +96,7 @@ function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
     const trackDownloadClick = React.useCallback(
         (event: TrackedMouseEvent) => {
             if (userStatus?.isInstructor) {
-                trackLink(event, model.bookModel?.id);
+                trackLink(event, model.bookModel?.id.toString());
             }
         },
         [model.bookModel, userStatus]
