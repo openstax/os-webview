@@ -46,11 +46,11 @@ function useSelectedLabelTiedToSearchString(labels) {
     const selectedTab = findSelectedTab(labels);
     const updateSelectedLabel = React.useCallback(
         (newValue) => {
-            const newSearchString = replaceSearchTerm(labels, selectedTab, newValue);
+            const newSearchString = replaceSearchTerm(labels, newValue);
 
             navigate(newSearchString, {replace: true});
         },
-        [labels, navigate, selectedTab]
+        [labels, navigate]
     );
 
     return [selectedTab, updateSelectedLabel];
