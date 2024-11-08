@@ -68,7 +68,7 @@ function ResourceLink({ data, track }: {
     );
 }
 
-export type ResourceHeader = LinkData & {
+type ResourceHeader = LinkData & {
     heading: string;
     resourceCategory: string;
     description: string;
