@@ -6,7 +6,13 @@ import { FileButton } from '../errata-form/form/FileUploader';
 import useUserContext from '~/contexts/user';
 import './form.scss';
 
-const options = [
+type SetSubmitted = React.Dispatch<React.SetStateAction<boolean>>;
+
+const options: {
+    label: string;
+    value: string;
+    selected?: boolean;
+}[] = [
     'General',
     'Adopting OpenStax Textbooks',
     'OpenStax Kinetic',
@@ -34,12 +40,19 @@ const assignableOptions = [
 
 function LabeledInputWithInvalidMessage({
     className, children, eventType='input', showMessage
-}) {
-    const ref = useRef();
+}: React.PropsWithChildren<{
+    className?: string;
+    eventType?: string;
+    showMessage?: boolean;
+}>) {
+    const ref = useRef<HTMLLabelElement>(null);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const el = ref.current.querySelector('[name]');
+        const el = ref?.current?.querySelector('[name]') as HTMLInputElement & {
+            validationMessage: string;
+        };
+
         const updateMessage = () => setMessage(el.validationMessage);
 
         updateMessage();
@@ -64,14 +77,14 @@ function useIsEmbedded() {
     return pathname.includes('embedded');
 }
 
-function useAfterSubmit(setSubmitted) {
+function useAfterSubmit(setSubmitted?: SetSubmitted) {
     const navigate = useNavigate();
     const isEmbedded = useIsEmbedded();
 
     return React.useCallback(
         () => {
             if (isEmbedded) {
-                setSubmitted(true);
+                (setSubmitted as SetSubmitted)(true); // the embedded form passes it
             } else {
                 navigate('/confirmation/contact');
             }
@@ -106,7 +119,7 @@ function useSubjectWithInitialization() {
 // in the salesforceForm will be right.
 const newPostSite = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
 
-export default function ContactForm({setSubmitted}) {
+export default function ContactForm({setSubmitted}: {setSubmitted?: SetSubmitted}) {
     const [showInvalidMessages, setShowInvalidMessages] = useState(false);
     const [subject, setSubject] = useSubjectWithInitialization();
     const assignableSelected = React.useMemo(
@@ -129,7 +142,7 @@ export default function ContactForm({setSubmitted}) {
     const searchParams = new window.URLSearchParams(window.location.search);
     const bodyParams = searchParams.getAll('body').join('\n');
     const {userStatus} = useUserContext();
-    const userUuid = searchParams.get('user_id') ?? userStatus.uuid;
+    const userUuid = searchParams.get('user_id') ?? userStatus?.uuid;
 
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>
@@ -161,7 +174,7 @@ export default function ContactForm({setSubmitted}) {
                 <div className="label-text">
                     Your Name
                 </div>
-                <input name="name" type="text" size="20" required />
+                <input name="name" type="text" size={20} required />
             </LabeledInputWithInvalidMessage>
             <LabeledInputWithInvalidMessage showMessage={showInvalidMessages}>
                 <div className="label-text">
@@ -173,7 +186,7 @@ export default function ContactForm({setSubmitted}) {
                 <div className="label-text">
                     Your Message
                 </div>
-                <textarea cols="50" name="description" rows="6" required />
+                <textarea cols={50} name="description" rows={6} required />
             </LabeledInputWithInvalidMessage>
             <div className="label-text">
                 Please add a screenshot or any other file that helps explain your request.

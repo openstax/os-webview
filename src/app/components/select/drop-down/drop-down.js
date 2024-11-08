@@ -62,7 +62,7 @@ function AutoFocusVerticalList({options}) {
     }, [options, select])
 
     return (
-        <div className="vl-wrapper" hidden={!isOpen}>
+        <div className="vl-wrapper" hidden={!isOpen} role="presentation">
             <VerticalList
                 items={options} RenderItem={RenderItem}
                 onSelect={onSelect} onCancel={close}
@@ -72,7 +72,7 @@ function AutoFocusVerticalList({options}) {
     );
 }
 
-export default function DropDownSelect({options, placeholder, ...passThruProps}) {
+export default function DropDownSelect({options, placeholder='Please select', ...passThruProps}) {
     return (
         <Select {...passThruProps}>
             <ToggleContextProvider>

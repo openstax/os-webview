@@ -4,8 +4,16 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import Form from './form';
 import './contact.scss';
 
+type PageData = {
+    title: string;
+    tagline: string;
+    mailingHeader: string;
+    mailingAddress: string;
+    customerService: string;
+}
+
 export default function ContactPage() {
-    const pageData = usePageData('pages/contact');
+    const pageData = usePageData<PageData>('pages/contact');
 
     if (!pageData) {
         return null;
