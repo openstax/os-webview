@@ -93,6 +93,9 @@ export type ContextValues = {
     partnerListLabel: string;
     partnerPageLinkText: string;
     salesforceAbbreviation: string;
+    adoptions?: number;
+    supportStatement: string;
+    savings: number;
 };
 
 function useContextValue({data}: {data: ContextValues}) {

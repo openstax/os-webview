@@ -60,7 +60,7 @@ function EnglishTab({model}) {
                 <div className="publication-info">
                     <PublicationInfo model={model} url={null} />
                 </div>
-                {model.adoptions && <SavingsBlurb model={model} />}
+                {model.adoptions && <SavingsBlurb />}
             </div>
         </div>
     );
