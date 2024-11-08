@@ -56,6 +56,7 @@ describe('k12 subject resources', () => {
                     }}
                     labels={['one', 'two']}
                     selectedLabel="one"
+                    setSelectedLabel={jest.fn()}
                 />
             </MemoryRouter>
         );
@@ -94,6 +95,7 @@ describe('k12 subject resources', () => {
                 }}
                 labels={['one', 'two']}
                 selectedLabel="one"
+                setSelectedLabel={jest.fn()}
             />
         );
         expect(screen.queryAllByRole('link')).toHaveLength(0);
@@ -126,6 +128,7 @@ describe('k12 subject resources', () => {
                     }}
                     labels={['one', 'two']}
                     selectedLabel="one"
+                    setSelectedLabel={jest.fn()}
                 />
             </MemoryRouter>
         );
@@ -169,6 +172,7 @@ describe('k12 subject resources', () => {
                     }}
                     labels={['one', 'two']}
                     selectedLabel="one"
+                    setSelectedLabel={jest.fn()}
                 />
             </MemoryRouter>
         );

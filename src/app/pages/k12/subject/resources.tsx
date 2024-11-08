@@ -7,7 +7,11 @@ import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-hand
 import bookTitles from '~/models/book-titles';
 import './resources.scss';
 
-function LinkWithGiveDialog({href, book, track}: {
+function LinkWithGiveDialog({
+    href,
+    book,
+    track
+}: {
     href: string;
     book: string;
     track: string;
@@ -33,10 +37,14 @@ function LinkWithGiveDialog({href, book, track}: {
 
     return (
         <React.Fragment>
-            <a href={href} onClick={openGiveDialog} data-track={track}>{book}</a>
+            <a href={href} onClick={openGiveDialog} data-track={track}>
+                {book}
+            </a>
             <GiveDialog
-            link={href} variant='K12 resource' track={track}
-            onDownload={trackDownloadClick}
+                link={href}
+                variant="K12 resource"
+                track={track}
+                onDownload={trackDownloadClick}
             />
         </React.Fragment>
     );
@@ -50,20 +58,17 @@ type LinkData = {
     linkDocumentUrl: string;
 };
 
-function ResourceLink({ data, track }: {
-    data: LinkData;
-    track: string;
-}) {
+function ResourceLink({data, track}: {data: LinkData; track: string}) {
     const url = data.linkExternal || data.linkDocumentUrl;
     const {isVerified} = useUserContext();
 
     return (
         <li>
-            {
-                data.resourceUnlocked || isVerified ?
-                <LinkWithGiveDialog href={url} book={data.book} track={track} /> :
+            {data.resourceUnlocked || isVerified ? (
+                <LinkWithGiveDialog href={url} book={data.book} track={track} />
+            ) : (
                 <span>{data.book} (verified instructor only)</span>
-            }
+            )}
         </li>
     );
 }
@@ -82,9 +87,9 @@ type ResourceHeader = LinkData & {
 };
 type ResourceDict = {
     [name: string]: ResourceHeader[];
-}
+};
 
-function ResourceToContent({ resources }: {resources: ResourceDict}) {
+function ResourceToContent({resources}: {resources: ResourceDict}) {
     return (
         <div className="card-grid">
             {(Reflect.ownKeys(resources) as string[])?.map((name) => {
@@ -98,7 +103,11 @@ function ResourceToContent({ resources }: {resources: ResourceDict}) {
                         </div>
                         <ul>
                             {resourceList.map((r) => (
-                                <ResourceLink key={r.book} data={r} track={name} />
+                                <ResourceLink
+                                    key={r.book}
+                                    data={r}
+                                    track={name}
+                                />
                             ))}
                         </ul>
                     </div>
@@ -124,7 +133,8 @@ type HeaderKeys = 'facultyResourceHeaders' | 'studentResourceHeaders';
 export default function Resources({
     data,
     labels,
-    selectedLabel
+    selectedLabel,
+    setSelectedLabel
 }: {
     data: {
         resourcesHeading: string;
@@ -133,11 +143,13 @@ export default function Resources({
     };
     labels: string[];
     selectedLabel: string;
+    setSelectedLabel: (s: unknown) => void;
 }) {
     const resources = React.useMemo(
-        () => ['facultyResourceHeaders', 'studentResourceHeaders'].map(
-            (k) => resourceHeadersToResources(data[k as HeaderKeys])
-        ),
+        () =>
+            ['facultyResourceHeaders', 'studentResourceHeaders'].map((k) =>
+                resourceHeadersToResources(data[k as HeaderKeys])
+            ),
         [data]
     );
 
@@ -145,14 +157,16 @@ export default function Resources({
         <section id="resources">
             <div className="boxed">
                 <h1>{data.resourcesHeading}</h1>
-                <Tabs aria-label="Resource tabs" selectedKey={selectedLabel}>
-                    {
-                        labels.map((label, i) =>
-                            <Item key={label} title={label}>
-                                <ResourceToContent resources={resources[i]} />
-                            </Item>
-                        )
-                    }
+                <Tabs
+                    aria-label="Resource tabs"
+                    selectedKey={selectedLabel}
+                    onSelectionChange={setSelectedLabel}
+                >
+                    {labels.map((label, i) => (
+                        <Item key={label} title={label}>
+                            <ResourceToContent resources={resources[i]} />
+                        </Item>
+                    ))}
                 </Tabs>
             </div>
         </section>
