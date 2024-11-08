@@ -17,7 +17,7 @@ export default function GiveBeforeOther({
     close: () => void;
     data: DonationPopupData;
     track?: string;
-    variant?: string;
+    variant: string;
     onDownload?: (event: React.MouseEvent) => void;
     id?: string;
 }) {

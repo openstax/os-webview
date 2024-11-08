@@ -14,12 +14,25 @@ import OrderPrintCopy from './get-this-title-files/order-print-copy/order-print-
 import './get-this-title-files/get-this-title.scss';
 import trackLink from './track-link';
 
-type Model = {
+export type Model = {
     id: string;
     slug: string;
+    bookState: string;
+    comingSoon: boolean;
+    title: string;
     bookshareLink: string;
     ibookLink: string;
+    ibookLink2: string;
     kindleLink: string;
+    webviewRexLink: string;
+    webviewLink: string;
+    contentWarningText?: string;
+    rexCalloutTitle?: string;
+    rexCalloutBlurb?: string;
+    highResolutionPdfUrl: string;
+    lowResolutionPdfUrl: string;
+    cheggLink: string; // These may not be supported at all anymore,
+    cheggLinkText: string; // but the CMS is still serving them.
 };
 type ModelKey = 'bookshareLink' | 'ibookLink' | 'kindleLink';
 type TrackedMouseEvent = Parameters<typeof trackLink>[0];

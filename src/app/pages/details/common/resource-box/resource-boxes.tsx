@@ -1,7 +1,7 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import ResourceBox from './resource-box';
 import useDetailsContext from '../../context';
 import './resource-box.scss';
@@ -43,9 +43,21 @@ function CommonsHubBox() {
     );
 }
 
-export default function ResourceBoxes({ models, includeCommonsHub = false }: {
-    models: {heading: string;
-    }[]; // Will be a real type when other stuff becomes TS
+// There's more, but this is all we need for now
+export type ResourceModel = {
+    heading: string;
+    description?: string;
+    link: {
+        text: string;
+        url: string;
+    }
+};
+
+export default function ResourceBoxes({
+    models,
+    includeCommonsHub = false
+}: {
+    models: ResourceModel[];
     includeCommonsHub?: boolean;
 }) {
     return (
@@ -57,4 +69,3 @@ export default function ResourceBoxes({ models, includeCommonsHub = false }: {
         </React.Fragment>
     );
 }
-

@@ -62,7 +62,7 @@ function GiveBeforePdfAfterConditionals({
 }: {
     onThankYouClick: ReturnType<typeof useOnThankYouClick>['onThankYouClick'];
     link: string;
-    track: string | undefined;
+    track?: string;
     data: DonationPopupData;
     close: () => void;
     onDownload?: (event: React.MouseEvent) => void;
