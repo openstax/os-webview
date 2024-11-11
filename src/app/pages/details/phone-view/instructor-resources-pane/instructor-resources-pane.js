@@ -2,7 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import {useNavigate} from 'react-router-dom';
-import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box';
+import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box-utils';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import VideoResourceBoxes from '../../common/resource-box/video-resource-box';

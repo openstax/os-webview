@@ -1,5 +1,5 @@
 import React from 'react';
-import {studentResourceBoxPermissions} from '../../common/resource-box/resource-box';
+import {studentResourceBoxPermissions} from '../../common/resource-box/resource-box-utils';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import useUserContext from '~/contexts/user';
 import './student-resources-pane.scss';

@@ -12,22 +12,15 @@ import trackLink from '../track-link';
 import useGiveDialog, { VariantValue } from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
+import {ResourceModel} from './resource-boxes';
 
-type LeftContentModelType = {
-    link?: {url?: string; text?: string};
-    comingSoon: boolean;
-    iconType: string;
-    bookModel?: {id: string; customizationFormHeading: string};
-    heading: string;
-    resourceCategory?: string;
-};
-
+// ResourceModel & LinkIsSet changes link from optional to required.
 type LinkIsSet = {
     link: {url: string; text: string};
 };
 
 // eslint-disable-next-line complexity
-export default function LeftContent({model}: {model: LeftContentModelType}) {
+export default function LeftContent({model}: {model: ResourceModel}) {
     const {userStatus} = useUserContext();
     const doneWaiting = useDoneWaitingForModelChange(model);
 
@@ -52,10 +45,10 @@ export default function LeftContent({model}: {model: LeftContentModelType}) {
         );
     }
 
-    return <LeftButton model={model as LeftContentModelType & LinkIsSet} />;
+    return <LeftButton model={model as ResourceModel & LinkIsSet} />;
 }
 
-function useDoneWaitingForModelChange(model: LeftContentModelType) {
+function useDoneWaitingForModelChange(model: ResourceModel) {
     const [timeIsUp, toggle] = useToggle(false);
     const timerRef = React.useRef<number>();
 
@@ -95,7 +88,7 @@ function useVariant(): VariantValue {
     return '? resource';
 }
 
-function LeftButton({model}: {model: LeftContentModelType & LinkIsSet}) {
+function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
     const {GiveDialog, open, enabled} = useGiveDialog();

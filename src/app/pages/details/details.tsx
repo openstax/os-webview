@@ -9,63 +9,66 @@ import TitleImage from './title-image';
 import DualView from './dual-view';
 import {useTableOfContents} from './common/hooks';
 import useLanguageContext from '~/contexts/language';
-import useDetailsContext, {DetailsContextProvider} from './context';
+import useDetailsContext, {
+    DetailsContextProvider,
+    ContextValues
+} from './context';
 import {WindowContextProvider} from '~/contexts/window';
 import './details.scss';
 import './table-of-contents.scss';
 
-function setPageColor(color) {
-    document.querySelector('.details-page').classList.add(color);
+function setPageColor(color: string) {
+    document.querySelector('.details-page')?.classList.add(color);
 }
 
-function setJsonLd(data) {
+function setJsonLd(data: ContextValues) {
     const el = document.createElement('script');
     const authorData = data.authors.map((obj) => ({
         '@type': 'Person',
-        'name': obj.name,
-        'affiliation': obj.university
+        name: obj.name,
+        affiliation: obj.university
     }));
     const polish = $.isPolish(data.title);
     const ldData = {
         '@content': 'https://schema.org',
         '@type': 'WebPage',
-        'datePublished': data.created,
-        'dateModified': data.updated,
-        'mainEntity': {
-            'type': 'Book',
-            'name': data.title,
-            'author': authorData,
-            'publisher': {
-                'type': 'Organization',
-                'name': 'OpenStax'
+        datePublished: data.created,
+        dateModified: data.updated,
+        mainEntity: {
+            type: 'Book',
+            name: data.title,
+            author: authorData,
+            publisher: {
+                type: 'Organization',
+                name: 'OpenStax'
             },
-            'image': data.coverUrl,
-            'inLanguage': polish ? 'Polish' : 'English',
-            'isbn': data.digitalIsbn13,
-            'url': data.rexWebviewLink || data.webviewLink
+            image: data.coverUrl,
+            inLanguage: polish ? 'Polish' : 'English',
+            isbn: data.digitalIsbn13,
+            url: data.webviewRexLink
         }
     };
-    const descriptionEl = document.querySelector('head meta[name="description"]');
+    const descriptionEl = document.querySelector(
+        'head meta[name="description"]'
+    );
 
     if (descriptionEl) {
         el.type = 'application/ld+json';
         el.textContent = JSON.stringify(ldData, null, 2);
-        descriptionEl.parentNode.insertBefore(el, descriptionEl.nextSibling);
+        descriptionEl.parentNode?.insertBefore(el, descriptionEl.nextSibling);
     }
 }
 
-function TocSlideoutAndContent({children}) {
+function TocSlideoutAndContent({children}: {children: React.ReactNode}) {
     const {isOpen} = useTOCContext();
-    const model = useDetailsContext();
+    const {slug} = useDetailsContext();
     const cwClass = cn('content-wrapper', {'drawer-open': isOpen});
-    const tocHtml = useTableOfContents(model);
+    const tocHtml = useTableOfContents();
 
     return (
-        <div className={cwClass} data-slug={model.slug}>
+        <div className={cwClass} data-slug={slug}>
             <TOCSlideout html={tocHtml} />
-            <div className="content">
-                {children}
-            </div>
+            <div className="content">{children}</div>
         </div>
     );
 }
@@ -74,17 +77,18 @@ export function BookDetails() {
     const model = useDetailsContext();
     const {setLanguage} = useLanguageContext();
 
-    useEffect(
-        () => {
-            setPageColor(model.coverColor);
-            setJsonLd(model);
-            setLanguage(model.meta.locale);
-        },
-        [model, setLanguage]
-    );
+    useEffect(() => {
+        setPageColor(model.coverColor);
+        setJsonLd(model);
+        setLanguage(model.meta.locale);
+    }, [model, setLanguage]);
 
     return (
-        <main className={cn('details-page', {'card-background': model.useCardBackground})}>
+        <main
+            className={cn('details-page', {
+                'card-background': model.useCardBackground
+            })}
+        >
             <TitleImage />
             <TOCContextProvider>
                 <TocSlideoutAndContent>
@@ -97,7 +101,7 @@ export function BookDetails() {
     );
 }
 
-function BookDetailsWithContext({data}) {
+function BookDetailsWithContext({data}: {data: ContextValues}) {
     return (
         <DetailsContextProvider contextValueParameters={{data}}>
             <BookDetails />
@@ -110,6 +114,10 @@ export default function BookDetailsLoader() {
     const slug = `books/${title}`;
 
     return (
-        <LoaderPage slug={slug} Child={BookDetailsWithContext} doDocumentSetup />
+        <LoaderPage
+            slug={slug}
+            Child={BookDetailsWithContext}
+            doDocumentSetup
+        />
     );
 }

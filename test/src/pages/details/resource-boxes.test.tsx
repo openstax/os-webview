@@ -1,12 +1,14 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import BookDetailsLoader from './book-details-context';
+import ShellContextProvider from '../../../helpers/shell-context';
+import {MemoryRouter} from 'react-router-dom';
+
 import * as detailCtx from '~/pages/details/context';
 import ResourceBoxes from '~/pages/details/common/resource-box/resource-boxes';
 import {
     instructorResourceBoxPermissions,
     studentResourceBoxPermissions
-} from '~/pages/details/common/resource-box/resource-box';
+} from '~/pages/details/common/resource-box/resource-box-utils';
 
 // Test all the conditions in here:
 // userStatus: isInstructor: true|false
@@ -29,15 +31,21 @@ const payload = {
 };
 
 function LangWrapResourceBoxes({
-    models, includeCommonsHub
+    models,
+    includeCommonsHub
 }: {
     models: Parameters<typeof ResourceBoxes>[0]['models'];
     includeCommonsHub?: boolean;
 }) {
     return (
-        <BookDetailsLoader slug="books/college-algebra">
-            <ResourceBoxes models={models} includeCommonsHub={includeCommonsHub} />
-        </BookDetailsLoader>
+        <ShellContextProvider>
+            <MemoryRouter initialEntries={['/books/college-algebra']}>
+                <ResourceBoxes
+                    models={models}
+                    includeCommonsHub={includeCommonsHub}
+                />
+            </MemoryRouter>
+        </ShellContextProvider>
     );
 }
 
@@ -66,16 +74,14 @@ function studentModels(resDelta: ResDelta, userDelta = {}) {
     return [Object.assign(payload, studentResourceBoxPermissions(res, user))];
 }
 
-it('handles unlocked instructor resources', async () => {
+it('handles unlocked instructor resources', () => {
     render(<LangWrapResourceBoxes models={instructorModels({})} />);
-    expect((await screen.findByRole('heading')).textContent).toBe(
-        payload.heading
-    );
+    expect(screen.getByRole('heading').textContent).toBe(payload.heading);
     expect(screen.getAllByText('a description')).toHaveLength(1);
     expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
 });
 
-it('handles locked instructor resources', async () => {
+it('handles locked instructor resources', () => {
     const mockUseDetailsContext = jest.spyOn(detailCtx, 'default');
 
     mockUseDetailsContext.mockReturnValueOnce({
@@ -94,12 +100,14 @@ it('handles locked instructor resources', async () => {
         />
     );
 
-    const links = await screen.findAllByRole<HTMLAnchorElement>('link');
+    const links = screen.getAllByRole<HTMLAnchorElement>('link');
 
-    expect(links.find((el) => el.textContent === resourceData.lockedText)).toBeTruthy();
+    expect(
+        links.find((el) => el.textContent === resourceData.lockedText)
+    ).toBeTruthy();
     expect(links).toHaveLength(3);
 });
-it('handles empty community resource url', async () => {
+it('handles empty community resource url', () => {
     const mockUseDetailsContext = jest.spyOn(detailCtx, 'default');
 
     mockUseDetailsContext.mockReturnValueOnce({
@@ -111,36 +119,32 @@ it('handles empty community resource url', async () => {
             includeCommonsHub
         />
     );
-    const links = await screen.findAllByRole<HTMLAnchorElement>('link');
+    const links = screen.getAllByRole<HTMLAnchorElement>('link');
 
     expect(links).toHaveLength(1);
 });
 
-it('allows instructors access to locked resources', async () => {
+it('allows instructors access to locked resources', () => {
     const models = instructorModels(
         {resource: {resourceUnlocked: false}},
         {isInstructor: true}
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    expect((await screen.findByRole('link')).textContent).toBe(
-        resourceData.linkText
-    );
+    expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
 });
 
-it('handles locked student resources', async () => {
+it('handles locked student resources', () => {
     const models = studentModels(
         {resource: {resourceUnlocked: false}},
         {isStudent: false, isInstructor: false}
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    expect((await screen.findByRole('link')).textContent).toBe(
-        resourceData.lockedText
-    );
+    expect(screen.getByRole('link').textContent).toBe(resourceData.lockedText);
 });
 
-it('allows students access to locked resources', async () => {
+it('allows students access to locked resources', () => {
     const models = studentModels(
         {},
         {
@@ -150,12 +154,10 @@ it('allows students access to locked resources', async () => {
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    expect((await screen.findByRole('link')).textContent).toBe(
-        resourceData.linkText
-    );
+    expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
 });
 
-it('allows instructors access to locked student resources', async () => {
+it('allows instructors access to locked student resources', () => {
     const models = studentModels(
         {},
         {
@@ -165,13 +167,13 @@ it('allows instructors access to locked student resources', async () => {
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    const link = await screen.findByRole<HTMLAnchorElement>('link');
+    const link = screen.getByRole<HTMLAnchorElement>('link');
 
     expect(link.textContent).toBe(resourceData.linkText);
     expect(link.href).toMatch('/download');
 });
 
-it('understands external links', async () => {
+it('understands external links', () => {
     const models = studentModels(
         {
             linkDocumentUrl: null,
@@ -184,7 +186,63 @@ it('understands external links', async () => {
     );
 
     render(<LangWrapResourceBoxes models={models} />);
-    expect((await screen.findByRole('link')).textContent).toBe(
-        resourceData.linkText
+    expect(screen.getByRole('link').textContent).toBe(resourceData.linkText);
+});
+
+it('displays comingSoonText and NewLabel', () => {
+    const models = studentModels({}, {}).map((model) => ({
+        ...model,
+        comingSoon: true,
+        comingSoonText: 'not ready yet!',
+        isNew: true
+    }));
+
+    render(<LangWrapResourceBoxes models={models} />);
+    screen.getByText('not ready yet!');
+});
+
+it('displays k12 badge', () => {
+    const models = studentModels({}, {}).map((model) => ({
+        ...model,
+        k12: true,
+        comingSoonText: 'not ready yet!'
+    }));
+
+    render(<LangWrapResourceBoxes models={models} />);
+    screen.getByAltText('K12 resource');
+    expect(screen.getByRole('heading', {level: 3}).getAttribute('class')).toBe(
+        'space-for-badge'
     );
+});
+
+it('displays CreatorFest notice', () => {
+    const models = studentModels({}, {}).map((model) => ({
+        ...model,
+        creatorFest: true
+    }));
+
+    render(<LangWrapResourceBoxes models={models} />);
+    screen.getByRole('img', {
+        description: 'This resource was created by instructors at Creator Fest'
+    });
+});
+
+it('displays print link', () => {
+    const models = studentModels({}, {}).map((model) => ({
+        ...model,
+        printLink: '/path/to/print'
+    }));
+
+    render(<LangWrapResourceBoxes models={models} />);
+    screen.getByRole('link', {name: 'Buy print'});
+});
+
+it('displays NEW label', () => {
+    const models = studentModels({}, {}).map((model) => ({
+        ...model,
+        isNew: true
+    }));
+
+    render(<LangWrapResourceBoxes models={models} />);
+    screen.getByText('NEW');
 });

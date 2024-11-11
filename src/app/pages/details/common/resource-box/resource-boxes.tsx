@@ -47,10 +47,20 @@ function CommonsHubBox() {
 export type ResourceModel = {
     heading: string;
     description?: string;
-    link: {
-        text: string;
-        url: string;
-    }
+    double: boolean;
+    comingSoon: boolean;
+    comingSoonText: string;
+    resourceCategory?: string;
+    k12: boolean;
+    videoReferenceNumber: number;
+    trackResource: boolean;
+    printLink: string;
+    icon: string;
+    isNew: boolean;
+    creatorFest: boolean;
+    iconType: string;
+    bookModel?: {id: string; customizationFormHeading: string};
+    link?: {url?: string; text?: string};
 };
 
 export default function ResourceBoxes({

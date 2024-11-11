@@ -11,14 +11,20 @@ export default function DualView() {
 
     return (
         <React.Fragment>
-            <div className='phone-view'>
-                <LinksToTranslations />
-                {viewsUsed.phone && <JITLoad importFn={importPhoneView} />}
-            </div>
-            <div className='bigger-view'>
-                <LinksToTranslations />
-                {viewsUsed.desktop && <JITLoad importFn={importDesktopView} />}
-            </div>
+            {
+                viewsUsed.phone &&
+                <div className='phone-view'>
+                    <LinksToTranslations />
+                    <JITLoad importFn={importPhoneView} />
+                </div>
+            }
+            {
+                viewsUsed.desktop &&
+                <div className='bigger-view'>
+                    <LinksToTranslations />
+                    <JITLoad importFn={importDesktopView} />
+                </div>
+            }
         </React.Fragment>
     );
 }

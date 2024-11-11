@@ -4,6 +4,7 @@ import FeaturedResourcesSection from '~/pages/details/common/featured-resources/
 import ShellContextProvider from '../../../../helpers/shell-context';
 import {MemoryRouter} from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import {ResourceModel} from '~/pages/details/common/resource-box/resource-boxes';
 
 const mockUseUserContext = jest.fn();
 
@@ -27,7 +28,7 @@ const resourceModels = [
             url: 'url2'
         }
     }
-];
+] as ResourceModel[];
 
 describe('details/featured-resources', () => {
     const user = userEvent.setup();

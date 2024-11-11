@@ -13,7 +13,7 @@ export default function DetailsPane({polish, model}) {
             {model.adoptions && <SavingsBlurb model={model} />}
             <div className="authors-region">
                 <CollapsingPane title={polish ? 'Autorzy' : 'Authors'}>
-                    <Authors model={model} polish={polish} />
+                    <Authors />
                 </CollapsingPane>
             </div>
             <div className="product-details-region">

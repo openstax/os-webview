@@ -5,11 +5,9 @@ import memoize from 'lodash/memoize';
 export function bookToc(slug: string) {
     return cmsFetch(slug)
         .then((bi) => {
-            const isRex = true;
             const webviewLink = bi.webview_rex_link;
 
             return {
-                isRex,
                 webviewLink,
                 cnxId: bi.cnx_id
             };

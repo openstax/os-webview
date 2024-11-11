@@ -1,3 +1,5 @@
+import {useState} from 'react';
+import buildContext from '~/components/jsx-helpers/build-context';
 export type LocaleType = {
     locale: string;
 };
@@ -8,7 +10,7 @@ type WebinarContent = {
         link: string;
         content: string;
     };
-}
+};
 type StuffContent = {
     content: {
         id: number;
@@ -18,16 +20,22 @@ type StuffContent = {
         contentLoggedIn: string;
         heading: string;
     };
-
-}
+};
 type VideoContent = {
     title: string;
     description: string;
     embed: string;
-}
+};
+type Author = {
+    name: string;
+    university: string;
+    seniorAuthor?: boolean;
+};
+
 export type ContextValues = {
     slug: string;
     translations: Array<TranslationType>;
+    bookState: string;
     comingSoon: boolean;
     coverColor: string;
     meta: LocaleType;
@@ -47,12 +55,25 @@ export type ContextValues = {
     freeStuffInstructor: StuffContent;
     videos: [VideoContent[]];
     setUseCardBackground: React.Dispatch<React.SetStateAction<boolean>>;
+    authors: Author[];
+    created: string;
+    updated: string;
+    coverUrl: string;
+    digitalIsbn13: string;
+    webviewRexLink: string;
+    webviewLink: string;
+    errataContent: string;
+    cnxId: string;
 };
 
-export default function (): ContextValues;
+function useContextValue({data}: {data: ContextValues}) {
+    const [useCardBackground, setUseCardBackground] = useState(false);
 
-export function DetailsContextProvider({
-    data
-}: {
-    data: Omit<ContextValues, 'comingSoon'>;
-}): null;
+    data.comingSoon = data.bookState === 'coming_soon';
+
+    return {...data, useCardBackground, setUseCardBackground};
+}
+
+const {useContext, ContextProvider} = buildContext({useContextValue});
+
+export {useContext as default, ContextProvider as DetailsContextProvider};

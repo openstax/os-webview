@@ -68,7 +68,7 @@ describe('give-before-pdf', () => {
         await screen.findByText('Go to your file');
     });
     it('Thank You note can be filled and submitted', async () => {
-        const thankYouClick = jest.fn(() => console.info('** Thank you'));
+        const thankYouClick = jest.fn();
 
         jest.spyOn(TY, 'useOnThankYouClick').mockReturnValue({
             showThankYou: true,

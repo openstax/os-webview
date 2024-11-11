@@ -25,8 +25,8 @@ function PolishTab({model}) {
                     <h3>Podsumowanie</h3>
                     <RawHTML html={model.description} />
                 </div>
-                <Authors model={model} polish={true} />
-                <ErrataSection model={model} polish={true} />
+                <Authors />
+                <ErrataSection />
                 <PublicationInfo model={model} polish={true} />
             </div>
         </div>
@@ -55,8 +55,8 @@ function EnglishTab({model}) {
                     </h3>
                     <RawHTML html={model.description} />
                 </div>
-                <Authors model={model} />
-                <ErrataSection model={model} />
+                <Authors />
+                <ErrataSection />
                 <div className="publication-info">
                     <PublicationInfo model={model} url={null} />
                 </div>
