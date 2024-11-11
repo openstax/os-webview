@@ -23,10 +23,10 @@ const resourceData = {
     linkText: 'Click this',
     lockedText: 'Login to unlock',
     linkDocument: {file: '/download'}
-} as unknown as ResourceData;
+} as ResourceData;
 const userStatus = {
     isInstructor: false
-} as unknown as UserStatus;
+} as UserStatus;
 const payload = {
     heading: 'This is the heading',
     description: 'This is <b>a description</b> in HTML'
