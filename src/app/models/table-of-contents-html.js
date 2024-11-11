@@ -37,6 +37,7 @@ export default function tableOfContentsHtml({cnxId, webviewLink}) {
             buildTableOfContents(cnxData.tree.contents, 'div').join(''),
         (err) => {
             console.warn(`Error fetching TOC for ${cnxId}: ${err}`);
+            return '';
         }
     );
 }

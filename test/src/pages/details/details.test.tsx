@@ -65,7 +65,8 @@ describe('Details page', () => {
     });
 
     it('renders book', async () => {
-        spyWindowContext.mockReturnValue({innerWidth: 1280} as any); // eslint-disable-line
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        spyWindowContext.mockReturnValue({innerWidth: 1280} as any);
         render(<Component />);
         await finishedRendering();
         expect(lengthOfView('phone')).toBeUndefined();

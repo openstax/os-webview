@@ -8,7 +8,7 @@ import useDetailsContext from '../context';
 export function useTableOfContents() {
     const model = useDetailsContext();
     const webviewLink = model.webviewRexLink;
-    const [tocHtml, setTocHtml] = useState<string | void>('');
+    const [tocHtml, setTocHtml] = useState<string>('');
 
     tableOfContentsHtml({
         cnxId: model.cnxId,
@@ -22,7 +22,7 @@ export function useTableOfContents() {
     return tocHtml as string;
 }
 
-function toBlurb(partner: object) {
+function toBlurb(partner: PartnerData) {
     const pData = camelCaseKeys(partner);
 
     return {
