@@ -72,10 +72,6 @@ function UpcomingWebinar({data}: {data: Webinar}) {
                     <span className='label'>Speakers: </span>
                     {data.speakers}
                 </div>
-                <div className='spaces-remaining'>
-                    <span className='label'>Spaces remaining: </span>
-                    {data.spacesRemaining}
-                </div>
             </div>
             <LinkWithChevron href={data.registrationUrl}>
                 {data.registrationLinkText}

@@ -12,7 +12,6 @@ const upcomingWebinar: Webinar = {
     title: 'Upcoming Webinar',
     description: 'Academic self-efficacy',
     speakers: 'Preeti Ravi (Kritik)',
-    spacesRemaining: 400,
     registrationUrl:
         'https://event.on24.com/wcc/r/4347876/516C29B63558FFB28274BDE77CEAAFF7',
     registrationLinkText: 'Register today'
@@ -27,7 +26,6 @@ const pastWebinar: Webinar = {
     title: 'Past Webinar',
     description: 'Academic self-efficacy',
     speakers: 'Preeti Ravi (Kritik)',
-    spacesRemaining: 400,
     registrationUrl:
         'https://event.on24.com/wcc/r/4347876/516C29B63558FFB28274BDE77CEAAFF7',
     registrationLinkText: 'Register today'

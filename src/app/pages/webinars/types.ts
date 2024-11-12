@@ -27,5 +27,4 @@ export type Webinar = {
     registrationLinkText: string;
     registrationUrl: string;
     speakers: string;
-    spacesRemaining: number;
 };
