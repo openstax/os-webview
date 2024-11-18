@@ -88,6 +88,13 @@ function useVariant(): VariantValue {
     return '? resource';
 }
 
+function LinkText({iconType, link}: LinkIsSet & {iconType: ResourceModel['iconType']}) {
+    if (iconType === 'lock') {
+        return <FormattedMessage id="resources.loginToUnlock" />;
+    }
+    return link.text;
+}
+
 function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
@@ -124,7 +131,7 @@ function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
                 aria-label={ariaLabel}
             >
                 <FontAwesomeIcon icon={icon} />
-                <span>{model.link.text}</span>
+                <span><LinkText iconType={model.iconType} link={model.link} /></span>
             </a>
             {isDownload && (
                 <GiveDialog

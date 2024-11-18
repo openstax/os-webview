@@ -71,7 +71,7 @@ describe('left-content', () => {
                 isInstructor: true
             }
         });
-        const model = {link, ...baseModel};
+        const model = {link, ...baseModel, ...{iconType: 'unlock'}};
 
         render(<Component model={model} search="Student" />);
         const foundLink = screen.getByRole('link');

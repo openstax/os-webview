@@ -1,5 +1,4 @@
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
 import linkHelper from '~/helpers/link';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import useUserContext, {UserStatus} from '~/contexts/user';
@@ -70,7 +69,7 @@ function resourceBoxPermissions({
         locked: {
             iconType: 'lock',
             link: {
-                text: <FormattedMessage id="resources.loginToUnlock" /> as unknown as string,
+                text: '',
                 url: loginUrl
             }
         }
