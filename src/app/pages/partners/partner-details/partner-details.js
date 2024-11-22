@@ -61,7 +61,7 @@ function RequestInfoButton({infoText='Request info'}) {
 function Overview({model, icon}) {
     const {
         richDescription: description,
-        infoUrl, infoLinkText: infoText,
+        infoLinkText: infoText,
         books, images, videos, title: partnerName
     } = model;
     const titles = useRealTitles(books);
@@ -84,7 +84,7 @@ function Overview({model, icon}) {
             <section className="carousel">
                 <Carousel {...{icon, images, videos}} />
             </section>
-            <RequestInfoButton {...{infoUrl, infoText, partnerName}} />
+            <RequestInfoButton {...{infoText, partnerName}} />
             <hr />
             <section className="overview">
                 <h2>Overview</h2>

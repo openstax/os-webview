@@ -1,7 +1,7 @@
 import React from 'react';
 import ResultGrid from './result-grid';
 import useSearchContext from '../search-context';
-import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
+import partnerFeaturePromise from '~/models/salesforce-partners';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 import {useToggle} from '~/helpers/data';
 import shuffle from 'lodash/shuffle';
@@ -33,7 +33,57 @@ export const equityOptions = [
 
 const equityOptionValues = equityOptions.map((entry) => entry.value);
 
-function filterByBooks(candidates, books) {
+type PartnerData = {
+    id: number;
+    average_rating: {
+        rating__avg: number;
+    };
+    rating_count: number;
+    salesforce_id: string;
+    partner_name: string;
+    partner_logo: string | null;
+    image_1: string | null;
+    image_2: string | null;
+    image_3: string | null;
+    image_4: string | null;
+    image_5: string | null;
+    video_1: string | null;
+    video_2: string | null;
+    visible_on_website: boolean;
+    partner_type: string | null;
+    rich_description: string | null;
+    partner_description: string | null;
+    short_partner_description: string | null;
+    partner_website: string | null;
+    books: string;
+    landing_page: string | null;
+    partner_sf_account_id: string;
+    affordability_cost: string;
+    affordability_institutional: boolean;
+    app_available: boolean;
+    instructional_level_k12: boolean;
+    instructional_level_higher_ed: boolean;
+    international: boolean;
+    partnership_level: string;
+    equity_rating: string | null;
+    partner_anniversary_date: string | null;
+}
+
+export type PartnerEntry = ReturnType<typeof resultEntry>
+
+// The key domains need to be done
+export type LinkTexts = {
+    [key: string]: string
+};
+export type HeaderTexts = {
+    [key: string]: string
+};
+
+
+type BooksType = ReturnType<typeof useSearchContext>['books'];
+type TypesType= ReturnType<typeof useSearchContext>['types'];
+
+function filterByBooks(candidates: PartnerEntry[], books: BooksType) {
     if (books.value.length <= 0) {
         return candidates;
     }
@@ -42,7 +92,7 @@ function filterByBooks(candidates, books) {
     });
 }
 
-function filterByType(candidates, types) {
+function filterByType(candidates: PartnerEntry[], types: TypesType) {
     if (! types.value) {
         return candidates;
     }
@@ -53,8 +103,12 @@ function filterByType(candidates, types) {
     });
 }
 
+type AdvancedType = ReturnType<typeof useSearchContext>['advanced'];
+
 // Custom advanced filter handling
-function filterBy(values, candidates, candidateField, advanced) {
+function filterBy(values: string[], candidates: PartnerEntry[],
+    candidateField: keyof PartnerEntry, advanced: AdvancedType
+) {
     const features = advanced.value
         .filter((f) => values.includes(f));
 
@@ -66,13 +120,13 @@ function filterBy(values, candidates, candidateField, advanced) {
             const v = entry[candidateField] || '';
 
             // Includes because for costs, the value is a semicolon-separated list
-            return features.some((f) => v.includes(f));
+            return features.some((f) => (v as unknown[]).includes(f));
         }
     );
 }
 
 // eslint-disable-next-line complexity
-function useFilteredEntries(entries) {
+function useFilteredEntries(entries: PartnerEntry[]) {
     const {books, types, advanced, sort, resultCount} = useSearchContext();
     const finalResult = React.useMemo(
         () => {
@@ -108,14 +162,14 @@ function useFilteredEntries(entries) {
             }
 
             const getFieldsDict = {
-                1: [(r) => r.title.toLowerCase()],
-                2: [(r) => Math.abs(r.rating), (r) => r.ratingCount]
+                '1': [(r: PartnerEntry) => r.title.toLowerCase()],
+                '2': [(r: PartnerEntry) => Math.abs(r.rating), (r: PartnerEntry) => r.ratingCount]
             };
             const sortDir = sort.value < 0 ? 'desc' : 'asc';
 
             return orderBy(
                 finalResult,
-                getFieldsDict[Math.abs(sort.value)],
+                getFieldsDict[Math.abs(sort.value) as unknown as '1' | '2'],
                 [sortDir, sortDir]
             );
         },
@@ -123,12 +177,14 @@ function useFilteredEntries(entries) {
     );
 }
 
-function advancedFilterKeys(partnerEntry) {
-    return Reflect.ownKeys(partnerEntry).filter((k) => [false, true].includes(partnerEntry[k]));
+function advancedFilterKeys(partnerEntry: PartnerData) {
+    return (Reflect.ownKeys(partnerEntry) as Array<keyof PartnerData>).filter(
+        (k) => ([false, true] as unknown[]).includes(partnerEntry[k])
+    );
 }
 
 // eslint-disable-next-line complexity
-function resultEntry(pd) {
+function resultEntry(pd: PartnerData) {
     return {
         id: pd.id,
         title: pd.partner_name,
@@ -163,18 +219,17 @@ function resultEntry(pd) {
         type: pd.partner_type,
         cost: pd.affordability_cost,
         equityRating: pd.equity_rating,
-        infoUrl: pd.formstack_url,
-        verifiedFeatures: pd.verified_by_instructor ? tooltipText : false,
+        verifiedFeatures: false,
         rating: pd.average_rating.rating__avg,
         ratingCount: pd.rating_count,
         partnershipLevel: pd.partnership_level
     };
 }
 
-function SeeMore({defaultOpen, children}) {
+function SeeMore({defaultOpen, children}: React.PropsWithChildren<{defaultOpen: boolean}>) {
     const [opened, toggle] = useToggle(false);
     const onClick = React.useCallback(
-        (event) => {
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.preventDefault();
             toggle();
         },
@@ -204,9 +259,13 @@ function SeeMore({defaultOpen, children}) {
 }
 
 const allyPartnershipLevel = 'Brand Ally';
-const isAlly = (level) => level.localeCompare(allyPartnershipLevel, 'en', {sensitivity: 'base'}) === 0;
+const isAlly = (level: string) => level.localeCompare(allyPartnershipLevel, 'en', {sensitivity: 'base'}) === 0;
 
-function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
+function ResultGridLoader({partnerData, linkTexts, headerTexts}: {
+    partnerData: PartnerData[];
+    linkTexts: LinkTexts;
+    headerTexts: HeaderTexts;
+}) {
     const entries = React.useMemo(
         () => partnerData.map(resultEntry),
         [partnerData]
@@ -239,8 +298,11 @@ function ResultGridLoader({partnerData, linkTexts, headerTexts}) {
     );
 }
 
-export default function Results({linkTexts, headerTexts}) {
-    const partnerData = useDataFromPromise(partnerFeaturePromise);
+export default function Results({linkTexts, headerTexts}: {
+    linkTexts: LinkTexts;
+    headerTexts: {[key: string]: string};
+}) {
+    const partnerData: PartnerData[] = useDataFromPromise(partnerFeaturePromise);
     const visiblePartners = React.useMemo(
         () => partnerData?.filter((e) => e.visible_on_website),
         [partnerData]

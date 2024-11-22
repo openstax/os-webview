@@ -2,12 +2,12 @@ import React from 'react';
 import Dialog from '~/components/dialog/dialog';
 import useDialogContext, {DialogContextProvider} from './dialog-context';
 import PartnerDetails from '../partner-details/partner-details';
-import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import {useNavigate, useLocation} from 'react-router-dom';
+import type { LinkTexts, PartnerEntry } from './results';
 
-function modelFromEntry(entry) {
+function modelFromEntry(entry: PartnerEntry) {
     return {
         id: entry.id,
         type: entry.type,
@@ -22,18 +22,17 @@ function modelFromEntry(entry) {
     };
 }
 
-function ResultCard({entry}) {
+function ResultCard({entry}: {entry: PartnerEntry}) {
     const {
-        type, title, logoUrl, verifiedFeatures, badgeImage, tags, rating, ratingCount
+        type, title, logoUrl, verifiedFeatures, badgeImage, tags
     } = modelFromEntry(entry);
-    const summary = {count: ratingCount, rating};
     const navigate = useNavigate();
     const onSelect = React.useCallback(
-        (event) => {
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.preventDefault();
             const href = event.currentTarget.getAttribute('href');
 
-            navigate(href, {replace: true});
+            navigate(href as string, {replace: true});
         },
         [navigate]
     );
@@ -64,21 +63,24 @@ function ResultCard({entry}) {
             <div className="tags">
                 {tags.map(({value}) => <div key={value}>{value}</div>)}
             </div>
+            {/*
             <StarsAndCount
                 rating={summary.rating}
                 count={summary.count}
                 showNumber />
+            */}
         </a>
     );
 }
 
-function usePartnerFromLocation(entries) {
+function usePartnerFromLocation(entries: PartnerEntry[]):
+[PartnerEntry, () => void] {
     const {pathname, search} = useLocation();
     const partner = React.useMemo(
         () => {
             const paramKeys = Array.from(new window.URLSearchParams(search).keys());
 
-            return entries.find((e) => paramKeys.includes(e.title));
+            return entries.find((e) => paramKeys.includes(e.title)) as PartnerEntry;
         },
         [entries, search]
     );
@@ -91,7 +93,7 @@ function usePartnerFromLocation(entries) {
     return [partner, closePartner];
 }
 
-function DialogInContext(dialogProps) {
+function DialogInContext(dialogProps: Parameters<typeof Dialog>[0]) {
     const {title} = useDialogContext();
 
     return (
@@ -99,7 +101,10 @@ function DialogInContext(dialogProps) {
     );
 }
 
-export default function ResultGrid({entries, linkTexts}) {
+export default function ResultGrid({entries, linkTexts}: {
+    entries: PartnerEntry[];
+    linkTexts?: LinkTexts;
+}) {
     const [partner, closePartner] = usePartnerFromLocation(entries);
     const detailData = {...partner, ...linkTexts};
 
