@@ -78,22 +78,13 @@ function getFilterOptions(data) {
     return result;
 }
 
-// eslint-disable-next-line complexity
 function textsFromData(data) {
     const linkTexts = {
         websiteLinkText: data.partner_landing_page_link,
         infoLinkText: (data.partner_request_info_link || 'Request info')
     };
-    const headerTexts = {
-        partnerHeader: data.partner_full_partner_heading || 'Full partners',
-        partnerDescription: data.partner_full_partner_description ||
-        'Something about what Full Partners are',
-        allyHeader: data.partner_ally_heading || 'Brand allies',
-        allyDescription: data.partner_ally_description ||
-        'Something about what Brand Allies are'
-    };
 
-    return {linkTexts, headerTexts};
+    return {linkTexts};
 }
 
 function Partners({data}) {
@@ -114,7 +105,7 @@ function Partners({data}) {
     );
     const headline = data.heading;
     const description = data.description;
-    const {linkTexts, headerTexts} = textsFromData(data);
+    const {linkTexts} = textsFromData(data);
 
     return (
         <React.Fragment>
@@ -134,7 +125,7 @@ function Partners({data}) {
                 className="padding"
                 data-analytics-content-list={headline}
             >
-                <Results linkTexts={linkTexts} headerTexts={headerTexts} />
+                <Results linkTexts={linkTexts} />
             </div>
         </React.Fragment>
     );

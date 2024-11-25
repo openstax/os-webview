@@ -15,7 +15,4 @@ function useContextValue(partner: unknown) {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as DialogContextProvider
-};
+export {useContext as default, ContextProvider as DialogContextProvider};

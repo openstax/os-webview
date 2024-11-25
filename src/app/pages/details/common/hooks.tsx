@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import tableOfContentsHtml from '~/models/table-of-contents-html';
-import partnerFeaturePromise, {tooltipText} from '~/models/salesforce-partners';
+import partnerFeaturePromise from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 import useDetailsContext from '../context';
@@ -33,7 +33,6 @@ function toBlurb(partner: PartnerData) {
         cost: pData.affordabilityCost,
         type: pData.partnerType,
         url: `/partners?${pData.partnerName}`,
-        verifiedFeatures: pData.verifiedByInstructor ? tooltipText : false,
         rating: pData.averageRating?.ratingAvg,
         ratingCount: pData.ratingCount
     };
