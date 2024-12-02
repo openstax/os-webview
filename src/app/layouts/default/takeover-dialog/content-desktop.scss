@@ -1,6 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.modal.takeover-dialog dialog .takeover-content.desktop-only {
+.modal.takeover-dialog .takeover-content.desktop-only {
     @include width-up-to($phone-max) {
         display: none;
     }
