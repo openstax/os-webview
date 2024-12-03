@@ -4,7 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import './featured-resources.scss';
 
 type ResourcesProps = {
-    header: string;
+    header: string | null;
     models: ResourceModel[];
     'data-analytics-content-list': string;
 };

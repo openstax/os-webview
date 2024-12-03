@@ -1,7 +1,7 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 
-type PromoteData = {
+export type PromoteData = {
     content?: {
         description: string;
     }

@@ -1,6 +1,10 @@
 import React from 'react';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources';
-import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box-utils';
+import {
+    resourceBoxModel,
+    useResources,
+    ResourceData
+} from '../../common/resource-box/resource-box-utils';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import VideoResourceBoxes from '../../common/resource-box/video-resource-box';
 import Partners from './partners/partners';
@@ -9,25 +13,39 @@ import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons/faExclamati
 import {faDesktop} from '@fortawesome/free-solid-svg-icons/faDesktop';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {usePartnerFeatures} from '../../common/hooks';
-import useUserContext from '~/contexts/user';
-import useDetailsContext from '~/pages/details/context';
+import useUserContext, {UserStatus} from '~/contexts/user';
+import useDetailsContext, {ContextValues} from '~/pages/details/context';
 import Promo from '../promo';
 import './instructor-resource-tab.scss';
 
-function FreeStuff({freeStuffContent, userStatus}) {
+function FreeStuff({
+    freeStuffContent,
+    userStatus
+}: {
+    freeStuffContent: ContextValues['freeStuffInstructor']['content'];
+    userStatus: UserStatus;
+}) {
     const blurbLookupByInstructorStatus = {
         undefined: freeStuffContent.content,
         true: freeStuffContent.contentLoggedIn,
-        false: <div className="blurb-body">
-            <FontAwesomeIcon icon={faExclamationCircle} />{' '}
-            Your account must be instructor verified...
-            <a href="https://help.openstax.org/s/article/Requesting-Instructor-only-access-to-the-resources-on-openstax-org">How do I do that?</a>
-        </div>
+        false: (
+            <div className="blurb-body">
+                <FontAwesomeIcon icon={faExclamationCircle} /> Your account must
+                be instructor verified...
+                <a href="https://help.openstax.org/s/article/Requesting-Instructor-only-access-to-the-resources-on-openstax-org">
+                    How do I do that?
+                </a>
+            </div>
+        )
     };
-    const blurbContent = blurbLookupByInstructorStatus[userStatus.isInstructor];
-    const blurbJsx = typeof blurbContent === 'string' ?
-        <RawHTML className="blurb-body" html={blurbContent} /> :
-        blurbContent;
+    const blurbContent =
+        blurbLookupByInstructorStatus[`${userStatus.isInstructor}`];
+    const blurbJsx =
+        typeof blurbContent === 'string' ? (
+            <RawHTML className="blurb-body" html={blurbContent} />
+        ) : (
+            blurbContent
+        );
 
     return (
         <div className="free-stuff-blurb">
@@ -40,7 +58,7 @@ function FreeStuff({freeStuffContent, userStatus}) {
 function Webinar() {
     const {webinarContent} = useDetailsContext();
 
-    if (!webinarContent.content) {
+    if (!webinarContent?.content) {
         return null;
     }
 
@@ -61,11 +79,17 @@ function Webinar() {
     );
 }
 
-function InstructorResourceTab({model, userStatus}) {
+function InstructorResourceTab({userStatus}: {userStatus: UserStatus}) {
+    const model = useDetailsContext();
     const bookAbbreviation = model.salesforceAbbreviation;
     const {
         bookVideoFacultyResources,
         bookFacultyResources
+    }: {
+        bookVideoFacultyResources: Parameters<
+            typeof VideoResourceBoxes
+        >[0]['models'];
+        bookFacultyResources: (ResourceData & {featured: boolean})[];
     } = useResources(model.slug);
 
     const featuredModels = bookFacultyResources
@@ -78,9 +102,11 @@ function InstructorResourceTab({model, userStatus}) {
         .filter((r) => r.videoReferenceNumber !== null)
         .map((res) => resourceBoxModel(res, userStatus, model));
     const otherModels = bookFacultyResources
-        .filter((r) =>
-            !r.featured && r.videoReferenceNumber === null &&
-            r.linkText !== 'View resources'
+        .filter(
+            (r) =>
+                !r.featured &&
+                r.videoReferenceNumber === null &&
+                r.linkText !== 'View resources'
         )
         .map((res) => resourceBoxModel(res, userStatus, model));
 
@@ -100,14 +126,13 @@ function InstructorResourceTab({model, userStatus}) {
             <Promo promoteSnippet={model.promoteSnippet} />
             <div>
                 <FreeStuff {...{freeStuffContent, userStatus}} />
-                {
-                    featuredModels.length > 0 &&
-                        <FeaturedResourcesSection
-                            data-analytics-content-list="Instructor Featured Resources"
-                            header={model.featuredResourcesHeader}
-                            models={featuredModels}
-                        />
-                }
+                {featuredModels.length > 0 && (
+                    <FeaturedResourcesSection
+                        data-analytics-content-list="Instructor Featured Resources"
+                        header={model.featuredResourcesHeader}
+                        models={featuredModels}
+                    />
+                )}
                 <div className={`cards ${includePartners}`}>
                     <div
                         className="resources"
@@ -132,7 +157,7 @@ function InstructorResourceTab({model, userStatus}) {
     );
 }
 
-export default function LoadUserStatusThenInstructorTab({model}) {
+export default function LoadUserStatusThenInstructorTab() {
     const {userStatus} = useUserContext();
 
     if (!userStatus) {
@@ -140,7 +165,7 @@ export default function LoadUserStatusThenInstructorTab({model}) {
     }
     return (
         <div className="instructor-resources">
-            <InstructorResourceTab model={model} userStatus={userStatus} />
+            <InstructorResourceTab userStatus={userStatus} />
         </div>
     );
 }

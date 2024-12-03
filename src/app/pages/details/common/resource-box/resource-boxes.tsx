@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import ResourceBox from './resource-box';
 import useDetailsContext from '../../context';
+import {resourceBoxModel, ResourceData} from './resource-box-utils';
 import './resource-box.scss';
 
 function CommonsHubBox() {
@@ -44,23 +45,14 @@ function CommonsHubBox() {
 }
 
 // There's more, but this is all we need for now
-export type ResourceModel = {
-    heading: string;
-    description?: string;
-    double: boolean;
-    comingSoon: boolean;
-    comingSoonText: string;
-    resourceCategory?: string;
-    k12: boolean;
-    videoReferenceNumber: number;
-    trackResource: boolean;
-    printLink: string;
-    icon: string;
-    isNew: boolean;
-    creatorFest: boolean;
-    iconType: string;
-    bookModel?: {id: string; customizationFormHeading: string};
-    link?: {url?: string; text?: string};
+export type ResourceModel = ReturnType<typeof resourceBoxModel> & {
+    link?: {
+        url: string;
+        text?: string;
+    };
+    double?: boolean;
+    videoReferenceNumber: ResourceData['videoReferenceNumber'];
+    isNew?: boolean;
 };
 
 export default function ResourceBoxes({

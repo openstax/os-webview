@@ -12,8 +12,8 @@ import {findSelectedTab, replaceSearchTerm} from '../common/tab-utils';
 import './desktop-view.scss';
 
 const importDetailsTab = () => import('./details-tab/details-tab.js');
-const importInstructorTab = () => import('./instructor-resource-tab/instructor-resource-tab.js');
-const importStudentTab = () => import('./student-resource-tab/student-resource-tab.js');
+const importInstructorTab = () => import('./instructor-resource-tab/import-instructor-resource-tab.js');
+const importStudentTab = () => import('./student-resource-tab/import-student-resource-tab.js');
 
 // eslint-disable-next-line complexity
 function useLabelsFromModel(model, polish) {
@@ -46,11 +46,11 @@ function useSelectedLabelTiedToSearchString(labels) {
     const selectedTab = findSelectedTab(labels);
     const updateSelectedLabel = React.useCallback(
         (newValue) => {
-            const newSearchString = replaceSearchTerm(labels, selectedTab, newValue);
+            const newSearchString = replaceSearchTerm(labels, newValue);
 
             navigate(newSearchString, {replace: true});
         },
-        [labels, navigate, selectedTab]
+        [labels, navigate]
     );
 
     return [selectedTab, updateSelectedLabel];
@@ -100,7 +100,7 @@ export default function DesktopView() {
                 <ContentGroup activeIndex={activeIndex} labels={labels}>
                     <StubUntilSeen active={activeIndex===0} importFn={importDetailsTab} polish={polish} model={model} />
                     <StubUntilSeen active={activeIndex===1} importFn={importInstructorTab} model={model} />
-                    <StubUntilSeen active={activeIndex===2} importFn={importStudentTab} model={model} />
+                    <StubUntilSeen active={activeIndex===2} importFn={importStudentTab} />
                     {model.videos[0] && <VideoTab videos={model.videos[0]} />}
                 </ContentGroup>
             </div>

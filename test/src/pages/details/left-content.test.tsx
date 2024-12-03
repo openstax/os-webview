@@ -53,7 +53,7 @@ describe('left-content', () => {
     });
     it('returns MISSING LINK if link has no URL', () => {
         jest.useFakeTimers();
-        const model = {link: {text: 'whoops'}, ...baseModel};
+        const model = {link: {text: 'whoops', url: ''}, ...baseModel};
 
         render(<Component model={model} />);
         jest.runAllTimers();
@@ -71,7 +71,7 @@ describe('left-content', () => {
                 isInstructor: true
             }
         });
-        const model = {link, ...baseModel};
+        const model = {link, ...baseModel, ...{iconType: 'unlock'}};
 
         render(<Component model={model} search="Student" />);
         const foundLink = screen.getByRole('link');

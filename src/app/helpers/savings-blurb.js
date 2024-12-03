@@ -1,3 +1,4 @@
+import useDetailsContext from '~/pages/details/context';
 
 function plugInto(container, id, value) {
     const el = container.querySelector(`#${id}`);
@@ -7,7 +8,13 @@ function plugInto(container, id, value) {
     }
 }
 
-export default function useSavingsDataIn(description, adoptions, savings) {
+export default function useSavingsData() {
+    const {
+        supportStatement: description,
+        adoptions,
+        savings
+    } = useDetailsContext();
+
     if (!adoptions) {
         return description;
     }
