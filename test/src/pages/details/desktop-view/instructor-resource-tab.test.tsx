@@ -53,14 +53,7 @@ describe('details/instructor-resource-tab', () => {
     it('returns null until user status exists', async () => {
         mockUseUserContext.mockReturnValue({});
         render(<Component />);
-        let caught = false;
-
-        try {
-            await screen.findByRole('heading');
-        } catch {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByRole('heading')).rejects.toThrow();
     });
     it('returns SR tab when user status exists', async () => {
         render(<Component />);
@@ -71,14 +64,8 @@ describe('details/instructor-resource-tab', () => {
     it('handles empty webinarContent', async () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         render(<Component data={{...bookData, webinarContent: undefined as any}} />);
-        let caught = false;
 
-        try {
-            await screen.findByRole('heading', {level: 2, name: 'Find a webinar'});
-        } catch {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByRole('heading', {level: 2, name: 'Find a webinar'})).rejects.toThrow();
     });
     it('puts placeholders for missing text', async () => {
         render(<Component data={{...bookData, partnerListLabel: '', partnerPageLinkText: ''}} />);

@@ -55,14 +55,7 @@ describe('details/common/publication-info', () => {
         };
 
         render(<WrappedPublicationInfo additionalItems={additionalItems} />);
-        let caught = false;
-
-        try {
-            await screen.findByText('Web Version Last Updated:');
-        } catch {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByText('Web Version Last Updated:')).rejects.toThrow();
     });
     test('Shows iBooks publication dates when present', async () => {
         const additionalItems = {
@@ -100,14 +93,7 @@ describe('details/common/publication-info', () => {
         };
 
         render(<WrappedPublicationInfo additionalItems={additionalItems} />);
-        let caught = false;
-
-        try {
-            await screen.findByRole('img');
-        } catch {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByRole('img')).rejects.toThrow();
     });
     test('Warns when Rex fetch is rejected', async () => {
         mockRexRelease.mockReturnValue(Promise.reject('oops'));
@@ -157,14 +143,7 @@ describe('details/common/publication-info', () => {
                 polish={true}
             />
         );
-        let caught = false;
-
-        try {
-            await screen.findByRole('img');
-        } catch {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByRole('img')).rejects.toThrow();
     });
     test('Polish ISBN skipped if 10 and 13 are empty', async () => {
         const additionalItems = {
@@ -180,13 +159,6 @@ describe('details/common/publication-info', () => {
             />
         );
 
-        let caught = false;
-
-        try {
-            await screen.findByText('Wydrukowane:');
-        } catch {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByText('Wydrukowane:')).rejects.toThrow();
     });
 });

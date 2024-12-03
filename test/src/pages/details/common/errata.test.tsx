@@ -35,14 +35,7 @@ describe('details/common/errata', () => {
         } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
         render(<Component />);
 
-        let caught = false;
-
-        try {
-            await screen.findByText('blurb');
-        } catch (err) {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByText('blurb')).rejects.toThrow();
     });
     test('Erratasection is skipped if language is Spanish', async () => {
         spyDetailsContext.mockReturnValue({
@@ -57,13 +50,6 @@ describe('details/common/errata', () => {
 
         render(<Component />);
 
-        let caught = false;
-
-        try {
-            await screen.findByText('blurb');
-        } catch (err) {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByText('blurb')).rejects.toThrow();
     });
 });

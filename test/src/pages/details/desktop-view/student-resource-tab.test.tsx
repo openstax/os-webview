@@ -25,14 +25,7 @@ describe('details/student-resource-tab', () => {
     it('returns null until user status exists', async () => {
         mockUseUserContext.mockReturnValue({});
         render(<Component />);
-        let caught = false;
-
-        try {
-            await screen.findByRole('heading');
-        } catch {
-            caught = true;
-        }
-        expect(caught).toBe(true);
+        await expect(screen.findByRole('heading')).rejects.toThrow();
     });
     it('returns SR tab when user status exists', async () => {
         mockUseUserContext.mockReturnValue({
