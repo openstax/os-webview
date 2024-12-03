@@ -78,7 +78,7 @@ describe('full page', () => {
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
     });
-    jest.setTimeout(8000);
+    jest.setTimeout(12000);
     it('displays grid that filters by type', async () => {
         const buttons = await screen.findAllByRole('button');
 

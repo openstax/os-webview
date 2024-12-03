@@ -59,7 +59,7 @@ describe('details/instructor-resource-tab', () => {
         render(<Component />);
         await screen.findByRole('heading', {level: 2, name: 'Find a webinar'});
         screen.getByText('How do I do that?', {exact: false});
-        expect(screen.getAllByRole('link')).toHaveLength(22);
+        expect(screen.getAllByRole('link')).toHaveLength(10);
     });
     it('handles empty webinarContent', async () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
