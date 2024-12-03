@@ -145,9 +145,9 @@ function PartnerDetailsOrInfoRequestForm({model}) {
     );
 }
 
-export default function PartnerDetailsWrapper({detailData: {id, ...model}}) {
+export default function PartnerDetailsWrapper({detailData: {id, ...model}, title, setTitle}) {
     return (
-        <PartnerContextProvider contextValueParameters={{id, model}}>
+        <PartnerContextProvider contextValueParameters={{id, model, title, setTitle}}>
             <PartnerDetailsOrInfoRequestForm model={model} />
         </PartnerContextProvider>
     );

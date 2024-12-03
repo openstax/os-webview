@@ -46,12 +46,6 @@ function ResultCard({entry}: {entry: PartnerEntry}) {
                     <div key={value}>{value}</div>
                 ))}
             </div>
-            {/*
-            <StarsAndCount
-                rating={summary.rating}
-                count={summary.count}
-                showNumber />
-            */}
         </a>
     );
 }

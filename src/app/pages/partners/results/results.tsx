@@ -121,10 +121,13 @@ function filterBy(
 // eslint-disable-next-line complexity
 function useFilteredEntries(entries: PartnerEntry[]) {
     const {books, types, advanced, sort, resultCount} = useSearchContext();
+    const unfilteredResults = React.useMemo(
+        () => shuffle(entries),
+        [entries]
+    );
     const finalResult = React.useMemo(() => {
-        let result = shuffle(entries);
+        let result = filterByBooks(unfilteredResults, books);
 
-        result = filterByBooks(result, books);
         result = filterByType(result, types);
 
         if (advanced.value.length > 0) {
@@ -146,7 +149,7 @@ function useFilteredEntries(entries: PartnerEntry[]) {
         }
 
         return result;
-    }, [entries, advanced, books, types]);
+    }, [unfilteredResults, advanced, books, types]);
 
     resultCount.setValue(finalResult.length);
 
@@ -173,7 +176,7 @@ function useFilteredEntries(entries: PartnerEntry[]) {
 }
 
 function advancedFilterKeys(partnerEntry: PartnerData) {
-    return (Reflect.ownKeys(partnerEntry) as Array<keyof PartnerData>).filter(
+    return (Object.keys(partnerEntry) as Array<keyof PartnerData>).filter(
         (k) => ([false, true] as unknown[]).includes(partnerEntry[k])
     );
 }
@@ -222,7 +225,7 @@ function resultEntry(pd: PartnerData) {
         ratingCount: pd.rating_count,
         partnershipLevel: pd.partnership_level,
         yearsAsPartner: pd.partner_anniversary_date
-            ? differenceInYears(Date.now(), pd.partner_anniversary_date)
+            ? differenceInYears(Date.now(), new Date(pd.partner_anniversary_date))
             : null
     };
 }

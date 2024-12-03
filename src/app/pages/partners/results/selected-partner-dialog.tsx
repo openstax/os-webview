@@ -1,7 +1,6 @@
 import React from 'react';
 import PartnerDetails from '../partner-details/partner-details';
 import Dialog from '~/components/dialog/dialog';
-import useDialogContext, {DialogContextProvider} from './dialog-context';
 import {useNavigate, useLocation} from 'react-router-dom';
 import type {LinkTexts, PartnerEntry} from './results';
 
@@ -14,13 +13,25 @@ export default function SelectedPartnerDialog({
 }) {
     const [partner, closePartner] = usePartnerFromLocation(entries);
     const detailData = {...partner, ...linkTexts};
+    const [title, setTitle] = React.useState('');
+
+    // Reset between partners
+    React.useEffect(() => setTitle(''), [partner]);
 
     return (
-        <DialogContextProvider contextValueParameters={partner}>
-            <DialogInContext isOpen={Boolean(partner)} onPutAway={closePartner}>
-                {Boolean(partner) && <PartnerDetails detailData={detailData} />}
-            </DialogInContext>
-        </DialogContextProvider>
+        <Dialog
+            title={title}
+            isOpen={Boolean(partner)}
+            onPutAway={closePartner}
+        >
+            {Boolean(partner) && (
+                <PartnerDetails
+                    detailData={detailData}
+                    title={title}
+                    setTitle={setTitle}
+                />
+            )}
+        </Dialog>
     );
 }
 
@@ -40,10 +51,4 @@ function usePartnerFromLocation(
     );
 
     return [partner, closePartner];
-}
-
-function DialogInContext(dialogProps: Parameters<typeof Dialog>[0]) {
-    const {title} = useDialogContext();
-
-    return <Dialog title={title} {...dialogProps} />;
 }
