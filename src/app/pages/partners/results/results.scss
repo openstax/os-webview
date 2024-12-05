@@ -104,4 +104,35 @@
             }
         }
     }
+
+    .with-sidebar {
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+        max-width: 120rem;
+        margin: 0 auto;
+
+        > .boxed {
+            grid-gap: 3rem;
+        }
+
+        .grid {
+            max-width: unset;
+        }
+
+        > .sidebar {
+            min-width: 20rem;
+            border: thin solid black;
+            height: max-content;
+
+            h2 {
+                background-color: white;
+                text-align: center;
+            }
+
+            .grid {
+                gap: 0.2rem;
+            }
+        }
+    }
 }

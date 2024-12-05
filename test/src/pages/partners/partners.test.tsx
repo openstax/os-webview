@@ -62,7 +62,7 @@ describe('partners/results', () => {
     });
 });
 
-describe('full page', () => {
+describe('partners full page', () => {
     const user = userEvent.setup();
 
     function Component() {
@@ -74,12 +74,11 @@ describe('full page', () => {
             </ShellContextProvider>
         );
     }
-    beforeEach(() => {
-        mockSfPartners.mockResolvedValue(sfPartners);
-        render(<Component />);
-    });
+
     jest.setTimeout(12000);
     it('displays grid that filters by type', async () => {
+        mockSfPartners.mockResolvedValue(sfPartners);
+        render(<Component />);
         const buttons = await screen.findAllByRole('button');
 
         expect(buttons).toHaveLength(6);
@@ -93,6 +92,8 @@ describe('full page', () => {
         expect(screen.getAllByRole('link')).toHaveLength(4);
     });
     it('filters by book', async () => {
+        mockSfPartners.mockResolvedValue(sfPartners);
+        render(<Component />);
         const bookButton = await screen.findByRole('button', {name: 'Books'});
 
         await user.click(bookButton);
@@ -106,6 +107,8 @@ describe('full page', () => {
         expect(checkboxes).toHaveLength(24);
     });
     it('filters by advanced filter', async () => {
+        mockSfPartners.mockResolvedValue(sfPartners);
+        render(<Component />);
         const filterButton = await screen.findByRole('button', {
             name: 'Advanced Filters'
         });
@@ -122,6 +125,8 @@ describe('full page', () => {
         expect(screen.getAllByRole('link')).toHaveLength(5);
     });
     it('sorts', async () => {
+        mockSfPartners.mockResolvedValue(sfPartners);
+        render(<Component />);
         const sortButtons = await screen.findAllByRole('button', {
             name: 'Sort'
         });
@@ -170,11 +175,22 @@ describe('full page', () => {
         ]);
     });
     it('shows details in dialog', async () => {
+        mockSfPartners.mockResolvedValue(sfPartners);
+        render(<Component />);
         const partnerLink = await screen.findByRole('link', {name: 'Rice Online Learning'});
 
         await user.click(partnerLink);
         screen.getByRole('dialog');
         screen.getByText('through the edX platform', {exact: false});
         await user.click(screen.getByRole('button', {name: 'close'}));
+    });
+    it('displays sidebar of startups', async () => {
+        sfPartners[0].partnership_level = 'startup'; // eslint-disable-line
+        mockSfPartners.mockResolvedValue(sfPartners);
+        render(<Component />);
+        const startupHeading = await screen.findByRole('heading', {level: 2, name: 'Startups'});
+
+        expect(startupHeading.parentNode?.textContent).toContain(sfPartners[0].partner_name);
+        sfPartners[0].partnership_level = 'Full partner'; // eslint-disable-line
     });
 });
