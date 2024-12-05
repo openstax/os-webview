@@ -6,8 +6,9 @@ import {useDataFromPromise} from '~/helpers/page-data-utils';
 import SelectedPartnerDialog from './selected-partner-dialog';
 import shuffle from 'lodash/shuffle';
 import orderBy from 'lodash/orderBy';
-import './results.scss';
+import partition from 'lodash/partition';
 import {differenceInYears} from 'date-fns';
+import './results.scss';
 
 export const costOptions = ['$0 - $10', '$11 - $25', '$26 - $40', '> $40'].map(
     (label) => ({
@@ -112,10 +113,7 @@ function filterBy(
 // eslint-disable-next-line complexity
 function useFilteredEntries(entries: PartnerEntry[]) {
     const {books, types, advanced, sort, resultCount} = useSearchContext();
-    const unfilteredResults = React.useMemo(
-        () => shuffle(entries),
-        [entries]
-    );
+    const unfilteredResults = React.useMemo(() => shuffle(entries), [entries]);
     const finalResult = React.useMemo(() => {
         let result = filterByBooks(unfilteredResults, books);
 
@@ -160,8 +158,8 @@ function useFilteredEntries(entries: PartnerEntry[]) {
 }
 
 function advancedFilterKeys(partnerEntry: PartnerData) {
-    return (Object.keys(partnerEntry) as Array<keyof PartnerData>).filter(
-        (k) => ([false, true] as unknown[]).includes(partnerEntry[k])
+    return (Object.keys(partnerEntry) as Array<keyof PartnerData>).filter((k) =>
+        ([false, true] as unknown[]).includes(partnerEntry[k])
     );
 }
 
@@ -204,9 +202,47 @@ function resultEntry(pd: PartnerData) {
         ratingCount: pd.rating_count,
         partnershipLevel: pd.partnership_level,
         yearsAsPartner: pd.partner_anniversary_date
-            ? differenceInYears(Date.now(), new Date(pd.partner_anniversary_date))
+            ? differenceInYears(
+                  Date.now(),
+                  new Date(pd.partner_anniversary_date)
+              )
             : null
     };
+}
+
+function Sidebar({entries}: {entries: PartnerEntry[]}) {
+    return (
+        <div className="sidebar">
+            <div className="sidebar-content">
+                <h2>Startups</h2>
+                <ResultGrid entries={entries} />
+            </div>
+        </div>
+    );
+}
+
+const headings: Record<Ages, string> = {
+    '10': '10+ years as Technology Partners',
+    '7': '7-10 years as partners',
+    '4': '4-7 years as partners',
+    '1': '1-3 years as partners',
+    new: 'New partners'
+};
+const ages: Ages[] = ['10', '7', '4', '1', 'new'];
+
+function HeadingAndResultGrid({
+    age,
+    entries
+}: {
+    age: Ages;
+    entries: PartnerEntry[];
+}) {
+    return (
+        <React.Fragment>
+            <h2>{headings[age as Ages]}</h2>
+            <ResultGrid entries={entries} />
+        </React.Fragment>
+    );
 }
 
 type Ages = '10' | '7' | '4' | '1' | 'new';
@@ -223,15 +259,11 @@ function ResultGridLoader({
         [partnerData]
     );
     const filteredEntries = useFilteredEntries(entries);
-    const ages: Ages[] = ['10', '7', '4', '1'];
-    const headings: Record<Ages, string> = {
-        '10': '10+ years as Technology Partners',
-        '7': '7-10 years as partners',
-        '4': '4-7 years as partners',
-        '1': '1-3 years as partners',
-        new: 'New partners'
-    };
-    const partnersByAge = filteredEntries.reduce((a, b) => {
+    const [startups, nonStartups] = partition(
+        filteredEntries,
+        (e) => e.partnershipLevel?.toLowerCase() === 'startup'
+    );
+    const partnersByAge = nonStartups.reduce((a, b) => {
         const bucket =
             ages.find((age) => (b.yearsAsPartner ?? 0) >= Number(age)) ?? 'new';
 
@@ -241,22 +273,52 @@ function ResultGridLoader({
         a[bucket].push(b);
         return a;
     }, {} as Record<string, PartnerEntry[]>);
+    const foundAges = ages.filter((a) => partnersByAge[a]);
 
+    if (startups.length > 0) {
+        const [firstAge, ...otherAges] = foundAges;
+
+        return (
+            <section className="results">
+                <div className="boxed">
+                    <HeadingAndResultGrid
+                        age={firstAge}
+                        entries={partnersByAge[firstAge]}
+                    />
+                </div>
+                <SelectedPartnerDialog
+                    linkTexts={linkTexts}
+                    entries={filteredEntries}
+                />
+                <div className="with-sidebar">
+                    <div className="boxed">
+                        {otherAges.map((age) => (
+                            <HeadingAndResultGrid
+                                key={age}
+                                age={age}
+                                entries={partnersByAge[age]}
+                            />
+                        ))}
+                    </div>
+                    <Sidebar entries={startups} />
+                </div>
+            </section>
+        );
+    }
     return (
-        <React.Fragment>
-            {([...ages, 'new'] as Ages[])
-                .filter((age) => age in partnersByAge)
-                .map((age) => (
-                    <React.Fragment key={age}>
-                        <h2>{headings[age as Ages]}</h2>
-                        <ResultGrid entries={partnersByAge[age]} />
-                    </React.Fragment>
-                ))}
+        <section className="results boxed">
+            {foundAges.map((age) => (
+                <HeadingAndResultGrid
+                    key={age}
+                    age={age}
+                    entries={partnersByAge[age]}
+                />
+            ))}
             <SelectedPartnerDialog
                 linkTexts={linkTexts}
                 entries={filteredEntries}
             />
-        </React.Fragment>
+        </section>
     );
 }
 
@@ -269,14 +331,9 @@ export default function Results({linkTexts}: {linkTexts: LinkTexts}) {
         [partnerData]
     );
 
-
     if (!partnerData) {
         return null;
     }
 
-    return (
-        <section className="results boxed">
-            <ResultGridLoader {...{partnerData: visiblePartners, linkTexts}} />
-        </section>
-    );
+    return <ResultGridLoader {...{partnerData: visiblePartners, linkTexts}} />;
 }
