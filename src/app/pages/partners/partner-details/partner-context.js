@@ -1,11 +1,9 @@
 import buildContext from '~/components/jsx-helpers/build-context';
 import useReviews from '~/models/reviews';
-import useDialogContext from '../results/dialog-context';
 
 // eslint-disable-next-line complexity
-function useContextValue({id: partnerId, model}) {
+function useContextValue({id: partnerId, model, title, setTitle}) {
     const [ratings, postRating] = useReviews(partnerId);
-    const {title, setTitle} = useDialogContext();
 
     if (!ratings) {
         return {};

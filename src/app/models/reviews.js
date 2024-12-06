@@ -9,6 +9,10 @@ const postUrl = 'salesforce/reviews/';
 // calculate them anyway.
 // Note: mutator
 function recalculateRatings(data) {
+    if (!data.reviews) {
+        data.reviews = [];
+        data.averageRating = {};
+    }
     const reviewsThatCount = data.reviews.filter((r) => r.status === 'Approved');
 
     data.ratingCount = reviewsThatCount.length;

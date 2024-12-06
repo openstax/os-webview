@@ -4,7 +4,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Controls from './controls/controls';
 import MobileControlRow from './mobile-controls/mobile-controls';
-import Results, {costOptions, equityOptions} from './results/results';
+import Results, {costOptions} from './results/results';
 import {useLocation} from 'react-router-dom';
 import {SearchContextProvider} from './search-context';
 import './partners.scss';
@@ -67,8 +67,6 @@ function getFilterOptions(data) {
             if (itemInResult) {
                 if (label === 'Cost per semester') {
                     costOptions.forEach((opt) => itemInResult.options.push(opt));
-                } else if (label === 'Equity Rating') {
-                    equityOptions.forEach((opt) => itemInResult.options.push(opt));
                 } else {
                     itemInResult.options.push(entry);
                 }
@@ -78,22 +76,13 @@ function getFilterOptions(data) {
     return result;
 }
 
-// eslint-disable-next-line complexity
 function textsFromData(data) {
     const linkTexts = {
         websiteLinkText: data.partner_landing_page_link,
         infoLinkText: (data.partner_request_info_link || 'Request info')
     };
-    const headerTexts = {
-        partnerHeader: data.partner_full_partner_heading || 'Full partners',
-        partnerDescription: data.partner_full_partner_description ||
-        'Something about what Full Partners are',
-        allyHeader: data.partner_ally_heading || 'Brand allies',
-        allyDescription: data.partner_ally_description ||
-        'Something about what Brand Allies are'
-    };
 
-    return {linkTexts, headerTexts};
+    return {linkTexts};
 }
 
 function Partners({data}) {
@@ -114,7 +103,7 @@ function Partners({data}) {
     );
     const headline = data.heading;
     const description = data.description;
-    const {linkTexts, headerTexts} = textsFromData(data);
+    const {linkTexts} = textsFromData(data);
 
     return (
         <React.Fragment>
@@ -134,7 +123,7 @@ function Partners({data}) {
                 className="padding"
                 data-analytics-content-list={headline}
             >
-                <Results linkTexts={linkTexts} headerTexts={headerTexts} />
+                <Results linkTexts={linkTexts} />
             </div>
         </React.Fragment>
     );
