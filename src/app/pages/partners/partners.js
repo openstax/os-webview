@@ -4,7 +4,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Controls from './controls/controls';
 import MobileControlRow from './mobile-controls/mobile-controls';
-import Results, {costOptions, equityOptions} from './results/results';
+import Results, {costOptions} from './results/results';
 import {useLocation} from 'react-router-dom';
 import {SearchContextProvider} from './search-context';
 import './partners.scss';
@@ -67,8 +67,6 @@ function getFilterOptions(data) {
             if (itemInResult) {
                 if (label === 'Cost per semester') {
                     costOptions.forEach((opt) => itemInResult.options.push(opt));
-                } else if (label === 'Equity Rating') {
-                    equityOptions.forEach((opt) => itemInResult.options.push(opt));
                 } else {
                     itemInResult.options.push(entry);
                 }

@@ -17,14 +17,6 @@ export const costOptions = ['$0 - $10', '$11 - $25', '$26 - $40', '> $40'].map(
 );
 const costOptionValues = costOptions.map((entry) => entry.value);
 
-export const equityOptions = ['Best', 'Good', 'Needs Improvement'].map(
-    (label) => ({
-        label,
-        value: label
-    })
-);
-const equityOptionValues = equityOptions.map((entry) => entry.value);
-
 type PartnerData = {
     id: number;
     average_rating: {
@@ -57,7 +49,6 @@ type PartnerData = {
     instructional_level_higher_ed: boolean;
     international: boolean;
     partnership_level: string;
-    equity_rating: string | null;
     partner_anniversary_date: string | null;
 };
 
@@ -134,18 +125,11 @@ function useFilteredEntries(entries: PartnerEntry[]) {
             result = result.filter((entry) => {
                 return advanced.value
                     .filter((feature) => !costOptionValues.includes(feature))
-                    .filter((feature) => !equityOptionValues.includes(feature))
                     .every((requiredFeature) =>
                         entry.advancedFeatures.includes(requiredFeature)
                     );
             });
             result = filterBy(costOptionValues, result, 'cost', advanced);
-            result = filterBy(
-                equityOptionValues,
-                result,
-                'equityRating',
-                advanced
-            );
         }
 
         return result;
@@ -195,10 +179,6 @@ function resultEntry(pd: PartnerData) {
             {
                 label: 'cost',
                 value: pd.affordability_cost
-            },
-            {
-                label: 'equity',
-                value: pd.equity_rating
             }
         ].filter((v) => Boolean(v.value)),
         richDescription:
@@ -220,7 +200,6 @@ function resultEntry(pd: PartnerData) {
         videos: [pd.video_1, pd.video_2].filter((vid) => Boolean(vid)),
         type: pd.partner_type,
         cost: pd.affordability_cost,
-        equityRating: pd.equity_rating,
         rating: pd.average_rating.rating__avg,
         ratingCount: pd.rating_count,
         partnershipLevel: pd.partnership_level,
