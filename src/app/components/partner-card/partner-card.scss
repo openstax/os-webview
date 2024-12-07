@@ -1,0 +1,68 @@
+@import 'pattern-library/core/pattern-library/headers';
+@import 'mixins/placeholder-selectors';
+
+.partner-card {
+    align-content: center;
+    align-items: center;
+    color: inherit;
+    display: grid;
+    grid-column-gap: $normal-margin;
+    grid-row-gap: 0.5rem;
+    grid-template-columns: 33% 1fr;
+    grid-template-rows: 100%;
+    min-height: 13rem;
+    padding: 1.2rem 1rem 1.2rem 1.2rem;
+    position: relative;
+    text-decoration: none;
+
+    &:hover::after,
+    &:active::after {
+        background: rgba(ui-color(black), 0.1);
+        content: '\A';
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .logo {
+        align-items: center;
+        display: grid;
+        height: 100%;
+        max-width: 100%;
+        position: relative;
+
+        > img {
+            max-width: 100%;
+        }
+    }
+
+    .badge {
+        @extend %verified-badge;
+
+        margin-top: 0.5rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
+    }
+
+    .name {
+        @include title-font(1.8rem);
+    }
+
+    .tags {
+        @include body-font(1.2rem);
+
+        color: text-color(helper);
+
+        .tag:not(:first-child)::before {
+            content: ' • ';
+        }
+    }
+
+    .stars-and-count {
+        margin-top: $normal-margin;
+    }
+}
