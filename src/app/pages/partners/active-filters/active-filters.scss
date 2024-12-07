@@ -2,7 +2,6 @@
 
 .active-filters {
     @extend %content;
-    padding: 0;
 
     @include wider-than($phone-max) {
         margin-top: 4rem;

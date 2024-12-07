@@ -3,7 +3,7 @@
 
 .partners .results {
     align-items: start;
-    padding: 2rem 0 20rem;
+    padding: 2rem $normal-margin 20rem;
     row-gap: 2rem;
 
     @include width-up-to($phone-max) {
@@ -101,6 +101,43 @@
                     font-size: 75%;
                     padding-bottom: 3%;
                 }
+            }
+        }
+    }
+
+    .boxed {
+        grid-gap: 3rem;
+    }
+
+    .with-sidebar {
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+        max-width: 120rem;
+        margin: 0 auto;
+        padding-right: $normal-margin;
+
+        .grid {
+            max-width: unset;
+        }
+
+        > .sidebar {
+            min-width: 20rem;
+            border: thin solid black;
+            height: max-content;
+
+            .sidebar-content {
+                background-color: ui-color(white);
+            }
+
+            h2 {
+                background-color: transparent;
+                padding: 0.5rem 0;
+                text-align: center;
+            }
+
+            .grid {
+                gap: 0.2rem;
             }
         }
     }
