@@ -3,7 +3,7 @@
 
 .partners .results {
     align-items: start;
-    padding: 2rem 0 20rem;
+    padding: 2rem $normal-margin 20rem;
     row-gap: 2rem;
 
     @include width-up-to($phone-max) {
@@ -105,16 +105,17 @@
         }
     }
 
+    .boxed {
+        grid-gap: 3rem;
+    }
+
     .with-sidebar {
         display: flex;
         flex-direction: row;
         gap: 3rem;
         max-width: 120rem;
         margin: 0 auto;
-
-        > .boxed {
-            grid-gap: 3rem;
-        }
+        padding-right: $normal-margin;
 
         .grid {
             max-width: unset;
@@ -125,8 +126,13 @@
             border: thin solid black;
             height: max-content;
 
+            .sidebar-content {
+                background-color: ui-color(white);
+            }
+
             h2 {
-                background-color: white;
+                background-color: transparent;
+                padding: 0.5rem 0;
                 text-align: center;
             }
 

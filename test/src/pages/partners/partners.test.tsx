@@ -83,7 +83,7 @@ describe('partners full page', () => {
 
         expect(buttons).toHaveLength(6);
         await screen.findByText('Carolina Distance Learning');
-        expect(screen.getAllByRole('link')).toHaveLength(22);
+        expect(screen.getAllByRole('link')).toHaveLength(21);
         await user.click(buttons[1]);
         const options = screen.getAllByRole('option');
 

@@ -221,7 +221,7 @@ function resultEntry(pd: PartnerData) {
         equityRating: pd.equity_rating,
         rating: pd.average_rating.rating__avg,
         ratingCount: pd.rating_count,
-        partnershipLevel: pd.partnership_level,
+        partnershipLevel: pd.partnership_level as string,
         yearsAsPartner: pd.partner_anniversary_date
             ? differenceInYears(
                   Date.now(),
@@ -275,8 +275,19 @@ function ResultGridLoader({
     partnerData: PartnerData[];
     linkTexts: LinkTexts;
 }) {
+    // // *** FOR TESTING because Dev data is missing some things
+    // let altered = false;
+
+    // if (!altered) {
+    //     partnerData.slice(-5).forEach((d) => {d.partnership_level = 'startup'});
+    //     partnerData.slice(0, 5).forEach((d, i) => {d.partner_anniversary_date = `10 Jun ${2014 + i}`});
+    //     altered = true;
+    // }
+    // // *** /FOR TESTING
     const entries = React.useMemo(
-        () => partnerData.map(resultEntry),
+        () => partnerData
+            .filter((d) => d.partnership_level !== null)
+            .map(resultEntry),
         [partnerData]
     );
     const filteredEntries = useFilteredEntries(entries);
