@@ -33,6 +33,7 @@
         "boxible": "^1.7.1",
         "classnames": "^2.3.2",
         "color": "^4.2.3",
+        "date-fns": "^4.1.0",
         "deep-equal": "^2.2.3",
         "esbuild-loader": "^3.0.1",
         "js-cookie": "^3.0.5",

@@ -61,7 +61,7 @@ function RequestInfoButton({infoText='Request info'}) {
 function Overview({model, icon}) {
     const {
         richDescription: description,
-        infoUrl, infoLinkText: infoText,
+        infoLinkText: infoText,
         books, images, videos, title: partnerName
     } = model;
     const titles = useRealTitles(books);
@@ -84,7 +84,7 @@ function Overview({model, icon}) {
             <section className="carousel">
                 <Carousel {...{icon, images, videos}} />
             </section>
-            <RequestInfoButton {...{infoUrl, infoText, partnerName}} />
+            <RequestInfoButton {...{infoText, partnerName}} />
             <hr />
             <section className="overview">
                 <h2>Overview</h2>
@@ -145,9 +145,9 @@ function PartnerDetailsOrInfoRequestForm({model}) {
     );
 }
 
-export default function PartnerDetailsWrapper({detailData: {id, ...model}}) {
+export default function PartnerDetailsWrapper({detailData: {id, ...model}, title, setTitle}) {
     return (
-        <PartnerContextProvider contextValueParameters={{id, model}}>
+        <PartnerContextProvider contextValueParameters={{id, model, title, setTitle}}>
             <PartnerDetailsOrInfoRequestForm model={model} />
         </PartnerContextProvider>
     );

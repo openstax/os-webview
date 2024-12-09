@@ -41,7 +41,7 @@ describe('details/common/hooks', () => {
 
         render(<Component />);
 
-        await screen.findByText('28,29,31,32,39,41,42,48,55,56,61,7,70,79,9');
+        await screen.findByText('1938,1951,1955,1962,1984,2109');
     });
     it('(usePartnerFeatures) handles no matches found', async () => {
         function Component() {
