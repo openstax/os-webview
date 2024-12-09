@@ -107,37 +107,68 @@
 
     .boxed {
         grid-gap: 3rem;
+
+        @include width-up-to($phone-max) {
+            grid-gap: $normal-margin;
+        }
     }
 
     .with-sidebar {
-        display: flex;
-        flex-direction: row;
-        gap: 3rem;
-        max-width: 120rem;
-        margin: 0 auto;
-        padding-right: $normal-margin;
-
-        .grid {
-            max-width: unset;
+        h2 {
+            text-align: center;
         }
 
-        > .sidebar {
-            min-width: 20rem;
-            border: thin solid black;
-            height: max-content;
+        @include width-up-to($phone-max) {
+            > .boxed {
+                padding: 0;
+            }
 
             .sidebar-content {
-                background-color: ui-color(white);
+                display: flex;
+                flex-direction: column;
+                grid-gap: 3rem;
+                margin-top: 3rem;
             }
+        }
 
-            h2 {
-                background-color: transparent;
-                padding: 0.5rem 0;
-                text-align: center;
-            }
+        @include wider-than($phone-max) {
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+            max-width: 120rem;
+            margin: 0 auto;
+            padding-right: $normal-margin;    
 
             .grid {
-                gap: 0.2rem;
+                max-width: unset;
+            }
+    
+            > .sidebar {
+                min-width: 20rem;
+                border: thin solid black;
+                height: max-content;
+
+                .sidebar-content {
+                    background-color: ui-color(white);
+                }
+
+                h2 {
+                    @include set-font(h3);
+
+                    background-color: os-color(gray);
+                    color: ui-color(white);
+                    padding: $normal-margin;
+                }
+
+                .grid {
+                    gap: 0.2rem;
+                }
+
+                .card {
+                    border-radius: 0;
+                    box-shadow: none;
+                    border-bottom: thin solid ui-color(form-border);
+                }
             }
         }
     }
