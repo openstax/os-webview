@@ -7,7 +7,7 @@ import {
 } from '~/components/language-selector/language-selector';
 import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
-import { useDataFromSlug } from '~/helpers/page-data-utils';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
@@ -15,9 +15,15 @@ import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
 function DropdownOrMenuItem({item}) {
+    if (! item.name && ! item.label) {
+        return null;
+    }
     if ('menu' in item) {
         return (
-            <Dropdown label={item.name} navAnalytics={`Main Menu (${item.name})`}>
+            <Dropdown
+                label={item.name}
+                navAnalytics={`Main Menu (${item.name})`}
+            >
                 <MenusFromStructure structure={item.menu} />
             </Dropdown>
         );
@@ -43,18 +49,11 @@ function MenusFromCMS() {
         return null;
     }
 
-    return (
-        <MenusFromStructure structure={structure} />
-    );
+    return <MenusFromStructure structure={structure} />;
 }
 
 function K12MenuItem() {
-    return (
-        <MenuItem
-            label='&#127822; For K12 Teachers'
-            url='/k12'
-        />
-    );
+    return <MenuItem label="&#127822; For K12 Teachers" url="/k12" />;
 }
 
 function SubjectsMenu() {
@@ -69,27 +68,38 @@ function SubjectsMenu() {
     }
 
     return (
-        <Dropdown className='subjects-dropdown' label='Subjects' navAnalytics="Main Menu (Subjects)">
-            {categories.filter((obj) => obj.html !== 'K12').map((obj) => (
-                <MenuItem
-                    key={obj.value}
-                    label={obj.html}
-                    url={`/subjects/${obj.value}`}
-                />
-            ))}
+        <Dropdown
+            className="subjects-dropdown"
+            label="Subjects"
+            navAnalytics="Main Menu (Subjects)"
+        >
+            {categories
+                .filter((obj) => obj.html !== 'K12')
+                .map((obj) => (
+                    <MenuItem
+                        key={obj.value}
+                        label={obj.html}
+                        url={`/subjects/${obj.value}`}
+                    />
+                ))}
             {pathname.startsWith('/details/books') ? null : (
                 <React.Fragment>
                     <LanguageSelectorWrapper>
-                        <FormattedMessage id='view' defaultMessage='View' />{' '}
+                        <FormattedMessage id="view" defaultMessage="View" />{' '}
                         <LanguageLink locale={otherLocale} />
                     </LanguageSelectorWrapper>
                     <LanguageSelectorWrapper>
-                        <FormattedMessage id='view' defaultMessage='View' />{' '}
-                        <LanguageLink locale='pl' />
+                        <FormattedMessage id="view" defaultMessage="View" />{' '}
+                        <LanguageLink locale="pl" />
                     </LanguageSelectorWrapper>
                 </React.Fragment>
-        )}
-            {language === 'en' ? <React.Fragment><hr /><K12MenuItem /></React.Fragment> : null}
+            )}
+            {language === 'en' ? (
+                <React.Fragment>
+                    <hr />
+                    <K12MenuItem />
+                </React.Fragment>
+            ) : null}
         </Dropdown>
     );
 }
@@ -99,12 +109,18 @@ function navigateWithArrows(event) {
         case 'ArrowRight':
             event.preventDefault();
             event.stopPropagation();
-            event.target.closest('li').nextElementSibling?.querySelector('a').focus();
+            event.target
+                .closest('li')
+                .nextElementSibling?.querySelector('a')
+                .focus();
             break;
         case 'ArrowLeft':
             event.preventDefault();
             event.stopPropagation();
-            event.target.closest('li').previousElementSibling?.querySelector('a').focus();
+            event.target
+                .closest('li')
+                .previousElementSibling?.querySelector('a')
+                .focus();
             break;
         default:
             break;
@@ -117,7 +133,7 @@ export function MainMenuItems() {
         <React.Fragment>
             <SubjectsMenu />
             <MenusFromCMS />
-            <li className='give-button-item' role='presentation'>
+            <li className="give-button-item" role="presentation">
                 <GiveButton />
             </li>
             <LoginMenu />
@@ -127,7 +143,11 @@ export function MainMenuItems() {
 
 export default function MainMenu() {
     return (
-        <ul className='nav-menu main-menu no-bullets' data-analytics-nav="Main Menu" onKeyDown={navigateWithArrows}>
+        <ul
+            className="nav-menu main-menu no-bullets"
+            data-analytics-nav="Main Menu"
+            onKeyDown={navigateWithArrows}
+        >
             <MainMenuItems />
         </ul>
     );

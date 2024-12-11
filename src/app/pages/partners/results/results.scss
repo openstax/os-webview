@@ -2,9 +2,7 @@
 @import 'mixins/placeholder-selectors';
 
 .partners .results {
-    align-items: start;
-    padding: 2rem 0 20rem;
-    row-gap: 2rem;
+    padding: 2rem $normal-margin 20rem;
 
     @include width-up-to($phone-max) {
         padding: 0 $normal-margin 6rem;
@@ -12,6 +10,16 @@
 
     @include wider-than($phone-max) {
         min-height: 60rem;
+    }
+
+    >:first-child {
+        @include width-up-to($phone-max) {
+            margin-bottom: $normal-margin;
+        }
+    
+        @include wider-than($phone-max) {
+            margin-bottom: 3rem;
+        }
     }
 
     h2 {
@@ -100,6 +108,75 @@
                     color: os-color(yellow);
                     font-size: 75%;
                     padding-bottom: 3%;
+                }
+            }
+        }
+    }
+
+    .boxed {
+        gap: 3rem;
+
+        @include width-up-to($phone-max) {
+            gap: $normal-margin;
+            padding: 0;
+        }
+    }
+
+    .with-sidebar {
+        h2 {
+            text-align: center;
+        }
+
+        @include width-up-to($phone-max) {
+            > .boxed {
+                padding: 0;
+            }
+
+            &,
+            .sidebar-content {
+                display: flex;
+                flex-direction: column;
+                gap: $normal-margin;
+            }
+        }
+
+        @include wider-than($phone-max) {
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+            max-width: 120rem;
+            margin: 0 auto;
+            padding-right: $normal-margin;    
+
+            .grid {
+                max-width: unset;
+            }
+    
+            > .sidebar {
+                min-width: 20rem;
+                border: thin solid black;
+                height: max-content;
+
+                .sidebar-content {
+                    background-color: ui-color(white);
+                }
+
+                h2 {
+                    @include set-font(h3);
+
+                    background-color: os-color(gray);
+                    color: ui-color(white);
+                    padding: $normal-margin;
+                }
+
+                .grid {
+                    gap: 0.2rem;
+                }
+
+                .card {
+                    border-radius: 0;
+                    box-shadow: none;
+                    border-bottom: thin solid ui-color(form-border);
                 }
             }
         }
