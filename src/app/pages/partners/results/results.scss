@@ -2,9 +2,7 @@
 @import 'mixins/placeholder-selectors';
 
 .partners .results {
-    align-items: start;
     padding: 2rem $normal-margin 20rem;
-    row-gap: 2rem;
 
     @include width-up-to($phone-max) {
         padding: 0 $normal-margin 6rem;
@@ -12,6 +10,16 @@
 
     @include wider-than($phone-max) {
         min-height: 60rem;
+    }
+
+    >:first-child {
+        @include width-up-to($phone-max) {
+            margin-bottom: $normal-margin;
+        }
+    
+        @include wider-than($phone-max) {
+            margin-bottom: 3rem;
+        }
     }
 
     h2 {
@@ -106,10 +114,11 @@
     }
 
     .boxed {
-        grid-gap: 3rem;
+        gap: 3rem;
 
         @include width-up-to($phone-max) {
-            grid-gap: $normal-margin;
+            gap: $normal-margin;
+            padding: 0;
         }
     }
 
@@ -123,11 +132,11 @@
                 padding: 0;
             }
 
+            &,
             .sidebar-content {
                 display: flex;
                 flex-direction: column;
-                grid-gap: 3rem;
-                margin-top: 3rem;
+                gap: $normal-margin;
             }
         }
 

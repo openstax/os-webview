@@ -15,6 +15,9 @@ import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
 function DropdownOrMenuItem({item}) {
+    if (! item.name && ! item.label) {
+        return null;
+    }
     if ('menu' in item) {
         return (
             <Dropdown label={item.name} navAnalytics={`Main Menu (${item.name})`}>

@@ -200,7 +200,7 @@ function resultEntry(pd: PartnerData) {
         cost: pd.affordability_cost,
         rating: pd.average_rating.rating__avg,
         ratingCount: pd.rating_count,
-        partnershipLevel: pd.partnership_level as string,
+        partnershipLevel: pd.partnership_level,
         yearsAsPartner: pd.partner_anniversary_date
             ? differenceInYears(
                   Date.now(),
@@ -301,18 +301,25 @@ function ResultGridLoader({
                     linkTexts={linkTexts}
                     entries={filteredEntries}
                 />
-                <div className="with-sidebar">
-                    <div className="boxed">
-                        {otherAges.map((age) => (
-                            <HeadingAndResultGrid
-                                key={age}
-                                age={age}
-                                entries={partnersByAge[age]}
-                            />
-                        ))}
+                {
+                    otherAges.length > 0
+                    ? <div className="with-sidebar">
+                        <div className="boxed">
+                            {otherAges.map((age) => (
+                                <HeadingAndResultGrid
+                                    key={age}
+                                    age={age}
+                                    entries={partnersByAge[age]}
+                                />
+                            ))}
+                        </div>
+                        <Sidebar entries={startups} />
                     </div>
-                    <Sidebar entries={startups} />
-                </div>
+                    : <div className="boxed">
+                        <h2>Startups</h2>
+                        <ResultGrid entries={startups} />
+                    </div>
+                }
             </section>
         );
     }
