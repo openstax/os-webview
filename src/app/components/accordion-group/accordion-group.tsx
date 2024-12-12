@@ -13,14 +13,16 @@ import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import {faCircleInfo} from '@fortawesome/free-solid-svg-icons/faCircleInfo';
 import './accordion-group.scss';
 
-function useChevronDirection(forwardOnChange, preExpanded) {
+type FunctionOrFalse = false | ((n: unknown) => void);
+
+function useChevronDirection(forwardOnChange: FunctionOrFalse, preExpanded: unknown[]) {
     const [openTabs, updateOpenTabs] = React.useState([...preExpanded]);
     const chevronDirection = React.useCallback(
-        (uuid) => openTabs.includes(uuid) ? 'up' : 'down',
+        (uuid: string) => openTabs.includes(uuid) ? 'up' : 'down',
         [openTabs]
     );
     const onChange = React.useCallback(
-        (newOpenTabs) => {
+        (newOpenTabs: unknown[]) => {
             if (forwardOnChange) {
                 forwardOnChange(newOpenTabs);
             }
@@ -29,14 +31,14 @@ function useChevronDirection(forwardOnChange, preExpanded) {
         [forwardOnChange, updateOpenTabs]
     );
 
-    return [chevronDirection, onChange];
+    return [chevronDirection, onChange] as const;
 }
 
-function TooltipButton({content}) {
-    const ref = React.useRef();
+function TooltipButton({content}: {content: React.ReactNode}) {
+    const ref = React.useRef<HTMLSpanElement>(null);
     const focus = React.useCallback(
-        (e) => {
-            ref.current.focus();
+        (e: React.MouseEvent) => {
+            ref.current?.focus();
             e.stopPropagation();
         },
         []
@@ -44,10 +46,9 @@ function TooltipButton({content}) {
 
     return (
         <span
-            className="info-trigger" tabIndex="0" ref={ref}
-            href="tooltip"
-            onMouseEnter={() => ref.current.focus()}
-            onMouseLeave={() => ref.current.blur()}
+            className="info-trigger" tabIndex={0} ref={ref}
+            onMouseEnter={() => ref.current?.focus()}
+            onMouseLeave={() => ref.current?.blur()}
             onClick={focus}
         >
             <FontAwesomeIcon icon={faCircleInfo} />
@@ -58,7 +59,15 @@ function TooltipButton({content}) {
     );
 }
 
-function TitleBar({title, titleTag, chevronDirection, tooltipContent, analytics}) {
+type ChevronDirection = 'up' | 'down';
+
+function TitleBar({title, titleTag, chevronDirection, tooltipContent, analytics}: {
+    title: string;
+    titleTag?: string;
+    chevronDirection: ChevronDirection;
+    tooltipContent?: React.ReactNode;
+    analytics?: boolean;
+}) {
     const icon = ({
         down: faChevronDown,
         up: faChevronUp
@@ -87,11 +96,15 @@ function TitleBar({title, titleTag, chevronDirection, tooltipContent, analytics}
     );
 }
 
-function toUuid(name) {
+function toUuid(name: string) {
     return name.replace(/\W+/g, '_');
 }
 
-function Item({title, titleTag, tooltipContent, checkChevronDirection, contentComponent, analytics}) {
+function Item({title, titleTag, tooltipContent, checkChevronDirection, contentComponent, analytics}:
+    Omit<Parameters<typeof TitleBar>[0], 'chevronDirection'> & {
+        contentComponent: React.ReactNode;
+        checkChevronDirection: (u: string) => ChevronDirection;
+}) {
     const uuid = toUuid(title);
     const chevronDirection = checkChevronDirection(uuid);
 
@@ -105,19 +118,32 @@ function Item({title, titleTag, tooltipContent, checkChevronDirection, contentCo
     );
 }
 
+type ItemType = {
+    title: string;
+    inline?: React.ReactNode;
+    contentComponent: React.ReactNode;
+}
+
 export default function AccordionGroup({
     items,
     accordionProps={allowZeroExpanded: true},
     noScroll=false,
     forwardOnChange=false,
     preExpanded=[],
-    ...props
+    'data-analytics-nav': analyticsNav
+}: {
+    items: ItemType[];
+    accordionProps?: object;
+    noScroll?: boolean;
+    forwardOnChange?: FunctionOrFalse;
+    preExpanded?: string[];
+    'data-analytics-nav'?: string;
 }) {
-    const root = React.useRef();
+    const root = React.useRef<HTMLDivElement>(null);
     const preExpandedUuids = preExpanded.map(toUuid);
     const [chevronDirection, onChange] = useChevronDirection(forwardOnChange, preExpandedUuids);
     const scrollAndChangeChevronPlus = React.useCallback(
-        (...args) => {
+        (newOpenTabs: unknown[]) => {
             if (!noScroll) {
                 window.setTimeout(
                     () => {
@@ -130,11 +156,10 @@ export default function AccordionGroup({
                     20
                 );
             }
-            onChange(...args);
+            onChange(newOpenTabs);
         },
         [onChange, noScroll]
     );
-    const analyticsNav = props['data-analytics-nav'];
 
     return (
         <div ref={root}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Hero from '~/components/hero/hero';
-import AccordionGroup from '~/components/accordion-group/accordion-group.js';
+import AccordionGroup from '~/components/accordion-group/accordion-group';
 import PeopleTab from './people-tab/people-tab';
 import {Tabs, Item} from '~/components/tablist/tablist';
 import './team.scss';
