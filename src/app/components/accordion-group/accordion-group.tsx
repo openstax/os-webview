@@ -15,10 +15,13 @@ import './accordion-group.scss';
 
 type FunctionOrFalse = false | ((n: unknown) => void);
 
-function useChevronDirection(forwardOnChange: FunctionOrFalse, preExpanded: unknown[]) {
+function useChevronDirection(
+    forwardOnChange: FunctionOrFalse,
+    preExpanded: unknown[]
+) {
     const [openTabs, updateOpenTabs] = React.useState([...preExpanded]);
     const chevronDirection = React.useCallback(
-        (uuid: string) => openTabs.includes(uuid) ? 'up' : 'down',
+        (uuid: string) => (openTabs.includes(uuid) ? 'up' : 'down'),
         [openTabs]
     );
     const onChange = React.useCallback(
@@ -36,42 +39,45 @@ function useChevronDirection(forwardOnChange: FunctionOrFalse, preExpanded: unkn
 
 function TooltipButton({content}: {content: React.ReactNode}) {
     const ref = React.useRef<HTMLSpanElement>(null);
-    const focus = React.useCallback(
-        (e: React.MouseEvent) => {
-            ref.current?.focus();
-            e.stopPropagation();
-        },
-        []
-    );
+    const focus = React.useCallback((e: React.MouseEvent) => {
+        ref.current?.focus();
+        e.stopPropagation();
+    }, []);
 
     return (
         <span
-            className="info-trigger" tabIndex={0} ref={ref}
+            className="info-trigger"
+            tabIndex={0}
+            ref={ref}
             onMouseEnter={() => ref.current?.focus()}
             onMouseLeave={() => ref.current?.blur()}
             onClick={focus}
         >
             <FontAwesomeIcon icon={faCircleInfo} />
-            <div role="tooltip">
-                {content}
-            </div>
+            <div role="tooltip">{content}</div>
         </span>
     );
 }
 
 type ChevronDirection = 'up' | 'down';
 
-function TitleBar({title, titleTag, chevronDirection, tooltipContent, analytics}: {
+function TitleBar({
+    title,
+    titleTag,
+    chevronDirection,
+    tooltipContent,
+    analytics
+}: {
     title: string;
     titleTag?: string;
     chevronDirection: ChevronDirection;
     tooltipContent?: React.ReactNode;
     analytics?: boolean;
 }) {
-    const icon = ({
+    const icon = {
         down: faChevronDown,
         up: faChevronUp
-    })[chevronDirection];
+    }[chevronDirection];
     const isOpen = chevronDirection === 'up';
 
     return (
@@ -82,11 +88,10 @@ function TitleBar({title, titleTag, chevronDirection, tooltipContent, analytics}
             >
                 <div className="label">
                     {title}
-                    {
-                        titleTag &&
-                            <span className="title-tag">{titleTag}</span>
-                    }
-                    {tooltipContent && <TooltipButton content={tooltipContent} />}
+                    {titleTag && <span className="title-tag">{titleTag}</span>}
+                    {tooltipContent && (
+                        <TooltipButton content={tooltipContent} />
+                    )}
                 </div>
                 <div className="chevron">
                     <FontAwesomeIcon icon={icon} />
@@ -100,17 +105,31 @@ function toUuid(name: string) {
     return name.replace(/\W+/g, '_');
 }
 
-function Item({title, titleTag, tooltipContent, checkChevronDirection, contentComponent, analytics}:
-    Omit<Parameters<typeof TitleBar>[0], 'chevronDirection'> & {
-        contentComponent: React.ReactNode;
-        checkChevronDirection: (u: string) => ChevronDirection;
+function Item({
+    title,
+    titleTag,
+    tooltipContent,
+    checkChevronDirection,
+    contentComponent,
+    analytics
+}: Omit<Parameters<typeof TitleBar>[0], 'chevronDirection'> & {
+    contentComponent: React.ReactNode;
+    checkChevronDirection: (u: string) => ChevronDirection;
 }) {
     const uuid = toUuid(title);
     const chevronDirection = checkChevronDirection(uuid);
 
     return (
         <AccordionItem uuid={uuid} className="accordion-item">
-            <TitleBar {...{title, titleTag, tooltipContent, chevronDirection, analytics}} />
+            <TitleBar
+                {...{
+                    title,
+                    titleTag,
+                    tooltipContent,
+                    chevronDirection,
+                    analytics
+                }}
+            />
             <AccordionItemPanel className="content-pane">
                 {contentComponent}
             </AccordionItemPanel>
@@ -122,14 +141,14 @@ type ItemType = {
     title: string;
     inline?: React.ReactNode;
     contentComponent: React.ReactNode;
-}
+};
 
 export default function AccordionGroup({
     items,
-    accordionProps={allowZeroExpanded: true},
-    noScroll=false,
-    forwardOnChange=false,
-    preExpanded=[],
+    accordionProps = {allowZeroExpanded: true},
+    noScroll = false,
+    forwardOnChange = false,
+    preExpanded = [],
     'data-analytics-nav': analyticsNav
 }: {
     items: ItemType[];
@@ -141,20 +160,22 @@ export default function AccordionGroup({
 }) {
     const root = React.useRef<HTMLDivElement>(null);
     const preExpandedUuids = preExpanded.map(toUuid);
-    const [chevronDirection, onChange] = useChevronDirection(forwardOnChange, preExpandedUuids);
+    const [chevronDirection, onChange] = useChevronDirection(
+        forwardOnChange,
+        preExpandedUuids
+    );
     const scrollAndChangeChevronPlus = React.useCallback(
         (newOpenTabs: unknown[]) => {
             if (!noScroll) {
-                window.setTimeout(
-                    () => {
-                        const openItem = root.current?.querySelector('[aria-expanded="true"]');
+                window.setTimeout(() => {
+                    const openItem = root.current?.querySelector(
+                        '[aria-expanded="true"]'
+                    );
 
-                        if (openItem) {
-                            $.scrollTo(openItem);
-                        }
-                    },
-                    20
-                );
+                    if (openItem) {
+                        $.scrollTo(openItem);
+                    }
+                }, 20);
             }
             onChange(newOpenTabs);
         },
@@ -170,16 +191,17 @@ export default function AccordionGroup({
                 preExpanded={preExpandedUuids}
                 data-analytics-nav={analyticsNav}
             >
-                {
-                    items.map((item) =>
-                        item.inline || <Item
-                          analytics={!!analyticsNav}
-                          key={item.title}
-                          {...item}
-                          checkChevronDirection={chevronDirection}
-                        />
-                    )
-                }
+                {items.map(
+                    (item) =>
+                        item.inline || (
+                            <Item
+                                analytics={!!analyticsNav}
+                                key={item.title}
+                                {...item}
+                                checkChevronDirection={chevronDirection}
+                            />
+                        )
+                )}
             </Accordion>
         </div>
     );
