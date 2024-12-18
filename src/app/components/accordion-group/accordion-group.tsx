@@ -10,7 +10,6 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
-import {faCircleInfo} from '@fortawesome/free-solid-svg-icons/faCircleInfo';
 import './accordion-group.scss';
 
 type FunctionOrFalse = false | ((n: unknown) => void);
@@ -37,41 +36,17 @@ function useChevronDirection(
     return [chevronDirection, onChange] as const;
 }
 
-function TooltipButton({content}: {content: React.ReactNode}) {
-    const ref = React.useRef<HTMLSpanElement>(null);
-    const focus = React.useCallback((e: React.MouseEvent) => {
-        ref.current?.focus();
-        e.stopPropagation();
-    }, []);
-
-    return (
-        <span
-            className="info-trigger"
-            tabIndex={0}
-            ref={ref}
-            onMouseEnter={() => ref.current?.focus()}
-            onMouseLeave={() => ref.current?.blur()}
-            onClick={focus}
-        >
-            <FontAwesomeIcon icon={faCircleInfo} />
-            <div role="tooltip">{content}</div>
-        </span>
-    );
-}
-
 type ChevronDirection = 'up' | 'down';
 
 function TitleBar({
     title,
     titleTag,
     chevronDirection,
-    tooltipContent,
     analytics
 }: {
     title: string;
     titleTag?: string;
     chevronDirection: ChevronDirection;
-    tooltipContent?: React.ReactNode;
     analytics?: boolean;
 }) {
     const icon = {
@@ -89,9 +64,6 @@ function TitleBar({
                 <div className="label">
                     {title}
                     {titleTag && <span className="title-tag">{titleTag}</span>}
-                    {tooltipContent && (
-                        <TooltipButton content={tooltipContent} />
-                    )}
                 </div>
                 <div className="chevron">
                     <FontAwesomeIcon icon={icon} />
@@ -108,7 +80,6 @@ function toUuid(name: string) {
 function Item({
     title,
     titleTag,
-    tooltipContent,
     checkChevronDirection,
     contentComponent,
     analytics
@@ -125,7 +96,6 @@ function Item({
                 {...{
                     title,
                     titleTag,
-                    tooltipContent,
                     chevronDirection,
                     analytics
                 }}
