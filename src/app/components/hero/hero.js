@@ -4,7 +4,7 @@ import ClippedImage from '~/components/clipped-image/clipped-image';
 import cn from 'classnames';
 import './hero.scss';
 
-export default function Hero({children, src, alt, Tag='div', reverse}) {
+export default function Hero({children, src, alt, Tag='div', reverse=undefined}) {
     const pictureRef = React.useRef();
 
     return (

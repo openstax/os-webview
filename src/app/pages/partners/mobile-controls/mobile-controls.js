@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import ActiveFilters from '../active-filters/active-filters';
-import AccordionGroup from '~/components/accordion-group/accordion-group.js';
+import AccordionGroup from '~/components/accordion-group/accordion-group';
 import BookOptions from '../controls/book-options/book-options';
 import OptionsList from '../controls/options-list/options-list';
 import Checkboxes from '../controls/checkboxes-linked-to-store/checkboxes-linked-to-store';

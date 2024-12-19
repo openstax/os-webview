@@ -6,6 +6,7 @@ import useScrollProgress from '~/pages/blog/article/use-progress';
 import pageData, {featuredVideo, pdfBody} from '~/../../test/src/data/article-page-data';
 import * as HelpersData from '~/helpers/data';
 import * as WCtx from '~/contexts/window';
+import * as DH from '~/helpers/use-document-head';
 
 const mockUsePageData = jest.fn();
 const onload = jest.fn();
@@ -21,6 +22,8 @@ jest.mock('~/helpers/jit-load', () => ({
     __esModule: true,
     default: () => mockJITLoad()
 }));
+
+jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue();
 
 describe('blog/article', () => {
     afterEach(() => jest.resetAllMocks());
