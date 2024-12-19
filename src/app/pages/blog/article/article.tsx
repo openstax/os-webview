@@ -1,4 +1,4 @@
-import BodyUnit from '~/components/body-units/body-units';
+import BodyUnit, {UnitType} from '~/components/body-units/body-units';
 import Byline from '~/components/byline/byline';
 import ProgressRing from '~/components/progress-ring/progress-ring';
 import useScrollProgress from './use-progress';
@@ -25,15 +25,6 @@ export function ArticleFromSlug({slug, onLoad}: ArticleArgs) {
     );
 }
 
-type BodyData = {
-    type: string;
-    value:
-        | string
-        | {
-              alignment: string;
-          };
-    id: string;
-};
 export type ArticleData = BookData & {
     error?: {
         message: string;
@@ -42,7 +33,7 @@ export type ArticleData = BookData & {
     subheading: string;
     date: string;
     author: string;
-    body: BodyData[];
+    body: UnitType[];
     featuredVideo: [{value: string}];
     articleImage: string;
     featuredImageAltText: string;
@@ -166,11 +157,11 @@ function VideoArticle({data}: {data: ArticleData}) {
     );
 }
 
-function normalUnits(unit: BodyData) {
-    return typeof unit.value === 'string' || unit.value.alignment !== 'bottom';
+function normalUnits(unit: UnitType) {
+    return typeof unit.value === 'string' || ('alignment' in unit.value && unit.value.alignment !== 'bottom');
 }
-function bottomUnits(unit: BodyData) {
-    return typeof unit.value !== 'string' && unit.value.alignment === 'bottom';
+function bottomUnits(unit: UnitType) {
+    return typeof unit.value !== 'string' && ('alignment' in unit.value && unit.value.alignment === 'bottom');
 }
 
 function ArticleBody({
@@ -178,7 +169,7 @@ function ArticleBody({
     setReadTime,
     bodyRef
 }: {
-    bodyData: BodyData[];
+    bodyData: UnitType[];
     setReadTime: (rt: number) => void;
     bodyRef: React.MutableRefObject<HTMLDivElement | undefined>;
 }) {
