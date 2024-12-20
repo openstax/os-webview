@@ -8,12 +8,16 @@ import './carousel.scss';
 export function FrameChanger({
     chevronDirection,
     onClick,
-    hoverText,
+    hoverText = '',
     disable = false
 }) {
     const icon = {
         left: faChevronLeft,
         right: faChevronRight
+    }[chevronDirection];
+    const label = {
+        left: 'Previous page',
+        right: 'Next page'
     }[chevronDirection];
 
     return (
@@ -22,6 +26,7 @@ export function FrameChanger({
             className={`frame-changer ${chevronDirection}`}
             onClick={onClick}
             disabled={disable}
+            aria-label={label}
         >
             <FontAwesomeIcon icon={icon} />
             {hoverText && <span className='hover-text'>{hoverText}</span>}

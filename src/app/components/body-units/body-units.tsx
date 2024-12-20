@@ -84,12 +84,12 @@ function PullQuote({data}: {data: PQData}) {
 }
 
 
-type DocumentData = {
+export type DocumentData = {
     download_url: string;
 }
 
 function Document({data}: {data: DocumentData}) {
-    return <JITLoad importFn={() => import('./pdf-unit.js')} data={data} />;
+    return <JITLoad importFn={() => import('./import-pdf-unit.js')} data={data} />;
 }
 
 // Using CMS tags, which are not camel-case
