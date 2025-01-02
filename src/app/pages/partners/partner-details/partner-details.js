@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import usePartnerContext, {PartnerContextProvider} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
-// import Reviews from './reviews/reviews';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
