@@ -24,10 +24,12 @@ function checkUserForProblems(user?: UserModelType) {
 export type UserStatus = ReturnType<typeof getUserStatus>;
 
 // eslint-disable-next-line complexity
-function getUserStatus(user: Partial<UserModelType> ={}) {
-    const isInstructor = user.username && 'groups' in user && user.groups?.includes('Faculty');
+function getUserStatus(user: Partial<UserModelType> = {}) {
+    const isInstructor =
+        user.username && 'groups' in user && user.groups?.includes('Faculty');
     const isStudent = user.username && !isInstructor;
-    const trackDownloads = user.accountsModel?.faculty_status === 'confirmed_faculty';
+    const trackDownloads =
+        user.accountsModel?.faculty_status === 'confirmed_faculty';
 
     checkUserForProblems();
     return {
@@ -46,27 +48,28 @@ function getUserStatus(user: Partial<UserModelType> ={}) {
 
 function useContextValue() {
     const model = useUserModel();
-    const userStatus = React.useMemo(
-        () => getUserStatus(model),
-        [model]
-    );
-    const isVerified = model?.accountsModel?.faculty_status === 'confirmed_faculty';
-    const [fetchTime, updateMyOpenStaxUser] = useRefreshable(
-        () => Date.now()
-    );
+    const userStatus = React.useMemo(() => getUserStatus(model), [model]);
+    const isVerified =
+        model?.accountsModel?.faculty_status === 'confirmed_faculty';
+    const [fetchTime, updateMyOpenStaxUser] = useRefreshable(() => Date.now());
     const myOpenStaxUser = useMyOpenStaxUser(isVerified, fetchTime);
     const value = React.useMemo(
-        () => model?.last_name ?
-            {
-                accountId: model.id,
-                userName: `${model.first_name} ${model.last_name.substr(0, 1)}.`,
-                userModel: model,
-                uuid: model.uuid,
-                isVerified,
-                userStatus,
-                myOpenStaxUser,
-                updateMyOpenStaxUser
-            } : {userStatus, myOpenStaxUser},
+        () =>
+            model?.last_name
+                ? {
+                      accountId: model.id,
+                      userName: `${model.first_name} ${model.last_name.substr(
+                          0,
+                          1
+                      )}.`,
+                      userModel: model,
+                      uuid: model.uuid,
+                      isVerified,
+                      userStatus,
+                      myOpenStaxUser,
+                      updateMyOpenStaxUser
+                  }
+                : {userStatus, myOpenStaxUser},
         [model, userStatus, isVerified, myOpenStaxUser, updateMyOpenStaxUser]
     );
 
@@ -85,7 +88,4 @@ function useContextValue() {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as UserContextProvider
-};
+export {useContext as default, ContextProvider as UserContextProvider};

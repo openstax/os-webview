@@ -29,7 +29,4 @@ function useContextValue() {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as ActiveElementContextProvider
-};
+export {useContext as default, ContextProvider as ActiveElementContextProvider};
