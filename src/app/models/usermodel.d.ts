@@ -17,7 +17,10 @@ export type UserModelType = {
     self_reported_school: string;
     is_not_gdpr_location: boolean;
     salesforce_contact_id: string;
-    accountsModel: object;
+    accountsModel: {
+        faculty_status?: string;
+        school_name?: string;
+    };
 };
 
 declare const userModel: {
@@ -25,3 +28,5 @@ declare const userModel: {
 };
 
 export default userModel;
+export const accountsModel: object;
+export function useUserModel(): UserModelType;
