@@ -52,7 +52,7 @@ function TabPanel({state, ...props}: TabPanelProps) {
 
     return (
         <div {...tabPanelProps} ref={ref}>
-            {state.selectedItem?.props.children}
+            {state?.selectedItem?.props.children}
         </div>
     );
 }

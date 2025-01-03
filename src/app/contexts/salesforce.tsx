@@ -16,13 +16,13 @@ export const adoptionOptions = [{
 }, {
     key: 'self',
     value: 'For my own knowledge or other work'
-}];
+}] as const;
 
-function adoption(options) {
+function adoption(options: string[]) {
     return adoptionOptions.filter((option) => options.includes(option.key));
 }
 
-const initialContextValue = {adoption, adoptionName};
+const initialContextValue: Record<string, unknown> = {adoption, adoptionName};
 const fetchPromise = cmsFetch('salesforce/forms/');
 
 export function useContextValue() {
