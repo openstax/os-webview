@@ -3,7 +3,7 @@ import buildContext from '~/components/jsx-helpers/build-context';
 
 function useContextValue() {
     const [stickyCount, setSticky] = React.useReducer(
-        (s, a) => a ? s + 1 : s - 1,
+        (s: number, a: boolean) => a ? s + 1 : s - 1,
         0
     );
     const stickyClass = React.useMemo(
@@ -11,7 +11,7 @@ function useContextValue() {
         [stickyCount]
     );
     const [modalClass, setModal] = React.useReducer(
-        (s, a) => a ? 'with-modal' : '',
+        (s: string, a: boolean) => a ? 'with-modal' : '',
         ''
     );
     const classes = React.useMemo(

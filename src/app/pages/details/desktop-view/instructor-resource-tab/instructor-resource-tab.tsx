@@ -39,7 +39,7 @@ function FreeStuff({
         )
     };
     const blurbContent =
-        blurbLookupByInstructorStatus[`${userStatus.isInstructor}`];
+        blurbLookupByInstructorStatus[`${userStatus.isInstructor}` as 'undefined' | 'true' | 'false'];
     const blurbJsx =
         typeof blurbContent === 'string' ? (
             <RawHTML className="blurb-body" html={blurbContent} />

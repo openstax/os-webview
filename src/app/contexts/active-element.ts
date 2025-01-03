@@ -5,7 +5,7 @@ import buildContext from '~/components/jsx-helpers/build-context';
 function useContextValue() {
     const [value, refresh] = useRefreshable(() => document.activeElement);
     const blurHandler = React.useCallback(
-        ({relatedTarget}) => {
+        ({relatedTarget}: FocusEvent) => {
             if (!relatedTarget) {
                 refresh();
             }

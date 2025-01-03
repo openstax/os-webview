@@ -1,13 +1,13 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import {useUserModel} from '~/models/usermodel';
+import {useUserModel, UserModelType} from '~/models/usermodel';
 import useMyOpenStaxUser from '~/models/myopenstax-user';
 import {useRefreshable} from '~/helpers/data';
 import debounce from 'lodash/debounce';
 
 const debouncedDebug = debounce((...args) => console.debug(...args), 100);
 
-function checkUserForProblems(user) {
+function checkUserForProblems(user?: UserModelType) {
     if (!user || Reflect.ownKeys(user).length === 0) {
         debouncedDebug('No user info retrieved');
     } else if (!('pending_verification' in user)) {
@@ -21,9 +21,11 @@ function checkUserForProblems(user) {
     }
 }
 
+export type UserStatus = ReturnType<typeof getUserStatus>;
+
 // eslint-disable-next-line complexity
-function getUserStatus(user={}) {
-    const isInstructor = user.username && 'groups' in user && user.groups.includes('Faculty');
+function getUserStatus(user: Partial<UserModelType> ={}) {
+    const isInstructor = user.username && 'groups' in user && user.groups?.includes('Faculty');
     const isStudent = user.username && !isInstructor;
     const trackDownloads = user.accountsModel?.faculty_status === 'confirmed_faculty';
 
@@ -69,8 +71,12 @@ function useContextValue() {
     );
 
     React.useEffect(() => {
+        const w = window as typeof window & {
+            pi(k: string, id: number): void;
+        };
+
         if (model && model.id) {
-            pi('identify_client', model.id);
+            w.pi('identify_client', model.id);
         }
     }, [model]);
 
