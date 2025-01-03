@@ -7,31 +7,25 @@ import debounce from 'lodash/debounce';
 
 const debouncedDebug = debounce((...args) => console.debug(...args), 100);
 
-function checkUserForProblems(user?: UserModelType) {
+function checkUserForProblems(user?: Partial<UserModelType>) {
     if (!user || Reflect.ownKeys(user).length === 0) {
         debouncedDebug('No user info retrieved');
     } else if (!('pending_verification' in user)) {
         debouncedDebug('No pending_verification flag set in user info', user);
-    } else {
-        debouncedDebug('User info:', {
-            email: user.email,
-            pendingVerification: user.pending_verification,
-            groups: user.groups
-        });
     }
 }
 
 export type UserStatus = ReturnType<typeof getUserStatus>;
 
 // eslint-disable-next-line complexity
-function getUserStatus(user: Partial<UserModelType> = {}) {
+function getUserStatus(user: Partial<UserModelType>) {
     const isInstructor =
         user.username && 'groups' in user && user.groups?.includes('Faculty');
     const isStudent = user.username && !isInstructor;
     const trackDownloads =
         user.accountsModel?.faculty_status === 'confirmed_faculty';
 
-    checkUserForProblems();
+    checkUserForProblems(user);
     return {
         isInstructor,
         isStudent,

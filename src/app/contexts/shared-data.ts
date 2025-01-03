@@ -25,12 +25,12 @@ function useFlags() {
 
 function useContextValue() {
     const flags = useFlags();
-    const stickyFooterState = useState(null);
+    const stickyFooterState = useState<boolean | null>(null);
 
     return {
         flags,
         stickyFooterState
-    };
+    } as const;
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
