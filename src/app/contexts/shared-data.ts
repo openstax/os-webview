@@ -14,10 +14,7 @@ const flagPromise = cmsFetch('flags')
             a[f.name] = f.feature_active;
             return a;
         }, {} as Record<string, boolean>)
-    )
-    .catch((err) => {
-        throw new Error(`Unable to get flags: ${err}`);
-    });
+    );
 
 function useFlags() {
     return usePromise<Record<string, boolean> | false>(flagPromise, false);

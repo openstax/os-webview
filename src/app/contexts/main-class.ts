@@ -22,9 +22,7 @@ function useContextValue() {
     React.useEffect(() => {
         const bodyClasses = document.body.classList;
 
-        if (bodyClasses) {
-            bodyClasses[modalClass === 'with-modal' ? 'add' : 'remove']();
-        }
+        bodyClasses[modalClass === 'with-modal' ? 'add' : 'remove']('with-modal');
     }, [modalClass]);
 
     return {classes, setSticky, setModal};
