@@ -6,6 +6,7 @@ import ShellContextProvider from '~/../../test/helpers/shell-context';
 import { SpecificSubjectContextProvider } from '~/pages/subjects/new/specific/context';
 import businessBooksData from '~/../../test/src/data/business-books';
 import businessBlogBlurbs from '~/../../test/src/data/business-blog-blurbs';
+import * as DH from '~/helpers/use-document-head';
 
 const mockUsePageData = jest.fn();
 const mockUseDataFromSlug = jest.fn();
@@ -19,6 +20,7 @@ jest.mock('~/helpers/page-data-utils', () => ({
     ...jest.requireActual('~/helpers/page-data-utils'),
     useDataFromSlug: () => mockUseDataFromSlug()
 }));
+jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue();
 
 const mockCarouselSection = jest.fn();
 
@@ -58,11 +60,15 @@ describe('subjects/blog-posts section', () => {
     });
     it('returns no-blogs message if none found', async () => {
         const dataNoSubject = {...businessBooksData};
+        const saveWarn = console.warn;
 
+        console.warn = jest.fn();
         dataNoSubject.title = '';
         mockUsePageData.mockReturnValue(dataNoSubject);
         mockUseDataFromSlug.mockReturnValue(undefined);
         render(<Component />);
         await screen.findByText('No blog entries found (yet)');
+        expect(console.warn).toHaveBeenCalledWith('Specific subjects and title need to be defined');
+        console.warn = saveWarn;
     });
 });

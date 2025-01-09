@@ -18,10 +18,12 @@ function Component() {
 
 describe('blog/latest-blog-posts', () => {
     it('renders Latest Blog Posts page', async () => {
+        window.scrollTo = jest.fn();
         render(<Component />);
 
         await screen.findAllByText('Search all blog posts');
         screen.getByText('showing 1-9 of', {exact: false});
         expect(screen.getAllByRole('button')).toHaveLength(4);
+        expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
     });
 });
