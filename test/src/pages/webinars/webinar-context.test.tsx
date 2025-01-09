@@ -19,7 +19,7 @@ function Component() {
 function UserComponent() {
     const {searchFor} = useWebinarContext();
 
-    searchFor('something');
+    React.useEffect(() => searchFor('something'), [searchFor]);
 
     return null;
 }
@@ -36,6 +36,6 @@ describe('webinar context', () => {
             return [];
         });
         render(<Component />);
-        expect(useData as jest.Mock).toHaveBeenCalledTimes(4);
+        expect(useData as jest.Mock).toHaveBeenCalledTimes(12);
     });
 });

@@ -16,7 +16,7 @@ type FunctionOrFalse = false | ((n: unknown) => void);
 
 function useChevronDirection(
     forwardOnChange: FunctionOrFalse,
-    preExpanded: unknown[]
+    preExpanded: string[]
 ) {
     const [openTabs, updateOpenTabs] = React.useState([...preExpanded]);
     const chevronDirection = React.useCallback(
@@ -24,7 +24,7 @@ function useChevronDirection(
         [openTabs]
     );
     const onChange = React.useCallback(
-        (newOpenTabs: unknown[]) => {
+        (newOpenTabs: string[]) => {
             if (forwardOnChange) {
                 forwardOnChange(newOpenTabs);
             }
@@ -135,7 +135,7 @@ export default function AccordionGroup({
         preExpandedUuids
     );
     const scrollAndChangeChevronPlus = React.useCallback(
-        (newOpenTabs: unknown[]) => {
+        (newOpenTabs: string[]) => {
             if (!noScroll) {
                 window.setTimeout(() => {
                     const openItem = root.current?.querySelector(

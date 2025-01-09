@@ -22,15 +22,37 @@ function adoption(options: string[]) {
     return adoptionOptions.filter((option) => options.includes(option.key));
 }
 
-const initialContextValue: Record<string, unknown> = {adoption, adoptionName};
+const initialContextValue = {adoption, adoptionName};
+
+type SalesforceFormsData = {
+    oid: string;
+    debug: boolean;
+    posting_url: string;
+    webtoleadUrl: string;
+    adoption_form_posting_url: string;
+    interest_form_posting_url: string;
+    tech_scout_form_posting_url: string;
+}
+
+type TransformedSFData = typeof initialContextValue
+    & Partial<
+        Pick<SalesforceFormsData, 'oid' | 'debug' | 'webtoleadUrl'>
+        & {
+            webtocaseUrl: string;
+            adoptionUrl: string;
+            interestUrl: string;
+            techScoutUrl: string;
+        }
+    >
+
 const fetchPromise = cmsFetch('salesforce/forms/');
 
 export function useContextValue() {
-    const [value, setValue] = useState(initialContextValue);
+    const [value, setValue] = useState<TransformedSFData>(initialContextValue);
 
     useEffect(() => {
         fetchPromise
-            .then((sfData) => {
+            .then((sfData: [SalesforceFormsData]) => {
                 const {
                     oid, debug, posting_url: webtoleadUrl,
                     adoption_form_posting_url: adoptionUrl,
