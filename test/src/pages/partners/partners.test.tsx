@@ -193,4 +193,12 @@ describe('partners full page', () => {
         expect(startupHeading.parentNode?.textContent).toContain(sfPartners[0].partner_name);
         sfPartners[0].partnership_level = 'Full partner'; // eslint-disable-line
     });
+    it('displays no sidebar when no other parterns are displayed', async () => {
+        sfPartners.map((p) => p.partnership_level = 'startup'); // eslint-disable-line
+        sfPartners[0].partnership_level = 'Full partner'; // eslint-disable-line
+        mockSfPartners.mockResolvedValue(sfPartners);
+        render(<Component />);
+        await screen.findByRole('heading', {level: 2, name: 'Startups'});
+        sfPartners.map((p) => p.partnership_level = 'Full partner'); // eslint-disable-line
+    });
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import BookDetailsLoader from '~/pages/details/details';
 import {MemoryRouter, Routes, Route} from 'react-router-dom';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
@@ -107,6 +108,18 @@ describe('Details page', () => {
         await finishedRendering();
         expect(lengthOfView('phone')).toBe(346);
         expect(lengthOfView('bigger')).toBeUndefined();
+    });
+    it('toggles authors at phone width', async () => {
+        spyWindowContext.mockReturnValue({innerWidth: 480} as any); // eslint-disable-line
+        render(<Component />);
+        await finishedRendering();
+        const authorToggle = await screen.findByText('Authors');
+        const detailsEl = authorToggle.closest('details');
+        const user = userEvent.setup();
+
+        await user.click(authorToggle);
+        expect(detailsEl?.open).toBe(true);
+        await screen.findByText('Senior Contributing Authors');
     });
     it('handles missing description', async () => {
         document.head.removeChild(

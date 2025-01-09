@@ -5,19 +5,22 @@ import {faPlus} from '@fortawesome/free-solid-svg-icons/faPlus';
 import {faMinus} from '@fortawesome/free-solid-svg-icons/faMinus';
 import './collapsing-pane.scss';
 
-export default function CollapsingPane({title, children}) {
+export default function CollapsingPane({
+    title,
+    children
+}: React.PropsWithChildren<{
+    title: string;
+}>) {
     const [isOpen, toggle] = useToggle(false);
     const plusOrMinus = isOpen ? faMinus : faPlus;
 
     return (
-        <div className="collapsing-pane">
-            <div className="control-bar" onClick={toggle}>
+        <details className="collapsing-pane" open={isOpen} onToggle={() => toggle()}>
+            <summary className="control-bar">
                 <div>{title}</div>
                 <FontAwesomeIcon icon={plusOrMinus} />
-            </div>
-            <div hidden={!isOpen} >
-                {children}
-            </div>
-        </div>
+            </summary>
+            <div>{children}</div>
+        </details>
     );
 }

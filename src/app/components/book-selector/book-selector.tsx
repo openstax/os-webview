@@ -2,7 +2,7 @@ import React from 'react';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import {fetchAllBooks} from '~/models/books';
-import {salesforceTitles} from '~/helpers/books';
+import {salesforceTitles, SalesforceBook} from '~/helpers/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useIntl} from 'react-intl';
 import {useFirstSearchArgument} from './after-form-submit';
@@ -15,6 +15,13 @@ function Subject({
     selectedBooks,
     toggleBook,
     limitReached
+}: {
+    subject: string;
+    books: SalesforceBook[];
+    name: string;
+    selectedBooks: SalesforceBook[];
+    toggleBook: (b: SalesforceBook) => void;
+    limitReached: boolean;
 }) {
     return (
         <div>
@@ -22,7 +29,7 @@ function Subject({
             <div className="two-columns">
                 {books.map((book) => (
                     <BookCheckbox
-                        key={book}
+                        key={book.value}
                         book={book}
                         name={name}
                         checked={selectedBooks.includes(book)}
@@ -35,7 +42,7 @@ function Subject({
     );
 }
 
-function useHintText(selectedCount, limit) {
+function useHintText(selectedCount: number, limit?: number) {
     const {formatMessage} = useIntl();
 
     if (!limit) {
@@ -45,12 +52,25 @@ function useHintText(selectedCount, limit) {
         return formatMessage({id: 'book-selector.select'}, {limit});
     }
     if (selectedCount < limit) {
-        return formatMessage({id: 'book-selector.select-more'}, {limit: limit - selectedCount});
+        return formatMessage(
+            {id: 'book-selector.select-more'},
+            {limit: limit - selectedCount}
+        );
     }
     return `Maximum ${limit} selected`;
 }
 
 const defaultIncludeFilter = () => true;
+
+type PropsFromOutside = {
+    prompt: string;
+    name: string;
+    selectedBooks: SalesforceBook[];
+    toggleBook: (b: SalesforceBook) => void;
+    limit?: number;
+    additionalInstructions?: string;
+    includeFilter?: () => boolean;
+};
 
 function BookSelector({
     data,
@@ -61,19 +81,21 @@ function BookSelector({
     limit,
     additionalInstructions,
     includeFilter = defaultIncludeFilter
-}) {
+}: {
+    data: {books: Parameters<typeof salesforceTitles>[0]};
+} & PropsFromOutside) {
     const books = React.useMemo(
         () => salesforceTitles(data.books).filter(includeFilter),
         [data.books, includeFilter]
     );
     const subjects = books
-        .reduce((a, b) => a.concat(b.subjects), [])
-        .reduce((a, b) => (a.includes(b) ? a : a.concat(b)), []);
-    const booksBySubject = (subject) =>
+        .reduce<string[]>((a, b) => a.concat(b.subjects), [])
+        .reduce<string[]>((a, b) => (a.includes(b) ? a : a.concat(b)), []);
+    const booksBySubject = (subject: string) =>
         books.filter((b) => b.subjects.includes(subject));
     const validationMessage =
         selectedBooks.length > 0 ? '' : 'Please select at least one book';
-    const limitReached = selectedBooks.length >= limit;
+    const limitReached = limit !== undefined && selectedBooks.length >= limit;
     const preselectedTitle = useFirstSearchArgument();
     const preselectedBook = React.useMemo(
         () => books.find((book) => preselectedTitle === book.value),
@@ -114,9 +136,11 @@ function BookSelector({
 }
 
 export function useSelectedBooks() {
-    const [selectedBooks, setSelectedBooks] = React.useState([]);
+    const [selectedBooks, setSelectedBooks] = React.useState<SalesforceBook[]>(
+        []
+    );
     const toggleBook = React.useCallback(
-        (value) => {
+        (value: SalesforceBook) => {
             if (selectedBooks.includes(value)) {
                 setSelectedBooks(selectedBooks.filter((b) => b !== value));
             } else {
@@ -126,11 +150,15 @@ export function useSelectedBooks() {
         [selectedBooks]
     );
 
-    return [selectedBooks, toggleBook];
+    return [selectedBooks, toggleBook] as const;
 }
 
-export default function BookSelectorLoader(props) {
+export default function BookSelectorLoader(props: PropsFromOutside) {
     const books = useDataFromPromise(fetchAllBooks);
 
-    return books ? <BookSelector {...props} data={{books}} /> : <LoadingPlaceholder />;
+    return books ? (
+        <BookSelector {...props} data={{books}} />
+    ) : (
+        <LoadingPlaceholder />
+    );
 }

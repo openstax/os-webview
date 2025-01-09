@@ -28,7 +28,7 @@ function PastWebinar({data}: {data: Webinar}) {
     return (
         <div className='card past'>
             <h3>{data.title}</h3>
-            <Byline author={data.speakers} date={data.start} />
+            <Byline author={data.speakers} date={data.start.toDateString()} />
             <div>{data.description}</div>
             <LinkWithChevron href={data.registrationUrl}>
                 {data.registrationLinkText}

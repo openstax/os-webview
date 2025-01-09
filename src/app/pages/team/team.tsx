@@ -1,18 +1,31 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Hero from '~/components/hero/hero';
-import AccordionGroup from '~/components/accordion-group/accordion-group.js';
+import AccordionGroup from '~/components/accordion-group/accordion-group';
 import PeopleTab from './people-tab/people-tab';
 import {Tabs, Item} from '~/components/tablist/tablist';
 import './team.scss';
 
-function TeamPage({data: {
-    header: heroHeadline,
-    subheader: heroParagraph,
-    headerImageUrl: heroImage,
-    teamHeader,
-    openstaxPeople
-}}) {
+function TeamPage({
+    data: {
+        header: heroHeadline,
+        subheader: heroParagraph,
+        headerImageUrl: heroImage,
+        teamHeader,
+        openstaxPeople
+    }
+}: {
+    data: {
+        header: string;
+        subheader: string;
+        headerImageUrl: string;
+        teamHeader: string;
+        openstaxPeople: Array<{
+            heading: string;
+            people: unknown[];
+        }>;
+    };
+}) {
     const accordionItems = openstaxPeople.map((t, i) => ({
         title: t.heading,
         contentComponent: <PeopleTab data={t.people} key={i} />
@@ -33,14 +46,11 @@ function TeamPage({data: {
                 </div>
                 <div className="bigger-view">
                     <Tabs aria-label="Sub-teams">
-                        {
-                            accordionItems.map(
-                                (i) =>
-                                <Item key={i.title} title={i.title}>
-                                    {i.contentComponent}
-                                </Item>
-                            )
-                        }
+                        {accordionItems.map((i) => (
+                            <Item key={i.title} title={i.title}>
+                                {i.contentComponent}
+                            </Item>
+                        ))}
                     </Tabs>
                 </div>
             </section>

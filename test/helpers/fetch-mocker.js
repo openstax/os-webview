@@ -70,6 +70,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isFlags = args[0].includes('/flags');
     const isFooter = (/api\/footer/).test(args[0]);
     const isFormHeading = (/form-headings/).test(args[0]);
+    const isGiveBanner = args[0].endsWith('snippets/givebanner/');
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isKinetic = args[0].endsWith('kinetic/');
     const isHomepage = (/openstax-homepage/).test(args[0]);
@@ -134,6 +135,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = footerData;
             } else if (isFormHeading) {
                 payload = formHeadings;
+            } else if (isGiveBanner) {
+                payload = {};
             } else if (isHomepage) {
                 payload = openstaxHomepageData;
             } else if (isInstitutionalPartnership) {

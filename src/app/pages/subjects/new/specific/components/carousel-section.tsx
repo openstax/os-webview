@@ -14,7 +14,7 @@ export default function CarouselSection({
     minWidth: number;
 }>) {
     const {innerWidth} = useWindowContext();
-    const ref = React.useRef<{base: HTMLDivElement}>();
+    const ref = React.useRef<HTMLDivElement & {base: Element}>(null);
     const [atATime, setAtATime] = React.useState(1);
 
     React.useEffect(
