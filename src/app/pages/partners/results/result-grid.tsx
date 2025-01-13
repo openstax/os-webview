@@ -1,23 +1,13 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import type {PartnerEntry} from './results';
+import PartnerCard from '~/components/partner-card/partner-card';
 
-function modelFromEntry(entry: PartnerEntry) {
-    return {
-        type: entry.type,
-        title: entry.title,
-        logoUrl: entry.logoUrl,
-        description: entry.blurb,
-        tags: entry.tags,
-        badgeImage: '/dist/images/partners/verified-badge.svg'
-    };
-}
-
-function ResultCard({entry}: {entry: PartnerEntry}) {
-    const {type, title, logoUrl, tags} =
-        modelFromEntry(entry);
+export const badgeImage = '/dist/images/partners/verified-badge.svg';
+export function useOnSelect() {
     const navigate = useNavigate();
-    const onSelect = React.useCallback(
+
+    return React.useCallback(
         (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.preventDefault();
             const href = event.currentTarget.getAttribute('href');
@@ -26,27 +16,23 @@ function ResultCard({entry}: {entry: PartnerEntry}) {
         },
         [navigate]
     );
+}
+
+function ResultCard({entry}: {entry: PartnerEntry}) {
+    const {type, title, logoUrl, tags} = entry;
+    const onSelect = useOnSelect();
 
     return (
-        <a
+        <PartnerCard
+            type={type}
             href={`?${encodeURIComponent(title)}`}
-            type="button"
-            className="card"
+            title={title}
+            logoUrl={logoUrl}
+            tags={tags.map((t) => t.value).filter((v) => v !== null)}
             onClick={onSelect}
-            data-analytics-select-content={title}
-            data-content-type="Partner Profile"
-            data-content-tags={`,category=${type},`}
-        >
-            <div className="logo">
-                {logoUrl && <img src={logoUrl} alt="" />}
-            </div>
-            <div className="resource-title">{title}</div>
-            <div className="tags">
-                {tags.map(({value}) => (
-                    <div key={value}>{value}</div>
-                ))}
-            </div>
-        </a>
+            badgeImage={badgeImage}
+            analyticsContentType='Partner Profile'
+        />
     );
 }
 

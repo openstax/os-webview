@@ -31,7 +31,7 @@
         }
 
         .badge {
-            @extend %verified-badge;
+            @include verified-badge();
 
             align-self: start;
             grid-area: icon;

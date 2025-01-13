@@ -1,5 +1,6 @@
 import React from 'react';
-import ResultGrid from './result-grid';
+import ResultGrid, {badgeImage, useOnSelect} from './result-grid';
+import PartnerCard from '~/components/partner-card/partner-card';
 import useSearchContext from '../search-context';
 import partnerFeaturePromise from '~/models/salesforce-partners';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
@@ -211,11 +212,29 @@ function resultEntry(pd: PartnerData) {
 }
 
 function Sidebar({entries}: {entries: PartnerEntry[]}) {
+    const onSelect = useOnSelect();
+
     return (
         <div className="sidebar">
             <div className="sidebar-content">
                 <h2>Startups</h2>
-                <ResultGrid entries={entries} />
+                <ul className="no-bullets">
+                    {entries.map(({type, title, logoUrl, tags}) => (
+                        <li key={title}>
+                            <PartnerCard
+                                type={type}
+                                href={`?${encodeURIComponent(title)}`}
+                                title={title}
+                                logoUrl={logoUrl}
+                                tags={tags.map((t) => t.value).filter((v) => v !== null)}
+                                onClick={onSelect}
+                                badgeImage={badgeImage}
+                                analyticsContentType='Partner Profile'
+                            />
+                        </li>
+                    ))}
+                </ul>
+
             </div>
         </div>
     );

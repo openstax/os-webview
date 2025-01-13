@@ -5,7 +5,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-%verified-badge {
+@mixin verified-badge {
     align-items: center;
     color: text-color(white);
     display: grid;

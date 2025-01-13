@@ -27,7 +27,6 @@ function MainPage() {
 
     return (
         <React.Fragment>
-            <div>In the press</div>
             <section id='in-the-press'>
                 <Banner />
             </section>
