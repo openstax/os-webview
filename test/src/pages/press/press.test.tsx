@@ -25,7 +25,7 @@ describe('press page', () => {
                 <Press />
             </MemoryRouter>
         );
-        await screen.findByText('In the press');
+        await screen.findByRole('heading', {'level': 1, name: 'In the Press'});
         await waitFor(() => expect(document.title).toMatch('- OpenStax'));
         document.title = '';
     });
