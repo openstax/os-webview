@@ -26,7 +26,7 @@
         margin: 0;
     }
 
-    .grid {
+    @mixin partner-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
         grid-auto-rows: minmax(min-content, 100%);
@@ -43,74 +43,82 @@
         }
 
         .partner-card {
-            background-color: ui-color(white);
-            border-radius: 0.3rem;
-            box-shadow: $card-shadow;
-            color: inherit;
-            display: grid;
-            grid-row-gap: 1rem;
-            grid-template: 'image'  8rem
-            'title'
-            'tags' 1fr
-            'rating';
-            height: 100%;
-            padding: $normal-margin;
-            text-decoration: none;
+            @include partner-card();
+        }
+    }
 
-            .logo {
-                align-self: center;
-                grid-area: image;
-                justify-self: center;
+    @mixin partner-card {
+        background-color: ui-color(white);
+        border-radius: 0.3rem;
+        box-shadow: $card-shadow;
+        color: inherit;
+        display: grid;
+        grid-row-gap: 1rem;
+        grid-template: 'image'  8rem
+        'title'
+        'tags' 1fr
+        'rating';
+        height: 100%;
+        padding: $normal-margin;
+        text-decoration: none;
 
-                > img {
-                    max-height: 8rem;
-                    max-width: 100%;
-                }
-            }
+        .logo {
+            align-self: center;
+            grid-area: image;
+            justify-self: center;
 
-            .badge {
-                @extend %verified-badge;
-
-                align-self: start;
-                grid-area: image;
-                justify-self: end;
-                z-index: auto;
-            }
-
-            .resource-title {
-                @include set-font(h4);
-
-                font-weight: bold;
-                grid-area: title;
-                line-height: normal;
-            }
-
-            .tags,
-            .stars-and-count {
-                @include body-font(1.2rem);
-
-                color: text-color(helper);
-            }
-
-            .tags {
-                grid-area: tags;
-            }
-
-            .stars-and-count {
-                align-items: center;
-                grid-area: rating;
-                display: grid;
-                grid-auto-flow: column;
-                grid-column-gap: 0.7rem;
-                justify-content: left;
-
-                .stars {
-                    color: os-color(yellow);
-                    font-size: 75%;
-                    padding-bottom: 3%;
-                }
+            > img {
+                max-height: 8rem;
+                max-width: 100%;
             }
         }
+
+        .badge {
+            @include verified-badge();
+
+            align-self: start;
+            grid-area: image;
+            justify-self: end;
+            z-index: auto;
+        }
+
+        .resource-title {
+            @include set-font(h4);
+
+            font-weight: bold;
+            grid-area: title;
+            line-height: normal;
+        }
+
+        .tags,
+        .stars-and-count {
+            @include body-font(1.2rem);
+
+            color: text-color(helper);
+        }
+
+        .tags {
+            grid-area: tags;
+        }
+
+        .stars-and-count {
+            align-items: center;
+            grid-area: rating;
+            display: grid;
+            grid-auto-flow: column;
+            grid-column-gap: 0.7rem;
+            justify-content: left;
+
+            .stars {
+                color: os-color(yellow);
+                font-size: 75%;
+                padding-bottom: 3%;
+            }
+        }
+    }
+
+    .grid {
+        @include partner-grid;
     }
 
     .boxed {
@@ -137,6 +145,14 @@
                 display: flex;
                 flex-direction: column;
                 gap: $normal-margin;
+
+                ul {
+                    @include partner-grid();
+                }
+
+                li > a {
+                    @include partner-card();
+                }
             }
         }
 
@@ -161,6 +177,11 @@
 
                     ul {
                         padding: 0;
+                        margin: 0;
+
+                        li {
+                            border-bottom: thin solid ui-color(form-border);
+                        }
                     }
                 }
 

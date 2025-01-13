@@ -39,7 +39,7 @@
     }
 
     .badge {
-        @extend %verified-badge;
+        @include verified-badge();
 
         margin-top: 0.5rem;
         position: absolute;
