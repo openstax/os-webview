@@ -11,7 +11,7 @@ export default async function cmsFetch(path: string) {
     }
 }
 
-export async function cmsPost(path: string, payload: URLSearchParams, method='POST') {
+export async function cmsPost(path: string, payload: URLSearchParams, method: string) {
     const url = path.replace(/[^?]+/, urlFromSlug);
     const params = new window.URLSearchParams(payload);
     const qs = method.toLowerCase() === 'delete' ? `?${params}` : '';
