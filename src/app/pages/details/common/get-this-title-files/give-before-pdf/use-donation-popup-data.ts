@@ -17,10 +17,9 @@ export type DonationPopupData = {
 };
 
 export default function useDonationPopupData() {
-    // When useDataFromSlug moves to TS, we can make it type-generic
-    const data1 = useDataFromSlug('donations/donation-popup');
+    const data1 = useDataFromSlug<unknown[]>('donations/donation-popup');
     const data = React.useMemo(
-        () => (data1?.length > 0 ? data1[0] : {}),
+        () => data1 && (data1?.length > 0 ? data1[0] : {}),
         [data1]
     );
 

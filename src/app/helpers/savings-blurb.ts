@@ -1,6 +1,6 @@
 import useDetailsContext from '~/pages/details/context';
 
-function plugInto(container, id, value) {
+function plugInto(container: Element, id: string, value: string) {
     const el = container.querySelector(`#${id}`);
 
     if (el) {

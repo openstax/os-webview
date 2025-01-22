@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import userModel from '~/models/usermodel';
-import {useErrataDetail} from '~/helpers/errata';
+import {useErrataDetail, Errata} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
@@ -60,7 +60,7 @@ function SubmitAgainButton({detail}: {detail: {bookTitle: string}}) {
     );
 }
 
-function BelowHeader({text, data}: {text: string; data?: object}) {
+function BelowHeader({text, data}: {text: string; data?: Errata}) {
     const detail = useErrataDetail(data);
 
     return (
@@ -99,7 +99,7 @@ function ErrataButtonsAndDetail({
     text: string;
 }) {
     const slug = `errata/${errataId}`;
-    const data = camelCaseKeys(useDataFromSlug(slug));
+    const data = camelCaseKeys(useDataFromSlug(slug)) as Errata;
 
     return (
         <React.Fragment>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
+import {fetchFromCMS, camelCaseKeys, Json} from '~/helpers/page-data-utils';
 import type {LocaleEntry} from '~/components/language-selector/language-selector';
 
 export type Data = {
@@ -27,7 +27,7 @@ async function replaceImageNumbersWithImageData(data: Data) {
 async function fetchDataAndExpandImages(
     slug: string,
     preserveWrapping: boolean
-): Promise<Data> {
+): Promise<Json> {
     const data = await fetchFromCMS(slug, preserveWrapping);
 
     await replaceImageNumbersWithImageData(data);
@@ -40,11 +40,11 @@ export function fetchPageData<T>(
     preserveWrapping: boolean,
     noCamelCase: boolean
 ): Promise<T> {
-    const camelCaseOrNot = noCamelCase ? (obj: object) => obj : camelCaseKeys;
+    const camelCaseOrNot = noCamelCase ? (obj: unknown) => obj : camelCaseKeys;
 
     return fetchDataAndExpandImages(slug, preserveWrapping).then(
         camelCaseOrNot
-    );
+    ) as Promise<T>;
 }
 
 export default function usePageData<T>(

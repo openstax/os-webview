@@ -6,6 +6,11 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import useLatestBlogEntries from '~/models/blog-entries';
 import useData from '~/helpers/use-data';
 
+type Meta = {
+    slug: string;
+    searchDescription: string;
+}
+
 type NewsPageData = {
     title: string;
     interestBlock: {
@@ -16,10 +21,7 @@ type NewsPageData = {
     footerText: string;
     footerButtonText: string;
     footerLink: string;
-    meta: {
-        slug: string;
-        searchDescription: string;
-    };
+    meta: Meta;
     displayFooter: boolean;
 };
 
@@ -45,6 +47,7 @@ export type ArticleSummary = {
     date: string;
     heading: string;
     id: number;
+    meta: Meta;
     pinToTop: boolean;
     searchDescription: string;
     seoTitle: string;
@@ -109,9 +112,9 @@ function useTopicStories() {
         }
         return `search/?collection=${topic}`;
     }, [topic, topicType]);
-    const topicStories: ArticleSummary[] = camelCaseKeys(
+    const topicStories = camelCaseKeys(
         useDataFromSlug(slug) || []
-    );
+    ) as ArticleSummary [];
 
     // Until search returns the heading field
     topicStories.forEach((s) => {
@@ -149,7 +152,7 @@ function useContextValue({
     const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} =
         useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
-    const pinnedStory = topicFeatured || (pinnedData && pinnedData[0]);
+    const pinnedStory = topicFeatured || pinnedData?.[0] as ArticleSummary;
     const totalCount = pinnedData?.totalCount;
     const subjectSnippet = useEnglishSubjects();
     const collectionSnippet = useCollections();

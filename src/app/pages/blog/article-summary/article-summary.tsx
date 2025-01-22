@@ -20,7 +20,7 @@ type ArticleSubjectVariant =
           value: {subject: SubjectEntry}[];
       };
 
-type BlurbData =
+export type BlurbData =
     | null
     | (Omit<BlurbDataBase, 'collections' | 'articleSubjects'> & {
           meta?: {slug: string};

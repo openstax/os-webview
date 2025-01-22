@@ -2,16 +2,24 @@ import React from 'react';
 import bookPromise from '~/models/book-titles';
 import urlFromSlug from './url-from-slug';
 
-export function transformData(data) {
-    Reflect.ownKeys(data).forEach((prop) => {
+type TypeAndValue = {
+    type: string;
+    value: string;
+};
+
+export type Json = boolean | string | number | null | Json[] | {[key: string]: Json}
+
+export function transformData(data: Record<string, Json>) {
+    Object.keys(data).forEach((prop) => {
         if (Array.isArray(data[prop])) {
-            const arr = data[prop];
-            const contentItem = arr.filter((e) => e.type === 'content').length === 1;
+            const arr = data[prop] as TypeAndValue[];
+            const contentItem =
+                arr.filter((e) => e.type === 'content').length === 1;
 
             if (contentItem) {
                 data[prop] = {};
                 arr.forEach((v) => {
-                    data[prop][v.type] = v.value;
+                    (data[prop] as Record<string, string>)[v.type] = v.value;
                 });
             } else {
                 data[prop] = arr.map((item) => {
@@ -27,20 +35,24 @@ export function transformData(data) {
     return data;
 }
 
-const draftParams = new window.URLSearchParams(window.location.search).has('preview')
+const draftParams = new window.URLSearchParams(window.location.search).has(
+    'preview'
+)
     ? `&draft=${Date.now()}`
     : '';
 
-export async function getUrlFor(initialSlug) {
+export async function getUrlFor(initialSlug: string) {
     let apiUrl = urlFromSlug(initialSlug);
 
     // A little magic to handle book titles
     if (initialSlug.startsWith('books/')) {
-        const strippedSlug = initialSlug.substr(6);
+        const strippedSlug = initialSlug.substring(6);
 
         if (strippedSlug) {
             const bookList = await bookPromise;
-            const bookEntry = bookList.find((e) => e.meta.slug === strippedSlug);
+            const bookEntry = bookList.find(
+                (e) => e.meta.slug === strippedSlug
+            );
 
             if (bookEntry) {
                 apiUrl = bookEntry.meta.detail_url;
@@ -48,31 +60,33 @@ export async function getUrlFor(initialSlug) {
         }
     }
 
-    const qsChar = ((/\?/).test(apiUrl)) ? '&' : '?';
+    const qsChar = (/\?/).test(apiUrl) ? '&' : '?';
 
     return `${apiUrl}${qsChar}format=json${draftParams}`;
 }
 
-function camelCase(underscored) {
-    return underscored.replace(/_+([a-z0-9])/g, (_, chr) => chr ? chr.toUpperCase() : '');
+function camelCase(underscored: string) {
+    return underscored.replace(/_+([a-z0-9])/g, (_, chr: string) =>
+        chr ? chr.toUpperCase() : ''
+    );
 }
 
-export function camelCaseKeys(obj) {
+export function camelCaseKeys(obj?: Json): Json | undefined {
     if (!(obj instanceof Object)) {
         return obj;
     }
 
     if (obj instanceof Array) {
-        return obj.map((v) => camelCaseKeys(v));
+        return (obj).map((v) => camelCaseKeys(v)) as Json;
     }
 
-    return Reflect.ownKeys(obj).reduce((result, k) => {
-        result[camelCase(k)] = camelCaseKeys(obj[k]);
+    return Object.keys(obj).reduce((result, k) => {
+        result[camelCase(k)] = camelCaseKeys((obj)[k]) as Json;
         return result;
-    }, {});
+    }, {} as Record<string, Json>);
 }
 
-export async function fetchFromCMS(slug, preserveWrapping=false) {
+export async function fetchFromCMS(slug: string, preserveWrapping = false) {
     const apiUrl = await getUrlFor(slug);
     let data;
 
@@ -90,12 +104,15 @@ export async function fetchFromCMS(slug, preserveWrapping=false) {
     }
 
     data.slug = slug;
-    return (preserveWrapping || data.error) ? data : transformData(data);
+    return preserveWrapping || data.error ? data : transformData(data);
 }
 
-export function useTextFromSlug(slug) {
-    const [text, setText] = React.useState();
-    const [head, setHead] = React.useState();
+export function useTextFromSlug(slug: string) {
+    const [text, setText] = React.useState<string | Error>();
+    const [head, setHead] = React.useState<{
+        title?: string | null;
+        description?: string | null;
+    }>();
 
     React.useEffect(() => {
         const url = urlFromSlug(slug);
@@ -105,16 +122,24 @@ export function useTextFromSlug(slug) {
                 if (r?.ok) {
                     r.text().then((pageHtml) => {
                         const parser = new window.DOMParser();
-                        const newDoc = parser.parseFromString(pageHtml, 'text/html');
+                        const newDoc = parser.parseFromString(
+                            pageHtml,
+                            'text/html'
+                        );
 
                         setText(newDoc.body.innerHTML);
                         setHead({
-                            title: newDoc.head.querySelector('title')?.textContent,
-                            description: newDoc.head.querySelector('[name="description"]')?.getAttribute('content')
+                            title: newDoc.head.querySelector('title')
+                                ?.textContent,
+                            description: newDoc.head
+                                .querySelector('[name="description"]')
+                                ?.getAttribute('content')
                         });
                     });
                 } else {
-                    setText(new Error(r?.statusText || `Failed to load ${slug}`));
+                    setText(
+                        new Error(r?.statusText || `Failed to load ${slug}`)
+                    );
                 }
             })
             .catch((err) => setText(err));
@@ -123,8 +148,11 @@ export function useTextFromSlug(slug) {
     return {head, text};
 }
 
-export function useDataFromPromise(promise, defaultValue) {
-    const [data, setData] = React.useState(defaultValue);
+export function useDataFromPromise<T = Json>(
+    promise: Promise<T> | null,
+    defaultValue?: T
+) {
+    const [data, setData] = React.useState<T | null | undefined>(defaultValue);
 
     React.useEffect(() => {
         if (promise) {
@@ -137,11 +165,11 @@ export function useDataFromPromise(promise, defaultValue) {
     return data;
 }
 
-export function useDataFromSlug(slug, preserveWrapping=false) {
+export function useDataFromSlug<T = Json>(slug: string | null, preserveWrapping = false) {
     const promise = React.useMemo(
-        () => slug ? fetchFromCMS(slug, preserveWrapping) : null,
+        () => (slug ? fetchFromCMS(slug, preserveWrapping) : null),
         [slug, preserveWrapping]
     );
 
-    return useDataFromPromise(promise);
+    return useDataFromPromise<T>(promise);
 }

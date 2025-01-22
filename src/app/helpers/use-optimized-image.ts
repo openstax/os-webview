@@ -1,7 +1,7 @@
 const distributionUrl = 'https://images.openstax.org';
 const version = 'v1';
 
-export default function useOptimizedImage(src, maxDim) {
+export default function useOptimizedImage(src: string, maxDim?: number) {
     if (!src) {
         return src;
     }

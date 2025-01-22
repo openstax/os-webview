@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
-import GetThisTitle from '~/pages/details/common/get-this-title';
+import GetThisTitle, {Model} from '~/pages/details/common/get-this-title';
 import {TOCContextProvider} from '~/pages/details/common/toc-slideout/context';
 import BookDetailsLoader from '../book-details-context';
 import * as UDH from '~/helpers/use-document-head';
@@ -10,9 +10,9 @@ import * as TL from '~/pages/details/common/track-link';
 import * as UC from '~/contexts/user';
 // College algebra book details
 import details from '../../../data/details-college-algebra';
-import {transformData, camelCaseKeys} from '~/helpers/page-data-utils';
+import {transformData, camelCaseKeys, Json} from '~/helpers/page-data-utils';
 
-const baseModel = camelCaseKeys(transformData(details));
+const baseModel = camelCaseKeys(transformData(details as unknown as Record<string, Json>)) as Model;
 
 function GTTinContext({model = baseModel}) {
     return (

@@ -53,7 +53,9 @@ describe('use-link-handler', () => {
         expect(notPrevented).toBeCalledWith(true);
     });
     it('short-circuits if not left mouse button', () => {
-        jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue(true);
+        const el = document.createElement('a');
+
+        jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue(el);
 
         render(<Component />);
         fireEvent(
@@ -62,12 +64,13 @@ describe('use-link-handler', () => {
                 button: 3
             })
         );
-        expect(notPrevented).toBeCalledWith(true);
+        expect(notPrevented).toBeCalledWith(el);
     });
     it('goes on when left click on valid URL', async () => {
         const navigate = jest.fn();
+        const el = document.createElement('a');
 
-        jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue(true);
+        jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue(el);
         jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
             'whatever'
         );
@@ -93,7 +96,7 @@ describe('use-link-handler', () => {
             href: 'clickHref',
             dataset: {},
             trackingInfo: {payload: 'junk'}
-        });
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
         jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
             'whatever'
         );
@@ -112,7 +115,7 @@ describe('use-link-handler', () => {
             href: 'clickHref',
             dataset: {local: 'true'},
             preventDefault() {return;}
-        });
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
         jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
             'whatever'
         );
@@ -132,7 +135,7 @@ describe('use-link-handler', () => {
             href: 'clickHref',
             dataset: {},
             preventDefault() {return;}
-        });
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
         jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
             'whatever'
         );
@@ -153,7 +156,7 @@ describe('use-link-handler', () => {
             href: 'clickHref',
             preventDefault() {return;},
             dataset: {}
-        });
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
         jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
             'whatever'
         );
@@ -173,7 +176,7 @@ describe('use-link-handler', () => {
             href: 'clickHref',
             preventDefault() {return;},
             dataset: {}
-        });
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
         jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
             'whatever'
         );

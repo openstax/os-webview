@@ -3,7 +3,8 @@ import {useLocation} from 'react-router-dom';
 import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
 import {
     blurbModel,
-    PopulatedBlurbModel
+    PopulatedBlurbModel,
+    BlurbData
 } from '../article-summary/article-summary';
 import uniqBy from 'lodash/uniqBy';
 
@@ -22,7 +23,7 @@ export default function useAllArticles() {
             const articles = uniqBy(results, 'id').map((data) => {
                 data.heading = data.title;
                 data.subheading = '';
-                return blurbModel(camelCaseKeys(data)) as PopulatedBlurbModel;
+                return blurbModel(camelCaseKeys(data) as BlurbData) as PopulatedBlurbModel;
             });
 
             setAllArticles(articles);

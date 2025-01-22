@@ -8,12 +8,16 @@ userModel.load().then((i) => {
     userInfo = i;
 });
 
+// eslint-disable-next-line complexity
 export default function trackLink(event: TrackedMouseEvent, id?: string) {
     const el = linkhelper.validUrlClick(event);
-    const isResource = el.dataset?.variant === 'resource';
+
+    if (!el) {return;}
+
+    const isResource = el.dataset.variant === 'resource';
     const trackThis =
         userInfo?.accounts_id &&
-        el?.dataset?.track &&
+        el.dataset.track &&
         id;
 
     if (trackThis) {

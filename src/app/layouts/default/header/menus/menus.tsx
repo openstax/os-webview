@@ -32,7 +32,7 @@ export default function Menus() {
     );
 
     React.useEffect(() => {
-        const tabListener = trapTab(ref.current);
+        const tabListener = trapTab(ref.current as Element);
 
         if (active) {
             document.addEventListener('keydown', tabListener, true);

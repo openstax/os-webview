@@ -1,8 +1,8 @@
-export function treatKeydownAsClick(event, keyList) {
+export function treatKeydownAsClick(event: React.KeyboardEvent, keyList: string[]) {
     if (keyList.includes(event.key)) {
-        const saveActiveElement = document.activeElement;
+        const saveActiveElement = document.activeElement as HTMLElement;
 
-        event.target.dispatchEvent(new window.MouseEvent('click', {
+        event.target?.dispatchEvent(new window.MouseEvent('click', {
             'view': window,
             'bubbles': true,
             'cancelable': true
@@ -13,6 +13,6 @@ export function treatKeydownAsClick(event, keyList) {
     }
 }
 
-export function treatSpaceOrEnterAsClick(event) {
+export function treatSpaceOrEnterAsClick(event: React.KeyboardEvent) {
     treatKeydownAsClick(event, ['Enter', ' ']);
 }

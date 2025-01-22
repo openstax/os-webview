@@ -1,16 +1,46 @@
 import {useState, useEffect} from 'react';
-import bookPromise from '~/models/book-titles';
+import bookPromise, {Item} from '~/models/book-titles';
+
+export type Errata = {
+    id: number;
+    status: string;
+    resolution: string;
+    created: string;
+    book: Item['id'];
+    location?: string;
+    additionalLocationInformation?: string;
+    resource: string;
+    resourceOther: string;
+    errorType: unknown;
+    detail: unknown;
+    resolutionNotes: string;
+};
+
+type Detail = Pick<
+    Errata,
+    'id' | 'status' | 'errorType' | 'detail' | 'resolutionNotes'
+> & {
+    bookTitle: Item['title'];
+    source: string;
+    location: string;
+    date: string;
+};
 
 // eslint-disable-next-line complexity
-export function approvedStatuses(created) {
+export function approvedStatuses(created: string) {
     const posted = new Date(created);
     const m = posted.getMonth();
     const y = posted.getFullYear();
     const correctionYear = m < 2 ? y : y + 1;
     const postedSpring = m > 10 || m < 2;
-    const correctionSeason = `${postedSpring ? 'Fall' : 'Spring'} ${correctionYear}`;
-    const correctionDate = new Date(`${correctionYear}/${postedSpring ? 11 : 3}/1`);
-    const barStatus = Date.now() > correctionDate ? 'Corrected' : 'Will correct';
+    const correctionSeason = `${
+        postedSpring ? 'Fall' : 'Spring'
+    } ${correctionYear}`;
+    const correctionDate = new Date(
+        `${correctionYear}/${postedSpring ? 11 : 3}/1`
+    );
+    const barStatus =
+        Date.now() > correctionDate.getTime() ? 'Corrected' : 'Will correct';
 
     return {
         status: `${barStatus} ${correctionSeason}`,
@@ -19,7 +49,7 @@ export function approvedStatuses(created) {
 }
 
 // eslint-disable-next-line complexity
-export function getDisplayStatus(data) {
+export function getDisplayStatus(data: Errata) {
     const result = {
         status: 'Reviewed',
         barStatus: ''
@@ -41,14 +71,14 @@ export function getDisplayStatus(data) {
     return result;
 }
 
-export function shouldShowDecisionDetails(data) {
+export function shouldShowDecisionDetails(data: Errata) {
     const {status, barStatus} = getDisplayStatus(data);
 
     return barStatus || status === 'Will Correct';
 }
 
-export function useErrataDetail(data={}) {
-    const [detail, setDetail] = useState();
+export function useErrataDetail(data = {} as Errata) {
+    const [detail, setDetail] = useState<Detail>();
 
     useEffect(() => {
         bookPromise.then((bookList) => {
@@ -57,13 +87,17 @@ export function useErrataDetail(data={}) {
             }
             const entry = bookList.find((info) => info.id === data.book);
             const location = [data.location, data.additionalLocationInformation]
-                .filter((info) => info).join('; ');
+                .filter((info) => info)
+                .join('; ');
+            const source = data.resource === 'Other'
+                ? data.resourceOther
+                : data.resource;
 
             setDetail({
                 id: data.id,
-                bookTitle: entry.title,
-                source: data.resource === 'Other' ? data.resourceOther : data.resource,
                 status: data.status,
+                bookTitle: entry?.title ?? '',
+                source,
                 errorType: data.errorType,
                 location,
                 detail: data.detail,

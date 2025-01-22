@@ -1,6 +1,6 @@
 // Universal data fetcher/processor to replace the various data-fetching hooks, I hope
 import React from 'react';
-import {getUrlFor, camelCaseKeys, transformData} from './page-data-utils';
+import {getUrlFor, camelCaseKeys, transformData, Json} from './page-data-utils';
 
 // Any Promise returned by fetch, or a CMS endpoint reference
 // we can use to make such a Promise
@@ -48,8 +48,10 @@ export default function useFetchedData<T>(
     );
     const processedPromise = React.useMemo(
         () =>
-            promise ? promise.then((resp) => resp[resolveTo]())
-                .then((rawData) => processRawData<T>(rawData, options))
+            promise
+                ? promise
+                      .then((resp) => resp[resolveTo]())
+                      .then((rawData) => processRawData<T>(rawData, options))
                 : Promise.resolve(defaultValue),
         [promise, resolveTo] // eslint-disable-line react-hooks/exhaustive-deps
     );
@@ -69,22 +71,22 @@ export function usePromise<T>(promise: Promise<T>, defaultValue: T) {
 }
 
 function processRawData<T>(
-    rawData: unknown,
+    rawData: Json,
     processing: Omit<ProcessingOptions, 'resolveTo'>
 ): T {
     let returnValue = rawData;
 
     if (processing.transform) {
         // mutates
-        transformData(rawData);
+        transformData(rawData as object as Record<string, Json>);
     }
     if (processing.camelCase) {
-        returnValue = camelCaseKeys(rawData);
+        returnValue = camelCaseKeys(rawData) as Json;
     }
-    if (processing.postProcess) {
-        returnValue = (returnValue as Array<unknown>).map(
+    if (processing.postProcess && returnValue instanceof Array) {
+        returnValue = returnValue.map(
             processing.postProcess
-        );
+        ) as unknown as Json;
     }
 
     return returnValue as T;

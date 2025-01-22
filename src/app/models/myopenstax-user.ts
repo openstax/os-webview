@@ -12,15 +12,29 @@ const INITIAL_STATE = {
     }
 };
 
+type OSUser = {
+    error?: string;
+    contact?: {
+        firstName: string;
+        lastName: string;
+        createdAt: string;
+        salesforceId: string;
+    };
+}
+
 async function fetchUser() {
     const user = await sfApiFetch('users');
 
-    return camelCaseKeys({...INITIAL_STATE, ...user});
+    return camelCaseKeys({...INITIAL_STATE, ...user}) as OSUser;
 }
 
-export default function useMyOpenStaxUser(isVerified, fetchTime) {
-    const [user, setUser] = React.useState({error: 'not loaded'});
-    const {flags: {my_openstax: isEnabled}} = useSharedDataContext();
+export default function useMyOpenStaxUser(isVerified: boolean, fetchTime: unknown) {
+    const [user, setUser] = React.useState<OSUser>({error: 'not loaded'});
+    const {flags: {my_openstax: isEnabled}} = useSharedDataContext() as unknown as {
+        flags: {
+            my_openstax: boolean
+        }
+    };
 
     React.useEffect(() => {
         if (isEnabled) {
