@@ -1,4 +1,4 @@
-import windowWithSettings from './window-settings';
+import type {WindowWithSettings} from './window-settings';
 
 const EXTERNAL = /^([a-z]+:)/;
 const ABSOLUTE_OPENSTAX = new RegExp(
@@ -74,8 +74,9 @@ function loginOrOutLink(loginOrLogout: 'login' | 'logout') {
     const encodedLocation = encodeURIComponent(
         decodeURIComponent(window.location.href)
     );
+    const w = window as WindowWithSettings;
 
-    return `${windowWithSettings.SETTINGS.accountHref}/${loginOrLogout}/?r=${encodedLocation}`;
+    return `${w.SETTINGS.accountHref}/${loginOrLogout}/?r=${encodedLocation}`;
 }
 
 function loginLink() {

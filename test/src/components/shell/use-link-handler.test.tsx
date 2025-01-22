@@ -64,7 +64,7 @@ describe('use-link-handler', () => {
                 button: 3
             })
         );
-        expect(notPrevented).toBeCalledWith(el);
+        expect(notPrevented).toBeCalledWith(true);
     });
     it('goes on when left click on valid URL', async () => {
         const navigate = jest.fn();

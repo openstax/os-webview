@@ -1,4 +1,4 @@
-type WindowWithSettings = typeof window & {
+export type WindowWithSettings = typeof window & {
     SETTINGS: {
         accountHref: string;
         gatedContentEndpoint: string;
