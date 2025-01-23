@@ -49,7 +49,7 @@ export function approvedStatuses(created: string) {
 }
 
 // eslint-disable-next-line complexity
-export function getDisplayStatus(data: Errata) {
+export function getDisplayStatus(data?: Errata) {
     const result = {
         status: 'Reviewed',
         barStatus: ''
