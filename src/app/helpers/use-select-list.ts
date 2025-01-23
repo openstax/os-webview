@@ -11,7 +11,7 @@ export default function useSelectList({
         label: string;
     }[];
     accept: (item: unknown) => void;
-    cancel: () => void;
+    cancel?: () => void;
     minActiveIndex?: number;
     searchable?: boolean;
 }) {
