@@ -7,7 +7,13 @@ type TypeAndValue = {
     value: string;
 };
 
-export type Json = boolean | string | number | null | Json[] | {[key: string]: Json}
+export type Json =
+    | boolean
+    | string
+    | number
+    | null
+    | Json[]
+    | {[key: string]: Json};
 
 export function transformData(data: Record<string, Json>) {
     Object.keys(data).forEach((prop) => {
@@ -35,39 +41,31 @@ export function transformData(data: Record<string, Json>) {
     return data;
 }
 
-const draftParams = new window.URLSearchParams(window.location.search).has(
-    'preview'
-)
-    ? `&draft=${Date.now()}`
-    : '';
-
 export async function getUrlFor(initialSlug: string) {
     let apiUrl = urlFromSlug(initialSlug);
 
     // A little magic to handle book titles
-    if (initialSlug.startsWith('books/')) {
+    if (initialSlug.startsWith('books/') && initialSlug.length > 6) {
         const strippedSlug = initialSlug.substring(6);
 
-        if (strippedSlug) {
-            const bookList = await bookPromise;
-            const bookEntry = bookList.find(
-                (e) => e.meta.slug === strippedSlug
-            );
+        const bookList = await bookPromise;
+        const bookEntry = bookList.find(
+            (e) => e.meta.slug === strippedSlug
+        );
 
-            if (bookEntry) {
-                apiUrl = bookEntry.meta.detail_url;
-            }
+        if (bookEntry) {
+            apiUrl = bookEntry.meta.detail_url;
         }
     }
 
     const qsChar = (/\?/).test(apiUrl) ? '&' : '?';
 
-    return `${apiUrl}${qsChar}format=json${draftParams}`;
+    return `${apiUrl}${qsChar}format=json`;
 }
 
 function camelCase(underscored: string) {
     return underscored.replace(/_+([a-z0-9])/g, (_, chr: string) =>
-        chr ? chr.toUpperCase() : ''
+        chr.toUpperCase()
     );
 }
 
@@ -77,11 +75,11 @@ export function camelCaseKeys(obj?: Json): Json | undefined {
     }
 
     if (obj instanceof Array) {
-        return (obj).map((v) => camelCaseKeys(v)) as Json;
+        return obj.map((v) => camelCaseKeys(v)) as Json;
     }
 
     return Object.keys(obj).reduce((result, k) => {
-        result[camelCase(k)] = camelCaseKeys((obj)[k]) as Json;
+        result[camelCase(k)] = camelCaseKeys(obj[k]) as Json;
         return result;
     }, {} as Record<string, Json>);
 }
@@ -117,6 +115,7 @@ export function useTextFromSlug(slug: string) {
     React.useEffect(() => {
         const url = urlFromSlug(slug);
 
+        console.info('Fetching from', url);
         fetch(url)
             .then((r) => {
                 if (r?.ok) {
@@ -165,7 +164,10 @@ export function useDataFromPromise<T = Json>(
     return data;
 }
 
-export function useDataFromSlug<T = Json>(slug: string | null, preserveWrapping = false) {
+export function useDataFromSlug<T = Json>(
+    slug: string | null,
+    preserveWrapping = false
+) {
     const promise = React.useMemo(
         () => (slug ? fetchFromCMS(slug, preserveWrapping) : null),
         [slug, preserveWrapping]

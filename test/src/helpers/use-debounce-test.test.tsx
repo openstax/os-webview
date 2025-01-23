@@ -12,12 +12,9 @@ function Component({testValue}: {testValue: boolean}) {
 function Component2() {
     const [tv, setTv] = React.useState(true);
 
-    React.useEffect(
-        () => {
-            setTimeout(() => setTv(false), 10);
-        },
-        []
-    );
+    React.useEffect(() => {
+        setTimeout(() => setTv(false), 10);
+    }, []);
 
     return <Component testValue={tv} />;
 }
