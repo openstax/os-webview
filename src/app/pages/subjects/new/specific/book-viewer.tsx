@@ -1,7 +1,6 @@
 import React from 'react';
 import useSpecificSubjectContext, {CategoryData} from './context';
 import BookTile from '~/components/book-tile/book-tile';
-import {ActiveElementContextProvider} from '~/contexts/active-element';
 import {useLocation} from 'react-router-dom';
 import throttle from 'lodash/throttle';
 import './book-viewer.scss';
@@ -57,14 +56,12 @@ export default function BookViewer() {
     const {categories} = useSpecificSubjectContext();
 
     return (
-        <ActiveElementContextProvider>
-            <section className="book-viewer">
-                <div className="content">
-                    {categories.map((c) => (
-                        <Category key={c[0]} category={c} />
-                    ))}
-                </div>
-            </section>
-        </ActiveElementContextProvider>
+        <section className="book-viewer">
+            <div className="content">
+                {categories.map((c) => (
+                    <Category key={c[0]} category={c} />
+                ))}
+            </div>
+        </section>
     );
 }

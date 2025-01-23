@@ -22,7 +22,11 @@ export type Category = {
 
 function dataToEntry(item: InputItem): Category {
     const name = item.name;
-    const value = name.toLowerCase().replace(' ', '-').normalize('NFD').replace(/\p{Diacritic}/gu, '');
+    const value = name
+        .toLowerCase()
+        .replace(' ', '-')
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '');
 
     return {
         value,
@@ -47,7 +51,11 @@ function useSubjectCategoriesForLocale(locale: string): ContextValues {
     const intl = useIntl();
 
     useEffect(() => {
-        const viewAllEntry = {value: 'view-all', cms: '', html: intl.formatMessage({id: 'viewAll'})};
+        const viewAllEntry = {
+            value: 'view-all',
+            cms: '',
+            html: intl.formatMessage({id: 'viewAll'})
+        };
 
         // Empty the language-incompatible entries right away
         setValue([]);

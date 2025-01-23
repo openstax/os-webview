@@ -175,7 +175,7 @@ const throttledLoginCheck = throttle((setData) => {
 }, 20000);
 
 function useUserModel() {
-    const [data, setData] = useState();
+    const [data, setData] = useState({});
 
     useEffect(() => {
         const check = () => throttledLoginCheck(setData);

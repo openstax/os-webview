@@ -3,15 +3,15 @@ import buildContext from '~/components/jsx-helpers/build-context';
 
 function useContextValue() {
     const [stickyCount, setSticky] = React.useReducer(
-        (s, a) => a ? s + 1 : s - 1,
+        (s: number, a: boolean) => (a ? s + 1 : s - 1),
         0
     );
     const stickyClass = React.useMemo(
-        () => stickyCount > 0 ? 'with-sticky' : '',
+        () => (stickyCount > 0 ? 'with-sticky' : ''),
         [stickyCount]
     );
     const [modalClass, setModal] = React.useReducer(
-        (s, a) => a ? 'with-modal' : '',
+        (s: string, a: boolean) => (a ? 'with-modal' : ''),
         ''
     );
     const classes = React.useMemo(
@@ -19,23 +19,15 @@ function useContextValue() {
         [stickyClass, modalClass]
     );
 
-    React.useEffect(
-        () => {
-            const bodyClasses = document.body.classList;
+    React.useEffect(() => {
+        const bodyClasses = document.body.classList;
 
-            if (bodyClasses) {
-                bodyClasses[modalClass === 'with-modal' ? 'add' : 'remove']();
-            }
-        },
-        [modalClass]
-    );
+        bodyClasses[modalClass === 'with-modal' ? 'add' : 'remove']('with-modal');
+    }, [modalClass]);
 
     return {classes, setSticky, setModal};
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as MainClassContextProvider
-};
+export {useContext as default, ContextProvider as MainClassContextProvider};
