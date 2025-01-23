@@ -4,7 +4,7 @@ const focusableItems = [
     '[href]', '[tabindex]:not([tabindex="-1"])'
 ]).join(',');
 
-export default function trapTab(el: Element) {
+export default function trapTab(el: Element | null) {
     // eslint-disable-next-line complexity
     return (event: KeyboardEvent) => {
         if (event.key !== 'Tab' || !el) {

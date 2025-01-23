@@ -6,7 +6,7 @@ import Logo from './logo/logo';
 import MainMenu, {MainMenuItems} from './main-menu/main-menu';
 import {useToggle} from '~/helpers/data';
 import cn from 'classnames';
-import trapTab from '~/helpers/trapTab';
+import trapTab from '~/helpers/trap-tab';
 import './menus.scss';
 import { treatSpaceOrEnterAsClick } from '~/helpers/events';
 
@@ -32,7 +32,7 @@ export default function Menus() {
     );
 
     React.useEffect(() => {
-        const tabListener = trapTab(ref.current as Element);
+        const tabListener = trapTab(ref.current);
 
         if (active) {
             document.addEventListener('keydown', tabListener, true);
