@@ -12,7 +12,7 @@ import * as UC from '~/contexts/user';
 import details from '../../../data/details-college-algebra';
 import {transformData, camelCaseKeys, Json} from '~/helpers/page-data-utils';
 
-const baseModel = camelCaseKeys(transformData(details as unknown as Record<string, Json>)) as Model;
+const baseModel = camelCaseKeys(transformData(details as Record<string, Json>)) as Model;
 
 function GTTinContext({model = baseModel}) {
     return (

@@ -73,5 +73,5 @@ export default function useSelectList({
         return handled;
     }
 
-    return [activeIndex, handleKeyDown, setActiveIndex];
+    return [activeIndex, handleKeyDown, setActiveIndex] as const;
 }

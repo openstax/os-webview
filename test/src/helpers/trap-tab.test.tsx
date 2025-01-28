@@ -30,7 +30,7 @@ describe('trap-tab', () => {
 
         expect(() => handler(tabPressEvent)).not.toThrow();
     });
-    it('ignores event if there are no focusable element', () => {
+    it('ignores event if there are no focusable elements', () => {
         render(<div id="no-elements" />);
         const handler = trapTab(document.getElementById('no-elements'));
 

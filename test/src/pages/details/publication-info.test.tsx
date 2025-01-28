@@ -19,7 +19,7 @@ function WrappedPublicationInfo({additionalItems = {}, polish = false}) {
 }
 
 const mockUseDetailsContext = jest.spyOn(DC, 'default');
-const ccBookData = camelCaseKeys(bookData as object as Json) as object;
+const ccBookData = camelCaseKeys(bookData as Json) as object;
 const mockRexRelease = jest.fn();
 
 jest.mock('~/models/rex-release', () => ({
