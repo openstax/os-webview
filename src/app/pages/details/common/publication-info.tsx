@@ -219,8 +219,8 @@ export default function PublicationInfo({url, polish}: {
     const [pub, web, hard, paper, dig] = [
         intl.formatMessage({id: 'pubInfo.pub.pub'}),
         intl.formatMessage({id: 'pubInfo.pub.web'}),
-        intl.formatMessage({id: 'pubInfo.pub.hard'}),
-        intl.formatMessage({id: 'pubInfo.pub.paper'}),
+        intl.formatMessage({id: 'pubInfo.pub.color'}),
+        intl.formatMessage({id: 'pubInfo.pub.b-w'}),
         intl.formatMessage({id: 'pubInfo.pub.dig'})
     ];
     const iBooksLabel =
