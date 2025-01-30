@@ -44,8 +44,8 @@ describe('details/common/publication-info', () => {
     test('Shows publication dates', async () => {
         render(<WrappedPublicationInfo />);
         await screen.findByText('Publish Date:');
-        screen.getByText('Hardcover:');
-        screen.getByText('Paperback:');
+        screen.getByText('Color:');
+        screen.getByText('Black and White:');
         expect(screen.queryAllByText('iBooks', {exact: false})).toHaveLength(0);
         screen.getByText('Web Version Last Updated:');
     });
