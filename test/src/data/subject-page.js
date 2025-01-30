@@ -1795,7 +1795,7 @@ webview_rex_link: "https://staging.openstax.org/books/psychology-2e/pages/1-intr
 bookshare_link: "",
 kindle_link: "",
 amazon_coming_soon: false,
-amazon_link: "https://www.amazon.com/Psychology-OpenStax-hardcover-version-color/dp/1975076451",
+amazon_link: "https://www.amazon.com/Psychology-OpenStax-color-version-color/dp/1975076451",
 bookstore_coming_soon: false,
 comp_copy_available: false,
 salesforce_abbreviation: "Psychology",
