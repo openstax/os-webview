@@ -1,35 +1,23 @@
 import buildContext from '~/components/jsx-helpers/build-context';
-import useReviews from '~/models/reviews';
+import usePartnerInfo from '~/models/partner-info';
 
 
 function useContextValue({id: partnerId, model, title, setTitle}) {
-    const [ratings, postRating] = useReviews(partnerId);
+    const info = usePartnerInfo(partnerId);
 
-    if (!ratings) {
+    if (!info) {
         return {};
     }
-    const [partnerName, summary, reviews] = [
-        ratings.partnerName,
-        {
-            count: ratings.ratingCount,
-            rating: ratings.averageRating.ratingAvg
-        },
-        ratings.reviews
-    ];
-    const reviewCount = reviews.reduce((a, b) => a + (b.status === 'Approved' ? 1 : 0), 0);
+    const {partnerName} = info;
     const showInfoRequestForm = title !== '';
     const toggleForm = () => setTitle(title ? '' : 'Request information');
 
     return {
         partnerId,
         partnerName,
-        summary,
-        reviews,
-        reviewCount,
-        postRating,
         showInfoRequestForm,
         toggleForm,
-        partnerType: ratings?.partnerType,
+        partnerType: info.partnerType,
         books: model.books
     };
 }
