@@ -28,15 +28,13 @@ async function fetchUser() {
     return camelCaseKeys({...INITIAL_STATE, ...user}) as OSUser;
 }
 
-export default function useMyOpenStaxUser(isVerified: boolean, fetchTime: unknown) {
+export default function useMyOpenStaxUser(isVerified: boolean, fetchTime: number) {
     const [user, setUser] = React.useState<OSUser>({error: 'not loaded'});
-    const {flags: {my_openstax: isEnabled}} = useSharedDataContext() as unknown as {
-        flags: {
-            my_openstax: boolean
-        }
-    };
+    const {flags} = useSharedDataContext();
 
     React.useEffect(() => {
+        const isEnabled = flags && flags.my_openstax;
+
         if (isEnabled) {
             if (isVerified) {
                 fetchUser().then(setUser);
@@ -44,7 +42,7 @@ export default function useMyOpenStaxUser(isVerified: boolean, fetchTime: unknow
                 setUser({error: 'Not faculty verified'});
             }
         }
-    }, [isEnabled, isVerified, fetchTime]);
+    }, [flags, isVerified, fetchTime]);
 
     return user;
 }
