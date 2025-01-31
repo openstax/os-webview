@@ -126,16 +126,6 @@ function RedirectToCanonicalDetailsPage() {
     );
 }
 
-function RedirectToPageWithoutJunk() {
-    const {name, '*': junk} = useParams();
-
-    if (junk) {
-        return <Navigate to={`/${name}`} replace />;
-    }
-
-    return <TopLevelPage />;
-}
-
 function MainRoutes() {
     const {Layout} = useLayoutContext();
 
@@ -168,7 +158,8 @@ function MainRoutes() {
                     path="/edtech-partner-program"
                     element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
                 />
-                <Route path="/:name/*" element={<RedirectToPageWithoutJunk />} />
+                <Route path="/:name/" element={<TopLevelPage />} />
+                <Route path="/:name/*" element={<Error404 />} />
                 <Route element={<h1>Fell through</h1>} />
             </Routes>
         </Layout>
