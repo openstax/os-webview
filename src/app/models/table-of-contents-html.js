@@ -1,9 +1,5 @@
 import fetchRexRelease from '~/models/rex-release';
 
-export function cnxFetch({cnxId, webviewLink}) {
-    return fetchRexRelease(webviewLink, cnxId);
-}
-
 export default function tableOfContentsHtml({cnxId, webviewLink}) {
     function pageLink(entry) {
         const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
@@ -32,7 +28,7 @@ export default function tableOfContentsHtml({cnxId, webviewLink}) {
         return htmlEntities;
     }
 
-    return cnxFetch({cnxId, webviewLink}).then(
+    return fetchRexRelease(webviewLink, cnxId).then(
         (cnxData) =>
             buildTableOfContents(cnxData.tree.contents, 'div').join(''),
         (err) => {

@@ -23,7 +23,6 @@ const ccBookData = camelCaseKeys(bookData as Json) as object;
 const mockRexRelease = jest.fn();
 
 jest.mock('~/models/rex-release', () => ({
-    ...jest.requireActual('~/models/rex-release'),
     __esModule: true,
     default: () => mockRexRelease()
 }));

@@ -1,7 +1,7 @@
 import memoize from 'lodash/memoize';
 import retry from '~/helpers/retry';
 
-function rexOriginFromWebview(url) {
+function rexOriginFromWebview(url: string) {
     return (new window.URL(url)).origin;
 }
 
@@ -40,10 +40,6 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
     ;
 });
 
-export default function (webviewLink, cnxId) {
-    try {
-        return fetchContents(cnxId, rexOriginFromWebview(webviewLink));
-    } catch (err) {
-        return Promise.reject(new Error(`Failed to fetch Rex data for ${webviewLink}: ${err}`));
-    }
+export default function fetchRexRelease(webviewLink: string, cnxId: string) {
+    return fetchContents(cnxId, rexOriginFromWebview(webviewLink));
 }
