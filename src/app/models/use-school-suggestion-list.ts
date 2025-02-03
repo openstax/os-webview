@@ -3,11 +3,15 @@ import useSharedDataContext from '~/contexts/shared-data';
 import sfApiFetch from '~/models/sfapi';
 import cmsFetch from '~/helpers/cms-fetch';
 import debounce from 'lodash/debounce';
+import type {SchoolInfo} from './query-schools';
+
+type SFSchoolInfo = SchoolInfo & {school_type?: string};
+type SchoolFetchFunction = (value: string) => Promise<(SFSchoolInfo)[]>;
 
 const debouncedFetch = debounce(
-    (schoolFetch, value, setSchools) => {
+    (schoolFetch: SchoolFetchFunction, value, setSchools) => {
         if (value?.length > 1) {
-            schoolFetch(value).then((list) => (list || []).map(
+            schoolFetch(value).then((list) => list.map(
                 (entry) => ({
                     name: entry.name,
                     type: entry.school_type || entry.type, // different names in sfapi and old cms?
@@ -24,11 +28,12 @@ const debouncedFetch = debounce(
 );
 
 function useSchoolFetchFunction() {
-    const {flags: {my_openstax: isEnabled}} = useSharedDataContext();
+    const {flags} = useSharedDataContext();
+    const {my_openstax: isEnabled} = flags || {};
     const fn = useMemo(
-        () => isEnabled ?
-            (value) => sfApiFetch('schools', `/search?name=${value}`) :
-            (value) => cmsFetch(`salesforce/schools?search=${value}`)
+        () => (isEnabled ?
+            (value: string) => sfApiFetch('schools', `/search?name=${value}`) :
+            (value: string) => cmsFetch(`salesforce/schools?search=${value}`)) as SchoolFetchFunction
         ,
         [isEnabled]
     );
@@ -36,9 +41,9 @@ function useSchoolFetchFunction() {
     return fn;
 }
 
-export default function useMatchingSchools(value) {
+export default function useMatchingSchools(value: string) {
     const schoolFetch = useSchoolFetchFunction();
-    const [schools, setSchools] = useState([]);
+    const [schools, setSchools] = useState<SchoolInfo[]>([]);
     const schoolNames = useMemo(() => schools.map((s) => s.name).sort(), [schools]);
     const schoolSet = useMemo(() => new window.Set(schoolNames.map((s) => s.toLowerCase())), [schoolNames]);
     const schoolIsOk = schoolSet.has(value?.toLowerCase());
