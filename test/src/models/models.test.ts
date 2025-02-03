@@ -67,3 +67,5 @@ describe('errata-fields', () => {
         expect(mockCmsFetch).toHaveBeenCalled();
     });
 });
+
+// savings and salesforce-partners are not testable
