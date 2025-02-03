@@ -1,5 +1,5 @@
-
-import {accountsModel} from '~/models/usermodel';
+/* eslint-disable camelcase, no-nested-ternary */
+import accountsModel from '~/models/accounts-model';
 const tagManagerID = 'GTM-W6N7PB';
 
 window.dataLayer = window.dataLayer || [];
