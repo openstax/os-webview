@@ -11,11 +11,10 @@ import useFormTarget from '~/components/form-target/form-target';
 import type {ArticleData} from '../article/article';
 import useBlogContext from '../blog-context';
 import cn from 'classnames';
-import windowWithSettings from '~/helpers/window-settings';
+import settings from '~/helpers/window-settings';
 import './gated-content-dialog.scss';
 
-const formSubmitUrl = windowWithSettings.SETTINGS
-    .gatedContentEndpoint;
+const formSubmitUrl = settings().gatedContentEndpoint;
 
 export default function WaitForData({articleData}: {articleData?: ArticleData}) {
     return articleData?.gatedContent ? <GatedContentDialog /> : null;
