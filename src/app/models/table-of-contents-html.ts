@@ -1,14 +1,27 @@
 import fetchRexRelease from '~/models/rex-release';
 
-export default function tableOfContentsHtml({cnxId, webviewLink}) {
-    function pageLink(entry) {
-        const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
+type TOCEntry = {
+    title: string;
+    contents: TOCEntry[];
+    slug: string;
+    shortId: string;
+};
 
+export default function tableOfContentsHtml({
+    cnxId,
+    webviewLink
+}: {
+    cnxId: string;
+    webviewLink: string;
+}) {
+    const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
+
+    function pageLink(entry: TOCEntry) {
         return `${rexRoot}/pages/${entry.slug || entry.shortId}`;
     }
 
-    function buildTableOfContents(contents, tag) {
-        const htmlEntities = [];
+    function buildTableOfContents(contents: TOCEntry[], tag: string) {
+        const htmlEntities: string[] = [];
 
         contents.forEach((entry) => {
             if (entry.contents) {
