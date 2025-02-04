@@ -30,17 +30,27 @@ function oldUserModel(sfUserModel: SfUserModel) {
     if (!('id' in sfUserModel)) {
         return {};
     }
-    const findPreferredEmail = (contacts: UserModelType['accountsModel']['contact_infos']) => (contacts
-        .filter((obj) => obj.type === 'EmailAddress')
-        .reduce((a, b) => {
-            if (b.is_guessed_preferred || (b.is_verified && !a.is_verified)) {
-                return b;
-            }
-            return a;
-        })).value;
-    const isStudent = ['student', 'unknown_role'].includes(sfUserModel.self_reported_role);
-    const isVerificationStale = !isStudent && sfUserModel.is_instructor_verification_stale;
-    const isVerificationPending = !isStudent &&
+    const findPreferredEmail = (
+        contacts: UserModelType['accountsModel']['contact_infos']
+    ) =>
+        contacts
+            .filter((obj) => obj.type === 'EmailAddress')
+            .reduce((a, b) => {
+                if (
+                    b.is_guessed_preferred ||
+                    (b.is_verified && !a.is_verified)
+                ) {
+                    return b;
+                }
+                return a;
+            }).value;
+    const isStudent = ['student', 'unknown_role'].includes(
+        sfUserModel.self_reported_role
+    );
+    const isVerificationStale =
+        !isStudent && sfUserModel.is_instructor_verification_stale;
+    const isVerificationPending =
+        !isStudent &&
         ['pending_faculty'].includes(sfUserModel.faculty_status) &&
         !isVerificationStale;
     const groups = (function () {
@@ -61,7 +71,9 @@ function oldUserModel(sfUserModel: SfUserModel) {
         'pending_faculty'
     ].includes(sfUserModel.faculty_status);
     const incompleteSignup = sfUserModel.faculty_status === 'incomplete_signup';
-    const emailUnverified = !sfUserModel.contact_infos.some((i) => i.is_verified);
+    const emailUnverified = !sfUserModel.contact_infos.some(
+        (i) => i.is_verified
+    );
     const instructorEligible = sfUserModel.faculty_status === 'no_faculty_info';
 
     /* eslint camelcase: 0 */
@@ -69,7 +81,9 @@ function oldUserModel(sfUserModel: SfUserModel) {
         id: sfUserModel.id,
         accounts_id: sfUserModel.id,
         uuid: sfUserModel.uuid,
-        email: (sfUserModel.contact_infos).length ? findPreferredEmail(sfUserModel.contact_infos) : undefined,
+        email: sfUserModel.contact_infos.length
+            ? findPreferredEmail(sfUserModel.contact_infos)
+            : undefined,
         first_name: sfUserModel.first_name,
         groups,
         last_name: sfUserModel.last_name,
@@ -90,7 +104,9 @@ function oldUserModel(sfUserModel: SfUserModel) {
 
 const userModel = {
     load() {
-        return accountsModel.load()?.then((sfModel) => oldUserModel(sfModel as SfUserModel));
+        return accountsModel
+            .load()
+            ?.then((sfModel) => oldUserModel(sfModel as SfUserModel));
     }
 };
 

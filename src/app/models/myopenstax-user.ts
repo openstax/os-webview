@@ -20,7 +20,7 @@ type OSUser = {
         createdAt: string;
         salesforceId: string;
     };
-}
+};
 
 async function fetchUser() {
     const user = await sfApiFetch('users');
@@ -28,7 +28,10 @@ async function fetchUser() {
     return camelCaseKeys({...INITIAL_STATE, ...user}) as OSUser;
 }
 
-export default function useMyOpenStaxUser(isVerified: boolean, fetchTime: number) {
+export default function useMyOpenStaxUser(
+    isVerified: boolean,
+    fetchTime: number
+) {
     const [user, setUser] = React.useState<OSUser>({error: 'not loaded'});
     const {flags} = useSharedDataContext();
 

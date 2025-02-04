@@ -6,7 +6,9 @@ export default function useAdoptions(uuid: string) {
 
     useEffect(() => {
         if (uuid) {
-            fetchFromCMS(`salesforce/renewal?account_uuid=${uuid}`).then(setAdoptions);
+            fetchFromCMS(`salesforce/renewal?account_uuid=${uuid}`).then(
+                setAdoptions
+            );
         }
     }, [uuid]);
 

@@ -38,7 +38,7 @@ export type SfUserModel = {
         is_verified: boolean;
         is_guessed_preferred: boolean;
     }[];
-}
+};
 
 export default {
     load: cached(() => {
@@ -82,35 +82,34 @@ export default {
         //     ]
         // });
         // eslint-disable-next-line no-unreachable
-        return fetch(accountsUrl, {credentials: 'include'})
-            .then(
-                (response) => {
-                    if (response.status === 403) {
-                        return {};
-                    }
-                    return response.json().then(
-                        (result) => {
-                            if (
-                                'dataLayer' in window &&
-                                window.dataLayer instanceof Array
-                            ) {
-                                window.dataLayer.push({
-                                    // eslint-disable-next-line camelcase
-                                    faculty_status: result.faculty_status
-                                });
-                            }
-                            return result as SfUserModel;
-                        },
-                        (err: unknown) => {
-                            console.warn('No JSON in Accounts response');
-                            return {err};
-                        }
-                    );
-                },
-                (err: unknown) => {
-                    console.warn('"Error fetching user info"');
-                    return {err};
+        return fetch(accountsUrl, {credentials: 'include'}).then(
+            (response) => {
+                if (response.status === 403) {
+                    return {};
                 }
-            );
+                return response.json().then(
+                    (result) => {
+                        if (
+                            'dataLayer' in window &&
+                            window.dataLayer instanceof Array
+                        ) {
+                            window.dataLayer.push({
+                                // eslint-disable-next-line camelcase
+                                faculty_status: result.faculty_status
+                            });
+                        }
+                        return result as SfUserModel;
+                    },
+                    (err: unknown) => {
+                        console.warn('No JSON in Accounts response');
+                        return {err};
+                    }
+                );
+            },
+            (err: unknown) => {
+                console.warn('"Error fetching user info"');
+                return {err};
+            }
+        );
     })
 };

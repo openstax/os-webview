@@ -1,10 +1,15 @@
 import settings from '~/helpers/window-settings';
 
 const subdomains = ['dev.', 'qa.', 'staging.'];
-const subdomain = subdomains.find((sd) => settings().accountHref?.includes(sd)) || '';
+const subdomain =
+    subdomains.find((sd) => settings().accountHref?.includes(sd)) || '';
 const server = `https://${subdomain}salesforce.openstax.org`;
 
-export async function sfApiPost(objectType: string, data: object, method = 'POST') {
+export async function sfApiPost(
+    objectType: string,
+    data: object,
+    method = 'POST'
+) {
     try {
         const options = {
             credentials: 'include',

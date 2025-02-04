@@ -5,19 +5,16 @@ import {camelCaseKeys} from '~/helpers/page-data-utils';
 type Data = {
     id: number;
     partnerName: string;
-}
+};
 
 function usePartnerData(id: string) {
     const [data, setData] = useState<Data>();
 
-    useLayoutEffect(
-        () => {
-            cmsFetch(`salesforce/partners/${id}`)
-                .then((d) => camelCaseKeys(d) as Data)
-                .then(setData);
-        },
-        [id]
-    );
+    useLayoutEffect(() => {
+        cmsFetch(`salesforce/partners/${id}`)
+            .then((d) => camelCaseKeys(d) as Data)
+            .then(setData);
+    }, [id]);
 
     return data;
 }
