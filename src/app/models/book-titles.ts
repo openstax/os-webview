@@ -14,6 +14,10 @@ export type Item = {
     book_state: string;
     title: string;
     promote_snippet: PromoteSnippet[];
+    meta: {
+        slug: string;
+        detail_url: string;
+    }
 };
 
 export default cmsFetch('pages/?type=books.Book&fields=title,id,book_state,promote_snippet&limit=250')

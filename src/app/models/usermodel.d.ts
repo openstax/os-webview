@@ -18,8 +18,16 @@ export type UserModelType = {
     is_not_gdpr_location: boolean;
     salesforce_contact_id: string;
     accountsModel: {
+        id: number;
         faculty_status?: string;
         school_name?: string;
+        contact_infos: {
+            type: string;
+            value: string;
+            is_verified: boolean;
+            is_guessed_preferred: boolean;
+        }[];
+        load: () => Promise<UserModelType['accountsModel']>
     };
 };
 
@@ -28,5 +36,5 @@ declare const userModel: {
 };
 
 export default userModel;
-export const accountsModel: object;
+export const accountsModel: UserModelType['accountsModel'];
 export function useUserModel(): UserModelType;

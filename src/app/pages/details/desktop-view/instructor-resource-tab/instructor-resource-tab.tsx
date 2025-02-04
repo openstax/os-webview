@@ -2,8 +2,7 @@ import React from 'react';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources';
 import {
     resourceBoxModel,
-    useResources,
-    ResourceData
+    useResources
 } from '../../common/resource-box/resource-box-utils';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import VideoResourceBoxes from '../../common/resource-box/video-resource-box';
@@ -85,11 +84,6 @@ function InstructorResourceTab({userStatus}: {userStatus: UserStatus}) {
     const {
         bookVideoFacultyResources,
         bookFacultyResources
-    }: {
-        bookVideoFacultyResources: Parameters<
-            typeof VideoResourceBoxes
-        >[0]['models'];
-        bookFacultyResources: (ResourceData & {featured: boolean})[];
     } = useResources(model.slug);
 
     const featuredModels = bookFacultyResources

@@ -1,7 +1,7 @@
 import retry from '~/helpers/retry';
 import urlFromSlug from './url-from-slug';
 
-export default async function cmsFetch(path) {
+export default async function cmsFetch(path: string) {
     const url = path.replace(/[^?]+/, urlFromSlug);
 
     try {
@@ -11,7 +11,7 @@ export default async function cmsFetch(path) {
     }
 }
 
-export async function cmsPost(path, payload, method='POST') {
+export async function cmsPost(path: string, payload: URLSearchParams, method: string) {
     const url = path.replace(/[^?]+/, urlFromSlug);
     const params = new window.URLSearchParams(payload);
     const qs = method.toLowerCase() === 'delete' ? `?${params}` : '';

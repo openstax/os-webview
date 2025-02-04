@@ -91,7 +91,10 @@ export type BookData = {
 
 // eslint-disable-next-line complexity
 export function setPageTitleAndDescriptionFromBookData(data: BookData = {}) {
-    const meta = camelCaseKeys(data.meta || {});
+    const meta = camelCaseKeys(data.meta as Record<string, string>) as {
+        seoTitle?: string;
+        searchDescription?: string;
+    };
     const defaultDescription = data.description
         ? htmlToText(data.description)
         : '';
@@ -137,8 +140,8 @@ export function setPageTitleAndDescriptionFromBookData(data: BookData = {}) {
     setContentTags(contentTags);
 
     setPageTitleAndDescription(
-        meta.seoTitle || data.title,
-        meta.searchDescription || defaultDescription
+        meta?.seoTitle || data.title,
+        meta?.searchDescription || defaultDescription
     );
 }
 

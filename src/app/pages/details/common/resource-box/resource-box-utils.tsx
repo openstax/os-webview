@@ -3,6 +3,7 @@ import linkHelper from '~/helpers/link';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import useUserContext, {UserStatus} from '~/contexts/user';
 import type {ContextValues} from '../../context';
+import type {VideoResourceBoxModelType} from './video-resource-box';
 
 type WindowWithSettings = typeof window & {
     SETTINGS: {accountHref: string};
@@ -39,6 +40,7 @@ export type ResourceData = {
     lockedText?: string;
     resourceHeading: string;
     resourceDescription: string;
+    featured?: boolean;
 };
 
 function resourceBoxPermissions({
@@ -114,14 +116,21 @@ const emptyResources = {
     bookFacultyResources: []
 };
 
+type BookResourceData = {
+    bookVideoFacultyResources: VideoResourceBoxModelType[];
+    bookFacultyResources: ResourceData[];
+}
+
 export function useResources(slug: string) {
     const {isVerified} = useUserContext();
     const title = slug.replace('books/', '');
-    const rawResources = useDataFromSlug(
+    const rawResources = useDataFromSlug<{
+        error?: string;
+    }>(
         `books/resources/?slug=${title}&x=${isVerified ? 'x' : 'y'}`
     );
     const resources = React.useMemo(
-        () => (rawResources?.error ? null : camelCaseKeys(rawResources)),
+        () => (rawResources?.error ? null : camelCaseKeys(rawResources) as object as BookResourceData),
         [rawResources]
     );
 

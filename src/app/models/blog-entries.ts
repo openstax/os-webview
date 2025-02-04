@@ -1,4 +1,5 @@
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
+import {ArticleSummary} from '~pages/blog/blog-context';
 
 const fields = [
     'title', 'id', 'article_image', 'featured_image_alt_text', 'heading',
@@ -6,7 +7,12 @@ const fields = [
 ].join(',');
 
 export default function useLatestBlogEntries(limit: number) {
-    const lsData = useDataFromSlug(
+    const lsData = useDataFromSlug<{
+        items: ArticleSummary[];
+        meta: {
+            total_count: number;
+        }
+    }>(
         `pages?type=news.newsArticle&fields=${fields}` +
         `&order=-date&pin_to_top=false&limit=${limit}`
     );
@@ -15,7 +21,9 @@ export default function useLatestBlogEntries(limit: number) {
         return null;
     }
 
-    const ccItems = camelCaseKeys(lsData.items);
+    const ccItems = camelCaseKeys(lsData.items) as ArticleSummary[] & {
+        totalCount?: number;
+    };
 
     ccItems.totalCount = lsData.meta.total_count;
 

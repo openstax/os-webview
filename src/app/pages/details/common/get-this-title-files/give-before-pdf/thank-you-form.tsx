@@ -72,8 +72,8 @@ export default function ThankYou({
         close();
     }, [link, close]);
     const trackDownload = React.useCallback(
-        (event: TrackedMouseEvent) => {
-            trackLink(event, id);
+        (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+            trackLink(event as object as TrackedMouseEvent, id);
         },
         [id]
     );

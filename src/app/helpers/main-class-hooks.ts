@@ -1,7 +1,7 @@
 import React from 'react';
 import useMainClassContext from '~/contexts/main-class';
 
-function useOnAndOff(setter) {
+function useOnAndOff(setter: (state: boolean) => void) {
     React.useEffect(
         () => {
             setter(true);

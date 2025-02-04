@@ -1,6 +1,6 @@
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, max-len */
 export const tutorAd = {
     content: {
         image: 'url',
@@ -170,7 +170,7 @@ const mathBooksData = camelCaseKeys({
             id: 'aed8031b-d217-4697-931f-204db66841e4'
         }
     ]
-});
+}) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 const spanishMathBooksData = camelCaseKeys({
     title: 'Matemáticas',
@@ -404,7 +404,7 @@ const spanishMathBooksData = camelCaseKeys({
             id: '807d3f94-0a97-425e-a27c-9dfb591e649d'
         }
     ]
-});
+}) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 export const mathSubjectContext = {
     ...mathBooksData,

@@ -53,7 +53,7 @@ export default function useGiveDialog() {
     return {
         GiveDialog,
         open,
-        enabled: !data.hide_donation_popup
+        enabled: !data?.hide_donation_popup
     };
 }
 

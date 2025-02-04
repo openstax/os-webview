@@ -72,6 +72,8 @@ type PropsFromOutside = {
     includeFilter?: () => boolean;
 };
 
+type Books = Parameters<typeof salesforceTitles>[0]
+
 function BookSelector({
     data,
     prompt,
@@ -82,7 +84,7 @@ function BookSelector({
     additionalInstructions,
     includeFilter = defaultIncludeFilter
 }: {
-    data: {books: Parameters<typeof salesforceTitles>[0]};
+    data: {books: Books};
 } & PropsFromOutside) {
     const books = React.useMemo(
         () => salesforceTitles(data.books).filter(includeFilter),
@@ -154,7 +156,7 @@ export function useSelectedBooks() {
 }
 
 export default function BookSelectorLoader(props: PropsFromOutside) {
-    const books = useDataFromPromise(fetchAllBooks);
+    const books = useDataFromPromise(fetchAllBooks) as Books | undefined;
 
     return books ? (
         <BookSelector {...props} data={{books}} />

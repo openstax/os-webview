@@ -1,6 +1,6 @@
 import $ from '~/helpers/$';
 
-export default function urlFromSlug(initialSlug) {
+export default function urlFromSlug(initialSlug: string) {
     const slug = initialSlug === 'news' ? 'pages/openstax-news' : initialSlug;
     const possibleSlash = (slug.endsWith('/') || slug.includes('?')) ? '' : '/';
     const apiPrefix = slug.includes('pages') ? $.apiOriginAndPrefix :

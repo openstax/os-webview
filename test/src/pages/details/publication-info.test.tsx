@@ -3,12 +3,13 @@ import {render, screen, waitFor} from '@testing-library/preact';
 import PublicationInfo from '~/pages/details/common/publication-info';
 import ShellContextProvider from '../../../helpers/shell-context';
 import bookData from '../../data/details-college-algebra';
-import {camelCaseKeys} from '~/helpers/page-data-utils';
+import {camelCaseKeys, Json} from '~/helpers/page-data-utils';
 import * as DC from '~/pages/details/context';
 import * as UC from '~/contexts/user';
 
 function WrappedPublicationInfo({additionalItems = {}, polish = false}) {
-    mockUseDetailsContext.mockReturnValue({...ccBookData, ...additionalItems});
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mockUseDetailsContext.mockReturnValue({...ccBookData, ...additionalItems} as any);
 
     return (
         <ShellContextProvider>
@@ -18,7 +19,7 @@ function WrappedPublicationInfo({additionalItems = {}, polish = false}) {
 }
 
 const mockUseDetailsContext = jest.spyOn(DC, 'default');
-const ccBookData = camelCaseKeys(bookData);
+const ccBookData = camelCaseKeys(bookData as Json) as object;
 const mockRexRelease = jest.fn();
 
 jest.mock('~/models/rex-release', () => ({

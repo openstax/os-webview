@@ -8,7 +8,7 @@ import ResourceBox from './resource-box';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {ResourceModel} from './resource-boxes';
 
-type VideoResourceBoxModelType = {
+export type VideoResourceBoxModelType = {
     heading: string;
     resourceHeading: string;
     resourceDescription: TrustedHTML;

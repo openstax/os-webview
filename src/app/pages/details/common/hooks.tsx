@@ -23,7 +23,7 @@ export function useTableOfContents() {
 }
 
 function toBlurb(partner: PartnerData) {
-    const pData = camelCaseKeys(partner);
+    const pData = camelCaseKeys(partner) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     return {
         id: pData.id,

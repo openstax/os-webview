@@ -20,7 +20,7 @@ const menuData = Object.entries(menuStructure).map(
 function MenuItem({label, url, showButton}: {
     label: string;
     url: string;
-    showButton: boolean;
+    showButton?: boolean;
 }) {
     if (label === 'Give') {
         return showButton ?
@@ -39,7 +39,7 @@ function MenuItem({label, url, showButton}: {
 const importGiveButton = () => import('../give-button/give-button');
 
 export default function UpperMenu() {
-    const {showButton} = useGiveToday();
+    const {showButton}: {showButton?: boolean} = useGiveToday();
     const riceLogo = useOptimizedImage('https://openstax.org/dist/images/rice.webp', 80);
 
     return (

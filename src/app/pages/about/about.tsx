@@ -86,7 +86,7 @@ function About({
     const mapAlt =
         whereMapAlt ||
         'animated map suggesting where our books are being adopted';
-    const maxDim = window.innerWidth < 1920 ? 1015 : null;
+    const maxDim = window.innerWidth < 1920 ? 1015 : undefined;
     const optimizedWhoImage = useOptimizedImage(whoImageUrl, maxDim);
 
     return (
