@@ -2,7 +2,7 @@ import settings from '~/helpers/window-settings';
 
 const accountsUrl = `${settings().accountHref}/api/user`;
 
-function cached<T>(fn: () => T | null) {
+function cached<T>(fn: () => T) {
     let valid = false;
     let cachedResult: T | null = null;
     const cachedFn = function () {
@@ -17,6 +17,27 @@ function cached<T>(fn: () => T | null) {
         valid = false;
     };
     return cachedFn;
+}
+
+export type SfUserModel = {
+    id: number;
+    uuid: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    school_name: string;
+    self_reported_role: string;
+    self_reported_school: string;
+    is_not_gdpr_location: boolean;
+    salesforce_contact_id: string;
+    is_instructor_verification_stale: boolean;
+    faculty_status: string;
+    contact_infos: {
+        type: string;
+        value: string;
+        is_verified: boolean;
+        is_guessed_preferred: boolean;
+    }[];
 }
 
 export default {
@@ -78,15 +99,15 @@ export default {
                                     faculty_status: result.faculty_status
                                 });
                             }
-                            return result;
+                            return result as SfUserModel;
                         },
-                        (err) => {
+                        (err: unknown) => {
                             console.warn('No JSON in Accounts response');
                             return {err};
                         }
                     );
                 },
-                (err) => {
+                (err: unknown) => {
                     console.warn('"Error fetching user info"');
                     return {err};
                 }

@@ -1,4 +1,5 @@
 import fetchRexRelease from '~/models/rex-release';
+import jsonized from './jsonized';
 
 // Data from rexOrigin/rex/environment.json
 const environment = {
@@ -47,14 +48,6 @@ const config = {
     UNLIMITED_CONTENT: false
 };
 const contents = '*** contents ***';
-
-function jsonized(content: unknown) {
-    return Promise.resolve({
-        json() {
-            return content;
-        }
-    });
-}
 
 const fetchImplementation = (path: string) => {
     if (path.includes('environment')) {
