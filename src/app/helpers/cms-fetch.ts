@@ -25,7 +25,7 @@ export async function cmsPost(path: string, payload: URLSearchParams, method: st
             },
             body: JSON.stringify(payload)
         })).json();
-    } catch (e) {
+    } catch {
         return Promise.reject(new Error(`Failed to ${method} ${url}${qs}`));
     }
 }
