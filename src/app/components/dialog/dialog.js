@@ -17,19 +17,14 @@ function PutAway({noTitle, onClick}) {
     );
 }
 
-export function FooterDialog({
-    isOpen, title, children, className
-}) {
-    React.useLayoutEffect(
-        () => {
-            const footerEl = document.getElementById('footer');
+export function FooterDialog({isOpen, title, children, className}) {
+    React.useLayoutEffect(() => {
+        const footerEl = document.getElementById('footer');
 
-            footerEl?.style.setProperty('z-index', 1);
+        footerEl?.style.setProperty('z-index', 1);
 
-            return () => footerEl?.style.removeProperty('z-index');
-        },
-        []
-    );
+        return () => footerEl?.style.removeProperty('z-index');
+    }, []);
 
     if (!isOpen) {
         return null;
@@ -37,20 +32,25 @@ export function FooterDialog({
 
     return (
         <dialog className={cn('footer-dialog', className)}>
-            {
-                title &&
-                    <div className="title-bar">
-                        <RawHTML Tag="span" html={title} />
-                    </div>
-            }
+            {title && (
+                <div className="title-bar">
+                    <RawHTML Tag="span" html={title} />
+                </div>
+            )}
             {children}
         </dialog>
     );
 }
 
+// eslint-disable-next-line complexity
 export default function Dialog({
-    isOpen, title, onPutAway, children, className = undefined, closeOnOutsideClick=false,
-    aria=title ? {labelledby: 'modal-dialog-title'} : {label: 'missing label'}
+    isOpen,
+    title,
+    onPutAway,
+    children,
+    className = undefined,
+    closeOnOutsideClick = false,
+    aria = title ? {labelledby: 'modal-dialog-title'} : {label: 'missing label'}
 }) {
     const overlayClassName = className ? `modal-overlay-${className}` : '';
 
@@ -65,22 +65,20 @@ export default function Dialog({
             shouldCloseOnEsc={closeOnOutsideClick}
             aria={aria}
         >
-            {
-                title ?
-                    <div className="title-bar" id="modal-dialog-title">
-                        <RawHTML Tag="span" html={title} />
-                        <PutAway onClick={onPutAway} />
-                    </div> :
-                    <PutAway noTitle onClick={onPutAway} />
-            }
-            <div className="main-region">
-                {children}
-            </div>
+            {title ? (
+                <div className="title-bar" id="modal-dialog-title">
+                    <RawHTML Tag="span" html={title} />
+                    <PutAway onClick={onPutAway} />
+                </div>
+            ) : (
+                <PutAway noTitle onClick={onPutAway} />
+            )}
+            <div className="main-region">{children}</div>
         </ReactModal>
     );
 }
 
-export function useDialog(initiallyOpen=false) {
+export function useDialog(initiallyOpen = false) {
     const [showDialog, updateShowDialog] = React.useState(initiallyOpen);
 
     return React.useMemo(() => {
@@ -88,8 +86,12 @@ export function useDialog(initiallyOpen=false) {
         const close = () => updateShowDialog(false);
 
         function BoundDialog({
-            title, children, modal = true, className,
-            showPutAway=true, afterClose=() => null,
+            title,
+            children,
+            modal = true,
+            className,
+            showPutAway = true,
+            afterClose = () => null,
             aria,
             ...otherProps
         }) {
@@ -102,13 +104,15 @@ export function useDialog(initiallyOpen=false) {
             return (
                 <Modal
                     isOpen={showDialog}
-                    className='modal'
+                    className="modal"
                     overlayClassName="modal-overlay"
                     bodyOpenClassName="no-scroll-dialog"
                     {...otherProps}
                 >
                     <Dialog
-                        title={title} className={className} isOpen={showDialog}
+                        title={title}
+                        className={className}
+                        isOpen={showDialog}
                         onPutAway={showPutAway && closeAndAfterClose}
                         aria={aria}
                     >

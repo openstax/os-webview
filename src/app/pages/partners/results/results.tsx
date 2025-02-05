@@ -111,7 +111,7 @@ function filterBy(
     });
 }
 
-// eslint-disable-next-line complexity
+
 function useFilteredEntries(entries: PartnerEntry[]) {
     const {books, types, advanced, sort, resultCount} = useSearchContext();
     const unfilteredResults = React.useMemo(() => shuffle(entries), [entries]);
@@ -164,7 +164,7 @@ function advancedFilterKeys(partnerEntry: PartnerData) {
     );
 }
 
-// eslint-disable-next-line complexity
+
 function resultEntry(pd: PartnerData) {
     return {
         id: pd.id,

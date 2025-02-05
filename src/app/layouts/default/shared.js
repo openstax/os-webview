@@ -90,7 +90,7 @@ const stickyDataPromise = Promise.all([cmsFetch('sticky/'), cmsFetch('snippets/g
         return sd;
     });
 
-// eslint-disable-next-line complexity
+
 export function useStickyData() {
     const stickyData = useDataFromPromise(stickyDataPromise);
 

@@ -30,15 +30,19 @@ export interface DividerBlockConfig {
     };
 }
 
+function getTransform(config: DividerConfigOptions[]) {
+    const offsetVertical = findByType(config, 'offset_vertical')?.value ?? '-50%';
+    const offsetHorizontal = findByType(config, 'offset_horizontal')?.value ?? '0px';
+
+    return `translateY(${offsetVertical}) translateX(${offsetHorizontal})`;
+}
+
 export function DividerBlock({data}: {data: DividerBlockConfig}) {
     const width = findByType(data.value.config, 'width')?.value;
     const height = findByType(data.value.config, 'height')?.value;
     const alignment = findByType(data.value.config, 'alignment')?.value;
     const alignmentClass = alignment ? `align_${alignment}` : null;
-
-    const offsetVertical = findByType(data.value.config, 'offset_vertical')?.value ?? '-50%';
-    const offsetHorizontal = findByType(data.value.config, 'offset_horizontal')?.value ?? '0px';
-    const transform = `translateY(${offsetVertical}) translateX(${offsetHorizontal})`;
+    const transform = getTransform(data.value.config);
 
     return <div className={cn('content-block-divider', alignmentClass)}>
         <Image

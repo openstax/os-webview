@@ -47,7 +47,7 @@ export function SearchResultsPage() {
 }
 
 // Exported so it can be tested
-// eslint-disable-next-line complexity
+
 export function MainBlogPage() {
     const {
         pinnedStory, pageDescription, searchFor,

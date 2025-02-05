@@ -1,7 +1,7 @@
 import buildContext from '~/components/jsx-helpers/build-context';
 import useReviews from '~/models/reviews';
 
-// eslint-disable-next-line complexity
+
 function useContextValue({id: partnerId, model, title, setTitle}) {
     const [ratings, postRating] = useReviews(partnerId);
 

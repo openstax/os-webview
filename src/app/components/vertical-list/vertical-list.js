@@ -6,7 +6,7 @@ function RenderInContext({items, RenderItem, vListRef, onSelect, onCancel}) {
 
     React.useEffect(() => setCount(items.length), [items, setCount]);
 
-    // eslint-disable-next-line complexity
+
     const onKeyDown = (event) => {
         switch (event.key) {
         case 'ArrowDown':

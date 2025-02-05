@@ -7,7 +7,7 @@ function useEnqueueWhenReady(useContent, queue, setQueue) {
     const [hasQueued, setHasQueued] = React.useState(false);
 
     React.useEffect(
-        // eslint-disable-next-line complexity
+
         () => {
             if (!hasQueued && ready && !queue.includes(Item)) {
                 setQueue([...queue, Item]);

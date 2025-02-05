@@ -19,7 +19,7 @@ function AccountItem() {
     );
 }
 
-// eslint-disable-next-line complexity
+
 export default function LoginMenuWithDropdown() {
     const {userModel} = useUserContext();
 

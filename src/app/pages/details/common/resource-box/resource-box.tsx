@@ -21,7 +21,7 @@ export default function ResourceBox({model}: {model: ResourceModel}) {
     );
 }
 
-// eslint-disable-next-line complexity
+
 function Top({model}: {model: ResourceModel}) {
     const description = model.comingSoon
         ? `<p>${model.comingSoonText}</p>`
