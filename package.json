@@ -148,5 +148,9 @@
         "singleQuote": true,
         "jsxSingleQuote": false,
         "trailingComma": "none"
+    },
+    "resolutions": {
+        "@types/react": "^18",
+        "@types/react-dom": "^18"
     }
 }
