@@ -9,7 +9,7 @@ const settings = window.SETTINGS;
         document.createElement('link'),
         {
             rel: 'stylesheet',
-            href: 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css',
+            href: 'https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css',
             type: 'text/css'
         }
     );

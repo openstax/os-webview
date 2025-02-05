@@ -129,7 +129,7 @@ export default function querySchools(
 }
 
 export function queryById(id: string) {
-    return cmsFetch(`${searchPath}?id=${id}`).then((response) =>
-        augmentInfo(response[0])
-    );
+    return cmsFetch(`${searchPath}?id=${id}`).then((response: Item[]) => {
+        return response.length > 0 ? augmentInfo(response[0]) : null;
+    });
 }
