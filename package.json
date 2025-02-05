@@ -90,7 +90,7 @@
         "node-sass": "^8.0.0",
         "particles.js": "^2.0.0",
         "pattern-library": "openstax/pattern-library",
-        "preact": "^10.13.1",
+        "preact": "~10.24",
         "prettier": "^2.8.6",
         "react-modal": "^3.16.1",
         "require-dir": "^1.2.0",
