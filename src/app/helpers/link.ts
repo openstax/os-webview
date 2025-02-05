@@ -15,8 +15,8 @@ function ignoreClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
 }
 
 function validUrlClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-    const el = (e.target as HTMLElement).closest('a') as HTMLAnchorElement;
-    const href = el.getAttribute('href');
+    const el = (e.target as HTMLElement).closest('a');
+    const href = el?.getAttribute('href') ?? null;
 
     if (ignoreClick(e) || ignoreUrl(href)) {
         return false;
