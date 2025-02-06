@@ -1,4 +1,4 @@
-/* eslint-disable camelcase, no-nested-ternary */
+
 import {accountsModel} from '~/models/usermodel';
 const tagManagerID = 'GTM-W6N7PB';
 

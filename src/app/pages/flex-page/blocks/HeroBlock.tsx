@@ -49,6 +49,7 @@ const parseAlignment = (alignment: string) => {
     return 'center';
 };
 
+// eslint-disable-next-line complexity
 export function HeroBlock({data}: {data: HeroBlockConfig}) {
     const id = findByType(data.value.config, 'id')?.value;
     const textAlign = findByType(data.value.config, 'text_alignment')?.value;

@@ -63,7 +63,7 @@ const accountsModel = {
         //         }
         //     ]
         // });
-        // eslint-disable-next-line no-unreachable
+
         return fetch(accountsUrl, {credentials: 'include'})
         .then(
             (response) => {

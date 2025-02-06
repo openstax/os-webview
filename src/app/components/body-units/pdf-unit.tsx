@@ -49,7 +49,6 @@ function PageControls({
     );
 }
 
-// eslint-disable-next-line complexity
 function toggleFullscreen(
     elem: Element & {
         mozRequestFullscreen?: () => void;

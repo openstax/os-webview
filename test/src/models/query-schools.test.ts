@@ -51,6 +51,6 @@ describe('query-schools', () => {
         }));
         const data = await queryById('1');
 
-        expect(data.cityState).toBe('New Albany, Ohio');
+        expect(data?.cityState).toBe('New Albany, Ohio');
     });
 });

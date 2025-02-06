@@ -37,6 +37,7 @@ export interface SectionBlockConfig {
     };
 }
 
+// eslint-disable-next-line complexity
 export function SectionBlock({data}: {data: SectionBlockConfig}) {
     const id = findByType(data.value.config, 'id')?.value;
     const textAlign = findByType(data.value.config, 'text_alignment')?.value;

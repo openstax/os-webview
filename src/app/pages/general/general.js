@@ -36,6 +36,7 @@ function getCanonicalPath(slug) {
     return `${slug.replace(/.*\/(?!$)/, '/')}${slug.endsWith('/') ? '' : '/'}`;
 }
 
+// eslint-disable-next-line complexity
 export function GeneralPageFromSlug({slug, fallback}) {
     const {head, text: html} = useTextFromSlug(slug);
     const canonicalPath = getCanonicalPath(slug);

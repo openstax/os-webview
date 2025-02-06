@@ -105,7 +105,7 @@ export function TocOption({model}: {model: Model}) {
     );
 }
 
-// eslint-disable-next-line complexity
+
 export function WebviewOption({model}: {model: Model}) {
     const [showCallout, hideForever] = useCalloutCounter(model.slug);
 

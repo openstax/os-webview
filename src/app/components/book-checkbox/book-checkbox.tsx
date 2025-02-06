@@ -6,7 +6,6 @@ import type { SalesforceBook } from '~/helpers/books';
 import cn from 'classnames';
 import './book-checkbox.scss';
 
-// eslint-disable-next-line complexity
 export default function BookCheckbox({book, name, checked, toggle, disabled}: {
     book: SalesforceBook;
     name: string;

@@ -26,7 +26,7 @@ type Detail = Pick<
     date: string;
 };
 
-// eslint-disable-next-line complexity
+
 export function approvedStatuses(created: string) {
     const posted = new Date(created);
     const m = posted.getMonth();
@@ -48,7 +48,7 @@ export function approvedStatuses(created: string) {
     };
 }
 
-// eslint-disable-next-line complexity
+
 export function getDisplayStatus(data?: Errata) {
     const result = {
         status: 'Reviewed',

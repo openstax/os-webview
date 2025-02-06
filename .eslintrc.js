@@ -1,3 +1,5 @@
+// This is only used in the build phase; not used by yarn lint
+// see eslint.config.mjs for that.
 module.exports = {
     'parser': '@typescript-eslint/parser',
     'parserOptions': {
@@ -49,7 +51,7 @@ module.exports = {
         'accessor-pairs': ['error', {'getWithoutSet': false}],
         'block-scoped-var': 'error',
         'comma-dangle': ['error', 'never'],
-        'complexity': ['error', 5],
+        'complexity': ['error', 6],
         'consistent-return': 'error',
         'curly': ['error', 'all'],
         'default-case': 'error',
