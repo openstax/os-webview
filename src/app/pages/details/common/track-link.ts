@@ -4,7 +4,7 @@ import type {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link
 
 let userInfo: Partial<UserModelType>;
 
-userModel.load()?.then((i) => {
+userModel.load().then((i) => {
     userInfo = i;
 });
 

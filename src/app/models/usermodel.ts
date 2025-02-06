@@ -111,11 +111,11 @@ const userModel = {
 };
 
 const throttledLoginCheck = throttle((setData) => {
-    accountsModel.load()?.then((oldUser) => {
+    accountsModel.load().then((oldUser) => {
         accountsModel.load.invalidate();
-        accountsModel.load()?.then((newUser) => {
+        accountsModel.load().then((newUser) => {
             if (!isEqual(oldUser, newUser)) {
-                userModel.load()?.then(setData);
+                userModel.load().then(setData);
             }
         });
     });
@@ -128,7 +128,7 @@ function useUserModel() {
         const check = () => throttledLoginCheck(setData);
 
         window.addEventListener('focus', check);
-        userModel.load()?.then(setData);
+        userModel.load().then(setData);
 
         return () => window.removeEventListener('focus', check);
     }, []);

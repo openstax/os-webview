@@ -10,7 +10,7 @@ function cached<T>(fn: () => T) {
             cachedResult = fn();
             valid = true;
         }
-        return cachedResult;
+        return cachedResult as T;
     };
 
     cachedFn.invalidate = () => {
