@@ -24,8 +24,78 @@
         <link rel="preconnect" href="https://connect.facebook.net" crossorigin="anonymous">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/books/?format=json">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/footer/?format=json">
-        <link rel="stylesheet" href="https://ram.openstax.org/osano/osano.css">
-        <script src="https://cmp.osano.com/AzZqbXTbzhHsU3cv1/68d8e8ae-4024-4489-a000-72766ad284a6/osano.js"></script>
+        <script>
+          fetch('/accounts/api/user', { credentials: 'include' }).then((userResponse) => {
+            const updateUserConsentPreferences = (consentPreferences) => {
+              if (userResponse.status === 200) {
+                return fetch('/accounts/api/user', {
+                  body: JSON.stringify({consent_preferences: consentPreferences}),
+                  credentials: 'include',
+                  headers: { 'Content-Type': 'application/json' },
+                  method: 'PUT',
+                }).then(
+                  (response) => {
+                    if (response.status === 200) {
+                      window.location.reload();
+                    } else {
+                      Sentry.captureMessage(`Failed to save cookie consent (HTTP status code: ${response.status})`);
+                    }
+                  }, (error) => Sentry.captureException(error)
+                );
+              }
+            };
+
+            document.addEventListener('cookieyes_banner_load', async(eventData) => {
+              const user = userResponse.status === 200 ? await userResponse.json() : undefined;
+              const userConsentPreferences = user?.consent_preferences;
+
+              if (userConsentPreferences) {
+                // Accounts remembers some state
+                // We always defer to Accounts in this case
+
+                // Only call the CookieYes API if it doesn't match what's in Accounts
+                let doUpdate = !eventData.detail.isUserActionCompleted;
+
+                userConsentPreferences.accepted.forEach((accepted) => {
+                  // There is no "necessary" switch
+                  if (accepted !== 'necessary') {
+                    document.getElementById(`ckySwitch${accepted}`).checked = true;
+                    if (!eventData.detail.categories[accepted]) { doUpdate = true; }
+                  }
+                });
+                userConsentPreferences.rejected.forEach((rejected) => {
+                  document.getElementById(`ckySwitch${rejected}`).checked = false;
+                  if (eventData.detail.categories[rejected]) { doUpdate = true; }
+                });
+                if (doUpdate) { performBannerAction('accept_partial'); }
+              } else if (eventData.detail.isUserActionCompleted) {
+                // Accounts doesn't have state but somehow CookieYes does
+                // This can happen because of 3rd party cookies enabled, non-embedded launch, etc
+                // Ideally we'd clear the CookieYes consent and let users click the banner again,
+                // but there's no API to do that
+                // So instead we make a request to save the user consent to Accounts
+                const bannerConsentPreferences = { accepted: [], rejected: [] };
+                Object.entries(eventData.detail.categories).forEach(([category, accepted]) => {
+                  const arr = accepted ? bannerConsentPreferences.accepted : bannerConsentPreferences.rejected;
+                  arr.push(category);
+                });
+                updateUserConsentPreferences(bannerConsentPreferences);
+              } else {
+                // If we don't have a recorded consent and they click the X button, interpret it as "reject all"
+                document.getElementsByClassName('cky-banner-btn-close')[0]?.addEventListener(
+                  'click', () => performBannerAction('reject')
+                );
+              }
+            });
+
+            document.addEventListener('cookieyes_consent_update', (eventData) => {
+              updateUserConsentPreferences(eventData.detail);
+            });
+          });
+        </script>
+        <!-- Start cookieyes banner -->
+        <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/7c03144a7ef8b7f646f1ce01/script.js"></script>
+        <!-- End cookieyes banner -->
         <script src="//script.crazyegg.com/pages/scripts/0084/9271.js" async="async"></script>
     </head>
     <body class="page-loading">
