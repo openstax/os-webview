@@ -37,9 +37,9 @@ function loginOrOutLink(loginOrLogout: 'login' | 'logout') {
     const encodedLocation = encodeURIComponent(
         decodeURIComponent(window.location.href)
     );
-    const w = window as WindowWithSettings;
+    const {accountHref} = (window as WindowWithSettings).SETTINGS;
 
-    return `${w.SETTINGS.accountHref}/${loginOrLogout}/?r=${encodedLocation}`;
+    return `${accountHref}/${loginOrLogout}/?r=${encodedLocation}`;
 }
 
 function loginLink() {

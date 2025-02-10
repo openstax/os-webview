@@ -3,8 +3,10 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/helpers/cms-fetch';
 import {usePromise} from '~/helpers/use-data';
 
+type FlagName = 'myox_pardot' | 'my_openstax' | 'new_subjects';
+
 type Flag = {
-    name: string;
+    name: FlagName;
     feature_active: boolean;
 };
 
@@ -13,11 +15,11 @@ const flagPromise = cmsFetch('flags')
         flags.reduce((a, f) => {
             a[f.name] = f.feature_active;
             return a;
-        }, {} as Record<string, boolean>)
+        }, {} as Record<FlagName, boolean>)
     );
 
 function useFlags() {
-    return usePromise<Record<string, boolean> | false>(flagPromise, false);
+    return usePromise<Record<FlagName, boolean> | false>(flagPromise, false);
 }
 
 function useContextValue() {

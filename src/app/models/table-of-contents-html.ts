@@ -1,18 +1,27 @@
 import fetchRexRelease from '~/models/rex-release';
 
-export function cnxFetch({cnxId, webviewLink}) {
-    return fetchRexRelease(webviewLink, cnxId);
-}
+type TOCEntry = {
+    title: string;
+    contents: TOCEntry[];
+    slug: string;
+    shortId: string;
+};
 
-export default function tableOfContentsHtml({cnxId, webviewLink}) {
-    function pageLink(entry) {
-        const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
+export default function tableOfContentsHtml({
+    cnxId,
+    webviewLink
+}: {
+    cnxId: string;
+    webviewLink: string;
+}) {
+    const rexRoot = webviewLink.replace(/\/pages\/.*/, '');
 
+    function pageLink(entry: TOCEntry) {
         return `${rexRoot}/pages/${entry.slug || entry.shortId}`;
     }
 
-    function buildTableOfContents(contents, tag) {
-        const htmlEntities = [];
+    function buildTableOfContents(contents: TOCEntry[], tag: string) {
+        const htmlEntities: string[] = [];
 
         contents.forEach((entry) => {
             if (entry.contents) {
@@ -32,7 +41,7 @@ export default function tableOfContentsHtml({cnxId, webviewLink}) {
         return htmlEntities;
     }
 
-    return cnxFetch({cnxId, webviewLink}).then(
+    return fetchRexRelease(webviewLink, cnxId).then(
         (cnxData) =>
             buildTableOfContents(cnxData.tree.contents, 'div').join(''),
         (err) => {

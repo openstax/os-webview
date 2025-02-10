@@ -50,6 +50,10 @@ describe('page-data-utils', () => {
 
             return text ? <div>{(text as Error).message}</div> : null;
         }
+        const saveInfo = console.info;
+
+        beforeEach(() => {console.info = jest.fn();});
+        afterEach(() => {console.info = saveInfo;});
         it('sets text to error when response is not ok', async () => {
             mockFetch.mockResolvedValueOnce({
                 ok: false,

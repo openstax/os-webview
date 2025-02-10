@@ -42,7 +42,7 @@ function useDefaultEmail() {
         async function fetchData() {
             const response = await userModel.load();
 
-            setEmail(response.email);
+            setEmail(response?.email);
         }
         fetchData();
     }, []);
