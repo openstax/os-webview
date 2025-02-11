@@ -3,6 +3,7 @@ import {useLocation} from 'react-router-dom';
 import linkHelper from '~/helpers/link';
 import useUserContext from '~/contexts/user';
 import useAdoptions from '~/models/renewals';
+import YearSelector from '~/components/year-selector/year-selector';
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
 // -- We'll be trying to do this for the next release.
 // import _adoptionsPromise from './salesforce-data';
@@ -40,7 +41,7 @@ function useFormData(adoptions) {
     return {counts, updateCount, defaultCount};
 }
 
-function HiddenFields({email, uuid, counts}) {
+function HiddenFields({email, uuid, counts, year}) {
     const {search} = useLocation();
     const params = new window.URLSearchParams(search);
     const fromValue = params.get('from');
@@ -49,11 +50,12 @@ function HiddenFields({email, uuid, counts}) {
     const {selectedItems} = useBookTagsContext();
     const json = React.useMemo(
         () => JSON.stringify({
+            baseYear: year,
             'Books': selectedItems.map(
                 ({value: name}) => ({name, students: +counts[name]})
             )
         }),
-        [selectedItems, counts]
+        [selectedItems, counts, year]
     );
     const subjects = React.useMemo(
         () => selectedItems ? selectedItems.map((i) => i.value).join(';') : '',
@@ -141,6 +143,9 @@ function TheForm() {
         [select, counts, updateCount, defaultCount]
     );
     const [initialized, setInitialized] = React.useState(false);
+    const {search} = useLocation();
+    const selectedYear = new window.URLSearchParams(search).get('year') ?? undefined;
+    const [copyOfYear, setCopyOfYear] = React.useState(selectedYear);
 
     // Initialize selections from adoptions
     React.useEffect(
@@ -159,12 +164,13 @@ function TheForm() {
 
     return (
         <form action={window.SETTINGS.renewalEndpoint} method="post">
-            <HiddenFields email={email} uuid={uuid} counts={counts} />
+            <HiddenFields email={email} uuid={uuid} counts={counts} year={copyOfYear} />
             <div className="fixed-fields">
                 <FixedField label="First name" name="first_name" value={firstName} />
                 <FixedField label="Last name" name="last_name" value={lastName} />
                 <FixedField label="School name" name="school" value={school} />
             </div>
+            <YearSelector selectedYear={selectedYear} onValueUpdate={setCopyOfYear} />
             <BooksAndStudentCounts counts={counts} updateCount={updateCount} />
             <input type="submit" />
         </form>

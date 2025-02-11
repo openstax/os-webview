@@ -74,7 +74,7 @@ function reducer(state, action) {
     return {...state, ...action};
 }
 
-export default function HowUsing({selectedBooks}) {
+export default function HowUsing({selectedBooks, year}) {
     const [bookData, dispatch] = React.useReducer(reducer, {});
     const [useData, udDispatch] = React.useReducer(reducer, {});
     const json = React.useMemo(() => {
@@ -91,9 +91,10 @@ export default function HowUsing({selectedBooks}) {
         });
 
         return JSON.stringify({
+            baseYear: year,
             Books: rewrittenBookData
         });
-    }, [bookData, useData, selectedBooks]);
+    }, [bookData, useData, selectedBooks, year]);
 
     return (
         <div className="how-using">

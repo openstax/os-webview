@@ -13,6 +13,14 @@
         @include set-font(h2);
     }
 
+    label {
+        font-weight: bold;
+
+        .Select {
+            font-weight: normal;
+        }
+    }
+
     form {
         background-color: ui-color(white);
         border: thin solid ui-color(form-border);

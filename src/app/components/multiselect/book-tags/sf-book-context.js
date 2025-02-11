@@ -22,7 +22,7 @@ function useContextValue({selected: selectedValues = [], booksAllowed}) {
     const [filter, setFilter] = React.useState('');
     const matchingBooks = React.useMemo(
         () => books.filter(
-            (b) => b.text.toLowerCase().includes(filter.toLowerCase())
+            (b) => b.text?.toLowerCase().includes(filter.toLowerCase())
         ),
         [books, filter]
     );
