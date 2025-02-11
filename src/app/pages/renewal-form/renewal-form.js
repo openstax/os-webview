@@ -145,7 +145,7 @@ function TheForm() {
     const [initialized, setInitialized] = React.useState(false);
     const {search} = useLocation();
     const selectedYear = new window.URLSearchParams(search).get('year') ?? undefined;
-    const [copyOfYear, setCopyOfYear] = React.useState(selectedYear);
+    const [copyOfYear, setCopyOfYear] = React.useState();
 
     // Initialize selections from adoptions
     React.useEffect(
