@@ -25,9 +25,20 @@
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/books/?format=json">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/footer/?format=json">
         <script>
-          fetch('/accounts/api/user', { credentials: 'include' }).then((userResponse) => {
+          window._OX_USER_PROMISE ||= fetch('/accounts/api/user?always_200=true', { credentials: 'include' }).then(
+            (response) => {
+              if (response.status === 200) {
+                return response.json().catch((error) => {
+                  throw new Error(`Failed to parse user JSON: ${error.message}`);
+                });
+              } else {
+                throw new Error(`Failed to load user: HTTP ${response.status} status code`);
+              }
+            }
+          );
+          window._OX_USER_PROMISE.then((user) => {
             const updateUserConsentPreferences = (consentPreferences) => {
-              if (userResponse.status === 200) {
+              if (user.id) {
                 return fetch('/accounts/api/user', {
                   body: JSON.stringify({consent_preferences: consentPreferences}),
                   credentials: 'include',
@@ -38,9 +49,9 @@
                     if (response.status === 200) {
                       window.location.reload();
                     } else {
-                      Sentry.captureMessage(`Failed to save cookie consent (HTTP status code: ${response.status})`);
+                      throw new Error(`Failed to save cookie consent: HTTP ${response.status} status code`);
                     }
-                  }, (error) => Sentry.captureException(error)
+                  }
                 );
               }
             };
@@ -79,7 +90,7 @@
                   const arr = accepted ? bannerConsentPreferences.accepted : bannerConsentPreferences.rejected;
                   arr.push(category);
                 });
-                updateUserConsentPreferences(bannerConsentPreferences);
+                return updateUserConsentPreferences(bannerConsentPreferences);
               } else {
                 // If we don't have a recorded consent and they click the X button, interpret it as "reject all"
                 document.getElementsByClassName('cky-banner-btn-close')[0]?.addEventListener(
@@ -88,9 +99,9 @@
               }
             });
 
-            document.addEventListener('cookieyes_consent_update', (eventData) => {
-              updateUserConsentPreferences(eventData.detail);
-            });
+            document.addEventListener(
+              'cookieyes_consent_update', (eventData) => updateUserConsentPreferences(eventData.detail)
+            );
           });
         </script>
         <!-- Start cookieyes banner -->

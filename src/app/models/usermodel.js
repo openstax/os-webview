@@ -3,7 +3,7 @@ import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
 
 const settings = window.SETTINGS;
-const accountsUrl = `${settings.accountHref}/api/user`;
+const accountsUrl = `${settings.accountHref}/api/user?always_200=true`;
 
 function cached(fn) {
     let valid = false;
@@ -64,33 +64,25 @@ const accountsModel = {
         //     ]
         // });
 
-        return fetch(accountsUrl, {credentials: 'include'})
-        .then(
-            (response) => {
-                if (response.status === 403) {
-                    return {};
-                }
-                return response.json().then(
-                    (result) => {
-                        if (window.dataLayer) {
-                            window.dataLayer.push({
-                                faculty_status: result.faculty_status
-                            });
-                        }
-                        return result;
-                    },
-                    (err) => {
-                        console.warn('No JSON in Accounts response');
-                        return {err};
-                    }
-                );
-            },
-            (err) => {
-                console.warn('"Error fetching user info"');
-                return {err};
+        window._OX_USER_PROMISE ||= fetch('/accounts/api/user?always_200=true', { credentials: 'include' }).then(
+          (response) => {
+            if (response.status === 200) {
+              return response.json().catch((error) => {
+                throw new Error(`Failed to parse user JSON: ${error.message}`);
+              });
+            } else {
+              throw new Error(`Failed to load user: HTTP ${response.status} status code`);
             }
-        )
-        .catch((err) => {throw new Error(`Unable to fetch user data: ${err}`);});
+          }
+        );
+        return window._OX_USER_PROMISE.then((user) => {
+          if (window.dataLayer) {
+            window.dataLayer.push({
+              faculty_status: user.faculty_status
+            });
+          }
+          return user;
+        });
     })
 };
 
@@ -165,6 +157,7 @@ const userModel = {
 
 const throttledLoginCheck = throttle((setData) => {
     accountsModel.load().then((oldUser) => {
+        window._OX_USER_PROMISE = undefined;
         accountsModel.load.invalidate();
         accountsModel.load().then((newUser) => {
             if (!isEqual(oldUser, newUser)) {
