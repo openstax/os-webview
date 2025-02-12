@@ -10,11 +10,18 @@ import BookOptions from './book-options';
 import PutAway from '~/components/put-away/put-away';
 import './book-tags.scss';
 
-function Tag({item}) {
+type Item = {
+    text: string;
+    label: string;
+    value: string;
+}
+
+function Tag({item}: {
+    item: Item
+}) {
     const {deselect} = useMultiselectContext();
     const onClick = React.useCallback(
-        (event) => {
-            event.stopPropagation();
+        () => {
             deselect(item);
         },
         [deselect, item]
@@ -28,16 +35,16 @@ function Tag({item}) {
     );
 }
 
-function capture(event) {
+function capture(event: React.MouseEvent<HTMLInputElement, MouseEvent>) {
     event.stopPropagation();
 }
 
 function Filter() {
     const {filter, setFilter} = useSFBookContext();
     const {toggle} = useToggleContext();
-    const ref = React.useRef();
+    const ref = React.useRef(null);
     const onChange = React.useCallback(
-        ({target: {value}}) => setFilter(value),
+        ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => setFilter(value),
         [setFilter]
     );
 
@@ -61,7 +68,7 @@ function TagList() {
 
     return (
         <div className="tag-list">
-            {selectedItems.map((i) => <Tag key={i} item={i} />)}
+            {(selectedItems as Item[]).map((i) => <Tag key={i.value} item={i} />)}
             <Filter />
         </div>
     );
@@ -70,7 +77,13 @@ function TagList() {
 // BookTagsMultiselect must be wrapped in a SFBookContextProvider,
 // which must itself be wrapped in a MultiselectContextProvider.
 // This is a convenience wrapper so you just need one tag
-export function BookTagsContextProvider({selected, booksAllowed, children, maxSelections}) {
+export function BookTagsContextProvider({selected, booksAllowed, children, maxSelections}:
+React.PropsWithChildren<{
+    selected?: string[];
+    booksAllowed?: string[];
+    maxSelections: number;
+}>
+) {
     return (
         <MultiselectContextProvider contextValueParameters={{maxSelections}}>
             <SFBookContextProvider contextValueParameters={{selected, booksAllowed}}>
@@ -84,7 +97,9 @@ export function useBookTagsContext() {
     return {...useMultiselectContext(), ...useSFBookContext()};
 }
 
-export default function BookTagsMultiselect(passThruProps) {
+type MultiselectArgs = Parameters<typeof Multiselect>[0];
+
+export default function BookTagsMultiselect(passThruProps: MultiselectArgs) {
     return (
         <Multiselect {...passThruProps}>
             <ToggleContextProvider>

@@ -81,7 +81,7 @@ export default {
         //         }
         //     ]
         // });
-        // eslint-disable-next-line no-unreachable
+        // // eslint-disable-next-line no-unreachable
         return fetch(accountsUrl, {credentials: 'include'}).then(
             (response) => {
                 if (response.status === 403) {

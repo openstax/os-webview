@@ -43,7 +43,7 @@ export function salesforceTitles(books: Book[]) {
         .sort((a, b) => (a.text < b.text ? -1 : 1));
 }
 
-export function subjects(sfTitles: Book[]) {
+export function subjects(sfTitles: SalesforceBook[]) {
     return sfTitles
         .reduce<string[]>((a, b) => a.concat(b.subjects), [])
         .reduce<string[]>((a, b) => (a.includes(b) ? a : a.concat(b)), []);

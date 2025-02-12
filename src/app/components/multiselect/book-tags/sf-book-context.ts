@@ -1,17 +1,22 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import useMultiselectContext from '../multiselect-context.js';
+import useMultiselectContext from '../multiselect-context';
 import fetchBooks from '~/models/books';
-import {salesforceTitles, subjects as getSubjects} from '~/helpers/books';
+import {salesforceTitles, subjects as getSubjects, SalesforceBook} from '~/helpers/books';
 
 function useSFBooks() {
-    const [books, setBooks] = React.useState([]);
+    const [books, setBooks] = React.useState<SalesforceBook[]>([]);
 
-    React.useEffect(() => fetchBooks.then(salesforceTitles).then(setBooks), []);
+    React.useEffect(() => {
+        fetchBooks.then(salesforceTitles).then(setBooks);
+    }, []);
     return books;
 }
 
-function useContextValue({selected: selectedValues = [], booksAllowed}) {
+function useContextValue({selected: selectedValues = [], booksAllowed}: {
+    selected?: string[];
+    booksAllowed?: string[];
+}) {
     const allBooks = useSFBooks();
     const books = React.useMemo(
         () => allBooks.filter((b) => !booksAllowed || booksAllowed.includes(b.value)),
