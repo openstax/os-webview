@@ -5,7 +5,7 @@ import throttle from 'lodash/throttle';
 const settings = window.SETTINGS;
 const accountsUrl = `${settings.accountHref}/api/user?always_200=true`;
 
-function cached(fn) {
+function cached(fn, invalidateFn) {
     let valid = false;
     let cachedResult = null;
     const cachedFn = function () {
@@ -17,6 +17,7 @@ function cached(fn) {
     };
 
     cachedFn.invalidate = () => {
+        invalidateFn();
         valid = false;
     };
     return cachedFn;
@@ -64,26 +65,26 @@ const accountsModel = {
         //     ]
         // });
 
-        window._OX_USER_PROMISE ||= fetch('/accounts/api/user?always_200=true', { credentials: 'include' }).then(
-          (response) => {
-            if (response.status === 200) {
-              return response.json().catch((error) => {
-                throw new Error(`Failed to parse user JSON: ${error.message}`);
-              });
-            } else {
-              throw new Error(`Failed to load user: HTTP ${response.status} status code`);
+        window._OX_USER_PROMISE ||= fetch(accountsUrl, { credentials: 'include' }).then(
+            (response) => {
+                if (response.status === 200) {
+                    return response.json().catch((error) => {
+                        throw new Error(`Failed to parse user JSON: ${error.message}`);
+                    });
+                } else {
+                    throw new Error(`Failed to load user: HTTP ${response.status} status code`);
+                }
             }
-          }
         );
         return window._OX_USER_PROMISE.then((user) => {
-          if (window.dataLayer) {
-            window.dataLayer.push({
-              faculty_status: user.faculty_status
-            });
-          }
-          return user;
+            if (window.dataLayer) {
+                window.dataLayer.push({
+                    faculty_status: user.faculty_status
+                });
+            }
+            return user;
         });
-    })
+    }, () => { window._OX_USER_PROMISE = undefined; })
 };
 
 // eslint-disable-next-line complexity
@@ -157,7 +158,6 @@ const userModel = {
 
 const throttledLoginCheck = throttle((setData) => {
     accountsModel.load().then((oldUser) => {
-        window._OX_USER_PROMISE = undefined;
         accountsModel.load.invalidate();
         accountsModel.load().then((newUser) => {
             if (!isEqual(oldUser, newUser)) {
