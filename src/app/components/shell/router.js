@@ -146,7 +146,7 @@ function MainRoutes() {
                 <Route path="/details/" element={<Navigate to="/subjects" replace />} />
                 <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
                 <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
-                <Route path="/subjects-preview/*" element={<ImportedPage name="subjects" />} />
+                <Route path="/subjects/*" element={<ImportedPage name="subjects" />} />
                 <Route path="/k12/*" element={<ImportedPage name="k12" />} />
                 <Route path="/blog/*" element={<ImportedPage name="blog" />} />
                 <Route path="/webinars/*" element={<ImportedPage name="webinars" />} />
@@ -158,7 +158,8 @@ function MainRoutes() {
                     path="/edtech-partner-program"
                     element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
                 />
-                <Route path="/:name/*" element={<TopLevelPage />} />
+                <Route path="/:name/" element={<TopLevelPage />} />
+                <Route path="/:name/*" element={<Error404 />} />
                 <Route element={<h1>Fell through</h1>} />
             </Routes>
         </Layout>

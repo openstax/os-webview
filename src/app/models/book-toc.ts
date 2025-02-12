@@ -1,5 +1,5 @@
 import cmsFetch from '~/helpers/cms-fetch';
-import {cnxFetch} from './table-of-contents-html';
+import fetchRexRelease from '~/models/rex-release';
 import memoize from 'lodash/memoize';
 
 export function bookToc(slug: string) {
@@ -7,12 +7,8 @@ export function bookToc(slug: string) {
         .then((bi) => {
             const webviewLink = bi.webview_rex_link;
 
-            return {
-                webviewLink,
-                cnxId: bi.cnx_id
-            };
+            return fetchRexRelease(webviewLink, bi.cnx_id);
         })
-        .then(cnxFetch)
         .then((result) => result.tree.contents);
 }
 

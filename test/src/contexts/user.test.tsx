@@ -22,7 +22,7 @@ const uData = {
 describe('user context', () => {
     beforeAll(() => {
         jest.spyOn(SDC, 'default').mockReturnValue({
-            flags: {},
+            flags: false,
             stickyFooterState: [true, jest.fn()]
         });
     });

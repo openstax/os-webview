@@ -1,11 +1,11 @@
 import * as CF from '~/helpers/cms-fetch';
-import * as TC from '~/models/table-of-contents-html';
+import * as FRR from '~/models/rex-release';
 import * as PDU from '~/helpers/page-data-utils';
 import bookToc from '~/models/book-toc';
 import getFields from '~/models/errata-fields';
 
 const mockCmsFetch = jest.spyOn(CF, 'default');
-const mockCnxFetch = jest.spyOn(TC, 'cnxFetch');
+const mockCnxFetch = jest.spyOn(FRR, 'default');
 
 describe('mapbox', () => {
     it('calls cmsFetch', async () => {
@@ -67,3 +67,5 @@ describe('errata-fields', () => {
         expect(mockCmsFetch).toHaveBeenCalled();
     });
 });
+
+// savings and salesforce-partners are not testable

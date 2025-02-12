@@ -2,7 +2,7 @@ import cmsFetch from '~/helpers/cms-fetch';
 
 export const MAX_SEARCH_RESULTS = 1000;
 
-type SchoolInfo = {
+export type SchoolInfo = {
     name: string;
     physical_city: string;
     physical_state_province: string;
@@ -14,6 +14,8 @@ type SchoolInfo = {
     testimonial_name?: string;
     testimonial_position?: string;
     all_time_savings: number;
+    location: string;
+    total_school_enrollment: string | null;
 };
 
 export function generateCityState(schoolInfo: SchoolInfo) {

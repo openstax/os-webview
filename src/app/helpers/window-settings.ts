@@ -5,4 +5,6 @@ export type WindowWithSettings = typeof window & {
     };
 };
 
-export default window as WindowWithSettings;
+export default function settings() {
+    return (window as WindowWithSettings).SETTINGS;
+}

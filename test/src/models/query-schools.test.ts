@@ -53,4 +53,15 @@ describe('query-schools', () => {
 
         expect(data?.cityState).toBe('New Albany, Ohio');
     });
+    it('does queryById, handles empty response', async () => {
+        (global.fetch as jest.Mock).mockImplementation(() => Promise.resolve({
+            ok: true,
+            json() {
+                return Promise.resolve([]);
+            }
+        }));
+        const data = await queryById('1');
+
+        expect(data).toBeNull();
+    });
 });
