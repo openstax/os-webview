@@ -8,8 +8,8 @@ function useContextValue<T extends {value: string; text: string}>({maxSelections
 
         switch (action) {
         case 'add': return canAdd ? [...itemsOtherThanItem, item] : state;
-        case 'remove': return itemsOtherThanItem;
-        default: return state;
+        // this is the 'remove' case, but also the only other possibility
+        default: return itemsOtherThanItem;
         }
     }, []);
     const select = useCallback((item: T) => dispatch(['add', item]), []);
