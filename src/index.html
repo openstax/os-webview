@@ -27,7 +27,7 @@
         <script>
           window._OX_USER_PROMISE ||= fetch('/accounts/api/user?always_200=true', { credentials: 'include' }).then(
             (response) => {
-              if (response.status === 200) {
+              if (response.ok) {
                 return response.json().catch((error) => {
                   throw new Error(`Failed to parse user JSON: ${error.message}`);
                 });
@@ -46,7 +46,7 @@
                   method: 'PUT',
                 }).then(
                   (response) => {
-                    if (response.status === 200) {
+                    if (response.ok) {
                       window.location.reload();
                     } else {
                       throw new Error(`Failed to save cookie consent: HTTP ${response.status} status code`);
@@ -57,7 +57,6 @@
             };
 
             document.addEventListener('cookieyes_banner_load', async(eventData) => {
-              const user = userResponse.status === 200 ? await userResponse.json() : undefined;
               const userConsentPreferences = user?.consent_preferences;
 
               if (userConsentPreferences) {

@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react';
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
-import accountsModel, {SfUserModel} from './accounts-model';
+import accountsModel from './accounts-model';
+import type {AccountsUserModel} from '../../typings/accounts';
 
 export type UserModelType = {
     id: number;
@@ -22,12 +23,12 @@ export type UserModelType = {
     self_reported_school: string;
     is_not_gdpr_location: boolean;
     salesforce_contact_id: string;
-    accountsModel: SfUserModel;
+    accountsModel: AccountsUserModel;
 };
 
 // eslint-disable-next-line complexity
-function oldUserModel(sfUserModel: SfUserModel) {
-    if (!('id' in sfUserModel)) {
+function oldUserModel(accountsUserModel: AccountsUserModel) {
+    if (!('id' in accountsUserModel)) {
         return {};
     }
     const findPreferredEmail = (
@@ -45,13 +46,13 @@ function oldUserModel(sfUserModel: SfUserModel) {
                 return a;
             }).value;
     const isStudent = ['student', 'unknown_role'].includes(
-        sfUserModel.self_reported_role
+        accountsUserModel.self_reported_role
     );
     const isVerificationStale =
-        !isStudent && sfUserModel.is_instructor_verification_stale;
+        !isStudent && accountsUserModel.is_instructor_verification_stale;
     const isVerificationPending =
         !isStudent &&
-        ['pending_faculty'].includes(sfUserModel.faculty_status) &&
+        ['pending_faculty'].includes(accountsUserModel.faculty_status) &&
         !isVerificationStale;
     const groups = (function () {
         const result = [];
@@ -59,7 +60,7 @@ function oldUserModel(sfUserModel: SfUserModel) {
         if (isStudent) {
             result.push('Student');
         }
-        if (sfUserModel.faculty_status === 'confirmed_faculty') {
+        if (accountsUserModel.faculty_status === 'confirmed_faculty') {
             result.push('Faculty');
         }
         return result;
@@ -69,36 +70,36 @@ function oldUserModel(sfUserModel: SfUserModel) {
     const pendingInstructorAccess = [
         'rejected_by_sheerid',
         'pending_faculty'
-    ].includes(sfUserModel.faculty_status);
-    const incompleteSignup = sfUserModel.faculty_status === 'incomplete_signup';
-    const emailUnverified = !sfUserModel.contact_infos.some(
+    ].includes(accountsUserModel.faculty_status);
+    const incompleteSignup = accountsUserModel.faculty_status === 'incomplete_signup';
+    const emailUnverified = !accountsUserModel.contact_infos.some(
         (i) => i.is_verified
     );
-    const instructorEligible = sfUserModel.faculty_status === 'no_faculty_info';
+    const instructorEligible = accountsUserModel.faculty_status === 'no_faculty_info';
 
     /* eslint camelcase: 0 */
     return {
-        id: sfUserModel.id,
-        accounts_id: sfUserModel.id,
-        uuid: sfUserModel.uuid,
-        email: sfUserModel.contact_infos.length
-            ? findPreferredEmail(sfUserModel.contact_infos)
+        id: accountsUserModel.id,
+        accounts_id: accountsUserModel.id,
+        uuid: accountsUserModel.uuid,
+        email: accountsUserModel.contact_infos.length
+            ? findPreferredEmail(accountsUserModel.contact_infos)
             : undefined,
-        first_name: sfUserModel.first_name,
+        first_name: accountsUserModel.first_name,
         groups,
-        last_name: sfUserModel.last_name,
+        last_name: accountsUserModel.last_name,
         instructorEligible,
         pending_verification: isVerificationPending,
         stale_verification: isVerificationStale,
         incompleteSignup,
         pendingInstructorAccess,
         emailUnverified,
-        username: sfUserModel.id,
-        self_reported_role: sfUserModel.self_reported_role,
-        self_reported_school: sfUserModel.self_reported_school,
-        is_not_gdpr_location: sfUserModel.is_not_gdpr_location,
-        salesforce_contact_id: sfUserModel.salesforce_contact_id,
-        accountsModel: sfUserModel
+        username: accountsUserModel.id,
+        self_reported_role: accountsUserModel.self_reported_role,
+        self_reported_school: accountsUserModel.self_reported_school,
+        is_not_gdpr_location: accountsUserModel.is_not_gdpr_location,
+        salesforce_contact_id: accountsUserModel.salesforce_contact_id,
+        accountsModel: accountsUserModel
     } as const;
 }
 
@@ -106,7 +107,7 @@ const userModel = {
     load() {
         return accountsModel
             .load()
-            ?.then((sfModel) => oldUserModel(sfModel as SfUserModel));
+            ?.then((accountsUserModel) => oldUserModel(accountsUserModel as AccountsUserModel));
     }
 };
 
