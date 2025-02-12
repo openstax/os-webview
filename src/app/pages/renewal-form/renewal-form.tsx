@@ -166,7 +166,7 @@ function TheForm() {
     const [initialized, setInitialized] = React.useState(false);
     const {search} = useLocation();
     const selectedYear = new window.URLSearchParams(search).get('year') ?? undefined;
-    const [, setCopyOfYear] = React.useState();
+    const [, setCopyOfYear] = React.useState<string>();
     const settings = (window as WindowWithSettings).SETTINGS;
 
     // Initialize selections from adoptions
@@ -188,13 +188,26 @@ function TheForm() {
         <form action={settings.renewalEndpoint} method="post">
             <HiddenFields email={email} uuid={uuid} counts={counts} />
             <div className="fixed-fields">
-                <FixedField label="First name" name="first_name" value={firstName} />
-                <FixedField label="Last name" name="last_name" value={lastName} />
-                <FixedField label="School name" name="school" value={school} />
+                {
+                    uuid ? <>
+                        <FixedField label="First name" name="first_name" value={firstName} />
+                        <FixedField label="Last name" name="last_name" value={lastName} />
+                        <FixedField label="School name" name="school" value={school} />
+                    </> : <div>
+                        ...fetching user info...
+                    </div>
+                }
             </div>
-            <YearSelector selectedYear={selectedYear} onValueUpdate={setCopyOfYear} />
-            <BooksAndStudentCounts counts={counts} updateCount={updateCount} />
             <input type="submit" />
+            {
+                adoptions
+                ? <React.Fragment>
+                    <YearSelector selectedYear={selectedYear} onValueUpdate={setCopyOfYear} />
+                    <BooksAndStudentCounts counts={counts} updateCount={updateCount} />
+                </React.Fragment>
+                : <div>...fetching adoption info...</div>
+            }
+            <input type="submit" disabled={!adoptions} />
         </form>
     );
 }
