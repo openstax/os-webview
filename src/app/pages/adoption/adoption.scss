@@ -1,6 +1,10 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .adoption-form-v2 {
+    .year-selector-container {
+        margin-bottom: $normal-margin;
+    }
+    
     .hint {
         @include set-font(helper-label);
         color: text-color(helper);
