@@ -53,7 +53,7 @@ function Footer({
                             <a href="/tos">Terms of Use</a>
                             <a href="/license">Licensing</a>
                             <a href="/privacy">Privacy Notice</a>
-                            <OsanoToggle />
+                            <CookieYesToggle />
                         </ListOfLinks>
                     </div>
                 </div>
@@ -127,27 +127,11 @@ function Footer({
     );
 }
 
-function OsanoToggle() {
-    const osano = typeof window === 'undefined' ? undefined : window.Osano;
-    const showOsanoDrawer = React.useCallback(
-        (e) => {
-            e.preventDefault();
-            osano.cm.showDrawer('osano-cm-dom-info-dialog-open');
-        },
-        [osano]
-    );
-
-    if (osano === undefined || osano.cm.mode === 'debug') {
-        document.body.classList.remove('hide-osano');
-        return null;
-    }
-
-    document.body.classList.add('hide-osano');
+function CookieYesToggle() {
     return (
         <button
-            type='button'
-            className="small"
-            onClick={showOsanoDrawer}
+            type="button"
+            className="cky-banner-element small"
         >
             Manage cookies
         </button>
