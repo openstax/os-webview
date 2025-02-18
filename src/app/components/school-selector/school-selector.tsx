@@ -1,36 +1,30 @@
 import React from 'react';
+import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
-import useMatchingSchools from '~/models/use-school-suggestion-list';
+import useMatchingSchools, {schoolTypeValues} from '~/models/use-school-suggestion-list';
+import type {SchoolInfo as School} from '~/models/query-schools';
 import {useIntl, FormattedMessage} from 'react-intl';
-
-const schoolTypeValues = [
-    'College/University (4)',
-    'Technical/Community College (2)',
-    'Career School/For-Profit (2)',
-    'High School',
-    'K-12 School',
-    'Home School',
-    'Other'
-];
 
 export default function SchoolSelector() {
     const [value, setValue] = React.useState('');
     const {schoolNames, schoolIsOk, selectedSchool} = useMatchingSchools(value);
     const showSchoolInfo = !schoolIsOk && value.length > 3;
     const onChange = React.useCallback(
-        ({target}) => setValue(target.value),
+        ({target}: React.ChangeEvent<HTMLInputElement>) => setValue(target.value),
         []
     );
     const {formatMessage} = useIntl();
 
     React.useLayoutEffect(() => {
         if (showSchoolInfo) {
-            const putFocusBack = document.activeElement;
+            if (document.hasFocus()) {
+                const putFocusBack = document.activeElement as HTMLElement;
 
-            window.setTimeout(() => {
-                putFocusBack.focus();
-            }, 40);
+                window.setTimeout(() => {
+                    putFocusBack.focus();
+                }, 40);
+            }
         }
     }, [showSchoolInfo]);
 
@@ -48,14 +42,13 @@ export default function SchoolSelector() {
                     onChange
                 }}
             />
-            <SchoolHiddenInfo school={selectedSchool} />
+            {selectedSchool && <SchoolHiddenInfo school={selectedSchool} />}
             {showSchoolInfo && <SchoolInfo />}
         </React.Fragment>
     );
 }
 
 function SchoolInfo() {
-    const [schoolLocation, setSchoolLocation] = React.useState();
     const {formatMessage} = useIntl();
     // Because they have to be statically evaluate-able
     const schoolTypeLabels = {
@@ -94,15 +87,14 @@ function SchoolInfo() {
                     {label: formatMessage({id: 'yes'}), value: 'Domestic'},
                     {label: formatMessage({id: 'no'}), value: 'Foreign'}
                 ]}
-                selectedValue={schoolLocation}
-                setSelectedValue={setSchoolLocation}
                 required
             />
         </div>
     );
 }
 
-function SchoolHiddenInfo({school}) {
+
+function SchoolHiddenInfo({school}: {school: School}) {
     if (!school) {
         return null;
     }
@@ -113,7 +105,7 @@ function SchoolHiddenInfo({school}) {
             <input type="hidden" name="school_location" value={school.location} />
             <input
                 type="hidden" name="school_total_enrollment"
-                value={school.total_school_enrollment}
+                value={school.total_school_enrollment ?? ''}
             />
         </React.Fragment>
     );
