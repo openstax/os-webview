@@ -5,9 +5,10 @@ import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import useMatchingSchools, {schoolTypeValues} from '~/models/use-school-suggestion-list';
 import type {SchoolInfo as School} from '~/models/query-schools';
 import {useIntl, FormattedMessage} from 'react-intl';
+import './school-selector.scss';
 
-export default function SchoolSelector() {
-    const [value, setValue] = React.useState('');
+export default function SchoolSelector({initialValue = ''}) {
+    const [value, setValue] = React.useState(initialValue);
     const {schoolNames, schoolIsOk, selectedSchool} = useMatchingSchools(value);
     const showSchoolInfo = !schoolIsOk && value.length > 3;
     const onChange = React.useCallback(
@@ -29,7 +30,7 @@ export default function SchoolSelector() {
     }, [showSchoolInfo]);
 
     return (
-        <React.Fragment>
+        <div>
             <FormInput
                 label={formatMessage({id: 'contact-info.school'})}
                 suggestions={schoolNames}
@@ -44,7 +45,7 @@ export default function SchoolSelector() {
             />
             {selectedSchool && <SchoolHiddenInfo school={selectedSchool} />}
             {showSchoolInfo && <SchoolInfo />}
-        </React.Fragment>
+        </div>
     );
 }
 
