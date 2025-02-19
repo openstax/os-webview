@@ -95,11 +95,7 @@ function SchoolInfo() {
 }
 
 
-function SchoolHiddenInfo({school}: {school: School}) {
-    if (!school) {
-        return null;
-    }
-
+function SchoolHiddenInfo({school}: {school: Exclude<School, null>}) {
     return (
         <React.Fragment>
             <input type="hidden" name="school_type" value={school.type} />

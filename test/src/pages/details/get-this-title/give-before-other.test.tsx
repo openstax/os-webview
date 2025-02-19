@@ -3,9 +3,14 @@ import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GiveBeforeOther from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-other';
 import { MemoryRouter } from 'react-router-dom';
+import {LanguageContextProvider} from '~/contexts/language';
 import * as TY from '~/pages/details/common/get-this-title-files/give-before-pdf/thank-you-form';
 
 type PopupData = Parameters<typeof GiveBeforeOther>[0]['data'];
+
+jest.mock('~/helpers/main-class-hooks', () => ({
+    useMainSticky: () => jest.fn()
+}));
 
 describe('give-before-other', () => {
     const close = jest.fn();
@@ -56,15 +61,17 @@ describe('give-before-other', () => {
             onThankYouClick: () => null
         });
         render(
-            <MemoryRouter initialEntries={['']}>
-                <GiveBeforeOther
-                    link='#gbo-link'
-                    close={close}
-                    data={data}
-                    onDownload={onDownload}
-                    variant='Download resource'
-                />
-            </MemoryRouter>
+            <LanguageContextProvider>
+                <MemoryRouter initialEntries={['']}>
+                    <GiveBeforeOther
+                        link='#gbo-link'
+                        close={close}
+                        data={data}
+                        onDownload={onDownload}
+                        variant='Download resource'
+                    />
+                </MemoryRouter>
+            </LanguageContextProvider>
         );
         expect(screen.getAllByRole('textbox')).toHaveLength(5);
         screen.getByText('Send us a thank you note');

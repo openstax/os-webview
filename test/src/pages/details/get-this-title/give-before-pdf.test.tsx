@@ -2,10 +2,15 @@ import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {MemoryRouter} from 'react-router-dom';
+import {LanguageContextProvider} from '~/contexts/language';
 import GiveBeforePdf from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-pdf';
 // eslint-disable-next-line max-len
 import type {DonationPopupData} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-donation-popup-data';
 import * as TY from '~/pages/details/common/get-this-title-files/give-before-pdf/thank-you-form';
+
+jest.mock('~/helpers/main-class-hooks', () => ({
+    useMainSticky: () => jest.fn()
+}));
 
 jest.useFakeTimers();
 const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
@@ -32,7 +37,6 @@ describe('give-before-pdf', () => {
     const originalError = console.error;
 
     afterEach(() => {
-        jest.resetAllMocks();
         jest.restoreAllMocks();
     });
 
@@ -53,16 +57,18 @@ describe('give-before-pdf', () => {
     });
     it('shows Thank You', async () => {
         render(
-            <ShowThankYouButton>
-                <MemoryRouter initialEntries={['']}>
-                    <GiveBeforePdf
-                        link="gbp-link"
-                        close={close}
-                        data={data}
-                        onDownload={onDownload}
-                    />
-                </MemoryRouter>
-            </ShowThankYouButton>
+            <LanguageContextProvider>
+                <ShowThankYouButton>
+                    <MemoryRouter initialEntries={['']}>
+                        <GiveBeforePdf
+                            link="gbp-link"
+                            close={close}
+                            data={data}
+                            onDownload={onDownload}
+                        />
+                    </MemoryRouter>
+                </ShowThankYouButton>
+            </LanguageContextProvider>
         );
         await user.click(await screen.findByRole('button'));
         await screen.findByText('Go to your file');
@@ -75,15 +81,17 @@ describe('give-before-pdf', () => {
             onThankYouClick: () => thankYouClick()
         });
         render(
-            <MemoryRouter initialEntries={['']}>
-                <GiveBeforePdf
-                    link="gbp-link"
-                    close={close}
-                    data={data}
-                    onDownload={onDownload}
-                    track="thanks"
-                />
-            </MemoryRouter>
+            <LanguageContextProvider>
+                <MemoryRouter initialEntries={['']}>
+                    <GiveBeforePdf
+                        link="gbp-link"
+                        close={close}
+                        data={data}
+                        onDownload={onDownload}
+                        track="thanks"
+                    />
+                </MemoryRouter>
+            </LanguageContextProvider>
         );
         jest.runAllTimers();
         await screen.findByRole('heading', {
@@ -91,7 +99,7 @@ describe('give-before-pdf', () => {
             name: 'Send us a thank you note'
         });
         screen.getAllByRole('textbox').forEach((el) => {
-            fireEvent.input(el, {target: {value: 'something'}});
+            fireEvent.input(el, {target: {value: 'Casper College'}});
         });
         await user.click(screen.getByRole('checkbox'));
         console.error = jest.fn();
@@ -130,6 +138,7 @@ describe('give-before-pdf', () => {
         await user.click(goLink);
         jest.runAllTimers();
         expect(onDownload).toHaveBeenCalled();
+        jest.resetAllMocks();
     });
     it('Handle close without onDownload', async () => {
         expect(close).not.toHaveBeenCalled();
