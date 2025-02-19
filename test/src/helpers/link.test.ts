@@ -27,4 +27,11 @@ describe('stripOpenStaxDomain', () => {
 
         urls.forEach((url) => expect(linkHelper.isExternal(url)).toBe(true));
     });
+    it('handles invalid url click', () => {
+        const el = document.createElement('a');
+
+        expect(linkHelper.validUrlClick({
+            target: el
+        } as unknown as React.MouseEvent<HTMLAnchorElement, MouseEvent>)).toBe(false);
+    });
 });

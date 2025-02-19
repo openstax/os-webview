@@ -206,7 +206,6 @@ module.exports = {
         'template-curly-spacing': ['error', 'never'],
         'yield-star-spacing': ['error', {'before': false, 'after': true}],
 
-        'react/jsx-curly-newline': ['error', 'consistent'],
         'react/jsx-curly-brace-presence': ['error', 'never'],
         'react/jsx-equals-spacing': ['error', 'never'],
         'react/jsx-first-prop-new-line': ['error', 'multiline'],

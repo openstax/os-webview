@@ -25,7 +25,6 @@ export type UserModelType = {
     accountsModel: SfUserModel;
 };
 
-// eslint-disable-next-line complexity
 function oldUserModel(sfUserModel: SfUserModel) {
     if (!('id' in sfUserModel)) {
         return {};

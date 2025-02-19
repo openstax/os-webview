@@ -1,7 +1,7 @@
 import React from 'react';
-import useMultiselectContext from '../multiselect-context.js';
+import useMultiselectContext from '../multiselect-context';
 import useSFBookContext from './sf-book-context';
-import useToggleContext from '~/components/toggle/toggle-context.js';
+import useToggleContext from '~/components/toggle/toggle-context';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './book-options.scss';
 
