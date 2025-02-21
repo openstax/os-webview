@@ -61,15 +61,6 @@
         }
     }
 
-    .disqus {
-        @extend %text-content;
-
-        > * {
-            max-width: 100%;
-            width: 60rem;
-        }
-    }
-
     .write-for-us {
         background-color: os-color(baby-blue);
 

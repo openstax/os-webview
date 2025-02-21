@@ -24,7 +24,6 @@ module.exports = {
     'globals': {
         'console': 'readonly',
         'document': 'readonly',
-        'DISQUS': 'readonly',
         'fetch': 'readonly',
         'history': 'readonly',
         'piTracker': 'readonly',
