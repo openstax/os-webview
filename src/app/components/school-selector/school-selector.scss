@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.school-info {
+    background-color: ui-color(white);
+    border: thin solid ui-color(form-border);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    row-gap: 2rem;
+
+    .control-group {
+        margin-bottom: 0;
+    }
+}
+

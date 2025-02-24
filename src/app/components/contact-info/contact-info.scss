@@ -1,20 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .contact-info {
-    .school-info {
-        background-color: ui-color(white);
-        border: thin solid ui-color(form-border);
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 2rem;
-        padding: 2rem;
-        row-gap: 2rem;
-
-        .control-group {
-            margin-bottom: 0;
-        }
-    }
-
     .vertical-list {
         max-height: 32rem;
         overflow-y: auto;

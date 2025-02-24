@@ -20,7 +20,7 @@ function Option({item, name, required, selectedValue, onChange}) {
 }
 
 export default function FormRadioGroup({
-    label, longLabel, name, options, required
+    label=undefined, longLabel, name, options, required
 }) {
     const ref = React.useRef();
     const [validationMessage, setValidationMessage] = useState('');

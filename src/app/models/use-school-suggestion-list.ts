@@ -5,15 +5,27 @@ import cmsFetch from '~/helpers/cms-fetch';
 import debounce from 'lodash/debounce';
 import type {SchoolInfo} from './query-schools';
 
-type SFSchoolInfo = SchoolInfo & {school_type?: string};
-type SchoolFetchFunction = (value: string) => Promise<SFSchoolInfo[]>;
+export const schoolTypeValues = [
+    'College/University (4)',
+    'Technical/Community College (2)',
+    'Career School/For-Profit (2)',
+    'High School',
+    'K-12 School',
+    'Home School',
+    'Other'
+] as const;
+
+export type SchoolType = typeof schoolTypeValues[number];
+
+type SFSchoolInfo = SchoolInfo & {school_type?: SchoolType};
+type SchoolFetchFunction = (value: string) => Promise<SFSchoolInfo[] | null>;
 
 const debouncedFetch = debounce(
     (schoolFetch: SchoolFetchFunction, value, setSchools) => {
         if (value?.length > 1) {
             schoolFetch(value)
                 .then((list) =>
-                    list.map((entry) => ({
+                    list?.map((entry) => ({
                         name: entry.name,
                         type: entry.school_type || entry.type, // different names in sfapi and old cms?
                         location: entry.location,
@@ -48,9 +60,9 @@ function useSchoolFetchFunction() {
 
 export default function useMatchingSchools(value: string) {
     const schoolFetch = useSchoolFetchFunction();
-    const [schools, setSchools] = useState<SchoolInfo[]>([]);
+    const [schools, setSchools] = useState<SchoolInfo[] | undefined>([]);
     const schoolNames = useMemo(
-        () => schools.map((s) => s.name).sort(),
+        () => schools?.map((s) => s.name).sort() ?? [],
         [schools]
     );
     const schoolSet = useMemo(
@@ -60,7 +72,7 @@ export default function useMatchingSchools(value: string) {
     const schoolIsOk = schoolSet.has(value?.toLowerCase());
     const selectedSchool =
         schoolIsOk &&
-        schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
+        schools?.find((s) => s.name.toLowerCase() === value.toLowerCase());
     const schoolOptions = useMemo(
         () => schoolNames.map((n) => ({label: n, value: n})),
         [schoolNames]
