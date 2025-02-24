@@ -7,7 +7,6 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject';
 import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
 import PinnedArticle from './pinned-article/pinned-article';
-import DisqusForm from './disqus-form/disqus-form';
 import MoreStories from './more-stories/more-stories';
 import SearchBar, {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import SearchResults from './search-results/search-results';
@@ -96,7 +95,6 @@ export function ArticlePage() {
     return (
         <WindowContextProvider>
             <ArticleFromSlug slug={`news/${slug}`} onLoad={setArticleData} />
-            <DisqusForm />
             <div className="boxed">
                 <MoreStories exceptSlug={slug as string} />
             </div>

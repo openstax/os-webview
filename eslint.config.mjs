@@ -36,7 +36,6 @@ export default [{
         globals: {
             console: "readonly",
             document: "readonly",
-            DISQUS: "readonly",
             fetch: "readonly",
             history: "readonly",
             piTracker: "readonly",
