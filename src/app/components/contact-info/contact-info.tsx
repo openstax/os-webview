@@ -4,7 +4,7 @@ import {useIntl} from 'react-intl';
 import SchoolSelector from '~/components/school-selector/school-selector';
 import './contact-info.scss';
 
-export default function ContactInfo({children}) {
+export default function ContactInfo({children}: React.PropsWithChildren<Record<never, never>>) {
     const {formatMessage} = useIntl();
 
     return (
