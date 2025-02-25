@@ -74,6 +74,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isKinetic = args[0].endsWith('kinetic/');
     const isHomepage = (/openstax-homepage/).test(args[0]);
+    const isImage = args[0].includes('/api/images/');
     const isNewSubjects = args[0].includes('new-subjects');
     const isOsNews = (/openstax-news/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
@@ -93,7 +94,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSubjectPage = args[0].includes('pages/subjects');
     const isTeam = (/pages\/team/).test(args[0]);
     const isUser = (/api\/user/).test(args[0]);
-    const isImage = (/api\/v2\/images/).test(args[0]);
     const isArchive = (/archive\.cnx/).test(args[0]);
     const isSalesforceForms = (/salesforce\/forms/).test(args[0]);
     const isSalesforcePartners = (/salesforce\/partners/).test(args[0]);

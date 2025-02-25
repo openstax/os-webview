@@ -11,11 +11,8 @@ import userStatus from '../data/userStatus';
 import allBooks from '../data/sf-all-books';
 import * as SFBC from '~/components/multiselect/book-tags/sf-book-context';
 
-/* eslint-disable camelcase */
-const routerFuture = {
-    v7_startTransition: true,
-    v7_relativeSplatPath: true
-};
+// @ts-expect-error does not exist on
+const {routerFuture} = global;
 /* eslint-enable camelcase */
 const mockNavigate = jest.fn();
 // option necessary when using fake timers
