@@ -1,15 +1,18 @@
 import React from 'react';
-import ReactModal from 'react-modal';
+import ReactModal, {Aria} from 'react-modal';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import cn from 'classnames';
 import './dialog.scss';
 
-function PutAway({noTitle, onClick}) {
+function PutAway({noTitle, onClick}: {
+    noTitle?: boolean;
+    onClick?: () => void;
+}) {
     return (
         <button
             className={cn('put-away', {'no-title-bar': noTitle})}
             hidden={!onClick}
-            onClick={() => onClick()}
+            onClick={() => onClick?.()}
             aria-label="close"
         >
             ×
@@ -17,41 +20,22 @@ function PutAway({noTitle, onClick}) {
     );
 }
 
-export function FooterDialog({isOpen, title, children, className}) {
-    React.useLayoutEffect(() => {
-        const footerEl = document.getElementById('footer');
-
-        footerEl?.style.setProperty('z-index', 1);
-
-        return () => footerEl?.style.removeProperty('z-index');
-    }, []);
-
-    if (!isOpen) {
-        return null;
-    }
-
-    return (
-        <dialog className={cn('footer-dialog', className)}>
-            {title && (
-                <div className="title-bar">
-                    <RawHTML Tag="span" html={title} />
-                </div>
-            )}
-            {children}
-        </dialog>
-    );
-}
-
-// eslint-disable-next-line complexity
 export default function Dialog({
     isOpen,
     title,
     onPutAway,
     children,
-    className = undefined,
+    className,
     closeOnOutsideClick = false,
     aria = title ? {labelledby: 'modal-dialog-title'} : {label: 'missing label'}
-}) {
+}: React.PropsWithChildren<{
+    isOpen: boolean;
+    title?: string;
+    onPutAway?: () => void;
+    className?: string;
+    closeOnOutsideClick?: boolean;
+    aria?: Aria & {label?: string};
+}>) {
     const overlayClassName = className ? `modal-overlay-${className}` : '';
 
     return (
@@ -94,7 +78,14 @@ export function useDialog(initiallyOpen = false) {
             afterClose = () => null,
             aria,
             ...otherProps
-        }) {
+        }: React.PropsWithChildren<{
+            title?: string;
+            modal?: boolean;
+            className?: string;
+            showPutAway?: boolean;
+            afterClose?: () => void;
+            aria?: Aria;
+        }>) {
             const Modal = modal ? ReactModal : React.Fragment;
             const closeAndAfterClose = () => {
                 close();
@@ -113,7 +104,7 @@ export function useDialog(initiallyOpen = false) {
                         title={title}
                         className={className}
                         isOpen={showDialog}
-                        onPutAway={showPutAway && closeAndAfterClose}
+                        onPutAway={showPutAway ? closeAndAfterClose : undefined}
                         aria={aria}
                     >
                         {children}
@@ -122,6 +113,6 @@ export function useDialog(initiallyOpen = false) {
             );
         }
 
-        return [BoundDialog, open, close, showDialog];
+        return [BoundDialog, open, close, showDialog] as const;
     }, [showDialog]);
 }
