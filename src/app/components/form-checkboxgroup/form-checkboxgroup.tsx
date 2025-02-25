@@ -1,6 +1,16 @@
 import React from 'react';
 
-function Option({item, name, onChange, checked=false}) {
+type Item = {
+    label: string;
+    value: string;
+}
+
+function Option({item, name, onChange, checked}: {
+    item: Item;
+    name: string;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    checked: boolean;
+}) {
     const inputProps = item.value ? {
         name,
         value: item.value
@@ -17,17 +27,22 @@ function Option({item, name, onChange, checked=false}) {
 }
 
 export default function FormCheckboxgroup(
-    {name, label, longLabel, instructions, options, onChange}
+    {name, label, longLabel, instructions, options, onChange}: {
+        name: string;
+        label?: string;
+        longLabel?: string;
+        instructions?: string;
+        options: Item[];
+        onChange?: (arr: unknown[]) => void;
+    }
 ) {
     const checkedItems = React.useMemo(() => new window.Set(), []);
     const onItemChange = React.useCallback(
-        ({target: {value, checked}}) => {
+        ({target: {value, checked}}: React.ChangeEvent<HTMLInputElement>) => {
             const method = checked ? 'add' : 'delete';
 
             checkedItems[method](value);
-            if (onChange) {
-                onChange(Array.from(checkedItems.values()));
-            }
+            onChange?.(Array.from(checkedItems.values()));
         },
         [checkedItems, onChange]
     );
@@ -40,7 +55,7 @@ export default function FormCheckboxgroup(
             {
                 options.map((item) =>
                     <Option
-                        item={item} name={name} key={item}
+                        item={item} name={name} key={item.value}
                         checked={checkedItems.has(item.value)}
                         onChange={onItemChange}
                     />
