@@ -192,7 +192,7 @@
             flex-direction: row;
             gap: 3rem;
             max-width: 120rem;
-            margin: 0 auto;
+            margin: 0 auto 3rem;
 
             .grid {
                 max-width: unset;
@@ -235,14 +235,15 @@
                 }
             }
         }
-        // When the screen is narrow, the sidebar needs to be relatively wide
-        // beyond these, its self-sizing is fine
         > .sidebar {
             @include width-between($phone-max, $first-break) {
                 min-width: calc(50% - 1.5rem);
             }
             @include width-between($first-break, $second-break) {
                 min-width: calc(33.3% - 3rem);
+            }
+            @include wider-than($second-break) {
+                min-width: calc(25% - 4.5rem);
             }
         }
     }
