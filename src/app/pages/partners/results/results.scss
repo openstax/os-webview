@@ -2,7 +2,9 @@
 @import 'mixins/placeholder-selectors';
 
 .partners .results {
-    padding: 2rem $normal-margin 20rem;
+    align-items: start;
+    padding: 2rem 0 20rem;
+    row-gap: 2rem;
 
     @include width-up-to($phone-max) {
         padding: 0 $normal-margin 6rem;
@@ -12,21 +14,11 @@
         min-height: 60rem;
     }
 
-    >:first-child {
-        @include width-up-to($phone-max) {
-            margin-bottom: $normal-margin;
-        }
-    
-        @include wider-than($phone-max) {
-            margin-bottom: 3rem;
-        }
-    }
-
     h2 {
         margin: 0;
     }
 
-    @mixin partner-grid {
+    .grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
         grid-auto-rows: minmax(min-content, 100%);
@@ -42,177 +34,73 @@
             justify-content: left;
         }
 
-        .partner-card {
-            @include partner-card();
-        }
-    }
-
-    @mixin partner-card {
-        background-color: ui-color(white);
-        border-radius: 0.3rem;
-        box-shadow: $card-shadow;
-        color: inherit;
-        display: grid;
-        grid-row-gap: 1rem;
-        grid-template: 'image'  8rem
-        'title'
-        'tags' 1fr
-        'rating';
-        height: 100%;
-        padding: $normal-margin;
-        text-decoration: none;
-
-        .logo {
-            align-self: center;
-            grid-area: image;
-            justify-self: center;
-
-            > img {
-                max-height: 8rem;
-                max-width: 100%;
-            }
-        }
-
-        .badge {
-            @include verified-badge();
-
-            align-self: start;
-            grid-area: image;
-            justify-self: end;
-            z-index: auto;
-        }
-
-        .resource-title {
-            @include set-font(h4);
-
-            font-weight: bold;
-            grid-area: title;
-            line-height: normal;
-        }
-
-        .tags,
-        .stars-and-count {
-            @include body-font(1.2rem);
-
-            color: text-color(helper);
-        }
-
-        .tags {
-            grid-area: tags;
-        }
-
-        .stars-and-count {
-            align-items: center;
-            grid-area: rating;
+        .card {
+            background-color: ui-color(white);
+            border-radius: 0.3rem;
+            box-shadow: $card-shadow;
+            color: inherit;
             display: grid;
-            grid-auto-flow: column;
-            grid-column-gap: 0.7rem;
-            justify-content: left;
+            grid-row-gap: 1rem;
+            grid-template: 'image'  8rem
+            'title'
+            'tags' 1fr
+            'rating';
+            height: 100%;
+            padding: $normal-margin;
+            text-decoration: none;
 
-            .stars {
-                color: os-color(yellow);
-                font-size: 75%;
-                padding-bottom: 3%;
-            }
-        }
-    }
+            .logo {
+                align-self: center;
+                grid-area: image;
+                justify-self: center;
 
-    .grid {
-        @include partner-grid;
-    }
-
-    .boxed {
-        gap: 3rem;
-
-        @include width-up-to($phone-max) {
-            gap: $normal-margin;
-            padding: 0;
-        }
-    }
-
-    .with-sidebar {
-        h2 {
-            text-align: center;
-        }
-
-        @include width-up-to($phone-max) {
-            > .boxed {
-                padding: 0;
-            }
-
-            &,
-            .sidebar-content {
-                display: flex;
-                flex-direction: column;
-                gap: $normal-margin;
-
-                ul {
-                    @include partner-grid();
-                }
-
-                li > a {
-                    @include partner-card();
+                > img {
+                    max-height: 8rem;
+                    max-width: 100%;
                 }
             }
-        }
 
-        @include wider-than($phone-max) {
-            display: flex;
-            flex-direction: row;
-            gap: $normal-margin;
-            max-width: 120rem;
-            margin: 0 auto;
-            padding-right: $normal-margin;    
+            .badge {
+                @extend %verified-badge;
 
-            .grid {
-                max-width: unset;
+                align-self: start;
+                grid-area: image;
+                justify-self: end;
+                z-index: auto;
             }
-    
-            > .sidebar {
-                border: thin solid black;
-                height: max-content;
 
-                .sidebar-content {
-                    background-color: ui-color(white);
+            .resource-title {
+                @include set-font(h4);
 
-                    ul {
-                        padding: 0;
-                        margin: 0;
-
-                        li {
-                            border-bottom: thin solid ui-color(form-border);
-                        }
-                    }
-                }
-
-                h2 {
-                    @include set-font(h3);
-
-                    background-color: os-color(gray);
-                    color: ui-color(white);
-                    padding: $normal-margin;
-                }
-
-                .grid {
-                    gap: 0.2rem;
-                    grid-template-columns: 100%;
-                }
-
-                .card {
-                    border-radius: 0;
-                    box-shadow: none;
-                    border-bottom: thin solid ui-color(form-border);
-                }
+                font-weight: bold;
+                grid-area: title;
+                line-height: normal;
             }
-        }
-        @include width-between($phone-max, $tablet-max) {
-            > .sidebar {
-                min-width: calc(50% - 3rem);
+
+            .tags,
+            .stars-and-count {
+                @include body-font(1.2rem);
+
+                color: text-color(helper);
             }
-        }
-        @include wider-than($tablet-max) {
-            > .sidebar {
-                min-width: calc(25% + 12rem);
+
+            .tags {
+                grid-area: tags;
+            }
+
+            .stars-and-count {
+                align-items: center;
+                grid-area: rating;
+                display: grid;
+                grid-auto-flow: column;
+                grid-column-gap: 0.7rem;
+                justify-content: left;
+
+                .stars {
+                    color: os-color(yellow);
+                    font-size: 75%;
+                    padding-bottom: 3%;
+                }
             }
         }
     }

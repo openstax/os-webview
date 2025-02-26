@@ -27,8 +27,7 @@ export default function SelectedPartnerDialog({
             {Boolean(partner) && (
                 <PartnerDetails
                     detailData={detailData}
-                    title={title}
-                    setTitle={setTitle}
+                    {...{title, setTitle}}
                 />
             )}
         </Dialog>

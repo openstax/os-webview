@@ -1,23 +1,37 @@
 import buildContext from '~/components/jsx-helpers/build-context';
-import usePartnerInfo from '~/models/partner-info';
+import useReviews from '~/models/reviews';
+import useDialogContext from '../results/dialog-context';
 
+// eslint-disable-next-line complexity
+function useContextValue({id: partnerId, model}) {
+    const [ratings, postRating] = useReviews(partnerId);
+    const {title, setTitle} = useDialogContext();
 
-function useContextValue({id: partnerId, model, title, setTitle}) {
-    const info = usePartnerInfo(partnerId);
-
-    if (!info) {
+    if (!ratings) {
         return {};
     }
-    const {partnerName} = info;
+    const [partnerName, summary, reviews] = [
+        ratings.partnerName,
+        {
+            count: ratings.ratingCount,
+            rating: ratings.averageRating.ratingAvg
+        },
+        ratings.reviews
+    ];
+    const reviewCount = reviews.reduce((a, b) => a + (b.status === 'Approved' ? 1 : 0), 0);
     const showInfoRequestForm = title !== '';
     const toggleForm = () => setTitle(title ? '' : 'Request information');
 
     return {
         partnerId,
         partnerName,
+        summary,
+        reviews,
+        reviewCount,
+        postRating,
         showInfoRequestForm,
         toggleForm,
-        partnerType: info.partnerType,
+        partnerType: ratings?.partnerType,
         books: model.books
     };
 }
