@@ -17,7 +17,8 @@ describe('useSelectList', () => {
 
         React.useEffect(
             () => {
-                document.addEventListener('keydown', handler);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                document.addEventListener('keydown', handler as any);
             },
             [handler]
         );
