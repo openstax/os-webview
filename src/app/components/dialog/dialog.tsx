@@ -4,7 +4,10 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import cn from 'classnames';
 import './dialog.scss';
 
-function PutAway({noTitle, onClick}: {
+function PutAway({
+    noTitle,
+    onClick
+}: {
     noTitle?: boolean;
     onClick?: () => void;
 }) {
