@@ -10,7 +10,7 @@ export default function useSelectList({
     getItems: () => {
         label: string;
     }[];
-    accept: (item: unknown) => void;
+    accept: (item: object) => void;
     cancel?: () => void;
     minActiveIndex?: number;
     searchable?: boolean;
@@ -18,7 +18,7 @@ export default function useSelectList({
     const [activeIndex, setActiveIndex] = useState(-1);
 
     // eslint-disable-next-line complexity
-    function handleKeyDown(event: KeyboardEvent) {
+    function handleKeyDown(event: React.KeyboardEvent) {
         let handled = true;
         const items = getItems();
 
