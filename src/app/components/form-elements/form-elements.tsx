@@ -3,10 +3,14 @@ import useSelectList from '~/helpers/use-select-list';
 import cn from 'classnames';
 import './form-elements.scss';
 
-function Option({text, active, onClick}: {
+function Option({
+    text,
+    active,
+    onClick
+}: {
     text: string;
     active: boolean;
-    onClick?: React.MouseEventHandler<HTMLDivElement>
+    onClick?: React.MouseEventHandler<HTMLDivElement>;
 }) {
     const ref = React.useRef<HTMLDivElement>(null);
 
@@ -17,12 +21,7 @@ function Option({text, active, onClick}: {
     }, [active]);
 
     return (
-        <div
-            className={cn({active})}
-            role="option"
-            onClick={onClick}
-            ref={ref}
-        >
+        <div className={cn({active})} role="option" onClick={onClick} ref={ref}>
             {text}
         </div>
     );
@@ -31,29 +30,37 @@ function Option({text, active, onClick}: {
 type OptionType = {
     label: string;
     value: string;
-}
+};
 
-function SuggestionList({options, activeIndex, accept}: {
+function SuggestionList({
+    options,
+    activeIndex,
+    accept
+}: {
     options: OptionType[];
     accept: (o: OptionType) => void;
     activeIndex: number;
 }) {
     return (
         <div className="suggestion-list" role="listbox">
-            {
-                options.map((opt, i) =>
-                    <Option
-                        key={opt.value} active={activeIndex === i}
-                        onClick={() => accept(opt)}
-                        text={opt.label}
-                    />
-                )
-            }
+            {options.map((opt, i) => (
+                <Option
+                    key={opt.value}
+                    active={activeIndex === i}
+                    onClick={() => accept(opt)}
+                    text={opt.label}
+                />
+            ))}
         </div>
     );
 }
 
-export function FilteringSelect({options, inputProps, accept, accepted}: {
+export function FilteringSelect({
+    options,
+    inputProps,
+    accept,
+    accepted
+}: {
     options: OptionType[];
     inputProps: JSX.IntrinsicAttributes;
     accept: (o: unknown) => void;
@@ -85,10 +92,13 @@ export function FilteringSelect({options, inputProps, accept, accepted}: {
     return (
         <div className="input-with-suggestions">
             <input type="text" {...inputProps} onKeyDown={wrappedKeyDown} />
-            {
-                !accepted &&
-                <SuggestionList options={options} activeIndex={activeIndex} accept={accept} />
-            }
+            {!accepted && (
+                <SuggestionList
+                    options={options}
+                    activeIndex={activeIndex}
+                    accept={accept}
+                />
+            )}
         </div>
     );
 }
