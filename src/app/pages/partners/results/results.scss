@@ -24,6 +24,11 @@
 
     h2 {
         margin: 0;
+        width: 100%;
+        text-align: center;
+        background-color: ui-color(form-border);
+        padding: $normal-margin 0;
+        border: thin solid ui-color(black);
     }
 
     @mixin partner-grid {
@@ -131,10 +136,6 @@
     }
 
     .with-sidebar {
-        h2 {
-            text-align: center;
-        }
-
         /*
             We want to make breakpoints for each possible number of cards
             on a row, from 2 to 5, such that the row with a sidebar has one
@@ -199,9 +200,9 @@
             }
     
             > .sidebar {
-                border: thin solid black;
+                outline: thin solid black;
                 height: max-content;
-
+                
                 .sidebar-content {
                     background-color: ui-color(white);
 
@@ -216,10 +217,8 @@
                 }
 
                 h2 {
-                    @include set-font(h3);
-
-                    background-color: ui-color(form-border);
-                    padding: $normal-margin;
+                    // @include set-font(h3);
+                    border: 0;
                 }
 
                 .grid {
