@@ -30,7 +30,7 @@ describe('models/use-school-suggestion-list', () => {
         jest.spyOn(USDC, 'default').mockReturnValue({
             flags: {my_openstax: true} // eslint-disable-line camelcase
         } as ReturnType<typeof USDC.default>);
-        jest.spyOn(SFF, 'default').mockResolvedValue([]);
+        jest.spyOn(SFF, 'default').mockResolvedValue(undefined);
         render(<Component searchTerm="Rice" />);
         jest.runAllTimers();
         screen.getByText(0);

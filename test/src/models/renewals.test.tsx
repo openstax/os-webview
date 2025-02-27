@@ -7,7 +7,7 @@ describe('models/renewals', () => {
     function Component({uuid = ''}) {
         const adoptions = useAdoptions(uuid);
 
-        return <div>{adoptions}</div>;
+        return <div>{adoptions?.toString()}</div>;
     }
     it('calls fetchFromCMS when passed a uuid', () => {
         const mockFetch = jest.fn();

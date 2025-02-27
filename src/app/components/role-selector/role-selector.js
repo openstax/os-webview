@@ -23,18 +23,6 @@ export function RoleDropdown({ options, setValue, name = 'subject' }) {
     );
 }
 
-// Jest didn't like dynamic id for formatMessage
-const spanishRoles = {
-    'Student': 'Estudiante',
-    'Faculty': 'Instructor(a)',
-    'Home School Teacher': 'Instructor(a) de educación en el hogar',
-    'Administrator': 'Administrador(a)',
-    'Librarian': 'Bibliotecario',
-    'Instructional Designer': 'Diseñador(a) instruccional',
-    'Adjunct Faculty': 'Adjunto Facultad',
-    'Other': 'Otro'
-};
-
 /* eslint-disable */
 function RoleSelector({
     data: options,
@@ -44,19 +32,13 @@ function RoleSelector({
     hidden = false
 }) {
     const [studentContent, facultyContent] = children;
-    const {language} = useLanguageContext();
-    const translatedOptions = options.map(
-        (opt) => {
-            return {...opt, displayName: language === 'es' && spanishRoles[opt.salesforceName] || opt.displayName};
-        }
-    );
 
     return (
         <div className="role-selector">
             <form data-region="selector">
                 <label hidden={hidden}>
                     <FormattedMessage id="role-selector.i-am" defaultMessage='I am a' />
-                    <RoleDropdown options={translatedOptions} setValue={setValue} />
+                    <RoleDropdown options={options} setValue={setValue} />
                 </label>
             </form>
             {value === "Student" && studentContent}
@@ -66,7 +48,9 @@ function RoleSelector({
 }
 
 export default function RoleSelectorLoader(props) {
+    const {language} = useLanguageContext();
+
     return (
-        <LoaderPage slug="snippets/roles" props={props} Child={RoleSelector} />
+        <LoaderPage slug={`snippets/roles?locale=${language}`} props={props} Child={RoleSelector} />
     );
 }

@@ -13,6 +13,14 @@
         @include set-font(h2);
     }
 
+    label {
+        font-weight: bold;
+
+        .Select {
+            font-weight: normal;
+        }
+    }
+
     form {
         background-color: ui-color(white);
         border: thin solid ui-color(form-border);
@@ -27,6 +35,15 @@
             @include button();
             @extend %primary;
             align-self: flex-start;
+
+            &[disabled] {
+                cursor: not-allowed;
+                opacity: 0.8;
+                
+                &:hover {
+                    background-color: ui-color(primary);
+                }
+            }
         }
     }
 

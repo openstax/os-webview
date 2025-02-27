@@ -26,7 +26,6 @@ export type UserModelType = {
     accountsModel: AccountsUserModel;
 };
 
-// eslint-disable-next-line complexity
 function oldUserModel(accountsUserModel: AccountsUserModel) {
     if (!('id' in accountsUserModel)) {
         return {};

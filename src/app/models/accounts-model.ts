@@ -61,7 +61,7 @@ export default {
         //         }
         //     ]
         // });
-        // eslint-disable-next-line no-unreachable
+
         window._OX_USER_PROMISE ||= fetch(accountsUrl, { credentials: 'include' }).then(
             (response) => {
                 if (response.ok) {
@@ -73,6 +73,7 @@ export default {
                 }
             }
         );
+
         return window._OX_USER_PROMISE.then((user) => {
             window.dataLayer ||= [];
             window.dataLayer.push({

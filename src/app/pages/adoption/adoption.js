@@ -1,10 +1,12 @@
 import React, {useState, useRef} from 'react';
+import {useLocation} from 'react-router-dom';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import ContactInfo from '~/components/contact-info/contact-info';
+import YearSelector from '~/components/year-selector/year-selector';
 import {useAfterSubmit} from '~/components/book-selector/after-form-submit';
 import BookSelector, {
     useSelectedBooks
@@ -16,7 +18,7 @@ import TrackingParameters from '~/components/tracking-parameters/tracking-parame
 import {useIntl} from 'react-intl';
 import './adoption.scss';
 
-function BookSelectorPage({selectedBooksRef}) {
+function BookSelectorPage({selectedBooksRef, year}) {
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = React.useMemo(
     () => selectedBooks.map((b) => b.value.replace(/ *\[.*/, '')).join('; '),
@@ -44,7 +46,7 @@ function BookSelectorPage({selectedBooksRef}) {
             <input type="hidden" name="subject_interest" value={bookList} />
             <label>
                 <div className="control-group">
-                    <HowUsing selectedBooks={selectedBooks} />
+                    <HowUsing selectedBooks={selectedBooks} year={year} />
                 </div>
             </label>
         </React.Fragment>
@@ -77,6 +79,9 @@ function FacultyForm({position, onPageChange}) {
         },
         [onSubmit]
     );
+    const {search} = useLocation();
+    const selectedYear = new window.URLSearchParams(search).get('year') ?? undefined;
+    const [copyOfYear, setCopyOfYear] = React.useState();
 
     return (
         <React.Fragment>
@@ -92,9 +97,12 @@ function FacultyForm({position, onPageChange}) {
                     <input type="hidden" name="role" value="Instructor" />
                     <input type="hidden" name="lead_source" value="Adoption Form" />
                     <input type="hidden" name="process_adoptions" value={true} />
+                    <div className="year-selector-container">
+                        <YearSelector selectedYear={selectedYear} onValueUpdate={setCopyOfYear} />
+                    </div>
                     <ContactInfo />
                 </React.Fragment>
-                <BookSelectorPage selectedBooksRef={selectedBooksRef} />
+                <BookSelectorPage selectedBooksRef={selectedBooksRef} year={copyOfYear} />
             </MultiPageForm>
         </React.Fragment>
     );

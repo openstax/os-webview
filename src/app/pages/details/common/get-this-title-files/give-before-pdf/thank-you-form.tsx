@@ -2,6 +2,7 @@ import React from 'react';
 import useUserContext from '~/contexts/user';
 import trackLink from '../../track-link';
 import './thank-you-form.scss';
+import SchoolSelector from '~/components/school-selector/school-selector';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
 function FormWithAfterSubmit({
@@ -121,16 +122,7 @@ export default function ThankYou({
                         defaultValue={last}
                     />
                 </label>
-                <label>
-                    Institution name <span className="asterisk" />
-                    <input
-                        name="institution"
-                        type="text"
-                        placeholder="Your school"
-                        required
-                        defaultValue={school}
-                    />
-                </label>
+                <SchoolSelector initialValue={school} />
                 <label>
                     Email address
                     <input
