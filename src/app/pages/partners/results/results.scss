@@ -218,8 +218,7 @@
                 h2 {
                     @include set-font(h3);
 
-                    background-color: os-color(gray);
-                    color: ui-color(white);
+                    background-color: ui-color(form-border);
                     padding: $normal-margin;
                 }
 
