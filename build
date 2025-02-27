@@ -1,0 +1,1368 @@
+Script started on Thu Feb 27 10:28:37 2025
+[1m[7m%[27m[1m[0m                                                                                                                                                                    ]7;file://C02G43CDMD6R/Users/rej2/Documents/GitHub/os-webview[0m[27m[24m[Jrej2@C02G43CDMD6R os-webview % [K[?2004hyyarn  n sc    y  sscriptbu    pt/build[1m [0m[0m [?2004l
+[31mWARNING:(B[m You may need to uninstall XCode and just install the command line tools
+[93m==>(B[m Setting correct node version (see ./.nvmrc) [90m...(B[m [32mOK(B[m
+[2K[1G[1myarn run v1.22.22[22m
+[2K[1G[2m$ /Users/rej2/Documents/GitHub/os-webview/node_modules/.bin/webpack --mode development[22m
+Building development
+[90m----------------------------------------[39m
+[90m[1280]  [39m                max-width: 8rem;
+[90m[1281]  [39m            }
+[90m[1282]  [39m
+[90m[1283]  [39m            @include wider-than($phone-max) {
+[90m[1284]  [39m                max-height: 12rem;
+[90m[1285]  [39m                max-width: 12rem;
+[90m[1286]  [39m            }
+[90m[1287]  [39m        }
+[90m[1288]  [39m
+[90m[1289]  [39m        .badge {
+[31m[1290]              @extend %verified-badge;[39m
+                            ^
+[90m[1291]  [39m
+[90m[1292]  [39m            align-self: start;
+[90m[1293]  [39m            grid-area: icon;
+[90m[1294]  [39m            justify-self: end;
+[90m[1295]  [39m            margin-top: 0.5rem;
+[90m[1296]  [39m        }
+[90m[1297]  [39m        .headline {
+[90m[1298]  [39m            @include title-font(1.6rem);
+[90m[1299]  [39m
+[90m[1300]  [39m            grid-area: title;
+[90m----------------------------------------[39m
+Error: ".partner-details > .sticky-region > .synopsis .badge" failed to @extend "%verified-badge".
+The selector "%verified-badge" was not found.
+Use "@extend %verified-badge !optional" if the extend should be able to fail.
+    at options.error (/Users/rej2/Documents/GitHub/os-webview/node_modules/node-sass/lib/index.js:290:33)
+[90m----------------------------------------[39m
+[90m[1310]  [39m                grid-area: image;
+[90m[1311]  [39m                justify-self: center;
+[90m[1312]  [39m
+[90m[1313]  [39m                > img {
+[90m[1314]  [39m                    max-height: 8rem;
+[90m[1315]  [39m                    max-width: 100%;
+[90m[1316]  [39m                }
+[90m[1317]  [39m            }
+[90m[1318]  [39m
+[90m[1319]  [39m            .badge {
+[31m[1320]                  @extend %verified-badge;[39m
+                                ^
+[90m[1321]  [39m
+[90m[1322]  [39m                align-self: start;
+[90m[1323]  [39m                grid-area: image;
+[90m[1324]  [39m                justify-self: end;
+[90m[1325]  [39m                z-index: auto;
+[90m[1326]  [39m            }
+[90m[1327]  [39m
+[90m[1328]  [39m            .resource-title {
+[90m[1329]  [39m                @include set-font(h4);
+[90m[1330]  [39m
+[90m----------------------------------------[39m
+Error: ".partners .results .grid .card .badge" failed to @extend "%verified-badge".
+The selector "%verified-badge" was not found.
+Use "@extend %verified-badge !optional" if the extend should be able to fail.
+    at options.error (/Users/rej2/Documents/GitHub/os-webview/node_modules/node-sass/lib/index.js:290:33)
+assets by path [1m[32m*.js[39m[22m 23.6 MiB
+  assets by chunk 14 MiB (id hint: vendor)
+    asset [1m[33mnpm.mapbox-gl.js[39m[22m [1m[33m3.69 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: npm.mapbox-gl) (id hint: vendor)
+    asset [1m[32mnpm.lodash.js[39m[22m 1.81 MiB [1m[32m[emitted][39m[22m (name: npm.lodash) (id hint: vendor)
+    asset [1m[32mnpm.pdfjs-dist.js[39m[22m 1.58 MiB [1m[32m[emitted][39m[22m (name: npm.pdfjs-dist) (id hint: vendor)
+    asset [1m[32mnpm.sentry.js[39m[22m 1.36 MiB [1m[32m[emitted][39m[22m (name: npm.sentry) (id hint: vendor)
+    asset [1m[32mnpm.sentry-internal.js[39m[22m 1000 KiB [1m[32m[emitted][39m[22m (name: npm.sentry-internal) (id hint: vendor)
+    asset [1m[32mnpm.react-aria.js[39m[22m 630 KiB [1m[32m[emitted][39m[22m (name: npm.react-aria) (id hint: vendor)
+    asset [1m[32mnpm.fortawesome.js[39m[22m 506 KiB [1m[32m[emitted][39m[22m (name: npm.fortawesome) (id hint: vendor)
+    asset [1m[32mnpm.remix-run.js[39m[22m 497 KiB [1m[32m[emitted][39m[22m (name: npm.remix-run) (id hint: vendor)
+    + 103 assets
+  + 505 assets
+assets by path [1m[32mimages/[39m[22m 1.58 MiB 69 assets
+asset [1m[32mindex.html[39m[22m 2.98 KiB [1m[32m[emitted][39m[22m
+asset [1m[32massets/favicon.svg[39m[22m 1.91 KiB [1m[32m[emitted][39m[22m
+Entrypoint [1mmain[39m[22m 162 KiB = [1m[32mruntime.js[39m[22m 31.9 KiB [1m[32mnpm.preact.js[39m[22m 110 KiB [1m[32mmain.js[39m[22m 19.8 KiB
+orphan modules 3.72 MiB [1m[33m[orphan][39m[22m 1445 modules
+runtime modules 8.72 KiB 15 modules
+cacheable modules 7.08 MiB
+  modules by path [1m./src/[39m[22m 2.02 MiB 904 modules
+  modules by path [1m./node_modules/[39m[22m 5.06 MiB 756 modules
+  [1m./package.json[39m[22m 3.79 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./util.inspect (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[1m./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object[39m[22m 160 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+
+[1mLOG from favicons-webpack-plugin[39m[22m
+<i> [1m[32mgenerate only a single favicon for fast compilation time in development mode. This behaviour can be changed by setting the favicon mode option.[39m[22m
+
+[1m[33mWARNING[39m[22m in [1m./src/app/pages/partners/results/results.tsx[39m[22m [1m[32m125:21-32[39m[22m
+[1mexport 'useOnSelect' (imported as 'useOnSelect') was [1m[31mnot found[39m[22m[1m in './result-grid' (possible exports: [1m[32mdefault[39m[22m[1m)[39m[22m
+ @ ./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object ./partners/results/results.tsx
+ @ ./src/app/components/shell/router.js 79:20-53
+ @ ./src/app/components/shell/import-router.js 1:0-30 2:15-21
+ @ ./src/app/components/shell/shell.tsx 23:27-55
+ @ ./src/app/main.js 42:28-69
+
+[1m[33mWARNING[39m[22m in [1m./src/app/pages/partners/results/results.tsx[39m[22m [1m[32m130:223-233[39m[22m
+[1mexport 'badgeImage' (imported as 'badgeImage') was [1m[31mnot found[39m[22m[1m in './result-grid' (possible exports: [1m[32mdefault[39m[22m[1m)[39m[22m
+ @ ./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object ./partners/results/results.tsx
+ @ ./src/app/components/shell/router.js 79:20-53
+ @ ./src/app/components/shell/import-router.js 1:0-30 2:15-21
+ @ ./src/app/components/shell/shell.tsx 23:27-55
+ @ ./src/app/main.js 42:28-69
+
+[1m[31mERROR[39m[22m in [1m./src/app/pages/partners/partner-details/synopsis/synopsis.scss[39m[22m (./node_modules/fast-css-loader/lib/index.js!./node_modules/fast-sass-loader/lib/index.js??ruleSet[1].rules[3].use[2]!./src/app/pages/partners/partner-details/synopsis/synopsis.scss)
+[1mModule build [1m[31mfailed[39m[22m[1m (from ./node_modules/fast-sass-loader/lib/index.js):
+[1m[31mError[39m[22m[1m: ".partner-details > .sticky-region > .synopsis .badge" [1m[31mfailed[39m[22m[1m to @extend "%verified-badge".
+The selector "%verified-badge" was [1m[31mnot found[39m[22m[1m.
+Use "@extend %verified-badge !optional" if the extend should be able to fail.
+    at options.[1m[31merror[39m[22m[1m (/Users/rej2/Documents/GitHub/os-webview/node_modules/node-sass/lib/index.js:290:33)[39m[22m
+ @ ./src/app/pages/partners/partner-details/synopsis/synopsis.scss 8:6-213 22:17-24 26:0-183 26:0-183 27:22-29 27:33-47 27:50-64
+ @ ./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object ./partners/partner-details/synopsis/synopsis.scss
+ @ ./src/app/components/shell/router.js 79:20-53
+ @ ./src/app/components/shell/import-router.js 1:0-30 2:15-21
+ @ ./src/app/components/shell/shell.tsx 23:27-55
+ @ ./src/app/main.js 42:28-69
+
+[1m[31mERROR[39m[22m in [1m./src/app/pages/partners/results/results.scss[39m[22m (./node_modules/fast-css-loader/lib/index.js!./node_modules/fast-sass-loader/lib/index.js??ruleSet[1].rules[3].use[2]!./src/app/pages/partners/results/results.scss)
+[1mModule build [1m[31mfailed[39m[22m[1m (from ./node_modules/fast-sass-loader/lib/index.js):
+[1m[31mError[39m[22m[1m: ".partners .results .grid .card .badge" [1m[31mfailed[39m[22m[1m to @extend "%verified-badge".
+The selector "%verified-badge" was [1m[31mnot found[39m[22m[1m.
+Use "@extend %verified-badge !optional" if the extend should be able to fail.
+    at options.[1m[31merror[39m[22m[1m (/Users/rej2/Documents/GitHub/os-webview/node_modules/node-sass/lib/index.js:290:33)[39m[22m
+ @ ./src/app/pages/partners/results/results.scss 8:6-206 22:17-24 26:0-176 26:0-176 27:22-29 27:33-47 27:50-64
+ @ ./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object ./partners/results/results.scss
+ @ ./src/app/components/shell/router.js 79:20-53
+ @ ./src/app/components/shell/import-router.js 1:0-30 2:15-21
+ @ ./src/app/components/shell/shell.tsx 23:27-55
+ @ ./src/app/main.js 42:28-69
+
+webpack 5.97.1 compiled with [1m[31m2 errors[39m[22m and [1m[33m2 warnings[39m[22m in 33067 ms
+[2K[1G[31merror[39m Command failed with exit code 1.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/run[22m for documentation about this command.
+[1m[7m%[27m[1m[0m                                                                                                                                                                    ]7;file://C02G43CDMD6R/Users/rej2/Documents/GitHub/os-webview[0m[27m[24m[Jrej2@C02G43CDMD6R os-webview % [K[?2004hscript/build[?2004l
+[31mWARNING:(B[m You may need to uninstall XCode and just install the command line tools
+[93m==>(B[m Setting correct node version (see ./.nvmrc) [90m...(B[m [32mOK(B[m
+[2K[1G[1myarn run v1.22.22[22m
+[2K[1G[2m$ /Users/rej2/Documents/GitHub/os-webview/node_modules/.bin/webpack --mode development[22m
+Building development
+[90m----------------------------------------[39m
+[90m[1310]  [39m                grid-area: image;
+[90m[1311]  [39m                justify-self: center;
+[90m[1312]  [39m
+[90m[1313]  [39m                > img {
+[90m[1314]  [39m                    max-height: 8rem;
+[90m[1315]  [39m                    max-width: 100%;
+[90m[1316]  [39m                }
+[90m[1317]  [39m            }
+[90m[1318]  [39m
+[90m[1319]  [39m            .badge {
+[31m[1320]                  @extend %verified-badge;[39m
+                                ^
+[90m[1321]  [39m
+[90m[1322]  [39m                align-self: start;
+[90m[1323]  [39m                grid-area: image;
+[90m[1324]  [39m                justify-self: end;
+[90m[1325]  [39m                z-index: auto;
+[90m[1326]  [39m            }
+[90m[1327]  [39m
+[90m[1328]  [39m            .resource-title {
+[90m[1329]  [39m                @include set-font(h4);
+[90m[1330]  [39m
+[90m----------------------------------------[39m
+Error: ".partners .results .grid .card .badge" failed to @extend "%verified-badge".
+The selector "%verified-badge" was not found.
+Use "@extend %verified-badge !optional" if the extend should be able to fail.
+    at options.error (/Users/rej2/Documents/GitHub/os-webview/node_modules/node-sass/lib/index.js:290:33)
+[90m----------------------------------------[39m
+[90m[1280]  [39m                max-width: 8rem;
+[90m[1281]  [39m            }
+[90m[1282]  [39m
+[90m[1283]  [39m            @include wider-than($phone-max) {
+[90m[1284]  [39m                max-height: 12rem;
+[90m[1285]  [39m                max-width: 12rem;
+[90m[1286]  [39m            }
+[90m[1287]  [39m        }
+[90m[1288]  [39m
+[90m[1289]  [39m        .badge {
+[31m[1290]              @extend %verified-badge;[39m
+                            ^
+[90m[1291]  [39m
+[90m[1292]  [39m            align-self: start;
+[90m[1293]  [39m            grid-area: icon;
+[90m[1294]  [39m            justify-self: end;
+[90m[1295]  [39m            margin-top: 0.5rem;
+[90m[1296]  [39m        }
+[90m[1297]  [39m        .headline {
+[90m[1298]  [39m            @include title-font(1.6rem);
+[90m[1299]  [39m
+[90m[1300]  [39m            grid-area: title;
+[90m----------------------------------------[39m
+Error: ".partner-details > .sticky-region > .synopsis .badge" failed to @extend "%verified-badge".
+The selector "%verified-badge" was not found.
+Use "@extend %verified-badge !optional" if the extend should be able to fail.
+    at options.error (/Users/rej2/Documents/GitHub/os-webview/node_modules/node-sass/lib/index.js:290:33)
+assets by path [1m[32m*.js[39m[22m 23.5 MiB
+  assets by chunk 14 MiB (id hint: vendor)
+    asset [1m[33mnpm.mapbox-gl.js[39m[22m [1m[33m3.69 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: npm.mapbox-gl) (id hint: vendor)
+    asset [1m[32mnpm.lodash.js[39m[22m 1.81 MiB [1m[32m[emitted][39m[22m (name: npm.lodash) (id hint: vendor)
+    asset [1m[32mnpm.pdfjs-dist.js[39m[22m 1.58 MiB [1m[32m[emitted][39m[22m (name: npm.pdfjs-dist) (id hint: vendor)
+    asset [1m[32mnpm.sentry.js[39m[22m 1.36 MiB [1m[32m[emitted][39m[22m (name: npm.sentry) (id hint: vendor)
+    asset [1m[32mnpm.sentry-internal.js[39m[22m 1000 KiB [1m[32m[emitted][39m[22m (name: npm.sentry-internal) (id hint: vendor)
+    asset [1m[32mnpm.react-aria.js[39m[22m 630 KiB [1m[32m[emitted][39m[22m (name: npm.react-aria) (id hint: vendor)
+    asset [1m[32mnpm.fortawesome.js[39m[22m 506 KiB [1m[32m[emitted][39m[22m (name: npm.fortawesome) (id hint: vendor)
+    asset [1m[32mnpm.remix-run.js[39m[22m 497 KiB [1m[32m[emitted][39m[22m (name: npm.remix-run) (id hint: vendor)
+    + 103 assets
+  + 504 assets
+assets by path [1m[32mimages/[39m[22m 1.58 MiB 69 assets
+asset [1m[32mindex.html[39m[22m 2.98 KiB [1m[32m[emitted][39m[22m
+asset [1m[32massets/favicon.svg[39m[22m 1.91 KiB [1m[32m[emitted][39m[22m
+Entrypoint [1mmain[39m[22m 162 KiB = [1m[32mruntime.js[39m[22m 31.9 KiB [1m[32mnpm.preact.js[39m[22m 110 KiB [1m[32mmain.js[39m[22m 19.8 KiB
+orphan modules 3.72 MiB [1m[33m[orphan][39m[22m 1445 modules
+runtime modules 8.72 KiB 15 modules
+cacheable modules 7.08 MiB
+  modules by path [1m./src/[39m[22m 2.01 MiB 903 modules
+  modules by path [1m./node_modules/[39m[22m 5.06 MiB 756 modules
+  [1m./package.json[39m[22m 3.79 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./util.inspect (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[1m./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object[39m[22m 160 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+
+[1mLOG from favicons-webpack-plugin[39m[22m
+<i> [1m[32mgenerate only a single favicon for fast compilation time in development mode. This behaviour can be changed by setting the favicon mode option.[39m[22m
+
+[1m[31mERROR[39m[22m in [1m./src/app/pages/partners/partner-details/synopsis/synopsis.scss[39m[22m (./node_modules/fast-css-loader/lib/index.js!./node_modules/fast-sass-loader/lib/index.js??ruleSet[1].rules[3].use[2]!./src/app/pages/partners/partner-details/synopsis/synopsis.scss)
+[1mModule build [1m[31mfailed[39m[22m[1m (from ./node_modules/fast-sass-loader/lib/index.js):
+[1m[31mError[39m[22m[1m: ".partner-details > .sticky-region > .synopsis .badge" [1m[31mfailed[39m[22m[1m to @extend "%verified-badge".
+The selector "%verified-badge" was [1m[31mnot found[39m[22m[1m.
+Use "@extend %verified-badge !optional" if the extend should be able to fail.
+    at options.[1m[31merror[39m[22m[1m (/Users/rej2/Documents/GitHub/os-webview/node_modules/node-sass/lib/index.js:290:33)[39m[22m
+ @ ./src/app/pages/partners/partner-details/synopsis/synopsis.scss 8:6-213 22:17-24 26:0-183 26:0-183 27:22-29 27:33-47 27:50-64
+ @ ./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object ./partners/partner-details/synopsis/synopsis.scss
+ @ ./src/app/components/shell/router.js 79:20-53
+ @ ./src/app/components/shell/import-router.js 1:0-30 2:15-21
+ @ ./src/app/components/shell/shell.tsx 23:27-55
+ @ ./src/app/main.js 42:28-69
+
+[1m[31mERROR[39m[22m in [1m./src/app/pages/partners/results/results.scss[39m[22m (./node_modules/fast-css-loader/lib/index.js!./node_modules/fast-sass-loader/lib/index.js??ruleSet[1].rules[3].use[2]!./src/app/pages/partners/results/results.scss)
+[1mModule build [1m[31mfailed[39m[22m[1m (from ./node_modules/fast-sass-loader/lib/index.js):
+[1m[31mError[39m[22m[1m: ".partners .results .grid .card .badge" [1m[31mfailed[39m[22m[1m to @extend "%verified-badge".
+The selector "%verified-badge" was [1m[31mnot found[39m[22m[1m.
+Use "@extend %verified-badge !optional" if the extend should be able to fail.
+    at options.[1m[31merror[39m[22m[1m (/Users/rej2/Documents/GitHub/os-webview/node_modules/node-sass/lib/index.js:290:33)[39m[22m
+ @ ./src/app/pages/partners/results/results.scss 8:6-206 22:17-24 26:0-176 26:0-176 27:22-29 27:33-47 27:50-64
+ @ ./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object ./partners/results/results.scss
+ @ ./src/app/components/shell/router.js 79:20-53
+ @ ./src/app/components/shell/import-router.js 1:0-30 2:15-21
+ @ ./src/app/components/shell/shell.tsx 23:27-55
+ @ ./src/app/main.js 42:28-69
+
+webpack 5.97.1 compiled with [1m[31m2 errors[39m[22m in 31265 ms
+[2K[1G[31merror[39m Command failed with exit code 1.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/run[22m for documentation about this command.
+[1m[7m%[27m[1m[0m                                                                                                                                                                    ]7;file://C02G43CDMD6R/Users/rej2/Documents/GitHub/os-webview[0m[27m[24m[Jrej2@C02G43CDMD6R os-webview % [K[?2004hscript/build[?2004l
+[31mWARNING:(B[m You may need to uninstall XCode and just install the command line tools
+[93m==>(B[m Setting correct node version (see ./.nvmrc) [90m...(B[m [32mOK(B[m
+[2K[1G[1myarn run v1.22.22[22m
+[2K[1G[2m$ /Users/rej2/Documents/GitHub/os-webview/node_modules/.bin/webpack --mode development[22m
+Building development
+assets by path [1m[32m*.js[39m[22m 23.5 MiB
+  assets by chunk 14 MiB (id hint: vendor)
+    asset [1m[33mnpm.mapbox-gl.js[39m[22m [1m[33m3.69 MiB[39m[22m [1m[32m[emitted][39m[22m [1m[33m[big][39m[22m (name: npm.mapbox-gl) (id hint: vendor)
+    asset [1m[32mnpm.lodash.js[39m[22m 1.81 MiB [1m[32m[emitted][39m[22m (name: npm.lodash) (id hint: vendor)
+    asset [1m[32mnpm.pdfjs-dist.js[39m[22m 1.58 MiB [1m[32m[emitted][39m[22m (name: npm.pdfjs-dist) (id hint: vendor)
+    asset [1m[32mnpm.sentry.js[39m[22m 1.36 MiB [1m[32m[emitted][39m[22m (name: npm.sentry) (id hint: vendor)
+    asset [1m[32mnpm.sentry-internal.js[39m[22m 1000 KiB [1m[32m[emitted][39m[22m (name: npm.sentry-internal) (id hint: vendor)
+    asset [1m[32mnpm.react-aria.js[39m[22m 630 KiB [1m[32m[emitted][39m[22m (name: npm.react-aria) (id hint: vendor)
+    asset [1m[32mnpm.fortawesome.js[39m[22m 506 KiB [1m[32m[emitted][39m[22m (name: npm.fortawesome) (id hint: vendor)
+    asset [1m[32mnpm.remix-run.js[39m[22m 497 KiB [1m[32m[emitted][39m[22m (name: npm.remix-run) (id hint: vendor)
+    + 103 assets
+  + 504 assets
+assets by path [1m[32mimages/[39m[22m 1.58 MiB 69 assets
+asset [1m[32mindex.html[39m[22m 2.98 KiB [1m[32m[emitted][39m[22m
+asset [1m[32massets/favicon.svg[39m[22m 1.91 KiB [1m[32m[emitted][39m[22m
+Entrypoint [1mmain[39m[22m 162 KiB = [1m[32mruntime.js[39m[22m 31.9 KiB [1m[32mnpm.preact.js[39m[22m 110 KiB [1m[32mmain.js[39m[22m 19.8 KiB
+orphan modules 3.72 MiB [1m[33m[orphan][39m[22m 1445 modules
+runtime modules 8.72 KiB 15 modules
+cacheable modules 7.08 MiB
+  modules by path [1m./src/[39m[22m 2.02 MiB 903 modules
+  modules by path [1m./node_modules/[39m[22m 5.06 MiB 756 modules
+  [1m./package.json[39m[22m 3.79 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./util.inspect (ignored)[39m[22m 15 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+[1m./src/app/pages/ lazy ^\.\/.*\/.*$ namespace object[39m[22m 160 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+
+[1mLOG from favicons-webpack-plugin[39m[22m
+<i> [1m[32mgenerate only a single favicon for fast compilation time in development mode. This behaviour can be changed by setting the favicon mode option.[39m[22m
+
+webpack 5.97.1 compiled [1m[32msuccessfully[39m[22m in 35752 ms
+[2K[1G✨  Done in 38.26s.
+[1m[7m%[27m[1m[0m                                                                                                                                                                    ]7;file://C02G43CDMD6R/Users/rej2/Documents/GitHub/os-webview[0m[27m[24m[Jrej2@C02G43CDMD6R os-webview % [K[?2004hyyarn upgrade[?2004l
+[2K[1G[1myarn upgrade v1.22.22[22m
+[2K[1G[2m[1/5][22m 🔍  Validating package.json...
+[2K[1G[31merror[39m @openstax/os-webview@2.140.0: The engine "node" is incompatible with this module. Expected version ">=16.20.2". Got "10.22.0"
+[2K[1G[31merror[39m Found incompatible module.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/upgrade[22m for documentation about this command.
+[1m[7m%[27m[1m[0m                                                                                                                                                                    ]7;file://C02G43CDMD6R/Users/rej2/Documents/GitHub/os-webview[0m[27m[24m[Jrej2@C02G43CDMD6R os-webview % [K[?2004hnnvm use[?2004l
+Found '/Users/rej2/Documents/GitHub/os-webview/.nvmrc' with version <v18.19.0>
+Now using node v18.19.0 (npm v10.2.3)
+[1m[7m%[27m[1m[0m                                                                                                                                                                    ]7;file://C02G43CDMD6R/Users/rej2/Documents/GitHub/os-webview[0m[27m[24m[Jrej2@C02G43CDMD6R os-webview % [K[?2004hyyarn upgre ade[?2004l
+[2K[1G[1myarn upgrade v1.22.22[22m
+[2K[1G[2m[1/5][22m 🔍  Validating package.json...
+[2K[1G[2m[2/5][22m 🔍  Resolving packages...
+[1G⠁ [0K[1G⠂ @emotion/babel-plugin-jsx-pragmatic@^0.3.0[0K[1G⠄ regenerator-runtime@^0.14.0[0K[1G⡀ @babel/helper-plugin-utils@^7.25.9[0K[1G⢀ @babel/code-frame@^7.26.2[0K[1G⠠ resolve@^1.19.0[0K[1G⠐ ms@^2.1.3[0K[1G⠈ @jridgewell/trace-mapping@^0.3.25[0K[1G⠁ @babel/types@^7.26.9[0K[1G⠂ lines-and-columns@^1.1.6[0K[1G⠄ is-arrayish@^0.2.1[0K[1G⡀ callsites@^3.0.0[0K[1G⢀ callsites@^3.0.0[0K[1G⠠ callsites@^3.0.0[0K[1G⠐ callsites@^3.0.0[0K[1G⠈ hoist-non-react-statics@^3.3.1[0K[1G⠁ react-is@^16.7.0[0K[1G⠂ react-is@^16.7.0[0K[1G⠄ stylis@4.2.0[0K[1G⡀ stylis@4.2.0[0K[1G⢀ stylis@4.2.0[0K[1G⠠ @emotion/utils@^1.4.2[0K[1G⠐ @emotion/utils@^1.4.2[0K[1G⠈ @fortawesome/fontawesome-common-types@6.7.2[0K[1G⠁ @fortawesome/fontawesome-common-types@6.7.2[0K[1G⠂ @fortawesome/fontawesome-common-types@6.7.2[0K[1G⠄ prop-types@^15.8.1[0K[1G⡀ js-cookie@^3.0.5[0K[1G⢀ js-cookie@^3.0.5[0K[1G⠠ js-cookie@^3.0.5[0K[1G⠐ js-cookie@^3.0.5[0K[1G⠈ js-cookie@^3.0.5[0K[1G⠁ js-cookie@^3.0.5[0K[1G⠂ js-cookie@^3.0.5[0K[1G⠄ js-cookie@^3.0.5[0K[1G⡀ js-cookie@^3.0.5[0K[1G⢀ js-cookie@^3.0.5[0K[1G⠠ js-cookie@^3.0.5[0K[1G⠐ js-cookie@^3.0.5[0K[1G⠈ js-cookie@^3.0.5[0K[1G⠁ js-cookie@^3.0.5[0K[1G⠂ which-typed-array@^1.1.13[0K[1G⠄ xml2js@0.6.2[0K[1G⡀ tslib@^2.6.2[0K[1G⢀ uuid@^9.0.1[0K[1G⠠ object-keys@^1.1.1[0K[1G⠐ is-weakset@^2.0.3[0K[1G⠈ has-tostringtag@^1.0.2[0K[2K[1G[33mwarning[39m @openstax/experiments > @openstax/ts-utils > aws-sdk > querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+[1G⠁ ieee754@^1.2.1[0K[2K[1G[33mwarning[39m @openstax/experiments > @openstax/ts-utils > aws-sdk > url > querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+[1G⠂ querystring@0.2.0[0K[1G⠄ lodash.clonedeep@^4.5.0[0K[1G⡀ lodash.clonedeep@^4.5.0[0K[1G⢀ tslib@^2.6.2[0K[1G⠠ tslib@^2.6.2[0K[1G⠐ tslib@^2.6.2[0K[1G⠈ tslib@^2.6.2[0K[1G⠁ tslib@^2.6.2[0K[1G⠂ tslib@^2.6.2[0K[1G⠄ tslib@^2.6.2[0K[1G⡀ tslib@^2.6.2[0K[1G⢀ tslib@^2.6.2[0K[1G⠠ function-bind@^1.1.2[0K[1G⠐ es-object-atoms@^1.0.0[0K[1G⠈ @smithy/util-buffer-from@^2.2.0[0K[1G⠁ has-property-descriptors@^1.0.2[0K[1G⠂ has-tostringtag@^1.0.2[0K[1G⠄ safe-regex-test@^1.1.0[0K[1G⡀ yallist@^4.0.0[0K[1G⢀ undici-types@~6.20.0[0K[1G⠠ strnum@^1.0.5[0K[1G⠐ tslib@^2.6.2[0K[1G⠈ tslib@^2.6.2[0K[1G⠁ tslib@^2.6.2[0K[1G⠂ tslib@^2.6.2[0K[1G⠄ gopd@^1.0.1[0K[1G⡀ tslib@^2.6.2[0K[1G⢀ is-regex@^1.2.1[0K[1G⠠ @types/node@*[0K[1G⠐ tslib@^2.6.2[0K[1G⠈ tslib@^2.6.2[0K[1G⠁ @sentry-internal/tracing@7.120.3[0K[1G⠂ @sentry-internal/tracing@7.120.3[0K[1G⠄ @sentry/utils@7.120.3[0K[1G⡀ @sentry/utils@7.120.3[0K[1G⢀ @sentry/utils@7.120.3[0K[1G⠠ jest-environment-jsdom@^29.4.3[0K[1G⠐ @jest/fake-timers@^29.7.0[0K[1G⠈ @types/node@*[0K[2K[1G[33mwarning[39m boxible > jest-environment-jsdom > jsdom > abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[1G⠁ entities@^4.5.0[0K[2K[1G[33mwarning[39m boxible > jest-environment-jsdom > jsdom > data-urls > abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2K[1G[33mwarning[39m boxible > jest-environment-jsdom > jsdom > domexception@4.0.0: Use your platform's native DOMException instead
+[1G⠂ iconv-lite@0.6.3[0K[1G⠄ whatwg-encoding@^2.0.0[0K[1G⡀ @types/istanbul-lib-report@*[0K[1G⢀ punycode@^2.1.1[0K[1G⠠ safer-buffer@>= 2.1.2 < 3.0.0[0K[1G⠐ picomatch@^2.3.1[0K[1G⠈ @jest/schemas@^29.6.3[0K[1G⠁ color-name@~1.1.4[0K[1G⠂ to-regex-range@^5.0.1[0K[1G⠄ is-number@^7.0.0[0K[1G⡀ simple-swizzle@^0.2.2[0K[1G⢀ @react-aria/visually-hidden@^3.8.19[0K[1G⠠ @react-aria/visually-hidden@^3.8.19[0K[1G⠐ @react-aria/visually-hidden@^3.8.19[0K[1G⠈ @react-aria/live-announcer@^3.4.1[0K[1G⠁ @react-aria/selection@^3.22.0[0K[1G⠂ @react-aria/visually-hidden@^3.8.19[0K[1G⠄ @react-aria/interactions@^3.23.0[0K[1G⡀ @react-aria/interactions@^3.23.0[0K[1G⢀ @react-aria/progress@^3.4.19[0K[1G⠠ @react-aria/visually-hidden@^3.8.19[0K[1G⠐ @react-aria/visually-hidden@^3.8.19[0K[1G⠈ @react-aria/interactions@^3.23.0[0K[1G⠁ @react-types/shared@^3.27.0[0K[1G⠂ @react-aria/interactions@^3.23.0[0K[1G⠄ @react-aria/interactions@^3.23.0[0K[1G⡀ @react-stately/collections@^3.12.1[0K[1G⢀ @react-aria/live-announcer@^3.4.1[0K[1G⠠ @react-aria/interactions@^3.23.0[0K[1G⠐ @react-stately/collections@^3.12.1[0K[1G⠈ @react-stately/collections@^3.12.1[0K[1G⠁ @react-stately/collections@^3.12.1[0K[1G⠂ @react-types/progress@^3.5.9[0K[1G⠄ @react-stately/datepicker@^3.12.0[0K[1G⡀ @react-aria/visually-hidden@^3.8.19[0K[1G⢀ @react-types/breadcrumbs@^3.7.10[0K[1G⠠ @swc/helpers@^0.5.0[0K[1G⠐ @react-stately/searchfield@^3.5.9[0K[1G⠈ @react-stately/searchfield@^3.5.9[0K[1G⠁ @swc/helpers@^0.5.0[0K[1G⠂ intl-messageformat@^10.1.0[0K[1G⠄ @react-stately/selection@^3.19.0[0K[1G⡀ @react-stately/overlays@^3.6.13[0K[1G⢀ @react-stately/collections@^3.12.1[0K[1G⠠ @react-types/shared@^3.27.0[0K[1G⠐ @react-types/shared@^3.27.0[0K[1G⠈ @react-types/shared@^3.27.0[0K[1G⠁ @react-types/overlays@^3.8.12[0K[1G⠂ @react-aria/live-announcer@^3.4.1[0K[1G⠄ @react-aria/live-announcer@^3.4.1[0K[1G⡀ @react-stately/collections@^3.12.1[0K[1G⢀ @swc/helpers@^0.5.0[0K[1G⠠ @react-types/shared@^3.27.0[0K[1G⠐ @react-types/shared@^3.27.0[0K[1G⠈ @react-aria/interactions@^3.23.0[0K[1G⠁ @react-types/shared@^3.27.0[0K[1G⠂ @react-aria/interactions@^3.23.0[0K[1G⠄ @react-types/checkbox@^3.9.1[0K[1G⡀ @react-types/overlays@^3.8.12[0K[1G⢀ @react-types/overlays@^3.8.12[0K[1G⠠ @internationalized/date@^3.7.0[0K[1G⠐ @react-types/overlays@^3.8.12[0K[1G⠈ @react-stately/utils@^3.10.5[0K[1G⠁ @react-stately/overlays@^3.6.13[0K[1G⠂ @react-types/shared@^3.27.0[0K[1G⠄ @internationalized/date@^3.7.0[0K[1G⡀ @react-stately/collections@^3.12.1[0K[1G⢀ @react-stately/utils@^3.10.5[0K[1G⠠ @react-types/overlays@^3.8.12[0K[1G⠐ @react-types/textfield@^3.11.0[0K[1G⠈ @react-types/textfield@^3.11.0[0K[1G⠁ @react-types/searchfield@^3.5.11[0K[1G⠂ @formatjs/intl-localematcher@0.6.0[0K[1G⠄ tslib@2[0K[1G⡀ tslib@2[0K[1G⢀ @formatjs/ecma402-abstract@2.2.4[0K[1G⠠ @formatjs/ecma402-abstract@2.2.4[0K[1G⠐ @formatjs/ecma402-abstract@2.2.4[0K[1G⠈ @formatjs/intl-localematcher@0.5.8[0K[1G⠁ warning@^4.0.0[0K[1G⠂ loose-envify@^1.0.0[0K[1G⠄ path2d@^0.2.1[0K[1G⡀ tunnel-agent@^0.6.0[0K[1G⢀ tunnel-agent@^0.6.0[0K[1G⠠ once@^1.4.0[0K[1G⠐ wrappy@1[0K[1G⠈ mimic-response@^3.1.0[0K[1G⠁ readable-stream@^3.1.1[0K[1G⠂ ieee754@^1.1.13[0K[1G⠄ @react-stately/searchfield@^3.5.9[0K[1G⡀ @react-stately/searchfield@^3.5.9[0K[1G⢀ @react-stately/searchfield@^3.5.9[0K[1G⠠ @react-stately/searchfield@^3.5.9[0K[1G⠐ @babel/plugin-transform-react-pure-annotations@^7.25.9[0K[1G⠈ @babel/plugin-transform-react-jsx@^7.25.9[0K[1G⠁ @babel/plugin-transform-modules-commonjs@^7.25.9[0K[1G⠂ @babel/helper-module-transforms@^7.26.0[0K[1G⠄ @babel/helper-skip-transparent-expression-wrappers@^7.25.9[0K[1G⡀ supports-color@^7.1.0[0K[1G⢀ supports-color@^7.1.0[0K[1G⠠ supports-color@^7.1.0[0K[1G⠐ strip-indent@^3.0.0[0K[1G⠈ @types/jest@*[0K[1G⠁ pretty-format@^29.0.0[0K[1G⠂ jest-matcher-utils@^29.7.0[0K[1G⠄ jest-get-type@^29.6.3[0K[1G⡀ diff-sequences@^29.6.3[0K[1G⢀ @testing-library/dom@^8.11.1[0K[1G⠠ ansi-styles@^5.0.0[0K[1G⠐ @types/color-convert@*[0K[1G⠈ @types/color-name@^1.1.0[0K[1G⠁ @types/webpack-sources@*[0K[1G⠂ normalize-path@^3.0.0[0K[1G⠄ @types/source-list-map@*[0K[1G⡀ @types/source-list-map@*[0K[1G⢀ babel-plugin-istanbul@^6.1.1[0K[1G⠠ babel-plugin-istanbul@^6.1.1[0K[1G⠐ babel-plugin-istanbul@^6.1.1[0K[1G⠈ babel-plugin-istanbul@^6.1.1[0K[1G⠁ @istanbuljs/schema@^0.1.2[0K[1G⠂ @babel/types@^7.0.0[0K[2K[1G[33mwarning[39m babel-jest > babel-plugin-istanbul > test-exclude > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[1G⠄ @babel/helper-plugin-utils@^7.10.4[0K[1G⡀ @babel/helper-plugin-utils@^7.8.0[0K[1G⢀ @babel/helper-plugin-utils@^7.8.0[0K[1G⠠ path-exists@^4.0.0[0K[1G⠐ has-flag@^4.0.0[0K[1G⠈ sprintf-js@~1.0.2[0K[2K[1G[33mwarning[39m babel-jest > babel-plugin-istanbul > test-exclude > glob > inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[1G⠁ p-limit@^2.2.0[0K[1G⠂ p-try@^2.0.0[0K[1G⠄ serialize-javascript@^6.0.0[0K[1G⡀ is-glob@^4.0.1[0K[1G⢀ require-from-string@^2.0.2[0K[1G⠠ safe-buffer@^5.1.0[0K[1G⠐ @nodelib/fs.stat@2.0.5[0K[1G⠈ queue-microtask@^1.2.2[0K[1G⠁ queue-microtask@^1.2.2[0K[1G⠂ supports-preserve-symlinks-flag@^1.0.0[0K[1G⠄ es-object-atoms@^1.0.0[0K[1G⡀ hasown@^2.0.2[0K[1G⢀ is-typed-array@^1.1.13[0K[1G⠠ reflect.getprototypeof@^1.0.9[0K[1G⠐ which-builtin-type@^1.2.1[0K[1G⠈ which-typed-array@^1.1.16[0K[1G⠁ safe-regex-test@^1.1.0[0K[1G⠂ supports-color@^8.0.0[0K[1G⠄ @types/json-schema@*[0K[1G⡀ @types/json-schema@*[0K[1G⢀ parse-import@^2.0.0[0K[1G⠠ get-imports@^1.0.0[0K[1G⠐ get-imports@^1.0.0[0K[1G⠈ get-imports@^1.0.0[0K[1G⠁ get-imports@^1.0.0[0K[1G⠂ get-imports@^1.0.0[0K[1G⠄ get-imports@^1.0.0[0K[1G⡀ import-regex@^1.1.0[0K[1G⢀ import-regex@^1.1.0[0K[1G⠠ import-regex@^1.1.0[0K[1G⠐ import-regex@^1.1.0[0K[1G⠈ import-regex@^1.1.0[0K[1G⠁ import-regex@^1.1.0[0K[1G⠂ loader-utils@^1.1.0[0K[1G⠄ escape-string-regexp@^1.0.2[0K[1G⡀ ansi-regex@^2.0.0[0K[1G⢀ ansi-regex@^2.0.0[0K[1G⠠ universalify@^0.1.0[0K[1G⠐ universalify@^0.1.0[0K[1G⠈ @img/sharp-libvips-linuxmusl-arm64@1.0.4[0K[1G⠁ @img/sharp-libvips-linuxmusl-arm64@1.0.4[0K[1G⠂ @img/sharp-libvips-linuxmusl-arm64@1.0.4[0K[1G⠄ @img/sharp-libvips-linuxmusl-arm64@1.0.4[0K[1G⡀ @img/sharp-libvips-linuxmusl-arm64@1.0.4[0K[1G⢀ @emnapi/runtime@^1.2.0[0K[1G⠠ @img/sharp-libvips-darwin-arm64@1.0.4[0K[1G⠐ @img/sharp-libvips-darwin-arm64@1.0.4[0K[1G⠈ @img/sharp-libvips-linuxmusl-x64@1.0.4[0K[1G⠁ @img/sharp-libvips-linux-s390x@1.0.4[0K[1G⠂ @img/sharp-libvips-linux-s390x@1.0.4[0K[1G⠄ tslib@^2.4.0[0K[1G⡀ tslib@^2.4.0[0K[1G⢀ tapable@^2.0.0[0K[1G⠠ tapable@^2.0.0[0K[1G⠐ tslib@^2.0.3[0K[1G⠈ tslib@^2.0.3[0K[1G⠁ nth-check@^2.0.1[0K[1G⠂ domelementtype@^2.2.0[0K[1G⠄ import-local@^3.0.2[0K[1G⡀ resolve-cwd@^3.0.0[0K[2K[1G[33mwarning[39m jest > jest-cli > jest-config > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m jest > jest-cli > jest-config > jest-environment-jsdom > jsdom > abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2K[1G[33mwarning[39m jest > jest-cli > jest-config > jest-environment-jsdom > jsdom > domexception@2.0.1: Use your platform's native DOMException instead
+[2K[1G[33mwarning[39m jest > jest-cli > jest-config > jest-environment-jsdom > jsdom > data-urls > abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2K[1G[33mwarning[39m jest > @jest/core > rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2K[1G[33mwarning[39m jest > @jest/core > rimraf > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[1G⢀ pretty-format@^27.5.1[0K[1G⠠ @types/istanbul-lib-coverage@^2.0.0[0K[2K[1G[33mwarning[39m jest > @jest/core > @jest/reporters > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m jest > @jest/core > jest-runtime > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[1G⠐ jest-environment-jsdom@^27.5.1[0K[1G⠈ resolve-from@^5.0.0[0K[2K[1G[33mwarning[39m jest > jest-cli > jest-config > jest-environment-jsdom > jsdom > w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+[1G⠁ jest-matcher-utils@^27.5.1[0K[1G⠂ @jest/test-result@^27.5.1[0K[1G⠄ supports-color@^7.1.0[0K[1G⡀ detect-newline@^3.0.0[0K[1G⢀ pretty-format@^27.5.1[0K[1G⠠ mimic-fn@^2.1.0[0K[1G⠐ path-key@^3.0.0[0K[1G⠈ imurmurhash@^0.1.4[0K[1G⠁ imurmurhash@^0.1.4[0K[2K[1G[33mwarning[39m node-sass@8.0.0: Node Sass is no longer supported. Please use `sass` or `sass-embedded` instead.
+[2K[1G[33mwarning[39m node-sass > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[1G⠂ make-fetch-happen@^10.0.4[0K[1G⠄ make-fetch-happen@^10.0.4[0K[1G⡀ make-fetch-happen@^10.0.4[0K[1G⢀ make-fetch-happen@^10.0.4[0K[2K[1G[33mwarning[39m node-sass > sass-graph > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m node-sass > node-gyp > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m node-sass > node-gyp > rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[1G⠠ normalize-package-data@^3.0.0[0K[2K[1G[33mwarning[39m node-sass > node-gyp > npmlog@6.0.2: This package is no longer supported.
+[1G⠐ console-control-strings@^1.1.0[0K[2K[1G[33mwarning[39m node-sass > gaze > globule > glob@7.1.7: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m node-sass > gaze > globule > glob > inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[1G⠈ minipass@^3.1.1[0K[2K[1G[33mwarning[39m node-sass > make-fetch-happen > cacache > glob@8.1.0: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m node-sass > make-fetch-happen > cacache > rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2K[1G[33mwarning[39m node-sass > node-gyp > make-fetch-happen > cacache > glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2K[1G[33mwarning[39m node-sass > node-gyp > make-fetch-happen > cacache > rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2K[1G[33mwarning[39m node-sass > make-fetch-happen > cacache > glob > inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[1G⠁ retry@^0.12.0[0K[1G⠂ agent-base@^6.0.2[0K[2K[1G[33mwarning[39m node-sass > node-gyp > npmlog > gauge@4.0.4: This package is no longer supported.
+[2K[1G[33mwarning[39m node-sass > node-gyp > npmlog > are-we-there-yet@3.0.1: This package is no longer supported.
+[1G⠄ spdx-expression-parse@^3.0.0[0K[1G⡀ validate-npm-package-license@^3.0.1[0K[2K[1G[33mwarning[39m node-sass > make-fetch-happen > cacache > @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+[2K[1G[33mwarning[39m node-sass > node-gyp > make-fetch-happen > cacache > @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+[2K[1G[33mwarning[39m node-sass > make-fetch-happen > cacache > @npmcli/move-file > rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2K[1G[33mwarning[39m node-sass > node-gyp > make-fetch-happen > cacache > @npmcli/move-file > rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[1G⢀ string-width@^1.0.2 || 2 || 3 || 4[0K[1G⠠ sprintf-js@^1.1.3[0K[1G⠐ sprintf-js@^1.1.3[0K[1G⠈ sprintf-js@^1.1.3[0K[1G⠁ warning@^4.0.3[0K[1G⠂ yocto-queue@^0.1.0[0K[1G⠄ source-map-js@^1.2.1[0K[1G⡀ flat-cache@^3.2.0[0K[1G⢀ util-deprecate@^1.0.2[0K[1G⠠ is-fullwidth-code-point@^3.0.0[0K[1G⠐ isexe@^2.0.0[0K[2K[1G[33mwarning[39m stylelint > file-entry-cache > flat-cache > rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[1G⠈ json-buffer@3.0.1[0K[1G⠁ stylelint-config-recommended-scss@^9.0.0[0K[1G⠂ postcss-resolve-nested-selector@^0.1.1[0K[1G⠄ postcss-resolve-nested-selector@^0.1.1[0K[1G⡀ source-map@^0.7.4[0K[1G⢀ @webpack-cli/configtest@^2.1.1[0K[1G⠠ clone-deep@^4.0.1[0K[1G⠐ isobject@^3.0.1[0K[2K[1G[33mwarning[39m webpack-dev-server > rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[1G⠈ @types/connect-history-api-fallback@^1.3.5[0K[1G⠁ @types/node@*[0K[1G⠂ @types/node@*[0K[1G⠄ schema-utils@^4.0.0[0K[1G⡀ websocket-extensions@>=0.1.1[0K[1G⢀ media-typer@0.3.0[0K[1G⠠ statuses@>= 1.4.0 < 2[0K[1G⠐ @types/express-serve-static-core@*[0K[1G⠈ wbuf@^1.7.3[0K[2K[1G[33mwarning[39m webpack-dev-server > webpack-dev-middleware > memfs@3.6.0: this will be v4
+[1G⠁ fs-monkey@^1.0.4[0K[1G⠂ is-docker@^2.0.0[0K[1G⠄ @leichtgewicht/ip-codec@^2.0.1[0K[1G⡀ @leichtgewicht/ip-codec@^2.0.1[0K[1G⢀ @nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1[0K[1G⠠ @nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1[0K[1G⠐ @nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1[0K[1G⠈ @nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1[0K[1G⠁ eslint-scope@5.1.1[0K[1G⠂ estraverse@^4.1.1[0K[1G⠄ babel-plugin-polyfill-regenerator@^0.6.1[0K[1G⡀ browserslist@^4.24.3[0K[1G⢀ core-js-compat@^3.40.0[0K[1G⠠ @babel/helper-module-transforms@^7.25.9[0K[1G⠐ @babel/helper-replace-supers@^7.25.9[0K[1G⠈ @babel/helper-plugin-utils@^7.25.9[0K[1G⠁ @babel/helper-plugin-utils@^7.25.9[0K[1G⠂ @babel/helper-plugin-utils@^7.25.9[0K[1G⠄ @babel/helper-create-regexp-features-plugin@^7.25.9[0K[1G⡀ @babel/helper-plugin-utils@^7.25.9[0K[1G⢀ @babel/helper-plugin-utils@^7.25.9[0K[1G⠠ @babel/helper-plugin-utils@^7.25.9[0K[1G⠐ unicode-match-property-value-ecmascript@^2.1.0[0K[1G⠈ regenerate@^1.4.2[0K[1G⠁ regenerate@^1.4.2[0K[1G⠂ fast-json-stable-stringify@^2.0.0[0K[1G⠄ punycode@^2.1.0[0K[1G⡀ hoist-non-react-statics@^3.3.2[0K[1G⢀ hoist-non-react-statics@^3.3.2[0K[1G⠠ hoist-non-react-statics@^3.3.2[0K[1G⠐ @sentry-internal/replay-canvas@8.55.0[0K[1G⠈ @sentry-internal/replay-canvas@8.55.0[0K[1G⠁ @sentry/core@8.55.0[0K[1G⠂ @sentry/core@8.55.0[0K[1G⠄ @typescript-eslint/scope-manager@8.25.0[0K[1G⡀ @typescript-eslint/scope-manager@8.25.0[0K[1G⢀ @typescript-eslint/typescript-estree@8.25.0[0K[1G⠠ @typescript-eslint/typescript-estree@8.25.0[0K[1G⠐ @typescript-eslint/visitor-keys@8.25.0[0K[1G⠈ @typescript-eslint/types@8.25.0[0K[1G⠁ brace-expansion@^2.0.1[0K[1G⠂ @formatjs/icu-messageformat-parser@2.11.1[0K[1G⠄ @formatjs/icu-messageformat-parser@2.11.1[0K[1G⡀ @types/babel__core@*[0K[1G⢀ @formatjs/icu-messageformat-parser@2.11.1[0K[1G⠠ object-keys@^1.1.1[0K[2K[1G[33mwarning[39m babel-plugin-formatjs > @formatjs/ts-transformer > @types/json-stable-stringify@1.2.0: This is a stub types definition. json-stable-stringify provides its own type definitions, so you do not need this installed.
+[1G⠐ emojis-list@^3.0.0[0K[1G⠈ resolve-pkg-maps@^1.0.0[0K[1G⠁ resolve-pkg-maps@^1.0.0[0K[1G⠂ resolve-pkg-maps@^1.0.0[0K[1G⠄ resolve-pkg-maps@^1.0.0[0K[1G⡀ resolve-pkg-maps@^1.0.0[0K[1G⢀ flatted@^3.2.9[0K[1G⠠ flatted@^3.2.9[0K[1G⠐ fast-levenshtein@^2.0.6[0K[1G⠈ type-check@~0.4.0[0K[1G⠁ @humanfs/core@^0.19.1[0K[1G⠂ @humanfs/core@^0.19.1[0K[1G⠄ @humanfs/core@^0.19.1[0K[1G⡀ @typescript-eslint/types@8.20.0[0K[1G⢀ @typescript-eslint/types@8.20.0[0K[1G⠠ vt-pbf@^3.1.3[0K[1G⠐ vt-pbf@^3.1.3[0K[1G⠈ vt-pbf@^3.1.3[0K[1G⠁ @mapbox/point-geometry@~0.1.0[0K[1G⠂ @mapbox/point-geometry@~0.1.0[0K[1G⠄ @types/mapbox__point-geometry@*[0K[1G⡀ @types/mapbox__point-geometry@*[0K[1G⢀ resolve-protobuf-schema@^2.1.0[0K[1G⠠ pbf@^3.2.1[0K[1G⠐ protocol-buffers-schema@^3.3.1[0K[1G⠈ protocol-buffers-schema@^3.3.1[0K[1G⠁ protocol-buffers-schema@^3.3.1[0K[1G⠂ protocol-buffers-schema@^3.3.1[0K[1G⠄ protocol-buffers-schema@^3.3.1[0K[1G⡀ protocol-buffers-schema@^3.3.1[0K[1G⢀ pattern-library@openstax/pattern-library[0K[1G⠠ pattern-library@openstax/pattern-library[0K[1G⠐ pattern-library@openstax/pattern-library[0K[1G⠈ pattern-library@openstax/pattern-library[0K[1G⠁ pattern-library@openstax/pattern-library[0K[1G⠂ pattern-library@openstax/pattern-library[0K[1G⠄ pattern-library@openstax/pattern-library[0K[1G⡀ pattern-library@openstax/pattern-library[0K[1G⢀ pattern-library@openstax/pattern-library[0K[1G⠠ pattern-library@openstax/pattern-library[0K[1G⠐ pattern-library@openstax/pattern-library[0K[1G⠈ pattern-library@openstax/pattern-library[0K[1G⠁ pattern-library@openstax/pattern-library[0K[1G⠂ pattern-library@openstax/pattern-library[0K[1G⠄ pattern-library@openstax/pattern-library[0K[1G⡀ pattern-library@openstax/pattern-library[0K[1G⢀ pattern-library@openstax/pattern-library[0K[1G⠠ pattern-library@openstax/pattern-library[0K[1G⠐ pattern-library@openstax/pattern-library[0K[1G⠈ pattern-library@openstax/pattern-library[0K[1G⠁ pattern-library@openstax/pattern-library[0K[1G⠂ pattern-library@openstax/pattern-library[0K[1G⠄ pattern-library@openstax/pattern-library[0K[1G⡀ pattern-library@openstax/pattern-library[0K[1G⢀ pattern-library@openstax/pattern-library[0K[1G⠠ react@npm:@preact/compat[0K[1G⠐ react@npm:@preact/compat[0K[1G⠈ react@npm:@preact/compat[0K[1G⠁ react-router@6.30.0[0K[1G⠂ @remix-run/router@1.23.0[0K[1G⠄ webpack-sources@^3.2.3[0K[1G⡀ webpack-sources@^3.2.3[0K[1G⢀ webpack-sources@^3.2.3[0K[1G⠠ @webassemblyjs/wast-printer@1.14.1[0K[1G⠐ @webassemblyjs/wasm-parser@1.14.1[0K[2K[1G[2K[1G[2m[3/5][22m 🚚  Fetching packages...
+[2K[1G[1G[----------------------------------------------------------------------------------------------------------------------------------------------------------] 0/1626[1G[##############------------------------------------------------------------------------------------------------------------------------------------------] 147/1626[1G[#############################---------------------------------------------------------------------------------------------------------------------------] 311/1626[1G[############################################------------------------------------------------------------------------------------------------------------] 468/1626[1G[############################################################--------------------------------------------------------------------------------------------] 646/1626[1G[############################################################################----------------------------------------------------------------------------] 815/1626[1G[####################################################################################--------------------------------------------------------------------] 898/1626[1G[###################################################################################################----------------------------------------------------] 1070/1626[1G[##################################################################################################################-------------------------------------] 1230/1626[1G[#################################################################################################################################----------------------] 1387/1626[1G[#################################################################################################################################################------] 1562/1626[1G[#######################################################################################################################################################] 1622/1626[1G[#######################################################################################################################################################] 1626/1626[2K[1G[2m[4/5][22m 🔗  Linking dependencies...
+[2K[1G[33mwarning[39m "@openstax/experiments > @openstax/ts-utils@1.21.7" has unmet peer dependency "cors@^2.8.5".
+[2K[1G[33mwarning[39m "@openstax/experiments > @openstax/ts-utils@1.21.7" has unmet peer dependency "express@^4.17.3".
+[2K[1G[33mwarning[39m "@openstax/experiments > @openstax/ts-utils@1.21.7" has unmet peer dependency "multer@^1.4.5-lts.1".
+[2K[1G[33mwarning[39m "@openstax/experiments > @openstax/ts-utils@1.21.7" has unmet peer dependency "postgres@^3.4.5".
+[2K[1G[33mwarning[39m "@openstax/experiments > @openstax/ts-utils@1.21.7" has unmet peer dependency "zod@^3.23.8".
+[2K[1G[33mwarning[39m " > react-accessible-accordion@4.0.0" has incorrect peer dependency "react@^16.3.2 || ^17.0.0".
+[2K[1G[33mwarning[39m " > react-accessible-accordion@4.0.0" has incorrect peer dependency "react-dom@^16.3.3 || ^17.0.0".
+[2K[1G[33mwarning[39m " > @testing-library/user-event@14.6.1" has unmet peer dependency "@testing-library/dom@>=7.21.4".
+[2K[1G[33mwarning[39m " > fast-sass-loader@2.0.1" has unmet peer dependency "sass@1.x".
+[2K[1G[33mwarning[39m "stylelint-config-standard-scss > stylelint-config-recommended-scss > postcss-scss@4.0.9" has unmet peer dependency "postcss@^8.4.29".
+[2K[1G[33mwarning[39m Workspaces can only be enabled in private projects.
+[2K[1G[2K[1G[1G[----------------------------------------------------------------------------------------------------------------------------------------------------------] 0/1664[2K[1G[2K[1G[1G[---------------------------------------------------------------------------------------------------------------------------------------------------------] 0/12514[1G[###----------------------------------------------------------------------------------------------------------------------------------------------------] 256/12514[1G[######-------------------------------------------------------------------------------------------------------------------------------------------------] 512/12514[1G[########-----------------------------------------------------------------------------------------------------------------------------------------------] 640/12514[1G[#########----------------------------------------------------------------------------------------------------------------------------------------------] 768/12514[1G[###########--------------------------------------------------------------------------------------------------------------------------------------------] 901/12514[1G[##############----------------------------------------------------------------------------------------------------------------------------------------] 1150/12514[1G[###############---------------------------------------------------------------------------------------------------------------------------------------] 1275/12514[1G[#################-------------------------------------------------------------------------------------------------------------------------------------] 1430/12514[1G[####################----------------------------------------------------------------------------------------------------------------------------------] 1653/12514[1G[#######################-------------------------------------------------------------------------------------------------------------------------------] 1905/12514[1G[########################------------------------------------------------------------------------------------------------------------------------------] 2037/12514[1G[##########################----------------------------------------------------------------------------------------------------------------------------] 2170/12514[1G[#############################-------------------------------------------------------------------------------------------------------------------------] 2417/12514[1G[###############################-----------------------------------------------------------------------------------------------------------------------] 2559/12514[1G[################################----------------------------------------------------------------------------------------------------------------------] 2668/12514[1G[################################----------------------------------------------------------------------------------------------------------------------] 2670/12514[1G[##################################--------------------------------------------------------------------------------------------------------------------] 2808/12514[1G[####################################------------------------------------------------------------------------------------------------------------------] 3038/12514[1G[######################################----------------------------------------------------------------------------------------------------------------] 3180/12514[1G[#########################################-------------------------------------------------------------------------------------------------------------] 3429/12514[1G[############################################----------------------------------------------------------------------------------------------------------] 3679/12514[1G[###############################################-------------------------------------------------------------------------------------------------------] 3889/12514[1G[#################################################-----------------------------------------------------------------------------------------------------] 4077/12514[1G[####################################################--------------------------------------------------------------------------------------------------] 4312/12514[1G[######################################################------------------------------------------------------------------------------------------------] 4500/12514[1G[########################################################----------------------------------------------------------------------------------------------] 4690/12514[1G[###########################################################-------------------------------------------------------------------------------------------] 4938/12514[1G[#############################################################-----------------------------------------------------------------------------------------] 5099/12514[1G[################################################################--------------------------------------------------------------------------------------] 5317/12514[1G[###################################################################-----------------------------------------------------------------------------------] 5570/12514[1G[#####################################################################---------------------------------------------------------------------------------] 5793/12514[1G[#######################################################################-------------------------------------------------------------------------------] 5956/12514[1G[##########################################################################----------------------------------------------------------------------------] 6202/12514[1G[############################################################################--------------------------------------------------------------------------] 6336/12514[1G[###############################################################################-----------------------------------------------------------------------] 6586/12514[1G[##################################################################################--------------------------------------------------------------------] 6823/12514[1G[####################################################################################------------------------------------------------------------------] 6972/12514[1G[#####################################################################################-----------------------------------------------------------------] 7066/12514[1G[#######################################################################################---------------------------------------------------------------] 7237/12514[1G[#########################################################################################-------------------------------------------------------------] 7454/12514[1G[############################################################################################----------------------------------------------------------] 7652/12514[1G[##############################################################################################--------------------------------------------------------] 7828/12514[1G[#################################################################################################-----------------------------------------------------] 8056/12514[1G[###################################################################################################---------------------------------------------------] 8226/12514[1G[#####################################################################################################-------------------------------------------------] 8400/12514[1G[#######################################################################################################-----------------------------------------------] 8581/12514[1G[#########################################################################################################---------------------------------------------] 8722/12514[1G[###########################################################################################################-------------------------------------------] 8958/12514[1G[#############################################################################################################-----------------------------------------] 9106/12514[1G[################################################################################################################--------------------------------------] 9355/12514[1G[###################################################################################################################-----------------------------------] 9604/12514[1G[######################################################################################################################--------------------------------] 9831/12514[1G[########################################################################################################################------------------------------] 9980/12514[1G[##########################################################################################################################---------------------------] 10208/12514[1G[###########################################################################################################################--------------------------] 10369/12514[1G[##############################################################################################################################-----------------------] 10617/12514[1G[#################################################################################################################################--------------------] 10837/12514[1G[###################################################################################################################################------------------] 11037/12514[1G[######################################################################################################################################---------------] 11285/12514[1G[#########################################################################################################################################------------] 11497/12514[1G[###########################################################################################################################################----------] 11672/12514[1G[#############################################################################################################################################--------] 11882/12514[1G[################################################################################################################################################-----] 12062/12514[1G[##################################################################################################################################################---] 12227/12514[1G[###################################################################################################################################################--] 12347/12514[1G[#####################################################################################################################################################] 12486/12514[1G[#####################################################################################################################################################] 12514/12514[2K[1G[2K[1G[1G[----------------------------------------------------------------------------------------------------------------------------------------------------------] 0/3047[1G[#######-------------------------------------------------------------------------------------------------------------------------------------------------] 148/3047[1G[#############################---------------------------------------------------------------------------------------------------------------------------] 590/3047[1G[########################################################-----------------------------------------------------------------------------------------------] 1122/3047[1G[###########################################################--------------------------------------------------------------------------------------------] 1194/3047[1G[#############################################################################--------------------------------------------------------------------------] 1558/3047[1G[########################################################################################---------------------------------------------------------------] 1772/3047[1G[##############################################################################################################-----------------------------------------] 2212/3047[1G[##############################################################################################################################-------------------------] 2538/3047[1G[###############################################################################################################################------------------------] 2556/3047[1G[###########################################################################################################################################------------] 2806/3047[1G[#######################################################################################################################################################] 3047/3047[2K[1G[2m[5/5][22m 🔨  Rebuilding all packages...
+[2K[1G
+[2K[1G
+[2K[1G
+[2K[1G
+[1G⠁ [0K[1G[1A⠁ [0K[1G[1B[1G[2A⠁ [0K[1G[2B[1G[3A⠁ [0K[1G[3B[1G[4A⠁ [0K[1G[4B[1G[2m[5/5][22m ⠂ esbuild[0K[1G[1A[2m[4/5][22m ⠂ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠂ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠂ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠄ esbuild[0K[1G[1A[2m[4/5][22m ⠄ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠄ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠄ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⡀ esbuild[0K[1G[1A[2m[4/5][22m ⡀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⡀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⡀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⢀ esbuild[0K[1G[1A[2m[4/5][22m ⢀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⢀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⢀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠠ esbuild[0K[1G[1A[2m[4/5][22m ⠠ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠠ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠠ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠐ esbuild[0K[1G[1A[2m[4/5][22m ⠐ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠐ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠐ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠈ esbuild[0K[1G[1A[2m[4/5][22m ⠈ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠈ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠈ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠁ esbuild[0K[1G[1A[2m[4/5][22m ⠁ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠁ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠁ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠂ esbuild[0K[1G[1A[2m[4/5][22m ⠂ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠂ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠂ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠄ esbuild[0K[1G[1A[2m[4/5][22m ⠄ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠄ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠄ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⡀ esbuild[0K[1G[1A[2m[4/5][22m ⡀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⡀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⡀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⢀ esbuild[0K[1G[1A[2m[4/5][22m ⢀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⢀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⢀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠠ esbuild[0K[1G[1A[2m[4/5][22m ⠠ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠠ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠠ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠐ esbuild[0K[1G[1A[2m[4/5][22m ⠐ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠐ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠐ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠈ esbuild[0K[1G[1A[2m[4/5][22m ⠈ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠈ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠈ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠁ esbuild[0K[1G[1A[2m[4/5][22m ⠁ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠁ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠁ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠂ esbuild[0K[1G[1A[2m[4/5][22m ⠂ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠂ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠂ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠄ esbuild[0K[1G[1A[2m[4/5][22m ⠄ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠄ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠄ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⡀ esbuild[0K[1G[1A[2m[4/5][22m ⡀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⡀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⡀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⢀ esbuild[0K[1G[1A[2m[4/5][22m ⢀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⢀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⢀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠠ esbuild[0K[1G[1A[2m[4/5][22m ⠠ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠠ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠠ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠐ esbuild[0K[1G[1A[2m[4/5][22m ⠐ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠐ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠐ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠈ esbuild[0K[1G[1A[2m[4/5][22m ⠈ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠈ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠈ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠁ esbuild[0K[1G[1A[2m[4/5][22m ⠁ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠁ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠁ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠂ esbuild[0K[1G[1A[2m[4/5][22m ⠂ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠂ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠂ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠄ esbuild[0K[1G[1A[2m[4/5][22m ⠄ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠄ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠄ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⡀ esbuild[0K[1G[1A[2m[4/5][22m ⡀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⡀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⡀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⢀ esbuild[0K[1G[1A[2m[4/5][22m ⢀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⢀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⢀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠠ esbuild[0K[1G[1A[2m[4/5][22m ⠠ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠠ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠠ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠐ esbuild[0K[1G[1A[2m[4/5][22m ⠐ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠐ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠐ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠈ esbuild[0K[1G[1A[2m[4/5][22m ⠈ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠈ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠈ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠁ esbuild[0K[1G[1A[2m[4/5][22m ⠁ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠁ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠁ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠂ esbuild[0K[1G[1A[2m[4/5][22m ⠂ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠂ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠂ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠄ esbuild[0K[1G[1A[2m[4/5][22m ⠄ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠄ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠄ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⡀ esbuild[0K[1G[1A[2m[4/5][22m ⡀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⡀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⡀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⢀ esbuild[0K[1G[1A[2m[4/5][22m ⢀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⢀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⢀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠠ esbuild[0K[1G[1A[2m[4/5][22m ⠠ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠠ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠠ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠐ esbuild[0K[1G[1A[2m[4/5][22m ⠐ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠐ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠐ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠈ esbuild[0K[1G[1A[2m[4/5][22m ⠈ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠈ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠈ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠁ esbuild[0K[1G[1A[2m[4/5][22m ⠁ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠁ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠁ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠂ esbuild[0K[1G[1A[2m[4/5][22m ⠂ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠂ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠂ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠄ esbuild[0K[1G[1A[2m[4/5][22m ⠄ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠄ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠄ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⡀ esbuild[0K[1G[1A[2m[4/5][22m ⡀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⡀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⡀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⢀ esbuild[0K[1G[1A[2m[4/5][22m ⢀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⢀ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⢀ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠠ esbuild[0K[1G[1A[2m[4/5][22m ⠠ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠠ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠠ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠐ esbuild[0K[1G[1A[2m[4/5][22m ⠐ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠐ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠐ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠈ esbuild[0K[1G[1A[2m[4/5][22m ⠈ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠈ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠈ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠁ esbuild[0K[1G[1A[2m[4/5][22m ⠁ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠁ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠁ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠂ esbuild[0K[1G[1A[2m[4/5][22m ⠂ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠂ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠂ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⠄ esbuild[0K[1G[1A[2m[4/5][22m ⠄ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠄ canvas[0K[1G[3B[1G[4A[2m[1/5][22m ⠄ aws-sdk[0K[1G[4B[1G[2m[5/5][22m ⡀ esbuild[0K[1G[1A[2m[4/5][22m ⡀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⡀ canvas[0K[1G[3B[1G[4A[2m[-/5][22m ⡀ waiting...[0K[1G[4B[1G[2m[5/5][22m ⢀ esbuild[0K[1G[1A[2m[4/5][22m ⢀ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⢀ canvas[0K[1G[3B[1G[4A[2m[-/5][22m ⢀ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠠ esbuild[0K[1G[1A[2m[4/5][22m ⠠ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠠ canvas[0K[1G[3B[1G[4A[2m[-/5][22m ⠠ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠐ esbuild[0K[1G[1A[2m[4/5][22m ⠐ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠐ canvas[0K[1G[3B[1G[4A[2m[-/5][22m ⠐ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠈ esbuild[0K[1G[1A[2m[4/5][22m ⠈ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[2/5][22m ⠈ canvas[0K[1G[3B[1G[4A[2m[-/5][22m ⠈ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠁ esbuild[0K[1G[1A[2m[4/5][22m ⠁ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠁ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠁ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠂ esbuild[0K[1G[1A[2m[4/5][22m ⠂ node-sass[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠂ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠂ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠄ esbuild[0K[1G[1A[2m[-/5][22m ⠄ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠄ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠄ waiting...[0K[1G[4B[1G[2m[5/5][22m ⡀ esbuild[0K[1G[1A[2m[-/5][22m ⡀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⡀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⡀ waiting...[0K[1G[4B[1G[2m[5/5][22m ⢀ esbuild[0K[1G[1A[2m[-/5][22m ⢀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⢀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⢀ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠠ esbuild[0K[1G[1A[2m[-/5][22m ⠠ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠠ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠠ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠐ esbuild[0K[1G[1A[2m[-/5][22m ⠐ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠐ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠐ waiting...[0K[1G[4B[1G[2m[5/5][22m ⠈ esbuild[0K[1G[1A[2m[-/5][22m ⠈ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠈ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠈ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠁ waiting...[0K[1G[1A[2m[-/5][22m ⠁ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠁ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠁ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠂ waiting...[0K[1G[1A[2m[-/5][22m ⠂ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠂ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠂ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠄ waiting...[0K[1G[1A[2m[-/5][22m ⠄ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠄ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠄ waiting...[0K[1G[4B[1G[2m[-/5][22m ⡀ waiting...[0K[1G[1A[2m[-/5][22m ⡀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⡀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⡀ waiting...[0K[1G[4B[1G[2m[-/5][22m ⢀ waiting...[0K[1G[1A[2m[-/5][22m ⢀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⢀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⢀ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠠ waiting...[0K[1G[1A[2m[-/5][22m ⠠ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠠ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠠ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠐ waiting...[0K[1G[1A[2m[-/5][22m ⠐ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠐ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠐ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠈ waiting...[0K[1G[1A[2m[-/5][22m ⠈ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠈ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠈ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠁ waiting...[0K[1G[1A[2m[-/5][22m ⠁ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠁ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠁ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠂ waiting...[0K[1G[1A[2m[-/5][22m ⠂ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠂ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠂ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠄ waiting...[0K[1G[1A[2m[-/5][22m ⠄ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠄ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠄ waiting...[0K[1G[4B[1G[2m[-/5][22m ⡀ waiting...[0K[1G[1A[2m[-/5][22m ⡀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⡀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⡀ waiting...[0K[1G[4B[1G[2m[-/5][22m ⢀ waiting...[0K[1G[1A[2m[-/5][22m ⢀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⢀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⢀ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠠ waiting...[0K[1G[1A[2m[-/5][22m ⠠ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠠ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠠ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠐ waiting...[0K[1G[1A[2m[-/5][22m ⠐ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠐ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠐ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠈ waiting...[0K[1G[1A[2m[-/5][22m ⠈ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠈ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠈ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠁ waiting...[0K[1G[1A[2m[-/5][22m ⠁ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠁ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠁ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠂ waiting...[0K[1G[1A[2m[-/5][22m ⠂ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠂ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠂ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠄ waiting...[0K[1G[1A[2m[-/5][22m ⠄ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠄ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠄ waiting...[0K[1G[4B[1G[2m[-/5][22m ⡀ waiting...[0K[1G[1A[2m[-/5][22m ⡀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⡀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⡀ waiting...[0K[1G[4B[1G[2m[-/5][22m ⢀ waiting...[0K[1G[1A[2m[-/5][22m ⢀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⢀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⢀ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠠ waiting...[0K[1G[1A[2m[-/5][22m ⠠ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠠ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠠ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠐ waiting...[0K[1G[1A[2m[-/5][22m ⠐ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠐ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠐ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠈ waiting...[0K[1G[1A[2m[-/5][22m ⠈ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠈ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠈ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠁ waiting...[0K[1G[1A[2m[-/5][22m ⠁ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠁ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠁ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠂ waiting...[0K[1G[1A[2m[-/5][22m ⠂ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠂ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠂ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠄ waiting...[0K[1G[1A[2m[-/5][22m ⠄ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠄ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠄ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠄ waiting...[0K[1G[4B[1G[2m[-/5][22m ⡀ waiting...[0K[1G[1A[2m[-/5][22m ⡀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⡀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⡀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⡀ waiting...[0K[1G[4B[1G[2m[-/5][22m ⢀ waiting...[0K[1G[1A[2m[-/5][22m ⢀ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⢀ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⢀ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⢀ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠠ waiting...[0K[1G[1A[2m[-/5][22m ⠠ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠠ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠠ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠠ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠐ waiting...[0K[1G[1A[2m[-/5][22m ⠐ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠐ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠐ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠐ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠈ waiting...[0K[1G[1A[2m[-/5][22m ⠈ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠈ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠈ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠈ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠁ waiting...[0K[1G[1A[2m[-/5][22m ⠁ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠁ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠁ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠁ waiting...[0K[1G[4B[1G[2m[-/5][22m ⠂ waiting...[0K[1G[1A[2m[-/5][22m ⠂ waiting...[0K[1G[1B[1G[2A[2m[3/5][22m ⠂ sharp[0K[1G[2B[1G[3A[2m[-/5][22m ⠂ waiting...[0K[1G[3B[1G[4A[2m[-/5][22m ⠂ waiting...[0K[1G[4B[1G[4A[2K[4B[1G[3A[2K[3B[1G[2A[2K[2B[1G[1A[2K[1B[2K[1G[4A[2K[1G[32msuccess[39m Saved lockfile.
+[2K[1G[33mwarning[39m Workspaces can only be enabled in private projects.
+[2K[1G[32msuccess[39m Saved 915 new dependencies.
+[2K[1G[34minfo[39m Direct dependencies
+[2K[1G├─ @babel/core@7.26.9
+├─ @babel/eslint-parser@7.26.8
+├─ @babel/plugin-transform-runtime@7.26.9
+├─ @babel/preset-env@7.26.9
+├─ @babel/preset-react@7.26.3
+├─ @babel/preset-typescript@7.26.0
+├─ @emotion/babel-preset-css-prop@11.12.0
+├─ @emotion/react@11.14.0
+├─ @emotion/styled@11.14.0
+├─ @eslint/compat@1.2.7
+├─ @eslint/eslintrc@3.3.0
+├─ @eslint/js@9.21.0
+├─ @fortawesome/fontawesome-svg-core@6.7.2
+├─ @fortawesome/free-brands-svg-icons@6.7.2
+├─ @fortawesome/free-regular-svg-icons@6.7.2
+├─ @fortawesome/free-solid-svg-icons@6.7.2
+├─ @fortawesome/react-fontawesome@0.2.2
+├─ @openstax/experiments@1.0.2
+├─ @sentry/react@8.55.0
+├─ @sentry/tracing@7.120.3
+├─ @testing-library/jest-dom@5.17.0
+├─ @testing-library/preact@3.2.4
+├─ @testing-library/user-event@14.6.1
+├─ @types/color@3.0.6
+├─ @types/deep-equal@1.0.4
+├─ @types/js-cookie@3.0.6
+├─ @types/lodash@4.17.15
+├─ @types/react-dom@18.3.5
+├─ @types/react-lazyload@3.2.3
+├─ @types/react-loadable@5.5.11
+├─ @types/react-modal@3.16.3
+├─ @types/react@18.3.18
+├─ @typescript-eslint/eslint-plugin@8.25.0
+├─ @typescript-eslint/parser@8.25.0
+├─ babel-jest@28.1.3
+├─ babel-plugin-formatjs@10.5.35
+├─ boxible@1.7.7
+├─ classnames@2.5.1
+├─ copy-webpack-plugin@11.0.0
+├─ date-fns@4.1.0
+├─ deep-equal@2.2.3
+├─ esbuild-loader@4.3.0
+├─ eslint-config-prettier@10.0.2
+├─ eslint-plugin-formatjs@5.2.14
+├─ eslint-plugin-react-hooks@5.1.0
+├─ eslint-plugin-react@7.37.4
+├─ eslint-webpack-plugin@4.2.0
+├─ eslint@9.21.0
+├─ fast-css-loader@1.0.2
+├─ fast-sass-loader@2.0.1
+├─ favicons-webpack-plugin@6.0.1
+├─ favicons@7.2.0
+├─ html-webpack-plugin@5.6.3
+├─ ignore-loader@0.1.2
+├─ jest@27.5.1
+├─ mapbox-gl@3.10.0
+├─ node-localstorage@2.2.1
+├─ node-sass@8.0.0
+├─ particles.js@2.0.0
+├─ pattern-library@1.3.4
+├─ preact@10.24.3
+├─ prettier@3.5.2
+├─ react-accessible-accordion@4.0.0
+├─ react-aria-carousel@0.2.0
+├─ react-aria@3.37.0
+├─ react-dom@18.3.1
+├─ react-intl@6.8.9
+├─ react-lazyload@3.2.1
+├─ react-loadable@5.5.0
+├─ react-modal@3.16.3
+├─ react-pdf@9.2.1
+├─ react-router-dom@6.30.0
+├─ react-stately@3.35.0
+├─ react@18.3.1
+├─ require-dir@1.2.0
+├─ style-loader@3.3.4
+├─ stylelint-config-standard-scss@7.0.1
+├─ stylelint-scss@4.7.0
+├─ stylelint-webpack-plugin@4.1.1
+├─ stylelint@15.11.0
+├─ ts-loader@9.5.2
+├─ typescript@5.7.3
+├─ webpack-cli@5.1.4
+├─ webpack-dev-server@4.15.2
+└─ webpack@5.98.0
+[2K[1G[34minfo[39m All dependencies
+├─ @adobe/css-tools@4.4.2
+├─ @ampproject/remapping@2.3.0
+├─ @aws-crypto/crc32c@5.2.0
+├─ @aws-crypto/sha1-browser@5.2.0
+├─ @aws-sdk/client-dynamodb@3.751.0
+├─ @aws-sdk/client-s3@3.750.0
+├─ @aws-sdk/client-ssm@3.750.0
+├─ @aws-sdk/client-sso@3.750.0
+├─ @aws-sdk/client-sts@3.750.0
+├─ @aws-sdk/credential-provider-ini@3.750.0
+├─ @aws-sdk/endpoint-cache@3.723.0
+├─ @aws-sdk/middleware-bucket-endpoint@3.734.0
+├─ @aws-sdk/middleware-endpoint-discovery@3.734.0
+├─ @aws-sdk/middleware-expect-continue@3.734.0
+├─ @aws-sdk/middleware-flexible-checksums@3.750.0
+├─ @aws-sdk/middleware-location-constraint@3.734.0
+├─ @aws-sdk/middleware-ssec@3.734.0
+├─ @aws-sdk/s3-request-presigner@3.750.0
+├─ @aws-sdk/token-providers@3.750.0
+├─ @aws-sdk/util-format-url@3.734.0
+├─ @aws-sdk/xml-builder@3.734.0
+├─ @babel/compat-data@7.26.8
+├─ @babel/core@7.26.9
+├─ @babel/eslint-parser@7.26.8
+├─ @babel/generator@7.26.9
+├─ @babel/helper-plugin-utils@7.26.5
+├─ @babel/helper-string-parser@7.25.9
+├─ @babel/helper-wrap-function@7.25.9
+├─ @babel/helpers@7.26.9
+├─ @babel/parser@7.26.9
+├─ @babel/plugin-bugfix-firefox-class-in-computed-class-key@7.25.9
+├─ @babel/plugin-bugfix-safari-class-field-initializer-scope@7.25.9
+├─ @babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@7.25.9
+├─ @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.25.9
+├─ @babel/plugin-bugfix-v8-static-class-fields-redefine-readonly@7.25.9
+├─ @babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2
+├─ @babel/plugin-syntax-async-generators@7.8.4
+├─ @babel/plugin-syntax-bigint@7.8.3
+├─ @babel/plugin-syntax-class-properties@7.12.13
+├─ @babel/plugin-syntax-class-static-block@7.14.5
+├─ @babel/plugin-syntax-import-assertions@7.26.0
+├─ @babel/plugin-syntax-import-attributes@7.26.0
+├─ @babel/plugin-syntax-import-meta@7.10.4
+├─ @babel/plugin-syntax-json-strings@7.8.3
+├─ @babel/plugin-syntax-jsx@7.25.9
+├─ @babel/plugin-syntax-logical-assignment-operators@7.10.4
+├─ @babel/plugin-syntax-nullish-coalescing-operator@7.8.3
+├─ @babel/plugin-syntax-numeric-separator@7.10.4
+├─ @babel/plugin-syntax-object-rest-spread@7.8.3
+├─ @babel/plugin-syntax-optional-catch-binding@7.8.3
+├─ @babel/plugin-syntax-optional-chaining@7.8.3
+├─ @babel/plugin-syntax-private-property-in-object@7.14.5
+├─ @babel/plugin-syntax-top-level-await@7.14.5
+├─ @babel/plugin-syntax-typescript@7.25.9
+├─ @babel/plugin-syntax-unicode-sets-regex@7.18.6
+├─ @babel/plugin-transform-arrow-functions@7.25.9
+├─ @babel/plugin-transform-async-generator-functions@7.26.8
+├─ @babel/plugin-transform-async-to-generator@7.25.9
+├─ @babel/plugin-transform-block-scoped-functions@7.26.5
+├─ @babel/plugin-transform-block-scoping@7.25.9
+├─ @babel/plugin-transform-class-properties@7.25.9
+├─ @babel/plugin-transform-class-static-block@7.26.0
+├─ @babel/plugin-transform-classes@7.25.9
+├─ @babel/plugin-transform-computed-properties@7.25.9
+├─ @babel/plugin-transform-destructuring@7.25.9
+├─ @babel/plugin-transform-dotall-regex@7.25.9
+├─ @babel/plugin-transform-duplicate-keys@7.25.9
+├─ @babel/plugin-transform-duplicate-named-capturing-groups-regex@7.25.9
+├─ @babel/plugin-transform-dynamic-import@7.25.9
+├─ @babel/plugin-transform-exponentiation-operator@7.26.3
+├─ @babel/plugin-transform-export-namespace-from@7.25.9
+├─ @babel/plugin-transform-for-of@7.26.9
+├─ @babel/plugin-transform-function-name@7.25.9
+├─ @babel/plugin-transform-json-strings@7.25.9
+├─ @babel/plugin-transform-literals@7.25.9
+├─ @babel/plugin-transform-logical-assignment-operators@7.25.9
+├─ @babel/plugin-transform-member-expression-literals@7.25.9
+├─ @babel/plugin-transform-modules-amd@7.25.9
+├─ @babel/plugin-transform-modules-commonjs@7.26.3
+├─ @babel/plugin-transform-modules-systemjs@7.25.9
+├─ @babel/plugin-transform-modules-umd@7.25.9
+├─ @babel/plugin-transform-named-capturing-groups-regex@7.25.9
+├─ @babel/plugin-transform-new-target@7.25.9
+├─ @babel/plugin-transform-nullish-coalescing-operator@7.26.6
+├─ @babel/plugin-transform-numeric-separator@7.25.9
+├─ @babel/plugin-transform-object-rest-spread@7.25.9
+├─ @babel/plugin-transform-object-super@7.25.9
+├─ @babel/plugin-transform-optional-catch-binding@7.25.9
+├─ @babel/plugin-transform-private-methods@7.25.9
+├─ @babel/plugin-transform-private-property-in-object@7.25.9
+├─ @babel/plugin-transform-property-literals@7.25.9
+├─ @babel/plugin-transform-react-display-name@7.25.9
+├─ @babel/plugin-transform-react-jsx-development@7.25.9
+├─ @babel/plugin-transform-react-pure-annotations@7.25.9
+├─ @babel/plugin-transform-regenerator@7.25.9
+├─ @babel/plugin-transform-regexp-modifiers@7.26.0
+├─ @babel/plugin-transform-reserved-words@7.25.9
+├─ @babel/plugin-transform-runtime@7.26.9
+├─ @babel/plugin-transform-shorthand-properties@7.25.9
+├─ @babel/plugin-transform-spread@7.25.9
+├─ @babel/plugin-transform-sticky-regex@7.25.9
+├─ @babel/plugin-transform-template-literals@7.26.8
+├─ @babel/plugin-transform-typeof-symbol@7.26.7
+├─ @babel/plugin-transform-typescript@7.26.8
+├─ @babel/plugin-transform-unicode-escapes@7.25.9
+├─ @babel/plugin-transform-unicode-property-regex@7.25.9
+├─ @babel/plugin-transform-unicode-regex@7.25.9
+├─ @babel/plugin-transform-unicode-sets-regex@7.25.9
+├─ @babel/preset-env@7.26.9
+├─ @babel/preset-modules@0.1.6-no-external-plugins
+├─ @babel/preset-react@7.26.3
+├─ @babel/preset-typescript@7.26.0
+├─ @babel/runtime@7.26.9
+├─ @babel/traverse@7.26.9
+├─ @babel/types@7.26.9
+├─ @bcoe/v8-coverage@0.2.3
+├─ @csstools/css-parser-algorithms@2.7.1
+├─ @csstools/css-tokenizer@2.4.1
+├─ @csstools/media-query-list-parser@2.1.13
+├─ @csstools/selector-specificity@3.1.1
+├─ @discoveryjs/json-ext@0.5.7
+├─ @emotion/babel-plugin-jsx-pragmatic@0.3.0
+├─ @emotion/babel-preset-css-prop@11.12.0
+├─ @emotion/cache@11.14.0
+├─ @emotion/is-prop-valid@1.3.1
+├─ @emotion/react@11.14.0
+├─ @emotion/sheet@1.4.0
+├─ @emotion/styled@11.14.0
+├─ @emotion/unitless@0.10.0
+├─ @esbuild/darwin-x64@0.25.0
+├─ @eslint-community/regexpp@4.12.1
+├─ @eslint/compat@1.2.7
+├─ @eslint/config-array@0.19.2
+├─ @eslint/eslintrc@3.3.0
+├─ @eslint/js@9.21.0
+├─ @eslint/object-schema@2.1.6
+├─ @eslint/plugin-kit@0.2.7
+├─ @formatjs/icu-skeleton-parser@1.8.13
+├─ @formatjs/intl@2.10.15
+├─ @fortawesome/fontawesome-svg-core@6.7.2
+├─ @fortawesome/free-brands-svg-icons@6.7.2
+├─ @fortawesome/free-regular-svg-icons@6.7.2
+├─ @fortawesome/free-solid-svg-icons@6.7.2
+├─ @fortawesome/react-fontawesome@0.2.2
+├─ @gar/promisify@1.1.3
+├─ @humanfs/core@0.19.1
+├─ @humanfs/node@0.16.6
+├─ @humanwhocodes/module-importer@1.0.1
+├─ @humanwhocodes/retry@0.4.2
+├─ @img/sharp-darwin-x64@0.33.5
+├─ @internationalized/message@3.1.6
+├─ @istanbuljs/load-nyc-config@1.1.0
+├─ @jest/expect-utils@29.7.0
+├─ @jest/globals@27.5.1
+├─ @jest/reporters@27.5.1
+├─ @jest/test-sequencer@27.5.1
+├─ @jridgewell/gen-mapping@0.3.8
+├─ @jridgewell/resolve-uri@3.1.2
+├─ @jridgewell/set-array@1.2.1
+├─ @jridgewell/source-map@0.3.6
+├─ @jridgewell/sourcemap-codec@1.5.0
+├─ @leichtgewicht/ip-codec@2.0.5
+├─ @mapbox/jsonlint-lines-primitives@2.0.2
+├─ @mapbox/mapbox-gl-supported@3.0.0
+├─ @mapbox/point-geometry@0.1.0
+├─ @mapbox/tiny-sdf@2.0.6
+├─ @mapbox/unitbezier@0.0.1
+├─ @mapbox/whoots-js@3.1.0
+├─ @nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1
+├─ @nodelib/fs.scandir@2.1.5
+├─ @nodelib/fs.stat@2.0.5
+├─ @nodelib/fs.walk@1.2.8
+├─ @npmcli/fs@2.1.2
+├─ @npmcli/move-file@2.0.1
+├─ @openstax/experiments@1.0.2
+├─ @openstax/ts-utils@1.21.7
+├─ @react-aria/breadcrumbs@3.5.20
+├─ @react-aria/button@3.11.1
+├─ @react-aria/calendar@3.7.0
+├─ @react-aria/checkbox@3.15.1
+├─ @react-aria/color@3.0.3
+├─ @react-aria/combobox@3.11.1
+├─ @react-aria/datepicker@3.13.0
+├─ @react-aria/dialog@3.5.21
+├─ @react-aria/disclosure@3.0.1
+├─ @react-aria/dnd@3.8.1
+├─ @react-aria/meter@3.4.19
+├─ @react-aria/radio@3.10.11
+├─ @react-aria/searchfield@3.8.0
+├─ @react-aria/select@3.15.1
+├─ @react-aria/separator@3.4.5
+├─ @react-aria/switch@3.6.11
+├─ @react-aria/table@3.16.1
+├─ @react-aria/tabs@3.9.9
+├─ @react-aria/tag@3.4.9
+├─ @react-aria/toolbar@3.0.0-beta.12
+├─ @react-aria/tooltip@3.7.11
+├─ @react-stately/data@3.12.1
+├─ @react-types/breadcrumbs@3.7.10
+├─ @react-types/listbox@3.5.4
+├─ @react-types/meter@3.4.6
+├─ @react-types/switch@3.5.8
+├─ @sentry-internal/feedback@8.55.0
+├─ @sentry-internal/replay-canvas@8.55.0
+├─ @sentry-internal/tracing@7.120.3
+├─ @sentry/browser@8.55.0
+├─ @sentry/react@8.55.0
+├─ @sentry/tracing@7.120.3
+├─ @sinclair/typebox@0.27.8
+├─ @sinonjs/commons@1.8.6
+├─ @sinonjs/fake-timers@8.1.0
+├─ @smithy/chunked-blob-reader-native@4.0.0
+├─ @smithy/chunked-blob-reader@5.0.0
+├─ @smithy/eventstream-codec@4.0.1
+├─ @smithy/eventstream-serde-browser@4.0.1
+├─ @smithy/eventstream-serde-config-resolver@4.0.1
+├─ @smithy/eventstream-serde-node@4.0.1
+├─ @smithy/hash-blob-browser@4.0.1
+├─ @smithy/hash-stream-node@4.0.1
+├─ @smithy/md5-js@4.0.1
+├─ @smithy/querystring-parser@4.0.1
+├─ @testing-library/dom@8.20.1
+├─ @testing-library/jest-dom@5.17.0
+├─ @testing-library/preact@3.2.4
+├─ @testing-library/user-event@14.6.1
+├─ @tootallnate/once@1.1.2
+├─ @types/aria-query@5.0.4
+├─ @types/babel__core@7.20.5
+├─ @types/babel__generator@7.6.8
+├─ @types/babel__helper-plugin-utils@7.10.3
+├─ @types/babel__template@7.4.4
+├─ @types/babel__traverse@7.20.6
+├─ @types/bonjour@3.5.13
+├─ @types/color-convert@2.0.4
+├─ @types/color-name@1.1.5
+├─ @types/color@3.0.6
+├─ @types/connect-history-api-fallback@1.5.4
+├─ @types/connect@3.4.38
+├─ @types/deep-equal@1.0.4
+├─ @types/eslint-scope@3.7.7
+├─ @types/eslint@9.6.1
+├─ @types/express-serve-static-core@5.0.6
+├─ @types/express@4.17.21
+├─ @types/geojson-vt@3.2.5
+├─ @types/graceful-fs@4.1.9
+├─ @types/hoist-non-react-statics@3.3.6
+├─ @types/html-minifier-terser@6.1.0
+├─ @types/http-errors@2.0.4
+├─ @types/http-proxy@1.17.16
+├─ @types/istanbul-lib-coverage@2.0.6
+├─ @types/istanbul-lib-report@3.0.3
+├─ @types/jest@29.5.14
+├─ @types/js-cookie@3.0.6
+├─ @types/jsdom@20.0.1
+├─ @types/json-stable-stringify@1.2.0
+├─ @types/jsonwebtoken@9.0.9
+├─ @types/lodash@4.17.15
+├─ @types/mapbox__point-geometry@0.1.4
+├─ @types/mapbox__vector-tile@1.3.4
+├─ @types/mime@1.3.5
+├─ @types/minimist@1.2.5
+├─ @types/ms@2.1.0
+├─ @types/node-forge@1.3.11
+├─ @types/node@22.13.5
+├─ @types/parse-json@4.0.2
+├─ @types/pbf@3.0.5
+├─ @types/picomatch@3.0.2
+├─ @types/prettier@2.7.3
+├─ @types/prop-types@15.7.14
+├─ @types/react-dom@18.3.5
+├─ @types/react-lazyload@3.2.3
+├─ @types/react-loadable@5.5.11
+├─ @types/react-modal@3.16.3
+├─ @types/react@18.3.18
+├─ @types/retry@0.12.0
+├─ @types/serve-index@1.9.4
+├─ @types/sockjs@0.3.36
+├─ @types/source-list-map@0.1.6
+├─ @types/supercluster@7.1.3
+├─ @types/tapable@1.0.12
+├─ @types/testing-library__jest-dom@5.14.9
+├─ @types/tough-cookie@4.0.5
+├─ @types/uglify-js@3.17.5
+├─ @types/webpack-sources@3.2.3
+├─ @types/webpack@4.41.40
+├─ @types/ws@8.5.14
+├─ @typescript-eslint/eslint-plugin@8.25.0
+├─ @typescript-eslint/parser@8.25.0
+├─ @typescript-eslint/type-utils@8.25.0
+├─ @webassemblyjs/floating-point-hex-parser@1.13.2
+├─ @webassemblyjs/helper-numbers@1.13.2
+├─ @webassemblyjs/helper-wasm-section@1.14.1
+├─ @webassemblyjs/wasm-edit@1.14.1
+├─ @webassemblyjs/wasm-opt@1.14.1
+├─ @webassemblyjs/wast-printer@1.14.1
+├─ @webpack-cli/configtest@2.1.1
+├─ @webpack-cli/info@2.0.2
+├─ @webpack-cli/serve@2.0.5
+├─ @xtuc/ieee754@1.2.0
+├─ abab@2.0.6
+├─ abbrev@1.1.1
+├─ accepts@1.3.8
+├─ acorn-globals@6.0.0
+├─ acorn-jsx@5.3.2
+├─ acorn-walk@7.2.0
+├─ agentkeepalive@4.6.0
+├─ aggregate-error@3.1.0
+├─ ajv-formats@2.1.1
+├─ ajv-keywords@5.1.0
+├─ ajv@8.17.1
+├─ ansi-html-community@0.0.8
+├─ anymatch@3.1.3
+├─ aproba@2.0.0
+├─ are-we-there-yet@3.0.1
+├─ argparse@2.0.1
+├─ aria-query@5.3.2
+├─ array-buffer-byte-length@1.0.2
+├─ array-flatten@1.1.1
+├─ array-includes@3.1.8
+├─ array-union@2.1.0
+├─ array-uniq@1.0.3
+├─ array.prototype.findlast@1.2.5
+├─ array.prototype.flat@1.3.3
+├─ array.prototype.flatmap@1.3.3
+├─ array.prototype.tosorted@1.1.4
+├─ arraybuffer.prototype.slice@1.0.4
+├─ arrify@1.0.1
+├─ astral-regex@2.0.0
+├─ async-foreach@0.1.3
+├─ async-function@1.0.0
+├─ async@2.6.4
+├─ author-regex@1.0.0
+├─ aws-sdk@2.1692.0
+├─ babel-jest@28.1.3
+├─ babel-plugin-formatjs@10.5.35
+├─ babel-plugin-jest-hoist@28.1.3
+├─ babel-plugin-macros@3.1.0
+├─ babel-plugin-polyfill-corejs3@0.10.6
+├─ babel-preset-jest@28.1.3
+├─ base64-js@1.5.1
+├─ base64url@3.0.1
+├─ batch@0.6.1
+├─ binary-extensions@2.3.0
+├─ bl@4.1.0
+├─ body-parser@1.20.3
+├─ bonjour-service@1.3.0
+├─ boxible@1.7.7
+├─ braces@3.0.3
+├─ browser-process-hrtime@1.0.0
+├─ bser@2.1.1
+├─ buffer-equal-constant-time@1.0.1
+├─ buffer-from@1.1.2
+├─ buffer@4.9.2
+├─ cacache@16.1.3
+├─ camel-case@4.1.2
+├─ camelcase-keys@6.2.2
+├─ caniuse-lite@1.0.30001701
+├─ canvas@3.1.0
+├─ char-regex@1.0.2
+├─ cheap-ruler@4.0.0
+├─ chokidar@3.6.0
+├─ chrome-trace-event@1.0.4
+├─ cjs-module-lexer@1.4.3
+├─ classnames@2.5.1
+├─ clean-css@5.3.3
+├─ clean-stack@2.2.0
+├─ cli-source-preview@1.1.0
+├─ cliui@7.0.4
+├─ clone-deep@4.0.1
+├─ color-name@1.1.4
+├─ color-string@1.9.1
+├─ color-support@1.1.3
+├─ colord@2.9.3
+├─ commander@10.0.1
+├─ compressible@2.0.18
+├─ compression@1.8.0
+├─ concat-map@0.0.1
+├─ connect-history-api-fallback@2.0.0
+├─ content-disposition@0.5.4
+├─ content-type@1.0.5
+├─ convert-source-map@1.9.0
+├─ cookie-signature@1.0.6
+├─ cookie@0.7.1
+├─ copy-webpack-plugin@11.0.0
+├─ core-util-is@1.0.3
+├─ cosmiconfig@8.3.6
+├─ cross-spawn@7.0.6
+├─ css-functions-list@3.2.3
+├─ css-select@4.3.0
+├─ css-tree@2.3.1
+├─ css-what@6.1.0
+├─ css.escape@1.5.1
+├─ csscolorparser@1.0.3
+├─ cssesc@3.0.0
+├─ cssom@0.4.4
+├─ data-urls@2.0.0
+├─ data-view-buffer@1.0.2
+├─ data-view-byte-length@1.0.2
+├─ data-view-byte-offset@1.0.1
+├─ date-fns@4.1.0
+├─ decamelize@1.2.0
+├─ decimal.js@10.5.0
+├─ decode-uri-component@0.2.2
+├─ decompress-response@6.0.0
+├─ dedent@0.7.0
+├─ deep-equal@2.2.3
+├─ deep-extend@0.6.0
+├─ deep-is@0.1.4
+├─ deepmerge@4.3.1
+├─ default-gateway@6.0.3
+├─ define-lazy-prop@2.0.0
+├─ delayed-stream@1.0.0
+├─ delegates@1.0.0
+├─ dequal@2.0.3
+├─ detect-libc@2.0.3
+├─ detect-newline@3.1.0
+├─ detect-node@2.1.0
+├─ diff-sequences@27.5.1
+├─ dns-packet@5.6.1
+├─ doctrine@2.1.0
+├─ dom-accessibility-api@0.5.16
+├─ dom-converter@0.2.0
+├─ dom-serializer@1.4.1
+├─ domexception@2.0.1
+├─ domutils@2.8.0
+├─ dot-case@3.0.4
+├─ earcut@3.0.1
+├─ ecdsa-sig-formatter@1.0.11
+├─ ee-first@1.1.1
+├─ electron-to-chromium@1.5.107
+├─ emoji-regex@10.3.0
+├─ encoding@0.1.13
+├─ end-of-stream@1.4.4
+├─ enhanced-resolve@5.18.1
+├─ env-paths@2.2.1
+├─ envinfo@7.14.0
+├─ err-code@2.0.3
+├─ error-ex@1.3.2
+├─ es-abstract@1.23.9
+├─ es-get-iterator@1.1.3
+├─ es-iterator-helpers@1.2.1
+├─ es-module-lexer@1.6.0
+├─ es-to-primitive@1.3.0
+├─ es6-promise@4.2.8
+├─ esbuild-loader@4.3.0
+├─ esbuild@0.25.0
+├─ eslint-config-prettier@10.0.2
+├─ eslint-plugin-formatjs@5.2.14
+├─ eslint-plugin-react-hooks@5.1.0
+├─ eslint-plugin-react@7.37.4
+├─ eslint-webpack-plugin@4.2.0
+├─ eslint@9.21.0
+├─ espree@10.3.0
+├─ esprima@4.0.1
+├─ esquery@1.6.0
+├─ estraverse@5.3.0
+├─ eventemitter3@4.0.7
+├─ events@3.3.0
+├─ exenv@1.2.2
+├─ expand-template@2.0.3
+├─ express@4.21.2
+├─ fast-css-loader@1.0.2
+├─ fast-levenshtein@2.0.6
+├─ fast-sass-loader@2.0.1
+├─ fast-uri@3.0.6
+├─ fast-xml-parser@4.4.1
+├─ fastest-levenshtein@1.0.16
+├─ fastq@1.19.1
+├─ favicons-webpack-plugin@6.0.1
+├─ favicons@7.2.0
+├─ faye-websocket@0.11.4
+├─ file-entry-cache@7.0.2
+├─ fill-range@7.1.1
+├─ filter-obj@1.1.0
+├─ finalhandler@1.3.1
+├─ flat-cache@3.2.0
+├─ flat@5.0.2
+├─ follow-redirects@1.15.9
+├─ form-data@3.0.3
+├─ forwarded@0.2.0
+├─ fs-constants@1.0.0
+├─ fs-extra@3.0.1
+├─ fs-monkey@1.0.6
+├─ fsevents@2.3.3
+├─ function.prototype.name@1.1.8
+├─ gauge@4.0.4
+├─ gaze@1.1.3
+├─ gensync@1.0.0-beta.2
+├─ geojson-vt@4.0.2
+├─ get-imports@1.0.0
+├─ get-package-type@0.1.0
+├─ get-stdin@4.0.1
+├─ get-stream@6.0.1
+├─ get-symbol-description@1.1.0
+├─ get-tsconfig@4.10.0
+├─ github-from-package@0.0.0
+├─ gl-matrix@3.4.3
+├─ glob-parent@5.1.2
+├─ global-modules@2.0.0
+├─ global-prefix@3.0.0
+├─ globjoin@0.1.4
+├─ globule@1.3.4
+├─ graphemer@1.4.0
+├─ grid-index@1.1.0
+├─ handle-thing@2.0.1
+├─ has-ansi@2.0.0
+├─ has-unicode@2.0.1
+├─ he@1.2.0
+├─ hoist-non-react-statics@3.3.2
+├─ hosted-git-info@4.1.0
+├─ hpack.js@2.1.6
+├─ html-encoding-sniffer@2.0.1
+├─ html-entities@2.5.2
+├─ html-escaper@2.0.2
+├─ html-minifier-terser@6.1.0
+├─ html-tags@3.3.1
+├─ html-webpack-plugin@5.6.3
+├─ htmlparser2@6.1.0
+├─ http-deceiver@1.2.7
+├─ http-parser-js@0.5.9
+├─ http-proxy-middleware@2.0.7
+├─ http-proxy@1.18.1
+├─ human-signals@2.1.0
+├─ humanize-ms@1.2.1
+├─ ieee754@1.2.1
+├─ ignore-loader@0.1.2
+├─ import-lazy@4.0.0
+├─ import-regex@1.1.0
+├─ inherits@2.0.4
+├─ ini@1.3.8
+├─ interpret@3.1.1
+├─ ip-address@9.0.5
+├─ ipaddr.js@2.2.0
+├─ is-arguments@1.2.0
+├─ is-array-buffer@3.0.5
+├─ is-arrayish@0.3.2
+├─ is-async-function@2.1.1
+├─ is-bigint@1.1.0
+├─ is-binary-path@2.1.0
+├─ is-boolean-object@1.2.2
+├─ is-core-module@2.16.1
+├─ is-data-view@1.0.2
+├─ is-date-object@1.1.0
+├─ is-docker@2.2.1
+├─ is-extglob@2.1.1
+├─ is-finalizationregistry@1.1.1
+├─ is-generator-function@1.1.0
+├─ is-map@2.0.3
+├─ is-number-object@1.1.1
+├─ is-number@7.0.0
+├─ is-plain-obj@3.0.0
+├─ is-plain-object@5.0.0
+├─ is-set@2.0.3
+├─ is-shared-array-buffer@1.0.4
+├─ is-stream@2.0.1
+├─ is-symbol@1.1.1
+├─ is-weakmap@2.0.2
+├─ is-weakref@1.1.1
+├─ is-weakset@2.0.4
+├─ is-wsl@2.2.0
+├─ isobject@3.0.1
+├─ istanbul-lib-instrument@5.2.1
+├─ istanbul-lib-source-maps@4.0.1
+├─ istanbul-reports@3.1.7
+├─ iterator.prototype@1.1.5
+├─ jest-changed-files@27.5.1
+├─ jest-circus@27.5.1
+├─ jest-cli@27.5.1
+├─ jest-docblock@27.5.1
+├─ jest-jasmine2@27.5.1
+├─ jest-leak-detector@27.5.1
+├─ jest-pnp-resolver@1.2.3
+├─ jest-resolve-dependencies@27.5.1
+├─ jest-serializer@27.5.1
+├─ jest-watcher@27.5.1
+├─ jest-worker@27.5.1
+├─ jest@27.5.1
+├─ jmespath@0.16.0
+├─ jose@4.15.9
+├─ js-base64@2.6.4
+├─ js-tokens@4.0.0
+├─ jsbn@1.1.0
+├─ jsdom@16.7.0
+├─ jsesc@3.1.0
+├─ json-buffer@3.0.1
+├─ json-parse-even-better-errors@2.3.1
+├─ json-schema-traverse@1.0.0
+├─ json-stable-stringify-without-jsonify@1.0.1
+├─ json-stable-stringify@1.2.1
+├─ json5@2.2.3
+├─ jsonfile@3.0.1
+├─ jsonify@0.0.1
+├─ jsonwebtoken@9.0.2
+├─ jsx-ast-utils@3.3.5
+├─ jwa@1.4.1
+├─ jwks-rsa@3.1.0
+├─ jws@3.2.2
+├─ keyv@4.5.4
+├─ kleur@3.0.3
+├─ known-css-properties@0.29.0
+├─ launch-editor@2.10.0
+├─ leven@3.1.0
+├─ limiter@1.1.5
+├─ lines-and-columns@1.2.4
+├─ loader-runner@4.3.0
+├─ locate-path@5.0.0
+├─ lodash.clonedeep@4.5.0
+├─ lodash.debounce@4.0.8
+├─ lodash.includes@4.3.0
+├─ lodash.isboolean@3.0.3
+├─ lodash.isinteger@4.0.4
+├─ lodash.isnumber@3.0.3
+├─ lodash.isplainobject@4.0.6
+├─ lodash.isstring@4.0.1
+├─ lodash.merge@4.6.2
+├─ lodash.once@4.1.1
+├─ lodash.truncate@4.4.2
+├─ long@5.3.1
+├─ loose-envify@1.4.0
+├─ lower-case@2.0.2
+├─ lru-memoizer@2.3.0
+├─ lz-string@1.5.0
+├─ magic-string@0.30.17
+├─ make-cancellable-promise@1.3.2
+├─ make-dir@4.0.0
+├─ make-event-props@1.6.2
+├─ make-fetch-happen@10.2.1
+├─ makeerror@1.0.12
+├─ map-obj@4.3.0
+├─ mapbox-gl@3.10.0
+├─ mathml-tag-names@2.1.3
+├─ mdn-data@2.0.30
+├─ media-typer@0.3.0
+├─ memfs@3.6.0
+├─ meow@10.1.5
+├─ merge-descriptors@1.0.3
+├─ merge-refs@1.3.0
+├─ methods@1.1.2
+├─ micromatch@4.0.8
+├─ mime-db@1.52.0
+├─ mime-types@2.1.35
+├─ mime@1.6.0
+├─ mimic-fn@2.1.0
+├─ mimic-response@3.1.0
+├─ min-indent@1.0.1
+├─ minimalistic-assert@1.0.1
+├─ minimist@1.2.8
+├─ minipass-fetch@2.1.2
+├─ minipass-pipeline@1.2.4
+├─ minizlib@2.1.2
+├─ mkdirp-classic@0.5.3
+├─ mnemonist@0.38.3
+├─ ms@2.1.3
+├─ multicast-dns@7.2.5
+├─ murmurhash-js@1.0.0
+├─ nan@2.22.2
+├─ nanoid@3.3.8
+├─ napi-build-utils@2.0.0
+├─ negotiator@0.6.4
+├─ neo-async@2.6.2
+├─ node-abi@3.74.0
+├─ node-addon-api@7.1.1
+├─ node-forge@1.3.1
+├─ node-gyp@8.4.1
+├─ node-int64@0.4.0
+├─ node-jose@2.2.0
+├─ node-localstorage@2.2.1
+├─ node-releases@2.0.19
+├─ node-sass@8.0.0
+├─ nopt@5.0.0
+├─ normalize-path@3.0.0
+├─ npm-run-path@4.0.1
+├─ npmlog@6.0.2
+├─ nth-check@2.1.1
+├─ nwsapi@2.2.16
+├─ object-assign@4.1.1
+├─ object-is@1.1.6
+├─ object.assign@4.1.7
+├─ object.entries@1.1.8
+├─ object.fromentries@2.0.8
+├─ object.values@1.2.1
+├─ obliterator@1.6.1
+├─ obuf@1.1.2
+├─ on-headers@1.0.2
+├─ onetime@5.1.2
+├─ open@8.4.2
+├─ optionator@0.9.4
+├─ own-keys@1.0.1
+├─ p-limit@2.3.0
+├─ p-locate@4.1.0
+├─ p-retry@4.6.2
+├─ p-try@2.2.0
+├─ pako@2.1.0
+├─ param-case@3.0.4
+├─ parent-module@1.0.1
+├─ parse-author@2.0.0
+├─ parse-import@2.0.0
+├─ particles.js@2.0.0
+├─ pascal-case@3.1.2
+├─ path-key@3.1.1
+├─ path-to-regexp@0.1.12
+├─ path2d@0.2.2
+├─ pattern-library@1.3.4
+├─ pdfjs-dist@4.8.69
+├─ picomatch@2.3.1
+├─ pkg-dir@4.2.0
+├─ postcss-media-query-parser@0.2.3
+├─ postcss-safe-parser@6.0.0
+├─ postcss-scss@4.0.9
+├─ postcss-selector-parser@6.1.2
+├─ postcss@8.5.3
+├─ potpack@2.0.0
+├─ preact@10.24.3
+├─ prebuild-install@7.1.3
+├─ prettier@3.5.2
+├─ pretty-error@4.0.0
+├─ process-nextick-args@2.0.1
+├─ process@0.11.10
+├─ prompts@2.4.2
+├─ prop-types@15.8.1
+├─ protocol-buffers-schema@3.6.0
+├─ proxy-addr@2.0.7
+├─ psl@1.15.0
+├─ punycode@2.3.1
+├─ query-string@7.1.3
+├─ querystringify@2.2.0
+├─ queue-microtask@1.2.3
+├─ quick-lru@4.0.1
+├─ quickselect@3.0.0
+├─ randombytes@2.1.0
+├─ raw-body@2.5.2
+├─ rc@1.2.8
+├─ react-accessible-accordion@4.0.0
+├─ react-aria-carousel@0.2.0
+├─ react-aria@3.37.0
+├─ react-dom@18.3.1
+├─ react-intl@6.8.9
+├─ react-is@16.13.1
+├─ react-lazyload@3.2.1
+├─ react-lifecycles-compat@3.0.4
+├─ react-loadable@5.5.0
+├─ react-modal@3.16.3
+├─ react-pdf@9.2.1
+├─ react-router-dom@6.30.0
+├─ react-router@6.30.0
+├─ react-stately@3.35.0
+├─ react@18.3.1
+├─ read-pkg-up@7.0.1
+├─ read-pkg@5.2.0
+├─ readable-stream@3.6.2
+├─ readdirp@3.6.0
+├─ rechoir@0.8.0
+├─ reflect.getprototypeof@1.0.10
+├─ regenerate-unicode-properties@10.2.0
+├─ regenerator-runtime@0.14.1
+├─ regenerator-transform@0.15.2
+├─ regexpu-core@6.2.0
+├─ regjsgen@0.8.0
+├─ regjsparser@0.12.0
+├─ relateurl@0.2.7
+├─ renderkid@3.0.0
+├─ require-dir@1.2.0
+├─ require-from-string@2.0.2
+├─ resolve-cwd@3.0.0
+├─ resolve-pkg-maps@1.0.0
+├─ resolve-protobuf-schema@2.1.0
+├─ resolve.exports@1.1.1
+├─ resolve@1.22.10
+├─ retry@0.13.1
+├─ reusify@1.1.0
+├─ run-parallel@1.2.0
+├─ safer-buffer@2.1.2
+├─ sass-graph@4.0.1
+├─ sax@1.4.1
+├─ saxes@5.0.1
+├─ scss-tokenizer@0.4.3
+├─ select-hose@2.0.0
+├─ selfsigned@2.4.1
+├─ serialize-javascript@6.0.2
+├─ serialize-to-js@3.1.2
+├─ serve-index@1.9.1
+├─ serve-static@1.16.2
+├─ set-blocking@2.0.0
+├─ set-function-length@1.2.2
+├─ set-proto@1.0.0
+├─ shallow-clone@3.0.1
+├─ sharp@0.33.5
+├─ shebang-command@2.0.0
+├─ shebang-regex@3.0.0
+├─ shell-quote@1.8.2
+├─ side-channel-list@1.0.0
+├─ side-channel-weakmap@1.0.2
+├─ side-channel@1.1.0
+├─ simple-concat@1.0.1
+├─ simple-get@4.0.1
+├─ simple-swizzle@0.2.2
+├─ sisteransi@1.0.5
+├─ slice-ansi@4.0.0
+├─ slide@1.1.6
+├─ smart-buffer@4.2.0
+├─ sockjs@0.3.24
+├─ socks-proxy-agent@7.0.0
+├─ source-list-map@2.0.1
+├─ source-map-js@1.2.1
+├─ source-map-support@0.5.21
+├─ source-map@0.6.1
+├─ spdx-correct@3.2.0
+├─ spdx-exceptions@2.5.0
+├─ spdy-transport@3.0.0
+├─ spdy@4.0.2
+├─ split-on-first@1.1.0
+├─ sprintf-js@1.1.3
+├─ ssri@8.0.1
+├─ stdout-stream@1.4.1
+├─ stop-iteration-iterator@1.1.0
+├─ strict-uri-encode@2.0.0
+├─ string_decoder@1.3.0
+├─ string.prototype.matchall@4.0.12
+├─ string.prototype.repeat@1.0.0
+├─ string.prototype.trim@1.2.10
+├─ string.prototype.trimend@1.0.9
+├─ string.prototype.trimstart@1.0.8
+├─ strip-bom@4.0.0
+├─ strip-final-newline@2.0.0
+├─ strip-indent@3.0.0
+├─ strnum@1.1.2
+├─ style-loader@3.3.4
+├─ style-search@0.1.0
+├─ stylelint-config-recommended-scss@9.0.1
+├─ stylelint-config-standard-scss@7.0.1
+├─ stylelint-config-standard@30.0.1
+├─ stylelint-scss@4.7.0
+├─ stylelint-webpack-plugin@4.1.1
+├─ stylelint@15.11.0
+├─ supercluster@8.0.1
+├─ supports-hyperlinks@3.2.0
+├─ svg-tags@1.0.0
+├─ table@6.9.0
+├─ tapable@2.2.1
+├─ tar-fs@2.1.2
+├─ tar-stream@2.2.0
+├─ tar@6.2.1
+├─ terminal-link@2.1.1
+├─ terser-webpack-plugin@5.3.12
+├─ terser@5.39.0
+├─ test-exclude@6.0.0
+├─ thunky@1.1.0
+├─ tiny-invariant@1.3.3
+├─ tinyqueue@3.0.0
+├─ tmpl@1.0.5
+├─ to-regex-range@5.0.1
+├─ toidentifier@1.0.1
+├─ tough-cookie@4.1.4
+├─ tr46@3.0.0
+├─ trim-newlines@3.0.1
+├─ true-case-path@2.2.1
+├─ ts-api-utils@2.0.1
+├─ ts-loader@9.5.2
+├─ tunnel-agent@0.6.0
+├─ type-check@0.4.0
+├─ typed-array-buffer@1.0.3
+├─ typed-array-byte-length@1.0.3
+├─ typed-array-byte-offset@1.0.4
+├─ typed-array-length@1.0.7
+├─ typedarray-to-buffer@3.1.5
+├─ typescript@5.7.3
+├─ unbox-primitive@1.1.0
+├─ undici-types@6.20.0
+├─ unicode-canonical-property-names-ecmascript@2.0.1
+├─ unicode-emoji-utils@1.2.0
+├─ unicode-match-property-ecmascript@2.0.0
+├─ unicode-match-property-value-ecmascript@2.2.0
+├─ unicode-property-aliases-ecmascript@2.1.0
+├─ unique-filename@2.0.1
+├─ unique-slug@3.0.0
+├─ universalify@0.1.2
+├─ update-browserslist-db@1.1.3
+├─ uri-js@4.4.1
+├─ url-parse@1.5.10
+├─ url@0.10.3
+├─ util-deprecate@1.0.2
+├─ util@0.12.5
+├─ utils-merge@1.0.1
+├─ v8-to-istanbul@8.1.1
+├─ vt-pbf@3.1.3
+├─ w3c-hr-time@1.0.2
+├─ w3c-xmlserializer@2.0.0
+├─ walker@1.0.8
+├─ warning@4.0.3
+├─ watchpack@2.4.2
+├─ wbuf@1.7.3
+├─ webpack-cli@5.1.4
+├─ webpack-dev-middleware@5.3.4
+├─ webpack-dev-server@4.15.2
+├─ webpack-merge@5.10.0
+├─ webpack-sources@1.4.3
+├─ webpack@5.98.0
+├─ websocket-driver@0.7.4
+├─ websocket-extensions@0.1.4
+├─ which-boxed-primitive@1.1.1
+├─ which-builtin-type@1.2.1
+├─ which-collection@1.0.2
+├─ which@2.0.2
+├─ wide-align@1.1.5
+├─ wildcard@2.0.1
+├─ word-wrap@1.2.5
+├─ wrappy@1.0.2
+├─ write-file-atomic@1.3.4
+├─ ws@8.18.1
+├─ xml2js@0.6.2
+├─ xmlbuilder@11.0.1
+├─ yaml@1.10.2
+├─ yargs-parser@20.2.9
+├─ yargs@16.2.0
+└─ yocto-queue@0.1.0
+[2K[1G✨  Done in 45.10s.
+[1m[7m%[27m[1m[0m                                                                                                                                                                    ]7;file://C02G43CDMD6R/Users/rej2/Documents/GitHub/os-webview[0m[27m[24m[Jrej2@C02G43CDMD6R os-webview % [K[?2004h
