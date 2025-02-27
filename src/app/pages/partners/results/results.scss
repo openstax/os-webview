@@ -238,12 +238,15 @@
         > .sidebar {
             @include width-between($phone-max, $first-break) {
                 min-width: calc(50% - 1.5rem);
+                max-width: calc(50% - 1.5rem);
             }
             @include width-between($first-break, $second-break) {
                 min-width: calc(33.3% - 3rem);
+                max-width: calc(33.3% - 3rem);
             }
             @include wider-than($second-break) {
                 min-width: calc(25% - 4.5rem);
+                max-width: calc(25% + 1.5rem);
             }
         }
     }
