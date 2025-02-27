@@ -257,10 +257,10 @@ function HeadingAndResultGrid({
     entries: PartnerEntry[];
 }) {
     return (
-        <React.Fragment>
+        <div className="boxed">
             <h2>{headings[age as Ages]}</h2>
             <ResultGrid entries={entries} />
-        </React.Fragment>
+        </div>
     );
 }
 
@@ -310,30 +310,35 @@ function ResultGridLoader({
 
         return (
             <section className="results">
-                <div className="boxed">
-                    <HeadingAndResultGrid
-                        age={firstAge}
-                        entries={partnersByAge[firstAge]}
-                    />
-                </div>
+                <HeadingAndResultGrid
+                    age={firstAge}
+                    entries={partnersByAge[firstAge]}
+                />
                 <SelectedPartnerDialog
                     linkTexts={linkTexts}
                     entries={filteredEntries}
                 />
                 {
                     otherAges.length > 0
-                    ? <div className="with-sidebar">
-                        <div className="boxed">
-                            {otherAges.map((age) => (
+                    ? <React.Fragment>
+                        <div className="with-sidebar">
+                            {otherAges.slice(0, 1).map((age) => (
                                 <HeadingAndResultGrid
                                     key={age}
                                     age={age}
                                     entries={partnersByAge[age]}
                                 />
                             ))}
+                            <Sidebar entries={startups} />
                         </div>
-                        <Sidebar entries={startups} />
-                    </div>
+                        {otherAges.slice(1).map((age) => (
+                            <HeadingAndResultGrid
+                                key={age}
+                                age={age}
+                                entries={partnersByAge[age]}
+                            />
+                        ))}
+                    </React.Fragment>
                     : <div className="boxed">
                         <h2>Startups</h2>
                         <ResultGrid entries={startups} />
@@ -343,7 +348,7 @@ function ResultGridLoader({
         );
     }
     return (
-        <section className="results boxed">
+        <section className="results">
             {foundAges.map((age) => (
                 <HeadingAndResultGrid
                     key={age}
