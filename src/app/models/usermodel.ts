@@ -1,8 +1,7 @@
 import {useState, useEffect} from 'react';
 import isEqual from 'lodash/isEqual';
 import throttle from 'lodash/throttle';
-import accountsModel from './accounts-model';
-import type {AccountsUserModel} from '../../typings/accounts';
+import accountsModel, { AccountsUserModel } from './accounts-model';
 
 export type UserModelType = {
     id: number;

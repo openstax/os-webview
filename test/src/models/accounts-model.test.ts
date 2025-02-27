@@ -11,10 +11,8 @@ describe('accounts-model', () => {
         accountsModel.load.invalidate();
         console.warn = saveWarn;
     });
-    it('handles 403 response', async () => {
-        mockFetch.mockResolvedValueOnce({
-            status: 403
-        });
+    it('handles empty json response', async () => {
+        mockFetch.mockResolvedValueOnce({json: () => Promise.resolve({})});
         expect(await accountsModel.load()).toEqual({});
     });
     it('catches rejection', async () => {

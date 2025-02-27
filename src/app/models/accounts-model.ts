@@ -1,6 +1,6 @@
 import settings from '~/helpers/window-settings';
 
-const accountsUrl = `${settings().accountHref}/api/user`;
+const accountsUrl = `${settings().accountHref}/api/user?always_200=true`;
 
 function cached<T>(fn: () => T, invalidateFn: () => void) {
     let valid = false;
@@ -18,6 +18,34 @@ function cached<T>(fn: () => T, invalidateFn: () => void) {
         valid = false;
     };
     return cachedFn;
+}
+
+export type AccountsUserModel = {
+  id: number;
+  uuid: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  school_name: string;
+  self_reported_role: string;
+  self_reported_school: string;
+  is_not_gdpr_location: boolean;
+  salesforce_contact_id: string;
+  is_instructor_verification_stale: boolean;
+  faculty_status: string;
+  contact_infos: {
+      type: string;
+      value: string;
+      is_verified: boolean;
+      is_guessed_preferred: boolean;
+  }[];
+};
+
+declare global {
+    interface Window {
+        _OX_USER_PROMISE?: Promise<AccountsUserModel>;
+        dataLayer?: object[];
+    }
 }
 
 export default {
@@ -62,15 +90,17 @@ export default {
         //     ]
         // });
 
-        window._OX_USER_PROMISE ||= fetch(accountsUrl, { credentials: 'include' }).then(
-            (response) => {
-                if (response.ok) {
-                    return response.json().catch((error) => {
-                        throw new Error(`Failed to parse user JSON: ${error.message}`);
-                    });
-                } else {
-                    throw new Error(`Failed to load user: HTTP ${response.status} status code`);
+        // This code is shared with the CookieYes loader in index.html
+        window._OX_USER_PROMISE ||= fetch(accountsUrl, {credentials: 'include'}).then(
+            (response) => response.json().catch(
+                (err: unknown) => {
+                    console.warn('No JSON in Accounts response');
+                    return {err};
                 }
+            ),
+            (err: unknown) => {
+                console.warn('"Error fetching user info"');
+                return {err};
             }
         );
 
