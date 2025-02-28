@@ -1,31 +1,6 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-.annual-report.page .our-reach {
-    padding: 0;
-
-    .strips {
-        width: 50%;
-
-        @include wider-than($phone-max) {
-            display: none;
-        }
-    }
-
-    .hero.wrapped {
-        background-color: transparent;
-
-        .picture-content {
-            display: none;
-        }
-        .text-content {
-            padding: 4rem;
-        }
-    }
-
-    .text-content > div > :first-child {
-        margin-top: 0;
-    }
-
+.annual-report.page {
     .cards {
         grid-gap: $normal-margin;
         overflow-x: auto;
@@ -70,5 +45,33 @@
                 color: text-color(link);
             }
         }
+    }
+
+    .our-reach {
+        padding: 0;
+
+        .strips {
+            width: 50%;
+
+            @include wider-than($phone-max) {
+                display: none;
+            }
+        }
+
+        .hero.wrapped {
+            background-color: transparent;
+
+            .picture-content {
+                display: none;
+            }
+            .text-content {
+                padding: 4rem;
+            }
+        }
+
+        .text-content > div > :first-child {
+            margin-top: 0;
+        }
+
     }
 }

@@ -20,6 +20,7 @@ import errataResources from '../src/data/errata-resources';
 import flags from '../src/data/flags';
 import footerData from '../src/data/footer';
 import formHeadings from '../src/data/form-headings';
+import impact from '../src/data/impact';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
 import kineticData from '../src/data/kinetic';
 import newSubjectsData from '../src/data/new-subjects';
@@ -71,9 +72,11 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isFooter = (/api\/footer/).test(args[0]);
     const isFormHeading = (/form-headings/).test(args[0]);
     const isGiveBanner = args[0].endsWith('snippets/givebanner/');
+    const isImpact = args[0].includes('/pages/impact');
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isKinetic = args[0].endsWith('kinetic/');
     const isHomepage = (/openstax-homepage/).test(args[0]);
+    const isImage = args[0].includes('/api/images/');
     const isNewSubjects = args[0].includes('new-subjects');
     const isOsNews = (/openstax-news/).test(args[0]);
     const isPartner = (/pages\/partners/).test(args[0]);
@@ -93,7 +96,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSubjectPage = args[0].includes('pages/subjects');
     const isTeam = (/pages\/team/).test(args[0]);
     const isUser = (/api\/user/).test(args[0]);
-    const isImage = (/api\/v2\/images/).test(args[0]);
     const isArchive = (/archive\.cnx/).test(args[0]);
     const isSalesforceForms = (/salesforce\/forms/).test(args[0]);
     const isSalesforcePartners = (/salesforce\/partners/).test(args[0]);
@@ -139,6 +141,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = {};
             } else if (isHomepage) {
                 payload = openstaxHomepageData;
+            } else if (isImpact) {
+                payload = impact;
             } else if (isInstitutionalPartnership) {
                 payload = institutionalPartnershipData;
             } else if (isKinetic) {
