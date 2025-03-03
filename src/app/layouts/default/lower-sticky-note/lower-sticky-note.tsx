@@ -1,20 +1,36 @@
 import React from 'react';
 import {usePutAway, useStickyData} from '../shared.js';
 import JITLoad from '~/helpers/jit-load';
+import Cookies from 'js-cookie';
+
+const cookieKey = 'lower-sticky-note-closed';
 
 export default function LowerStickyNote() {
     const stickyData = useStickyData();
     const [closed, PutAway] = usePutAway();
-    const shouldNotDisplay = !stickyData || closed ||
-        stickyData.mode !== 'banner';
+    const shouldNotDisplay =
+        !stickyData ||
+        closed ||
+        stickyData?.mode !== 'banner' ||
+        Boolean(Cookies.get(cookieKey));
+    const hasDisplayed = React.useRef(false);
+
+    React.useEffect(() => {
+        if (hasDisplayed.current && closed) {
+            Cookies.set(cookieKey, 'true', {expires: 7});
+        }
+    }, [closed]);
 
     if (shouldNotDisplay) {
         return null;
     }
 
+    hasDisplayed.current = true;
+
     return (
         <JITLoad
-            importFn={() => import('./lsn-content')} stickyData={stickyData}
+            importFn={() => import('./lsn-content.js')}
+            stickyData={stickyData}
             PutAway={PutAway}
         />
     );
