@@ -6,7 +6,9 @@ import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import cn from 'classnames';
 import './lower-sticky-note.scss';
 
-function NoteContainer({withImage, children}) {
+function NoteContainer({withImage, children}: React.PropsWithChildren<{
+    withImage: boolean;
+}>) {
     const classes = cn('content', {'with-image': withImage});
 
     return (

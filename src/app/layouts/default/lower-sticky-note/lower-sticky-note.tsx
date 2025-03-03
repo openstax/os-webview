@@ -29,7 +29,7 @@ export default function LowerStickyNote() {
 
     return (
         <JITLoad
-            importFn={() => import('./lsn-content.js')}
+            importFn={() => import('./load-lsn-content.js')}
             stickyData={stickyData}
             PutAway={PutAway}
         />
