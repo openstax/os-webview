@@ -1,5 +1,5 @@
 import React from 'react';
-import {usePutAway, useStickyData} from '../shared.js';
+import {usePutAway, useStickyData} from '../shared';
 import JITLoad from '~/helpers/jit-load';
 import Cookies from 'js-cookie';
 

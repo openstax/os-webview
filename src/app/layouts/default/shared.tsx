@@ -7,11 +7,11 @@ import './shared.scss';
 // Shim for incognito windows that disable localStorage
 if (!window.localStorage) {
     window.localStorage = {
-        getItem(key) {return window.localStorage[key];}
-    };
+        getItem(key: string) {return window.localStorage[key];}
+    } as unknown as Storage;
 }
 
-export function useSeenCounter(seenEnough) {
+export function useSeenCounter(seenEnough: number) {
     const [counter, increment] = React.useReducer(
         (s) => s + 1,
         window.localStorage?.visitedGive || 0
@@ -43,14 +43,19 @@ export function usePutAway() {
     return [closed, () => <PutAway onClick={() => setClosed(true)} />];
 }
 
+type StickyData = {
+    emergency_expires: string;
+}
+
 // eslint-disable-next-line complexity
-function getMode(stickyData) {
+function getMode(stickyData: StickyData) {
     if (!stickyData) {
         return null;
     }
 
+    const now = new Date();
     const expireDate = new Date(stickyData.emergency_expires);
-    const useEmergency = stickyData.emergency_expires && Date.now() < expireDate;
+    const useEmergency = stickyData.emergency_expires && now < expireDate;
 
     if (useEmergency) {
         return 'emergency';
@@ -58,7 +63,7 @@ function getMode(stickyData) {
 
     const startDate = new Date(stickyData.start);
     const endDate = new Date(stickyData.expires);
-    const microdonationActive = startDate < Date.now() && endDate > Date.now();
+    const microdonationActive = startDate < now && endDate > now;
 
     if (!microdonationActive) {
         return null;

@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {usePutAway} from '../../shared.js';
+import {usePutAway} from '../../shared';
 import './sticky-note.scss';
 
 export default function StickyNote({stickyData}) {
