@@ -6,6 +6,13 @@ import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import cn from 'classnames';
 import './lower-sticky-note.scss';
 
+type BannerInfo = {
+    html_message: string;
+    link_url: string;
+    link_text: string;
+    banner_thumbnail?: string;
+}
+
 function NoteContainer({withImage, children}: React.PropsWithChildren<{
     withImage: boolean;
 }>) {
@@ -18,7 +25,7 @@ function NoteContainer({withImage, children}: React.PropsWithChildren<{
     );
 }
 
-function NoteWithImage({bannerInfo}) {
+function NoteWithImage({bannerInfo}: {bannerInfo: BannerInfo}) {
     return (
         <NoteContainer withImage={true}>
             <img src={bannerInfo.banner_thumbnail} height="70" width="70" alt="" />
@@ -33,7 +40,7 @@ function NoteWithImage({bannerInfo}) {
     );
 }
 
-function NoteWithoutImage({bannerInfo}) {
+function NoteWithoutImage({bannerInfo}: {bannerInfo: BannerInfo}) {
     return (
         <NoteContainer withImage={false}>
             <RawHTML className="blurb" html={bannerInfo.html_message} />
@@ -46,7 +53,10 @@ function NoteWithoutImage({bannerInfo}) {
     );
 }
 
-export default function LowerStickyNote({stickyData, PutAway}) {
+export default function LowerStickyNote({stickyData, PutAway}: {
+    stickyData: {bannerInfo: BannerInfo};
+    PutAway: () => React.JSX.Element;
+}) {
     return (
         <div
             className={
