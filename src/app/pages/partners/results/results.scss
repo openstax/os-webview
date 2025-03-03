@@ -2,7 +2,7 @@
 @import 'mixins/placeholder-selectors';
 
 .partners .results {
-    padding: 2rem $normal-margin 20rem;
+    padding: 2rem 0 20rem;
 
     @include width-up-to($phone-max) {
         padding: 0 $normal-margin 6rem;
@@ -24,13 +24,46 @@
 
     h2 {
         margin: 0;
+        width: 100%;
+        text-align: center;
+        background-color: ui-color(form-border);
+        padding: $normal-margin 0;
+        border: thin solid ui-color(black);
     }
+
+    /*
+        We want to make breakpoints for each possible number of cards
+        on a row, from 2 to 5, such that the row with a sidebar has one
+        fewer cards per row.
+        first: 2 cards on top, 1 on bottom
+        second: 3/2
+        third: 4/3
+        above: 5/4
+        These values are found experimentally using the grid-template-columns
+        on .grid above. If that changes, they need to be refigured.
+        There is some chance that different browsers will differ.
+    */
+    $first-break: 68.9em * $scale-factor;
+    $second-break: 91.9em * $scale-factor;
+    $third-break: 114.9em * $scale-factor;
 
     @mixin partner-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
         grid-auto-rows: minmax(min-content, 100%);
         padding: 0;
+
+        @include width-between($phone-max, $first-break) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @include width-between($first-break, $second-break) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @include width-between($second-break, $third-break) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @include wider-than($third-break) {
+            grid-template-columns: repeat(5, 1fr);
+        }
 
         @include width-up-to($phone-max) {
             grid-gap: 1.5rem;
@@ -123,17 +156,28 @@
 
     .boxed {
         gap: 3rem;
+        padding: 0;
 
         @include width-up-to($phone-max) {
             gap: $normal-margin;
-            padding: 0;
         }
     }
 
     .with-sidebar {
-        h2 {
-            text-align: center;
-        }
+        .grid {
+            @include width-between($phone-max, $first-break) {
+                grid-template-columns: repeat(1, 1fr);
+            }
+            @include width-between($first-break, $second-break) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            @include width-between($second-break, $third-break) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            @include wider-than($third-break) {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            }
 
         @include width-up-to($phone-max) {
             > .boxed {
@@ -159,19 +203,18 @@
         @include wider-than($phone-max) {
             display: flex;
             flex-direction: row;
-            gap: $normal-margin;
+            gap: 3rem;
             max-width: 120rem;
-            margin: 0 auto;
-            padding-right: $normal-margin;    
+            margin: 0 auto 3rem;
 
             .grid {
                 max-width: unset;
             }
     
             > .sidebar {
-                border: thin solid black;
+                outline: thin solid black;
                 height: max-content;
-
+                
                 .sidebar-content {
                     background-color: ui-color(white);
 
@@ -186,11 +229,7 @@
                 }
 
                 h2 {
-                    @include set-font(h3);
-
-                    background-color: os-color(gray);
-                    color: ui-color(white);
-                    padding: $normal-margin;
+                    border: 0;
                 }
 
                 .grid {
@@ -205,14 +244,18 @@
                 }
             }
         }
-        @include width-between($phone-max, $tablet-max) {
-            > .sidebar {
-                min-width: calc(50% - 3rem);
+        > .sidebar {
+            @include width-between($phone-max, $first-break) {
+                min-width: calc(50% - 1.5rem);
+                max-width: calc(50% - 1.5rem);
             }
-        }
-        @include wider-than($tablet-max) {
-            > .sidebar {
-                min-width: calc(25% + 12rem);
+            @include width-between($first-break, $second-break) {
+                min-width: calc(33.3% - 3rem);
+                max-width: calc(33.3% - 3rem);
+            }
+            @include wider-than($second-break) {
+                min-width: calc(25% - 4.5rem);
+                max-width: calc(25% + 1.5rem);
             }
         }
     }
