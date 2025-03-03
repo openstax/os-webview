@@ -31,11 +31,39 @@
         border: thin solid ui-color(black);
     }
 
+    /*
+        We want to make breakpoints for each possible number of cards
+        on a row, from 2 to 5, such that the row with a sidebar has one
+        fewer cards per row.
+        first: 2 cards on top, 1 on bottom
+        second: 3/2
+        third: 4/3
+        above: 5/4
+        These values are found experimentally using the grid-template-columns
+        on .grid above. If that changes, they need to be refigured.
+        There is some chance that different browsers will differ.
+    */
+    $first-break: 68.9em * $scale-factor;
+    $second-break: 91.9em * $scale-factor;
+    $third-break: 114.9em * $scale-factor;
+
     @mixin partner-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
         grid-auto-rows: minmax(min-content, 100%);
         padding: 0;
+
+        @include width-between($phone-max, $first-break) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @include width-between($first-break, $second-break) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @include width-between($second-break, $third-break) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @include wider-than($third-break) {
+            grid-template-columns: repeat(5, 1fr);
+        }
 
         @include width-up-to($phone-max) {
             grid-gap: 1.5rem;
@@ -136,36 +164,20 @@
     }
 
     .with-sidebar {
-        /*
-            We want to make breakpoints for each possible number of cards
-            on a row, from 2 to 5, such that the row with a sidebar has one
-            fewer cards per row.
-            first: 2 cards on top, 1 on bottom
-            second: 3/2
-            third: 4/3
-            above: 5/4
-            These values are found experimentally using the grid-template-columns
-            on .grid above. If that changes, they need to be refigured.
-            There is some chance that different browsers will differ.
-        */
-        $first-break: 68.9em * $scale-factor;
-        $second-break: 91.9em * $scale-factor;
-        $third-break: 114.9em * $scale-factor;
-
         .grid {
             @include width-between($phone-max, $first-break) {
-                grid-template-columns: repeat(auto-fill, minmax(calc(100%), 1fr));
+                grid-template-columns: repeat(1, 1fr);
             }
             @include width-between($first-break, $second-break) {
-                grid-template-columns: repeat(auto-fill, minmax(calc(50% - 1.5rem), 1fr));
+                grid-template-columns: repeat(2, 1fr);
             }
             @include width-between($second-break, $third-break) {
-                grid-template-columns: repeat(auto-fill, minmax(calc(33.3% - 3rem), 1fr));
+                grid-template-columns: repeat(3, 1fr);
             }
             @include wider-than($third-break) {
-                grid-template-columns: repeat(auto-fill, minmax(calc(25% - 4.5rem), 1fr));
+                grid-template-columns: repeat(4, 1fr);
             }
-        }
+            }
 
         @include width-up-to($phone-max) {
             > .boxed {
@@ -217,7 +229,6 @@
                 }
 
                 h2 {
-                    // @include set-font(h3);
                     border: 0;
                 }
 
