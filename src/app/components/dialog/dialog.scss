@@ -2,20 +2,18 @@
 
 dialog,
 [role="dialog"] {
-    &:not([class *= 'osano']) {
-        background-color: ui-color(white);
-        border: 0;
-        border-radius: 0.4rem;
-        color: text-color(normal);
-        display: block;
-        grid-template-rows: auto auto 1fr;
-        height: auto;
-        margin: 0;
-        overflow: hidden;
-        padding: 0;
-        position: relative;
-        width: max-content;
-    }
+    background-color: ui-color(white);
+    border: 0;
+    border-radius: 0.4rem;
+    color: text-color(normal);
+    display: block;
+    grid-template-rows: auto auto 1fr;
+    height: auto;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: max-content;
 
     &.footer-dialog {
         align-self: flex-end;
