@@ -111,5 +111,5 @@ export default {
             });
             return user;
         });
-    }, () => { window._OX_USER_PROMISE = undefined; })
+    }, () => {window._OX_USER_PROMISE = undefined;})
 };
