@@ -39,7 +39,6 @@ import searchSubject from '../src/data/search-subject';
 import sfapiUser from '../src/data/sfapi-user';
 import sfapiLists from '../src/data/sfapi-lists';
 import sfapiSchoolTrinity from '../src/data/sfapi-school-trinity';
-import stickyData from '../src/data/sticky';
 import subjectData from '../src/data/subject-categories';
 import subjectPageData from '../src/data/subject-page';
 import teamData from '../src/data/team';
@@ -89,7 +88,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSfapiUser = (/api\/v1\/users/).test(args[0]);
     const isSfapiLists = (/api\/v1\/lists/).test(args[0]);
     const isSfapiSchoolTrinity = (/0017h00000YXEBzAAP/).test(args[0]);
-    const isSticky = (/api\/sticky/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isSubjectPage = args[0].includes('pages/subjects');
     const isTeam = (/pages\/team/).test(args[0]);
@@ -175,8 +173,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = rolesData;
             } else if (isSchools) {
                 payload = schoolsData;
-            } else if (isSticky) {
-                payload = stickyData;
             } else if (isUser) {
                 payload = userData;
             } else if (isArchive) {
