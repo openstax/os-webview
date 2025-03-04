@@ -4,6 +4,12 @@ import './helpers/mock-lazyload';
 import {LocalStorage} from 'node-localstorage';
 import ReactModal from 'react-modal';
 
+/* eslint-disable */
+global.routerFuture = {
+  v7_startTransition: true,
+  v7_relativeSplatPath: true
+};
+
 ReactModal.setAppElement(window.document.createElement('div'));
 
 global.localStorage = new LocalStorage('./local-storage-scratch');
