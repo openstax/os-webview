@@ -2,29 +2,31 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import usePageData from '~/helpers/use-page-data';
 import {useLocation} from 'react-router-dom';
+import useDocumentHead from '~/helpers/use-document-head';
 import './footer-page.scss';
 
-const specialSlugFromPath = {
+const specialSlugFromPath: Record<string, string> = {
     '/privacy': '/privacy-policy'
 };
 
-export default function FooterPage() {
-    const {pathname} = useLocation();
-    const slugEnd = specialSlugFromPath[pathname] || pathname;
-    const slug = `pages${slugEnd}`;
-    const data = usePageData(slug);
+type PageData = {
+    introHeading: string;
+    title: string;
+    meta: {
+        searchDescription: string;
+    };
+} & {
+    [contentFieldName: string]: string;
+}
 
-    React.useLayoutEffect(
-        () => window.scrollTo(0, 0),
-        [pathname]
-    );
+function FooterPage({data}: {data: PageData}) {
+    useDocumentHead({
+        title: data.title,
+        description: data.meta.searchDescription
+    });
 
-    if (!data) {
-        return null;
-    }
-
-    const contentFieldName = Reflect.ownKeys(data)
-        .find((k) => k.match(/Content$/));
+    const contentFieldName = Object.keys(data)
+        .find((k) => k.match(/Content$/)) as string;
     const {introHeading: heading, [contentFieldName]: content} = data;
 
     return (
@@ -36,4 +38,22 @@ export default function FooterPage() {
             </main>
         </div>
     );
+}
+
+export default function LoadFooterPage() {
+    const {pathname} = useLocation();
+    const slugEnd = specialSlugFromPath[pathname] ?? pathname;
+    const slug = `pages${slugEnd}`;
+    const data = usePageData<PageData>(slug);
+
+    React.useLayoutEffect(
+        () => window.scrollTo(0, 0),
+        [pathname]
+    );
+
+    if (!data) {
+        return null;
+    }
+
+    return <FooterPage data={data} />;
 }
