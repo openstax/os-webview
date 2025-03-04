@@ -13,10 +13,9 @@ export default function LowerStickyNote() {
         closed ||
         stickyData?.mode !== 'banner' ||
         Boolean(Cookies.get(cookieKey));
-    const hasDisplayed = React.useRef(false);
 
     React.useEffect(() => {
-        if (hasDisplayed.current && closed) {
+        if (closed) {
             Cookies.set(cookieKey, 'true', {expires: 7});
         }
     }, [closed]);
@@ -24,8 +23,6 @@ export default function LowerStickyNote() {
     if (shouldNotDisplay) {
         return null;
     }
-
-    hasDisplayed.current = true;
 
     return (
         <JITLoad
