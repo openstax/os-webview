@@ -1,5 +1,6 @@
 import React from 'react';
-import usePageData from '~/helpers/use-page-data';
+import LoaderPage from '~/components/jsx-helpers/loader-page';
+import useDocumentHead from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import Form from './form';
 import './contact.scss';
@@ -10,21 +11,25 @@ type PageData = {
     mailingHeader: string;
     mailingAddress: string;
     customerService: string;
+    meta?: {
+        searchDescription: string;
+    }
 }
 
-export default function ContactPage() {
-    const pageData = usePageData<PageData>('pages/contact');
-
-    if (!pageData) {
-        return null;
-    }
+function ContactPage({data: pageData}: {data: PageData}) {
     const {
         title,
         tagline,
         mailingHeader,
         mailingAddress,
-        customerService
+        customerService,
+        meta
     } = pageData;
+
+    useDocumentHead({
+        title,
+        description: meta?.searchDescription
+    });
 
     return (
         <main id="maincontent" className="contact-page page">
@@ -45,6 +50,14 @@ export default function ContactPage() {
                     <RawHTML html={customerService} />
                 </div>
             </div>
+        </main>
+    );
+}
+
+export default function ContactPageLoader() {
+    return (
+        <main id="maincontent" className="contact-page page">
+            <LoaderPage slug="pages/contact" Child={ContactPage} />
         </main>
     );
 }

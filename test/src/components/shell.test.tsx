@@ -5,6 +5,9 @@ import AppElement from '~/components/shell/shell';
 import {BrowserRouter, MemoryRouter as MR} from 'react-router-dom';
 import ReactModal from 'react-modal';
 
+// @ts-expect-error does not exist on
+const {routerFuture} = global;
+
 jest.mock('react-router-dom', () => {
     const actualRouterDom = jest.requireActual('react-router-dom');
 
@@ -32,8 +35,10 @@ jest.mock('react-modal', () => ({
 
 describe('shell', () => {
     it('Delivers embedded contact page', async () => {
+        console.warn = jest.fn();
+        console.debug = jest.fn();
         (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/embedded/contact']}>{children}</MR>
+            <MR initialEntries={['/embedded/contact']} future={routerFuture}>{children}</MR>
         ));
 
         render(AppElement);
@@ -42,7 +47,7 @@ describe('shell', () => {
     });
     it('Delivers normal contact page', async () => {
         (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/contact']}>{children}</MR>
+            <MR initialEntries={['/contact']} future={routerFuture}>{children}</MR>
         ));
 
         render(AppElement);
