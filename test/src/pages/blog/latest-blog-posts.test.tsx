@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import {describe, it, expect} from '@jest/globals';
-import {BrowserRouter, MemoryRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
 
 import LatestBlogPosts from '~/pages/blog/latest-blog-posts/latest-blog-posts';

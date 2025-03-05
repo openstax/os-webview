@@ -62,11 +62,11 @@ jest.spyOn(SFF, 'default').mockImplementation(MockSfForm);
 describe('contact page', () => {
     const user = userEvent.setup();
 
-    it('returns null until data', () => {
+    it('returns loader page until data', () => {
         spyUsePageData.mockReturnValue(undefined);
-        const {container} = render(<Component />);
+        render(<Component />);
 
-        expect(container.innerHTML).toBe('');
+        expect(document.body.textContent).toBe('');
     });
     it('displays the form', async () => {
         spyUsePageData.mockReturnValue(pageData);
