@@ -16,6 +16,9 @@ jobs:
         name: "Setup environment"
         run: ./script/setup
       -
+        name: "Lint osweb"
+        run: yarn lint
+      -
         name: "Build osweb"
         run: ./script/build production
       -
