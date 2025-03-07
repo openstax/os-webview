@@ -33,8 +33,7 @@ function FormWithAfterSubmit({
     return (
         <React.Fragment>
             <iframe
-                title={responseId}
-                id={responseId}
+                name={responseId}
                 className="hidden"
                 src=""
                 width="0"
