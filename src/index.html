@@ -27,36 +27,34 @@
         <script>
           // This code is shared with the accounts-model
           window._OX_USER_PROMISE ||= fetch('/accounts/api/user?always_200=true', {credentials: 'include'}).then(
-              (response) => response.json().catch(
-                  (err) => {
-                      console.warn('No JSON in Accounts response');
-                      return {err};
-                  }
-              ),
-              (err) => {
-                  console.warn('"Error fetching user info"');
-                  return {err};
-              }
+            (response) => response.json()
           );
+
+          // This method is called when the CookieYes banner loads and we don't have a recorded consent at all,
+          // from neither Accounts nor the CookieYes cookie
+          const closeButtonRejectsAll = () => {
+            // Interpret clicking the X button on the banner as rejecting all cookies
+            document.getElementsByClassName('cky-banner-btn-close')[0]?.addEventListener(
+              'click', () => performBannerAction('reject')
+            );
+          };
 
           window._OX_USER_PROMISE.then((user) => {
             const updateUserConsentPreferences = (consentPreferences) => {
-              if (user.id) {
-                return fetch('/accounts/api/user', {
-                  body: JSON.stringify({consent_preferences: consentPreferences}),
-                  credentials: 'include',
-                  headers: { 'Content-Type': 'application/json' },
-                  method: 'PUT',
-                }).then(
-                  (response) => {
-                    if (response.ok) {
-                      window.location.reload();
-                    } else {
-                      throw new Error(`Failed to save cookie consent: HTTP ${response.status} status code`);
-                    }
+              return fetch('/accounts/api/user', {
+                body: JSON.stringify({consent_preferences: consentPreferences}),
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                method: 'PUT',
+              }).then(
+                (response) => {
+                  if (response.ok) {
+                    window.location.reload();
+                  } else {
+                    throw new Error(`Failed to save cookie consent: HTTP ${response.status} status code`);
                   }
-                );
-              }
+                }
+              );
             };
 
             document.addEventListener('cookieyes_banner_load', async(eventData) => {
@@ -94,16 +92,21 @@
                 });
                 return updateUserConsentPreferences(bannerConsentPreferences);
               } else {
-                // If we don't have a recorded consent and they click the X button, interpret it as "reject all"
-                document.getElementsByClassName('cky-banner-btn-close')[0]?.addEventListener(
-                  'click', () => performBannerAction('reject')
-                );
+                closeButtonRejectsAll();
               }
             });
 
             document.addEventListener(
               'cookieyes_consent_update', (eventData) => updateUserConsentPreferences(eventData.detail)
             );
+          }, () => {
+            // User load failed, so we just do the closeButtonRejectsAll() part for consistency
+            // and don't try to record the consent in Accounts
+            document.addEventListener('cookieyes_banner_load', (eventData) => {
+              if (!eventData.detail.isUserActionCompleted) {
+                closeButtonRejectsAll();
+              }
+            });
           });
         </script>
         <!-- Start cookieyes banner -->

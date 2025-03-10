@@ -92,16 +92,7 @@ export default {
 
         // This code is shared with the CookieYes loader in index.html
         window._OX_USER_PROMISE ||= fetch(accountsUrl, {credentials: 'include'}).then(
-            (response) => response.json().catch(
-                (err: unknown) => {
-                    console.warn('No JSON in Accounts response');
-                    return {err};
-                }
-            ),
-            (err: unknown) => {
-                console.warn('"Error fetching user info"');
-                return {err};
-            }
+            (response) => response.json()
         );
 
         return window._OX_USER_PROMISE.then((user) => {
@@ -110,6 +101,9 @@ export default {
                 faculty_status: user.faculty_status // eslint-disable-line camelcase
             });
             return user;
+        }, (err: unknown) => {
+            console.warn('"Error fetching user info"');
+            return {err};
         });
     }, () => {window._OX_USER_PROMISE = undefined;})
 };
