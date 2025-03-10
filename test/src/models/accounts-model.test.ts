@@ -25,6 +25,7 @@ describe('accounts-model', () => {
     });
     it('handles json response, window with dataLayer', async () => {
         const payload = {
+            id: 1,
             faculty_status: 'fs' // eslint-disable-line camelcase
         };
         const w = window as Window & {dataLayer?: []};
@@ -40,6 +41,7 @@ describe('accounts-model', () => {
     });
     it('handles json response, window without dataLayer', async () => {
         const payload = {
+            id: 1,
             faculty_status: 'fs' // eslint-disable-line camelcase
         };
 

@@ -39,7 +39,19 @@
             );
           };
 
+          // The user is logged out or user load failed, so we just do the closeButtonRejectsAll() part for consistency
+          // and don't try to record the consent in Accounts
+          const addCookieYesListenersForNoUser = () => {
+            document.addEventListener('cookieyes_banner_load', (eventData) => {
+              if (!eventData.detail.isUserActionCompleted) {
+                closeButtonRejectsAll();
+              }
+            });
+          };
+
           window._OX_USER_PROMISE.then((user) => {
+            if (!user.id) { return addCookieYesListenersForNoUser(); }
+
             const updateUserConsentPreferences = (consentPreferences) => {
               return fetch('/accounts/api/user', {
                 body: JSON.stringify({consent_preferences: consentPreferences}),
@@ -99,15 +111,7 @@
             document.addEventListener(
               'cookieyes_consent_update', (eventData) => updateUserConsentPreferences(eventData.detail)
             );
-          }, () => {
-            // User load failed, so we just do the closeButtonRejectsAll() part for consistency
-            // and don't try to record the consent in Accounts
-            document.addEventListener('cookieyes_banner_load', (eventData) => {
-              if (!eventData.detail.isUserActionCompleted) {
-                closeButtonRejectsAll();
-              }
-            });
-          });
+          }, () => addCookieYesListenersForNoUser());
         </script>
         <!-- Start cookieyes banner -->
         <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/7c03144a7ef8b7f646f1ce01/script.js"></script>

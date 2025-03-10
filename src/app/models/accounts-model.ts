@@ -96,10 +96,12 @@ export default {
         );
 
         return window._OX_USER_PROMISE.then((user) => {
-            window.dataLayer ||= [];
-            window.dataLayer.push({
-                faculty_status: user.faculty_status // eslint-disable-line camelcase
-            });
+            if (user.id) {
+                window.dataLayer ||= [];
+                window.dataLayer.push({
+                    faculty_status: user.faculty_status // eslint-disable-line camelcase
+                });
+            }
             return user;
         }, (err: unknown) => {
             console.warn('"Error fetching user info"');
