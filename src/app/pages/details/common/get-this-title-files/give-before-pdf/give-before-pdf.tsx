@@ -87,11 +87,10 @@ function GiveBeforePdfAfterConditionals({
     });
 
     React.useEffect(() => {
-        if ('dataLayer' in window) {
-            (window.dataLayer as Array<object>).push({
-                event: 'optimize.giveBeforePdf'
-            });
-        }
+        window.dataLayer ||= [];
+        window.dataLayer.push({
+            event: 'optimize.giveBeforePdf'
+        });
     });
 
     const closeAfterDelay = React.useCallback(

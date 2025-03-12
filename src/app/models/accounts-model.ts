@@ -1,8 +1,8 @@
 import settings from '~/helpers/window-settings';
 
-const accountsUrl = `${settings().accountHref}/api/user`;
+const accountsUrl = `${settings().accountHref}/api/user?always_200=true`;
 
-function cached<T>(fn: () => T) {
+function cached<T>(fn: () => T, invalidateFn: () => void) {
     let valid = false;
     let cachedResult: T | null = null;
     const cachedFn = function () {
@@ -14,31 +14,39 @@ function cached<T>(fn: () => T) {
     };
 
     cachedFn.invalidate = () => {
+        invalidateFn();
         valid = false;
     };
     return cachedFn;
 }
 
-export type SfUserModel = {
-    id: number;
-    uuid: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    school_name: string;
-    self_reported_role: string;
-    self_reported_school: string;
-    is_not_gdpr_location: boolean;
-    salesforce_contact_id: string;
-    is_instructor_verification_stale: boolean;
-    faculty_status: string;
-    contact_infos: {
-        type: string;
-        value: string;
-        is_verified: boolean;
-        is_guessed_preferred: boolean;
-    }[];
+export type AccountsUserModel = {
+  id: number;
+  uuid: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  school_name: string;
+  self_reported_role: string;
+  self_reported_school: string;
+  is_not_gdpr_location: boolean;
+  salesforce_contact_id: string;
+  is_instructor_verification_stale: boolean;
+  faculty_status: string;
+  contact_infos: {
+      type: string;
+      value: string;
+      is_verified: boolean;
+      is_guessed_preferred: boolean;
+  }[];
 };
+
+declare global {
+    interface Window {
+        _OX_USER_PROMISE?: Promise<AccountsUserModel>;
+        dataLayer?: object[];
+    }
+}
 
 export default {
     load: cached(() => {
@@ -81,35 +89,23 @@ export default {
         //         }
         //     ]
         // });
-        // // eslint-disable-next-line no-unreachable
-        return fetch(accountsUrl, {credentials: 'include'}).then(
-            (response) => {
-                if (response.status === 403) {
-                    return {};
-                }
-                return response.json().then(
-                    (result) => {
-                        if (
-                            'dataLayer' in window &&
-                            window.dataLayer instanceof Array
-                        ) {
-                            window.dataLayer.push({
-                                // eslint-disable-next-line camelcase
-                                faculty_status: result.faculty_status
-                            });
-                        }
-                        return result as SfUserModel;
-                    },
-                    (err: unknown) => {
-                        console.warn('No JSON in Accounts response');
-                        return {err};
-                    }
-                );
-            },
-            (err: unknown) => {
-                console.warn('"Error fetching user info"');
-                return {err};
-            }
+
+        // This code is shared with the CookieYes loader in GTM
+        window._OX_USER_PROMISE ||= fetch(accountsUrl, {credentials: 'include'}).then(
+            (response) => response.json()
         );
-    })
+
+        return window._OX_USER_PROMISE.then((user) => {
+            if (user.id) {
+                window.dataLayer ||= [];
+                window.dataLayer.push({
+                    faculty_status: user.faculty_status // eslint-disable-line camelcase
+                });
+            }
+            return user;
+        }, (err: unknown) => {
+            console.warn('"Error fetching user info"');
+            return {err};
+        });
+    }, () => {window._OX_USER_PROMISE = undefined;})
 };

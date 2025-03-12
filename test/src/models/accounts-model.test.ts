@@ -11,10 +11,8 @@ describe('accounts-model', () => {
         accountsModel.load.invalidate();
         console.warn = saveWarn;
     });
-    it('handles 403 response', async () => {
-        mockFetch.mockResolvedValueOnce({
-            status: 403
-        });
+    it('handles empty json response', async () => {
+        mockFetch.mockResolvedValueOnce({json: () => Promise.resolve({})});
         expect(await accountsModel.load()).toEqual({});
     });
     it('catches rejection', async () => {
@@ -27,6 +25,7 @@ describe('accounts-model', () => {
     });
     it('handles json response, window with dataLayer', async () => {
         const payload = {
+            id: 1,
             faculty_status: 'fs' // eslint-disable-line camelcase
         };
         const w = window as Window & {dataLayer?: []};
@@ -42,6 +41,7 @@ describe('accounts-model', () => {
     });
     it('handles json response, window without dataLayer', async () => {
         const payload = {
+            id: 1,
             faculty_status: 'fs' // eslint-disable-line camelcase
         };
 

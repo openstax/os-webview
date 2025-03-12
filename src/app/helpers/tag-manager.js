@@ -1,9 +1,9 @@
 import accountsModel from '~/models/accounts-model';
 const tagManagerID = 'GTM-W6N7PB';
 
-window.dataLayer = window.dataLayer || [];
+window.dataLayer ||= [];
 
-window.oxDLF = window.oxDLF || [];
+window.oxDLF ||= [];
 
 // eslint-disable-next-line max-params
 (function (w, d, s, l, i) {

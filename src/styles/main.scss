@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    &.hide-osano .osano-cm-widget {
+    .cky-btn-revisit-wrapper {
         display: none;
     }
 }
