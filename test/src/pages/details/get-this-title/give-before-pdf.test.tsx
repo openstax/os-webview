@@ -116,7 +116,7 @@ describe('give-before-pdf', () => {
         // Even firing the submit event doesn't cause anything to happen?
         fireEvent.submit(screen.getByRole('form'));
         // So we directly fire the load on the form target iframe
-        fireEvent.load(screen.getByTitle('form-response'));
+        fireEvent.load(document.querySelector('[name="form-response"]') as Node);
     });
     it('Exercise data-track and datalayer effect', async () => {
         (window as unknown as Window & {dataLayer: object[]}).dataLayer = [];
