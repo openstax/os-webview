@@ -90,7 +90,7 @@ export default {
         //     ]
         // });
 
-        // This code is shared with the CookieYes loader in index.html
+        // This code is shared with the CookieYes loader in GTM
         window._OX_USER_PROMISE ||= fetch(accountsUrl, {credentials: 'include'}).then(
             (response) => response.json()
         );
