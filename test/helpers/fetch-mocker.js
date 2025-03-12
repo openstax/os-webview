@@ -20,6 +20,7 @@ import errataResources from '../src/data/errata-resources';
 import flags from '../src/data/flags';
 import footerData from '../src/data/footer';
 import formHeadings from '../src/data/form-headings';
+import impact from '../src/data/impact';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
 import kineticData from '../src/data/kinetic';
 import newSubjectsData from '../src/data/new-subjects';
@@ -70,6 +71,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isFooter = (/api\/footer/).test(args[0]);
     const isFormHeading = (/form-headings/).test(args[0]);
     const isGiveBanner = args[0].endsWith('snippets/givebanner/');
+    const isImpact = args[0].includes('/pages/impact');
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isKinetic = args[0].endsWith('kinetic/');
     const isHomepage = (/openstax-homepage/).test(args[0]);
@@ -137,6 +139,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = {};
             } else if (isHomepage) {
                 payload = openstaxHomepageData;
+            } else if (isImpact) {
+                payload = impact;
             } else if (isInstitutionalPartnership) {
                 payload = institutionalPartnershipData;
             } else if (isKinetic) {

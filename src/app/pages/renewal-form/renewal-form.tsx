@@ -189,7 +189,7 @@ function TheForm() {
     const [initialized, setInitialized] = React.useState(false);
     const {search} = useLocation();
     const selectedYear = new window.URLSearchParams(search).get('year') ?? undefined;
-    const [, setCopyOfYear] = React.useState<string>();
+    const [copyOfYear, setCopyOfYear] = React.useState<string>();
     const settings = (window as WindowWithSettings).SETTINGS;
 
     // Initialize selections from adoptions
@@ -209,7 +209,7 @@ function TheForm() {
 
     return (
         <form action={settings.renewalEndpoint} method="post">
-            <HiddenFields email={email} uuid={uuid} counts={counts} />
+            <HiddenFields email={email} uuid={uuid} counts={counts} year={copyOfYear} />
             <div className="fixed-fields">
                 <FixedField
                     label="First name"
