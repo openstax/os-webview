@@ -17,8 +17,8 @@ export default function ContactInfo({
                     type: 'text',
                     name: 'first_name',
                     required: true,
-                    autocomplete: 'given-name',
-                    maxlength: 35
+                    autoComplete: 'given-name',
+                    maxLength: 35
                 }}
             />
             <FormInput
@@ -27,8 +27,8 @@ export default function ContactInfo({
                     type: 'text',
                     name: 'last_name',
                     required: true,
-                    autocomplete: 'family-name',
-                    maxlength: 35
+                    autoComplete: 'family-name',
+                    maxLength: 35
                 }}
             />
             <FormInput
@@ -37,8 +37,8 @@ export default function ContactInfo({
                     type: 'email',
                     name: 'email',
                     required: true,
-                    autocomplete: 'email',
-                    maxlength: 64
+                    autoComplete: 'email',
+                    maxLength: 64
                 }}
             />
             <FormInput
@@ -47,9 +47,9 @@ export default function ContactInfo({
                     type: 'tel',
                     name: 'phone',
                     required: true,
-                    autocomplete: 'tel-national',
-                    minlength: 9,
-                    maxlength: 20,
+                    autoComplete: 'tel-national',
+                    minLength: 9,
+                    maxLength: 20,
                     pattern: '[^a-zA-Z]{9,20}'
                 }}
             />

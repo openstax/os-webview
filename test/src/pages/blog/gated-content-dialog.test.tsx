@@ -9,6 +9,9 @@ import GatedContentDialog from '~/pages/blog/gated-content-dialog/gated-content-
 import type {ArticleData} from '~/pages/blog/article/article';
 import userEvent from '@testing-library/user-event';
 
+// @ts-expect-error does not exist on
+const {routerFuture} = global;
+
 const articleData: ArticleData = {
     gatedContent: true,
     heading: 'heading',
@@ -64,7 +67,11 @@ mockUseFormTarget.mockImplementation((fn) => {
 
 function Component({path}: {path: string}) {
     return (
-        <MemoryRouter basename="/blog" initialEntries={[path]}>
+        <MemoryRouter
+            basename="/blog"
+            initialEntries={[path]}
+            future={routerFuture}
+        >
             <ShellContextProvider>
                 <MainClassContextProvider>
                     <BlogContextProvider>
@@ -91,6 +98,8 @@ describe('blog/gated-content-dialog', () => {
         mockOpen.mockReset();
         mockClose.mockReset();
     });
+
+    console.debug = jest.fn();
 
     it('displays when gatedContent is set in article data', async () => {
         render(<Component path="/blog/some-post" />);
