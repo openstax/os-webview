@@ -86,12 +86,12 @@ export default function HowUsing({selectedBooks, year}) {
                 name: title,
                 students: Number(bookData[name]),
                 howUsing: useData[name],
-                language
+                language,
+                baseYear: year
             });
         });
 
         return JSON.stringify({
-            baseYear: year,
             Books: rewrittenBookData
         });
     }, [bookData, useData, selectedBooks, year]);

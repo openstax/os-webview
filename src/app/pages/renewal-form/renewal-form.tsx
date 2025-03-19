@@ -63,10 +63,10 @@ function HiddenFields({
     const json = React.useMemo(
         () =>
             JSON.stringify({
-                baseYear: year,
                 Books: selectedItems.map(({value: name}) => ({
                     name,
-                    students: +counts[name]
+                    students: +counts[name],
+                    baseYear: year
                 }))
             }),
         [selectedItems, counts, year]
