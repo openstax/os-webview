@@ -6,13 +6,19 @@ import './form-input.scss';
 
 const LIMIT_SUGGESTIONS = 400;
 
-function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
-    const ref = useRef();
+function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}: {
+    value: string;
+    accept: (v: string) => void;
+    index: number;
+    activeIndex: number;
+    setActiveIndex: (n: number) => void;
+}) {
+    const ref = useRef<HTMLDivElement>(null);
     const active = index === activeIndex;
 
     useLayoutEffect(() => {
         if (active) {
-            ref.current.scrollIntoView({block: 'nearest'});
+            ref.current?.scrollIntoView({block: 'nearest'});
         }
     }, [active]);
 
@@ -25,7 +31,7 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}) {
     );
 }
 
-function useMatches(pattern, suggestions=[]) {
+function useMatches(pattern: string, suggestions: string[]=[]) {
     const matches = React.useMemo(
         () => pattern.length > 1 ?
             suggestions.filter((s) => s.toLowerCase().includes(pattern)) :
@@ -38,10 +44,17 @@ function useMatches(pattern, suggestions=[]) {
         [matches, pattern]
     );
 
-    return [matches, exactMatch];
+    return [matches, exactMatch] as const;
 }
 
-function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setActiveIndex}) {
+function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setActiveIndex}: {
+    matches: string[];
+    exactMatch: boolean;
+    accepted: boolean;
+    accept: (v: string) => void;
+    activeIndex: number;
+    setActiveIndex: (n: number) => void;
+}) {
     if (exactMatch) {
         accept(matches[0]);
     }
@@ -67,37 +80,54 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
     );
 }
 
-function ValidatingInput({value, inputProps, onChange, accepted}) {
+type InputProps = {Tag?: keyof JSX.IntrinsicElements}
+    & React.InputHTMLAttributes<HTMLInputElement>;
+
+function ValidatingInput({value, inputProps, onChange, accepted}: {
+    value: string;
+    inputProps: InputProps;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    accepted: boolean;
+}) {
     const [validationMessage, setValidationMessage] = useState('');
-    const ref = useRef();
+    const ref = useRef<HTMLElement & {validationMessage: string}>(null);
     const Tag = inputProps.Tag || 'input';
 
     useLayoutEffect(() => {
-        setValidationMessage(ref.current.validationMessage);
-        if (!ref.current.validationMessage && !accepted) {
+        const vm = ref.current?.validationMessage as string;
+
+        setValidationMessage(vm);
+        if (!vm && !accepted) {
             setValidationMessage('Not a valid selection');
         }
     }, [value, accepted]);
 
     return (
         <React.Fragment>
+            {/* @ts-expect-error too complex */}
             <Tag ref={ref} onChange={onChange} value={value} {...inputProps} />
             <div className="invalid-message">{validationMessage}</div>
         </React.Fragment>
     );
 }
 
-export default function FormInput({label, longLabel, inputProps, suggestions}) {
-    const [value, setValue] = useState(inputProps.value ?? '');
+// eslint-disable-next-line complexity
+export default function FormInput({label, longLabel, inputProps, suggestions}: {
+    label: string;
+    longLabel?: string;
+    inputProps: InputProps;
+    suggestions?: string[];
+}) {
+    const [value, setValue] = useState(inputProps.value?.toString() ?? '');
     const {onChange: otherOnChange, ...otherProps} = inputProps;
-    const [matches, exactMatch] = useMatches(value.toLowerCase(), suggestions);
+    const [matches, exactMatch] = useMatches(value.toString().toLowerCase(), suggestions);
     const [accepted, setAccepted] = useState(!suggestions?.length);
     const accept = React.useCallback(
-        (item='') => {
+        (item: string) => {
             setValue(item);
             setAccepted(true);
             if (otherOnChange) {
-                otherOnChange({target: {value: item}});
+                otherOnChange({target: {value: item}} as React.ChangeEvent<HTMLInputElement>);
             }
         },
         [otherOnChange]
@@ -108,7 +138,7 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
         searchable: false
     });
     const onChange = React.useCallback(
-        (event) => {
+        (event: React.ChangeEvent<HTMLInputElement>) => {
             if (otherOnChange) {
                 otherOnChange(event);
             }
@@ -120,7 +150,7 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
         [otherOnChange, suggestions]
     );
     const onKeyDown = React.useCallback(
-        (event) => {
+        (event: React.KeyboardEvent) => {
             // Don't use space to accept
             if (event.key === ' ') {
                 return;
@@ -139,13 +169,16 @@ export default function FormInput({label, longLabel, inputProps, suggestions}) {
                 {label && <label className="field-label">{label}</label>}
                 {longLabel && <label className="field-long-label">{longLabel}</label>}
                 <ValidatingInput
-                    value={value} inputProps={{onKeyDown, ...otherProps}}
-                    onChange={onChange} accepted={accepted}
+                    value={value}
+                    inputProps={{onKeyDown, ...otherProps}}
+                    onChange={onChange}
+                    accepted={accepted}
                 />
                 {
                     suggestions &&
                         <SuggestionBox
-                            matches={matches} exactMatch={exactMatch}
+                            matches={matches}
+                            exactMatch={exactMatch}
                             accepted={accepted}
                             accept={accept} activeIndex={activeIndex}
                             setActiveIndex={setActiveIndex}

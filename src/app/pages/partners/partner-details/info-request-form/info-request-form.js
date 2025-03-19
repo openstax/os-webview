@@ -110,7 +110,7 @@ function SchoolSelector({value, setValue}) {
                     placeholder: 'School where you work',
                     required: true,
                     value,
-                    autocomplete: 'off',
+                    autoComplete: 'off',
                     onChange({target}) {setValue(target.value);}
                 }}
                 accept={accept}
@@ -170,7 +170,7 @@ function CountrySelector({value, setValue}) {
                     name: 'country',
                     required: true,
                     value,
-                    autocomplete: 'off',
+                    autoComplete: 'off',
                     onChange({target}) {setValue(target.value);}
                 }}
                 accept={accept}

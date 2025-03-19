@@ -38,7 +38,7 @@ export default function SchoolSelector({initialValue = ''}) {
                     type: 'text',
                     name: 'school',
                     required: true,
-                    autocomplete: 'off',
+                    autoComplete: 'off',
                     value,
                     onChange
                 }}

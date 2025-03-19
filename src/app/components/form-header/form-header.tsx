@@ -5,7 +5,10 @@ import useLanguageContext from '~/contexts/language';
 
 import './form-header.scss';
 
-function FormHeader({data, prefix}) {
+function FormHeader({data, prefix}: {
+    data: Record<string, string>;
+    prefix: string;
+}) {
     const heading = data[`${prefix}IntroHeading`];
     const description = data[`${prefix}IntroDescription`];
 
@@ -21,7 +24,7 @@ function FormHeader({data, prefix}) {
 
 const slugBase = 'pages/form-headings';
 
-export default function FormHeaderLoader({prefix}) {
+export default function FormHeaderLoader({prefix}: {prefix: string}) {
     const {language} = useLanguageContext();
     const slug = `${slugBase}?locale=${language}`;
 
