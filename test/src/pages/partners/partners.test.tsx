@@ -11,6 +11,9 @@ import * as MC from '~/contexts/main-class';
 import * as DH from '~/helpers/use-document-head';
 import * as UC from '~/contexts/user';
 
+// @ts-expect-error does not exist on
+const {routerFuture} = global;
+
 jest.mock('~/helpers/main-class-hooks', () => ({
     useMainSticky: () => jest.fn()
 }));
@@ -46,7 +49,7 @@ describe('partners/results', () => {
 
     function Component() {
         return (
-            <MemoryRouter initialEntries={['/partners']}>
+            <MemoryRouter initialEntries={['/partners']} future={routerFuture}>
                 <SearchContextProvider>
                     <Results linkTexts={linkTexts} />
                 </SearchContextProvider>
@@ -68,7 +71,7 @@ describe('partners full page', () => {
     function Component() {
         return (
             <ShellContextProvider>
-                <MemoryRouter initialEntries={['/partners']}>
+                <MemoryRouter initialEntries={['/partners']} future={routerFuture}>
                     <Partners />
                 </MemoryRouter>
             </ShellContextProvider>
@@ -185,20 +188,28 @@ describe('partners full page', () => {
         await user.click(screen.getByRole('button', {name: 'close'}));
     });
     it('displays sidebar of startups', async () => {
-        sfPartners[0].partnership_level = 'startup'; // eslint-disable-line
+        /* eslint-disable camelcase */
+        sfPartners[0].partnership_level = 'startup';
+        sfPartners[1].partner_anniversary_date = '2020-03-04';
+        sfPartners[2].partner_anniversary_date = '2020-03-04';
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
         const startupHeading = await screen.findByRole('heading', {level: 2, name: 'Startups'});
 
         expect(startupHeading.parentNode?.textContent).toContain(sfPartners[0].partner_name);
-        sfPartners[0].partnership_level = 'Full partner'; // eslint-disable-line
+        sfPartners[0].partnership_level = 'Full partner';
+        sfPartners[1].partner_anniversary_date = null;
+        sfPartners[2].partner_anniversary_date = null;
+        /* eslint-enable camelcase */
     });
     it('displays no sidebar when no other parterns are displayed', async () => {
-        sfPartners.map((p) => p.partnership_level = 'startup'); // eslint-disable-line
-        sfPartners[0].partnership_level = 'Full partner'; // eslint-disable-line
+        /* eslint-disable camelcase */
+        sfPartners.map((p) => {p.partnership_level = 'startup';});
+        sfPartners[0].partnership_level = 'Full partner';
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
         await screen.findByRole('heading', {level: 2, name: 'Startups'});
         sfPartners.map((p) => p.partnership_level = 'Full partner'); // eslint-disable-line
+        /* eslint-enable camelcase */
     });
 });
