@@ -4,9 +4,18 @@ import {useMainSticky} from '~/helpers/main-class-hooks';
 import cn from 'classnames';
 import './form-input.scss';
 
+// Accessibility issues here:
+// https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-autocomplete
+
 const LIMIT_SUGGESTIONS = 400;
 
-function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}: {
+function SuggestionItem({
+    value,
+    accept,
+    index,
+    activeIndex,
+    setActiveIndex
+}: {
     value: string;
     accept: (v: string) => void;
     index: number;
@@ -24,22 +33,27 @@ function SuggestionItem({value, accept, index, activeIndex, setActiveIndex}: {
 
     return (
         <div
-            className={cn('suggestion', {active})} ref={ref}
+            className={cn('suggestion', {active})}
+            ref={ref}
             onClick={() => accept(value)}
             onMouseMove={() => setActiveIndex(index)}
-        >{value}</div>
+        >
+            {value}
+        </div>
     );
 }
 
-function useMatches(pattern: string, suggestions: string[]=[]) {
+function useMatches(pattern: string, suggestions: string[] = []) {
     const matches = React.useMemo(
-        () => pattern.length > 1 ?
-            suggestions.filter((s) => s.toLowerCase().includes(pattern)) :
-            [],
+        () =>
+            pattern.length > 1
+                ? suggestions.filter((s) => s.toLowerCase().includes(pattern))
+                : [],
         [pattern, suggestions]
     );
     const exactMatch = React.useMemo(
-        () => matches.includes(pattern) ||
+        () =>
+            matches.includes(pattern) ||
             (matches.length === 1 && pattern === matches[0].toLowerCase()),
         [matches, pattern]
     );
@@ -47,7 +61,14 @@ function useMatches(pattern: string, suggestions: string[]=[]) {
     return [matches, exactMatch] as const;
 }
 
-function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setActiveIndex}: {
+function SuggestionBox({
+    matches,
+    exactMatch,
+    accepted,
+    accept,
+    activeIndex,
+    setActiveIndex
+}: {
     matches: string[];
     exactMatch: boolean;
     accepted: boolean;
@@ -63,27 +84,40 @@ function SuggestionBox({matches, exactMatch, accepted, accept, activeIndex, setA
     return (
         <div className="suggestions">
             <div className="suggestion-box">
-                {
-                    !exactMatch && !accepted && matches.slice(0, LIMIT_SUGGESTIONS).map((match, i) =>
-                        <SuggestionItem
-                            value={match} accept={accept} index={i}
-                            activeIndex={activeIndex} setActiveIndex={setActiveIndex}
-                            key={match}
-                        />)
-                }
-                {
-                    matches.length > LIMIT_SUGGESTIONS &&
-                    <div className="suggestion"><i>List truncated</i></div>
-                }
+                {!exactMatch &&
+                    !accepted &&
+                    matches
+                        .slice(0, LIMIT_SUGGESTIONS)
+                        .map((match, i) => (
+                            <SuggestionItem
+                                value={match}
+                                accept={accept}
+                                index={i}
+                                activeIndex={activeIndex}
+                                setActiveIndex={setActiveIndex}
+                                key={match}
+                            />
+                        ))}
+                {matches.length > LIMIT_SUGGESTIONS && (
+                    <div className="suggestion">
+                        <i>List truncated</i>
+                    </div>
+                )}
             </div>
         </div>
     );
 }
 
-type InputProps = {Tag?: keyof JSX.IntrinsicElements}
-    & React.InputHTMLAttributes<HTMLInputElement>;
+type InputProps = {
+    Tag?: keyof JSX.IntrinsicElements;
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
-function ValidatingInput({value, inputProps, onChange, accepted}: {
+function ValidatingInput({
+    value,
+    inputProps,
+    onChange,
+    accepted
+}: {
     value: string;
     inputProps: InputProps;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -112,7 +146,12 @@ function ValidatingInput({value, inputProps, onChange, accepted}: {
 }
 
 // eslint-disable-next-line complexity
-export default function FormInput({label, longLabel, inputProps, suggestions}: {
+export default function FormInput({
+    label,
+    longLabel,
+    inputProps,
+    suggestions
+}: {
     label: string;
     longLabel?: string;
     inputProps: InputProps;
@@ -120,14 +159,19 @@ export default function FormInput({label, longLabel, inputProps, suggestions}: {
 }) {
     const [value, setValue] = useState(inputProps.value?.toString() ?? '');
     const {onChange: otherOnChange, ...otherProps} = inputProps;
-    const [matches, exactMatch] = useMatches(value.toString().toLowerCase(), suggestions);
+    const [matches, exactMatch] = useMatches(
+        value.toString().toLowerCase(),
+        suggestions
+    );
     const [accepted, setAccepted] = useState(!suggestions?.length);
     const accept = React.useCallback(
         (item: string) => {
             setValue(item);
             setAccepted(true);
             if (otherOnChange) {
-                otherOnChange({target: {value: item}} as React.ChangeEvent<HTMLInputElement>);
+                otherOnChange({
+                    target: {value: item}
+                } as React.ChangeEvent<HTMLInputElement>);
             }
         },
         [otherOnChange]
@@ -167,23 +211,25 @@ export default function FormInput({label, longLabel, inputProps, suggestions}: {
         <label className="form-input">
             <div className="control-group">
                 {label && <label className="field-label">{label}</label>}
-                {longLabel && <label className="field-long-label">{longLabel}</label>}
+                {longLabel && (
+                    <label className="field-long-label">{longLabel}</label>
+                )}
                 <ValidatingInput
                     value={value}
                     inputProps={{onKeyDown, ...otherProps}}
                     onChange={onChange}
                     accepted={accepted}
                 />
-                {
-                    suggestions &&
-                        <SuggestionBox
-                            matches={matches}
-                            exactMatch={exactMatch}
-                            accepted={accepted}
-                            accept={accept} activeIndex={activeIndex}
-                            setActiveIndex={setActiveIndex}
-                        />
-                }
+                {suggestions && (
+                    <SuggestionBox
+                        matches={matches}
+                        exactMatch={exactMatch}
+                        accepted={accepted}
+                        accept={accept}
+                        activeIndex={activeIndex}
+                        setActiveIndex={setActiveIndex}
+                    />
+                )}
             </div>
         </label>
     );
