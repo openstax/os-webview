@@ -158,10 +158,14 @@ function VideoArticle({data}: {data: ArticleData}) {
 }
 
 function normalUnits(unit: UnitType) {
-    return typeof unit.value === 'string' || ('alignment' in unit.value && unit.value.alignment !== 'bottom');
+    return !bottomUnits(unit);
 }
 function bottomUnits(unit: UnitType) {
-    return typeof unit.value !== 'string' && ('alignment' in unit.value && unit.value.alignment === 'bottom');
+    return (
+        typeof unit.value === 'object' &&
+        'alignment' in unit.value &&
+        unit.value.alignment === 'bottom'
+    );
 }
 
 function ArticleBody({
