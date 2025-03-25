@@ -1,16 +1,18 @@
 import {useState} from 'react';
 
-export default function useSelectList({
+type SearchableItem = {
+    label: string;
+};
+
+export default function useSelectList<ItemType=SearchableItem>({
     getItems,
     accept,
     cancel = () => null,
     minActiveIndex = 0,
     searchable = true
 }: {
-    getItems: () => {
-        label: string;
-    }[];
-    accept: (item: object) => void;
+    getItems: () => ItemType[];
+    accept: (item: ItemType) => void;
     cancel?: () => void;
     minActiveIndex?: number;
     searchable?: boolean;
@@ -51,7 +53,7 @@ export default function useSelectList({
                 if (searchable && event.key?.length === 1) {
                     const letter = event.key.toLowerCase();
                     const values = Array.from(items).map((opt) =>
-                        opt.label.toLowerCase()
+                        (opt as SearchableItem).label.toLowerCase()
                     );
                     let foundIndex = values.findIndex(
                         (val, i) => i > activeIndex && val.startsWith(letter)
