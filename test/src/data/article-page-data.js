@@ -1,5 +1,5 @@
 // Blog article data as returned by usePageData
-/* eslint-disable max-len */
+/* eslint-disable max-len, camelcase */
 export default {
     id: 754,
     meta: {
@@ -99,6 +99,25 @@ export default {
             type: 'paragraph',
             value: '<p data-block-key="eg7ck">This publication covers hard and soft skills that are applicable to a broad range of academic majors and fields. The introduction of “Workplace Software and Skills” underscores OpenStax’s commitment to its mission of expanding access to high-quality educational materials for all learners — this book, in particular, is likely to be valuable for learners both within and without traditional academic environments. </p><p data-block-key="c5o15">Since the publication of its first textbook in 2012, OpenStax has rapidly expanded its list of textbooks and technology offerings, and its minimalist book covers have become a familiar sight on campuses across the country. OpenStax resources have been used by 70% of colleges and universities across the United States and over 6,300 K-12 schools and districts.</p><p data-block-key="34gqf">To read the full press release, please <a href="https://news.rice.edu/news/2023/newest-openstax-textbook-provides-essential-workplace-skills-students">click here</a>.</p>',
             id: '7c6ae377-18d5-4223-883b-a5e304dd084c'
+        },
+        {
+            type: 'pullquote',
+            value: {
+                quote: 'Thank you for the OpenStax materials. I look forward to using them to raise the standards in math and science around the world.',
+                attribution: 'Amos Tarfa'
+            },
+            id: '28d9b0f2-6106-4487-a783-b470916e9517'
+        },
+        {
+            id: 'meh',
+            type: 'blog_cta',
+            value: {
+                alignment: 'left',
+                heading: 'Heading',
+                description: 'description text',
+                button_href: '#',
+                button_text: 'click me'
+            }
         },
         {
             type: 'aligned_html',
