@@ -9,7 +9,7 @@ function pass() {
     return true;
 }
 
-function MarkupChildren({children}) {
+function MarkupChildren({children}: {children: React.ReactNode[]}) {
     const {isVisible} = usePaginatorContext();
     const {validatedPages, activeRef} = usePagesContext();
 
@@ -44,12 +44,20 @@ function PageCount() {
     );
 }
 
+type MultiPageFormProps = {
+    children: React.ReactNode[];
+    validatePage?: (p: unknown) => boolean;
+    onPageChange?: (p: unknown) => boolean;
+    onSubmit: () => void;
+    submitting: boolean;
+} & React.FormHTMLAttributes<HTMLFormElement>;
+
 function MultiPageFormInContext({
     children,
     validatePage=pass, onPageChange=pass, onSubmit,
     submitting, ...formParams
-}) {
-    const formRef = React.useRef();
+}: MultiPageFormProps) {
+    const formRef = React.useRef<HTMLFormElement>(null);
 
     return (
         <div className="multi-page-form">
@@ -78,7 +86,7 @@ function MultiPageFormInContext({
     );
 }
 
-export default function MultiPageForm(params) {
+export default function MultiPageForm(params: MultiPageFormProps) {
     return (
         <PaginatorContextProvider>
             <MultiPageFormInContext {...params} />
