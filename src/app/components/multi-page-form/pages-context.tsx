@@ -2,13 +2,17 @@ import {useState, useRef, useEffect, useCallback} from 'react';
 import usePaginatorContext from '~/components/paginator/paginator-context';
 import buildContext from '~/components/jsx-helpers/build-context';
 
-function useContextValue({pages, validatePage, onPageChange}) {
+function useContextValue({pages, validatePage, onPageChange}: {
+    pages: number;
+    validatePage: (p: unknown) => boolean;
+    onPageChange: (p: unknown) => void;
+}) {
     const [validatedPages, setValidatedPages] = useState({});
-    const activeRef = useRef();
+    const activeRef = useRef<HTMLDivElement>(null);
     const {currentPage} = usePaginatorContext();
     const validateCurrentPage = useCallback(
         () => {
-            const invalid = activeRef.current.querySelector(':invalid');
+            const invalid = activeRef.current?.querySelector(':invalid');
 
             setValidatedPages({[currentPage]: true, ...validatedPages});
             return invalid === null && validatePage(currentPage);

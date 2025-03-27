@@ -3,7 +3,7 @@ import usePaginatorContext from '~/components/paginator/paginator-context';
 import usePagesContext from './pages-context';
 
 type Args = {
-    formRef: React.MutableRefObject<HTMLFormElement>;
+    formRef: React.RefObject<HTMLFormElement>;
     disabled: boolean;
     onSubmit: (form: HTMLFormElement) => void;
 };
@@ -48,7 +48,7 @@ function SubmitButton({disabled, formRef, onSubmit}: Args) {
     const validateAndSubmit = useCallback<React.MouseEventHandler>(
         (event) => {
             if (validateCurrentPage()) {
-                onSubmit(formRef.current);
+                onSubmit(formRef.current as HTMLFormElement);
             }
             event.preventDefault();
         },
