@@ -8,7 +8,7 @@ type Args = {
     onSubmit: (form: HTMLFormElement) => void;
 };
 
-export default function ButtonRow({formRef, onSubmit, disabled = false}: Args) {
+export default function ButtonRow({formRef, onSubmit, disabled}: Args) {
     return (
         <div className="button-row">
             <BackButton disabled={disabled} />

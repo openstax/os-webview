@@ -1,5 +1,4 @@
 import React from 'react';
-import {describe, it, expect} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
 import AppElement from '~/components/shell/shell';
 import {BrowserRouter, MemoryRouter as MR} from 'react-router-dom';

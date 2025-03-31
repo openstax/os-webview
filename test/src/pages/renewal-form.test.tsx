@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {fireEvent, render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import ShellContextProvider from '../../helpers/shell-context';
 import {MemoryRouter} from 'react-router-dom';
@@ -91,6 +91,18 @@ describe('renewal-form', () => {
 
         await user.click(remove);
         expect(screen.queryByRole('spinbutton')).toBeNull();
+
+        // Operate BookOption by key
+        const options = screen.getAllByRole('option');
+
+        expect(options).toHaveLength(6);
+        options[0].focus();
+        // Select book
+        fireEvent.keyDown(options[0], {key: ' '});
+        // Deselect book
+        fireEvent.keyDown(options[0], {key: ' '});
+        // Toggle book section
+        fireEvent.keyDown(options[0], {key: 'Escape'});
     });
     it('handles missing adoptions', async () => {
         // @ts-expect-error missing properties
