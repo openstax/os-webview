@@ -1,17 +1,12 @@
 import React from 'react';
 import './progress-ring.scss';
 
-function Circle({basicProps, className, strokeDashoffset=0}) {
-    return (
-        <circle
-            {...basicProps}
-            className={className}
-            strokeDashoffset={strokeDashoffset}
-        />
-    );
-}
-
-export default function ProgressRing({message, radius, progress, stroke}) {
+export default function ProgressRing({message, radius, progress, stroke}: {
+    message?: number;
+    radius: number;
+    progress: number;
+    stroke: number;
+}) {
     const normalizedRadius = radius - stroke * 2;
     const circumference = normalizedRadius * 2 * Math.PI;
     const basicCircleProps = React.useMemo(
@@ -35,11 +30,11 @@ export default function ProgressRing({message, radius, progress, stroke}) {
                 {message} min read
             </div>
             <svg height={radius * 2} width={radius * 2}>
-                <Circle
-                    basicProps={basicCircleProps}
+                <circle
+                    {...basicCircleProps}
                     className="unfinished" />
-                <Circle
-                    basicProps={basicCircleProps}
+                <circle
+                    {...basicCircleProps}
                     className="finished"
                     strokeDashoffset={strokeDashoffset} />
             </svg>
