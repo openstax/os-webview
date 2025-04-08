@@ -1,15 +1,19 @@
 import React from 'react';
 import {describe, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import {MemoryRouter, Routes, Route} from 'react-router-dom';
 import ExplorePage from '~/pages/webinars/explore-page/explore-page';
 import useWebinarContext from '~/pages/webinars/webinar-context';
 import {pastWebinar} from '../../data/webinars';
 import type {Webinar} from '~/pages/webinars/types';
 
+// @ts-expect-error does not exist on
+const {routerFuture} = global;
+
 function Component({path}: {path: string}) {
     return (
-        <MemoryRouter basename='/webinars' initialEntries={[path]}>
+        <MemoryRouter basename='/webinars' initialEntries={[path]} future={routerFuture}>
             <Routes>
                 <Route
                     path='explore/:exploreType/:topic'
@@ -21,6 +25,7 @@ function Component({path}: {path: string}) {
 }
 
 jest.mock('~/pages/webinars/webinar-context', () => jest.fn());
+jest.mock('~/helpers/use-document-head', () => jest.fn());
 
 const webinars: Webinar[] = [0, 1, 2, 3, 4]
     .map(() => JSON.parse(JSON.stringify(pastWebinar)))
@@ -48,6 +53,8 @@ webinars[4].subjects.push({
 });
 
 describe('webinars explore page', () => {
+    const user = userEvent.setup();
+
     (useWebinarContext as jest.Mock).mockImplementation(() => {
         return {
             latestWebinars: webinars,
@@ -93,7 +100,7 @@ describe('webinars explore page', () => {
             2
         );
     });
-    it('paginates if there are more than 9', () => {
+    it('paginates if there are more than 9', async () => {
         (useWebinarContext as jest.Mock).mockImplementation(() => {
             return {
                 latestWebinars: webinars.concat(Array(15).fill(webinars[3])),
@@ -102,6 +109,14 @@ describe('webinars explore page', () => {
             };
         });
         render(<Component path='/webinars/explore/collections/asubject' />);
+        expect(screen.getAllByText('Showing 1-9 of 16 webinars')).toHaveLength(
+            1
+        );
+        await user.click(screen.getByRole('button', {name: 'next'}));
+        expect(screen.getAllByText('Showing 10-16 of 16 webinars')).toHaveLength(
+            1
+        );
+        await user.click(screen.getByRole('button', {name: 'previous'}));
         expect(screen.getAllByText('Showing 1-9 of 16 webinars')).toHaveLength(
             1
         );
