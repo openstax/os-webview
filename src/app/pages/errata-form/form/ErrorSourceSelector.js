@@ -1,6 +1,6 @@
 import React, {useState, useRef, useMemo} from 'react';
 import useErrataFormContext from '../errata-form-context';
-import managedInvalidMessage from './InvalidMessage.js';
+import managedInvalidMessage from './InvalidMessage';
 import getFields from '~/models/errata-fields';
 
 const sourceNames = {

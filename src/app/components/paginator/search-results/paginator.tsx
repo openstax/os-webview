@@ -2,15 +2,15 @@ import React from 'react';
 import usePaginatorContext from '../paginator-context';
 import './paginator.scss';
 
-function getPageIndicators(pages, currentPage) {
+function getPageIndicators(pages: number, currentPage: number) {
     const indicatorCount = Math.min(pages, 5);
-    const propsFor = (label) => ({
+    const propsFor = (label: number) => ({
         label,
         page: `page ${label}`,
         disabled: label === currentPage,
         selected: label === currentPage
     });
-    const result = Array(indicatorCount).fill();
+    const result = Array(indicatorCount).fill(0);
 
     if (pages - currentPage < 3) {
         result[0] = pages - indicatorCount + 1;
@@ -23,7 +23,7 @@ function getPageIndicators(pages, currentPage) {
     return result.map(propsFor);
 }
 
-function PageButtonBar({pages}) {
+function PageButtonBar({pages}: {pages: number}) {
     const {currentPage, setCurrentPage} = usePaginatorContext();
     const disablePrevious = currentPage === 1;
     const disableNext = currentPage === pages;
@@ -56,7 +56,7 @@ function PageButtonBar({pages}) {
     );
 }
 
-export function PaginatorControls({items}) {
+export function PaginatorControls({items}: {items: number}) {
     const {currentPage, resultsPerPage} = usePaginatorContext();
     const pages = Math.ceil(items / resultsPerPage);
     const firstIndex = (currentPage - 1) * resultsPerPage;
