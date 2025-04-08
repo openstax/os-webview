@@ -229,16 +229,16 @@ function FloatingSideBar({
     readTime,
     progress
 }: {
-    readTime: number | undefined;
-    progress: number | React.MutableRefObject<undefined>;
+    readTime?: number;
+    progress: number;
 }) {
     return (
         <div className="floater">
             <div className="sticky-bit">
                 <ProgressRing
-                    radius="45"
+                    radius={45}
                     progress={progress}
-                    stroke="4"
+                    stroke={4}
                     message={readTime}
                 />
                 <ShareButtons />
