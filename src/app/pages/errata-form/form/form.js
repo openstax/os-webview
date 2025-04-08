@@ -5,7 +5,7 @@ import ErrorTypeSelector from './ErrorTypeSelector';
 import ErrorSourceSelector from './ErrorSourceSelector';
 import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector';
 import FileUploader from './FileUploader';
-import managedInvalidMessage from './InvalidMessage.js';
+import managedInvalidMessage from './InvalidMessage';
 import $ from '~/helpers/$';
 import Dialog from '~/components/dialog/dialog';
 import {useNavigate} from 'react-router-dom';

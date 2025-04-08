@@ -1,6 +1,6 @@
 import React from 'react';
 import {PutAway} from '../shared';
-import useMSQueue from './queue.js';
+import useMSQueue from './queue';
 import useSharedDataContext from '~/contexts/shared-data';
 import './microsurvey-popup.scss';
 

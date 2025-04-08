@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import Quote from '~/components/quote/quote.js';
+import Quote from '~/components/quote/quote';
 import JITLoad from '~/helpers/jit-load';
 
 function Unknown({data, type}: {data: unknown; type: string}) {
