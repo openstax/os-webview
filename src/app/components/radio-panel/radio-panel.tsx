@@ -4,11 +4,22 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import cn from 'classnames';
 
-function RadioButton({item, isSelected, onChange}) {
+type Item = {
+    value: string;
+    html: string;
+}
+
+type OnChange = (v: string) => void;
+
+function RadioButton({item, isSelected, onChange}: {
+    item: Item;
+    isSelected: (v: string) => boolean;
+    onChange: OnChange;
+}) {
     const onClick = () => {
         onChange(item.value);
     };
-    const onKeyDown = (event) => {
+    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if ([' ', 'Enter'].includes(event.key)) {
             onClick();
         }
@@ -16,7 +27,7 @@ function RadioButton({item, isSelected, onChange}) {
 
     return (
         <div
-            className="filter-button" tabIndex="0"
+            className="filter-button" tabIndex={0}
             role="radio" aria-checked={isSelected(item.value)}
             onClick={onClick}
             onKeyDown={onKeyDown}
@@ -38,8 +49,12 @@ function RadioButton({item, isSelected, onChange}) {
     );
 }
 
-function RadioPanelJsx({items, selectedValue, onChange}) {
-    const isSelected = (val) => {
+function RadioPanelJsx({items, selectedValue, onChange}: {
+    items: Item[];
+    selectedValue: string;
+    onChange: OnChange;
+}) {
+    const isSelected = (val: string) => {
         return val === selectedValue;
     };
 
@@ -54,7 +69,11 @@ function RadioPanelJsx({items, selectedValue, onChange}) {
     );
 }
 
-export function RadioPanel({selectedItem, items, onChange}) {
+export function RadioPanel({selectedItem, items, onChange}: {
+    selectedItem: string;
+    items: Item[];
+    onChange: OnChange;
+}) {
     const [active, setActive] = useState(false);
 
     function toggleActive() {
