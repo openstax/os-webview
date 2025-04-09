@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import Quote from '~/components/quote/quote';
+import Quote from './quote';
 import JITLoad from '~/helpers/jit-load';
 
 function Unknown({data, type}: {data: unknown; type: string}) {
@@ -75,7 +75,6 @@ type PQData = {
 
 function PullQuote({data}: {data: PQData}) {
     const model = {
-        image: {},
         content: data.quote,
         attribution: data.attribution
     };
