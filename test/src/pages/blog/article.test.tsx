@@ -33,9 +33,9 @@ describe('blog/article', () => {
 
         expect(onload).toHaveBeenCalled();
         screen.getByText('2 min read');
-        expect(document.body.querySelector('.quote-bucket .quote .attribution')).toBeTruthy();
+        expect(document.body.querySelector('.quote .attribution')).toBeTruthy();
         // Bottom-aligned stuff comes at the end
-        expect(document.body.querySelector('.quote-bucket ~ figure.bottom')).toBeTruthy();
+        expect(document.body.querySelector('.quote ~ figure.bottom')).toBeTruthy();
         // CTA should be there
         screen.getByRole('link', {name: 'click me'});
     });
