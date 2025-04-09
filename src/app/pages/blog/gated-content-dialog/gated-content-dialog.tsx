@@ -4,7 +4,7 @@ import linkHelper from '~/helpers/link';
 import useUserContext from '~/contexts/user';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import ContactInfo from '~/components/contact-info/contact-info';
-import {RoleDropdown} from '~/components/role-selector/role-selector';
+import {RoleDropdown, Option} from '~/components/role-selector/role-selector';
 import FormInput from '~/components/form-input/form-input';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
 import useFormTarget from '~/components/form-target/form-target';
@@ -170,7 +170,7 @@ function RoleSelector({
             <div className="control-group">
                 <label className="field-label">Your role</label>
                 <RoleDropdown
-                    options={roleOptions}
+                    options={roleOptions as Option[]}
                     setValue={setValue}
                     name="role"
                 />
