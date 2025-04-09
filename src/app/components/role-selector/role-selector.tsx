@@ -5,8 +5,17 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import useLanguageContext from '~/contexts/language';
 import './role-selector.scss';
 
-export function RoleDropdown({ options, setValue, name = 'subject' }) {
-    const optionsAsOptions = options.map((opt) => ({
+export type Option = {
+    displayName: string;
+    salesforceName: string;
+}
+
+export function RoleDropdown({ options, setValue, name = 'subject' }: {
+    options: Option[];
+    setValue: (v: string) => void;
+    name?: string;
+}) {
+    const optionsAsOptions = options.map((opt: Option) => ({
         label: opt.displayName,
         value: opt.salesforceName
     }));
@@ -23,14 +32,23 @@ export function RoleDropdown({ options, setValue, name = 'subject' }) {
     );
 }
 
+type Props = {
+    value: string;
+    setValue: (v: string) => void;
+    hidden?: boolean;
+    children: React.ReactNode[];
+}
+
 /* eslint-disable */
 function RoleSelector({
     data: options,
     value,
     setValue,
     children,
-    hidden = false
-}) {
+    hidden
+}: {
+    data: Option[];
+} & Props) {
     const [studentContent, facultyContent] = children;
 
     return (
@@ -47,7 +65,7 @@ function RoleSelector({
     );
 }
 
-export default function RoleSelectorLoader(props) {
+export default function RoleSelectorLoader(props: Props) {
     const {language} = useLanguageContext();
 
     return (
