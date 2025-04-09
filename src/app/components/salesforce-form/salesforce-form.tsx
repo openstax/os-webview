@@ -1,35 +1,21 @@
 import React from 'react';
 import useSalesforceContext from '~/contexts/salesforce';
 
-export function HiddenFields({leadSource}) {
-    const {oid, debug} = useSalesforceContext();
+type FormParams = React.PropsWithChildren<{
+    postTo: string;
+    afterSubmit: () => void;
+}>
 
-    if (!oid) {
-        return (<div>Loading...</div>);
-    }
-    return (
-        <React.Fragment>
-            <input name="utf8" type="hidden" value="✓" />
-            <input type="hidden" name="Application_Source__c" value="OS Web" />
-            <input type="hidden" name="oid" value={oid} />
-            {
-                debug && <input type="hidden" name="debug" value="1" />
-            }
-            <input type="hidden" name="lead_source" value={leadSource} />
-        </React.Fragment>
-    );
-}
-
-function SfForm({children, postTo, afterSubmit}) {
+function SfForm({children, postTo, afterSubmit}: FormParams) {
     const [listening, setListening] = React.useState(false);
-    const {webtocaseUrl, debug, oid} = useSalesforceContext();
+    const {debug, oid} = useSalesforceContext();
     const onSubmit = React.useCallback(
         () => setListening(true),
         []
     );
     const onLoad = React.useCallback(
         () => {
-            if (listening && afterSubmit) {
+            if (listening) {
                 setListening(false);
                 afterSubmit();
             }
@@ -41,14 +27,15 @@ function SfForm({children, postTo, afterSubmit}) {
         <React.Fragment>
             <iframe
                 name="form-response" id="form-response" className="hidden"
-                src="" width="0" height="0" tabIndex="-1" onLoad={onLoad}
+                src="" width="0" height="0" tabIndex={-1} onLoad={onLoad}
             />
             <form
                 acceptCharset="UTF-8" className="form"
                 target={debug ? undefined : 'form-response'}
-                action={postTo || webtocaseUrl} method="post"
+                action={postTo} method="post"
                 onSubmit={onSubmit}
                 encType="multipart/form-data"
+                name="salesforce-form"
             >
                 <input type="hidden" name="orgid" value={oid} />
                 {
@@ -63,10 +50,10 @@ function SfForm({children, postTo, afterSubmit}) {
     );
 }
 
-export default function SfFormOrLoading(formParams) {
-    const {webtocaseUrl} = useSalesforceContext();
+export default function SfFormOrLoading(formParams: FormParams) {
+    const {oid} = useSalesforceContext();
 
-    if (!webtocaseUrl) {
+    if (!oid) {
         return (<div>Loading...</div>);
     }
 

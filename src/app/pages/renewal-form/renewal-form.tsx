@@ -5,7 +5,7 @@ import useUserContext from '~/contexts/user';
 import useAdoptions, {Adoption} from '~/models/renewals';
 import YearSelector from '~/components/year-selector/year-selector';
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
-import {WindowWithSettings} from '~helpers/window-settings';
+import {WindowWithSettings} from '~/helpers/window-settings';
 // -- We'll be trying to do this for the next release.
 // import _adoptionsPromise from './salesforce-data';
 import BookTagsMultiselect, {
