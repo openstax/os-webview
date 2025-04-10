@@ -220,7 +220,6 @@ function ShareButtons() {
             message={encodeURIComponent(
                 'Check out this OpenStax blog article!'
             )}
-            minimal={true}
         />
     );
 }
