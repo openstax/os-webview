@@ -73,16 +73,13 @@ function GatedContentBody({
 function SubjectSelector() {
     const {subjectSnippet: data} = useBlogContext();
     const options = React.useMemo(
-        () =>
-            camelCaseKeys(
-                data.map((obj) => ({
-                    label: obj.name,
-                    value: obj.name
-                }))
-            ),
+        () => data.map((obj) => ({
+            label: obj.name,
+            value: obj.name
+        })),
         [data]
     );
-    const [value, setValue] = React.useState();
+    const [value, setValue] = React.useState<string>();
     const message = value ? '' : 'Please select one';
 
     return (
