@@ -13,7 +13,7 @@ type ButtonData = {
     icon: IconDefinition;
     iconLabel: string;
     target?: string;
-}
+};
 
 function SocialLink({aClass, url, icon, iconLabel, target}: ButtonData) {
     return (
@@ -26,7 +26,7 @@ function SocialLink({aClass, url, icon, iconLabel, target}: ButtonData) {
 type Props = {
     pageUrl: string;
     message: string;
-}
+};
 
 function ShareInterior({pageUrl, message}: Props) {
     const buttonData = [
@@ -52,7 +52,7 @@ function ShareInterior({pageUrl, message}: Props) {
     ];
 
     return (
-        <div className='buttons'>
+        <div className="buttons">
             <div
                 className="fb-share-button"
                 data-href="https://developers.facebook.com/docs/plugins/"
@@ -61,18 +61,16 @@ function ShareInterior({pageUrl, message}: Props) {
             >
                 <SocialLink {...buttonData[0]} />
             </div>
-            {
-                buttonData.slice(1).map((data) =>
-                    <SocialLink {...data} key={data.url} />
-                )
-            }
+            {buttonData.slice(1).map((data) => (
+                <SocialLink {...data} key={data.url} />
+            ))}
         </div>
     );
 }
 
 export function ShareJsx(props: Props) {
     return (
-        <div className='share-buttons'>
+        <div className="share-buttons">
             <ShareInterior {...props} />
         </div>
     );

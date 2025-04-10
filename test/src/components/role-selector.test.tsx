@@ -10,14 +10,17 @@ const {routerFuture} = global;
 describe('role-selector', () => {
     it('renders student content', async () => {
         render(
-        <LanguageContextProvider>
-            <MemoryRouter future={routerFuture}>
-                <RoleSelector value='Student' setValue={jest.fn()}>
-                    <h1>Student stuff</h1>
-                    <h1>Instructor stuff</h1>
-                </RoleSelector>
-            </MemoryRouter>
-        </LanguageContextProvider>);
-        expect((await screen.findByRole('heading', {level: 1})).textContent).toBe('Student stuff');
+            <LanguageContextProvider>
+                <MemoryRouter future={routerFuture}>
+                    <RoleSelector value="Student" setValue={jest.fn()}>
+                        <h1>Student stuff</h1>
+                        <h1>Instructor stuff</h1>
+                    </RoleSelector>
+                </MemoryRouter>
+            </LanguageContextProvider>
+        );
+        expect(
+            (await screen.findByRole('heading', {level: 1})).textContent
+        ).toBe('Student stuff');
     });
 });
