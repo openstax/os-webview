@@ -19,7 +19,7 @@ type CTAData = {
     description: string;
     button_href: string;
     button_text: string;
-}
+};
 
 function CTA({data}: {data: CTAData}) {
     const alignment = convertAlignment(data.alignment);
@@ -45,7 +45,7 @@ type AImageData = {
         original: {
             src: string;
             alt: string;
-        }
+        };
     };
     alignment: string;
     alt_text: string;
@@ -71,7 +71,7 @@ function AlignedImage({data}: {data: AImageData}) {
 type PQData = {
     quote: string;
     attribution: string;
-}
+};
 
 function PullQuote({data}: {data: PQData}) {
     const model = {
@@ -82,13 +82,14 @@ function PullQuote({data}: {data: PQData}) {
     return <Quote model={model} />;
 }
 
-
 export type DocumentData = {
     download_url: string;
-}
+};
 
 function Document({data}: {data: DocumentData}) {
-    return <JITLoad importFn={() => import('./import-pdf-unit.js')} data={data} />;
+    return (
+        <JITLoad importFn={() => import('./import-pdf-unit.js')} data={data} />
+    );
 }
 
 // Using CMS tags, which are not camel-case
@@ -104,25 +105,39 @@ const bodyUnits = {
 
 export type UnitType = {
     id: string;
-} & ({
-    type: 'paragraph' | 'aligned_html';
-    value: string;
-} | {
-    type: 'aligned_image';
-    value: AImageData;
-} | {
-    type: 'pullquote';
-    value: PQData;
-} | {
-    type: 'document';
-    value: DocumentData;
-} | {
-    type: 'blog_cta';
-    value: CTAData;
-})
+} & (
+    | {
+          type: 'paragraph' | 'aligned_html';
+          value: string;
+      }
+    | {
+          type: 'aligned_image';
+          value: AImageData;
+      }
+    | {
+          type: 'pullquote';
+          value: PQData;
+      }
+    | {
+          type: 'document';
+          value: DocumentData;
+      }
+    | {
+          type: 'blog_cta';
+          value: CTAData;
+      }
+);
 
 export default function BodyUnit({unit}: {unit: UnitType}) {
-    const Unit = bodyUnits[unit.type] as ({data}: {data: typeof unit.value}) => React.JSX.Element;
+    const Unit = bodyUnits[unit.type] as ({
+        data
+    }: {
+        data: typeof unit.value;
+    }) => React.JSX.Element;
 
-    return Unit ? <Unit data={unit.value} /> : <Unknown data={unit.value} type={unit.type} />;
+    return Unit ? (
+        <Unit data={unit.value} />
+    ) : (
+        <Unknown data={unit.value} type={unit.type} />
+    );
 }

@@ -8,9 +8,13 @@ import './role-selector.scss';
 export type Option = {
     displayName: string;
     salesforceName: string;
-}
+};
 
-export function RoleDropdown({ options, setValue, name = 'subject' }: {
+export function RoleDropdown({
+    options,
+    setValue,
+    name = 'subject'
+}: {
     options: Option[];
     setValue: (v: string) => void;
     name?: string;
@@ -37,9 +41,8 @@ type Props = {
     setValue: (v: string) => void;
     hidden?: boolean;
     children: React.ReactNode[];
-}
+};
 
-/* eslint-disable */
 function RoleSelector({
     data: options,
     value,
@@ -55,12 +58,15 @@ function RoleSelector({
         <div className="role-selector">
             <form data-region="selector">
                 <label hidden={hidden}>
-                    <FormattedMessage id="role-selector.i-am" defaultMessage='I am a' />
+                    <FormattedMessage
+                        id="role-selector.i-am"
+                        defaultMessage="I am a"
+                    />
                     <RoleDropdown options={options} setValue={setValue} />
                 </label>
             </form>
-            {value === "Student" && studentContent}
-            {!["", undefined, "Student"].includes(value) && facultyContent}
+            {value === 'Student' && studentContent}
+            {!['', undefined, 'Student'].includes(value) && facultyContent}
         </div>
     );
 }
@@ -69,6 +75,10 @@ export default function RoleSelectorLoader(props: Props) {
     const {language} = useLanguageContext();
 
     return (
-        <LoaderPage slug={`snippets/roles?locale=${language}`} props={props} Child={RoleSelector} />
+        <LoaderPage
+            slug={`snippets/roles?locale=${language}`}
+            props={props}
+            Child={RoleSelector}
+        />
     );
 }
