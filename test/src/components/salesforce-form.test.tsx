@@ -8,9 +8,11 @@ const {SalesforceContextProvider} = SFC;
 const afterSubmit = jest.fn();
 
 function Component() {
-    return (<SalesforceForm postTo='foo' afterSubmit={afterSubmit}>
+    return (
+        <SalesforceForm postTo="foo" afterSubmit={afterSubmit}>
             <input type="submit" />
-        </SalesforceForm>);
+        </SalesforceForm>
+    );
 }
 
 describe('salesforce-form', () => {
@@ -23,9 +25,11 @@ describe('salesforce-form', () => {
             debug: true,
             oid: 'something'
         } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
-        render(<SalesforceContextProvider>
-            <Component />
-        </SalesforceContextProvider>);
+        render(
+            <SalesforceContextProvider>
+                <Component />
+            </SalesforceContextProvider>
+        );
         // Can't actually submit in jest
         screen.getByRole('form').onsubmit = (e) => {
             e.preventDefault();

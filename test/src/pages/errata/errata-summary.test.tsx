@@ -39,7 +39,9 @@ describe('errata-summary', () => {
             </MemoryRouter>
         );
         const user = userEvent.setup({delay: null});
-        const reviewButton = await screen.findByRole('radio', {name: 'In Review'});
+        const reviewButton = await screen.findByRole('radio', {
+            name: 'In Review'
+        });
 
         await user.click(reviewButton);
         expect(await getTableRows()).toHaveLength(19);

@@ -7,12 +7,14 @@ export type SelectItem = {
     selected?: boolean;
 };
 
-function useContextValue({onValueUpdate}: {
+function useContextValue({
+    onValueUpdate
+}: {
     onValueUpdate?: (v: string) => void;
 }) {
     const [item, setItem] = useState<SelectItem>();
 
-    useEffect(() => onValueUpdate && onValueUpdate(item?.value), [item, onValueUpdate]);
+    useEffect(() => item && onValueUpdate?.(item.value), [item, onValueUpdate]);
 
     return {
         select: setItem,
@@ -22,7 +24,4 @@ function useContextValue({onValueUpdate}: {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as SelectContextProvider
-};
+export {useContext as default, ContextProvider as SelectContextProvider};

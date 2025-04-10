@@ -7,11 +7,15 @@ import cn from 'classnames';
 type Item = {
     value: string;
     html: string;
-}
+};
 
 type OnChange = (v: string) => void;
 
-function RadioButton({item, isSelected, onChange}: {
+function RadioButton({
+    item,
+    isSelected,
+    onChange
+}: {
     item: Item;
     isSelected: (v: string) => boolean;
     onChange: OnChange;
@@ -27,29 +31,31 @@ function RadioButton({item, isSelected, onChange}: {
 
     return (
         <div
-            className="filter-button" tabIndex={0}
-            role="radio" aria-checked={isSelected(item.value)}
+            className="filter-button"
+            tabIndex={0}
+            role="radio"
+            aria-checked={isSelected(item.value)}
             onClick={onClick}
             onKeyDown={onKeyDown}
         >
-            {
-                isSelected(item.value) &&
-                    <span className="on-mobile filter-by">
-                        Filter by:
-                    </span>
-            }
+            {isSelected(item.value) && (
+                <span className="on-mobile filter-by">Filter by:</span>
+            )}
             <RawHTML Tag="span" html={item.html} />
-            {
-                isSelected(item.value) &&
-                    <span className="on-mobile">
-                        <FontAwesomeIcon icon={faChevronDown} />
-                    </span>
-            }
+            {isSelected(item.value) && (
+                <span className="on-mobile">
+                    <FontAwesomeIcon icon={faChevronDown} />
+                </span>
+            )}
         </div>
     );
 }
 
-function RadioPanelJsx({items, selectedValue, onChange}: {
+function RadioPanelJsx({
+    items,
+    selectedValue,
+    onChange
+}: {
     items: Item[];
     selectedValue: string;
     onChange: OnChange;
@@ -60,16 +66,22 @@ function RadioPanelJsx({items, selectedValue, onChange}: {
 
     return (
         <React.Fragment>
-            {
-                items && items.map((item) => (
-                    <RadioButton key={item.value} {...{item, isSelected, onChange}} />
-                ))
-            }
+            {items &&
+                items.map((item) => (
+                    <RadioButton
+                        key={item.value}
+                        {...{item, isSelected, onChange}}
+                    />
+                ))}
         </React.Fragment>
     );
 }
 
-export function RadioPanel({selectedItem, items, onChange}: {
+export function RadioPanel({
+    selectedItem,
+    items,
+    onChange
+}: {
     selectedItem: string;
     items: Item[];
     onChange: OnChange;
@@ -86,7 +98,11 @@ export function RadioPanel({selectedItem, items, onChange}: {
             className={cn('filter-buttons', {active})}
             onClick={toggleActive}
         >
-            <RadioPanelJsx items={items} selectedValue={selectedItem} onChange={onChange} />
+            <RadioPanelJsx
+                items={items}
+                selectedValue={selectedItem}
+                onChange={onChange}
+            />
         </div>
     );
 }
