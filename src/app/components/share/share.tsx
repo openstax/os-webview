@@ -1,32 +1,34 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
 import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
 import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
+import './facebook-script';
 import './share.scss';
 
-/* eslint-disable */
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id) || !fjs) return;
-  js = d.createElement(s); js.id = id;
-  js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-/* eslint-enable */
+type ButtonData = {
+    aClass: string;
+    url: string;
+    icon: IconDefinition;
+    iconLabel: string;
+    target?: string;
+}
 
-function SocialLink({minimal, aClass, url, icon, iconLabel, target}) {
+function SocialLink({aClass, url, icon, iconLabel, target}: ButtonData) {
     return (
-        <a className={aClass} target={target} href={url}>
+        <a className={aClass} target={target} href={url} aria-label={iconLabel}>
             <FontAwesomeIcon className="social-icon" icon={icon} />
-            {
-                !minimal && <span>{iconLabel}</span>
-            }
         </a>
     );
 }
 
-function ShareInterior({pageUrl, message, minimal}) {
+type Props = {
+    pageUrl: string;
+    message: string;
+}
+
+function ShareInterior({pageUrl, message}: Props) {
     const buttonData = [
         {
             aClass: 'fb-xfbml-parse-ignore facebook btn',
@@ -50,25 +52,25 @@ function ShareInterior({pageUrl, message, minimal}) {
     ];
 
     return (
-        <div className={`buttons ${minimal ? 'minimal' : ''}`}>
+        <div className='buttons'>
             <div
                 className="fb-share-button"
                 data-href="https://developers.facebook.com/docs/plugins/"
                 data-layout="link"
                 data-mobile-iframe="true"
             >
-                <SocialLink {...buttonData[0]} minimal={minimal} />
+                <SocialLink {...buttonData[0]} />
             </div>
             {
                 buttonData.slice(1).map((data) =>
-                    <SocialLink {...data} minimal={minimal} key={data} />
+                    <SocialLink {...data} key={data.url} />
                 )
             }
         </div>
     );
 }
 
-export function ShareJsx(props) {
+export function ShareJsx(props: Props) {
     return (
         <div className='share-buttons'>
             <ShareInterior {...props} />
