@@ -1,6 +1,8 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
+import Copyright from './copyright';
+import CookieYesToggle from './cookie-yes-toggle';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
 import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
@@ -23,8 +25,6 @@ function Footer({
         facebookLink, twitterLink, linkedinLink
     }
 }) {
-    const updatedCopyright = copyright ? copyright.replace(/-\d+/, `-${new Date().getFullYear()}`) : copyright;
-
     return (
         <React.Fragment>
             <div className="top">
@@ -61,8 +61,7 @@ function Footer({
             <div className="bottom">
                 <div className="boxed">
                     <div className="copyrights">
-                        <RawHTML html={updatedCopyright} />
-                        <RawHTML Tag="ap-html" html={apStatement} />
+                        <Copyright copyright={copyright} apStatement={apStatement} />
                     </div>
                     <ul className="social">
                         <li>
@@ -124,17 +123,6 @@ function Footer({
                 </div>
             </div>
         </React.Fragment>
-    );
-}
-
-function CookieYesToggle() {
-    return (
-        <button
-            type="button"
-            className="cky-banner-element small"
-        >
-            Manage cookies
-        </button>
     );
 }
 
