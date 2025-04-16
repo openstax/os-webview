@@ -83,6 +83,11 @@ $lower-footer: #3b3b3b;
                 line-height: inherit;
                 padding: inherit;
                 text-align: inherit;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
             }
 
             &.col1 {
