@@ -1,7 +1,5 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$lower-footer: #3b3b3b;
-
 .page-footer {
     color: text-color(footer);
     display: grid;
@@ -26,7 +24,7 @@ $lower-footer: #3b3b3b;
             grid-row-gap: 2rem;
 
             @include width-up-to($phone-max) {
-                grid-template: 'copyright'
+                grid-template: 'copyrights'
                 'col1'
                 'col2';
             }
@@ -34,7 +32,7 @@ $lower-footer: #3b3b3b;
             @include wider-than($phone-max) {
                 align-items: start;
                 grid-column-gap: 4rem;
-                grid-template: 'copyright col1 col2' / minmax(auto, 70rem) auto auto;
+                grid-template: 'copyrights col1 col2' / minmax(auto, 70rem) auto auto;
             }
 
             @include wider-than($tablet-max) {
@@ -51,11 +49,10 @@ $lower-footer: #3b3b3b;
             gap: 0.5rem;
         }
 
-                
         .copyrights {
             @include body-font(1.2rem);
             display: grid;
-            grid-area: copyright;
+            grid-area: copyrights;
             grid-gap: 1rem;
         }
 
@@ -99,5 +96,4 @@ $lower-footer: #3b3b3b;
             }
         }
     }
-
 }
