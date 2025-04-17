@@ -2,6 +2,7 @@ import React from 'react';
 import Copyright from '~/layouts/default/footer/copyright';
 import CookieYesToggle from '~/layouts/default/footer/cookie-yes-toggle';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
+import {useDialog} from '~/components/dialog/dialog';
 import './flex.scss';
 
 type Props = {
@@ -19,7 +20,59 @@ function ListOfLinks({children}: React.PropsWithChildren<object>) {
     );
 }
 
+function useContactDialog() {
+    const [Dialog, open, close] = useDialog();
+
+    function ContactDialog(
+        {contactFormParams, className}: {
+            contactFormParams?: {key: string; value: string}[];
+            className?: string;
+        }
+    ) {
+        const contactFormUrl = React.useMemo(() => {
+            const formUrl = 'https://openstax.org/embedded/contact';
+
+            if (contactFormParams !== undefined) {
+                const params = contactFormParams
+                    .map(({key, value}) => encodeURIComponent(`${key}=${value}`))
+                    .map((p) => `body=${p}`)
+                    .join('&');
+
+                return `${formUrl}?${params}`;
+            }
+
+            return formUrl;
+        }, [contactFormParams]);
+
+        React.useEffect(
+            () => {
+                const closeOnSubmit = ({data}: MessageEvent) => {
+                    if (data === 'CONTACT_FORM_SUBMITTED') {
+                        close();
+                    }
+                };
+
+                window.addEventListener('message', closeOnSubmit, false);
+                return () => {
+                    window.removeEventListener('message', closeOnSubmit, false);
+                };
+            },
+            []
+        );
+
+        return (
+            <Dialog className={className}>
+                <iframe id="contact-us" src={contactFormUrl} />
+            </Dialog>
+        );
+    };
+
+    return {ContactDialog, open};
+}
+
 function FlexFooter({data}: Props) {
+    const {ContactDialog, open: openContactDialog} = useContactDialog();
+
     return (
         <div className="flex-page">
             <div className="boxed">
@@ -28,7 +81,10 @@ function FlexFooter({data}: Props) {
                 </div>
                 <div className="column col1">
                     <ListOfLinks>
-                        <a href="/contact">Contact Us</a>
+                        <button onClick={openContactDialog}>
+                            Contact Us
+                            <ContactDialog className="contact-dialog" />
+                        </button>
                         <a href="/tos">Terms of Use</a>
                         <a href="/privacy">Privacy Notice</a>
                     </ListOfLinks>

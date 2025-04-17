@@ -1,5 +1,15 @@
 @import 'pattern-library/core/pattern-library/headers';
 
+.contact-dialog {
+    width: 75vw;
+    height: 75vh;
+
+    .main-region, iframe {
+        width: 100%;
+        height: 100%;
+    }
+}
+
 .page-footer {
     color: text-color(footer);
     display: grid;
