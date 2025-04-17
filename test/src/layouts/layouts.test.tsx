@@ -44,4 +44,32 @@ describe('layouts/landing', () => {
         );
         expect(screen.getAllByRole('link')).toHaveLength(4);
     });
+    it('renders the default footer for non-flex pages', async () => {
+        data.meta = { type: 'not-a-flex-page' };
+        render(
+            <MemoryRouter initialEntries={['']}>
+                <LandingLayout data={data}>
+                    <div>child contents</div>
+                </LandingLayout>
+            </MemoryRouter>
+        );
+
+        // Find social links by title
+        expect(await screen.findAllByTitle(/^OpenStax on .+$/)).toHaveLength(5);
+    });
+    it('renders the flex footer for flex pages', async () => {
+        data.meta = { type: 'pages.FlexPage' };
+        render(
+            <MemoryRouter initialEntries={['']}>
+                <LandingLayout data={data}>
+                    <div>child contents</div>
+                </LandingLayout>
+            </MemoryRouter>
+        );
+
+        // Flex footer does not have social links
+        await expect(screen.findAllByTitle(/^OpenStax on .+$/))
+            .rejects
+            .toThrow(/Unable to find an element/);
+    });
 });

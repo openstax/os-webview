@@ -20,7 +20,7 @@ function ListOfLinks({children}: React.PropsWithChildren<object>) {
     );
 }
 
-function useContactDialog() {
+export function useContactDialog() {
     const [Dialog, open, close] = useDialog();
 
     function ContactDialog(
