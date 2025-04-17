@@ -12,6 +12,7 @@ import { LinkFields } from '../../pages/flex-page/components/Link';
 import './landing.scss';
 
 type Props = {
+    showGive?: boolean;
     data: {
         title: string;
         layout: Array<{
@@ -22,13 +23,12 @@ type Props = {
     }
 }
 
-export default function LandingLayout({children, data}: React.PropsWithChildren<Props>) {
+export default function LandingLayout({children, data, showGive=true}: React.PropsWithChildren<Props>) {
     // BrowserRouter has to include everything that uses useLocation
-
     return (
         <React.Fragment>
-            <header className="landing-page-header">
-                <Header links={data.layout[0]?.value.navLinks ?? []} />
+            <header className="landing-page-header" >
+                <Header links={data.layout[0]?.value.navLinks ?? []} showGive={showGive} />
             </header>
             <SalesforceContextProvider>
                 <MainClassContextProvider>
