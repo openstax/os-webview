@@ -1,5 +1,5 @@
 import React from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import linkHelper from '~/helpers/link';
 import useUserContext from '~/contexts/user';
 import useAdoptions, {Adoption} from '~/models/renewals';
@@ -246,12 +246,11 @@ function EnsureLoggedIn() {
     const defaultMsg = `Reporting your use of OpenStax helps us
     secure additional funding for future titles!`;
     const [adoptionInfo, _setAdoptionInfo] = React.useState(defaultMsg);
-    const navigate = useNavigate();
 
     React.useEffect(() => {
         if (!uuid) {
             const t = window.setTimeout(() => {
-                navigate(linkHelper.loginLink());
+                window.location.assign(linkHelper.loginLink());
             }, 1000);
 
             return () => {
@@ -259,7 +258,7 @@ function EnsureLoggedIn() {
             };
         }
         return undefined;
-    }, [uuid, navigate]);
+    }, [uuid]);
 
     if (!uuid) {
         return <div>You need to be logged in. Redirecting...</div>;

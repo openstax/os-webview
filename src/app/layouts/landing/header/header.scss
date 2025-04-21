@@ -15,7 +15,8 @@
             width: auto;
         }
 
-        menu {
+        menu,
+        .pseudo-menu {
           overflow: hidden;
           height: 8rem;
           margin: 0;
@@ -25,7 +26,8 @@
           letter-spacing: -0.072rem;
           line-height: 2.5rem;
 
-          li {
+          li,
+          > img {
             display: inline-block;
             height: 100%;
             margin: 0 1rem;
@@ -60,7 +62,8 @@
     }
 
     @include width-up-to($tablet-max) {
-        menu {
+        menu,
+        .pseudo-menu {
             width: 100%;
         }
         menu li {
