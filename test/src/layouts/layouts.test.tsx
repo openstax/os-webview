@@ -7,17 +7,18 @@ import LandingLayout from '~/layouts/landing/landing';
 // @ts-expect-error does not exist on
 const {routerFuture} = global;
 
+type Layout = Parameters<typeof LandingLayout>[0]['data']['layout'];
 
 describe('layouts/landing', () => {
-    const data: Parameters<typeof LandingLayout>[0]['data'] = {
-        title: 'the-title',
-        layout: []
-    };
+    function Component({layout}: {layout: Layout}) {
+        const data: Parameters<typeof LandingLayout>[0]['data'] = {
+            title: 'the-title',
+            layout
+        };
 
-    function Component({showGive}: {showGive?: boolean}) {
         return (
             <MemoryRouter initialEntries={['']} future={routerFuture}>
-                <LandingLayout data={data} showGive={showGive}>
+                <LandingLayout data={data}>
                     <div>child contents</div>
                 </LandingLayout>
             </MemoryRouter>
@@ -25,17 +26,24 @@ describe('layouts/landing', () => {
     }
 
     it('renders without layout values', () => {
-        render(<Component />);
+        render(<Component layout={[]} />);
         expect(screen.getAllByRole('img')).toHaveLength(2);
         expect(screen.getAllByRole('link')).toHaveLength(1);
     });
     it('suppresses the Give link when specified', () => {
-        render(<Component showGive={false} />);
+        const layout = [{
+            value: {
+                navLinks: [],
+                showGive: false
+            }
+        }];
+
+        render(<Component layout={layout} />);
         expect(screen.getAllByRole('img')).toHaveLength(2);
         expect(screen.queryAllByRole('link')).toHaveLength(0);
     });
     it('renders with layout values', () => {
-        data.layout.push({
+        const layout = [{
             value: {
                 navLinks: [
                     {
@@ -47,8 +55,9 @@ describe('layouts/landing', () => {
                     }
                 ]
             }
-        });
-        render(<Component />);
+        }];
+
+        render(<Component layout={layout} />);
         expect(screen.getAllByRole('link')).toHaveLength(2);
     });
 });

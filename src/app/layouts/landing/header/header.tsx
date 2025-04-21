@@ -5,10 +5,10 @@ import './header.scss';
 
 export default function Header({
     links,
-    showGive
+    showGive = true
 }: {
     links: LinkFields[];
-    showGive: boolean;
+    showGive?: boolean;
 }) {
     const riceLogo = useOptimizedImage(
         'https://openstax.org/dist/images/rice.webp',
