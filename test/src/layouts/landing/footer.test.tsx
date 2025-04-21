@@ -1,35 +1,39 @@
 import React from 'react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import {render, screen, waitFor} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import { MemoryRouter } from 'react-router-dom';
 import { useContactDialog } from '~/layouts/landing/footer/flex';
 
-jest.useFakeTimers();
-const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
-
-function ShowDialogWithParams() {
+function ShowContactDialog(props: Parameters<ReturnType<typeof useContactDialog>['ContactDialog']>[0]) {
     const {ContactDialog, open: openContactDialog} = useContactDialog();
-    const contactFormParams = [
-        { key: 'userId', value: 'test' }
-    ];
 
     return (
         <button onClick={openContactDialog}>
             Contact Us
-            <ContactDialog contactFormParams={contactFormParams} />
+            <ContactDialog {...props} />
         </button>
     );
 }
 
 describe('flex landing footer', () => {
     describe('contact dialog', () => {
+        let user: UserEvent;
+
+        beforeEach(() => {
+            jest.useFakeTimers();
+            user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
+        });
+
         it('opens and closes', async () => {
             const getIframe = () => document.querySelector('iframe');
+            const contactFormParams = [
+                { key: 'userId', value: 'test' }
+            ];
 
             render(
                 <MemoryRouter initialEntries={['']}>
-                    <ShowDialogWithParams />
+                    <ShowContactDialog contactFormParams={contactFormParams} />
                 </MemoryRouter>
             );
             expect(getIframe()).toBeNull();
