@@ -10,6 +10,7 @@ $gradient-end: (
     light-blue: #1ee1f0,
     midnight: #005a72,
     orange: #faa461,
+    raise-green: #107b70,
     red: #e34361,
     yellow: #faea36
 );
@@ -154,6 +155,7 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
         @include set-color-items(light-blue);
         @include set-color-items(midnight);
         @include set-color-items(orange);
+        @include set-color-items(raise-green);
         @include set-color-items(red);
         @include set-color-items(yellow);
 
