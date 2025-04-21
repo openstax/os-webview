@@ -8,8 +8,9 @@ import useLanguageContext from '~/contexts/language';
 import ReactModal from 'react-modal';
 import cn from 'classnames';
 import { LinkFields } from '../../pages/flex-page/components/Link';
-import './landing.scss';
 import JITLoad from '~/helpers/jit-load';
+import { isFlexPage } from '~/components/shell/router-helpers/fallback-to';
+import './landing.scss';
 
 type Props = {
     data: {
@@ -25,10 +26,8 @@ type Props = {
     }
 }
 
-function Footer({data: {meta}}: Props) {
-    const type = meta?.type;
-    const isFlex = type === 'pages.FlexPage' || type === 'pages.RootPage';
-    const importFn = isFlex
+function Footer({data}: Props) {
+    const importFn = isFlexPage(data)
         ? () => import('~/layouts/landing/footer/flex')
         : () => import('~/layouts/default/footer/footer');
 
