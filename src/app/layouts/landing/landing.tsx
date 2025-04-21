@@ -8,7 +8,7 @@ import useMainClassContext, {
 import useLanguageContext from '~/contexts/language';
 import ReactModal from 'react-modal';
 import cn from 'classnames';
-import { LinkFields } from '../../pages/flex-page/components/Link';
+import {LinkFields} from '../../pages/flex-page/components/Link';
 import './landing.scss';
 
 type Props = {
@@ -17,18 +17,26 @@ type Props = {
         layout: Array<{
             value: {
                 navLinks: LinkFields[];
-            }
-        }>
-    }
-}
+                showGive?: boolean;
+            };
+        }>;
+    };
+};
 
-export default function LandingLayout({children, data}: React.PropsWithChildren<Props>) {
+export default function LandingLayout({
+    children,
+    data
+}: React.PropsWithChildren<Props>) {
+    const showGive = data.layout[0]?.value.showGive;
+
     // BrowserRouter has to include everything that uses useLocation
-
     return (
         <React.Fragment>
             <header className="landing-page-header">
-                <Header links={data.layout[0]?.value.navLinks ?? []} />
+                <Header
+                    links={data.layout[0]?.value.navLinks ?? []}
+                    showGive={showGive}
+                />
             </header>
             <SalesforceContextProvider>
                 <MainClassContextProvider>
