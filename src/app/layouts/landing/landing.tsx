@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './header/header';
-import Footer from '../default/footer/footer';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import useMainClassContext, {
     MainClassContextProvider
@@ -8,12 +7,17 @@ import useMainClassContext, {
 import useLanguageContext from '~/contexts/language';
 import ReactModal from 'react-modal';
 import cn from 'classnames';
-import {LinkFields} from '../../pages/flex-page/components/Link';
+import { LinkFields } from '../../pages/flex-page/components/Link';
+import JITLoad from '~/helpers/jit-load';
+import { isFlexPage } from '~/components/shell/router-helpers/fallback-to';
 import './landing.scss';
 
 type Props = {
     data: {
         title: string;
+        meta?: {
+            type: string;
+        },
         layout: Array<{
             value: {
                 navLinks: LinkFields[];
@@ -22,6 +26,14 @@ type Props = {
         }>;
     };
 };
+
+function Footer({data}: Props) {
+    const importFn = isFlexPage(data)
+        ? () => import('~/layouts/landing/footer/flex')
+        : () => import('~/layouts/default/footer/footer');
+
+    return <JITLoad importFn={importFn} />;
+}
 
 export default function LandingLayout({
     children,
@@ -44,7 +56,7 @@ export default function LandingLayout({
                 </MainClassContextProvider>
             </SalesforceContextProvider>
             <footer id="footer">
-                <Footer />
+                <Footer data={data} />
             </footer>
         </React.Fragment>
     );

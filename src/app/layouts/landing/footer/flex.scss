@@ -1,0 +1,109 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.contact-dialog {
+    width: 75vw;
+    height: 75vh;
+
+    .main-region, iframe {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.page-footer {
+    color: text-color(footer);
+    display: grid;
+
+    .flex-page {
+        background-color: ui-color(footer-bg);
+
+        a {
+            color: inherit;
+        }
+
+        @include width-up-to($phone-max) {
+            padding: $normal-margin;
+        }
+
+        @include wider-than($phone-max) {
+            padding: 2.5rem 0;
+        }
+
+        .boxed {
+            display: grid;
+            grid-row-gap: 2rem;
+
+            @include width-up-to($phone-max) {
+                grid-template: 'copyrights'
+                'col1'
+                'col2';
+            }
+
+            @include wider-than($phone-max) {
+                align-items: start;
+                grid-column-gap: 4rem;
+                grid-template: 'copyrights col1 col2' / minmax(auto, 70rem) auto auto;
+            }
+
+            @include wider-than($tablet-max) {
+                grid-column-gap: 8rem;
+            }
+        }
+
+        .list-of-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .copyrights {
+            @include body-font(1.2rem);
+            display: grid;
+            grid-area: copyrights;
+            grid-gap: 1rem;
+        }
+
+        .column {
+            display: grid;
+            grid-gap: 0.5rem;
+
+            a {
+                @include width-up-to($phone-max) {
+                    padding: 1.15rem 0;
+                }
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            button {
+                background-color: transparent;
+                color: inherit;
+                display: inline;
+                font-size: inherit;
+                font-weight: inherit;
+                line-height: inherit;
+                padding: inherit;
+                text-align: inherit;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &.col1 {
+                grid-area: col1;
+            }
+
+            &.col2 {
+                grid-area: col2;
+            }
+        }
+    }
+}

@@ -21,13 +21,16 @@ export default function FallbackTo({name}) {
     return <LoadedPage name={name} data={data} />;
 }
 
+export const isFlexPage = (data) => (
+    typeof data.meta?.type === 'string' &&
+    ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)
+);
+
 // eslint-disable-next-line complexity
 function LoadedPage({data, name}) {
     const {setLayoutParameters, layoutParameters} = useLayoutContext();
     const hasError = 'error' in data;
-    const isFlex =
-        !hasError &&
-        ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type);
+    const isFlex = !hasError && isFlexPage(data);
 
     React.useEffect(() => {
         if (isFlex) {

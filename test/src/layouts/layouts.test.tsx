@@ -60,4 +60,46 @@ describe('layouts/landing', () => {
         render(<Component layout={layout} />);
         expect(screen.getAllByRole('link')).toHaveLength(2);
     });
+    it('renders the default footer for non-flex pages', async () => {
+        const title = 'some-title';
+        const layout = [{value: {navLinks: []}}];
+        const type = 'not-a-flex-page';
+        const meta = {type};
+        const data = {title, layout, meta} as const;
+
+        render(
+            <MemoryRouter initialEntries={['']}>
+                <LandingLayout data={data}>
+                    <div>child contents</div>
+                </LandingLayout>
+            </MemoryRouter>
+        );
+
+        // Find social links by title
+        expect(await screen.findAllByTitle(/^OpenStax on .+$/)).toHaveLength(5);
+        // Default footer has 16 links + 1 link in layout = 17 links
+        expect(await screen.findAllByRole('link')).toHaveLength(17);
+    });
+    it('renders the flex footer for flex pages', async () => {
+        const title = 'some-title';
+        const layout = [{value: {navLinks: []}}];
+        const type = 'pages.FlexPage';
+        const meta = {type};
+        const data = {title, layout, meta} as const;
+
+        render(
+            <MemoryRouter initialEntries={['']}>
+                <LandingLayout data={data}>
+                    <div>child contents</div>
+                </LandingLayout>
+            </MemoryRouter>
+        );
+
+        // Flex footer does not have social links
+        await expect(screen.findAllByTitle(/^OpenStax on .+$/))
+            .rejects
+            .toThrow(/Unable to find an element/);
+        // Default footer has 4 links + 1 link in layout = 5 links
+        expect(await screen.findAllByRole('link')).toHaveLength(5);
+    });
 });
