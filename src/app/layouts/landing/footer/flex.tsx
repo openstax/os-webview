@@ -72,6 +72,7 @@ export function useContactDialog() {
 
 function FlexFooter({data}: Props) {
     const {ContactDialog, open: openContactDialog} = useContactDialog();
+    const contactFormParams = [{key: 'source_url', value: window.location.href}];
 
     return (
         <div className="flex-page">
@@ -83,7 +84,10 @@ function FlexFooter({data}: Props) {
                     <ListOfLinks>
                         <button onClick={openContactDialog}>
                             Contact Us
-                            <ContactDialog className="contact-dialog" />
+                            <ContactDialog
+                                className="contact-dialog"
+                                contactFormParams={contactFormParams}
+                            />
                         </button>
                         <a href="/tos">Terms of Use</a>
                         <a href="/privacy">Privacy Notice</a>
