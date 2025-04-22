@@ -1,6 +1,5 @@
 import React from 'react';
-import ResultGrid, {badgeImage, useOnSelect} from './result-grid';
-import PartnerCard from '~/components/partner-card/partner-card';
+import ResultGrid from './result-grid';
 import useSearchContext from '../search-context';
 import partnerFeaturePromise from '~/models/salesforce-partners';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
@@ -212,36 +211,6 @@ export function resultEntry(pd: PartnerData) {
     };
 }
 
-function Sidebar({entries}: {entries: PartnerEntry[]}) {
-    const onSelect = useOnSelect();
-
-    return (
-        <div className="sidebar">
-            <div className="sidebar-content">
-                <h2>Startups</h2>
-                <ul className="no-bullets">
-                    {entries.map(({type, title, logoUrl, tags}) => (
-                        <li key={title}>
-                            <PartnerCard
-                                type={type}
-                                href={`?${encodeURIComponent(title)}`}
-                                title={title}
-                                logoUrl={logoUrl}
-                                tags={tags
-                                    .map((t) => t.value)
-                                    .filter((v) => v !== null)}
-                                onClick={onSelect}
-                                badgeImage={badgeImage}
-                                analyticsContentType="Partner Profile"
-                            />
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
-}
-
 const headings: Record<Ages, string> = {
     '10': '10+ years as Technology Partners',
     '7': '7-10 years as partners',
@@ -256,11 +225,14 @@ function HeadingAndResultGrid({
     entries
 }: {
     age: Ages;
-    entries: PartnerEntry[];
+    entries?: PartnerEntry[];
 }) {
+    if (!entries) {
+        return null;
+    }
     return (
-        <div className="boxed">
-            <h2>{headings[age as Ages]}</h2>
+        <div className={`heading-and-result-grid results-${age}`}>
+            <h3>{age === 'new' ? 'Welcome new partners' : headings[age as Ages]}</h3>
             <ResultGrid entries={entries} />
         </div>
     );
@@ -312,57 +284,35 @@ function ResultGridLoader({
     );
     const foundAges = ages.filter((a) => partnersByAge[a]);
 
-    if (startups.length > 0) {
-        const [firstAge, ...otherAges] = foundAges;
-
-        return (
-            <section className="results">
-                <HeadingAndResultGrid
-                    age={firstAge}
-                    entries={partnersByAge[firstAge]}
-                />
-                <SelectedPartnerDialog
-                    linkTexts={linkTexts}
-                    entries={filteredEntries}
-                />
-                {otherAges.length > 0 ? (
-                    <React.Fragment>
-                        <div className="with-sidebar">
-                            {otherAges.slice(0, 1).map((age) => (
-                                <HeadingAndResultGrid
-                                    key={age}
-                                    age={age}
-                                    entries={partnersByAge[age]}
-                                />
-                            ))}
-                            <Sidebar entries={startups} />
-                        </div>
-                        {otherAges.slice(1).map((age) => (
-                            <HeadingAndResultGrid
-                                key={age}
-                                age={age}
-                                entries={partnersByAge[age]}
-                            />
-                        ))}
-                    </React.Fragment>
-                ) : (
-                    <div className="boxed">
-                        <h2>Startups</h2>
-                        <ResultGrid entries={startups} />
-                    </div>
-                )}
-            </section>
-        );
-    }
     return (
         <section className="results">
-            {foundAges.map((age) => (
-                <HeadingAndResultGrid
-                    key={age}
-                    age={age}
-                    entries={partnersByAge[age]}
-                />
-            ))}
+            <HeadingAndResultGrid
+                age='10'
+                entries={partnersByAge['10']}
+            />
+            <div className="result-columns">
+                <div className="result-column">
+                    {foundAges.filter((a) => ['7', '4', '1'].includes(a)).map((age) => (
+                        <HeadingAndResultGrid
+                            key={age}
+                            age={age}
+                            entries={partnersByAge[age]}
+                        />
+                    ))}
+                </div>
+                <div className="result-column">
+                    <HeadingAndResultGrid
+                        age='new'
+                        entries={partnersByAge.new}
+                    />
+                    {startups.length > 0 &&
+                        <div className='heading-and-result-grid results-startup'>
+                            <h3>Startups as partners</h3>
+                            <ResultGrid entries={startups} />
+                        </div>
+                    }
+                </div>
+            </div>
             <SelectedPartnerDialog
                 linkTexts={linkTexts}
                 entries={filteredEntries}
