@@ -110,15 +110,24 @@ function Partners({data}) {
             {confirmation && <Confirmation />}
             <section className="banner hero">
                 <div className="boxed">
-                    <h1>{headline}</h1>
-                    <RawHTML html={description} />
+                    <div className="text-block">
+                        <h1>{headline}</h1>
+                        <RawHTML html={description} />
+                    </div>
+                </div>
+                <div
+                    className="right-bg clipped-image"
+                />
+            </section>
+            <section>
+                <div className="text-content">
+                    <h2>
+                        Search our technology partners to find the best option for your course
+                    </h2>
                     <Controls {...{advancedFilterOptions, typeOptions}} />
                 </div>
-                <img
-                    className="strips" src="/dist/images/components/strips.svg"
-                    height="10" alt="" role="presentation" />
+                <MobileControlRow {...{advancedFilterOptions, typeOptions}} />
             </section>
-            <MobileControlRow {...{advancedFilterOptions, typeOptions}} />
             <div
                 className="padding"
                 data-analytics-content-list={headline}

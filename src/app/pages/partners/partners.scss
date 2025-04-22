@@ -2,6 +2,7 @@
 @import 'mixins/placeholder-selectors';
 
 .partners.page {
+    background-color: ui-color(white);
 
     .above-the-banner {
         background-color: #d9edf7;
@@ -39,13 +40,7 @@
     }
 
     .banner {
-        @extend %light-on-dark;
-
-        background-color: os-color(deep-green);
-        background-image: url('/dist/images/partners/partner-heading-bg.webp');
-        background-position: left top;
-        background-size: cover;
-        color: text-color(white);
+        border-bottom: thin solid os-color(green);
         padding-bottom: 8rem;
         position: relative;
 
@@ -57,17 +52,32 @@
             }
         }
 
-        h1 {
-            margin-bottom: 3rem;
+        .boxed {
+            display: block;
 
-            @include width-up-to($phone-max) {
-                @include set-font(h1);
+            .text-block {
+                text-align: left;
+
+                @include wider-than($phone-max) {
+                    max-width: 57rem;
+                    width: 50%;    
+                }
             }
         }
 
-        .strips {
-            bottom: 0;
+        h1 {
+            @include set-font(h1);
+            margin-bottom: 3rem;
         }
+    }
+
+    > section {
+        padding-left: $normal-margin;
+        padding-right: $normal-margin;
+    }
+
+    h2 {
+        text-align: center;
     }
 
     @include width-up-to($phone-max) {
