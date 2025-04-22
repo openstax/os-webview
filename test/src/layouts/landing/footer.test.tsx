@@ -1,9 +1,11 @@
 import React from 'react';
-import userEvent, { UserEvent } from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import {render, screen, waitFor} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import { MemoryRouter } from 'react-router-dom';
 import { useContactDialog } from '~/layouts/landing/footer/flex';
+
+const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
 
 function ShowContactDialog(props: Parameters<ReturnType<typeof useContactDialog>['ContactDialog']>[0]) {
     const {ContactDialog, open: openContactDialog} = useContactDialog();
@@ -18,11 +20,8 @@ function ShowContactDialog(props: Parameters<ReturnType<typeof useContactDialog>
 
 describe('flex landing footer', () => {
     describe('contact dialog', () => {
-        let user: UserEvent;
-
         beforeEach(() => {
             jest.useFakeTimers();
-            user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
         });
 
         it('opens and closes', async () => {
