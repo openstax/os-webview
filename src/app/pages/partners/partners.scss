@@ -52,6 +52,20 @@
             }
         }
 
+        .button-row {
+            margin-top: 4rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        a.btn {
+            @include button();
+
+            &.primary {
+                @extend %primary;
+            }
+        }
+
         .boxed {
             display: block;
 
