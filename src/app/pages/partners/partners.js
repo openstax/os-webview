@@ -113,6 +113,10 @@ function Partners({data}) {
                     <div className="text-block">
                         <h1>{headline}</h1>
                         <RawHTML html={description} />
+                        <div className="button-row">
+                            <a className="btn primary" href="/openstax-ally-technology-partner-program">Apply now</a>
+                            <a className="btn" href="/webinars/explore/collections/Ally%20Partners">Watch webinars</a>
+                        </div>
                     </div>
                 </div>
                 <div
