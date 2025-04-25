@@ -1,5 +1,6 @@
 import {useCallback} from 'react';
 import {useNavigate, NavigateOptions} from 'react-router-dom';
+import usePortalContext from '~/contexts/portal';
 import linkHelper from '~/helpers/link';
 import $ from '~/helpers/$';
 import retry from '~/helpers/retry';
@@ -10,9 +11,12 @@ export type TrackingInfo = {
     book_format?: string;
     contact_id?: string;
     resource_name?: string;
-}
+};
 
-export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
+export type TrackedMouseEvent = React.MouseEvent<
+    HTMLAnchorElement,
+    MouseEvent
+> & {
     trackingInfo: TrackingInfo;
 };
 
@@ -32,12 +36,18 @@ function handleExternalLink(href: Location['href'], el: HTMLElement) {
 type State = NavigateOptions & {x: number; y: number};
 
 export default function useLinkHandler() {
+    const {portal} = usePortalContext();
     const navigate = useNavigate();
     const navigateTo = useCallback(
         (path: Location['href'], state: State = {x: 0, y: 0}) => {
-            navigate(linkHelper.stripOpenStaxDomain(path), state);
+            let adjustedPath = linkHelper.stripOpenStaxDomain(path);
+
+            if (portal && !adjustedPath.startsWith(`/${portal}`)) {
+                adjustedPath = `/${portal}${adjustedPath}`;
+            }
+            navigate(adjustedPath, state);
         },
-        [navigate]
+        [navigate, portal]
     );
     const linkHandler = useCallback(
         // eslint-disable-next-line complexity
