@@ -1,7 +1,7 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import usePageData from '~/helpers/use-page-data';
-import {useLocation} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import useDocumentHead from '~/helpers/use-document-head';
 import './footer-page.scss';
 
@@ -41,7 +41,7 @@ function FooterPage({data}: {data: PageData}) {
 }
 
 export default function LoadFooterPage() {
-    const {pathname} = useLocation();
+    const pathname = `/${useParams()['*']}`;
     const slugEnd = specialSlugFromPath[pathname] ?? pathname;
     const slug = `pages${slugEnd}`;
     const data = usePageData<PageData>(slug);

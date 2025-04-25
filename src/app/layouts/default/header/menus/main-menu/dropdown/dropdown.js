@@ -6,6 +6,7 @@ import useNavigateByKey from './use-navigate-by-key';
 import useMenuControls from './use-menu-controls';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {useLocation} from 'react-router-dom';
+import usePortalContext from '~/contexts/portal';
 import cn from 'classnames';
 import './dropdown.scss';
 
@@ -18,12 +19,13 @@ export function MenuItem({label, url, local=undefined}) {
     const {innerWidth: _} = useWindowContext();
     const urlPath = url.replace('/view-all', '');
     const {pathname} = useLocation();
+    const {portal} = usePortalContext();
 
     return (
         <RawHTML
             Tag="a"
             html={label}
-            href={url}
+            href={portal ? `/${portal}${url}` : url}
             tabIndex={0}
             data-local={local}
             {...(urlPath === pathname ? {'aria-current': 'page'} : {})}

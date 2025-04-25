@@ -6,6 +6,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {SharedDataContextProvider} from '../../contexts/shared-data';
 import JITLoad from '~/helpers/jit-load';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
+import {PortalContextProvider} from '~/contexts/portal';
 
 import Error404 from '~/pages/404/404';
 
@@ -14,9 +15,11 @@ function AppContext({children}: React.PropsWithChildren<object>) {
         <SharedDataContextProvider>
             <UserContextProvider>
                 <LanguageContextProvider>
-                    <SubjectCategoryContextProvider>
-                        {children}
-                    </SubjectCategoryContextProvider>
+                    <PortalContextProvider>
+                        <SubjectCategoryContextProvider>
+                            {children}
+                        </SubjectCategoryContextProvider>
+                    </PortalContextProvider>
                 </LanguageContextProvider>
             </UserContextProvider>
         </SharedDataContextProvider>
