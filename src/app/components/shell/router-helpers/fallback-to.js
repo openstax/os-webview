@@ -22,7 +22,7 @@ export default function FallbackTo({name}) {
 }
 
 export const isFlexPage = (data) => (
-    typeof data.meta?.type === 'string' &&
+    typeof data?.meta?.type === 'string' &&
     ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)
 );
 

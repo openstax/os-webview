@@ -58,14 +58,14 @@ function useLoading(name) {
 }
 
 function DefaultLayout({children}) {
+    const {portal} = useParams();
     const {setLayoutParameters, layoutParameters} = useLayoutContext();
 
-    useEffect(
-        () => setLayoutParameters(),
-        [setLayoutParameters]
-    );
+    if (portal) {
+        setLayoutParameters({name: 'landing', data: layoutParameters.data});
+    }
 
-    return layoutParameters.name === 'default' ? children : null;
+    return layoutParameters.name ? children : null;
 }
 
 function usePage(name) {
