@@ -3,6 +3,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Copyright from './copyright';
 import CookieYesToggle from './cookie-yes-toggle';
+import ListOfLinks from '~/components/list-of-links/list-of-links';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
 import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
@@ -12,13 +13,6 @@ import {faYoutube} from '@fortawesome/free-brands-svg-icons/faYoutube';
 import usePortalContext from '~/contexts/portal';
 import './footer.scss';
 
-function ListOfLinks({children}) {
-    return (
-        <ul className="list-of-links">
-            {React.Children.toArray(children).map((c) => (<li key={c}>{c}</li>))}
-        </ul>
-    );
-}
 
 function Footer({
     data: {
@@ -134,8 +128,8 @@ function Footer({
 
 export default function FooterLoader() {
     return (
-        <footer className="page-footer" data-analytics-nav="Footer">
+        <div className="page-footer" data-analytics-nav="Footer">
             <LoaderPage slug="footer" Child={Footer} />
-        </footer>
+        </div>
     );
 }
