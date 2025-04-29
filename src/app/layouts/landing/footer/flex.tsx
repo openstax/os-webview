@@ -2,7 +2,9 @@ import React from 'react';
 import Copyright from '~/layouts/default/footer/copyright';
 import CookieYesToggle from '~/layouts/default/footer/cookie-yes-toggle';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
+import ListOfLinks from '~/components/list-of-links/list-of-links';
 import {useDialog} from '~/components/dialog/dialog';
+import usePortalContext from '~/contexts/portal';
 import './flex.scss';
 
 type Props = {
@@ -10,14 +12,6 @@ type Props = {
         copyright: string | undefined;
         apStatement: string | undefined;
     }
-}
-
-function ListOfLinks({children}: React.PropsWithChildren<object>) {
-    return (
-        <ul className="list-of-links">
-            {React.Children.toArray(children).map((c, i) => (<li key={i}>{c}</li>))}
-        </ul>
-    );
 }
 
 export function useContactDialog() {
@@ -73,6 +67,10 @@ export function useContactDialog() {
 function FlexFooter({data}: Props) {
     const {ContactDialog, open: openContactDialog} = useContactDialog();
     const contactFormParams = [{key: 'source_url', value: window.location.href}];
+    const {rewriteLinks} = usePortalContext();
+
+    React.useLayoutEffect(() => rewriteLinks?.(document.querySelector('.page-footer') as HTMLElement),
+    [rewriteLinks]);
 
     return (
         <div className="flex-page">
@@ -107,8 +105,8 @@ function FlexFooter({data}: Props) {
 
 export default function FooterLoader() {
     return (
-        <footer className="page-footer" data-analytics-nav="Footer">
+        <div className="page-footer" data-analytics-nav="Footer">
             <LoaderPage slug="footer" Child={FlexFooter} />
-        </footer>
+        </div>
     );
 }
