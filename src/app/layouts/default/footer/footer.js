@@ -9,6 +9,7 @@ import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
 import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
 import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
 import {faYoutube} from '@fortawesome/free-brands-svg-icons/faYoutube';
+import usePortalContext from '~/contexts/portal';
 import './footer.scss';
 
 function ListOfLinks({children}) {
@@ -25,6 +26,11 @@ function Footer({
         facebookLink, twitterLink, linkedinLink
     }
 }) {
+    const {rewriteLinks} = usePortalContext();
+
+    React.useLayoutEffect(() => rewriteLinks?.(document.querySelector('.page-footer')),
+    [rewriteLinks]);
+
     return (
         <React.Fragment>
             <div className="top">

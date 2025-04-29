@@ -19,13 +19,13 @@ export function MenuItem({label, url, local=undefined}) {
     const {innerWidth: _} = useWindowContext();
     const urlPath = url.replace('/view-all', '');
     const {pathname} = useLocation();
-    const {portal} = usePortalContext();
+    const {portalPrefix} = usePortalContext();
 
     return (
         <RawHTML
             Tag="a"
             html={label}
-            href={portal ? `/${portal}${url}` : url}
+            href={`${portalPrefix}${url}`}
             tabIndex={0}
             data-local={local}
             {...(urlPath === pathname ? {'aria-current': 'page'} : {})}

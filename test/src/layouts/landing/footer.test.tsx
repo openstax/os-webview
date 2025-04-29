@@ -23,9 +23,9 @@ describe('flex landing footer', () => {
         beforeEach(() => {
             jest.useFakeTimers();
         });
+        const getIframe = () => document.querySelector('iframe');
 
         it('opens and closes', async () => {
-            const getIframe = () => document.querySelector('iframe');
             const contactFormParams = [
                 { key: 'userId', value: 'test' }
             ];
@@ -49,8 +49,6 @@ describe('flex landing footer', () => {
             await waitFor(() => expect(getIframe()).toBeNull());
         });
         it('handles undefined contactFormParams', async () => {
-            const getIframe = () => document.querySelector('iframe');
-
             render(
                 <MR initialEntries={['']}>
                     <ShowContactDialog />
