@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons/faCaretLeft';
 import {faCaretRight} from '@fortawesome/free-solid-svg-icons/faCaretRight';
 import $ from '~/helpers/$';
+import {assertNotNull} from '~/helpers/data';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 
 function PseudoButton({onClick, children}: React.PropsWithChildren<{
@@ -49,7 +50,7 @@ export function Paginated({children, perPage=10}: {
     }
     useEffect(() => {
         if (pageChanged) {
-            $.scrollTo(ref.current as HTMLDivElement, 70);
+            $.scrollTo(assertNotNull(ref.current), 70);
         }
     }, [pageChanged]);
 
