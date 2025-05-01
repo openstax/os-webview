@@ -7,6 +7,13 @@ export function assertDefined<T>(value: T | undefined): T {
     return value;
 }
 
+export function assertNotNull<T>(value: T | null): T {
+    if (value === null) {
+        throw new Error('Value is null');
+    }
+    return value;
+}
+
 export function formatDateForBlog(date: string) {
     if (!date) {
         return null;
