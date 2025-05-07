@@ -1,3 +1,4 @@
+import './sentry';
 import cmsFetch from '~/helpers/cms-fetch';
 import {render} from 'preact';
 
@@ -16,7 +17,6 @@ window.SETTINGS = {};
         }
     }
 
-    import('./sentry');
     await Promise.all([
         import('../vendor/pardot'),
         import('../vendor/pulseinsights'),

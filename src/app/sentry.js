@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react';
-import {Integrations} from '@sentry/tracing';
+import * as Integrations from '@sentry/integrations';
 import isSupported from '~/helpers/device';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -96,7 +96,11 @@ function beforeSend(event, hint) {
 Sentry.init({
     dsn: 'https://68df3e19624c434eb975dafa316c03ff@o484761.ingest.sentry.io/5691260',
     release: `osweb@${packageVersion}`,
-    integrations: [new Integrations.BrowserTracing()],
+    integrations: [
+        Integrations.extraErrorDataIntegration(),
+        Integrations.dedupeIntegration(),
+        Sentry.browserTracingIntegration()
+    ],
     tracesSampleRate: 0.05,
     environment: window.location.hostname,
     ignoreErrors,
