@@ -17,7 +17,7 @@ function Basic({headline, message, image, children}) {
         <div className="takeover-content desktop-only">
             <div className="text-side">
                 <Logo />
-                <RawHTML Tag="h1" html={headline} />
+                <RawHTML Tag="h1" html={headline} id="takeover-headline" />
                 <div className="message">{message}</div>
                 {children}
             </div>
