@@ -13,7 +13,7 @@ import { isFlexPage } from '~/components/shell/router-helpers/fallback-to';
 import './landing.scss';
 
 type Props = {
-    data: {
+    data?: {
         title: string;
         meta?: {
             type: string;
@@ -39,14 +39,15 @@ export default function LandingLayout({
     children,
     data
 }: React.PropsWithChildren<Props>) {
-    const showGive = data.layout[0]?.value.showGive;
+    const layoutValue = data?.layout[0]?.value;
+    const showGive = layoutValue?.showGive;
 
     // BrowserRouter has to include everything that uses useLocation
     return (
         <React.Fragment>
             <header className="landing-page-header">
                 <Header
-                    links={data.layout[0]?.value.navLinks ?? []}
+                    links={layoutValue?.navLinks ?? []}
                     showGive={showGive}
                 />
             </header>
@@ -75,7 +76,7 @@ function Main({children, data}: React.PropsWithChildren<Props>) {
         <div
             id="main"
             className={cn('lang', 'layout-landing', language, classes)}
-            data-analytics-nav={`Landing page (${data.title})`}
+            data-analytics-nav={data ? `Landing page (${data.title})` : undefined}
             ref={ref}
             tabIndex={-1}
         >

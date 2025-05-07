@@ -3,28 +3,45 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Copyright from './copyright';
 import CookieYesToggle from './cookie-yes-toggle';
+import ListOfLinks from '~/components/list-of-links/list-of-links';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
 import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
 import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
 import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
 import {faYoutube} from '@fortawesome/free-brands-svg-icons/faYoutube';
+import usePortalContext from '~/contexts/portal';
 import './footer.scss';
-
-function ListOfLinks({children}) {
-    return (
-        <ul className="list-of-links">
-            {React.Children.toArray(children).map((c) => (<li key={c}>{c}</li>))}
-        </ul>
-    );
-}
 
 function Footer({
     data: {
-        supporters, copyright, apStatement,
-        facebookLink, twitterLink, linkedinLink
+        supporters,
+        copyright,
+        apStatement,
+        facebookLink,
+        twitterLink,
+        linkedinLink
     }
+}: {
+    data: {
+        supporters: string;
+        copyright: string;
+        apStatement: string;
+        facebookLink: string;
+        twitterLink: string;
+        linkedinLink: string;
+    };
 }) {
+    const {rewriteLinks} = usePortalContext();
+
+    React.useLayoutEffect(
+        () =>
+            rewriteLinks?.(
+                document.querySelector('.page-footer') as HTMLElement
+            ),
+        [rewriteLinks]
+    );
+
     return (
         <React.Fragment>
             <div className="top">
@@ -34,7 +51,9 @@ function Footer({
                         <h3>Help</h3>
                         <ListOfLinks>
                             <a href="/contact">Contact Us</a>
-                            <a href="https://help.openstax.org/s/">Support Center</a>
+                            <a href="https://help.openstax.org/s/">
+                                Support Center
+                            </a>
                             <a href="/faq">FAQ</a>
                         </ListOfLinks>
                     </div>
@@ -42,14 +61,18 @@ function Footer({
                         <h3>OpenStax</h3>
                         <ListOfLinks>
                             <a href="/press">Press</a>
-                            <a href="http://www2.openstax.org/l/218812/2016-10-04/lvk">Newsletter</a>
+                            <a href="http://www2.openstax.org/l/218812/2016-10-04/lvk">
+                                Newsletter
+                            </a>
                             <a href="/careers">Careers</a>
                         </ListOfLinks>
                     </div>
                     <div className="column col3">
                         <h3>Policies</h3>
                         <ListOfLinks>
-                            <a href="/accessibility-statement">Accessibility Statement</a>
+                            <a href="/accessibility-statement">
+                                Accessibility Statement
+                            </a>
                             <a href="/tos">Terms of Use</a>
                             <a href="/license">Licensing</a>
                             <a href="/privacy">Privacy Notice</a>
@@ -61,7 +84,10 @@ function Footer({
             <div className="bottom">
                 <div className="boxed">
                     <div className="copyrights">
-                        <Copyright copyright={copyright} apStatement={apStatement} />
+                        <Copyright
+                            copyright={copyright}
+                            apStatement={apStatement}
+                        />
                     </div>
                     <ul className="social">
                         <li>
@@ -128,8 +154,8 @@ function Footer({
 
 export default function FooterLoader() {
     return (
-        <footer className="page-footer" data-analytics-nav="Footer">
+        <div className="page-footer" data-analytics-nav="Footer">
             <LoaderPage slug="footer" Child={Footer} />
-        </footer>
+        </div>
     );
 }
