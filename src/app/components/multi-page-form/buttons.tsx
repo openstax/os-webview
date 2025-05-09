@@ -3,12 +3,12 @@ import usePaginatorContext from '~/components/paginator/paginator-context';
 import usePagesContext from './pages-context';
 
 type Args = {
-    formRef: React.MutableRefObject<HTMLFormElement>;
+    formRef: React.RefObject<HTMLFormElement>;
     disabled: boolean;
     onSubmit: (form: HTMLFormElement) => void;
 };
 
-export default function ButtonRow({formRef, onSubmit, disabled = false}: Args) {
+export default function ButtonRow({formRef, onSubmit, disabled}: Args) {
     return (
         <div className="button-row">
             <BackButton disabled={disabled} />
@@ -48,7 +48,7 @@ function SubmitButton({disabled, formRef, onSubmit}: Args) {
     const validateAndSubmit = useCallback<React.MouseEventHandler>(
         (event) => {
             if (validateCurrentPage()) {
-                onSubmit(formRef.current);
+                onSubmit(formRef.current as HTMLFormElement);
             }
             event.preventDefault();
         },

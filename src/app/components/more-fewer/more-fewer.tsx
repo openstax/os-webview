@@ -4,17 +4,23 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretLeft} from '@fortawesome/free-solid-svg-icons/faCaretLeft';
 import {faCaretRight} from '@fortawesome/free-solid-svg-icons/faCaretRight';
 import $ from '~/helpers/$';
+import {assertNotNull} from '~/helpers/data';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 
-function PseudoButton({onClick, children}) {
+function PseudoButton({onClick, children}: React.PropsWithChildren<{
+    onClick?: React.MouseEventHandler<HTMLDivElement>;
+}>) {
     return (
-        <div role="button" tabIndex="0" onClick={onClick} onKeyDown={treatSpaceOrEnterAsClick}>
+        <div role="button" tabIndex={0} onClick={onClick} onKeyDown={treatSpaceOrEnterAsClick}>
             {children}
         </div>
     );
 }
 
-function ButtonOrPresentation({condition, children, onClick}) {
+function ButtonOrPresentation({condition, children, onClick}: React.PropsWithChildren<{
+    condition: boolean;
+    onClick?: React.MouseEventHandler<HTMLDivElement>;
+}>) {
     return (
         condition ?
             <PseudoButton onClick={onClick} children={children} /> :
@@ -22,14 +28,17 @@ function ButtonOrPresentation({condition, children, onClick}) {
     );
 }
 
-export function Paginated({children, perPage=10}) {
+export function Paginated({children, perPage=10}: {
+    perPage?: number;
+    children: React.ReactNode[];
+}) {
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageChanged, setPageChanged] = useState();
+    const [pageChanged, setPageChanged] = useState<number>();
     const lastPage = Math.ceil(children.length / perPage);
     const firstDisplayed = perPage * (pageNumber - 1);
     const displayedChildren = children
         .slice(perPage * (pageNumber - 1), firstDisplayed + perPage);
-    const ref=useRef();
+    const ref=useRef<HTMLDivElement>(null);
 
     function nextPage() {
         setPageNumber(pageNumber + 1);
@@ -41,7 +50,7 @@ export function Paginated({children, perPage=10}) {
     }
     useEffect(() => {
         if (pageChanged) {
-            $.scrollTo(ref.current, 70);
+            $.scrollTo(assertNotNull(ref.current), 70);
         }
     }, [pageChanged]);
 
@@ -62,7 +71,10 @@ export function Paginated({children, perPage=10}) {
     );
 }
 
-export default function MoreFewer({children, pluralItemName}) {
+export default function MoreFewer({children, pluralItemName}: {
+    pluralItemName: string;
+    children: React.ReactNode[];
+}) {
     const [expanded, setExpanded] = useState(false);
     const displayedChildren = expanded ?
         <Paginated>{children}</Paginated> :
