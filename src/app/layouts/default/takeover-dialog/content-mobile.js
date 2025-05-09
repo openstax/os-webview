@@ -55,7 +55,7 @@ export default function MobileContent({data}) {
     React.useEffect(() => {
         document.getElementById('header').classList.add('over-mobile-dialog');
 
-        return () => document.getElementById('header').classList.remove('over-mobile-dialog');
+        return () => document.getElementById('header')?.classList.remove('over-mobile-dialog');
     }, []);
 
     return (
