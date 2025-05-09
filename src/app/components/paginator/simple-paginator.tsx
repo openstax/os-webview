@@ -5,17 +5,28 @@ import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import range from 'lodash/range';
 import './simple-paginator.scss';
 
-function ControlButton({active, icon, onClick}) {
+type Direction = 'next' | 'previous';
+
+function ControlButton({active, direction, onClick}: {
+    active?: boolean;
+    direction: Direction;
+    onClick: React.MouseEventHandler
+}) {
+    const icon = direction === 'next' ? faChevronRight : faChevronLeft;
+
     return (
-        <button disabled={!active} onClick={onClick}>
+        <button disabled={!active} onClick={onClick} aria-label={direction}>
             <FontAwesomeIcon icon={icon} />
         </button>
     );
 }
 
-function PageLink({page, setPage}) {
+function PageLink({page, setPage}: {
+    page: number;
+    setPage: (p: number) => void;
+}) {
     const onClick = React.useCallback(
-        (e) => {
+        (e: React.MouseEvent<HTMLAnchorElement>) => {
             e.preventDefault();
             setPage(page);
         },
@@ -23,11 +34,17 @@ function PageLink({page, setPage}) {
     );
 
     return (
-        <a href={page} onClick={onClick}>{page}</a>
+        <a href={page.toString()} onClick={onClick}>{page}</a>
     );
 }
 
-function PagesBeforeCurrent({currentPage, totalPages, setPage}) {
+type PaginatorArgs = {
+    currentPage: number;
+    setPage: (p: number) => void;
+    totalPages: number;
+}
+
+function PagesBeforeCurrent({currentPage, totalPages, setPage}: PaginatorArgs) {
     if (currentPage === 1) {
         return null;
     }
@@ -53,7 +70,7 @@ function PagesBeforeCurrent({currentPage, totalPages, setPage}) {
     );
 }
 
-function PagesAfterCurrent({currentPage, totalPages, setPage}) {
+function PagesAfterCurrent({currentPage, totalPages, setPage}: PaginatorArgs) {
     if (currentPage === totalPages) {
         return null;
     }
@@ -82,29 +99,34 @@ function PagesAfterCurrent({currentPage, totalPages, setPage}) {
     );
 }
 
-export default function SimplePaginator({currentPage, setPage, totalPages}) {
+export default function SimplePaginator({currentPage, setPage, totalPages}: PaginatorArgs) {
     const nextPage = () => setPage(currentPage + 1);
     const prevPage = () => setPage(currentPage - 1);
 
     return (
-        <div className="simple-paginator">
-            <ControlButton active={currentPage > 1} icon={faChevronLeft} onClick={prevPage} />
+        <nav className="simple-paginator">
+            <ControlButton active={currentPage > 1} direction='previous' onClick={prevPage} />
             <PagesBeforeCurrent {...{currentPage, totalPages, setPage}} />
             <span className="current-page">{currentPage}</span>
             <PagesAfterCurrent {...{currentPage, totalPages, setPage}} />
-            <ControlButton active={currentPage < totalPages} icon={faChevronRight} onClick={nextPage} />
-        </div>
+            <ControlButton active={currentPage < totalPages} direction='next' onClick={nextPage} />
+        </nav>
     );
 }
 
-export function itemRangeOnPage(page, perPage, totalCount) {
+export function itemRangeOnPage(page: number, perPage: number, totalCount: number) {
     const end = Math.min(totalCount, page * perPage);
     const start = (page - 1) * perPage + 1;
 
     return [start, end];
 }
 
-export function Showing({page, perPage=9, totalCount, ofWhat}) {
+export function Showing({page, perPage, totalCount, ofWhat}: {
+    page: number;
+    perPage: number;
+    totalCount: number;
+    ofWhat: string;
+}) {
     const [start, end] = itemRangeOnPage(page, perPage, totalCount);
     const countMessage = totalCount <= perPage ? 'all' : `${start}-${end} of`;
 

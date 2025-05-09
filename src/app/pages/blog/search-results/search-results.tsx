@@ -7,7 +7,7 @@ import ArticleSummary, {
 import usePaginatorContext, {
     PaginatorContextProvider
 } from '~/components/paginator/paginator-context';
-import {PaginatorControls} from '~/components/paginator/search-results/paginator.js';
+import {PaginatorControls} from '~/components/paginator/search-results/paginator';
 import NoResults from './no-results';
 import useAllArticles from './use-all-articles';
 import './search-results.scss';

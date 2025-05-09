@@ -7,9 +7,16 @@ import './language-selector.scss';
 
 const polishSite = 'https://openstax.pl/podreczniki';
 
-export function LanguageLink({locale, slug}) {
+type PLocaleEntry = {
+    locale: string;
+    slug?: string;
+};
+
+export type LocaleEntry = Required<PLocaleEntry>
+
+export function LanguageLink({locale, slug}: PLocaleEntry) {
     const {setLanguage} = useLanguageContext();
-    const onClick = React.useCallback((event) => {
+    const onClick = React.useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         setLanguage(locale);
     }, [locale, setLanguage]);
@@ -19,29 +26,24 @@ export function LanguageLink({locale, slug}) {
     return (<a {...props}><LanguageText locale={locale} /></a>);
 }
 
-// Provide a fallback so ancient browsers don't outright fail
-export function LanguageText({locale}) {
-    if (Intl.DisplayNames) {
-        return (<LanguageTextUsingIntl locale={locale} />);
-    }
-    return locale;
-}
-
-function LanguageTextUsingIntl({locale}) {
+export function LanguageText({locale}: {locale: string}) {
     const {language} = useLanguageContext();
-    const languageName = React.useMemo(
-        () => new Intl.DisplayNames([language], {type: 'language'}),
-        [language]
+    const text = React.useMemo(
+        () => (new Intl.DisplayNames([language], {type: 'language'})).of(locale),
+        [language, locale]
     );
 
-    return (
-        <React.Fragment>
-            {languageName.of(locale)}
-        </React.Fragment>
-    );
+    return text;
 }
 
-function AnotherLanguage({locale, LinkPresentation, position, listLength}) {
+type LinkPresentationType = ({locale}: PLocaleEntry) => React.JSX.Element | null;
+
+function AnotherLanguage({locale, LinkPresentation, position, listLength}: {
+    locale: string;
+    LinkPresentation: LinkPresentationType;
+    position: number;
+    listLength: number;
+}) {
     return (
         <React.Fragment>
             {listLength > 1 ? ', ' : ' '}
@@ -56,7 +58,7 @@ function AnotherLanguage({locale, LinkPresentation, position, listLength}) {
     );
 }
 
-export function LanguageSelectorWrapper({children}) {
+export function LanguageSelectorWrapper({children}: React.PropsWithChildren<Record<never, never>>) {
     return (
         <div className="language-selector">
             <FontAwesomeIcon icon={faGlobe} />
@@ -66,7 +68,12 @@ export function LanguageSelectorWrapper({children}) {
 }
 
 export default function LanguageSelector({
-    LeadIn, otherLocales=[], LinkPresentation=LanguageLink, addPolish=false
+    LeadIn, otherLocales, LinkPresentation=LanguageLink, addPolish=false
+}: {
+    LeadIn: () => React.JSX.Element;
+    otherLocales: string[];
+    LinkPresentation: LinkPresentationType;
+    addPolish?: boolean;
 }) {
     if (addPolish) {
         otherLocales.push('pl');
