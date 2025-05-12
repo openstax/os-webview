@@ -41,8 +41,13 @@ export default function TakeoverBanner({data, setDisplayed}) {
     }
 
     data.image = data.fundraiserImage;
+    /*
+        takeover-headline is the id of the h1 in content-desktop
+        aria-labelledby can reference hidden content, so even in mobile, the value in content-desktop
+        will be used
+    */
     return (
-        <Dialog className={cn('takeover-dialog', data.colorScheme)}>
+        <Dialog className={cn('takeover-dialog', data.colorScheme)} aria={{labelledby: 'takeover-headline'}}>
             <TakeoverContextProvider contextValueParameters={{close}}>
                 <DesktopContent data={data} />
                 <MobileContent data={data} />
