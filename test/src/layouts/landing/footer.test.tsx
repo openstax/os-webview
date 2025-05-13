@@ -5,6 +5,9 @@ import {describe, it} from '@jest/globals';
 import { MemoryRouter } from 'react-router-dom';
 import { useContactDialog } from '~/layouts/landing/footer/flex';
 
+// @ts-expect-error does not exist on
+const {routerFuture} = global;
+
 const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
 
 function ShowContactDialog(props: Parameters<ReturnType<typeof useContactDialog>['ContactDialog']>[0]) {
@@ -23,15 +26,15 @@ describe('flex landing footer', () => {
         beforeEach(() => {
             jest.useFakeTimers();
         });
+        const getIframe = () => document.querySelector('iframe');
 
         it('opens and closes', async () => {
-            const getIframe = () => document.querySelector('iframe');
             const contactFormParams = [
                 { key: 'userId', value: 'test' }
             ];
 
             render(
-                <MemoryRouter initialEntries={['']}>
+                <MemoryRouter initialEntries={['']} future={routerFuture}>
                     <ShowContactDialog contactFormParams={contactFormParams} />
                 </MemoryRouter>
             );
@@ -47,6 +50,16 @@ describe('flex landing footer', () => {
             // Should close the dialog
             window.postMessage('CONTACT_FORM_SUBMITTED', '*');
             await waitFor(() => expect(getIframe()).toBeNull());
+        });
+
+        it('handles no contactFormParams', async () => {
+            render(
+                <MemoryRouter initialEntries={['']} future={routerFuture}>
+                    <ShowContactDialog />
+                </MemoryRouter>
+            );
+            await user.click(await screen.findByText('Contact Us'));
+            expect(getIframe()?.src.endsWith('/contact')).toBe(true);
         });
     });
 });

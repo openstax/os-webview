@@ -5,6 +5,7 @@ import usePageData from '~/helpers/use-page-data';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import useLayoutContext from '~/contexts/layout';
+import usePortalContext from '~/contexts/portal';
 
 const FallbackToGeneralPage = loadable({
     loader: () => import('./fallback-to-general.js'),
@@ -22,7 +23,7 @@ export default function FallbackTo({name}) {
 }
 
 export const isFlexPage = (data) => (
-    typeof data.meta?.type === 'string' &&
+    typeof data?.meta?.type === 'string' &&
     ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)
 );
 
@@ -31,6 +32,14 @@ function LoadedPage({data, name}) {
     const {setLayoutParameters, layoutParameters} = useLayoutContext();
     const hasError = 'error' in data;
     const isFlex = !hasError && isFlexPage(data);
+    const isPortal = isFlex && layoutParameters.name === 'landing';
+    const {setPortal} = usePortalContext();
+
+    React.useEffect(() => {
+        if (isPortal) {
+            setPortal(name);
+        }
+    }, [isPortal, name, setPortal]);
 
     React.useEffect(() => {
         if (isFlex) {
