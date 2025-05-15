@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, test, expect} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
-import {useSet, assertDefined} from '~/helpers/data';
+import {useSet, assertDefined, assertNotNull} from '~/helpers/data';
 
 function Component() {
     const s = useSet([1]);
@@ -33,5 +33,10 @@ describe('helpers/data', () => {
         const foo: string | undefined = undefined;
 
         expect(() => assertDefined(foo)).toThrowError();
+    });
+    test('assertNotNull throws', () => {
+        const foo = null;
+
+        expect(() => assertNotNull(foo)).toThrowError();
     });
 });

@@ -1,12 +1,13 @@
 import React from 'react';
 import useMultiselectContext from '../multiselect-context';
 import useSFBookContext from './sf-book-context';
+import type {SalesforceBook} from '~/helpers/books';
 import useToggleContext from '~/components/toggle/toggle-context';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './book-options.scss';
 
 
-function BookOption({book}) {
+function BookOption({book}: {book: SalesforceBook}) {
     const {select, deselect, isSelected} = useMultiselectContext();
     const {toggle} = useToggleContext();
     const toggleBook = React.useCallback(
@@ -14,7 +15,7 @@ function BookOption({book}) {
         [book, isSelected, deselect, select]
     );
     const onKeyDown = React.useCallback(
-        (event) => {
+        (event: React.KeyboardEvent) => {
             if (event.key === 'Escape') {
                 event.preventDefault();
                 event.stopPropagation();
@@ -28,7 +29,7 @@ function BookOption({book}) {
 
     return (
         <span
-            className="book-option" tabIndex="0"
+            className="book-option" tabIndex={0}
             role="option" aria-selected={isSelected(book)}
             onClick={toggleBook}
             onKeyDown={onKeyDown}
@@ -38,7 +39,10 @@ function BookOption({book}) {
     );
 }
 
-function SubjectListing({subject, books}) {
+function SubjectListing({subject, books}: {
+    subject: string;
+    books: SalesforceBook[];
+}) {
     const booksInSubject = books.filter((b) => b.subjects.includes(subject));
     const groupId = `group-${subject}`;
 
