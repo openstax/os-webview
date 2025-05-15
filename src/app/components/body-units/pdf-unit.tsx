@@ -66,7 +66,9 @@ function toggleFullscreen(
     if (!fsFn) {
         return;
     }
-    elem.requestFullscreen = elem[fsFn as keyof typeof elem] as () => Promise<void>;
+    elem.requestFullscreen = elem[
+        fsFn as keyof typeof elem
+    ] as () => Promise<void>;
 
     if (!document.fullscreenElement) {
         elem.requestFullscreen().catch((err) => {
@@ -123,7 +125,9 @@ export default function Document({data}: {data: DocumentData}) {
         >
             <PDF
                 file={data.download_url}
-                onLoadSuccess={({numPages: n}: {numPages: number}) => setNumPages(n)}
+                onLoadSuccess={({numPages: n}: {numPages: number}) =>
+                    setNumPages(n)
+                }
                 inputRef={ref}
             >
                 <div className="pages-side-by-side">
