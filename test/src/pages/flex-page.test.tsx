@@ -1,4 +1,5 @@
 import React from 'react';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {render, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
@@ -38,9 +39,11 @@ let body: Data['body'];
 
 function Component() {
     return (
-        <MemoryRouter initialEntries={['']}>
-            <FlexPage data={{body}} />
-        </MemoryRouter>
+        <ShellContextProvider>
+            <MemoryRouter initialEntries={['']}>
+                <FlexPage data={{body}} />
+            </MemoryRouter>
+        </ShellContextProvider>
     );
 }
 
@@ -155,6 +158,11 @@ describe('flex-page', () => {
         render(<Component />);
         expect(screen.getAllByText('Some text with')).toHaveLength(1);
         expect(screen.getAllByText('formatting')).toHaveLength(1);
+    });
+    it('renders bookListBlock', () => {
+        body = [bookListBlock()];
+        render(<Component />);
+        expect(screen.getAllByText('book title')).toHaveLength(1);
     });
 });
 
@@ -333,6 +341,29 @@ function sectionBlock(): ContentBlockConfig {
                 {
                     type: 'id',
                     value: 'anchor-target'
+                }
+            ]
+        }
+    };
+}
+
+function bookListBlock(): ContentBlockConfig {
+    return {
+        id: 'book-list-id',
+        type: 'book_list',
+        value: {
+            books: [
+                {
+                    id: 'book id',
+                    title: 'book title',
+                    slug: 'book-slug',
+                    webviewRexLink: 'webview-rex-link',
+                    webviewLink: 'webview-link',
+                    highResolutionPdfUrl: 'high-res-url',
+                    lowResolutionPdfUrl: 'low-res-url',
+                    coverUrl: 'cover-url',
+                    bookState: 'book-state',
+                    promoteSnippet: [],
                 }
             ]
         }
