@@ -5,50 +5,16 @@ import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import GetTheBookDropdown from './dropdown-menu';
 import cn from 'classnames';
 import './book-tile.scss';
+import BookTileDisplay from './book-tile-display';
 
 // eslint-disable-next-line complexity
 export default function BookTile({book: [book]}: {book: [BookInfo]}) {
-    const {coverUrl, title, slug} = book;
     const info = useBookInfo(book.id);
-    const comingSoon = info?.book_state === 'coming_soon';
-    const snippets = info?.promote_snippet.filter((s) => s.value.image);
-    const promoteSnippet = snippets?.find((s) => s.value.image);
-    const classes = cn({
-        'book-tile': true,
-        'coming-soon': comingSoon,
-        promote: Boolean(promoteSnippet)
-    });
-
-    return (
-        <div className={classes}>
-            <a href={`/details/${slug}`} aria-label={`${title} book`}>
-                <img
-                    src={coverUrl}
-                    role='presentation'
-                    width='240'
-                    height='240'
-                />
-                {promoteSnippet?.value.image && (
-                    <PromoteBadge
-                        name={promoteSnippet.value.name}
-                        image={promoteSnippet.value.image}
-                    />
-                )}
-                <div className='text-block'>
-                    {title}
-                </div>
-            </a>
-            {comingSoon ? (
-                <div className='navmenu'>
-                    <button type='button' disabled>
-                        Coming soon
-                    </button>
-                </div>
-            ) : (
-                <GetTheBookDropdown bookInfo={book} />
-            )}
-        </div>
-    );
+    return <BookTileDisplay book={{
+        ...book,
+        bookState: info?.book_state,
+        promoteSnippet: info?.promote_snippet,
+    }} />;
 }
 
 function useBookInfo(id: number) {
