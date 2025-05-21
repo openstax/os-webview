@@ -7,11 +7,10 @@ import cn from 'classnames';
 import './book-tile.scss';
 
 type AdditionalFields = Partial<{
-  promoteSnippet: Item['promote_snippet'];
-  bookState: string;
+    promoteSnippet: Item['promote_snippet'];
+    bookState: string;
 }>
 
-// eslint-disable-next-line complexity
 export default function BookTile({book}: {book: BookInfo & AdditionalFields}) {
     const {coverUrl, title, slug} = book;
     const comingSoon = book.bookState === 'coming_soon';
