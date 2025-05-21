@@ -354,9 +354,9 @@ function bookListBlock(): ContentBlockConfig {
         value: {
             books: [
                 {
-                    id: 'book id',
-                    title: 'book title',
+                    id: 1,
                     slug: 'book-slug',
+                    title: 'book title',
                     webviewRexLink: 'webview-rex-link',
                     webviewLink: 'webview-link',
                     highResolutionPdfUrl: 'high-res-url',
