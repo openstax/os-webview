@@ -1,6 +1,7 @@
 import React from 'react';
 import { LoadedPage } from '~/components/jsx-helpers/loader-page';
 import { ContentBlocks, ContentBlockConfig } from './blocks/ContentBlock';
+import './flex-page.scss';
 
 type Data = {
     body: ContentBlockConfig[];

@@ -1,0 +1,16 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.flex-page.page div.content-block-book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    margin: $normal-margin 0;
+    width: 100%;
+
+    @include width-up-to($phone-max) {
+        grid-gap: 1rem;
+    }
+
+    @include wider-than($phone-max) {
+        grid-gap: 4rem 2rem;
+    }
+}
