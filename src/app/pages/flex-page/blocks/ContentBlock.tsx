@@ -9,7 +9,7 @@ import { HTMLBlockConfig, HTMLBlock } from './HTMLBlock';
 import { LinksBlockConfig, LinksBlock } from './LinksBlock';
 import { QuoteBlock, QuoteBlockConfig } from './QuoteBlock';
 import { FAQBlockConfig, FAQBlock } from './FAQBlock';
-import { BookListBlockConfig, BookListBlock } from "./BookListBlock";
+import { BookListBlockConfig, BookListBlock } from './BookListBlock';
 
 export type ContentBlockConfig =
     LinksBlockConfig |

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import './BookListBlock.scss';
 import BookTile from '~/components/book-tile/book-tile-display';
 
-/* 
+/*
  * the book data formatting in the CMS is currently fragemented,
  * when it gets centralized we can centralize the types as well
  */

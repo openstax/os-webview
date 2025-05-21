@@ -1,9 +1,6 @@
 import React from 'react';
-import PromoteBadge from '~/components/promote-badge/promote-badge';
 import bookPromise, {Item} from '~/models/book-titles';
 import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
-import GetTheBookDropdown from './dropdown-menu';
-import cn from 'classnames';
 import './book-tile.scss';
 import BookTileDisplay from './book-tile-display';
 
