@@ -168,18 +168,4 @@ describe('get-this-title', () => {
         render(<GTTinContext model={comingSoonModel} />);
         await screen.findByText('Download a PDF sample');
     });
-    it('shows iBooks options (2 volumes)', async () => {
-        const ibooksModel = {
-            ...baseModel,
-            ibookLink: 'first-volume',
-            ibookLink2: 'second-volume'
-        };
-
-        render(<GTTinContext model={ibooksModel} />);
-        const expander = await screen.findByText('+ 2 more options...');
-
-        await user.click(expander);
-        screen.getByRole('link', {name: 'iBooks part 1'});
-        screen.getByRole('link', {name: 'iBooks part 2'});
-    });
 });

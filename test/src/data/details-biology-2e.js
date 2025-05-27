@@ -214,24 +214,6 @@ export default {
             "k12": false
         },
         {
-            "id": 2086,
-            "meta": {
-                "type": "books.BookFacultyResources"
-            },
-            "resource_heading": "Apple iBooks Comp Copy",
-            "resource_description": "<p>We don&#x27;t give out print copies, but instructors can get an enhanced, interactive version of the textbook with an Apple iBooks comp copy.</p>",
-            "resource_unlocked": false,
-            "creator_fest_resource": false,
-            "link_external": "http://www.openstax.org/comp-copy",
-            "link_page": null,
-            "link_text": "Request your copy",
-            "coming_soon_text": null,
-            "video_reference_number": null,
-            "updated": null,
-            "featured": false,
-            "k12": false
-        },
-        {
             "id": 2087,
             "meta": {
                 "type": "books.BookFacultyResources"

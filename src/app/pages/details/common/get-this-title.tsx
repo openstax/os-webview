@@ -5,7 +5,6 @@ import {
     WebviewOption,
     PdfOption,
     BookshareOption,
-    IbooksOption,
     KindleOption,
     CheggOption,
     OptionExpander
@@ -21,8 +20,6 @@ export type Model = {
     comingSoon: boolean;
     title: string;
     bookshareLink: string;
-    ibookLink: string;
-    ibookLink2: string;
     kindleLink: string;
     webviewRexLink: string;
     webviewLink: string;
@@ -34,14 +31,13 @@ export type Model = {
     cheggLink: string; // These may not be supported at all anymore,
     cheggLinkText: string; // but the CMS is still serving them.
 };
-type ModelKey = 'bookshareLink' | 'ibookLink' | 'kindleLink';
+type ModelKey = 'bookshareLink' | 'kindleLink';
 type TrackedMouseEvent = Parameters<typeof trackLink>[0];
 
 function AdditionalOptions({model}: {model: Model}) {
     return (
         <React.Fragment>
             <BookshareOption model={model} />
-            <IbooksOption model={model} />
             <KindleOption model={model} />
         </React.Fragment>
     );
@@ -49,7 +45,7 @@ function AdditionalOptions({model}: {model: Model}) {
 
 export default function GetThisTitle({model}: {model: Model}) {
     const additionalOptions = (
-        ['bookshareLink', 'ibookLink', 'kindleLink'] as ModelKey[]
+        ['bookshareLink', 'kindleLink'] as ModelKey[]
     ).filter((key) => model[key]).length;
     const [expanded, toggleExpanded] = useToggle(additionalOptions < 1);
     const interceptLinkClicks = React.useCallback<React.MouseEventHandler>(

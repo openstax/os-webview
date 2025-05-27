@@ -8,7 +8,6 @@ import {faListOl} from '@fortawesome/free-solid-svg-icons/faListOl';
 import {faCloudDownloadAlt} from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
 import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
-import {faApple} from '@fortawesome/free-brands-svg-icons/faApple';
 import $ from '~/helpers/$';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {useIntl, FormattedMessage} from 'react-intl';
@@ -227,48 +226,6 @@ export function BookshareOption({model}: {model: Model}) {
             text="Bookshare"
             data-track="Bookshare"
         />
-    );
-}
-
-export function Ibooks2Volumes({model}: {model: Model}) {
-    const intl = useIntl();
-    const download = intl.formatMessage({id: 'getit.ibooks.download'});
-
-    return (
-        <React.Fragment>
-            <span className="option-header">
-                <IconAndText icon={faApple} text={download} />
-            </span>
-            <a href={model.ibookLink} data-track="iBooks">
-                <FormattedMessage
-                    id="getit.ibooks.part1"
-                    defaultMessage="iBooks part 1"
-                />
-            </a>
-            <a href={model.ibookLink2} data-track="iBooks">
-                <FormattedMessage
-                    id="getit.ibooks.part2"
-                    defaultMessage="iBooks part 2"
-                />
-            </a>
-        </React.Fragment>
-    );
-}
-
-export function IbooksOption({model}: {model: Model}) {
-    const intl = useIntl();
-    const download = intl.formatMessage({id: 'getit.ibooks.download'});
-
-    return (
-        <Option condition={model.ibookLink}>
-            {model.ibookLink2 ? (
-                <Ibooks2Volumes model={model} />
-            ) : (
-                <a href={model.ibookLink} data-track="iBooks">
-                    <IconAndText icon={faApple} text={download} />
-                </a>
-            )}
-        </Option>
     );
 }
 
