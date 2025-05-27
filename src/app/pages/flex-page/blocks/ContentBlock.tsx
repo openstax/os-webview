@@ -9,6 +9,7 @@ import { HTMLBlockConfig, HTMLBlock } from './HTMLBlock';
 import { LinksBlockConfig, LinksBlock } from './LinksBlock';
 import { QuoteBlock, QuoteBlockConfig } from './QuoteBlock';
 import { FAQBlockConfig, FAQBlock } from './FAQBlock';
+import { BookListBlockConfig, BookListBlock } from './BookListBlock';
 
 export type ContentBlockConfig =
     LinksBlockConfig |
@@ -20,6 +21,7 @@ export type ContentBlockConfig =
     RichTextBlockConfig |
     QuoteBlockConfig |
     FAQBlockConfig |
+    BookListBlockConfig |
     CardsBlockConfig;
 
 export function ContentBlocks({data}: {data: ContentBlockConfig[]}) {
@@ -51,6 +53,8 @@ export function ContentBlock({data}: {data: ContentBlockConfig}) {
            return <QuoteBlock data={data} />;
         case 'faq':
            return <FAQBlock data={data} />;
+        case 'book_list':
+           return <BookListBlock data={data} />;
         default:
             return <pre>{JSON.stringify(data, null, 2)}</pre>;
     }
