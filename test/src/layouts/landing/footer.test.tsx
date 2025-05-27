@@ -2,7 +2,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import {render, screen, waitFor} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
-import { MemoryRouter } from 'react-router-dom';
+import MR from '~/../../test/helpers/future-memory-router';
 import { useContactDialog } from '~/layouts/landing/footer/flex';
 
 const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
@@ -31,9 +31,9 @@ describe('flex landing footer', () => {
             ];
 
             render(
-                <MemoryRouter initialEntries={['']}>
+                <MR initialEntries={['']}>
                     <ShowContactDialog contactFormParams={contactFormParams} />
-                </MemoryRouter>
+                </MR>
             );
             expect(getIframe()).toBeNull();
             await user.click(await screen.findByText('Contact Us'));
@@ -47,6 +47,18 @@ describe('flex landing footer', () => {
             // Should close the dialog
             window.postMessage('CONTACT_FORM_SUBMITTED', '*');
             await waitFor(() => expect(getIframe()).toBeNull());
+        });
+        it('handles undefined contactFormParams', async () => {
+            const getIframe = () => document.querySelector('iframe');
+
+            render(
+                <MR initialEntries={['']}>
+                    <ShowContactDialog />
+                </MR>
+            );
+            expect(getIframe()).toBeNull();
+            await user.click(await screen.findByText('Contact Us'));
+            expect(getIframe()?.src.endsWith('embedded/contact')).toBe(true);
         });
     });
 });
