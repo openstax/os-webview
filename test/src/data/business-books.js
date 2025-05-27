@@ -185,7 +185,6 @@ export default {
                                     amazonLink:
                                         'https://www.amazon.com/dp/1947172689',
                                     bookstoreComingSoon: true,
-                                    compCopyAvailable: false,
                                     salesforceAbbreviation:
                                         'Financial Accounting',
                                     salesforceName: 'Financial Accounting',
@@ -223,7 +222,6 @@ export default {
                                     amazonLink:
                                         'https://www.amazon.com/dp/1947172603',
                                     bookstoreComingSoon: true,
-                                    compCopyAvailable: false,
                                     salesforceAbbreviation:
                                         'Managerial Accounting',
                                     salesforceName: 'Managerial Accounting',
@@ -271,7 +269,6 @@ export default {
                                 amazonLink:
                                     'https://www.amazon.com/dp/1947172549',
                                 bookstoreComingSoon: false,
-                                compCopyAvailable: false,
                                 salesforceAbbreviation:
                                     'Introduction to Business',
                                 salesforceName: 'Introduction to Business',
@@ -304,7 +301,6 @@ export default {
                                 amazonComingSoon: false,
                                 amazonLink: '',
                                 bookstoreComingSoon: false,
-                                compCopyAvailable: true,
                                 salesforceAbbreviation: null,
                                 salesforceName: null,
                                 urls: [],
@@ -349,7 +345,6 @@ export default {
                                 amazonLink:
                                     'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf',
                                 bookstoreComingSoon: false,
-                                compCopyAvailable: false,
                                 salesforceAbbreviation: null,
                                 salesforceName: null,
                                 urls: [],
@@ -408,7 +403,6 @@ export default {
                                 amazonLink:
                                     'https://www.amazon.com/dp/1947172689',
                                 bookstoreComingSoon: true,
-                                compCopyAvailable: false,
                                 salesforceAbbreviation: 'Financial Accounting',
                                 salesforceName: 'Financial Accounting',
                                 urls: [],
@@ -445,7 +439,6 @@ export default {
                                 amazonLink:
                                     'https://www.amazon.com/dp/1947172603',
                                 bookstoreComingSoon: true,
-                                compCopyAvailable: false,
                                 salesforceAbbreviation: 'Managerial Accounting',
                                 salesforceName: 'Managerial Accounting',
                                 urls: [],
@@ -497,7 +490,6 @@ export default {
                             amazonComingSoon: false,
                             amazonLink: 'https://www.amazon.com/dp/1947172549',
                             bookstoreComingSoon: false,
-                            compCopyAvailable: false,
                             salesforceAbbreviation: 'Introduction to Business',
                             salesforceName: 'Introduction to Business',
                             urls: [],
@@ -529,7 +521,6 @@ export default {
                             amazonComingSoon: false,
                             amazonLink: '',
                             bookstoreComingSoon: false,
-                            compCopyAvailable: true,
                             salesforceAbbreviation: null,
                             salesforceName: null,
                             urls: [],
@@ -568,8 +559,6 @@ export default {
                             coverColor: 'blue',
                             highResolutionPdfUrl: null,
                             lowResolutionPdfUrl: null,
-                            ibookLink: '',
-                            ibookLinkVolume2: '',
                             webviewLink:
                                 'https://dev.cnx.org/contents/547026cb-a330-4809-94bf-126be5f62381',
                             webviewRexLink:
@@ -580,7 +569,6 @@ export default {
                             amazonLink:
                                 'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf',
                             bookstoreComingSoon: false,
-                            compCopyAvailable: false,
                             salesforceAbbreviation: null,
                             salesforceName: null,
                             urls: [],

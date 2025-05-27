@@ -216,18 +216,14 @@ export default function PublicationInfo({url, polish}: {
     const model = useDetailsContext();
     const [webUpdate, setWebUpdate] = useState(model.lastUpdatedWeb);
     const intl = useIntl();
-    const [pub, web, hard, paper, dig] = [
+    const [pub, web, hard, paper, dig, assignable] = [
         intl.formatMessage({id: 'pubInfo.pub.pub'}),
         intl.formatMessage({id: 'pubInfo.pub.web'}),
         intl.formatMessage({id: 'pubInfo.pub.color'}),
         intl.formatMessage({id: 'pubInfo.pub.b-w'}),
-        intl.formatMessage({id: 'pubInfo.pub.dig'})
+        intl.formatMessage({id: 'pubInfo.pub.dig'}),
+        intl.formatMessage({id: 'pubInfo.pub.assignable'})
     ];
-    const iBooksLabel =
-        model.ibookVolume2Isbn10 || model.ibookVolume2Isbn13
-            ? intl.formatMessage({id: 'getit.ibooks.part1'})
-            : 'iBooks';
-    const labelPart2 = intl.formatMessage({id: 'getit.ibooks.part2'});
 
     useEffect(() => {
         const isRex = Boolean(model.webviewRexLink);
@@ -260,8 +256,7 @@ export default function PublicationInfo({url, polish}: {
             <IsbnInfo label={hard} tag="print" />
             <IsbnInfo label={paper} tag="printSoftcover" />
             <IsbnInfo label={dig} tag="digital" />
-            <IsbnInfo label={iBooksLabel} tag="ibook" />
-            <IsbnInfo label={labelPart2} tag="ibookVolume2" />
+            <IsbnInfo label={assignable} tag="assignable" />
             <LicenseInfo
                 name={model.licenseName}
                 text={model.licenseText}

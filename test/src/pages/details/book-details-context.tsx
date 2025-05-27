@@ -2,7 +2,7 @@ import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import ShellContextProvider from '../../../helpers/shell-context';
 import {DetailsContextProvider, ContextValues} from '~/pages/details/context';
-import {MemoryRouter} from 'react-router-dom';
+import MR from '~/../../test/helpers/future-memory-router';
 
 // Tamp down meaningless errors
 jest.mock('~/models/rex-release', () => jest.fn().mockReturnValue(Promise.resolve({
@@ -30,8 +30,8 @@ export default function BookDetailsLoader({slug, children}: React.PropsWithChild
     const absoluteSlug = `/${slug}`;
 
     return (
-        <MemoryRouter initialEntries={[absoluteSlug]}>
+        <MR initialEntries={[absoluteSlug]}>
             <LoaderPage slug={slug} Child={BookDetailsWithContext} doDocumentSetup props={{children}} />
-        </MemoryRouter>
+        </MR>
     );
 }

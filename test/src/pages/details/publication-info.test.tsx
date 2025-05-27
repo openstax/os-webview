@@ -46,7 +46,6 @@ describe('details/common/publication-info', () => {
         await screen.findByText('Publish Date:');
         screen.getByText('Color:');
         screen.getByText('Black and White:');
-        expect(screen.queryAllByText('iBooks', {exact: false})).toHaveLength(0);
         screen.getByText('Web Version Last Updated:');
     });
     test('Shows no web pub date when it has no Rex link', async () => {
@@ -56,16 +55,6 @@ describe('details/common/publication-info', () => {
 
         render(<WrappedPublicationInfo additionalItems={additionalItems} />);
         await expect(screen.findByText('Web Version Last Updated:')).rejects.toThrow();
-    });
-    test('Shows iBooks publication dates when present', async () => {
-        const additionalItems = {
-            ibookIsbn10: 'fakeISBN1',
-            ibookVolume2Isbn10: 'fakeISBN2'
-        };
-
-        render(<WrappedPublicationInfo additionalItems={additionalItems} />);
-        await screen.findByText('Publish Date:');
-        expect(screen.queryAllByText('iBooks', {exact: false})).toHaveLength(2);
     });
     test('Shows PDF update info when present', async () => {
         const additionalItems = {

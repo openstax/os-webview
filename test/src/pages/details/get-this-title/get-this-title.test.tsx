@@ -75,14 +75,13 @@ describe('get-this-title', () => {
     it('opens give dialog for Webview', async () => {
         render(<GTTinContext />);
         const wvLink = await screen.findByText('View online');
-
         const closeRecommendedCallout = screen.getByRole('button', {
             name: 'close-popup'
         });
 
         await user.click(closeRecommendedCallout);
-
         await user.click(wvLink);
+
         expect(screen.getAllByRole('dialog')).toHaveLength(2);
         const trackingLink = await screen.findByRole('link', {
             name: 'Go to your book'
@@ -97,6 +96,20 @@ describe('get-this-title', () => {
         console.error = originalError;
         expect(mockTrackLink).toHaveBeenCalled();
         mockTrackLink.mockReset();
+    });
+    it('renders pluralized expander', async () => {
+        const extraLinksModel = {
+            ...baseModel,
+            assignableLink: 'the-assignable-version',
+            bookshareLink: 'the-bookshare-version'
+        };
+
+        render(<GTTinContext model={extraLinksModel} />);
+        const expander = await screen.findByText('+ 2 more options...');
+
+        await user.click(expander);
+        screen.getByRole('link', {name: 'Bookshare'});
+        screen.getByRole('link', {name: 'Download for Kindle'});
     });
     it('opens give dialog for PDF', async () => {
         render(<GTTinContext />);
@@ -167,19 +180,5 @@ describe('get-this-title', () => {
 
         render(<GTTinContext model={comingSoonModel} />);
         await screen.findByText('Download a PDF sample');
-    });
-    it('shows iBooks options (2 volumes)', async () => {
-        const ibooksModel = {
-            ...baseModel,
-            ibookLink: 'first-volume',
-            ibookLink2: 'second-volume'
-        };
-
-        render(<GTTinContext model={ibooksModel} />);
-        const expander = await screen.findByText('+ 2 more options...');
-
-        await user.click(expander);
-        screen.getByRole('link', {name: 'iBooks part 1'});
-        screen.getByRole('link', {name: 'iBooks part 2'});
     });
 });

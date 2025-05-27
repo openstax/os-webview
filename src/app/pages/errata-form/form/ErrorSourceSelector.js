@@ -63,12 +63,6 @@ function LabeledButton({selectedSource, sType, onChange, radioRef}) {
 function filterForBook(bookInfo) {
     // eslint-disable-next-line complexity
     return function (type) {
-        if (type.startsWith('iBooks')) {
-            return Boolean(bookInfo.ibook_link);
-        }
-        if (type.startsWith('Rover')) {
-            return false;
-        }
         if (type.startsWith('Assignable')) {
             return bookInfo.assignable_book;
         }
