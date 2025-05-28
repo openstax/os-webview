@@ -437,7 +437,7 @@ export default {
     printSoftcoverIsbn13: '978-1-50669-822-9',
     digitalIsbn13: '978-1-947172-12-8',
     assignableIsbn10: null,
-    assignableIsbn13: null,
+    assignableIsbn13: '978-1-947172-12-14',
     licenseText: '',
     licenseName: 'Creative Commons Attribution License',
     licenseVersion: '4.0',
