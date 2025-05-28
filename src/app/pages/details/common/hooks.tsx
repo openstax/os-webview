@@ -4,10 +4,11 @@ import partnerFeaturePromise from '~/models/salesforce-partners';
 import shuffle from 'lodash/shuffle';
 import {camelCaseKeys} from '~/helpers/page-data-utils';
 import useDetailsContext from '../context';
+import {useRexPortalLinkOrNot} from '~/helpers/rex-portal';
 
 export function useTableOfContents() {
     const model = useDetailsContext();
-    const webviewLink = model.webviewRexLink;
+    const webviewLink = useRexPortalLinkOrNot(model.webviewRexLink);
     const [tocHtml, setTocHtml] = useState<string>('');
 
     if (webviewLink) {
