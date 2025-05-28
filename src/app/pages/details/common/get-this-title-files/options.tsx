@@ -18,6 +18,7 @@ import RecommendedCallout from './recommended-callout/recommended-callout';
 import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
 import useCalloutCounter from './recommended-callout/use-callout-counter';
 import trackLink from '../track-link';
+import {useRexPortalLinkOrNot} from '~/helpers/rex-portal';
 import type {Model} from '../get-this-title';
 import type {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
@@ -104,7 +105,6 @@ export function TocOption({model}: {model: Model}) {
     );
 }
 
-
 export function WebviewOption({model}: {model: Model}) {
     const [showCallout, hideForever] = useCalloutCounter(model.slug);
 
@@ -113,7 +113,7 @@ export function WebviewOption({model}: {model: Model}) {
         link: intl.formatMessage({id: 'getit.webview.link'})
     };
     const isRex = Boolean(model.webviewRexLink);
-    const webviewLink = model.webviewRexLink || model.webviewLink;
+    const webviewLink = useRexPortalLinkOrNot(model.webviewRexLink) || model.webviewLink;
     const iconAndTextArgs = {
         icon: faLaptop,
         text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : texts.link
