@@ -1,5 +1,5 @@
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
-import {ArticleSummary} from '~pages/blog/blog-context';
+import {ArticleSummary} from '~/pages/blog/blog-context';
 
 const fields = [
     'title',

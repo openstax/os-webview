@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import managedInvalidMessage from './InvalidMessage.js';
+import managedInvalidMessage from './InvalidMessage';
 
 function OtherErrorInput() {
     const inputRef = useRef();

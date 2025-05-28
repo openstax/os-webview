@@ -10,7 +10,7 @@
       "esModuleInterop": true,
       "moduleResolution": "bundler",
       "paths": {
-        "~*": ["./src/app/*"]
+        "~/*": ["./src/app/*"]
       }
     },
     "include": [
