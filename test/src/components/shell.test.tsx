@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import AppElement from '~/components/shell/shell';
 import * as RRD from 'react-router-dom';
+import * as CF from '~/helpers/cms-fetch';
 import MR from '~/../../test/helpers/future-memory-router';
 import ReactModal from 'react-modal';
 
@@ -64,6 +65,15 @@ describe('shell', () => {
         await modalCalled;
     });
     it('delivers press page in a portal', async () => {
+        jest.spyOn(CF, 'default').mockImplementation((path) => {
+            if (path.includes('books?')) {
+                return Promise.resolve({books: []});
+            }
+            if (path.includes('pages/?type')) {
+                return Promise.resolve({items: []});
+            }
+            return Promise.resolve([]);
+        });
         (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
             <MR initialEntries={['/some-portal/press']}>{children}</MR>
         ));
