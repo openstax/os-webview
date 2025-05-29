@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
+import type { ElementWithValidationMessage } from '../validation-message/validation-message';
 
 type OptionItem = {
     value: string;
@@ -37,10 +38,6 @@ function Option({
     );
 }
 
-type InputElementWithValidationMessage = HTMLInputElement & {
-    validationMessage: string;
-};
-
 export default function FormRadioGroup({
     longLabel,
     name,
@@ -58,7 +55,7 @@ export default function FormRadioGroup({
     const [selectedValue, setSelectedValue] = useState(checkedValue);
     const validate = React.useCallback(() => {
         const invalid =
-            ref.current?.querySelector<InputElementWithValidationMessage>(
+            ref.current?.querySelector<ElementWithValidationMessage>(
                 ':invalid'
             );
 
