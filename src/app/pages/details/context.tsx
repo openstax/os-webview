@@ -35,7 +35,7 @@ type Author = {
     seniorAuthor?: boolean;
 };
 
-export type IsbnType = 'print' | 'printSoftcover' | 'digital' | 'ibook' | 'ibookVolume2';
+export type IsbnType = 'print' | 'printSoftcover' | 'digital' | 'assignable';
 
 export type ContextValues = {
     id: number;
@@ -76,10 +76,8 @@ export type ContextValues = {
     printSoftcoverIsbn13: string;
     digitalIsbn10?: string;
     digitalIsbn13: string;
-    ibookIsbn10?: string;
-    ibookIsbn13: string | null;
-    ibookVolume2Isbn10?: string;
-    ibookVolume2Isbn13: string | null;
+    assignableIsbn10?: null;
+    assignableIsbn13?: string | null;
     lastUpdatedWeb?: string;
     lastUpdatedPdf: string | null;
     licenseName: string;

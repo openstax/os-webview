@@ -436,8 +436,8 @@ export default {
     printIsbn13: '978-1-938168-38-3',
     printSoftcoverIsbn13: '978-1-50669-822-9',
     digitalIsbn13: '978-1-947172-12-8',
-    ibookIsbn13: null,
-    ibookVolume2Isbn13: null,
+    assignableIsbn10: null,
+    assignableIsbn13: '978-1-947172-12-14',
     licenseText: '',
     licenseName: 'Creative Commons Attribution License',
     licenseVersion: '4.0',
@@ -490,8 +490,6 @@ export default {
         link: 'https://openstax.org/webinars'
     },
     promoteSnippet: [],
-    ibookLink: '',
-    ibookLinkVolume2: '',
     webviewLink:
         'https://dev.cnx.org/contents/9b08c294-057f-4201-9f48-5d6ad992740d',
     webviewRexLink:
@@ -526,8 +524,6 @@ export default {
             buttonUrl: 'https://buyprint.openstax.org/bookstore-suppliers'
         }
     ],
-    compCopyAvailable: false,
-    compCopyContent: ['iBooks comp copy request'],
     tutorMarketingBook: false,
     assignableBook: false,
     partnerListLabel: 'Technology Partners',
