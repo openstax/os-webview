@@ -10,14 +10,16 @@ export function useTableOfContents() {
     const webviewLink = model.webviewRexLink;
     const [tocHtml, setTocHtml] = useState<string>('');
 
-    tableOfContentsHtml({
-        cnxId: model.cnxId,
-        webviewLink
-    }).then(setTocHtml, (err) => {
-        console.warn(
-            `Failed to generate table of contents HTML for ${model.cnxId}: ${err}`
-        );
-    });
+    if (webviewLink) {
+        tableOfContentsHtml({
+            cnxId: model.cnxId,
+            webviewLink
+        }).then(setTocHtml, (err) => {
+            console.warn(
+                `Failed to generate table of contents HTML for ${model.cnxId}: ${err}`
+            );
+        });
+    }
 
     return tocHtml as string;
 }

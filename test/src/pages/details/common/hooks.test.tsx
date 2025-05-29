@@ -4,6 +4,7 @@ import {
     useTableOfContents,
     usePartnerFeatures
 } from '~/pages/details/common/hooks';
+import * as UDC from '~/pages/details/context';
 
 const mockTocHtml = jest.fn();
 
@@ -13,6 +14,10 @@ describe('details/common/hooks', () => {
     const originalWarn = console.warn;
 
     it('(useTableOfContents) handles rejection', async () => {
+        jest.spyOn(UDC, 'default').mockReturnValue(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            {webviewRexLink: 'https://openstax.org/books/thing'} as any
+        );
         console.warn = jest.fn();
 
         mockTocHtml.mockReturnValue(Promise.reject(new Error('oh no')));
@@ -30,6 +35,19 @@ describe('details/common/hooks', () => {
             )
         );
         console.warn = originalWarn;
+    });
+    it('(useTableOfContents) handles empty webviewLink', async () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        jest.spyOn(UDC, 'default').mockReturnValue({webviewRexLink: ''} as any);
+
+        function Component() {
+            const tocHtml = useTableOfContents();
+
+            return <div>{tocHtml}</div>;
+        }
+
+        render(<Component />);
+        expect(document.body.textContent).toBe('');
     });
     it('(usePartnerFeatures) sets its values', async () => {
         function Component() {
