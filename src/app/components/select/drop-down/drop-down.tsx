@@ -1,9 +1,8 @@
 import React from 'react';
 import Select from '../select';
 import useSelectContext, {SelectItem} from '../select-context';
-import useToggleContext, {
-    ToggleContextProvider
-} from '~/components/toggle/toggle-context';
+import useToggleContext from '~/components/toggle/toggle-context';
+import Toggle from '~/components/toggle/toggle';
 import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import VerticalList from '~/components/vertical-list/vertical-list';
@@ -95,12 +94,12 @@ export default function DropDownSelect({
 } & Omit<Parameters<typeof Select>[0], 'children'>) {
     return (
         <Select {...passThruProps}>
-            <ToggleContextProvider>
+            <Toggle>
                 <ToggleControlBar Indicator={ArrowToggle}>
                     <SelectedItem placeholder={placeholder} />
                 </ToggleControlBar>
                 <AutoFocusVerticalList options={options} />
-            </ToggleContextProvider>
+            </Toggle>
         </Select>
     );
 }

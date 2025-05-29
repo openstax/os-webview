@@ -2,10 +2,8 @@ import React from 'react';
 import Multiselect, {MultiselectContextProvider} from '../multiselect';
 import useSFBookContext, {SFBookContextProvider} from './sf-book-context';
 import useMultiselectContext from '../multiselect-context';
-import useToggleContext, {
-    ToggleContextProvider
-} from '~/components/toggle/toggle-context';
-import {IfToggleIsOpen} from '~/components/toggle/toggle';
+import useToggleContext from '~/components/toggle/toggle-context';
+import Toggle, {IfToggleIsOpen} from '~/components/toggle/toggle';
 import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import BookOptions from './book-options';
@@ -107,14 +105,14 @@ type MultiselectArgs = Parameters<typeof Multiselect>[0];
 export default function BookTagsMultiselect(passThruProps: MultiselectArgs) {
     return (
         <Multiselect {...passThruProps}>
-            <ToggleContextProvider>
+            <Toggle>
                 <ToggleControlBar Indicator={ArrowToggle}>
                     <TagList />
                 </ToggleControlBar>
                 <IfToggleIsOpen>
                     <BookOptions />
                 </IfToggleIsOpen>
-            </ToggleContextProvider>
+            </Toggle>
         </Multiselect>
     );
 }
