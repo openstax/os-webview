@@ -40,8 +40,6 @@ describe('details/common/hooks', () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         jest.spyOn(UDC, 'default').mockReturnValue({webviewRexLink: ''} as any);
 
-        // mockTocHtml.mockReturnValue(Promise.resolve({webviewLink: ''}));
-
         function Component() {
             const tocHtml = useTableOfContents();
 
