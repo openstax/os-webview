@@ -5,11 +5,13 @@ import {useIntl} from 'react-intl';
 import {FontAwesomeIcon, FontAwesomeIconProps} from '@fortawesome/react-fontawesome';
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
+import usePortalContext from '~/contexts/portal';
 import cn from 'classnames';
 import './let-us-know.scss';
 
 function useDataStuffFor(title:string) {
     const intl = useIntl();
+    const {portalPrefix} = usePortalContext();
     const [text1, text2] = [
         intl.formatMessage({id: 'letusknow.text1'}),
         intl.formatMessage({id: 'letusknow.text2'})
@@ -25,8 +27,8 @@ function useDataStuffFor(title:string) {
     }
 
     return {
-        url1: `/interest?${encodeURIComponent(title)}`,
-        url2: `/adoption?${encodeURIComponent(title)}`,
+        url1: `${portalPrefix}/interest?${encodeURIComponent(title)}`,
+        url2: `${portalPrefix}/adoption?${encodeURIComponent(title)}`,
         text1, text2
     };
 }
