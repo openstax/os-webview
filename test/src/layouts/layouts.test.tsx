@@ -44,7 +44,7 @@ describe('layouts/landing', () => {
         const layout = [{
             value: {
                 navLinks: [],
-                showGive: false
+                showGiveNowButton: false
             }
         }];
 
