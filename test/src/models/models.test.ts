@@ -30,10 +30,10 @@ describe('give-today', () => {
             /* eslint-enable camelcase */
         });
         const {default: useGiveToday} = await import('~/models/give-today');
-        const output = await useGiveToday();
+        const {showButton, showLink} = await useGiveToday();
 
-        expect(output.showButton).toBe(true);
-        expect(output.showLink).toBe(true);
+        expect(showButton).toBe(true);
+        expect(showLink).toBe(true);
     });
 });
 
