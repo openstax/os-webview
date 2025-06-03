@@ -1,12 +1,11 @@
 import React from 'react';
 import Select from '../select';
 import useSelectContext, {SelectItem} from '../select-context';
-import useToggleContext, {
-    ToggleContextProvider
-} from '~/components/toggle/toggle-context';
+import useToggleContext from '~/components/toggle/toggle-context';
+import Toggle from '~/components/toggle/toggle';
 import ToggleControlBar from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
-import VerticalList from '~/components/vertical-list/vertical-list';
+import VerticalList, {RenderItemProps} from '~/components/vertical-list/vertical-list';
 import './drop-down.scss';
 
 function RenderItem({
@@ -14,12 +13,7 @@ function RenderItem({
     current,
     onMouseEnter,
     onClick
-}: {
-    item: SelectItem;
-    current: boolean;
-    onMouseEnter: React.MouseEventHandler;
-    onClick: React.MouseEventHandler;
-}) {
+}: RenderItemProps<SelectItem>) {
     const {item: selectedItem} = useSelectContext();
 
     return (
@@ -95,12 +89,12 @@ export default function DropDownSelect({
 } & Omit<Parameters<typeof Select>[0], 'children'>) {
     return (
         <Select {...passThruProps}>
-            <ToggleContextProvider>
+            <Toggle>
                 <ToggleControlBar Indicator={ArrowToggle}>
                     <SelectedItem placeholder={placeholder} />
                 </ToggleControlBar>
                 <AutoFocusVerticalList options={options} />
-            </ToggleContextProvider>
+            </Toggle>
         </Select>
     );
 }

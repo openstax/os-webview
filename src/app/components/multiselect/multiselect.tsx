@@ -2,12 +2,12 @@ import React from 'react';
 import useMultiselectContext, {
     MultiselectContextProvider
 } from './multiselect-context';
-import ValidationMessage from '~/components/validation-message/validation-message';
+import ValidationMessage, { ElementWithValidationMessage }
+    from '~/components/validation-message/validation-message';
 import './multiselect.scss';
 
-type ElementRef = React.MutableRefObject<
-    HTMLInputElement | HTMLSelectElement | null
->;
+type ValidatableElementRef = React.MutableRefObject<ElementWithValidationMessage & HTMLInputElement>;
+type SelectRef = React.MutableRefObject<HTMLSelectElement>;
 
 function HiddenSelect({
     name,
@@ -16,7 +16,7 @@ function HiddenSelect({
 }: {
     name: string;
     required?: boolean;
-    elementRef: ElementRef;
+    elementRef: SelectRef;
 }) {
     const {selectedItems} = useMultiselectContext();
 
@@ -25,7 +25,7 @@ function HiddenSelect({
             multiple
             name={name}
             required={required}
-            ref={elementRef as React.MutableRefObject<HTMLSelectElement>}
+            ref={elementRef}
             hidden
         >
             {selectedItems.map((i) => (
@@ -42,7 +42,7 @@ function HiddenSingleField({
 }: {
     name: string;
     required?: boolean;
-    elementRef: ElementRef;
+    elementRef: ValidatableElementRef;
 }) {
     const {selectedItems} = useMultiselectContext();
     const value = selectedItems.map((i) => i.value).join(';');
@@ -53,13 +53,13 @@ function HiddenSingleField({
             className="hidden-input"
             name={name}
             required={required}
-            ref={elementRef as React.MutableRefObject<HTMLInputElement>}
+            ref={elementRef}
             value={value}
         />
     );
 }
 
-function MSValidationMessage({elementRef}: {elementRef: ElementRef}) {
+function MSValidationMessage({elementRef}: {elementRef: ValidatableElementRef}) {
     const {selectedItems} = useMultiselectContext();
 
     return (
@@ -81,6 +81,17 @@ function useOnChangeHandler(onChange?: (items: unknown[]) => void) {
 // Exporting here for convenience
 export {MultiselectContextProvider, useMultiselectContext};
 
+function HiddenField({oneField, name, required, elementRef}: {
+    oneField?: boolean;
+    name: string;
+    required?: boolean;
+    elementRef: React.MutableRefObject<HTMLElement | null>
+}) {
+    return oneField ?
+        <HiddenSingleField {...{name, required}} elementRef={elementRef as ValidatableElementRef} /> :
+        <HiddenSelect name={name} required={required} elementRef={elementRef as SelectRef} />;
+}
+
 export default function Multiselect({
     name,
     required,
@@ -93,17 +104,16 @@ export default function Multiselect({
     oneField?: boolean;
     onChange?: Parameters<typeof useOnChangeHandler>[0];
 }>) {
-    const elementRef = React.useRef<HTMLInputElement | HTMLSelectElement>(null);
-    const HiddenField = oneField ? HiddenSingleField : HiddenSelect;
+    const elementRef = React.useRef<ElementWithValidationMessage | HTMLSelectElement>(null);
 
     useOnChangeHandler(onChange);
     return (
         <React.Fragment>
             <div className="multiselect">
-                {name && <HiddenField {...{name, required, elementRef}} />}
+                {name && <HiddenField {...{oneField, name, required, elementRef}} />}
                 {children}
             </div>
-            <MSValidationMessage elementRef={elementRef} />
+            <MSValidationMessage elementRef={elementRef as ValidatableElementRef} />
         </React.Fragment>
     );
 }
