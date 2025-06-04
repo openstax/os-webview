@@ -15,7 +15,8 @@ const bookData: BookInfo = {
     webviewLink: 'osweb-link',
     highResolutionPdfUrl: 'hi-res.pdf',
     lowResolutionPdfUrl: '',
-    coverUrl: 'cover.jpg'
+    coverUrl: 'cover.jpg',
+    bookstoreComingSoon: false
 };
 
 function Component({book}: {book: [BookInfo]}) {
@@ -131,5 +132,11 @@ describe('book-tile', () => {
 
         expect(screen.getAllByRole('dialog')).toHaveLength(2);
         mockCmsFetch.mockRestore();
+    });
+    it('suppresses the print order item when bookstoreComingSoon is true', async () => {
+        const bd = {...bookData, bookstoreComingSoon: true};
+
+        render(<Component book={[bd]} />);
+        expect(screen.getAllByRole('menuitem')).toHaveLength(4);
     });
 });
