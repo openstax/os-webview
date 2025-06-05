@@ -51,9 +51,33 @@ const AlumniGrid = styled(Box)({
     }
 });
 
-export const MembersSection = ({data: {peopleHeader, currentMembers, collaboratingResearchers, alumni }}) => {
+type MemberData = {
+    linkedIn?: string;
+    googleScholar?: string;
+    website?: string;
+    bio: string;
+    researchInterest?: string;
+    education?: string;
+    specialization?: string;
+    firstName: string;
+    lastName: string;
+    longTitle?: string;
+    title: string;
+    photo: {file: string; title: string};
+}
+
+type AlumnusData = {name: string; title: string; linkedIn: string}
+
+export const MembersSection = ({data: {peopleHeader, currentMembers, collaboratingResearchers, alumni }}: {
+    data: {
+        peopleHeader: string;
+        currentMembers: MemberData[];
+        collaboratingResearchers: MemberData[];
+        alumni: AlumnusData[];
+    }
+}) => {
     const [viewAll, setViewAll] = useState(!isMobileDisplay());
-    const membersRef = useRef(null);
+    const membersRef = useRef<HTMLDivElement>(null);
     const scrollToMembers = () => {
         membersRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
@@ -64,6 +88,7 @@ export const MembersSection = ({data: {peopleHeader, currentMembers, collaborati
         <Section backgroundColor={colors.lightGrayBackground}>
             <h2 className='pb-2' ref={membersRef}>{peopleHeader}</h2>
             <TabAccordionCombo>
+                {/* @ts-expect-error-next-line label and selected are not known attributes */}
                 <div label='Current Members' selected>
                     <MemberGrid>
                         {members.map((member, index) =>
@@ -93,7 +118,7 @@ export const MembersSection = ({data: {peopleHeader, currentMembers, collaborati
                         {viewAll ? 'View Less' : 'View All Current Members'}
                     </p>
                 </div>
-
+                {/* @ts-expect-error-next-line label is not a known attribute */}
                 <div label='Collaborating Researchers'>
                     <CollaboratorGrid>
                         {collaboratingResearchers.map((member, index) =>
@@ -105,7 +130,7 @@ export const MembersSection = ({data: {peopleHeader, currentMembers, collaborati
                         )}
                     </CollaboratorGrid>
                 </div>
-
+                {/* @ts-expect-error-next-line label is not a known attribute */}
                 <div label='Alumni'>
                     <AlumniGrid>
                         {alumni.map((alumnus, index) =>
@@ -118,7 +143,11 @@ export const MembersSection = ({data: {peopleHeader, currentMembers, collaborati
     );
 };
 
-const MemberModal = ({ member, isOpen, onHide }) => {
+const MemberModal = ({ member, isOpen, onHide }: {
+    member: MemberData;
+    isOpen: boolean;
+    onHide?: () => void;
+}) => {
     return (
         <Dialog className='member-modal' onPutAway={onHide} isOpen={isOpen} closeOnOutsideClick={true}>
             <MemberDetails member={member} />
@@ -126,7 +155,10 @@ const MemberModal = ({ member, isOpen, onHide }) => {
     );
 };
 
-export const Member = ({ member, displayName }) => {
+const Member = ({ member, displayName }: {
+    member: MemberData;
+    displayName: string;
+}) => {
     const [show, setShow] = useState(false);
 
     return (
@@ -153,7 +185,7 @@ export const Member = ({ member, displayName }) => {
     );
 };
 
-export const MemberDetails = ({ member }) => {
+const MemberDetails = ({ member }: {member: MemberData}) => {
     return (
         <Box
             css={{
@@ -184,7 +216,7 @@ const MemberImage = styled.img({
     }
 });
 
-export const MemberInfo = ({ member }) => {
+const MemberInfo = ({ member }: {member: MemberData}) => {
     return (
         <Box align='center' gap='large'>
             <MemberImage className='mobile-only' src={member.photo.file} alt={member.firstName} />
@@ -198,7 +230,7 @@ export const MemberInfo = ({ member }) => {
     );
 };
 
-export const MemberEducation = ({ member }) => {
+const MemberEducation = ({ member }: {member: MemberData}) => {
     if (!member.education) {
         return null;
     }
@@ -214,7 +246,7 @@ export const MemberEducation = ({ member }) => {
     );
 };
 
-export const MemberResearchInterest = ({ member }) => {
+const MemberResearchInterest = ({ member }: {member: MemberData}) => {
     if (!member.researchInterest) {
         return null;
     }
@@ -226,7 +258,7 @@ export const MemberResearchInterest = ({ member }) => {
     );
 };
 
-export const MemberBio = ({ member }) => {
+export const MemberBio = ({ member }: {member: MemberData}) => {
     return (
         <Box direction='column'>
             <h4>Bio</h4>
@@ -235,7 +267,7 @@ export const MemberBio = ({ member }) => {
     );
 };
 
-export const MemberLinks = ({ member }) => {
+const MemberLinks = ({ member }: {member: MemberData}) => {
     return (
         <Box gap='large'>
             {member.linkedIn && <a href={member.linkedIn} target='_blank' rel="noreferrer">LinkedIn</a>}
@@ -245,7 +277,7 @@ export const MemberLinks = ({ member }) => {
     );
 };
 
-export const Alumnus = ({ alumnus }) => (
+const Alumnus = ({ alumnus }: {alumnus: AlumnusData}) => (
     <Box direction={{ mobile: 'column' }} align='center' justify='center' gap>
         <a css={{ flex: 1 }} href={alumnus.linkedIn} target='_blank' rel="noreferrer">{alumnus.name}</a>
         <span css={{ flex: 3, color: colors.grayText }}>{alumnus.title}</span>

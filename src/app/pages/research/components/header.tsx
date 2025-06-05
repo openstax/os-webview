@@ -17,7 +17,9 @@ export const HeaderImage = styled.img({
     }
 });
 
-export const Header = ({data: { missionBody }}) => {
+export const Header = ({data: { missionBody }}: {
+    data: {missionBody: string}
+}) => {
     return (
         <Section backgroundColor={colors.lightBlue}>
             <Box direction={{ mobile: 'column', tablet: 'column', desktop: 'row' }} align='center'>
@@ -33,10 +35,17 @@ export const Header = ({data: { missionBody }}) => {
     );
 };
 
-export const Banner = ({data: {bannerBody, bannerHeader, bannerCTA, bannerURL}}) => {
+export const Banner = ({data: {bannerBody, bannerHeader, bannerCTA, bannerURL}}: {
+    data: {
+        bannerBody: string;
+        bannerHeader: string;
+        bannerCTA?: string;
+        bannerURL?: string;
+    }
+}) => {
     if (!bannerBody) {return null;}
     return (
-        <Section padding={false} css={{backgroundColor: colors.lightTeal}}>
+        <Section padding={false} backgroundColor={colors.lightTeal}>
             <Box
                 align={{mobile: 'center'}}
                 direction={{mobile: 'column'}}

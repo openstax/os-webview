@@ -10,12 +10,26 @@ import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowUpRightFromSquare} from '@fortawesome/free-solid-svg-icons/faArrowUpRightFromSquare';
 
-export const Publications = ({data: {publicationHeader, publications}}) => {
+type Publication = {
+    pdf: string;
+    title: string;
+    date: string;
+    authors: string;
+    excerpt: string;
+    github?: string;
+}
+
+export const Publications = ({data: {publicationHeader, publications}}: {
+    data: {
+        publicationHeader: string;
+        publications: Publication[];
+    }
+}) => {
     const [viewAll, setViewAll] = useState(false);
     const initialCount = isMobileDisplay() ? 3 : 5;
     const publicationList = viewAll ? publications : publications.slice(0, initialCount);
 
-    const publicationsRef = useRef(null);
+    const publicationsRef = useRef<HTMLDivElement>(null);
     const scrollToPublications = () => {
         publicationsRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
@@ -49,7 +63,7 @@ export const Publications = ({data: {publicationHeader, publications}}) => {
     );
 };
 
-export const PublicationItem = ({ publication }) => (
+const PublicationItem = ({ publication }: {publication: Publication}) => (
     <Box direction='column' padding={{vertical: 'large'}} css={{ lineHeight: 1.8 }}>
         <div>
             <a className='large-link' href={publication.pdf} target='_blank' rel="noreferrer">
