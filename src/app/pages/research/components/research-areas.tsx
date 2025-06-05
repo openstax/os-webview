@@ -4,10 +4,36 @@ import {Box} from 'boxible';
 import styled from '@emotion/styled';
 import {Section} from '~/pages/research/components/section';
 import {colors, media} from '~/pages/research/theme';
-import {TabAccordionCombo} from '~/pages/research/components/tab-accordion-combo';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import {TabAccordionCombo} from '~/pages/research/components/tab-accordion-combo';
 
-export const ResearchSection = ({data: {researchAreasList, researchAreaHeader, researchAreaDescriptionMobile}}) => {
+type ResearchArea = {
+    researchAreaTitle: string;
+    researchAreaBlurb: string;
+    researchAreaBlurbMobile: string;
+    header: string;
+    description: string;
+    shortDescription: string;
+    photo: {
+        title: string;
+        file: string;
+    }
+    ctaLink?: string;
+    ctaText: string;
+    researchAreas: ResearchArea[];
+}
+
+export const ResearchSection = ({data: {
+    researchAreasList,
+    researchAreaHeader,
+    researchAreaDescriptionMobile
+}}: {
+    data: {
+        researchAreasList: ResearchArea[];
+        researchAreaHeader: string;
+        researchAreaDescriptionMobile: string;
+    }
+}) => {
     return (
         <Section backgroundColor={colors.lightGrayBackground}>
             <h2>{researchAreaHeader}</h2>
@@ -17,13 +43,14 @@ export const ResearchSection = ({data: {researchAreasList, researchAreaHeader, r
     );
 };
 
-export const ResearchFocusAreas = ({researchAreaList}) => {
+const ResearchFocusAreas = ({researchAreaList}: {researchAreaList: ResearchArea[]}) => {
     return (
         <TabAccordionCombo collapseAll={true}>
             {researchAreaList.map((researchArea, i) => {
                 return (
                     <Box
                         direction='column'
+                        // @ts-expect-error-next-line label is not a known attribute
                         label={researchArea.researchAreaTitle}
                         selected
                         padding={{vertical: 'large'}}
@@ -45,7 +72,10 @@ export const ResearchFocusAreas = ({researchAreaList}) => {
     );
 };
 
-export const ResearchFocusArea = ({ researchArea, isLast }) => (
+const ResearchFocusArea = ({ researchArea, isLast }: {
+    researchArea: ResearchArea;
+    isLast?: boolean;
+}) => (
     <div>
         <Box gap='xlarge' direction={{ mobile: 'column' }} padding={{vertical: 'xlarge'}}>
             <ResearchAreaImage src={researchArea.photo.file} alt={researchArea.photo.title} />
