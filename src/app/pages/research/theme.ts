@@ -22,7 +22,7 @@ export const colors = {
     grayText: '#848484',
     darkText: '#151B2C',
     blackText: '#424242',
-    input: { border: '#ced4da' },
+    input: {border: '#ced4da'},
     line: '#cfcfcf',
     linkText: '#026AA1',
     linkButtonIcon: '#DBDBDB',
@@ -31,7 +31,7 @@ export const colors = {
     transparent: 'rgba(0,0,0,0)'
 };
 
-const scaleFactor = 10/16;
+const scaleFactor = 10 / 16;
 const medium = scaleFactor * 96;
 const large = scaleFactor * 120;
 

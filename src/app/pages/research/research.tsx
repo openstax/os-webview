@@ -9,7 +9,13 @@ import {ContactUs} from '~/pages/research/components/contact-us';
 import {Publications} from '~/pages/research/components/publications';
 import {MembersSection} from '~/pages/research/components/members';
 
-function ResearchPage({data}) {
+type ResearchPageData = Parameters<typeof Header>[0]['data'] &
+    Parameters<typeof Banner>[0]['data'] &
+    Parameters<typeof ResearchSection>[0]['data'] &
+    Parameters<typeof Publications>[0]['data'] &
+    Parameters<typeof MembersSection>[0]['data'];
+
+function ResearchPage({data}: {data: ResearchPageData}) {
     return (
         <React.Fragment>
             <Header data={data} />
@@ -32,7 +38,11 @@ function ResearchPage({data}) {
 export default function ResearchLoader() {
     return (
         <main className="research page">
-            <LoaderPage slug="pages/research" Child={ResearchPage} doDocumentSetup />
+            <LoaderPage
+                slug="pages/research"
+                Child={ResearchPage}
+                doDocumentSetup
+            />
         </main>
     );
 }

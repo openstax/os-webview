@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
 import TeamLoader from '~/pages/team/team';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {it, expect} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import $ from '~/helpers/$';
