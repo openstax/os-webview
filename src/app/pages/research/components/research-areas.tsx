@@ -17,50 +17,63 @@ type ResearchArea = {
     photo: {
         title: string;
         file: string;
-    }
+    };
     ctaLink?: string;
     ctaText: string;
     researchAreas: ResearchArea[];
-}
+};
 
-export const ResearchSection = ({data: {
-    researchAreasList,
-    researchAreaHeader,
-    researchAreaDescriptionMobile
-}}: {
+export const ResearchSection = ({
+    data: {researchAreasList, researchAreaHeader, researchAreaDescriptionMobile}
+}: {
     data: {
         researchAreasList: ResearchArea[];
         researchAreaHeader: string;
         researchAreaDescriptionMobile: string;
-    }
+    };
 }) => {
     return (
         <Section backgroundColor={colors.lightGrayBackground}>
             <h2>{researchAreaHeader}</h2>
-            <RawHTML html={researchAreaDescriptionMobile} className='mobile-only' />
+            <RawHTML
+                html={researchAreaDescriptionMobile}
+                className="mobile-only"
+            />
             <ResearchFocusAreas researchAreaList={researchAreasList} />
         </Section>
     );
 };
 
-const ResearchFocusAreas = ({researchAreaList}: {researchAreaList: ResearchArea[]}) => {
+const ResearchFocusAreas = ({
+    researchAreaList
+}: {
+    researchAreaList: ResearchArea[];
+}) => {
     return (
         <TabAccordionCombo collapseAll={true}>
             {researchAreaList.map((researchArea, i) => {
                 return (
                     <Box
-                        direction='column'
+                        direction="column"
                         // @ts-expect-error-next-line label is not a known attribute
                         label={researchArea.researchAreaTitle}
                         selected
                         padding={{vertical: 'large'}}
                         key={i}
                     >
-                        <RawHTML className='mobile-only' html={researchArea.researchAreaBlurbMobile} />
-                        <RawHTML className='desktop-only' html={researchArea.researchAreaBlurb} />
+                        <RawHTML
+                            className="mobile-only"
+                            html={researchArea.researchAreaBlurbMobile}
+                        />
+                        <RawHTML
+                            className="desktop-only"
+                            html={researchArea.researchAreaBlurb}
+                        />
                         {researchArea.researchAreas.map((areaSection, j) => (
                             <ResearchFocusArea
-                                isLast={researchArea.researchAreas.length === j + 1}
+                                isLast={
+                                    researchArea.researchAreas.length === j + 1
+                                }
                                 researchArea={areaSection}
                                 key={j}
                             />
@@ -72,23 +85,44 @@ const ResearchFocusAreas = ({researchAreaList}: {researchAreaList: ResearchArea[
     );
 };
 
-const ResearchFocusArea = ({ researchArea, isLast }: {
+const ResearchFocusArea = ({
+    researchArea,
+    isLast
+}: {
     researchArea: ResearchArea;
     isLast?: boolean;
 }) => (
     <div>
-        <Box gap='xlarge' direction={{ mobile: 'column' }} padding={{vertical: 'xlarge'}}>
-            <ResearchAreaImage src={researchArea.photo.file} alt={researchArea.photo.title} />
-            <Box direction='column' gap='large' css={{ flex: 6 }}>
+        <Box
+            gap="xlarge"
+            direction={{mobile: 'column'}}
+            padding={{vertical: 'xlarge'}}
+        >
+            <ResearchAreaImage
+                src={researchArea.photo.file}
+                alt={researchArea.photo.title}
+            />
+            <Box direction="column" gap="large" css={{flex: 6}}>
                 <h4>{researchArea.header}</h4>
-                <RawHTML className='desktop-only' html={researchArea.description} />
-                <RawHTML className='mobile-only' html={researchArea.shortDescription} />
-                {researchArea.ctaLink &&
+                <RawHTML
+                    className="desktop-only"
+                    html={researchArea.description}
+                />
+                <RawHTML
+                    className="mobile-only"
+                    html={researchArea.shortDescription}
+                />
+                {researchArea.ctaLink && (
                     <div>
-                        <a href={researchArea.ctaLink} target='_blank' rel="noreferrer">
+                        <a
+                            href={researchArea.ctaLink}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
                             {researchArea.ctaText}
                         </a>
-                    </div>}
+                    </div>
+                )}
             </Box>
         </Box>
         {!isLast && <hr />}
