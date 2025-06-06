@@ -8,15 +8,19 @@ import './faq.scss';
 
 const docUrlBase = `${$.apiOriginAndPrefix}/documents`;
 
-function useDocModel(docId) {
-    const [docData, setDocData] = React.useState({});
+type DocData = {
+    title?: string;
+    file?: string;
+}
+
+function useDocModel(docId: string) {
+    const [docData, setDocData] = React.useState<DocData>({});
 
     React.useEffect(() => {
         const url = `${docUrlBase}/${docId}`;
 
         fetch(url, {credentials: 'include'})
             .then((r) => r.json())
-            .catch((err) => {throw new Error(`Fetching ${url}: ${err}`);})
             .then((r) => setDocData({
                 title: r.title,
                 file: r.meta.download_url
@@ -27,8 +31,12 @@ function useDocModel(docId) {
     return docData;
 }
 
-function Document({document}) {
+function Document({document}: {document: string}) {
     const {title, file} = useDocModel(document);
+
+    if (!file) {
+        return null;
+    }
 
     return (
         <div className="answer">
@@ -38,15 +46,22 @@ function Document({document}) {
     );
 }
 
-function QuestionAndAnswer({qa}) {
+type QAData = {
+    slug: string;
+    question: string;
+    answer: string;
+    document?: string;
+}
+
+function QuestionAndAnswer({qa}: {qa: QAData}) {
     const slug = window.location.hash.substr(1);
     const initiallyOpen = slug === qa.slug;
     const [open, toggle] = useToggle(initiallyOpen);
-    const ref = React.useRef();
+    const ref = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (initiallyOpen) {
-            ref.current.scrollIntoView({block: 'center'});
+            ref.current?.scrollIntoView({block: 'center'});
         }
     }, [initiallyOpen]);
 
@@ -65,7 +80,13 @@ function FAQ({data: {
     introHeading: heading,
     introDescription: subhead,
     questions
-}}) {
+}}: {
+    data: {
+        introHeading: string;
+        introDescription: string;
+        questions: QAData[];
+    }
+}) {
     return (
         <React.Fragment>
             <div className="hero">

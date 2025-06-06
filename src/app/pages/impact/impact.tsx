@@ -1,14 +1,38 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import LazyLoad from 'react-lazyload';
-import FourSquare from './four-square';
-import Quote from './quote';
-import Testimonials from './testimonials';
-import Disruption from './disruption';
-import Give from './give';
+import FourSquare, {Model as FourSquareModel} from './four-square';
+import Quote, {QuoteModel} from './quote';
+import Testimonials, { TestimonialModel } from './testimonials';
+import Disruption, {DisruptionModel} from './disruption';
+import Give, { GiveModel } from './give';
 import './impact.scss';
 
-function ImpactPage({data}) {
+type ImpactData = {
+    improvingAccess: {
+        content: FourSquareModel
+    }
+    reach: {
+        content: FourSquareModel
+    }
+    quote: {
+        content: QuoteModel
+    }
+    supporterCommunity: {
+        content: QuoteModel
+    }
+    disruption: {
+        content: DisruptionModel
+    }
+    makingADifference: {
+        content: TestimonialModel
+    }
+    giving: {
+        content: GiveModel
+    }
+}
+
+function ImpactPage({data}: {data: ImpactData}) {
     return (
         <React.Fragment>
             <FourSquare top={data.improvingAccess.content} bottom={data.reach.content} />
@@ -22,7 +46,7 @@ function ImpactPage({data}) {
                 <Disruption model={data.disruption.content} />
             </LazyLoad>
             <LazyLoad>
-                <Quote supporter noStrips model={data.supporterCommunity.content} />
+                <Quote noStrips model={data.supporterCommunity.content} />
             </LazyLoad>
             <Give model={data.giving.content} />
         </React.Fragment>

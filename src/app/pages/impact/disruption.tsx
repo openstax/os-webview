@@ -1,10 +1,23 @@
 import React from 'react';
 import './disruption.scss';
 
+export type DisruptionModel = {
+    heading: string;
+    description: string;
+    graph: {
+        image: {
+            image: string;
+            altText: string;
+        }
+    }
+}
+
 export default function Disruption({
     model: {
         heading, description, graph: {image: {image, altText: imageAlt}}
     }
+}: {
+    model: DisruptionModel
 }) {
     return (
         <section className="disruption-section off-white">

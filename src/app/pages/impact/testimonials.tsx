@@ -10,14 +10,43 @@ import ClippedImage from '~/components/clipped-image/clipped-image';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import './testimonials.scss';
 
-function LightboxContent({cards, position, articleData}) {
+export type TestimonialModel = {
+    heading: string;
+    description: string;
+    stories: Story[];
+}
+
+type Story = {
+    description: string;
+    storyText: string;
+    linkedStory: string;
+    image?: {file: string}
+    embeddedVideo: string;
+}
+
+type ArticleData = Parameters<typeof Article>[0]['data'] & {
+    meta?: {
+        html_url: string;
+    }
+    featured_image: {
+        meta: {
+            download_url: string;
+        }
+    }
+};
+
+function LightboxContent({cards, position, articleData}: {
+    cards: Story[];
+    position: number;
+    articleData: ArticleData;
+}) {
     const {embeddedVideo} = cards[position];
 
     if (!articleData) {
         return <div className="text-content"><h2>Loading</h2></div>;
     }
     // eslint-disable-next-line camelcase
-    articleData.article_image = embeddedVideo ? null : articleData.featured_image.meta.download_url;
+    articleData.articleImage = embeddedVideo ? '' : articleData.featured_image.meta.download_url;
 
     return (
         <div className="lightbox-article">
@@ -30,18 +59,22 @@ function LightboxContent({cards, position, articleData}) {
     );
 }
 
-function useDataFromCard(card) {
+function useDataFromCard(card: Story) {
     const slug = `pages/${card.linkedStory}`;
 
-    return useDataFromSlug(slug, true);
+    return useDataFromSlug<ArticleData>(slug, true);
 }
 
-function Card({position, cards}) {
+// eslint-disable-next-line complexity
+function Card({position, cards}: {
+    position: number;
+    cards: Story[];
+}) {
     const {image, storyText: description} = cards[position];
-    const articleData = useDataFromCard(cards[position]);
+    const articleData = useDataFromCard(cards[position]) as ArticleData;
     const [isOpen, toggle] = useToggle();
     const readMoreLink = articleData?.meta?.html_url;
-    const openDialog = React.useCallback((event) => {
+    const openDialog = React.useCallback((event: React.MouseEvent) => {
         event.preventDefault();
         toggle();
     }, [toggle]);
@@ -55,7 +88,7 @@ function Card({position, cards}) {
                 <div>{description}</div>
                 {articleData ? <LinkWithChevron
                     {...(readMoreLink
-                        ? {href: articleData.meta.html_url}
+                        ? {href: articleData.meta?.html_url}
                         : {href: 'lightbox-more', onClick: openDialog}
                     )}
                 >
@@ -73,7 +106,7 @@ function Card({position, cards}) {
     );
 }
 
-function useAtATime(container) {
+function useAtATime(container: HTMLElement) {
     const {innerWidth} = useWindowContext();
     const containerWidth = React.useMemo(
         () => container?.getBoundingClientRect().width,
@@ -89,7 +122,10 @@ function useAtATime(container) {
     return 1;
 }
 
-function TestimonialCarousel({stories, container}) {
+function TestimonialCarousel({stories, container}: {
+    stories: Story[];
+    container: HTMLElement;
+}) {
     const atATime = useAtATime(container);
 
     return (
@@ -107,8 +143,8 @@ export default function Testimonials({
     model: {
         heading, description, stories
     }
-}) {
-    const ref = React.useRef();
+}: {model: TestimonialModel}) {
+    const ref = React.useRef<HTMLDivElement>(null);
     const [container, refreshContainer] = useRefreshable(() => ref.current);
 
     React.useEffect(
@@ -122,7 +158,7 @@ export default function Testimonials({
                 <h2>{heading}</h2>
                 <RawHTML html={description} />
                 <WindowContextProvider>
-                    <TestimonialCarousel stories={stories} container={container} />
+                    <TestimonialCarousel stories={stories} container={container as HTMLDivElement} />
                 </WindowContextProvider>
             </div>
         </section>

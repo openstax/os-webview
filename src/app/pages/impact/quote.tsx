@@ -2,13 +2,25 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './quote.scss';
 
+export type QuoteModel = {
+    heading?: string;
+    quote: string;
+    image: {
+        image: string;
+        altText: string;
+    }
+} & ({
+    linkHref: string;
+    linkText: string;
+} | never);
+
 export default function Quote({
     model: {
         heading, quote: quoteBody, image: {image: portraitSrc, altText: portraitAlt},
         linkHref, linkText
     },
     noStrips=false
-}) {
+}: {model: QuoteModel; noStrips?: boolean}) {
     return (
         <section className="founder-quote">
             {

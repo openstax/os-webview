@@ -4,7 +4,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import './four-square.scss';
 
-type Model = {
+export type Model = {
     heading: string;
     image: {
         image: string;
