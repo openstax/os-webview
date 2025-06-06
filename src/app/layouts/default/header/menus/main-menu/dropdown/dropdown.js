@@ -80,6 +80,7 @@ export default function Dropdown({
                     id={ddId}
                     dropdownRef={dropdownRef}
                     navAnalytics={navAnalytics}
+                    label={label}
                 >
                     {children}
                 </DropdownContents>

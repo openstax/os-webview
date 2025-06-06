@@ -42,8 +42,8 @@ function LightboxContent({cards, position, articleData}: {
 }) {
     const {embeddedVideo} = cards[position];
 
-    // eslint-disable-next-line camelcase
     articleData.articleImage = embeddedVideo ? '' : articleData.featured_image?.meta.download_url;
+    articleData.tags ||= [];
 
     return (
         <div className="lightbox-article">
