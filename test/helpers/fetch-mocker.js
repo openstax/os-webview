@@ -31,6 +31,7 @@ import pageData from '../src/data/partners';
 import polishData from '../src/data/details-polish';
 import pressData from '../src/data/press';
 import pressArticleData from '../src/data/press-article';
+import researchData from '../src/data/research';
 import renewalData from '../src/data/renewal';
 import rolesData from '../src/data/roles';
 import salesforceData from '../src/data/salesforce';
@@ -85,6 +86,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isPress = (/api\/press\/\?/).test(args[0]);
     const isPressArticle = (/api\/press\/[a-z]/).test(args[0]);
     const isRenewal = args[0].includes('renewal?account_uuid');
+    const isResearch = args[0].includes('pages/research');
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
     const isSearchCollection = args[0].includes('/search/?collection=');
@@ -187,6 +189,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = archiveData;
             } else if (isBooks) {
                 payload = booksData;
+            } else if (isResearch) {
+                payload = researchData;
             } else if (isBuyprint) {
                 payload = buyprintData;
             } else if (isSalesforceForms) {

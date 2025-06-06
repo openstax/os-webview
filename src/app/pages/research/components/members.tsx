@@ -90,7 +90,7 @@ export const MembersSection = ({data: {peopleHeader, currentMembers, collaborati
             <TabAccordionCombo>
                 {/* @ts-expect-error-next-line label and selected are not known attributes */}
                 <div label='Current Members' selected>
-                    <MemberGrid>
+                    <MemberGrid id="member-grid">
                         {members.map((member, index) =>
                             <Member
                                 member={member}
@@ -101,6 +101,9 @@ export const MembersSection = ({data: {peopleHeader, currentMembers, collaborati
                     </MemberGrid>
                     <p
                         className='py-4 mobile-only'
+                        role="button"
+                        aria-expanded={viewAll}
+                        aria-controls="member-grid"
                         onClick={() => {
                             if (viewAll) {
                                 scrollToMembers();
@@ -168,13 +171,12 @@ const Member = ({ member, displayName }: {
                 width={145}
                 alt={member.photo.title}
                 src={member.photo.file}
-                tabIndex={0}
-                onClick={() => setShow(true)}
             />
             <span
                 css={{marginTop: '1.5rem', textAlign: 'center'}}
                 className='link-text'
                 tabIndex={0}
+                role="button"
                 onClick={() => setShow(true)}
             >
                 {displayName}

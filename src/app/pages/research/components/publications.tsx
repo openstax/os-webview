@@ -36,12 +36,15 @@ export const Publications = ({data: {publicationHeader, publications}}: {
 
     return (
         <Section>
-            <Box direction='column' ref={publicationsRef}>
+            <Box direction='column' ref={publicationsRef} id="publication-list">
                 <h2>{publicationHeader}</h2>
                 {publicationList.map((publication, index) =>
                     <PublicationItem key={index} publication={publication} />
                 )}
                 <span
+                    role="button"
+                    aria-expanded={viewAll}
+                    aria-controls="publication-list"
                     className='py-4'
                     onClick={() => {
                         if (viewAll) {
