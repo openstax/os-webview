@@ -64,43 +64,47 @@ type MemberData = {
     longTitle?: string;
     title: string;
     photo: {file: string; title: string};
-}
+};
 
-type AlumnusData = {name: string; title: string; linkedIn: string}
+type AlumnusData = {name: string; title: string; linkedIn: string};
 
-export const MembersSection = ({data: {peopleHeader, currentMembers, collaboratingResearchers, alumni }}: {
+export const MembersSection = ({
+    data: {peopleHeader, currentMembers, collaboratingResearchers, alumni}
+}: {
     data: {
         peopleHeader: string;
         currentMembers: MemberData[];
         collaboratingResearchers: MemberData[];
         alumni: AlumnusData[];
-    }
+    };
 }) => {
     const [viewAll, setViewAll] = useState(!isMobileDisplay());
     const membersRef = useRef<HTMLDivElement>(null);
     const scrollToMembers = () => {
-        membersRef.current?.scrollIntoView({ behavior: 'smooth' });
+        membersRef.current?.scrollIntoView({behavior: 'smooth'});
     };
 
     const members = viewAll ? currentMembers : currentMembers.slice(0, 4);
 
     return (
         <Section backgroundColor={colors.lightGrayBackground}>
-            <h2 className='pb-2' ref={membersRef}>{peopleHeader}</h2>
+            <h2 className="pb-2" ref={membersRef}>
+                {peopleHeader}
+            </h2>
             <TabAccordionCombo>
                 {/* @ts-expect-error-next-line label and selected are not known attributes */}
-                <div label='Current Members' selected>
+                <div label="Current Members" selected>
                     <MemberGrid id="member-grid">
-                        {members.map((member, index) =>
+                        {members.map((member, index) => (
                             <Member
                                 member={member}
                                 key={index}
                                 displayName={member.firstName}
                             />
-                        )}
+                        ))}
                     </MemberGrid>
                     <p
-                        className='py-4 mobile-only'
+                        className="py-4 mobile-only"
                         role="button"
                         aria-expanded={viewAll}
                         aria-controls="member-grid"
@@ -116,29 +120,31 @@ export const MembersSection = ({data: {peopleHeader, currentMembers, collaborati
                             textAlign: 'center'
                         }}
                     >
-                        <FontAwesomeIcon icon={viewAll ? faChevronUp : faChevronDown}></FontAwesomeIcon>
+                        <FontAwesomeIcon
+                            icon={viewAll ? faChevronUp : faChevronDown}
+                        ></FontAwesomeIcon>
                         &nbsp;
                         {viewAll ? 'View Less' : 'View All Current Members'}
                     </p>
                 </div>
                 {/* @ts-expect-error-next-line label is not a known attribute */}
-                <div label='Collaborating Researchers'>
+                <div label="Collaborating Researchers">
                     <CollaboratorGrid>
-                        {collaboratingResearchers.map((member, index) =>
+                        {collaboratingResearchers.map((member, index) => (
                             <Member
                                 member={member}
                                 key={index}
                                 displayName={`${member.firstName} ${member.lastName}`}
                             />
-                        )}
+                        ))}
                     </CollaboratorGrid>
                 </div>
                 {/* @ts-expect-error-next-line label is not a known attribute */}
-                <div label='Alumni'>
+                <div label="Alumni">
                     <AlumniGrid>
-                        {alumni.map((alumnus, index) =>
+                        {alumni.map((alumnus, index) => (
                             <Alumnus alumnus={alumnus} key={index} />
-                        )}
+                        ))}
                     </AlumniGrid>
                 </div>
             </TabAccordionCombo>
@@ -146,26 +152,38 @@ export const MembersSection = ({data: {peopleHeader, currentMembers, collaborati
     );
 };
 
-const MemberModal = ({ member, isOpen, onHide }: {
+const MemberModal = ({
+    member,
+    isOpen,
+    onHide
+}: {
     member: MemberData;
     isOpen: boolean;
     onHide?: () => void;
 }) => {
     return (
-        <Dialog className='member-modal' onPutAway={onHide} isOpen={isOpen} closeOnOutsideClick={true}>
+        <Dialog
+            className="member-modal"
+            onPutAway={onHide}
+            isOpen={isOpen}
+            closeOnOutsideClick={true}
+        >
             <MemberDetails member={member} />
         </Dialog>
     );
 };
 
-const Member = ({ member, displayName }: {
+const Member = ({
+    member,
+    displayName
+}: {
     member: MemberData;
     displayName: string;
 }) => {
     const [show, setShow] = useState(false);
 
     return (
-        <Box direction='column' align='center' className='text-center'>
+        <Box direction="column" align="center" className="text-center">
             <img
                 height={145}
                 width={145}
@@ -174,7 +192,7 @@ const Member = ({ member, displayName }: {
             />
             <span
                 css={{marginTop: '1.5rem', textAlign: 'center'}}
-                className='link-text'
+                className="link-text"
                 tabIndex={0}
                 role="button"
                 onClick={() => setShow(true)}
@@ -182,21 +200,30 @@ const Member = ({ member, displayName }: {
                 {displayName}
             </span>
             <small css={{textAlign: 'center'}}>{member.title}</small>
-            <MemberModal member={member} isOpen={show} onHide={() => setShow(false)} />
+            <MemberModal
+                member={member}
+                isOpen={show}
+                onHide={() => setShow(false)}
+            />
         </Box>
     );
 };
 
-const MemberDetails = ({ member }: {member: MemberData}) => {
+const MemberDetails = ({member}: {member: MemberData}) => {
     return (
         <Box
             css={{
                 fontSize: 15,
                 margin: '20px'
-            }}>
-            <Box gap='large'>
-                <MemberImage className='desktop-only' src={member.photo.file} alt={member.firstName} />
-                <Box direction='column' gap='large'>
+            }}
+        >
+            <Box gap="large">
+                <MemberImage
+                    className="desktop-only"
+                    src={member.photo.file}
+                    alt={member.firstName}
+                />
+                <Box direction="column" gap="large">
                     <MemberInfo member={member} />
                     <MemberEducation member={member} />
                     <MemberResearchInterest member={member} />
@@ -218,13 +245,19 @@ const MemberImage = styled.img({
     }
 });
 
-const MemberInfo = ({ member }: {member: MemberData}) => {
+const MemberInfo = ({member}: {member: MemberData}) => {
     return (
-        <Box align='center' gap='large'>
-            <MemberImage className='mobile-only' src={member.photo.file} alt={member.firstName} />
-            <Box direction='column'>
-                <h4>{member.firstName} {member.lastName}</h4>
-                <span css={{ color: colors.grayText }}>
+        <Box align="center" gap="large">
+            <MemberImage
+                className="mobile-only"
+                src={member.photo.file}
+                alt={member.firstName}
+            />
+            <Box direction="column">
+                <h4>
+                    {member.firstName} {member.lastName}
+                </h4>
+                <span css={{color: colors.grayText}}>
                     {member.longTitle || member.title}
                 </span>
             </Box>
@@ -232,56 +265,79 @@ const MemberInfo = ({ member }: {member: MemberData}) => {
     );
 };
 
-const MemberEducation = ({ member }: {member: MemberData}) => {
+const MemberEducation = ({member}: {member: MemberData}) => {
     if (!member.education) {
         return null;
     }
     return (
-        <Box direction='column'>
+        <Box direction="column">
             <h4>Education</h4>
             <span>
                 {member.education}
                 <br />
-                {member.specialization && <span css={{ color: colors.grayText }}>{member.specialization}</span>}
+                {member.specialization && (
+                    <span css={{color: colors.grayText}}>
+                        {member.specialization}
+                    </span>
+                )}
             </span>
         </Box>
     );
 };
 
-const MemberResearchInterest = ({ member }: {member: MemberData}) => {
+const MemberResearchInterest = ({member}: {member: MemberData}) => {
     if (!member.researchInterest) {
         return null;
     }
     return (
-        <Box direction='column'>
+        <Box direction="column">
             <h4>Research Interest</h4>
             <span>{member.researchInterest}</span>
         </Box>
     );
 };
 
-export const MemberBio = ({ member }: {member: MemberData}) => {
+export const MemberBio = ({member}: {member: MemberData}) => {
     return (
-        <Box direction='column'>
+        <Box direction="column">
             <h4>Bio</h4>
             <span>{member.bio}</span>
         </Box>
     );
 };
 
-const MemberLinks = ({ member }: {member: MemberData}) => {
+const MemberLinks = ({member}: {member: MemberData}) => {
     return (
-        <Box gap='large'>
-            {member.linkedIn && <a href={member.linkedIn} target='_blank' rel="noreferrer">LinkedIn</a>}
-            {member.googleScholar && <a href={member.googleScholar} target='_blank' rel="noreferrer">Google Scholar</a>}
-            {member.website && <a href={member.website} target='_blank' rel="noreferrer">Website</a>}
+        <Box gap="large">
+            {member.linkedIn && (
+                <a href={member.linkedIn} target="_blank" rel="noreferrer">
+                    LinkedIn
+                </a>
+            )}
+            {member.googleScholar && (
+                <a href={member.googleScholar} target="_blank" rel="noreferrer">
+                    Google Scholar
+                </a>
+            )}
+            {member.website && (
+                <a href={member.website} target="_blank" rel="noreferrer">
+                    Website
+                </a>
+            )}
         </Box>
     );
 };
 
-const Alumnus = ({ alumnus }: {alumnus: AlumnusData}) => (
-    <Box direction={{ mobile: 'column' }} align='center' justify='center' gap>
-        <a css={{ flex: 1 }} href={alumnus.linkedIn} target='_blank' rel="noreferrer">{alumnus.name}</a>
-        <span css={{ flex: 3, color: colors.grayText }}>{alumnus.title}</span>
+const Alumnus = ({alumnus}: {alumnus: AlumnusData}) => (
+    <Box direction={{mobile: 'column'}} align="center" justify="center" gap>
+        <a
+            css={{flex: 1}}
+            href={alumnus.linkedIn}
+            target="_blank"
+            rel="noreferrer"
+        >
+            {alumnus.name}
+        </a>
+        <span css={{flex: 3, color: colors.grayText}}>{alumnus.title}</span>
     </Box>
 );

@@ -17,35 +17,39 @@ type Publication = {
     authors: string;
     excerpt: string;
     github?: string;
-}
+};
 
-export const Publications = ({data: {publicationHeader, publications}}: {
+export const Publications = ({
+    data: {publicationHeader, publications}
+}: {
     data: {
         publicationHeader: string;
         publications: Publication[];
-    }
+    };
 }) => {
     const [viewAll, setViewAll] = useState(false);
     const initialCount = isMobileDisplay() ? 3 : 5;
-    const publicationList = viewAll ? publications : publications.slice(0, initialCount);
+    const publicationList = viewAll
+        ? publications
+        : publications.slice(0, initialCount);
 
     const publicationsRef = useRef<HTMLDivElement>(null);
     const scrollToPublications = () => {
-        publicationsRef.current?.scrollIntoView({ behavior: 'smooth' });
+        publicationsRef.current?.scrollIntoView({behavior: 'smooth'});
     };
 
     return (
         <Section>
-            <Box direction='column' ref={publicationsRef} id="publication-list">
+            <Box direction="column" ref={publicationsRef} id="publication-list">
                 <h2>{publicationHeader}</h2>
-                {publicationList.map((publication, index) =>
+                {publicationList.map((publication, index) => (
                     <PublicationItem key={index} publication={publication} />
-                )}
+                ))}
                 <span
                     role="button"
                     aria-expanded={viewAll}
                     aria-controls="publication-list"
-                    className='py-4'
+                    className="py-4"
                     onClick={() => {
                         if (viewAll) {
                             scrollToPublications();
@@ -56,8 +60,11 @@ export const Publications = ({data: {publicationHeader, publications}}: {
                         cursor: 'pointer',
                         color: colors.linkText,
                         alignSelf: 'center'
-                    }}>
-                    <FontAwesomeIcon icon={viewAll ? faChevronUp : faChevronDown} />
+                    }}
+                >
+                    <FontAwesomeIcon
+                        icon={viewAll ? faChevronUp : faChevronDown}
+                    />
                     &nbsp;
                     {viewAll ? 'View Less' : 'View All Publications'}
                 </span>
@@ -66,33 +73,59 @@ export const Publications = ({data: {publicationHeader, publications}}: {
     );
 };
 
-const PublicationItem = ({ publication }: {publication: Publication}) => (
-    <Box direction='column' padding={{vertical: 'large'}} css={{ lineHeight: 1.8 }}>
+const PublicationItem = ({publication}: {publication: Publication}) => (
+    <Box
+        direction="column"
+        padding={{vertical: 'large'}}
+        css={{lineHeight: 1.8}}
+    >
         <div>
-            <a className='large-link' href={publication.pdf} target='_blank' rel="noreferrer">
+            <a
+                className="large-link"
+                href={publication.pdf}
+                target="_blank"
+                rel="noreferrer"
+            >
                 {publication.title}
             </a>
         </div>
         <div>
             <span>{publication.date} &middot;&nbsp;</span>
-            <span css={{ color: colors.grayText }}>
+            <span css={{color: colors.grayText}}>
                 {publication.authors} {publication.excerpt}
             </span>
         </div>
-        <Box gap='xlarge'>
-            <a className='text-decoration-none' href={publication.pdf} target='_blank' rel="noreferrer">
-                <Box align='center' gap>
+        <Box gap="xlarge">
+            <a
+                className="text-decoration-none"
+                href={publication.pdf}
+                target="_blank"
+                rel="noreferrer"
+            >
+                <Box align="center" gap>
                     <span>Pdf</span>
-                    <FontAwesomeIcon size='sm' icon={faArrowUpRightFromSquare} />
+                    <FontAwesomeIcon
+                        size="sm"
+                        icon={faArrowUpRightFromSquare}
+                    />
                 </Box>
             </a>
-            {publication.github &&
-                <a className='text-decoration-none' href={publication.github} target='_blank' rel="noreferrer">
-                    <Box align='center' gap>
+            {publication.github && (
+                <a
+                    className="text-decoration-none"
+                    href={publication.github}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <Box align="center" gap>
                         <span>Github</span>
-                        <FontAwesomeIcon size='sm' icon={faArrowUpRightFromSquare} />
+                        <FontAwesomeIcon
+                            size="sm"
+                            icon={faArrowUpRightFromSquare}
+                        />
                     </Box>
-                </a>}
+                </a>
+            )}
         </Box>
     </Box>
 );

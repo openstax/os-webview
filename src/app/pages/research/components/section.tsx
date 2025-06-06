@@ -2,7 +2,11 @@
 import {jsx} from '@emotion/react';
 import {colors, media} from '~/pages/research/theme';
 
-export const Section = ({ children, backgroundColor=colors.white, padding = true }: React.PropsWithChildren<{
+export const Section = ({
+    children,
+    backgroundColor = colors.white,
+    padding = true
+}: React.PropsWithChildren<{
     backgroundColor?: string;
     padding?: boolean;
 }>) => {
@@ -14,10 +18,9 @@ export const Section = ({ children, backgroundColor=colors.white, padding = true
                 [media.mobile]: {
                     padding: padding ? '50px 0' : '0'
                 }
-            }}>
-            <div className='content'>
-                {children}
-            </div>
+            }}
+        >
+            <div className="content">{children}</div>
         </div>
     );
 };
