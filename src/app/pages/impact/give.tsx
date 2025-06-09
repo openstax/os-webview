@@ -9,15 +9,21 @@ export type GiveModel = {
     nonprofitStatement: string;
     annualReportLinkHref: string;
     annualReportLinkText: string;
-}
+};
 
 export default function Give({
     model: {
-        heading, description, linkHref, linkText,
+        heading,
+        description,
+        linkHref,
+        linkText,
         nonprofitStatement,
-        annualReportLinkHref, annualReportLinkText
+        annualReportLinkHref,
+        annualReportLinkText
     }
-}: {model: GiveModel}) {
+}: {
+    model: GiveModel;
+}) {
     return (
         <section className="give-section">
             <div className="text-content">

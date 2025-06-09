@@ -14,43 +14,52 @@ export type TestimonialModel = {
     heading: string;
     description: string;
     stories: Story[];
-}
+};
 
 type Story = {
     description: string;
     storyText: string;
     linkedStory: string;
-    image?: {file: string}
+    image?: {file: string};
     embeddedVideo: string;
-}
+};
 
 type ArticleData = Parameters<typeof Article>[0]['data'] & {
     meta?: {
         html_url: string;
-    }
+    };
     featured_image: {
         meta: {
             download_url: string;
-        }
-    }
+        };
+    };
 };
 
-function LightboxContent({cards, position, articleData}: {
+function LightboxContent({
+    cards,
+    position,
+    articleData
+}: {
     cards: Story[];
     position: number;
     articleData: ArticleData;
 }) {
     const {embeddedVideo} = cards[position];
 
-    articleData.articleImage = embeddedVideo ? '' : articleData.featured_image?.meta.download_url;
+    articleData.articleImage = embeddedVideo
+        ? ''
+        : articleData.featured_image?.meta.download_url;
     articleData.tags ||= [];
 
     return (
         <div className="lightbox-article">
-            {
-                embeddedVideo &&
-                    <RawHTML className="embedded-video" html={embeddedVideo} embed />
-            }
+            {embeddedVideo && (
+                <RawHTML
+                    className="embedded-video"
+                    html={embeddedVideo}
+                    embed
+                />
+            )}
             <Article data={articleData} />
         </div>
     );
@@ -63,19 +72,19 @@ function useDataFromCard(card: Story) {
 }
 
 // eslint-disable-next-line complexity
-function Card({position, cards}: {
-    position: number;
-    cards: Story[];
-}) {
+function Card({position, cards}: {position: number; cards: Story[]}) {
     const {image, storyText: description} = cards[position];
     const articleData = useDataFromCard(cards[position]);
 
     const [isOpen, toggle] = useToggle();
     const readMoreLink = articleData?.meta?.html_url;
-    const openDialog = React.useCallback((event: React.MouseEvent) => {
-        event.preventDefault();
-        toggle();
-    }, [toggle]);
+    const openDialog = React.useCallback(
+        (event: React.MouseEvent) => {
+            event.preventDefault();
+            toggle();
+        },
+        [toggle]
+    );
 
     if (!articleData) {
         return null;
@@ -91,17 +100,26 @@ function Card({position, cards}: {
                 <LinkWithChevron
                     {...(readMoreLink
                         ? {href: articleData.meta?.html_url}
-                        : {href: 'lightbox-more', onClick: openDialog, 'data-opens-in-lightbox': 'true'}
-                    )}
+                        : {
+                              href: 'lightbox-more',
+                              onClick: openDialog,
+                              'data-opens-in-lightbox': 'true'
+                          })}
                 >
                     Read more
                 </LinkWithChevron>
             </div>
             <Dialog
-                isOpen={isOpen} onPutAway={toggle} className="impact-testimonial"
+                isOpen={isOpen}
+                onPutAway={toggle}
+                className="impact-testimonial"
             >
                 <div className="lightbox-testimonial">
-                    <LightboxContent cards={cards} position={position} articleData={articleData} />
+                    <LightboxContent
+                        cards={cards}
+                        position={position}
+                        articleData={articleData}
+                    />
                 </div>
             </Dialog>
         </div>
@@ -118,35 +136,33 @@ function useAtATime(container: HTMLElement) {
     return Math.min(3, Math.floor(containerWidth / 300));
 }
 
-function TestimonialCarousel({stories, container}: {
+function TestimonialCarousel({
+    stories,
+    container
+}: {
     stories: Story[];
     container: HTMLElement;
 }) {
     const atATime = useAtATime(container);
 
     return (
-        <Carousel atATime={atATime} hoverTextThing='stories'>
-        {
-            stories.map((c, i) =>
+        <Carousel atATime={atATime} hoverTextThing="stories">
+            {stories.map((c, i) => (
                 <Card cards={stories} position={i} key={c.description} />
-            )
-        }
+            ))}
         </Carousel>
     );
 }
 
 export default function Testimonials({
-    model: {
-        heading, description, stories
-    }
-}: {model: TestimonialModel}) {
+    model: {heading, description, stories}
+}: {
+    model: TestimonialModel;
+}) {
     const ref = React.useRef<HTMLDivElement>(null);
     const [container, refreshContainer] = useRefreshable(() => ref.current);
 
-    React.useEffect(
-        () => refreshContainer(),
-        [refreshContainer]
-    );
+    React.useEffect(() => refreshContainer(), [refreshContainer]);
 
     return (
         <section className="testimonials off-white">
@@ -154,7 +170,12 @@ export default function Testimonials({
                 <h2>{heading}</h2>
                 <RawHTML html={description} />
                 <WindowContextProvider>
-                    {container && <TestimonialCarousel stories={stories} container={container} />}
+                    {container && (
+                        <TestimonialCarousel
+                            stories={stories}
+                            container={container}
+                        />
+                    )}
                 </WindowContextProvider>
             </div>
         </section>

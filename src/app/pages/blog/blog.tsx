@@ -18,7 +18,10 @@ export default function LoadBlog() {
                 <Routes>
                     <Route path="" element={<TopLevelPage />} />
                     <Route path="latest" element={<LatestBlogPosts />} />
-                    <Route path="explore/:exploreType/:topic" element={<ExplorePage />} />
+                    <Route
+                        path="explore/:exploreType/:topic"
+                        element={<ExplorePage />}
+                    />
                     <Route path=":slug" element={<ArticlePage />} />
                 </Routes>
             </BlogContextProvider>
