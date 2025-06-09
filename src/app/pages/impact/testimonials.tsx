@@ -42,11 +42,8 @@ function LightboxContent({cards, position, articleData}: {
 }) {
     const {embeddedVideo} = cards[position];
 
-    if (!articleData) {
-        return <div className="text-content"><h2>Loading</h2></div>;
-    }
     // eslint-disable-next-line camelcase
-    articleData.articleImage = embeddedVideo ? '' : articleData.featured_image.meta.download_url;
+    articleData.articleImage = embeddedVideo ? '' : articleData.featured_image?.meta.download_url;
 
     return (
         <div className="lightbox-article">
@@ -71,13 +68,18 @@ function Card({position, cards}: {
     cards: Story[];
 }) {
     const {image, storyText: description} = cards[position];
-    const articleData = useDataFromCard(cards[position]) as ArticleData;
+    const articleData = useDataFromCard(cards[position]);
+
     const [isOpen, toggle] = useToggle();
     const readMoreLink = articleData?.meta?.html_url;
     const openDialog = React.useCallback((event: React.MouseEvent) => {
         event.preventDefault();
         toggle();
     }, [toggle]);
+
+    if (!articleData) {
+        return null;
+    }
 
     return (
         <div className="card">
@@ -86,14 +88,14 @@ function Card({position, cards}: {
             </div>
             <div className="text-part">
                 <div>{description}</div>
-                {articleData ? <LinkWithChevron
+                <LinkWithChevron
                     {...(readMoreLink
                         ? {href: articleData.meta?.html_url}
-                        : {href: 'lightbox-more', onClick: openDialog}
+                        : {href: 'lightbox-more', onClick: openDialog, 'data-opens-in-lightbox': 'true'}
                     )}
                 >
                     Read more
-                </LinkWithChevron> : null}
+                </LinkWithChevron>
             </div>
             <Dialog
                 isOpen={isOpen} onPutAway={toggle} className="impact-testimonial"
@@ -113,13 +115,7 @@ function useAtATime(container: HTMLElement) {
         [innerWidth, container] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
-    if (containerWidth > 900) {
-        return 3;
-    }
-    if (containerWidth > 600) {
-        return 2;
-    }
-    return 1;
+    return Math.min(3, Math.floor(containerWidth / 300));
 }
 
 function TestimonialCarousel({stories, container}: {
@@ -158,7 +154,7 @@ export default function Testimonials({
                 <h2>{heading}</h2>
                 <RawHTML html={description} />
                 <WindowContextProvider>
-                    <TestimonialCarousel stories={stories} container={container as HTMLDivElement} />
+                    {container && <TestimonialCarousel stories={stories} container={container} />}
                 </WindowContextProvider>
             </div>
         </section>
