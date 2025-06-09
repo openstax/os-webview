@@ -364,6 +364,7 @@ function bookListBlock(): ContentBlockConfig {
                     coverUrl: 'cover-url',
                     bookState: 'book-state',
                     promoteSnippet: [],
+                    bookstoreComingSoon: false
                 }
             ]
         }
