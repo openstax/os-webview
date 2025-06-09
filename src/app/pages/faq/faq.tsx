@@ -1,5 +1,4 @@
 import React from 'react';
-import {useToggle} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import cn from 'classnames';
@@ -54,25 +53,14 @@ type QAData = {
 }
 
 function QuestionAndAnswer({qa}: {qa: QAData}) {
-    const slug = window.location.hash.substr(1);
-    const initiallyOpen = slug === qa.slug;
-    const [open, toggle] = useToggle(initiallyOpen);
-    const ref = React.useRef<HTMLDivElement>(null);
-
-    React.useEffect(() => {
-        if (initiallyOpen) {
-            ref.current?.scrollIntoView({block: 'center'});
-        }
-    }, [initiallyOpen]);
-
     return (
-        <div
-            id={qa.slug} key={qa.slug} ref={ref} className={cn('qa', {open})}
+        <details
+            id={qa.slug} key={qa.slug} className={cn('qa', {open})}
         >
-            <RawHTML className="question" html={qa.question} onClick={() => toggle()} />
+            <RawHTML Tag='summary' className="question" html={qa.question} />
             <RawHTML className="answer" html={qa.answer} />
             {qa.document && <Document document={qa.document} />}
-        </div>
+        </details>
     );
 }
 

@@ -49,14 +49,6 @@
             }
         }
 
-        &:not(.open) .question > p::before {
-            content: '+ ';
-        }
-
-        &.open .question > p::before {
-            content: '– '; //n-dash
-        }
-
         .answer {
             display: none;
             margin-left: 1em;
