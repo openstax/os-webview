@@ -2,20 +2,13 @@ import React from 'react';
 import cn from 'classnames';
 import './BookListBlock.scss';
 import BookTile from '~/components/book-tile/book-tile-display';
+import type {Book} from '~/pages/subjects/new/specific/context';
 
 /*
  * the book data formatting in the CMS is currently fragemented,
  * when it gets centralized we can centralize the types as well
  */
-export type BookInfo = {
-    id: number;
-    slug: string;
-    title: string;
-    webviewRexLink: string;
-    webviewLink: string;
-    highResolutionPdfUrl: string;
-    lowResolutionPdfUrl: string;
-    coverUrl: string;
+export type BookInfo = Book & {
     bookState: string;
     promoteSnippet: {
         value: {

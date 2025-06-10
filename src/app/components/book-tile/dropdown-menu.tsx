@@ -49,7 +49,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
                     warning={warning}
                     id={bookInfo.id.toString()}
                 />
-                <PrintOption slug={bookInfo.slug} />
+                {bookInfo.bookstoreComingSoon ? null : <PrintOption slug={bookInfo.slug} />}
                 <hr />
                 <MenuItem
                     defaultMessage="Instructor resources"
