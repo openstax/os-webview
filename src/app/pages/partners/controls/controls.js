@@ -118,8 +118,6 @@ export default function Controls({advancedFilterOptions, typeOptions}) {
                     <OptionsList items={typeOptions} selected={types} />
                 </BaseButton>
                 <BaseButton label="Advanced Filters" {...commonButtonProps} size={advanced.size} />
-            </div>
-            <div className="other-controls">
                 <BaseButton label="Sort" {...commonButtonProps}>
                     <OptionsList items={sortOptions} selected={sort} />
                 </BaseButton>
