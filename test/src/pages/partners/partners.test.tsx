@@ -99,13 +99,13 @@ describe('partners full page', () => {
 
         expect(buttons).toHaveLength(6);
         await screen.findByText('Carolina Distance Learning');
-        expect(screen.getAllByRole('link')).toHaveLength(21);
+        expect(screen.getAllByRole('link')).toHaveLength(23);
         await user.click(buttons[1]);
         const options = screen.getAllByRole('option');
 
         expect(options).toHaveLength(7);
         await user.click(options[3]);
-        expect(screen.getAllByRole('link')).toHaveLength(4);
+        expect(screen.getAllByRole('link')).toHaveLength(6);
     });
     it('respects location.state.book', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
@@ -139,11 +139,14 @@ describe('partners full page', () => {
         await user.click(bookButton);
         const checkboxes = screen.getAllByRole('checkbox');
 
-        expect(screen.getAllByRole('link')).toHaveLength(21);
+        expect(screen.getAllByRole('link')).toHaveLength(23);
         expect(checkboxes).toHaveLength(48);
         await user.click(checkboxes[3]);
-        expect(screen.getAllByRole('link')).toHaveLength(7);
+        expect(screen.getAllByRole('link')).toHaveLength(9);
         await user.click(bookButton);
+        expect(screen.getAllByRole('link')).toHaveLength(9);
+        await user.click(checkboxes[3]);
+        expect(checkboxes).toHaveLength(48);
     });
     it('filters by advanced filter', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
@@ -261,7 +264,7 @@ describe('partners full page', () => {
         expect(console.warn).toHaveBeenCalledWith('Book not found:', '');
         console.warn = saveWarn;
     });
-    it('displays sidebar of startups', async () => {
+    it('displays startups section', async () => {
         /* eslint-disable camelcase */
         sfPartners[0].partnership_level = 'startup';
         sfPartners[1].partner_anniversary_date = '2020-03-04';
@@ -269,8 +272,8 @@ describe('partners full page', () => {
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
         const startupHeading = await screen.findByRole('heading', {
-            level: 2,
-            name: 'Startups'
+            level: 3,
+            name: 'Startups as partners'
         });
 
         expect(startupHeading.parentNode?.textContent).toContain(
@@ -279,18 +282,6 @@ describe('partners full page', () => {
         sfPartners[0].partnership_level = 'Full partner';
         sfPartners[1].partner_anniversary_date = null;
         sfPartners[2].partner_anniversary_date = null;
-        /* eslint-enable camelcase */
-    });
-    it('displays no sidebar when no other partners are displayed', async () => {
-        /* eslint-disable camelcase */
-        sfPartners.map((p) => {
-            p.partnership_level = 'startup';
-        });
-        sfPartners[0].partnership_level = 'Full partner';
-        mockSfPartners.mockResolvedValue(sfPartners);
-        render(<Component />);
-        await screen.findByRole('heading', {level: 2, name: 'Startups'});
-        sfPartners.map((p) => (p.partnership_level = 'Full partner')); // eslint-disable-line
         /* eslint-enable camelcase */
     });
     it('toggles mobile controls', async () => {
