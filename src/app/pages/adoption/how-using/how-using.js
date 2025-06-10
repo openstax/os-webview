@@ -50,7 +50,7 @@ function HowUsingBook({book, dispatch}) {
     };
 
     adoptionOptions.forEach((opt) => {
-        opt.text = adoptionTexts[opt.key];
+        opt.label = adoptionTexts[opt.key];
     });
 
     return (
