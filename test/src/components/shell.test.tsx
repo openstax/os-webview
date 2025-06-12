@@ -1,11 +1,12 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import AppElement from '~/components/shell/shell';
-import {BrowserRouter, MemoryRouter as MR} from 'react-router-dom';
+import * as RRD from 'react-router-dom';
+import * as CF from '~/helpers/cms-fetch';
+import MR from '~/../../test/helpers/future-memory-router';
 import ReactModal from 'react-modal';
 
-// @ts-expect-error does not exist on
-const {routerFuture} = global;
+const {BrowserRouter} = RRD;
 
 jest.mock('react-router-dom', () => {
     const actualRouterDom = jest.requireActual('react-router-dom');
@@ -37,7 +38,7 @@ describe('shell', () => {
         console.warn = jest.fn();
         console.debug = jest.fn();
         (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/embedded/contact']} future={routerFuture}>{children}</MR>
+            <MR initialEntries={['/embedded/contact']} >{children}</MR>
         ));
 
         render(AppElement);
@@ -46,7 +47,7 @@ describe('shell', () => {
     });
     it('Delivers normal contact page', async () => {
         (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/contact']} future={routerFuture}>{children}</MR>
+            <MR initialEntries={['/contact']}>{children}</MR>
         ));
 
         render(AppElement);
@@ -62,5 +63,25 @@ describe('shell', () => {
 
         (ReactModal.setAppElement as jest.Mock).mockImplementation(() => externalResolution('ok'));
         await modalCalled;
+    });
+    it('delivers press page in a portal', async () => {
+        jest.spyOn(CF, 'default').mockImplementation((path) => {
+            if (path.includes('books?')) {
+                return Promise.resolve({books: []});
+            }
+            if (path.includes('pages/?type')) {
+                return Promise.resolve({items: []});
+            }
+            return Promise.resolve([]);
+        });
+        (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
+            <MR initialEntries={['/some-portal/press']}>{children}</MR>
+        ));
+        jest.spyOn(RRD, 'useParams').mockReturnValue({portal: 'some-portal', '*': '/contact'});
+
+        render(AppElement);
+        const pressLink = await screen.findByRole('link', {name: 'Press'});
+
+        expect(pressLink.getAttribute('href')).toBe('/some-portal/press');
     });
 });
