@@ -1,16 +1,16 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
-import {BrowserRouter, MemoryRouter, Routes, Route} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import useBlogContext, {
     BlogContextProvider,
     assertTType
 } from '~/pages/blog/blog-context';
+import BlogLoader from '~/pages/blog/blog';
 import {
-    MainBlogPage,
     ArticlePage,
     SearchResultsPage
 } from '~/pages/blog/blog-pages';
-import {MainClassContextProvider} from '~/contexts/main-class';
 import {describe, test, expect} from '@jest/globals';
 import * as PDU from '~/helpers/page-data-utils';
 
@@ -21,20 +21,22 @@ describe('blog pages', () => {
         description.setAttribute('name', 'description');
         document.head.appendChild(description);
     });
-    test('Main page', async () => {
-        render(
-            <BrowserRouter>
-                <BlogContextProvider>
-                    <MainClassContextProvider>
-                        <MainBlogPage />
-                    </MainClassContextProvider>
-                </BlogContextProvider>
-            </BrowserRouter>
-        );
+    test('Loader page for Main page', async () => {
+        render(<MemoryRouter>
+            <BlogLoader />
+        </MemoryRouter>);
         expect(await screen.findAllByText('Read more')).toHaveLength(3);
         expect(screen.queryAllByRole('textbox')).toHaveLength(1);
     });
-
+    test('Loader page for Search results', async () => {
+        render(
+            <MemoryRouter initialEntries={['/blog/?q=education']}>
+                <BlogLoader />
+            </MemoryRouter>
+        );
+        // Actual search results are tested below; this just exercises the branch
+        await waitFor(() => expect(document.querySelector('.blog.page')).toBeTruthy());
+    });
     test('Article page', async () => {
         window.scrollTo = jest.fn();
 
@@ -53,7 +55,7 @@ describe('blog pages', () => {
     });
 
     test('Search Results page', async () => {
-        /* eslint-disable camelcase, max-len */
+        /* eslint-disable camelcase */
         jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((id) => ({
                 id,

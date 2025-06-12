@@ -17,6 +17,7 @@ import errataBookData from '../src/data/errata-book';
 import errata7199 from '../src/data/errata-7199';
 import errataSummary from '../src/data/errata-summary';
 import errataResources from '../src/data/errata-resources';
+import faq from '../src/data/faq';
 import flags from '../src/data/flags';
 import footerData from '../src/data/footer';
 import formHeadings from '../src/data/form-headings';
@@ -67,6 +68,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
     const isErrataResources = (/errata-fields\?field/).test(args[0]);
     const isErrataSummary = args[0] === 'https://cms-dev.openstax.org/apps/cms/api/pages/errata?format=json';
+    const isFaq = args[0].includes('/pages/faq');
     const isFlags = args[0].includes('/flags');
     const isFooter = (/api\/footer/).test(args[0]);
     const isFormHeading = (/form-headings/).test(args[0]);
@@ -129,6 +131,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = errataResources;
             } else if (isErrataSummary) {
                 payload = errataSummary;
+            } else if (isFaq) {
+                payload = faq;
             } else if (isFlags) {
                 payload = flags;
             } else if (isFooter) {
@@ -222,4 +226,4 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     );
 });
 
-window.ga = () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+window.ga = () => {};

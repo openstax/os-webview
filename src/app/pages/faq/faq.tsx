@@ -1,5 +1,4 @@
 import React from 'react';
-import {useToggle} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import cn from 'classnames';
@@ -8,64 +7,73 @@ import './faq.scss';
 
 const docUrlBase = `${$.apiOriginAndPrefix}/documents`;
 
-function useDocModel(docId) {
-    const [docData, setDocData] = React.useState({});
+type DocData = {
+    title?: string;
+    file?: string;
+};
+
+function useDocModel(docId: string) {
+    const [docData, setDocData] = React.useState<DocData>({});
 
     React.useEffect(() => {
         const url = `${docUrlBase}/${docId}`;
 
         fetch(url, {credentials: 'include'})
             .then((r) => r.json())
-            .catch((err) => {throw new Error(`Fetching ${url}: ${err}`);})
-            .then((r) => setDocData({
-                title: r.title,
-                file: r.meta.download_url
-            }))
-        ;
+            .then((r) =>
+                setDocData({
+                    title: r.title,
+                    file: r.meta.download_url
+                })
+            );
     }, [docId]);
 
     return docData;
 }
 
-function Document({document}) {
+function Document({document}: {document: string}) {
     const {title, file} = useDocModel(document);
+
+    if (!file) {
+        return null;
+    }
 
     return (
         <div className="answer">
             <div className="document-title">{title}</div>
-            <a className="download-link" href={file}>Download</a>
+            <a className="download-link" href={file}>
+                Download
+            </a>
         </div>
     );
 }
 
-function QuestionAndAnswer({qa}) {
-    const slug = window.location.hash.substr(1);
-    const initiallyOpen = slug === qa.slug;
-    const [open, toggle] = useToggle(initiallyOpen);
-    const ref = React.useRef();
+type QAData = {
+    slug: string;
+    question: string;
+    answer: string;
+    document?: string;
+};
 
-    React.useEffect(() => {
-        if (initiallyOpen) {
-            ref.current.scrollIntoView({block: 'center'});
-        }
-    }, [initiallyOpen]);
-
+function QuestionAndAnswer({qa}: {qa: QAData}) {
     return (
-        <div
-            id={qa.slug} key={qa.slug} ref={ref} className={cn('qa', {open})}
-        >
-            <RawHTML className="question" html={qa.question} onClick={() => toggle()} />
+        <details id={qa.slug} key={qa.slug} className={cn('qa', {open})}>
+            <RawHTML Tag="summary" className="question" html={qa.question} />
             <RawHTML className="answer" html={qa.answer} />
             {qa.document && <Document document={qa.document} />}
-        </div>
+        </details>
     );
 }
 
-function FAQ({data: {
-    introHeading: heading,
-    introDescription: subhead,
-    questions
-}}) {
+function FAQ({
+    data: {introHeading: heading, introDescription: subhead, questions}
+}: {
+    data: {
+        introHeading: string;
+        introDescription: string;
+        questions: QAData[];
+    };
+}) {
     return (
         <React.Fragment>
             <div className="hero">
@@ -74,10 +82,18 @@ function FAQ({data: {
                     <RawHTML className="text-content" html={subhead} />
                 </div>
             </div>
-            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img
+                className="strips"
+                src="/dist/images/components/strips.svg"
+                height="10"
+                alt=""
+                role="presentation"
+            />
             <div className="desktop-row boxed">
                 <div className="faq-list">
-                    {questions.map((qa) => <QuestionAndAnswer key={qa.slug} qa={qa} />)}
+                    {questions.map((qa) => (
+                        <QuestionAndAnswer key={qa.slug} qa={qa} />
+                    ))}
                 </div>
             </div>
         </React.Fragment>

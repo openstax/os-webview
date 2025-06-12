@@ -21,7 +21,7 @@ type NewsPageData = {
     footerText: string;
     footerButtonText: string;
     footerLink: string;
-    meta: Meta;
+    meta?: Meta;
     displayFooter: boolean;
 };
 
@@ -142,6 +142,7 @@ function useTopicStories() {
     return {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular};
 }
 
+// eslint-disable-next-line complexity
 function useContextValue({
     footerText,
     footerButtonText,
@@ -188,7 +189,7 @@ function useContextValue({
         topicStories,
         topicFeatured,
         topicPopular,
-        pageDescription: meta.searchDescription,
+        pageDescription: meta?.searchDescription,
         footerText,
         footerButtonText,
         footerLink,

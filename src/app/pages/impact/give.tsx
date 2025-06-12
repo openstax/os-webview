@@ -1,12 +1,28 @@
 import React from 'react';
 import './give.scss';
 
+export type GiveModel = {
+    heading: string;
+    description: string;
+    linkHref: string;
+    linkText: string;
+    nonprofitStatement: string;
+    annualReportLinkHref: string;
+    annualReportLinkText: string;
+};
+
 export default function Give({
     model: {
-        heading, description, linkHref, linkText,
+        heading,
+        description,
+        linkHref,
+        linkText,
         nonprofitStatement,
-        annualReportLinkHref, annualReportLinkText
+        annualReportLinkHref,
+        annualReportLinkText
     }
+}: {
+    model: GiveModel;
 }) {
     return (
         <section className="give-section">
