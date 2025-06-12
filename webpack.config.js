@@ -129,11 +129,11 @@ const config = {
         port: devServerPort,
         // fonts are always loaded with CORS but the CMS doesn't set CORS headers for them
         // to get around this, we proxy them instead
-        proxy: {
+        proxy: [{
             context: (p) => p.startsWith('/cms/assets/fonts'),
             target: API_ORIGIN,
             changeOrigin: true
-        },
+        }],
         static: {
             directory: path.resolve(__dirname, './src'),
             publicPath
