@@ -2,9 +2,8 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import useSpecificSubjectContext from './context';
 import {JumpToSection} from './navigator';
-import useToggleContext, {
-    ToggleContextProvider
-} from '~/components/toggle/toggle-context';
+import useToggleContext from '~/components/toggle/toggle-context';
+import Toggle from '~/components/toggle/toggle';
 import {FormattedMessage} from 'react-intl';
 import cn from 'classnames';
 import './subject-intro.scss';
@@ -31,9 +30,9 @@ function IntroContent({subjectName}: {subjectName: string}) {
 export default function SubjectIntro({subjectName}: {subjectName: string}) {
     return (
         <section className="subject-intro">
-            <ToggleContextProvider>
+            <Toggle>
                 <IntroContent subjectName={subjectName} />
-            </ToggleContextProvider>
+            </Toggle>
         </section>
     );
 }
