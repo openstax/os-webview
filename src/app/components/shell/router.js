@@ -36,11 +36,11 @@ const Error404 = loadable({
     loading: () => <h1>404</h1>
 });
 
-function useLoading(name: string) {
+function useLoading(name) {
     const {pathname} = useLocation();
 
     return React.useCallback(
-        ({error, pastDelay, retry}: loadable.LoadingComponentProps) => {
+        ({error, pastDelay, retry}) => {
             if (error) {
                 if (error.code === 'MODULE_NOT_FOUND') {
                     return pathname.endsWith('/')
@@ -58,14 +58,14 @@ function useLoading(name: string) {
     );
 }
 
-function usePage(name: string) {
+function usePage(name) {
     const loading = useLoading(name);
 
     return React.useMemo(
         () => loadable({
             loader: () => import(`~/pages/${name}/${name}`),
             loading,
-            render(loaded, props: object) {
+            render(loaded, props) {
                 const Component = loaded.default;
 
                 return <Component {...props} />;
@@ -75,7 +75,7 @@ function usePage(name: string) {
     );
 }
 
-function ImportedPage({name}: {name: string}) {
+function ImportedPage({name}) {
     const {pathname} = useLocation();
     const Page = usePage(name);
     const {portal} = useParams();
@@ -113,7 +113,7 @@ function TopLevelPage() {
     }
 
     return (
-        <ImportedPage name={name as string} />
+        <ImportedPage name={name} />
     );
 }
 
@@ -176,10 +176,10 @@ export function RoutesAlsoInPortal() {
     );
 }
 
-function doSkipToContent(event: React.MouseEvent) {
+function doSkipToContent(event) {
     event.preventDefault();
     const mainEl = document.getElementById('main');
-    const target = assertDefined(assertNotNull(mainEl?.querySelector<HTMLElement>($.focusable)));
+    const target = assertDefined(assertNotNull(mainEl?.querySelector($.focusable)));
 
     $.scrollTo(target);
     target.focus();
@@ -192,7 +192,7 @@ function SkipToContent() {
 }
 
 export default function Router() {
-    const linkHandler = useLinkHandler() as unknown as (ev: MouseEvent) => void;
+    const linkHandler = useLinkHandler();
     const {origin, pathname} = window.location; // React-Router Location does not have origin
     const canonicalUrl = `${origin}${pathname}`;
 
