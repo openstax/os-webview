@@ -8,6 +8,7 @@ import {
     useLocation,
     useParams
 } from 'react-router-dom';
+import {assertNotNull, assertDefined} from '~/helpers/data';
 import useLinkHandler from './router-helpers/use-link-handler';
 import useRouterContext, {RouterContextProvider} from './router-context';
 import loadable from 'react-loadable';
@@ -35,11 +36,11 @@ const Error404 = loadable({
     loading: () => <h1>404</h1>
 });
 
-function useLoading(name) {
+function useLoading(name: string) {
     const {pathname} = useLocation();
 
     return React.useCallback(
-        ({error, pastDelay, retry}) => {
+        ({error, pastDelay, retry}: loadable.LoadingComponentProps) => {
             if (error) {
                 if (error.code === 'MODULE_NOT_FOUND') {
                     return pathname.endsWith('/')
@@ -57,39 +58,28 @@ function useLoading(name) {
     );
 }
 
-function DefaultLayout({children}) {
-    const {portal} = useParams();
-    const {setLayoutParameters, layoutParameters} = useLayoutContext();
-
-    if (portal) {
-        setLayoutParameters({name: 'landing', data: layoutParameters.data});
-    }
-
-    return layoutParameters.name ? children : null;
-}
-
-function usePage(name) {
+function usePage(name: string) {
     const loading = useLoading(name);
 
     return React.useMemo(
         () => loadable({
             loader: () => import(`~/pages/${name}/${name}`),
             loading,
-            render(loaded, props) {
+            render(loaded, props: object) {
                 const Component = loaded.default;
 
-                return <DefaultLayout>
-                    <Component {...props} />
-                </DefaultLayout>;
+                return <Component {...props} />;
             }
         }),
         [name, loading]
     );
 }
 
-function ImportedPage({name}) {
+function ImportedPage({name}: {name: string}) {
     const {pathname} = useLocation();
     const Page = usePage(name);
+    const {portal} = useParams();
+    const {setLayoutParameters, layoutParameters} = useLayoutContext();
 
     useAnalyticsPageView();
 
@@ -99,6 +89,13 @@ function ImportedPage({name}) {
         () => window.scrollTo(0, 0),
         [name, pathname]
     );
+
+    if (portal) {
+        setLayoutParameters({name: 'landing', data: layoutParameters.data});
+        if (layoutParameters.name !== 'landing') {
+            return null;
+        }
+    }
 
     return <Page />;
 }
@@ -116,7 +113,7 @@ function TopLevelPage() {
     }
 
     return (
-        <ImportedPage name={name} />
+        <ImportedPage name={name as string} />
     );
 }
 
@@ -179,15 +176,13 @@ export function RoutesAlsoInPortal() {
     );
 }
 
-function doSkipToContent(event) {
+function doSkipToContent(event: React.MouseEvent) {
     event.preventDefault();
     const mainEl = document.getElementById('main');
-    const target = mainEl.querySelector($.focusable);
+    const target = assertDefined(assertNotNull(mainEl?.querySelector<HTMLElement>($.focusable)));
 
-    if (target) {
-        $.scrollTo(target);
-        target.focus();
-    }
+    $.scrollTo(target);
+    target.focus();
 }
 
 function SkipToContent() {
@@ -196,10 +191,9 @@ function SkipToContent() {
     );
 }
 
-
 export default function Router() {
-    const linkHandler = useLinkHandler();
-    const {origin, pathname} = useLocation();
+    const linkHandler = useLinkHandler() as unknown as (ev: MouseEvent) => void;
+    const {origin, pathname} = window.location; // React-Router Location does not have origin
     const canonicalUrl = `${origin}${pathname}`;
 
     useEffect(() => {
@@ -209,9 +203,8 @@ export default function Router() {
     }, [linkHandler]);
 
     useEffect(() => {
-        // Track initial page view in Pardot
-        if ('piTracker' in window) {
-            piTracker(canonicalUrl);
+        if ('piTracker' in window && window.piTracker instanceof Function) {
+            window.piTracker(canonicalUrl);
         }
     }, [canonicalUrl]);
 

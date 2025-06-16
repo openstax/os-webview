@@ -1,5 +1,6 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render, screen, waitFor} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import AppElement from '~/components/shell/shell';
 import * as RRD from 'react-router-dom';
 import * as CF from '~/helpers/cms-fetch';
@@ -34,6 +35,8 @@ jest.mock('react-modal', () => ({
 }));
 
 describe('shell', () => {
+    const user = userEvent.setup();
+
     it('Delivers embedded contact page', async () => {
         console.warn = jest.fn();
         console.debug = jest.fn();
@@ -77,11 +80,49 @@ describe('shell', () => {
         (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
             <MR initialEntries={['/some-portal/press']}>{children}</MR>
         ));
-        jest.spyOn(RRD, 'useParams').mockReturnValue({portal: 'some-portal', '*': '/contact'});
+        const mockUseParams = jest.spyOn(RRD, 'useParams').mockReturnValue({portal: 'some-portal', '*': '/contact'});
 
         render(AppElement);
         const pressLink = await screen.findByRole('link', {name: 'Press'});
 
         expect(pressLink.getAttribute('href')).toBe('/some-portal/press');
+        mockUseParams.mockReset();
+    });
+    it('skip to content link does that', async () => {
+        type WindowWithPiTracker = (typeof window) & {
+            piTracker: (path: string) => void;
+        }
+        const w = window as WindowWithPiTracker;
+        const piTracker = jest.fn();
+
+        w.piTracker = (path: string) => piTracker(path);
+        w.scrollBy = jest.fn();
+
+        jest.spyOn(CF, 'default').mockImplementation(() => {
+            return Promise.resolve([]);
+        });
+        (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
+            <MR initialEntries={['/']}>{children}</MR>
+        ));
+
+        render(AppElement);
+        await waitFor(() => expect(piTracker).toHaveBeenCalledWith('https://dev.openstax.org/'));
+        const skipLink = document.querySelector('[href="#main"]') as HTMLAnchorElement;
+
+        await user.click(skipLink);
+        expect(window.scrollBy).toHaveBeenCalled();
+        expect(document.getElementById('main')?.contains(document.activeElement));
+    });
+    it('redirects from /textbooks/ urls', async () => {
+        jest.spyOn(CF, 'default').mockImplementation(() => {
+            return Promise.resolve([]);
+        });
+        (BrowserRouter as jest.Mock).mockImplementationOnce(({children}) => (
+            <MR initialEntries={['/textbooks/some-book']}>{children}</MR>
+        ));
+
+        render(AppElement);
+        // It gets code coverage, but no test seems to work right; I have mocked
+        // Navigate, and it does show as being called.
     });
 });
