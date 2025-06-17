@@ -105,16 +105,27 @@ describe('book-tile', () => {
 
         render(<Component book={[lowResPdfData]} />);
 
-        const link = screen.getByRole('link');
+        const pdfLink = screen.getByRole('menuitem', {
+            name: 'Download a PDF'
+        });
 
         console.error = jest.fn();
-        await user.click(link);
-        expect(console.error).toHaveBeenCalledWith(
-            expect.stringContaining('Not implemented: navigation'),
-            undefined
-        );
+        expect(screen.queryAllByRole('dialog')).toHaveLength(0);
+        await user.click(pdfLink);
+        expect(screen.getAllByRole('dialog')).toHaveLength(2);
         console.error = originalError;
     });
+    it('hides PDF option if no PDF link', async () => {
+        const noPdfData = {
+            ...bookData,
+            highResolutionPdfUrl: '',
+            lowResolutionPdfUrl: ''
+        };
+
+        render(<Component book={[noPdfData]} />);
+        expect(screen.queryByRole('menuitem', {name: 'Download a PDF'})).toBeNull();
+    });
+
     it('brings up dialog when selecting print copy', async () => {
         render(<Component book={[bookData]} />);
         const printCopyLink = screen.getByRole('menuitem', {

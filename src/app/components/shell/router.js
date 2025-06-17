@@ -132,16 +132,38 @@ function MainRoutes() {
         <Layout>
             <Routes>
                 <Route path="/" element={<ImportedPage name="home" />} />
-            </Routes>
-            <RoutesAlsoInPortal />
-            <Routes>
+                {
+                    FOOTER_PAGES.map(
+                        (path) => <Route path={path} key={path} element={<ImportedPage name="footer-page" />} />
+                    )
+                }
+                <Route path="/errata/" element={<ImportedPage name="errata-summary" />} />
+                <Route path="/errata/form/" element={<ImportedPage name="errata-form" />} />
+                <Route path="/errata/*" element={<ImportedPage name="errata-detail" />} />
+                <Route path="/details/books/:title" element={<ImportedPage name="details" />} />
+                <Route path="/details/:title" element={<RedirectToCanonicalDetailsPage />} />
+                <Route path="/details/" element={<Navigate to="/subjects" replace />} />
+                <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
+                <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
+                <Route path="/subjects/*" element={<ImportedPage name="subjects" />} />
+                <Route path="/k12/*" element={<ImportedPage name="k12" />} />
+                <Route path="/blog/*" element={<ImportedPage name="blog" />} />
+                <Route path="/webinars/*" element={<ImportedPage name="webinars" />} />
+                <Route path="/general/*" element={<ImportedPage name="general" />} />
+                <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
+                <Route path="/campaign/*" element={<ImportedPage name="campaign" />} />
+                <Route path="/press/*" element={<ImportedPage name="press" />} />
+                <Route
+                    path="/edtech-partner-program"
+                    element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
+                />
+                <Route path="/:name/" element={<TopLevelPage />} />
                 <Route path="/:portal/*" element={<PortalRouter />} />
                 <Route element={<h1>Fell through</h1>} />
             </Routes>
         </Layout>
     );
 }
-
 
 export function RoutesAlsoInPortal() {
     return (
