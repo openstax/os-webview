@@ -65,7 +65,7 @@ function GiveBeforePdfAfterConditionals({
     track?: string;
     data: DonationPopupData;
     close: () => void;
-    onDownload?: (event: React.MouseEvent) => void;
+    onDownload?: React.MouseEventHandler;
 }) {
     const [controlLink, alternateLink] = useGiveLinks();
     const variants = [

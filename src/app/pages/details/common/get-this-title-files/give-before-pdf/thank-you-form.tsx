@@ -3,7 +3,6 @@ import useUserContext from '~/contexts/user';
 import trackLink from '../../track-link';
 import './thank-you-form.scss';
 import SchoolSelector from '~/components/school-selector/school-selector';
-import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
 function FormWithAfterSubmit({
     afterSubmit,
@@ -72,8 +71,8 @@ export default function ThankYou({
         close();
     }, [link, close]);
     const trackDownload = React.useCallback(
-        (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-            trackLink(event as object as TrackedMouseEvent, id);
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
+            trackLink(event, id);
         },
         [id]
     );
