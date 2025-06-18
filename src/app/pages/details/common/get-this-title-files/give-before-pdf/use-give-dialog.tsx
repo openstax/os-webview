@@ -29,7 +29,7 @@ export default function useGiveDialog() {
         }: {
             link: string;
             track?: string;
-            onDownload?: (e: React.MouseEvent) => void;
+            onDownload?: React.MouseEventHandler;
             variant?: VariantValue;
             warning?: string;
             id?: string;
