@@ -20,9 +20,10 @@ describe('use-link-handler', () => {
     const InnerComponent = ({track = false}) => {
         const linkHandler = useLinkHandler();
         const onClick = React.useCallback(
-            (e: React.MouseEvent & {trackingInfo?: {[key:string]: string}}) => {
+            (e: React.MouseEvent) => {
                 if (track) {
-                    (e).trackingInfo = {payload: 'junk'};
+                    // eslint-disable-next-line camelcase
+                    (e as TrackedMouseEvent).trackingInfo = {book: 'junk', account_uuid: '1234'};
                 }
                 linkHandler(e as TrackedMouseEvent);
                 if (!e.defaultPrevented) {

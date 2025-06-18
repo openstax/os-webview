@@ -10,11 +10,11 @@ function ignoreUrl(url: string | null) {
     return typeof url !== 'string' || MAILTO.test(url);
 }
 
-function ignoreClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+function ignoreClick(e: React.MouseEvent) {
     return e.defaultPrevented || e.metaKey;
 }
 
-function validUrlClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+function validUrlClick(e: React.MouseEvent) {
     const el = (e.target as HTMLElement).closest('a');
     const href = el?.getAttribute('href') ?? null;
 

@@ -30,8 +30,6 @@ describe('stripOpenStaxDomain', () => {
     it('handles invalid url click', () => {
         const el = document.createElement('a');
 
-        expect(linkHelper.validUrlClick({
-            target: el
-        } as unknown as React.MouseEvent<HTMLAnchorElement, MouseEvent>)).toBe(false);
+        expect(linkHelper.validUrlClick({target: el} as unknown as React.MouseEvent)).toBe(false);
     });
 });

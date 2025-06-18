@@ -142,7 +142,7 @@ export function WebviewOption({model}: {model: Model}) {
                     variant="View online"
                     warning={model.contentWarningText}
                     track="Online"
-                    onDownload={trackDownload as (e: React.MouseEvent) => void}
+                    onDownload={trackDownload}
                     id={model.id}
                 />
                 {showCallout && (
@@ -189,7 +189,7 @@ export function PdfOption({model}: {model: Model}) {
             <GiveDialog
                 link={pdfLink}
                 track="PDF"
-                onDownload={trackDownload as (e: React.MouseEvent) => void}
+                onDownload={trackDownload}
                 id={model.id}
                 warning={model.contentWarningText}
             />
