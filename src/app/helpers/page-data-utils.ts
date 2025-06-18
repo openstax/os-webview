@@ -115,7 +115,6 @@ export function useTextFromSlug(slug: string) {
     React.useEffect(() => {
         const url = urlFromSlug(slug);
 
-        console.info('Fetching from', url);
         fetch(url)
             .then((r) => {
                 if (r?.ok) {

@@ -7,9 +7,9 @@ import useMainClassContext, {
 import useLanguageContext from '~/contexts/language';
 import ReactModal from 'react-modal';
 import cn from 'classnames';
-import { LinkFields } from '../../pages/flex-page/components/Link';
+import {LinkFields} from '../../pages/flex-page/components/Link';
 import JITLoad from '~/helpers/jit-load';
-import { isFlexPage } from '~/components/shell/router-helpers/fallback-to';
+import {isFlexPage} from '~/pages/flex-page/flex-page';
 import './landing.scss';
 
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
         title: string;
         meta?: {
             type: string;
-        },
+        };
         layout: Array<{
             value: {
                 navLinks: LinkFields[];
@@ -45,10 +45,7 @@ export default function LandingLayout({
     return (
         <React.Fragment>
             <header className="landing-page-header">
-                <Header
-                    links={navLinks ?? []}
-                    showGive={showGiveNowButton}
-                />
+                <Header links={navLinks ?? []} showGive={showGiveNowButton} />
             </header>
             <SalesforceContextProvider>
                 <MainClassContextProvider>
@@ -75,7 +72,9 @@ function Main({children, data}: React.PropsWithChildren<Props>) {
         <div
             id="main"
             className={cn('lang', 'layout-landing', language, classes)}
-            data-analytics-nav={data ? `Landing page (${data.title})` : undefined}
+            data-analytics-nav={
+                data ? `Landing page (${data.title})` : undefined
+            }
             ref={ref}
             tabIndex={-1}
         >
