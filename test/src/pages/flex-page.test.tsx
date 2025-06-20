@@ -3,7 +3,7 @@ import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {render, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import FlexPage from '~/pages/flex-page/flex-page';
 import {CTALinkFields} from '~/pages/flex-page/blocks/CTABlock';
 import {ContentBlockConfig} from '~/pages/flex-page/blocks/ContentBlock';
