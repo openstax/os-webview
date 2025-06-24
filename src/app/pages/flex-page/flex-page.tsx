@@ -19,7 +19,7 @@ function FlexPageBody({data}: {data: FlexPageData}) {
     return <ContentBlocks data={data.body} />;
 }
 
-export function useDataToSetLayoutParameters(data: FlexPageData) {
+export function LayoutUsingData({data, children}: {data: FlexPageData, children: React.ReactNode}) {
     const {layoutParameters, setLayoutParameters} = useLayoutContext();
     const layoutName = data.layout[0]?.type;
 
@@ -28,9 +28,9 @@ export function useDataToSetLayoutParameters(data: FlexPageData) {
             data,
             name: layoutName
         });
-        return true;
+        return null;
     }
-    return false;
+    return children;
 }
 
 export default function FlexPage({data}: {data: FlexPageData}) {

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Routes, Route} from 'react-router-dom';
+import {Routes, Route, useLocation} from 'react-router-dom';
 import $ from '~/helpers/$';
 import {PageTitleConfirmation} from './announce-page-title';
 import {assertNotNull, assertDefined} from '~/helpers/data';
@@ -36,7 +36,8 @@ function SkipToContent() {
 
 export default function Router() {
     const linkHandler = useLinkHandler() as unknown as (ev: MouseEvent) => void;
-    const {origin, pathname} = window.location; // React-Router Location does not have origin
+    const {origin} = window.location; // React-Router Location does not have origin
+    const {pathname} = useLocation();
     const canonicalUrl = `${origin}${pathname}`;
 
     useEffect(() => {
