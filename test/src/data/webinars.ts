@@ -33,7 +33,8 @@ const pastWebinar: Webinar = {
 
 const pageData = {
     title: 'Webinar title',
-    heading: 'Webinar heading'
+    heading: 'Webinar heading',
+    webinars: []
 };
 
 export {upcomingWebinar, pastWebinar, pageData};
