@@ -33,3 +33,10 @@ describe('stripOpenStaxDomain', () => {
         expect(linkHelper.validUrlClick({target: el} as unknown as React.MouseEvent)).toBe(false);
     });
 });
+describe('logoutLink', () => {
+    it('generates a logoutLink', () => {
+        const link = linkHelper.logoutLink();
+
+        expect(link).toMatch('accounts/logout');
+    });
+});
