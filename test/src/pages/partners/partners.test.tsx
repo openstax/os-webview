@@ -86,13 +86,13 @@ describe('partners full page', () => {
 
         expect(buttons).toHaveLength(6);
         await screen.findByText('Carolina Distance Learning');
-        expect(screen.getAllByRole('link')).toHaveLength(21);
+        expect(screen.getAllByRole('link')).toHaveLength(23);
         await user.click(buttons[1]);
         const options = screen.getAllByRole('option');
 
         expect(options).toHaveLength(7);
         await user.click(options[3]);
-        expect(screen.getAllByRole('link')).toHaveLength(4);
+        expect(screen.getAllByRole('link')).toHaveLength(6);
     });
     it('filters by book', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
@@ -105,7 +105,7 @@ describe('partners full page', () => {
         expect(checkboxes).toHaveLength(24);
         await user.click(checkboxes[3]);
         await user.click(bookButton);
-        expect(screen.getAllByRole('link')).toHaveLength(8);
+        expect(screen.getAllByRole('link')).toHaveLength(10);
         await user.click(checkboxes[3]);
         expect(checkboxes).toHaveLength(24);
     });
@@ -120,12 +120,12 @@ describe('partners full page', () => {
         await user.click(screen.getByRole('button', {name: 'App Available'}));
         await user.click(screen.getByRole('checkbox', {name: 'App Available'}));
         await user.click(filterButton);
-        expect(screen.getAllByRole('link')).toHaveLength(7);
+        expect(screen.getAllByRole('link')).toHaveLength(9);
         await user.click(filterButton);
         await user.click(screen.getByRole('button', {name: 'Cost'}));
         await user.click(screen.getByRole('checkbox', {name: '$11 - $25'}));
         await user.click(filterButton);
-        expect(screen.getAllByRole('link')).toHaveLength(5);
+        expect(screen.getAllByRole('link')).toHaveLength(7);
     });
     it('sorts', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
@@ -187,28 +187,13 @@ describe('partners full page', () => {
         screen.getByText('through the edX platform', {exact: false});
         await user.click(screen.getByRole('button', {name: 'close'}));
     });
-    it('displays sidebar of startups', async () => {
-        /* eslint-disable camelcase */
-        sfPartners[0].partnership_level = 'startup';
-        sfPartners[1].partner_anniversary_date = '2020-03-04';
-        sfPartners[2].partner_anniversary_date = '2020-03-04';
-        mockSfPartners.mockResolvedValue(sfPartners);
-        render(<Component />);
-        const startupHeading = await screen.findByRole('heading', {level: 2, name: 'Startups'});
-
-        expect(startupHeading.parentNode?.textContent).toContain(sfPartners[0].partner_name);
-        sfPartners[0].partnership_level = 'Full partner';
-        sfPartners[1].partner_anniversary_date = null;
-        sfPartners[2].partner_anniversary_date = null;
-        /* eslint-enable camelcase */
-    });
     it('displays no sidebar when no other parterns are displayed', async () => {
         /* eslint-disable camelcase */
         sfPartners.map((p) => {p.partnership_level = 'startup';});
         sfPartners[0].partnership_level = 'Full partner';
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
-        await screen.findByRole('heading', {level: 2, name: 'Startups'});
+        await screen.findByRole('heading', {level: 3, name: 'Startups as partners'});
         sfPartners.map((p) => p.partnership_level = 'Full partner'); // eslint-disable-line
         /* eslint-enable camelcase */
     });
