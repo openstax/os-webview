@@ -81,6 +81,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isImage = args[0].includes('/api/images/');
     const isNewSubjects = args[0].includes('new-subjects');
     const isOsNews = (/openstax-news/).test(args[0]);
+    const isOxMenus = args[0].includes('/oxmenus/');
     const isPartner = (/pages\/partners/).test(args[0]);
     const isPolishPhysics = (/fizyka/).test(args[0]);
     const isPress = (/api\/press\/\?/).test(args[0]);
@@ -171,6 +172,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = bookTitleData;
             } else if (isOsNews) {
                 payload = osNewsData;
+            } else if (isOxMenus) {
+                payload = [];
             } else if (isBlogArticle) {
                 payload = blogArticleData;
             } else if (isTeam) {
