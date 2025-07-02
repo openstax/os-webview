@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import userEvent from '@testing-library/user-event';
 import Breadcrumb, {RetraceableLink} from '~/components/breadcrumb/breadcrumb';
 

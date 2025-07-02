@@ -197,6 +197,10 @@ function MenuItemWithGiveDialog({
 }: MenuItemWithGiveDialogProps) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
 
+    if (!props.url) {
+        return null;
+    }
+
     return (
         <React.Fragment>
             <MenuItem {...props} onClick={openGiveDialog} />

@@ -7,7 +7,8 @@ import LandingLayout from '~/layouts/landing/landing';
 // @ts-expect-error does not exist on
 const {routerFuture} = global;
 
-type Layout = Parameters<typeof LandingLayout>[0]['data']['layout'];
+type Data = Parameters<typeof LandingLayout>[0]['data'];
+type Layout = Exclude<Data, undefined>['layout'];
 
 describe('layouts/landing', () => {
     function Component({layout}: {layout: Layout}) {
@@ -25,6 +26,15 @@ describe('layouts/landing', () => {
         );
     }
 
+    it('renders without data object', () => {
+        render(<MemoryRouter initialEntries={['']} future={routerFuture}>
+            <LandingLayout>
+                <div>child contents</div>
+            </LandingLayout>
+        </MemoryRouter>);
+        expect(screen.getAllByRole('img')).toHaveLength(2);
+        expect(screen.getAllByRole('link')).toHaveLength(1);
+    });
     it('renders without layout values', () => {
         render(<Component layout={[]} />);
         expect(screen.getAllByRole('img')).toHaveLength(2);
@@ -34,7 +44,7 @@ describe('layouts/landing', () => {
         const layout = [{
             value: {
                 navLinks: [],
-                showGive: false
+                showGiveNowButton: false
             }
         }];
 
@@ -68,7 +78,7 @@ describe('layouts/landing', () => {
         const data = {title, layout, meta} as const;
 
         render(
-            <MemoryRouter initialEntries={['']}>
+            <MemoryRouter initialEntries={['']} future={routerFuture}>
                 <LandingLayout data={data}>
                     <div>child contents</div>
                 </LandingLayout>
@@ -88,7 +98,7 @@ describe('layouts/landing', () => {
         const data = {title, layout, meta} as const;
 
         render(
-            <MemoryRouter initialEntries={['']}>
+            <MemoryRouter initialEntries={['']} future={routerFuture}>
                 <LandingLayout data={data}>
                     <div>child contents</div>
                 </LandingLayout>

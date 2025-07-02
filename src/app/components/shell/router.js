@@ -8,11 +8,13 @@ import {
     useLocation,
     useParams
 } from 'react-router-dom';
+import {assertNotNull, assertDefined} from '~/helpers/data';
 import useLinkHandler from './router-helpers/use-link-handler';
 import useRouterContext, {RouterContextProvider} from './router-context';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import useLayoutContext, { LayoutContextProvider } from '~/contexts/layout';
+import PortalRouter from './portal-router';
 import './skip-to-content.scss';
 
 function useAnalyticsPageView() {
@@ -28,6 +30,7 @@ const Fallback = loadable({
     loader: () => import('./router-helpers/fallback-to.js'),
     loading: () => <h1>...Loading</h1>
 });
+
 const Error404 = loadable({
     loader: () => import('~/pages/404/404'),
     loading: () => <h1>404</h1>
@@ -55,17 +58,6 @@ function useLoading(name) {
     );
 }
 
-function DefaultLayout({children}) {
-    const {setLayoutParameters, layoutParameters} = useLayoutContext();
-
-    React.useEffect(
-        () => setLayoutParameters(),
-        [setLayoutParameters]
-    );
-
-    return layoutParameters.name === 'default' ? children : null;
-}
-
 function usePage(name) {
     const loading = useLoading(name);
 
@@ -76,9 +68,7 @@ function usePage(name) {
             render(loaded, props) {
                 const Component = loaded.default;
 
-                return <DefaultLayout>
-                    <Component {...props} />
-                </DefaultLayout>;
+                return <Component {...props} />;
             }
         }),
         [name, loading]
@@ -88,6 +78,8 @@ function usePage(name) {
 function ImportedPage({name}) {
     const {pathname} = useLocation();
     const Page = usePage(name);
+    const {portal} = useParams();
+    const {setLayoutParameters, layoutParameters} = useLayoutContext();
 
     useAnalyticsPageView();
 
@@ -97,6 +89,13 @@ function ImportedPage({name}) {
         () => window.scrollTo(0, 0),
         [name, pathname]
     );
+
+    if (portal) {
+        setLayoutParameters({name: 'landing', data: layoutParameters.data});
+        if (layoutParameters.name !== 'landing') {
+            return null;
+        }
+    }
 
     return <Page />;
 }
@@ -159,22 +158,53 @@ function MainRoutes() {
                     element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
                 />
                 <Route path="/:name/" element={<TopLevelPage />} />
-                <Route path="/:name/*" element={<Error404 />} />
+                <Route path="/:portal/*" element={<PortalRouter />} />
                 <Route element={<h1>Fell through</h1>} />
             </Routes>
         </Layout>
     );
 }
 
+export function RoutesAlsoInPortal() {
+    return (
+        <Routes>
+            {
+                FOOTER_PAGES.map(
+                    (path) => <Route path={path} key={path} element={<ImportedPage name="footer-page" />} />
+                )
+            }
+            <Route path="/errata/" element={<ImportedPage name="errata-summary" />} />
+            <Route path="/errata/form/" element={<ImportedPage name="errata-form" />} />
+            <Route path="/errata/*" element={<ImportedPage name="errata-detail" />} />
+            <Route path="/details/books/:title" element={<ImportedPage name="details" />} />
+            <Route path="/details/:title" element={<RedirectToCanonicalDetailsPage />} />
+            <Route path="/details/" element={<Navigate to="/subjects" replace />} />
+            <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
+            <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
+            <Route path="/subjects/*" element={<ImportedPage name="subjects" />} />
+            <Route path="/k12/*" element={<ImportedPage name="k12" />} />
+            <Route path="/blog/*" element={<ImportedPage name="blog" />} />
+            <Route path="/webinars/*" element={<ImportedPage name="webinars" />} />
+            <Route path="/general/*" element={<ImportedPage name="general" />} />
+            <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
+            <Route path="/campaign/*" element={<ImportedPage name="campaign" />} />
+            <Route path="/press/*" element={<ImportedPage name="press" />} />
+            <Route
+                path="/edtech-partner-program"
+                element={<ImportedPage name="/openstax-ally-technology-partner-program" />}
+            />
+            <Route path="/:name/" element={<TopLevelPage />} />
+        </Routes>
+    );
+}
+
 function doSkipToContent(event) {
     event.preventDefault();
     const mainEl = document.getElementById('main');
-    const target = mainEl.querySelector($.focusable);
+    const target = assertDefined(assertNotNull(mainEl?.querySelector($.focusable)));
 
-    if (target) {
-        $.scrollTo(target);
-        target.focus();
-    }
+    $.scrollTo(target);
+    target.focus();
 }
 
 function SkipToContent() {
@@ -183,10 +213,9 @@ function SkipToContent() {
     );
 }
 
-
 export default function Router() {
     const linkHandler = useLinkHandler();
-    const {origin, pathname} = useLocation();
+    const {origin, pathname} = window.location; // React-Router Location does not have origin
     const canonicalUrl = `${origin}${pathname}`;
 
     useEffect(() => {
@@ -196,9 +225,8 @@ export default function Router() {
     }, [linkHandler]);
 
     useEffect(() => {
-        // Track initial page view in Pardot
-        if ('piTracker' in window) {
-            piTracker(canonicalUrl);
+        if ('piTracker' in window && window.piTracker instanceof Function) {
+            window.piTracker(canonicalUrl);
         }
     }, [canonicalUrl]);
 
