@@ -1,12 +1,13 @@
 import React from 'react';
+import {ContentBlock} from '../helpers';
 import usePageContext from '../page-context';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import {htmlToText} from '~/helpers/data';
+import {htmlToText, assertDefined} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './faq.scss';
 
 export default function FAQ() {
-    const {faqs} = usePageContext();
+    const {faqs} = assertDefined(usePageContext());
 
     const accordionItems = React.useMemo(
         () =>
@@ -18,11 +19,10 @@ export default function FAQ() {
     );
 
     return (
-        <div className='content-block'>
-            <h2>Frequently asked questions</h2>
+        <ContentBlock title="Frequently asked questions">
             <div className='articles'>
                 <AccordionGroup items={accordionItems} noScroll />
             </div>
-        </div>
+        </ContentBlock>
     );
 }

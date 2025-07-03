@@ -12,7 +12,7 @@ import Testimonials from './testimonials/testimonials';
 import MissionStatements from './mission/mission';
 import Infographic from './infographic/infographic';
 import PressReleases from './press-releases/press-releases';
-import {ArticleLoader} from './article/article';
+import ArticleLoader from './article/article';
 import NewsMentions from './news-mentions/news-mentions';
 import FAQ from './faq/faq';
 import './press.scss';

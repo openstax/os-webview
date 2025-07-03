@@ -1,25 +1,18 @@
 import React from 'react';
+import {assertDefined} from '~/helpers/data';
 import usePageContext from '../page-context';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import Inquiries from './inquiries';
 import Leadership from './leadership';
 
 export default function MissionStatements() {
-    const pageData = usePageContext();
-
-    if (!pageData) {
-        return null;
-    }
-
-    const missionStatements = pageData.missionStatements.map(
-        (obj) => obj.statement
-    );
+    const {missionStatements} = assertDefined(usePageContext());
 
     return (
         <div className='content-block'>
             <div>
                 <h2>Our mission</h2>
-                {missionStatements.map((html) => (
+                {missionStatements.map(({statement: html}) => (
                     <RawHTML html={html} key={html} />
                 ))}
             </div>

@@ -10,6 +10,8 @@ type FeaturedInRollup = {
 // This will need more filling in as other components move to TSX
 type PressPageData = {
     meta: object;
+    title: string;
+    about: string;
     mentions: {
         date: string;
         featuredIn: boolean;
@@ -21,7 +23,38 @@ type PressPageData = {
         };
         url: string;
     }[];
+    expertsBlurb: string;
+    expertsBios: {
+        expertImage: string | null;
+        name: string;
+        title: string;
+        email: string;
+        bio: string;
+    }[];
+    faqs: {
+        question: string;
+        answer: string;
+    }[];
     featuredIn: FeaturedInRollup[];
+    infographicText: string;
+    infographicImage: {
+        meta: {downloadUrl: string};
+        title: string;
+    }
+    missionStatements: {statement: string}[];
+    pressInquiryName: string;
+    pressInquiryEmail: string;
+    pressInquiryPhone: string;
+    pressKitUrl: string;
+    releases: {
+        [slug: string]: {
+            detailUrl: string;
+            date: string;
+            heading: string;
+            excerpt: string;
+            author: string;
+        }
+    }
 }
 
 function useContextValue() {

@@ -1,13 +1,20 @@
-import usePageContext from '../page-context';
 import React from 'react';
+import {assertDefined} from '~/helpers/data';
+import usePageContext from '../page-context';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './leadership.scss';
 
-function Bio({imageUrl, name, contact, bio, title}) {
+function Bio({imageUrl, name, contact, bio, title}: {
+    imageUrl: string | null;
+    name: string;
+    contact: string;
+    bio: string;
+    title: string;
+}) {
     return (
         <div className='bio'>
             <div className='card'>
-                {Boolean(imageUrl) && <img src={imageUrl} alt={name} />}
+                {imageUrl !== null && <img src={imageUrl} alt={name} />}
             </div>
             <div className={imageUrl ? '' : 'span-2'}>
                 <div className='name'>{name}</div>
@@ -20,12 +27,7 @@ function Bio({imageUrl, name, contact, bio, title}) {
 }
 
 export default function Leadership() {
-    const pageData = usePageContext();
-
-    if (!pageData) {
-        return null;
-    }
-
+    const pageData = assertDefined(usePageContext());
     const blurb = pageData.expertsBlurb;
     const bios = pageData.expertsBios.map((b) => ({
         imageUrl: b.expertImage,

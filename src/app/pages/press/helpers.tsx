@@ -3,7 +3,7 @@ import Byline from '~/components/byline/byline';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 
-export function ContentBlock({title, children}) {
+export function ContentBlock({title, children}: React.PropsWithChildren<{title: string}>) {
     return (
         <div className='content-block'>
             <h2>{title}</h2>
@@ -12,13 +12,13 @@ export function ContentBlock({title, children}) {
     );
 }
 
-export function asDate(dateStr) {
+export function asDate(dateStr: string) {
     const [year, month, day] = dateStr.split('-');
 
-    return new Date(year, month - 1, day);
+    return new Date(+year, +month - 1, +day);
 }
 
-export function convertedDate(dateStr) {
+export function convertedDate(dateStr: string) {
     return asDate(dateStr).toLocaleString('en-US', {
         month: 'short',
         day: 'numeric',
@@ -26,7 +26,7 @@ export function convertedDate(dateStr) {
     });
 }
 
-function OptionalExcerpt({excerpt, url}) {
+function OptionalExcerpt({excerpt, url}: {excerpt?: string; url: string}) {
     return (
         excerpt && (
             <div className='excerpt'>
@@ -44,6 +44,11 @@ export function PressExcerpt({
     url,
     headline,
     excerpt
+}: Parameters<typeof Byline>[0] & {
+    iconUrl?: string;
+    url: string;
+    headline: string;
+    excerpt?: string;
 }) {
     const classList = ['press-excerpt'];
 
