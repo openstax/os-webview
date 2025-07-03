@@ -2,7 +2,7 @@ import React from 'react';
 import {describe, it, expect} from '@jest/globals';
 import {render, screen, fireEvent} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
-import {MemoryRouter} from 'react-router-dom';
+import MR from '~/../../test/helpers/future-memory-router';
 import { DropdownContextProvider } from '~/layouts/default/header/menus/dropdown-context';
 import Dropdown, {MenuItem} from '~/layouts/default/header/menus/main-menu/dropdown/dropdown';
 import * as deviceHelpers from '~/helpers/device';
@@ -12,7 +12,7 @@ const mobileSpy = jest.spyOn(deviceHelpers, 'isMobileDisplay');
 function Component() {
     return (
         <DropdownContextProvider>
-            <MemoryRouter initialEntries={['/selector?Calculus']}>
+            <MR initialEntries={['/selector?Calculus']}>
                 <Dropdown label='First item' navAnalytics='Na1'>
                     <MenuItem label='Item 1-1' url='/item-1-1' />
                     <MenuItem label='Item 1-2' url='/item-1-2' />
@@ -24,7 +24,7 @@ function Component() {
                     <MenuItem label='Item 2-2' url='/item-2-2' />
                     <MenuItem label='Item 2-3' url='/item-2-3' />
                 </Dropdown>
-            </MemoryRouter>
+            </MR>
         </DropdownContextProvider>
     );
 }
