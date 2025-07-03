@@ -5,8 +5,8 @@ import {convertedDate, asDate, ContentBlock, PressExcerpt} from '../helpers';
 import {Paginated} from '~/components/more-fewer/more-fewer';
 
 export default function NewsMentions() {
-    const newsMentions = assertDefined(usePageContext()).mentions
-        .map((obj) => ({
+    const newsMentions = assertDefined(usePageContext())
+        .mentions.map((obj) => ({
             iconUrl: obj.source.logo,
             source: obj.source.name,
             date: convertedDate(obj.date),

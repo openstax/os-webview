@@ -20,7 +20,7 @@ export default function FAQ() {
 
     return (
         <ContentBlock title="Frequently asked questions">
-            <div className='articles'>
+            <div className="articles">
                 <AccordionGroup items={accordionItems} noScroll />
             </div>
         </ContentBlock>

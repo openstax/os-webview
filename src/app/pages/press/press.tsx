@@ -1,5 +1,11 @@
 import React from 'react';
-import {Routes, Route, Navigate, useLocation, useParams} from 'react-router-dom';
+import {
+    Routes,
+    Route,
+    Navigate,
+    useLocation,
+    useParams
+} from 'react-router-dom';
 import usePageContext, {PageContextProvider} from './page-context';
 import {
     setPageTitleAndDescriptionFromBookData,
@@ -27,31 +33,31 @@ function MainPage() {
 
     return (
         <React.Fragment>
-            <section id='in-the-press'>
+            <section id="in-the-press">
                 <Banner />
             </section>
-            <section id='featured-in'>
+            <section id="featured-in">
                 <FeaturedIn />
             </section>
-            <section id='mission'>
+            <section id="mission">
                 <MissionStatements />
             </section>
-            <section id='about-openstax'>
+            <section id="about-openstax">
                 <AboutOpenStax />
             </section>
-            <section id='facts-infographic'>
+            <section id="facts-infographic">
                 <Infographic />
             </section>
-            <section id='testimonials'>
+            <section id="testimonials">
                 <Testimonials />
             </section>
-            <section id='faq'>
+            <section id="faq">
                 <FAQ />
             </section>
-            <section id='press-releases'>
+            <section id="press-releases">
                 <PressReleases />
             </section>
-            <section id='news-mentions'>
+            <section id="news-mentions">
                 <NewsMentions />
             </section>
         </React.Fragment>
@@ -86,11 +92,11 @@ function RedirectSlash() {
 
 export default function Press() {
     return (
-        <div className='press page'>
+        <div className="press page">
             <PageContextProvider>
                 <Routes>
-                    <Route path='/' element={<RedirectSlash />} />
-                    <Route path=':article' element={<ArticlePage />} />
+                    <Route path="/" element={<RedirectSlash />} />
+                    <Route path=":article" element={<ArticlePage />} />
                 </Routes>
             </PageContextProvider>
         </div>

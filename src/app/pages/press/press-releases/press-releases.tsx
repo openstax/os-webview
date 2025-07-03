@@ -5,7 +5,10 @@ import MoreFewer from '~/components/more-fewer/more-fewer';
 import {convertedDate, asDate, PressExcerpt} from '../helpers';
 import './press-releases.scss';
 
-export default function PressReleases({excludeSlug='', Container = MoreFewer}) {
+export default function PressReleases({
+    excludeSlug = '',
+    Container = MoreFewer
+}) {
     const {releases} = assertDefined(usePageContext());
 
     const pressReleases = Object.entries(releases)
@@ -21,9 +24,9 @@ export default function PressReleases({excludeSlug='', Container = MoreFewer}) {
         .sort((a, b) => b.asDate.getTime() - a.asDate.getTime());
 
     return (
-        <div className='content-block'>
+        <div className="content-block">
             <h2>Press releases</h2>
-            <Container pluralItemName='press releases'>
+            <Container pluralItemName="press releases">
                 {pressReleases.map((props) => (
                     <PressExcerpt {...props} key={props.url} />
                 ))}

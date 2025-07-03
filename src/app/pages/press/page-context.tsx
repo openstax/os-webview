@@ -40,7 +40,7 @@ type PressPageData = {
     infographicImage: {
         meta: {downloadUrl: string};
         title: string;
-    }
+    };
     missionStatements: {statement: string}[];
     pressInquiryName: string;
     pressInquiryEmail: string;
@@ -53,23 +53,21 @@ type PressPageData = {
             heading: string;
             excerpt: string;
             author: string;
-        }
-    }
-}
+        };
+    };
+};
 
 function useContextValue() {
     const value = usePageData<PressPageData>('press');
 
     if (value) {
-        value.featuredIn = value.mentions.filter(
-            (m) => m.featuredIn
-        ).map(
-            (m) => ({
+        value.featuredIn = value.mentions
+            .filter((m) => m.featuredIn)
+            .map((m) => ({
                 name: m.source.name,
                 url: m.url,
                 image: m.source.logo
-            })
-        );
+            }));
     }
 
     return value;

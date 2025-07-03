@@ -8,13 +8,13 @@ import './article.scss';
 
 function Hero({coverUrl}: {coverUrl: string}) {
     return (
-        <div className='hero' style={{backgroundImage: `url(${coverUrl})`}}>
+        <div className="hero" style={{backgroundImage: `url(${coverUrl})`}}>
             <img
-                className='strips'
-                src='/dist/images/components/strips.svg'
-                height='10'
-                alt=''
-                role='presentation'
+                className="strips"
+                src="/dist/images/components/strips.svg"
+                height="10"
+                alt=""
+                role="presentation"
             />
         </div>
     );
@@ -27,7 +27,7 @@ type ArticleData = {
     author: string;
     date: string;
     body: UnitType[];
-}
+};
 
 function Article({data}: {data: ArticleData}) {
     const {
@@ -41,13 +41,13 @@ function Article({data}: {data: ArticleData}) {
     const date = assertNotNull(formatDate(rawDate));
 
     return (
-        <div className='article'>
+        <div className="article">
             {coverUrl !== null && <Hero coverUrl={coverUrl} />}
-            <article className='text-content'>
+            <article className="text-content">
                 <h1>{title}</h1>
                 {Boolean(subheading) && <h2>{subheading}</h2>}
                 <Byline author={author} date={date} />
-                <div className='body'>
+                <div className="body">
                     {bodyData.map((unit) => (
                         <BodyUnit unit={unit} key={unit.value as string} />
                     ))}
@@ -57,9 +57,11 @@ function Article({data}: {data: ArticleData}) {
     );
 }
 
-type PageData = ArticleData | {
-    error: {message: string}
-}
+type PageData =
+    | ArticleData
+    | {
+          error: {message: string};
+      };
 
 export default function ArticleLoader({slug}: {slug: string}) {
     const data = usePageData<PageData>(slug, true);
@@ -69,7 +71,7 @@ export default function ArticleLoader({slug}: {slug: string}) {
     }
     if ('error' in data) {
         return (
-            <div className='text-content'>
+            <div className="text-content">
                 <h1>[Article not found]</h1>
                 <pre>
                     {data.error.message} {slug}

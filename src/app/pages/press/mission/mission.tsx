@@ -9,7 +9,7 @@ export default function MissionStatements() {
     const {missionStatements} = assertDefined(usePageContext());
 
     return (
-        <div className='content-block'>
+        <div className="content-block">
             <div>
                 <h2>Our mission</h2>
                 {missionStatements.map(({statement: html}) => (

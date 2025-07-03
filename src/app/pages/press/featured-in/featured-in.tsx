@@ -9,7 +9,7 @@ export default function FeaturedIn() {
 
     return (
         <ContentBlock title="Featured in">
-            <div className='link-grid'>
+            <div className="link-grid">
                 {featuredIn.map((obj) => (
                     <a key={obj.image} href={obj.url}>
                         <img src={obj.image} alt={obj.name} />
