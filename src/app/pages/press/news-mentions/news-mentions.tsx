@@ -1,13 +1,12 @@
 import React from 'react';
+import {assertDefined} from '~/helpers/data';
 import usePageContext from '../page-context';
-import {convertedDate, asDate, PressExcerpt} from '../helpers';
+import {convertedDate, asDate, ContentBlock, PressExcerpt} from '../helpers';
 import {Paginated} from '~/components/more-fewer/more-fewer';
 
 export default function NewsMentions() {
-    const pageData = usePageContext();
-
-    const newsMentions = pageData.mentions
-        .map((obj) => ({
+    const newsMentions = assertDefined(usePageContext())
+        .mentions.map((obj) => ({
             iconUrl: obj.source.logo,
             source: obj.source.name,
             date: convertedDate(obj.date),
@@ -18,13 +17,12 @@ export default function NewsMentions() {
         .sort((a, b) => b.asDate.getTime() - a.asDate.getTime());
 
     return (
-        <div className='content-block'>
-            <h2>News mentions</h2>
+        <ContentBlock title="News mentions">
             <Paginated perPage={7}>
                 {newsMentions.map((props) => (
                     <PressExcerpt {...props} key={props.url} />
                 ))}
             </Paginated>
-        </div>
+        </ContentBlock>
     );
 }

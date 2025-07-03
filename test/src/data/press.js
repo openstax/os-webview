@@ -44,8 +44,17 @@ export default {
             heading:
                 'OpenStax director comments on new Babson OER survey results',
             excerpt:
-                'The director of Rice University-based OpenStax is available to comment on new findings released today by Babson Survey Research Group about faculty awareness and satisfaction with open educational resources (OER), such as textbooks.',
+                'The director of Rice University-based OpenStax is available to comment on new findings released today by Babson Survey Research Group about',
             author: 'David Ruth'
+        },
+        'press/openstax-has-at-least-two-releases': {
+            detail_url: '/apps/cms/api/v2/pages/228/',
+            date: '2020-12-19',
+            heading:
+                'This is a second release',
+            excerpt:
+                'There once was a man from Nantucket...',
+            author: 'Some Body'
         }
     },
     promote_image: {
@@ -82,11 +91,11 @@ export default {
                 type: 'news.ExpertsBios'
             },
             name: 'Daniel Williamson',
-            email: null,
+            email: 'oDannyBoy@example.com',
             title: 'Managing Director',
             bio: 'Daniel specializes in education policy, open education, content development, ed-tech, consumer intelligence, and management. You can follow him on Twitter <a href="https://twitter.com/new_edu" style="text-decoration:none">@new_edu</a>.',
             expert_image:
-                'https://assets.openstax.org/oscms-prodcms/media/original_images/Daniel_Web.jpg'
+                null
         }
     ],
     infographic_image: {

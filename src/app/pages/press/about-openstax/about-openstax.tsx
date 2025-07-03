@@ -1,14 +1,15 @@
 import React from 'react';
 import usePageContext from '../page-context';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import {ContentBlock} from '../helpers';
+import {assertDefined} from '~/helpers/data';
 
 export default function AboutOpenStax() {
-    const {about} = usePageContext();
+    const {about} = assertDefined(usePageContext());
 
     return (
-        <div className='content-block'>
-            <h2>About OpenStax</h2>
+        <ContentBlock title="About OpenStax">
             <RawHTML html={about} />
-        </div>
+        </ContentBlock>
     );
 }
