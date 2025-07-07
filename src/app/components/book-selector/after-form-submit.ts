@@ -14,8 +14,8 @@ function afterFormSubmit(
             (entry) => entry.salesforce_abbreviation === preselectedTitle
         );
 
-        /* Send to Tech Scout with books pre-selected */
-        const scoutBooks = selectedBooks.map((sfBook) => sfBook.value);
+        /* Send to Tech Scout with books pre-selected -- Language removed */
+        const scoutBooks = selectedBooks.map((sfBook) => sfBook.value.replace(/ *\[.*/, ''));
 
         navigate('/partners', {
             state: {

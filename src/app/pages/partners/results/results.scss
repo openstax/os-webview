@@ -9,7 +9,7 @@
     }
 
     @include wider-than($phone-max) {
-        min-height: 60rem;
+        min-height: 120rem;
     }
 
     >:first-child {
