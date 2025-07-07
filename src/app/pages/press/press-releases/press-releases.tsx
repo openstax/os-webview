@@ -1,16 +1,17 @@
 import React from 'react';
+import {assertDefined} from '~/helpers/data';
 import usePageContext from '../page-context';
 import MoreFewer from '~/components/more-fewer/more-fewer';
 import {convertedDate, asDate, PressExcerpt} from '../helpers';
 import './press-releases.scss';
 
-export default function PressReleases({excludeSlug='', Container = MoreFewer}) {
-    const pageData = usePageContext();
+export default function PressReleases({
+    excludeSlug = '',
+    Container = MoreFewer
+}) {
+    const {releases} = assertDefined(usePageContext());
 
-    if (!pageData?.releases) {
-        return null;
-    }
-    const pressReleases = Object.entries(pageData.releases)
+    const pressReleases = Object.entries(releases)
         .filter(([slug]) => slug !== excludeSlug)
         .map(([slug, release]) => ({
             author: release.author,
@@ -23,9 +24,9 @@ export default function PressReleases({excludeSlug='', Container = MoreFewer}) {
         .sort((a, b) => b.asDate.getTime() - a.asDate.getTime());
 
     return (
-        <div className='content-block'>
+        <div className="content-block">
             <h2>Press releases</h2>
-            <Container pluralItemName='press releases'>
+            <Container pluralItemName="press releases">
                 {pressReleases.map((props) => (
                     <PressExcerpt {...props} key={props.url} />
                 ))}

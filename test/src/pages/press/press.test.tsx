@@ -1,7 +1,6 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
-import {describe, it} from '@jest/globals';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import Press from '~/pages/press/press';
 
 const mockPathname = jest.fn();
@@ -28,6 +27,7 @@ describe('press page', () => {
         await screen.findByRole('heading', {'level': 1, name: 'In the Press'});
         await waitFor(() => expect(document.title).toMatch('- OpenStax'));
         document.title = '';
+        screen.getByRole('heading', {level: 2, name: 'Senior leadership'});
     });
     it('renders press article page', async () => {
         render(
