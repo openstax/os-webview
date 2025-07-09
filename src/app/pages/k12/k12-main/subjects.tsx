@@ -5,8 +5,11 @@ import {faRightLong} from '@fortawesome/free-solid-svg-icons/faRightLong';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import uniq from 'lodash/uniq';
 import './subjects.scss';
+import { K12Data } from './k12-main';
 
-function Card({data}) {
+type CardData = K12Data['k12library'][0] & {title: string}
+
+function Card({data}: {data: CardData}) {
     const optimizedImage = useOptimizedImage(data.image, 600);
     const style = {backgroundImage: `url(${optimizedImage})`};
     const fixedLink = data.link.replace(/^\/*/, '/'); // ensure one leading slash
@@ -24,7 +27,7 @@ function Card({data}) {
     );
 }
 
-function BookCardsGrid({data}) {
+function BookCardsGrid({data}: {data: CardData[]}) {
     return (
         <div className="book-cards-grid">
             {
@@ -34,12 +37,12 @@ function BookCardsGrid({data}) {
     );
 }
 
-function FilteringGrid({data}) {
+function FilteringGrid({data}: {data: K12Data['k12library']}) {
     const k12titles = React.useMemo(
-        () => Reflect.ownKeys(data).map(
-            (k) => ({
-                title: k,
-                ...data[k]
+        () => Object.entries(data).map(
+            ([title, valueObject]) => ({
+                title,
+                ...valueObject
             })
         ),
         [data]
@@ -86,7 +89,7 @@ function FilteringGrid({data}) {
     );
 }
 
-export default function Subjects({data}) {
+export default function Subjects({data}: {data: K12Data}) {
     return (
         <section className="subjects">
             <div className="header boxed">

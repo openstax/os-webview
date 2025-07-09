@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import Resources from '~/pages/k12/subject/resources';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 let userContext: jest.Mock;
 

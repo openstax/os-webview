@@ -1,3 +1,4 @@
+/* eslint-disable quotes,max-len,camelcase */
 export default {
     "meta": {
         "total_count": 39

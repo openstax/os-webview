@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons/faCheckCircle';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import './stats-grid.scss';
+import { K12Data, StatTexts } from './k12-main';
 
-function StatsChecklistItem({heading, text}) {
+function StatsChecklistItem({heading, text}: {heading: string; text: string}) {
     return (
         <React.Fragment>
             <FontAwesomeIcon icon={faCheckCircle} />
@@ -17,7 +18,7 @@ function StatsChecklistItem({heading, text}) {
     );
 }
 
-function PictureCard({imgSrc}) {
+function PictureCard({imgSrc}: {imgSrc: string}) {
     const optimizedUrl = useOptimizedImage(imgSrc, 400);
     const style = {backgroundImage: `url(${optimizedUrl})`};
 
@@ -26,7 +27,10 @@ function PictureCard({imgSrc}) {
     );
 }
 
-function StatsCard({boldStatText: line1, normalStatText: line2, imgSrc}) {
+function StatsCard({boldStatText: line1, normalStatText: line2, imgSrc}:
+    Partial<{
+    imgSrc: string;
+} & StatTexts>) {
     if (imgSrc) {
         return (<PictureCard imgSrc={imgSrc} />);
     }
@@ -39,7 +43,7 @@ function StatsCard({boldStatText: line1, normalStatText: line2, imgSrc}) {
     );
 }
 
-export default function StatsGrid({data}) {
+export default function StatsGrid({data}: {data: K12Data}) {
     const gridItems = [
         data.statsGrid[0][0],
         {imgSrc: data.statsImage1.meta.downloadUrl},
@@ -70,7 +74,7 @@ export default function StatsGrid({data}) {
                 <div className="card-grid">
                     {
                         gridItems.map(
-                            (item) => <StatsCard key={item} {...item} />
+                            (item) => <StatsCard key={JSON.stringify(item)} {...item} />
                         )
                     }
                 </div>

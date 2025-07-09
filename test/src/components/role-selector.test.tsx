@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render, screen, waitFor} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import RoleSelector from '~/components/role-selector/role-selector';
 import MR from '~/../../test/helpers/future-memory-router';
@@ -50,7 +50,7 @@ describe('role-selector', () => {
         await user.keyboard('{Escape}');
         // Select by space
         await user.keyboard('{ArrowDown} ');
-        expect(options[1].getAttribute('aria-selected')).toBe('true');
+        await waitFor(() => expect(options[1].getAttribute('aria-selected')).toBe('true'));
         // fireEvent(options[0], new MouseEvent('mouseenter', {
         //     bubbles: true
         // }));
