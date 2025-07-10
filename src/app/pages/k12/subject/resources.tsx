@@ -6,6 +6,7 @@ import trackLink from '~/pages/details/common/track-link';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 import bookTitles from '~/models/book-titles';
 import './resources.scss';
+import { ResourceHeader, LinkData, K12SubjectData } from './subject';
 
 function LinkWithGiveDialog({
     href,
@@ -50,14 +51,6 @@ function LinkWithGiveDialog({
     );
 }
 
-type LinkData = {
-    id: string;
-    book: string;
-    resourceUnlocked: boolean;
-    linkExternal: string;
-    linkDocumentUrl: string;
-};
-
 function ResourceLink({data, track}: {data: LinkData; track: string}) {
     const url = data.linkExternal || data.linkDocumentUrl;
     const {isVerified} = useUserContext();
@@ -73,18 +66,6 @@ function ResourceLink({data, track}: {data: LinkData; track: string}) {
     );
 }
 
-type ResourceHeader = LinkData & {
-    heading: string;
-    resourceCategory: string;
-    description: string;
-    comingSoon: boolean;
-    comingSoonText: string;
-    k12: boolean;
-    videoReferenceNumber: number;
-    trackResource: boolean;
-    printLink: string;
-    icon: string;
-};
 type ResourceDict = {
     [name: string]: ResourceHeader[];
 };
@@ -130,20 +111,17 @@ function resourceHeadersToResources(resourceHeaders: ResourceHeader[]) {
 }
 
 type HeaderKeys = 'facultyResourceHeaders' | 'studentResourceHeaders';
+
 export default function Resources({
     data,
     labels,
     selectedLabel,
     setSelectedLabel
 }: {
-    data: {
-        resourcesHeading: string;
-        facultyResourceHeaders: ResourceHeader[];
-        studentResourceHeaders: ResourceHeader[];
-    };
+    data: K12SubjectData;
     labels: string[];
     selectedLabel: string;
-    setSelectedLabel: (s: unknown) => void;
+    setSelectedLabel: (s: string) => void;
 }) {
     const resources = React.useMemo(
         () =>
@@ -160,7 +138,7 @@ export default function Resources({
                 <Tabs
                     aria-label="Resource tabs"
                     selectedKey={selectedLabel}
-                    onSelectionChange={setSelectedLabel}
+                    onSelectionChange={setSelectedLabel as (s: unknown) => void}
                 >
                     {labels.map((label, i) => (
                         <Item key={label} title={label}>

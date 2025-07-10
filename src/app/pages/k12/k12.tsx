@@ -2,8 +2,8 @@ import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import JITLoad from '~/helpers/jit-load';
 
-const importMainPage = () => import('./import-k12-main.js');
-const importSubject = () => import('./subject/subject.js');
+const importMainPage = () => import('./import-k12-main');
+const importSubject = () => import('./import-subject');
 
 export default function K12Router() {
     return (
