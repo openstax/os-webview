@@ -19,6 +19,7 @@ export type Book = {
     lowResolutionPdfUrl: string;
     coverUrl: string;
     bookstoreComingSoon: boolean;
+    description: string;
 };
 
 export type CategoryData = {

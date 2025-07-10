@@ -1,5 +1,4 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import '../shared/contact-form';
 
 .k12.page .sign-up-form {
 
@@ -17,9 +16,5 @@
         h1 {
             @include set-font(h2);
         }
-    }
-
-    form {
-        @include contact-form();
     }
 }

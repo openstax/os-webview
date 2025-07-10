@@ -16,7 +16,8 @@ const bookData: BookInfo = {
     highResolutionPdfUrl: 'hi-res.pdf',
     lowResolutionPdfUrl: '',
     coverUrl: 'cover.jpg',
-    bookstoreComingSoon: false
+    bookstoreComingSoon: false,
+    description: ''
 };
 
 function Component({book}: {book: [BookInfo]}) {
