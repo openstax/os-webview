@@ -5,9 +5,9 @@ import {faRightLong} from '@fortawesome/free-solid-svg-icons/faRightLong';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import uniq from 'lodash/uniq';
 import './subjects.scss';
-import { K12Data } from './k12-main';
+import {K12Data} from './k12-main';
 
-type CardData = K12Data['k12library'][0] & {title: string}
+type CardData = K12Data['k12library'][0] & {title: string};
 
 function Card({data}: {data: CardData}) {
     const optimizedImage = useOptimizedImage(data.image, 600);
@@ -17,10 +17,8 @@ function Card({data}: {data: CardData}) {
     return (
         <a href={fixedLink} className={`card ${data.color}`}>
             <div className="picture-stripe" style={style} />
-            <div className="name-stripe">
-                {data.title}
-            </div>
-            <div className="link-stripe" >
+            <div className="name-stripe">{data.title}</div>
+            <div className="link-stripe">
                 <FontAwesomeIcon icon={faRightLong} />
             </div>
         </a>
@@ -30,21 +28,20 @@ function Card({data}: {data: CardData}) {
 function BookCardsGrid({data}: {data: CardData[]}) {
     return (
         <div className="book-cards-grid">
-            {
-                data.map((b) => <Card key={b.title} data={b} />)
-            }
+            {data.map((b) => (
+                <Card key={b.title} data={b} />
+            ))}
         </div>
     );
 }
 
 function FilteringGrid({data}: {data: K12Data['k12library']}) {
     const k12titles = React.useMemo(
-        () => Object.entries(data).map(
-            ([title, valueObject]) => ({
+        () =>
+            Object.entries(data).map(([title, valueObject]) => ({
                 title,
                 ...valueObject
-            })
-        ),
+            })),
         [data]
     );
     const k12cats = React.useMemo(
@@ -54,26 +51,21 @@ function FilteringGrid({data}: {data: K12Data['k12library']}) {
     const radioItems = React.useMemo(
         () => [
             {value: '', html: 'All'},
-            ...(
-                k12cats
-                    .map(
-                        (cat) => ({
-                            value: cat,
-                            html: cat
-                        })
-                    )
-            )
+            ...k12cats.map((cat) => ({
+                value: cat,
+                html: cat
+            }))
         ],
         [k12cats]
     );
-    const [selectedFilter, setSelectedFilter] = React.useState(radioItems[0].value);
+    const [selectedFilter, setSelectedFilter] = React.useState(
+        radioItems[0].value
+    );
     const matchingTitles = React.useMemo(
-        () => selectedFilter === '' ?
-            k12titles :
-            k12titles.filter(
-                (t) => t.subjectCategory === selectedFilter
-            )
-        ,
+        () =>
+            selectedFilter === ''
+                ? k12titles
+                : k12titles.filter((t) => t.subjectCategory === selectedFilter),
         [selectedFilter, k12titles]
     );
 

@@ -9,7 +9,10 @@ export default function K12Router() {
     return (
         <Routes>
             <Route path="" element={<JITLoad importFn={importMainPage} />} />
-            <Route path=":subject" element={<JITLoad importFn={importSubject} />} />
+            <Route
+                path=":subject"
+                element={<JITLoad importFn={importSubject} />}
+            />
         </Routes>
     );
 }

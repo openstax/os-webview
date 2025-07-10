@@ -2,7 +2,7 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import './banner.scss';
-import { K12SubjectData } from './subject';
+import {K12SubjectData} from './subject';
 
 export default function Banner({data}: {data: K12SubjectData}) {
     const bannerImgUrl = useOptimizedImage(data.subjectImage, 600);

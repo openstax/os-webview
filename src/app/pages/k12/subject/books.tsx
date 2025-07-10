@@ -3,9 +3,9 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import FAQSection from '~/components/faq-section/faq-section';
 import BookTile from '~/components/book-tile/book-tile';
 import './books.scss';
-import { K12SubjectData } from './subject';
+import {K12SubjectData} from './subject';
 
-function Overview({ data }: {data: K12SubjectData}) {
+function Overview({data}: {data: K12SubjectData}) {
     return (
         <div className="overview">
             <div className="text-content">
@@ -21,7 +21,7 @@ function Overview({ data }: {data: K12SubjectData}) {
     );
 }
 
-function AboutTheBooks({ data }: {data: K12SubjectData}) {
+function AboutTheBooks({data}: {data: K12SubjectData}) {
     const items = data.books.map((book) => ({
         title: book.title,
         contentComponent: <RawHTML html={book.description} />
@@ -34,7 +34,7 @@ function AboutTheBooks({ data }: {data: K12SubjectData}) {
     );
 }
 
-function AdoptionBox({ data }: {data: K12SubjectData}) {
+function AdoptionBox({data}: {data: K12SubjectData}) {
     return (
         <div className="adoption-box boxed">
             <h2>{data.adoptionHeading}</h2>
@@ -46,7 +46,7 @@ function AdoptionBox({ data }: {data: K12SubjectData}) {
     );
 }
 
-export default function Books({ data }: {data: K12SubjectData}) {
+export default function Books({data}: {data: K12SubjectData}) {
     return (
         <section id="books">
             <div className="boxed">

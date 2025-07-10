@@ -8,21 +8,22 @@ import './banner.scss';
 const subjectLabel = 'Find your subject';
 
 export default function Banner({data}: {data: K12Data}) {
-    const bannerImgUrl = useOptimizedImage(data.bannerRightImage.meta.downloadUrl, 800);
+    const bannerImgUrl = useOptimizedImage(
+        data.bannerRightImage.meta.downloadUrl,
+        800
+    );
     const subjects = React.useMemo(
-        () => Object.entries(data.k12library).map(
-            ([key, value]) => ({
+        () =>
+            Object.entries(data.k12library).map(([key, value]) => ({
                 html: key,
                 value: value.link.replace(/^\/*/, '/') // ensure one leading slash
-            })
-        ),
+            })),
         [data]
     );
     const navigate = useNavigate();
-    const navigateToSelection = React.useCallback<React.ChangeEventHandler<HTMLSelectElement>>(
-        ({currentTarget}) => navigate(currentTarget.value),
-        [navigate]
-    );
+    const navigateToSelection = React.useCallback<
+        React.ChangeEventHandler<HTMLSelectElement>
+    >(({currentTarget}) => navigate(currentTarget.value), [navigate]);
 
     return (
         <section className="banner">
@@ -31,7 +32,10 @@ export default function Banner({data}: {data: K12Data}) {
                     <h1>{data.bannerHeadline}</h1>
                     <div>{data.bannerDescription}</div>
                     <div className="buttons">
-                        <select className="classic" onChange={navigateToSelection}>
+                        <select
+                            className="classic"
+                            onChange={navigateToSelection}
+                        >
                             <option>{subjectLabel}</option>
                             {subjects.map((s) => (
                                 <RawHTML
@@ -49,8 +53,7 @@ export default function Banner({data}: {data: K12Data}) {
             <div
                 className="right-bg clipped-image"
                 style={{backgroundImage: `url(${bannerImgUrl});`}}
-            >
-            </div>
+            ></div>
         </section>
     );
 }

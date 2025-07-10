@@ -25,10 +25,12 @@ export type K12Data = {
         description: string;
     }>;
     highlightsHeader: string;
-    highlights: [Array<{
-        highlightSubheader: string;
-        highlightText: string;
-    }>];
+    highlights: [
+        Array<{
+            highlightSubheader: string;
+            highlightText: string;
+        }>
+    ];
     k12library: Record<string, TitleInfo>;
     rfiImage: DownloadableImage;
     rfiHeader: string;
@@ -41,36 +43,36 @@ export type K12Data = {
     subjectLibraryHeader: string;
     testimonialsDescription: string;
     testimonialsHeader: string;
-    testimonials: Array<TestimonialData>
-}
+    testimonials: Array<TestimonialData>;
+};
 
 type DownloadableImage = {
-    meta: {downloadUrl: string}
-}
+    meta: {downloadUrl: string};
+};
 
 export type StatTexts = {
     boldStatText: string;
     normalStatText: string;
-}
+};
 
 type Icon = {
     file: string;
     title: string;
-}
+};
 
 type TestimonialData = {
     authorIcon: Icon;
     authorName: string;
     authorTitle: string;
-    testimonial: string
-}
+    testimonial: string;
+};
 
 type TitleInfo = {
     color: string;
     image: string;
     link: string;
     subjectCategory: string;
-}
+};
 
 export default function K12({data}: {data: K12Data}) {
     return (

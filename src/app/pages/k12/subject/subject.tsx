@@ -3,7 +3,7 @@ import Banner from './banner';
 import Books from './books';
 import Resources from './resources';
 import Contact from './contact';
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import type {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './subject.scss';
@@ -54,7 +54,11 @@ export type LinkData = {
 
 const labels = ['Instructor resources', 'Student resources'];
 
-function QuickLinks({ setSelectedLabel }: {setSelectedLabel: (s: string) => void}) {
+function QuickLinks({
+    setSelectedLabel
+}: {
+    setSelectedLabel: (s: string) => void;
+}) {
     return (
         <section className="quick-links">
             <div className="boxed">
@@ -69,7 +73,8 @@ function QuickLinks({ setSelectedLabel }: {setSelectedLabel: (s: string) => void
                                 window.setTimeout(
                                     () => setSelectedLabel(text),
                                     0
-                                )}
+                                )
+                            }
                             key={text}
                         >
                             {text}
@@ -82,7 +87,7 @@ function QuickLinks({ setSelectedLabel }: {setSelectedLabel: (s: string) => void
     );
 }
 
-function WhatTeachersSay({ data }: {data: K12SubjectData}) {
+function WhatTeachersSay({data}: {data: K12SubjectData}) {
     return (
         <section className="what-teachers-say">
             <div className="boxed">
@@ -95,16 +100,16 @@ function WhatTeachersSay({ data }: {data: K12SubjectData}) {
     );
 }
 
-export default function Subject({ data }: {data: K12SubjectData}) {
+export default function Subject({data}: {data: K12SubjectData}) {
     const [selectedLabel, setSelectedLabel] = React.useState<string>(labels[0]);
-    const { hash } = useLocation();
+    const {hash} = useLocation();
 
     React.useLayoutEffect(() => {
         const id = hash.substring(1);
         const target = document.getElementById(id);
 
         if (target) {
-            target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            target.scrollIntoView({block: 'center', behavior: 'smooth'});
         } else if (id) {
             console.warn('Target not found', id);
         }
@@ -113,10 +118,10 @@ export default function Subject({ data }: {data: K12SubjectData}) {
     return (
         <div className="k12-subject page">
             <Banner data={data} />
-            <QuickLinks {...{ labels, setSelectedLabel }} />
+            <QuickLinks {...{labels, setSelectedLabel}} />
             <Books data={data} />
             <WhatTeachersSay data={data} />
-            <Resources {...{ data, labels, selectedLabel, setSelectedLabel }} />
+            <Resources {...{data, labels, selectedLabel, setSelectedLabel}} />
             {/* <Blogs data={data} /> */}
             <Contact data={data} />
         </div>

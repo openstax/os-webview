@@ -6,7 +6,7 @@ import trackLink from '~/pages/details/common/track-link';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 import bookTitles from '~/models/book-titles';
 import './resources.scss';
-import { ResourceHeader, LinkData, K12SubjectData } from './subject';
+import {ResourceHeader, LinkData, K12SubjectData} from './subject';
 
 function LinkWithGiveDialog({
     href,
