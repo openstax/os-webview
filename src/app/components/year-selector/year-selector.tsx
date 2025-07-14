@@ -2,7 +2,7 @@ import React from 'react';
 import DropdownSelect from '~/components/select/drop-down/drop-down';
 
 const now = new Date();
-const previousAcademicYear = now.getFullYear() - (now.getMonth() < 7 ? 2 : 1);
+const previousAcademicYear = now.getFullYear() - (now.getMonth() < 6 ? 2 : 1);
 
 export default function YearSelector({
     selectedYear = (previousAcademicYear + 1).toString(),
