@@ -11,7 +11,7 @@ export default function Header({
     showGive?: boolean;
 }) {
     const riceLogo = useOptimizedImage(
-        'https://openstax.org/dist/images/rice.webp',
+        'https://assets.openstax.org/oscms-prodcms/media/images/rice-logo-blue.original.webp',
         150
     );
 
@@ -40,7 +40,7 @@ export default function Header({
                 {showGive && (
                     <li>
                         <a
-                            href="/give"
+                            href="https://riceconnect.rice.edu/donation/support-openstax-header"
                             className="give-button"
                             data-analytics-link
                         >
