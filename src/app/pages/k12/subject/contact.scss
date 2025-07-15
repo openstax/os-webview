@@ -1,5 +1,4 @@
 @import 'pattern-library/core/pattern-library/headers';
-@import '../shared/contact-form';
 
 .k12-subject.page #contact {
     background-color: ui-color(page-bg);
@@ -21,10 +20,6 @@
             @include set-font(h2);
             margin: 0;
             margin-bottom: 1rem;
-        }
-
-        form {
-            @include contact-form();
         }
     }
 }

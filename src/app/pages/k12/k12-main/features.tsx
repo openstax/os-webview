@@ -1,8 +1,13 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import type {K12Data} from './k12-main';
 import './features.scss';
 
-function Card({data: {icon, title, description}}) {
+function Card({
+    data: {icon, title, description}
+}: {
+    data: K12Data['featuresCards'][0];
+}) {
     return (
         <div className="card">
             <img src={icon.file} alt={icon.title} width="50" height="50" />
@@ -14,13 +19,13 @@ function Card({data: {icon, title, description}}) {
     );
 }
 
-export default function Features({data}) {
+export default function Features({data}: {data: K12Data}) {
     return (
         <section className="features">
             <div className="boxed">
-                {
-                    data.featuresCards.map((d) => <Card key={d.head} data={d} />)
-                }
+                {data.featuresCards.map((d) => (
+                    <Card key={d.title} data={d} />
+                ))}
             </div>
         </section>
     );

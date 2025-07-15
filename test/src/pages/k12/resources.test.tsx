@@ -3,7 +3,8 @@ import {render, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import Resources from '~/pages/k12/subject/resources';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import { K12SubjectData } from '~/pages/k12/subject/subject';
 
 let userContext: jest.Mock;
 
@@ -53,7 +54,7 @@ describe('k12 subject resources', () => {
                             typeof Resources
                         >[0]['data']['facultyResourceHeaders'],
                         studentResourceHeaders: []
-                    }}
+                    } as unknown as K12SubjectData}
                     labels={['one', 'two']}
                     selectedLabel="one"
                     setSelectedLabel={jest.fn()}
@@ -92,7 +93,7 @@ describe('k12 subject resources', () => {
                         typeof Resources
                     >[0]['data']['facultyResourceHeaders'],
                     studentResourceHeaders: []
-                }}
+                } as unknown as K12SubjectData}
                 labels={['one', 'two']}
                 selectedLabel="one"
                 setSelectedLabel={jest.fn()}
@@ -125,7 +126,7 @@ describe('k12 subject resources', () => {
                             typeof Resources
                         >[0]['data']['facultyResourceHeaders'],
                         studentResourceHeaders: []
-                    }}
+                    } as unknown as K12SubjectData}
                     labels={['one', 'two']}
                     selectedLabel="one"
                     setSelectedLabel={jest.fn()}
@@ -169,7 +170,7 @@ describe('k12 subject resources', () => {
                             typeof Resources
                         >[0]['data']['facultyResourceHeaders'],
                         studentResourceHeaders: []
-                    }}
+                    } as unknown as K12SubjectData}
                     labels={['one', 'two']}
                     selectedLabel="one"
                     setSelectedLabel={jest.fn()}

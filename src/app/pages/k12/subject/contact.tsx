@@ -1,9 +1,10 @@
 import React from 'react';
 // import ContactForm from '../shared/contact-form';
-import { InterestForm } from '~/pages/interest/interest';
+import {InterestForm} from '~/pages/interest/interest';
+import {K12SubjectData} from './subject';
 import './contact.scss';
 
-export default function Contact({ data }) {
+export default function Contact({data}: {data: K12SubjectData}) {
     return (
         <section id="contact">
             <div className="boxed">
