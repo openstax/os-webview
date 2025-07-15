@@ -3,7 +3,6 @@ import {Tabs, Item} from '~/components/tablist/tablist';
 import useUserContext from '~/contexts/user';
 import {useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import trackLink from '~/pages/details/common/track-link';
-import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 import bookTitles from '~/models/book-titles';
 import './resources.scss';
 import {ResourceHeader, LinkData, K12SubjectData} from './subject';
@@ -20,15 +19,15 @@ function LinkWithGiveDialog({
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
     const {userStatus} = useUserContext();
     const trackDownloadClick = React.useCallback(
-        (event: React.MouseEvent) => {
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
             if (userStatus?.isInstructor) {
                 bookTitles.then((items) => {
                     const b = items.find((i) => i.title === book);
 
                     if (b) {
-                        trackLink(event as TrackedMouseEvent, b.id.toString());
+                        trackLink(event, b.id.toString());
                     } else {
-                        trackLink(event as TrackedMouseEvent);
+                        trackLink(event);
                     }
                 });
             }
