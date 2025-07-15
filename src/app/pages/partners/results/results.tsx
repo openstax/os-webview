@@ -57,8 +57,9 @@ type PartnerData = {
 export type PartnerEntry = ReturnType<typeof resultEntry>;
 
 // The key domains need to be done
+type LinkTextKeys = 'websiteLinkText' | 'infoLinkText';
 export type LinkTexts = {
-    [key: string]: string;
+    [key in LinkTextKeys]: string;
 };
 export type HeaderTexts = {
     [key: string]: string;

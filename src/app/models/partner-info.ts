@@ -5,9 +5,12 @@ import {camelCaseKeys} from '~/helpers/page-data-utils';
 type Data = {
     id: number;
     partnerName: string;
+    partnerType: string;
+    partnerDescription: string;
+    shortPartnerDescription: string;
 };
 
-function usePartnerData(id: string) {
+function usePartnerData(id: number) {
     const [data, setData] = useState<Data>();
 
     useLayoutEffect(() => {
@@ -19,7 +22,7 @@ function usePartnerData(id: string) {
     return data;
 }
 
-export default function usePartnerInfo(partnerId: string) {
+export default function usePartnerInfo(partnerId: number) {
     const data = usePartnerData(partnerId);
 
     return data;
