@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function useFormTarget(afterSubmit: () => void) {
+export default function useFormTarget(afterSubmit: () => void = () => null) {
     const [submitting, setSubmitting] = React.useState(false);
     // So onLoad is not redefined with every update of submitting
     const submittingRef = React.useRef(submitting);

@@ -7,6 +7,7 @@ import MobileControlRow from './mobile-controls/mobile-controls';
 import Results, {costOptions} from './results/results';
 import {useLocation} from 'react-router-dom';
 import {SearchContextProvider} from './search-context';
+import type {OptionType} from '~/components/form-elements/form-elements';
 import './partners.scss';
 
 function Confirmation() {
@@ -32,37 +33,54 @@ function Confirmation() {
                     }
                     .
                 </div>
-                <button type="button" className="put-away" onClick={toggleDone}>&times;</button>
+                <button
+                    type="button" className="put-away" aria-label="close confirmation"
+                    onClick={() => toggleDone(true)}>&times;</button>
             </div>
         </section>
     );
 }
 
-function getFilterOptions(data) {
+type PartnerPageData = {
+    title: string;
+    heading: string;
+    description: string;
+    partner_landing_page_link: string;
+    partner_request_info_link: string;
+    partner_full_partner_heading: string;
+    partner_full_partner_description: string;
+    partner_ally_heading: string;
+    partner_ally_description: string;
+    category_mapping: {[label: string]: string};
+    field_name_mapping: {[label: string]: string};
+    partner_type_choices: string[];
+};
+
+function getFilterOptions(data: PartnerPageData) {
     const excludeList = ['Book', 'Type'];
-    const categoryKeys = Reflect.ownKeys(data.category_mapping)
+    const categoryKeys = Object.keys(data.category_mapping)
         .filter((title) => !excludeList.includes(title));
     const result = categoryKeys
         .map((title) => ({
             title,
-            options: []
+            options: [] as Array<OptionType>
         }));
     const mapToTitle = categoryKeys
         .map((k) => [k, data.category_mapping[k]])
         .reduce((obj, [text, prefix]) => {
             obj[prefix] = text;
             return obj;
-        }, {});
+        }, {} as Record<string, string>);
 
     Object.entries(data.field_name_mapping)
         .forEach(([label, value]) => {
-            const entry = {
+            const entry: OptionType = {
                 label,
                 value
             };
-            const categoryPrefix = Reflect.ownKeys(mapToTitle)
-                .find((prefix) => value.substr(0, prefix.length) === prefix);
-            const itemInResult = result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
+            const categoryPrefix = Object.keys(mapToTitle)
+                .find((prefix) => value.substring(0, prefix.length) === prefix);
+            const itemInResult = categoryPrefix && result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
 
             if (itemInResult) {
                 if (label === 'Cost per semester') {
@@ -76,7 +94,7 @@ function getFilterOptions(data) {
     return result;
 }
 
-function textsFromData(data) {
+function textsFromData(data: PartnerPageData) {
     const linkTexts = {
         websiteLinkText: data.partner_landing_page_link,
         infoLinkText: (data.partner_request_info_link || 'Request info')
@@ -85,7 +103,7 @@ function textsFromData(data) {
     return {linkTexts};
 }
 
-function Partners({data}) {
+function Partners({data}: {data: PartnerPageData}) {
     const location = useLocation();
     const {confirmation} = location.state || {};
     const advancedFilterOptions = React.useMemo(

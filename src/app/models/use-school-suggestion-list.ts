@@ -69,7 +69,7 @@ export default function useMatchingSchools(value: string) {
         () => new window.Set(schoolNames.map((s) => s.toLowerCase())),
         [schoolNames]
     );
-    const schoolIsOk = schoolSet.has(value?.toLowerCase());
+    const schoolIsOk = schoolSet.has(value.toLowerCase());
     const selectedSchool =
         schoolIsOk &&
         schools?.find((s) => s.name.toLowerCase() === value.toLowerCase());

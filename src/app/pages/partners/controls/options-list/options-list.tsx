@@ -1,20 +1,21 @@
 import React from 'react';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
+import {OptionType} from '~/components/form-elements/form-elements';
 import './options-list.scss';
 
-function Item({label, value, selected}) {
+export type Selected = {
+    includes: (v: unknown) => boolean;
+} & (
+    {toggle: (v: unknown) => void}
+);
+
+function Item({label, value, selected}: OptionType & {selected: Selected}) {
     const isSelected = React.useMemo(
         () => selected.includes(value),
         [selected, value]
     );
     const toggleSelected = React.useCallback(
-        () => {
-            if ('toggle' in selected) {
-                selected.toggle(value);
-            } else {
-                selected.setValue(value);
-            }
-        },
+        () => selected.toggle(value),
         [selected, value]
     );
 
@@ -24,7 +25,7 @@ function Item({label, value, selected}) {
             aria-selected={isSelected}
             className="option"
             onClick={toggleSelected}
-            tabIndex="0"
+            tabIndex={0}
             onKeyDown={treatSpaceOrEnterAsClick}
         >
             {label}
@@ -32,7 +33,10 @@ function Item({label, value, selected}) {
     );
 }
 
-export default function OptionsList({items, selected}) {
+export default function OptionsList({items, selected}: {
+    items: OptionType[];
+    selected: Selected;
+}) {
     return (
         <div role='listbox' className="options-list">
             {
