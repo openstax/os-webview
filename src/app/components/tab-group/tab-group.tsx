@@ -52,7 +52,7 @@ type TabGroupArgs = React.PropsWithChildren<
     Pick<Partial<TabArgs>, 'TabTag'> &
     {
         labels: TabArgs['label'][];
-        'data-analytics-nav': string;
+        'data-analytics-nav'?: string;
         listLabel?: string;
     }
 >
