@@ -2,7 +2,9 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import usePartnerInfo from '~/models/partner-info';
 import type {LinkTexts, PartnerEntry} from '../results/results';
 
-export type Model = Omit<PartnerEntry, 'id'> & LinkTexts;
+export type Model = Omit<PartnerEntry, 'id'> & LinkTexts & {
+    verifiedFeatures?: string;
+};
 
 function useContextValue({id: partnerId, model, title, setTitle}: {
     id: number;
