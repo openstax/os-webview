@@ -196,8 +196,8 @@ function resultEntry(pd: PartnerData) {
             pd.image_3,
             pd.image_4,
             pd.image_5
-        ].filter((img) => Boolean(img)),
-        videos: [pd.video_1, pd.video_2].filter((vid) => Boolean(vid)),
+        ].filter((img) => Boolean(img)) as string[],
+        videos: [pd.video_1, pd.video_2].filter((vid) => Boolean(vid)) as string[],
         type: pd.partner_type,
         cost: pd.affordability_cost,
         rating: pd.average_rating.rating__avg,
