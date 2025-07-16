@@ -2,6 +2,7 @@ import {useCallback} from 'react';
 import {useNavigate, NavigateOptions} from 'react-router-dom';
 import linkHelper from '~/helpers/link';
 import $ from '~/helpers/$';
+import usePortalContext from '~/contexts/portal';
 import retry from '~/helpers/retry';
 
 export type TrackingInfo = {
@@ -31,6 +32,12 @@ function handleExternalLink(href: Location['href'], el: HTMLElement) {
 
 type State = NavigateOptions & {x: number; y: number};
 
+function isPortalRoot(portalPrefix: string) {
+    const pathname = window.location.pathname.replace(/\/$/, '');
+
+    return Boolean(portalPrefix && portalPrefix === pathname);
+}
+
 export default function useLinkHandler() {
     const navigate = useNavigate();
     const navigateTo = useCallback(
@@ -39,6 +46,7 @@ export default function useLinkHandler() {
         },
         [navigate]
     );
+    const {portalPrefix} = usePortalContext();
     const linkHandler = useCallback(
         // eslint-disable-next-line complexity
         (e: TrackedMouseEvent) => {
@@ -51,10 +59,14 @@ export default function useLinkHandler() {
             e.preventDefault();
 
             const fullyQualifiedHref = el.href;
-            const followLink =
-                el.target || linkHelper.isExternal(fullyQualifiedHref)
-                    ? () => handleExternalLink(fullyQualifiedHref, el)
-                    : () => navigateTo(fullyQualifiedHref);
+
+            const followLink = () => {
+                if (isPortalRoot(portalPrefix) || el.target || linkHelper.isExternal(fullyQualifiedHref)) {
+                    handleExternalLink(fullyQualifiedHref, el);
+                } else {
+                    navigateTo(fullyQualifiedHref);
+                }
+            };
 
             // Pardot tracking
             if ('piTracker' in window && window.piTracker instanceof Function) {
@@ -83,7 +95,7 @@ export default function useLinkHandler() {
                 followLink();
             }
         },
-        [navigateTo]
+        [navigateTo, portalPrefix]
     );
 
     return linkHandler;
