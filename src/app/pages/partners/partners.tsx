@@ -7,6 +7,7 @@ import MobileControlRow from './mobile-controls/mobile-controls';
 import Results, {costOptions} from './results/results';
 import {useLocation} from 'react-router-dom';
 import {SearchContextProvider} from './search-context';
+import type {OptionType} from '~/components/form-elements/form-elements';
 import './partners.scss';
 
 function Confirmation() {
@@ -60,7 +61,7 @@ function getFilterOptions(data: PartnerPageData) {
     const result = categoryKeys
         .map((title) => ({
             title,
-            options: [] as Array<unknown>
+            options: [] as Array<OptionType>
         }));
     const mapToTitle = categoryKeys
         .map((k) => [k, data.category_mapping[k]])
@@ -71,7 +72,7 @@ function getFilterOptions(data: PartnerPageData) {
 
     Object.entries(data.field_name_mapping)
         .forEach(([label, value]) => {
-            const entry = {
+            const entry: OptionType = {
                 label,
                 value
             };

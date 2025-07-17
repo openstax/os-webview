@@ -83,7 +83,7 @@ function filterByType(candidates: PartnerEntry[], types: TypesType) {
     }
     return candidates.filter((entry) => {
         return (
-            types.value.localeCompare(entry.type, 'en', {
+            (types.value as string).localeCompare(entry.type as string, 'en', {
                 sensitivity: 'base'
             }) === 0
         );
@@ -99,7 +99,7 @@ function filterBy(
     candidateField: keyof PartnerEntry,
     advanced: AdvancedType
 ) {
-    const features = advanced.value.filter((f) => values.includes(f));
+    const features = advanced.value.filter((f) => (values as unknown[]).includes(f));
 
     if (!features.length) {
         return candidates;
@@ -124,9 +124,9 @@ function useFilteredEntries(entries: PartnerEntry[]) {
         if (advanced.value.length > 0) {
             result = result.filter((entry) => {
                 return advanced.value
-                    .filter((feature) => !costOptionValues.includes(feature))
+                    .filter((feature) => !(costOptionValues as unknown[]).includes(feature))
                     .every((requiredFeature) =>
-                        entry.advancedFeatures.includes(requiredFeature)
+                        (entry.advancedFeatures as unknown[]).includes(requiredFeature)
                     );
             });
             result = filterBy(costOptionValues, result, 'cost', advanced);
