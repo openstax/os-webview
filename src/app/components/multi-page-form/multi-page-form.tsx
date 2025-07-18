@@ -48,9 +48,10 @@ type MultiPageFormProps = {
     children: React.ReactNode[];
     validatePage?: (p: unknown) => boolean;
     onPageChange?: (p: unknown) => boolean;
-    onSubmit: () => void;
+    onSubmit: (form: HTMLFormElement) => void;
     submitting: boolean;
-} & React.FormHTMLAttributes<HTMLFormElement>;
+    // onSubmit is redefined above to be simpler
+} & Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'>;
 
 function MultiPageFormInContext({
     children,

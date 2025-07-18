@@ -57,8 +57,9 @@ type PartnerData = {
 export type PartnerEntry = ReturnType<typeof resultEntry>;
 
 // The key domains need to be done
+type LinkTextKeys = 'websiteLinkText' | 'infoLinkText';
 export type LinkTexts = {
-    [key: string]: string;
+    [key in LinkTextKeys]: string;
 };
 export type HeaderTexts = {
     [key: string]: string;
@@ -82,7 +83,7 @@ function filterByType(candidates: PartnerEntry[], types: TypesType) {
     }
     return candidates.filter((entry) => {
         return (
-            types.value.localeCompare(entry.type, 'en', {
+            (types.value as string).localeCompare(entry.type as string, 'en', {
                 sensitivity: 'base'
             }) === 0
         );
@@ -98,7 +99,7 @@ function filterBy(
     candidateField: keyof PartnerEntry,
     advanced: AdvancedType
 ) {
-    const features = advanced.value.filter((f) => values.includes(f));
+    const features = advanced.value.filter((f) => (values as unknown[]).includes(f));
 
     if (!features.length) {
         return candidates;
@@ -123,9 +124,9 @@ function useFilteredEntries(entries: PartnerEntry[]) {
         if (advanced.value.length > 0) {
             result = result.filter((entry) => {
                 return advanced.value
-                    .filter((feature) => !costOptionValues.includes(feature))
+                    .filter((feature) => !(costOptionValues as unknown[]).includes(feature))
                     .every((requiredFeature) =>
-                        entry.advancedFeatures.includes(requiredFeature)
+                        (entry.advancedFeatures as unknown[]).includes(requiredFeature)
                     );
             });
             result = filterBy(costOptionValues, result, 'cost', advanced);
@@ -195,8 +196,8 @@ function resultEntry(pd: PartnerData) {
             pd.image_3,
             pd.image_4,
             pd.image_5
-        ].filter((img) => Boolean(img)),
-        videos: [pd.video_1, pd.video_2].filter((vid) => Boolean(vid)),
+        ].filter((img) => Boolean(img)) as string[],
+        videos: [pd.video_1, pd.video_2].filter((vid) => Boolean(vid)) as string[],
         type: pd.partner_type,
         cost: pd.affordability_cost,
         rating: pd.average_rating.rating__avg,

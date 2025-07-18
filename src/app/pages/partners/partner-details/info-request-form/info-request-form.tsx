@@ -8,7 +8,7 @@ import BookTagsMultiselect, {BookTagsContextProvider} from '~/components/multise
 import useSearchContext from '../../search-context';
 import FormRadiogroup from '~/components/form-radiogroup/form-radiogroup';
 import FormSelect from '~/components/form-select/form-select';
-import {FilteringSelect} from '~/components/form-elements/form-elements';
+import {FilteringSelect, OptionType} from '~/components/form-elements/form-elements';
 import inputProps from '~/components/form-elements/input-props';
 import FormInput from '~/components/form-input/form-input';
 import useFormTarget from '~/components/form-target/form-target';
@@ -83,7 +83,11 @@ function Page1() {
             </p>
             <div className="form-group">
                 <label>Book of interest</label>
-                <BookTagsContextProvider selected={books.value} booksAllowed={booksAllowed}>
+                <BookTagsContextProvider
+                    selected={books.value}
+                    booksAllowed={booksAllowed}
+                    maxSelections={5}
+                >
                     <BookTagsMultiselect name="subjects_of_interest" required oneField />
                 </BookTagsContextProvider>
             </div>
@@ -93,10 +97,13 @@ function Page1() {
     );
 }
 
-function SchoolSelector({value, setValue}) {
+function SchoolSelector({value, setValue}: {
+    value: string;
+    setValue: React.Dispatch<React.SetStateAction<string>>;
+}) {
     const {schoolIsOk, schoolOptions} = useMatchingSchools(value);
 
-    function accept(option) {
+    function accept(option: OptionType) {
         setValue(option.value);
     }
 
@@ -120,8 +127,14 @@ function SchoolSelector({value, setValue}) {
     );
 }
 
+type RoleSnippet = {
+    id: number;
+    display_name: string;
+    salesforce_name: string;
+}
+
 function RoleSelector() {
-    const roles = useDataFromSlug('snippets/roles');
+    const roles = useDataFromSlug<RoleSnippet[]>('snippets/roles');
     const options = React.useMemo(
         () => roles?.map((r) => ({label: r.display_name, value: r.salesforce_name})),
         [roles]
@@ -140,10 +153,14 @@ function RoleSelector() {
         [options, userModel]
     );
 
+    if (!optionsWithSelection) {
+        return null;
+    }
+
     return (
         <FormSelect
+            name="position"
             selectAttributes={{
-                name: 'position',
                 placeholder: 'Select your position',
                 required: true
             }}
@@ -153,11 +170,12 @@ function RoleSelector() {
 }
 
 // This is all kind of broken; just accepts anything
-function CountrySelector({value, setValue}) {
-    const countryOptions = [];
+function CountrySelector() {
+    const [value, setValue] = React.useState('');
+    const countryOptions: OptionType[] = [];
     const isOk = true;
 
-    function accept(option) {
+    function accept(option: OptionType) {
         setValue(option.value);
     }
 
@@ -182,8 +200,7 @@ function CountrySelector({value, setValue}) {
 
 function Page2() {
     const {userModel, userStatus} = useUserContext();
-    const [school, setSchool] = React.useState(userModel?.school_name);
-    const [country, setCountry] = React.useState();
+    const [school, setSchool] = React.useState(userModel?.accountsModel.school_name ?? '');
 
     return (
         <div className="form-page">
@@ -223,7 +240,7 @@ function Page2() {
                     label="Phone number"
                     inputProps={{...inputProps.phone, required: true}}
                 />
-                <CountrySelector value={country} setValue={setCountry} />
+                <CountrySelector />
             </div>
         </div>
     );
@@ -234,18 +251,19 @@ export default function InfoRequestForm() {
     const {onSubmit, submitting, FormTarget} = useFormTarget(toggleForm);
     const {techScoutUrl} = useSalesforceContextValue();
 
-    function doSubmit(form) {
+    function doSubmit(form: HTMLFormElement) {
         form.submit();
         onSubmit();
     }
 
     return (
         <React.Fragment>
-            <FormTarget submitting={submitting} />
+            <FormTarget />
             <MultiPageForm
                 action={techScoutUrl} className="info-request-form"
                 name="partner_info_request"
-                onSubmit={doSubmit} submitting={submitting}
+                onSubmit={doSubmit}
+                submitting={submitting}
                 target="form-target"
             >
                 <Page1 />
