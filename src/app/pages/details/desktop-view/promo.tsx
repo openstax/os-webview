@@ -1,5 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import './promo.scss';
 
 export type PromoteData = {
     content?: {
@@ -16,6 +17,6 @@ export default function Promo({promoteSnippet}: {promoteSnippet: PromoteData | P
     }
 
     return (
-        <RawHTML html={data.content.description} />
+        <RawHTML className="promote-snippet" html={data.content.description} />
     );
 }
