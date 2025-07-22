@@ -206,17 +206,18 @@ export default function FormInput({
         },
         [handleKeyDown]
     );
+    const id = `form-input-${Math.floor(Math.random() * 1010101)}`;
 
     return (
         <label className="form-input">
             <div className="control-group">
-                {label && <label className="field-label">{label}</label>}
+                {label && <label className="field-label" htmlFor={id}>{label}</label>}
                 {longLabel && (
                     <label className="field-long-label">{longLabel}</label>
                 )}
                 <ValidatingInput
                     value={value}
-                    inputProps={{onKeyDown, ...otherProps}}
+                    inputProps={{onKeyDown, ...otherProps, id}}
                     onChange={onChange}
                     accepted={accepted}
                 />

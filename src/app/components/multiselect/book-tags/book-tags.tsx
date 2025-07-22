@@ -4,7 +4,7 @@ import useSFBookContext, {SFBookContextProvider} from './sf-book-context';
 import useMultiselectContext from '../multiselect-context';
 import useToggleContext from '~/components/toggle/toggle-context';
 import Toggle, {IfToggleIsOpen} from '~/components/toggle/toggle';
-import ToggleControlBar from '~/components/toggle/toggle-control-bar';
+import ToggleControlBar, { getListboxId } from '~/components/toggle/toggle-control-bar';
 import ArrowToggle from '~/components/toggle/arrow-toggle';
 import BookOptions from './book-options';
 import PutAway from '~/components/put-away/put-away';
@@ -103,14 +103,16 @@ export function useBookTagsContext() {
 type MultiselectArgs = Parameters<typeof Multiselect>[0];
 
 export default function BookTagsMultiselect(passThruProps: MultiselectArgs) {
+    const listboxId = getListboxId();
+
     return (
         <Multiselect {...passThruProps}>
             <Toggle>
-                <ToggleControlBar Indicator={ArrowToggle}>
+                <ToggleControlBar Indicator={ArrowToggle} listboxId={listboxId}>
                     <TagList />
                 </ToggleControlBar>
                 <IfToggleIsOpen>
-                    <BookOptions />
+                    <BookOptions listboxId={listboxId} />
                 </IfToggleIsOpen>
             </Toggle>
         </Multiselect>
