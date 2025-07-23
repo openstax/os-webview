@@ -10,22 +10,22 @@ import type {Book} from '~/helpers/books';
 import InfoRequestForm from './info-request-form/info-request-form';
 import './partner-details.scss';
 
+function getTitlesFromAbbreviations(abbreviations: string[], bookInfo: Book[]) {
+    return abbreviations
+        .map((abbrev) => bookInfo.find((b) => b.salesforce_abbreviation === abbrev) || abbrev)
+        .filter((b) => {
+            const found = typeof b === 'object';
+
+            if (!found) {
+                console.warn('Book not found:', b);
+            }
+            return found;
+        })
+        .map((b) => b.salesforce_name);
+}
+
 function useRealTitles(books: Model['books']) {
     const [titles, setTitles] = React.useState(books);
-
-    function getTitlesFromAbbreviations(abbreviations: string[], bookInfo: Book[]) {
-        return abbreviations
-            .map((abbrev) => bookInfo.find((b) => b.salesforce_abbreviation === abbrev) || abbrev)
-            .filter((b) => {
-                const found = typeof b === 'object';
-
-                if (!found) {
-                    console.warn('Book not found:', b);
-                }
-                return found;
-            })
-            .map((b) => b.salesforce_name);
-    }
 
     React.useEffect(
         () => {
@@ -37,7 +37,7 @@ function useRealTitles(books: Model['books']) {
     return titles;
 }
 
-function RequestInfoButton({infoText='Request info'}) {
+function RequestInfoButton({infoText}: {infoText: string}) {
     const {toggleForm, books} = usePartnerContext();
     const validTitle = books?.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
 

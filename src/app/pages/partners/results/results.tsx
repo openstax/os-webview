@@ -41,16 +41,16 @@ type PartnerData = {
     partner_description: string | null;
     short_partner_description: string | null;
     partner_website: string | null;
-    books: string;
+    books: string | null;
     landing_page: string | null;
     partner_sf_account_id: string;
-    affordability_cost: string;
-    affordability_institutional: boolean;
-    app_available: boolean;
-    instructional_level_k12: boolean;
-    instructional_level_higher_ed: boolean;
-    international: boolean;
-    partnership_level: string;
+    affordability_cost: string | null;
+    affordability_institutional?: boolean;
+    app_available?: boolean;
+    instructional_level_k12?: boolean;
+    instructional_level_higher_ed?: boolean;
+    international?: boolean;
+    partnership_level: string | null;
     partner_anniversary_date: string | null;
 };
 
@@ -138,22 +138,15 @@ function useFilteredEntries(entries: PartnerEntry[]) {
     resultCount.setValue(finalResult.length);
 
     return React.useMemo(() => {
-        if (Math.abs(sort.value) === 0) {
+        if (sort.value === 0) {
             return finalResult;
         }
 
-        const getFieldsDict = {
-            '1': [(r: PartnerEntry) => r.title.toLowerCase()],
-            '2': [
-                (r: PartnerEntry) => Math.abs(r.rating),
-                (r: PartnerEntry) => r.ratingCount
-            ]
-        };
         const sortDir = sort.value < 0 ? 'desc' : 'asc';
 
         return orderBy(
             finalResult,
-            getFieldsDict[Math.abs(sort.value) as unknown as '1' | '2'],
+            [(r: PartnerEntry) => r.title.toLowerCase()],
             [sortDir, sortDir]
         );
     }, [finalResult, sort.value]);
@@ -166,7 +159,7 @@ function advancedFilterKeys(partnerEntry: PartnerData) {
 }
 
 
-function resultEntry(pd: PartnerData) {
+export function resultEntry(pd: PartnerData) {
     return {
         id: pd.id,
         title: pd.partner_name,

@@ -78,7 +78,7 @@ function useScalar<T=unknown>(initialValue: T) {
         toggle,
         clear,
         includes,
-        size: value === null ? 0 : 1,
+        size: value === initialValue ? 0 : 1,
         setValue,
         lastAction
     };
@@ -88,7 +88,7 @@ function useContextValue() {
     const books = useSet<string>();
     const types = useScalar<string | undefined>(undefined);
     const advanced = useSet<string>();
-    const sort = useScalar<number>(-2);
+    const sort = useScalar<number>(0);
     const resultCount = useScalar<number>(0);
     const clearStores = React.useCallback(
         () => {
