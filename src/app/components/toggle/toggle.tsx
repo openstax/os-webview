@@ -19,7 +19,7 @@ export function useRefToFocusAfterClose() {
     return ref;
 }
 
-export function IfToggleIsOpen({children}: React.PropsWithChildren<object>) {
+export function IfToggleIsOpen({children}: {children: React.ReactNode}) {
     const {isOpen} = useToggleContext();
 
     return isOpen && children;
