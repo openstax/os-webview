@@ -27,9 +27,7 @@ function SValidationMessage({
 }) {
     const {item} = useSelectContext();
 
-    return <ValidationMessage
-        watchValue={item} elementRef={elementRef}
-    />;
+    return <ValidationMessage watchValue={item} elementRef={elementRef} />;
 }
 
 export default function Select({
@@ -50,7 +48,13 @@ export default function Select({
                 {name && <HiddenSelect {...{name, required, elementRef}} />}
                 {children}
             </div>
-            {name && <SValidationMessage elementRef={elementRef as React.MutableRefObject<HTMLSelectElement>} />}
+            {name && (
+                <SValidationMessage
+                    elementRef={
+                        elementRef as React.MutableRefObject<HTMLSelectElement>
+                    }
+                />
+            )}
         </SelectContextProvider>
     );
 }
