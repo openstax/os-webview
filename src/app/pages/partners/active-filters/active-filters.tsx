@@ -16,7 +16,7 @@ function childPropertiesForStore(store: Store, decoder?: Record<string, string>)
     return store.value ? [{
         value: store.value,
         store,
-        label: decoder ? decoder[store.value] : store.value
+        label: store.value // no decoder for scalar values
     }] : [];
 }
 
@@ -42,6 +42,7 @@ export default function ActiveFilters({advancedFilterOptions}: {
         },
         [books, types, advanced]
     );
+
     const cp = React.useMemo(
         () => [
             ...childPropertiesForStore(books as Store),

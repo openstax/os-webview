@@ -48,7 +48,6 @@ export default function useLinkHandler() {
     );
     const {portalPrefix} = usePortalContext();
     const linkHandler = useCallback(
-        // eslint-disable-next-line complexity
         (e: TrackedMouseEvent) => {
             // Only handle left-clicks on links
             const el = linkHelper.validUrlClick(e);

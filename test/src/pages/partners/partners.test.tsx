@@ -155,6 +155,7 @@ describe('partners full page', () => {
         expect(screen.getAllByRole('link')).toHaveLength(5);
         // Filter remover
         await user.click(screen.getByRole('button', {name: 'remove filter for $11 - $25'}));
+        await user.click(screen.getByRole('link', {name: 'Clear All'}));
     });
     it('sorts', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
