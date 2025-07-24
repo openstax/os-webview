@@ -1,6 +1,8 @@
 import React from 'react';
 import useSelectContext, {SelectContextProvider} from './select-context';
-import ValidationMessage, { ElementWithValidationMessage } from '~/components/validation-message/validation-message';
+import ValidationMessage, {
+    ElementWithValidationMessage
+} from '~/components/validation-message/validation-message';
 
 function HiddenSelect({
     name,
@@ -23,7 +25,7 @@ function HiddenSelect({
 function SValidationMessage({
     elementRef
 }: {
-    elementRef: React.MutableRefObject<HTMLSelectElement & ElementWithValidationMessage | null>;
+    elementRef: React.RefObject<HTMLSelectElement>;
 }) {
     const {item} = useSelectContext();
 
@@ -31,9 +33,14 @@ function SValidationMessage({
         return null;
     }
 
-    return <ValidationMessage
-        watchValue={item} elementRef={elementRef as React.MutableRefObject<ElementWithValidationMessage>}
-    />;
+    return (
+        <ValidationMessage
+            watchValue={item}
+            elementRef={
+                elementRef as React.MutableRefObject<ElementWithValidationMessage>
+            }
+        />
+    );
 }
 
 export default function Select({
