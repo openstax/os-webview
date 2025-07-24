@@ -110,6 +110,6 @@ describe('layouts/landing', () => {
             .rejects
             .toThrow(/Unable to find an element/);
         // Default footer has 4 links + 1 link in layout = 5 links
-        expect(await screen.findAllByRole('link')).toHaveLength(5);
+        expect(await screen.findAllByRole('link')).toHaveLength(5+1); // contact is extra
     });
 });
