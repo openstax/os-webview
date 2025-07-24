@@ -24,7 +24,7 @@ export function useContactDialog() {
         }
     ) {
         const contactFormUrl = React.useMemo(() => {
-            const formUrl = 'https://openstax.org/embedded/contact';
+            const formUrl = '/embedded/contact';
 
             if (contactFormParams !== undefined) {
                 const params = contactFormParams
@@ -65,8 +65,9 @@ export function useContactDialog() {
 }
 
 function FlexFooter({data}: Props) {
-    const {ContactDialog, open: openContactDialog} = useContactDialog();
-    const contactFormParams = [{key: 'source_url', value: window.location.href}];
+    // ** Temporarily disabling
+    // const {ContactDialog, open: openContactDialog} = useContactDialog();
+    // const contactFormParams = [{key: 'source_url', value: window.location.href}];
     const {rewriteLinks} = usePortalContext();
 
     React.useLayoutEffect(() => rewriteLinks?.(document.querySelector('.page-footer') as HTMLElement),
@@ -80,13 +81,7 @@ function FlexFooter({data}: Props) {
                 </div>
                 <div className="column col1">
                     <ListOfLinks>
-                        <button onClick={openContactDialog}>
-                            Contact Us
-                            <ContactDialog
-                                className="contact-dialog"
-                                contactFormParams={contactFormParams}
-                            />
-                        </button>
+                        <a href="/contact">Contact Us</a>
                         <a href="/tos">Terms of Use</a>
                         <a href="/privacy">Privacy Notice</a>
                     </ListOfLinks>
