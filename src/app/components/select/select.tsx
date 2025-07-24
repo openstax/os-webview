@@ -23,11 +23,20 @@ function HiddenSelect({
 function SValidationMessage({
     elementRef
 }: {
-    elementRef: React.MutableRefObject<HTMLSelectElement>;
+    elementRef: React.MutableRefObject<HTMLSelectElement | null>;
 }) {
     const {item} = useSelectContext();
 
-    return <ValidationMessage watchValue={item} elementRef={elementRef} />;
+    if (elementRef.current === null) {
+        return null;
+    }
+
+    return (
+        <ValidationMessage
+            watchValue={item}
+            elementRef={elementRef as React.MutableRefObject<HTMLSelectElement>}
+        />
+    );
 }
 
 export default function Select({
