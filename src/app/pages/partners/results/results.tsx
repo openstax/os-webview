@@ -41,24 +41,25 @@ type PartnerData = {
     partner_description: string | null;
     short_partner_description: string | null;
     partner_website: string | null;
-    books: string;
+    books: string | null;
     landing_page: string | null;
     partner_sf_account_id: string;
-    affordability_cost: string;
-    affordability_institutional: boolean;
-    app_available: boolean;
-    instructional_level_k12: boolean;
-    instructional_level_higher_ed: boolean;
-    international: boolean;
-    partnership_level: string;
+    affordability_cost: string | null;
+    affordability_institutional?: boolean;
+    app_available?: boolean;
+    instructional_level_k12?: boolean;
+    instructional_level_higher_ed?: boolean;
+    international?: boolean;
+    partnership_level: string | null;
     partner_anniversary_date: string | null;
 };
 
 export type PartnerEntry = ReturnType<typeof resultEntry>;
 
 // The key domains need to be done
+type LinkTextKeys = 'websiteLinkText' | 'infoLinkText';
 export type LinkTexts = {
-    [key: string]: string;
+    [key in LinkTextKeys]: string;
 };
 export type HeaderTexts = {
     [key: string]: string;
@@ -82,7 +83,7 @@ function filterByType(candidates: PartnerEntry[], types: TypesType) {
     }
     return candidates.filter((entry) => {
         return (
-            types.value.localeCompare(entry.type, 'en', {
+            (types.value as string).localeCompare(entry.type as string, 'en', {
                 sensitivity: 'base'
             }) === 0
         );
@@ -98,7 +99,7 @@ function filterBy(
     candidateField: keyof PartnerEntry,
     advanced: AdvancedType
 ) {
-    const features = advanced.value.filter((f) => values.includes(f));
+    const features = advanced.value.filter((f) => (values as unknown[]).includes(f));
 
     if (!features.length) {
         return candidates;
@@ -123,9 +124,9 @@ function useFilteredEntries(entries: PartnerEntry[]) {
         if (advanced.value.length > 0) {
             result = result.filter((entry) => {
                 return advanced.value
-                    .filter((feature) => !costOptionValues.includes(feature))
+                    .filter((feature) => !(costOptionValues as unknown[]).includes(feature))
                     .every((requiredFeature) =>
-                        entry.advancedFeatures.includes(requiredFeature)
+                        (entry.advancedFeatures as unknown[]).includes(requiredFeature)
                     );
             });
             result = filterBy(costOptionValues, result, 'cost', advanced);
@@ -137,22 +138,15 @@ function useFilteredEntries(entries: PartnerEntry[]) {
     resultCount.setValue(finalResult.length);
 
     return React.useMemo(() => {
-        if (Math.abs(sort.value) === 0) {
+        if (sort.value === 0) {
             return finalResult;
         }
 
-        const getFieldsDict = {
-            '1': [(r: PartnerEntry) => r.title.toLowerCase()],
-            '2': [
-                (r: PartnerEntry) => Math.abs(r.rating),
-                (r: PartnerEntry) => r.ratingCount
-            ]
-        };
         const sortDir = sort.value < 0 ? 'desc' : 'asc';
 
         return orderBy(
             finalResult,
-            getFieldsDict[Math.abs(sort.value) as unknown as '1' | '2'],
+            [(r: PartnerEntry) => r.title.toLowerCase()],
             [sortDir, sortDir]
         );
     }, [finalResult, sort.value]);
@@ -165,7 +159,7 @@ function advancedFilterKeys(partnerEntry: PartnerData) {
 }
 
 
-function resultEntry(pd: PartnerData) {
+export function resultEntry(pd: PartnerData) {
     return {
         id: pd.id,
         title: pd.partner_name,
@@ -195,8 +189,8 @@ function resultEntry(pd: PartnerData) {
             pd.image_3,
             pd.image_4,
             pd.image_5
-        ].filter((img) => Boolean(img)),
-        videos: [pd.video_1, pd.video_2].filter((vid) => Boolean(vid)),
+        ].filter((img) => Boolean(img)) as string[],
+        videos: [pd.video_1, pd.video_2].filter((vid) => Boolean(vid)) as string[],
         type: pd.partner_type,
         cost: pd.affordability_cost,
         rating: pd.average_rating.rating__avg,

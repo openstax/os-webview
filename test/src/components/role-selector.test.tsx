@@ -34,7 +34,7 @@ describe('role-selector', () => {
         await user.click(activator);
 
         // There are two listboxes, one for "Please select one" and the other for the options
-        const listbox = screen.getAllByRole('listbox')[1];
+        const listbox = screen.getAllByRole('listbox').pop() as HTMLElement;
         const options = screen.getAllByRole('option');
 
         expect(options).toHaveLength(8);

@@ -1,26 +1,16 @@
 import React, {useRef} from 'react';
-import StarsAndCount from '~/components/stars-and-count/stars-and-count';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
-import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import './synopsis.scss';
+import { Model } from '../partner-context';
 
-function VerifiedBadge({verifiedFeatures}) {
-    const badgeImage = '/dist/images/partners/verified-badge.svg';
-
-    return (
-        verifiedFeatures &&
-            <div className="badge">
-                <img className="background" src={badgeImage} alt="verified" />
-                <FontAwesomeIcon icon={faCheck} className="checkmark" />
-                <div className="tooltip bottom">
-                    {verifiedFeatures}
-                </div>
-            </div>
-    );
+type PartnerLinkProps = {
+    partnerUrl: string | null;
+    partnerLinkText: string;
+    partnerName: string;
 }
 
-function PartnerLink({partnerUrl, partnerLinkText, partnerName}) {
+function PartnerLink({partnerUrl, partnerLinkText, partnerName}: PartnerLinkProps) {
     return (
         partnerUrl &&
             <a
@@ -34,9 +24,13 @@ function PartnerLink({partnerUrl, partnerLinkText, partnerName}) {
     );
 }
 
-export default function Synopsis({model, icon, partnerLinkProps}) {
-    const {verifiedFeatures, tags, title: partnerName, rating, ratingCount: reviewCount} = model;
-    const ref = useRef();
+export default function Synopsis({model, icon, partnerLinkProps}: {
+    model: Model;
+    icon: string;
+    partnerLinkProps: Omit<PartnerLinkProps, 'partnerName'>;
+}) {
+    const {tags, title: partnerName} = model;
+    const ref = useRef(null);
 
     if (!partnerName) {
         return null;
@@ -45,7 +39,6 @@ export default function Synopsis({model, icon, partnerLinkProps}) {
     return (
         <section className="synopsis" ref={ref}>
             <img className="icon" src={icon} alt="" />
-            <VerifiedBadge verifiedFeatures={verifiedFeatures} />
             <div className="headline">{partnerName}</div>
             <div className="tags">
                 {
@@ -56,7 +49,6 @@ export default function Synopsis({model, icon, partnerLinkProps}) {
                     )
                 }
             </div>
-            <StarsAndCount rating={rating} count={reviewCount} showNumber />
             <PartnerLink {...partnerLinkProps} partnerName={partnerName} />
         </section>
     );

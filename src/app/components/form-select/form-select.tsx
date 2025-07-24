@@ -6,7 +6,7 @@ export default function FormSelect({
     label,
     name,
     selectAttributes,
-    options = [],
+    options,
     onValueUpdate
 }: {
     label: string;

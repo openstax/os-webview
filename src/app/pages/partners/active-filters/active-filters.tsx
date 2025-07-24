@@ -1,10 +1,11 @@
 import React from 'react';
 import FilterRemover from './filter-remover';
-import useSearchContext from '../search-context';
+import useSearchContext, {Store} from '../search-context';
+import type {OptionType} from '~/components/form-elements/form-elements';
 import './active-filters.scss';
 
 // *** Might want to eliminate this and just build it into the FilterRemover
-function childPropertiesForStore(store, decoder) {
+function childPropertiesForStore(store: Store, decoder?: Record<string, string>) {
     if (store.value instanceof Array) {
         return store.value.map((value) => ({
             value,
@@ -15,11 +16,13 @@ function childPropertiesForStore(store, decoder) {
     return store.value ? [{
         value: store.value,
         store,
-        label: decoder ? decoder[store.value] : store.value
+        label: store.value // no decoder for scalar values
     }] : [];
 }
 
-export default function ActiveFilters({advancedFilterOptions}) {
+export default function ActiveFilters({advancedFilterOptions}: {
+    advancedFilterOptions: {options: OptionType[]}[]
+}) {
     const {books, types, advanced, resultCount} = useSearchContext();
     const advancedFilterDecoder = React.useMemo(
         () => advancedFilterOptions.reduce((a, b) => {
@@ -27,11 +30,11 @@ export default function ActiveFilters({advancedFilterOptions}) {
                 a[opt.value] = opt.label;
             });
             return a;
-        }, {}),
+        }, {} as Record<string, string>),
         [advancedFilterOptions]
     );
     const clearAll = React.useCallback(
-        (event) => {
+        (event: React.MouseEvent) => {
             event.preventDefault();
             for (const s of [books, types, advanced]) {
                 s.clear();
@@ -39,11 +42,12 @@ export default function ActiveFilters({advancedFilterOptions}) {
         },
         [books, types, advanced]
     );
+
     const cp = React.useMemo(
         () => [
-            ...childPropertiesForStore(books),
-            ...childPropertiesForStore(types),
-            ...childPropertiesForStore(advanced, advancedFilterDecoder)
+            ...childPropertiesForStore(books as Store),
+            ...childPropertiesForStore(types as Store),
+            ...childPropertiesForStore(advanced as Store, advancedFilterDecoder)
         ],
         [books, types, advanced, advancedFilterDecoder]
     );
