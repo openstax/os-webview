@@ -24,7 +24,7 @@ export function useContactDialog() {
         }
     ) {
         const contactFormUrl = React.useMemo(() => {
-            const formUrl = 'https://openstax.org/embedded/contact';
+            const formUrl = '/embedded/contact';
 
             if (contactFormParams !== undefined) {
                 const params = contactFormParams
