@@ -4,13 +4,14 @@ export type ElementWithValidationMessage = HTMLElement & {
     validationMessage: string;
 };
 
+// eslint-disable-next-line complexity
 function matchesOrContainsValidationMessage(el: ElementWithValidationMessage) {
-    return (
-        el?.validationMessage ||
-        el?.querySelector<ElementWithValidationMessage>(':invalid')
-            ?.validationMessage ||
-        'invalid input'
-    );
+    const containsInvalid =
+        el?.querySelector<ElementWithValidationMessage>(':invalid');
+
+    return el?.validationMessage || containsInvalid
+        ? containsInvalid?.validationMessage || 'invalid input'
+        : '';
 }
 
 // watchValue changes trigger updates
