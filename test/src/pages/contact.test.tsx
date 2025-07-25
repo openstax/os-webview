@@ -5,7 +5,8 @@ import userEvent from '@testing-library/user-event';
 import ContactPage from '~/pages/contact/contact';
 import Form from '~/pages/contact/form';
 import * as UPD from '~/helpers/use-page-data';
-import {MemoryRouter} from 'react-router-dom';
+import * as UDH from '~/helpers/use-document-head';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import * as SFF from '~/components/salesforce-form/salesforce-form';
 
@@ -58,6 +59,9 @@ function Component({path='/contact'}) {
 }
 
 jest.spyOn(SFF, 'default').mockImplementation(MockSfForm);
+jest.spyOn(UDH, 'setPageTitleAndDescriptionFromBookData').mockImplementation(
+    () => null
+);
 
 describe('contact page', () => {
     const user = userEvent.setup();
@@ -103,7 +107,7 @@ describe('contact page', () => {
 
         spyUsePageData.mockReturnValue(pageData);
         render(
-            <MemoryRouter initialEntries={['/embedded/contact']}>
+            <MemoryRouter initialEntries={['/embedded/contact?body=1&body=2']}>
                 <SalesforceContextProvider>
                     <Form setSubmitted={setSubmitted} />
                 </SalesforceContextProvider>

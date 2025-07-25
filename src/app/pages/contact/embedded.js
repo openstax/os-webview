@@ -12,7 +12,7 @@ export default function EmbeddedForm() {
 
     return (
         <main id="maincontent" className="embedded-contact">
-            <h1>Report an issue</h1>
+            <h1>Contact us</h1>
             <div>
                 Need to suggest a content correction instead? Find the book
                 on our{' '}
