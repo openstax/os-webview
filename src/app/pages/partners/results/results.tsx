@@ -99,7 +99,9 @@ function filterBy(
     candidateField: keyof PartnerEntry,
     advanced: AdvancedType
 ) {
-    const features = advanced.value.filter((f) => (values as unknown[]).includes(f));
+    const features = advanced.value.filter((f) =>
+        (values as unknown[]).includes(f)
+    );
 
     if (!features.length) {
         return candidates;
@@ -112,7 +114,6 @@ function filterBy(
     });
 }
 
-
 function useFilteredEntries(entries: PartnerEntry[]) {
     const {books, types, advanced, sort, resultCount} = useSearchContext();
     const unfilteredResults = React.useMemo(() => shuffle(entries), [entries]);
@@ -124,9 +125,14 @@ function useFilteredEntries(entries: PartnerEntry[]) {
         if (advanced.value.length > 0) {
             result = result.filter((entry) => {
                 return advanced.value
-                    .filter((feature) => !(costOptionValues as unknown[]).includes(feature))
+                    .filter(
+                        (feature) =>
+                            !(costOptionValues as unknown[]).includes(feature)
+                    )
                     .every((requiredFeature) =>
-                        (entry.advancedFeatures as unknown[]).includes(requiredFeature)
+                        (entry.advancedFeatures as unknown[]).includes(
+                            requiredFeature
+                        )
                     );
             });
             result = filterBy(costOptionValues, result, 'cost', advanced);
@@ -157,7 +163,6 @@ function advancedFilterKeys(partnerEntry: PartnerData) {
         ([false, true] as unknown[]).includes(partnerEntry[k])
     );
 }
-
 
 export function resultEntry(pd: PartnerData) {
     return {
@@ -190,7 +195,9 @@ export function resultEntry(pd: PartnerData) {
             pd.image_4,
             pd.image_5
         ].filter((img) => Boolean(img)) as string[],
-        videos: [pd.video_1, pd.video_2].filter((vid) => Boolean(vid)) as string[],
+        videos: [pd.video_1, pd.video_2].filter((vid) =>
+            Boolean(vid)
+        ) as string[],
         type: pd.partner_type,
         cost: pd.affordability_cost,
         rating: pd.average_rating.rating__avg,
@@ -220,15 +227,16 @@ function Sidebar({entries}: {entries: PartnerEntry[]}) {
                                 href={`?${encodeURIComponent(title)}`}
                                 title={title}
                                 logoUrl={logoUrl}
-                                tags={tags.map((t) => t.value).filter((v) => v !== null)}
+                                tags={tags
+                                    .map((t) => t.value)
+                                    .filter((v) => v !== null)}
                                 onClick={onSelect}
                                 badgeImage={badgeImage}
-                                analyticsContentType='Partner Profile'
+                                analyticsContentType="Partner Profile"
                             />
                         </li>
                     ))}
                 </ul>
-
             </div>
         </div>
     );
@@ -277,9 +285,10 @@ function ResultGridLoader({
     // }
     // // *** /FOR TESTING
     const entries = React.useMemo(
-        () => partnerData
-            .filter((d) => d.partnership_level !== null)
-            .map(resultEntry),
+        () =>
+            partnerData
+                .filter((d) => d.partnership_level !== null)
+                .map(resultEntry),
         [partnerData]
     );
     const filteredEntries = useFilteredEntries(entries);
@@ -287,16 +296,20 @@ function ResultGridLoader({
         filteredEntries,
         (e) => e.partnershipLevel?.toLowerCase() === 'startup'
     );
-    const partnersByAge = nonStartups.reduce((a, b) => {
-        const bucket =
-            ages.find((age) => (b.yearsAsPartner ?? 0) >= Number(age)) ?? 'new';
+    const partnersByAge = nonStartups.reduce(
+        (a, b) => {
+            const bucket =
+                ages.find((age) => (b.yearsAsPartner ?? 0) >= Number(age)) ??
+                'new';
 
-        if (!a[bucket]) {
-            a[bucket] = [];
-        }
-        a[bucket].push(b);
-        return a;
-    }, {} as Record<string, PartnerEntry[]>);
+            if (!a[bucket]) {
+                a[bucket] = [];
+            }
+            a[bucket].push(b);
+            return a;
+        },
+        {} as Record<string, PartnerEntry[]>
+    );
     const foundAges = ages.filter((a) => partnersByAge[a]);
 
     if (startups.length > 0) {
@@ -312,9 +325,8 @@ function ResultGridLoader({
                     linkTexts={linkTexts}
                     entries={filteredEntries}
                 />
-                {
-                    otherAges.length > 0
-                    ? <React.Fragment>
+                {otherAges.length > 0 ? (
+                    <React.Fragment>
                         <div className="with-sidebar">
                             {otherAges.slice(0, 1).map((age) => (
                                 <HeadingAndResultGrid
@@ -333,11 +345,12 @@ function ResultGridLoader({
                             />
                         ))}
                     </React.Fragment>
-                    : <div className="boxed">
+                ) : (
+                    <div className="boxed">
                         <h2>Startups</h2>
                         <ResultGrid entries={startups} />
                     </div>
-                }
+                )}
             </section>
         );
     }

@@ -8,24 +8,30 @@ import type {Store} from '../../search-context';
 export type AdvancedOptionGroup = {
     title: string;
     options: OptionType[];
-}
+};
 
 function checkedItemsCount(group: AdvancedOptionGroup, store: Store) {
-    return group.options.filter(({value}) => store.value?.includes(value)).length;
+    return group.options.filter(({value}) => store.value?.includes(value))
+        .length;
 }
 
-export default function AdvancedOptions({store, options, onTabIndex}: {
+export default function AdvancedOptions({
+    store,
+    options,
+    onTabIndex
+}: {
     store: Store;
     options: AdvancedOptionGroup[];
     onTabIndex: (n: number) => void;
 }) {
     const items = sortBy(
-        options
-            .map((group) => ({
-                title: group.title,
-                titleTag: checkedItemsCount(group, store) || null,
-                contentComponent: <Checkboxes options={group.options} store={store} />
-            })),
+        options.map((group) => ({
+            title: group.title,
+            titleTag: checkedItemsCount(group, store) || null,
+            contentComponent: (
+                <Checkboxes options={group.options} store={store} />
+            )
+        })),
         'title'
     );
 
@@ -34,6 +40,10 @@ export default function AdvancedOptions({store, options, onTabIndex}: {
     }
 
     return (
-        <AccordionGroup items={items} forwardOnChange={forwardOnChange} noScroll />
+        <AccordionGroup
+            items={items}
+            forwardOnChange={forwardOnChange}
+            noScroll
+        />
     );
 }

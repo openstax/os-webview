@@ -9,51 +9,56 @@ import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import {BaseButton, sortOptions} from '../controls/controls';
 import useMainClassContext from '~/contexts/main-class';
 import useSearchContext, {Store} from '../search-context';
-import { AdvancedOptionGroup } from '../controls/advanced-options/advanced-options';
+import {AdvancedOptionGroup} from '../controls/advanced-options/advanced-options';
 import type {OptionType} from '~/components/form-elements/form-elements';
 import sortBy from 'lodash/sortBy';
 import cn from 'classnames';
 import './mobile-controls.scss';
-import { assertDefined } from '~/helpers/data';
+import {assertDefined} from '~/helpers/data';
 
-function TypeOptions({store, options}: {
-    store: Store;
-    options: OptionType[];
-}) {
-    return (
-        <OptionsList items={options} selected={store as Selected} />
-    );
+function TypeOptions({store, options}: {store: Store; options: OptionType[]}) {
+    return <OptionsList items={options} selected={store as Selected} />;
 }
 
 function titleTag(size: number) {
     return size ? `(${size})` : null;
 }
 
-function AdvancedFilters({store, options}: {
+function AdvancedFilters({
+    store,
+    options
+}: {
     store: Store & {value: string[]};
     options: AdvancedOptionGroup[];
 }) {
     const items = sortBy(
         options.map((group) => {
             const groupValues = group.options.map((opt) => opt.value);
-            const selectedsFoundInGroup = store.value.filter((sv) => groupValues.includes(sv)).length;
+            const selectedsFoundInGroup = store.value.filter((sv) =>
+                groupValues.includes(sv)
+            ).length;
 
-            return ({
+            return {
                 title: group.title,
-                contentComponent: <Checkboxes options={group.options} store={store} />,
+                contentComponent: (
+                    <Checkboxes options={group.options} store={store} />
+                ),
                 titleTag: titleTag(selectedsFoundInGroup)
-            });
+            };
         }),
         'title'
     );
 
-    return (
-        <AccordionGroup items={items} noScroll={true} />
-    );
+    return <AccordionGroup items={items} noScroll={true} />;
 }
 
 function MobileFilters({
-    typeOptions, advancedFilterOptions, onClose, bookSize, typeSize, advancedSize
+    typeOptions,
+    advancedFilterOptions,
+    onClose,
+    bookSize,
+    typeSize,
+    advancedSize
 }: {
     typeOptions: OptionType[];
     advancedFilterOptions: AdvancedOptionGroup[];
@@ -62,7 +67,8 @@ function MobileFilters({
     typeSize: number;
     advancedSize: number;
 }) {
-    const {books, types, advanced, resultCount, clearStores} = useSearchContext();
+    const {books, types, advanced, resultCount, clearStores} =
+        useSearchContext();
     const items = [
         {
             title: 'Books',
@@ -71,12 +77,19 @@ function MobileFilters({
         },
         {
             title: 'Type',
-            contentComponent: <TypeOptions store={types} options={typeOptions} />,
+            contentComponent: (
+                <TypeOptions store={types} options={typeOptions} />
+            ),
             titleTag: titleTag(typeSize)
         },
         {
             title: 'Advanced Filters',
-            contentComponent: <AdvancedFilters store={advanced} options={advancedFilterOptions} />,
+            contentComponent: (
+                <AdvancedFilters
+                    store={advanced}
+                    options={advancedFilterOptions}
+                />
+            ),
             titleTag: titleTag(advancedSize)
         }
     ];
@@ -86,22 +99,32 @@ function MobileFilters({
             <div className="filter-section">
                 <div className="title-bar">
                     <span>Filters ({resultCount.value} results)</span>
-                    <PutAway onClick={onClose} ariaLabel='close' />
+                    <PutAway onClick={onClose} ariaLabel="close" />
                 </div>
                 <div className="mobile controls mobile-filters">
-                    <AccordionGroup items={items} preExpanded={['Advanced Filters']} />
+                    <AccordionGroup
+                        items={items}
+                        preExpanded={['Advanced Filters']}
+                    />
                 </div>
             </div>
             <div className="button-row">
-                <button type="button" onClick={clearStores}>Clear all</button>
-                <button type="button" className="primary" onClick={onClose}>Apply</button>
+                <button type="button" onClick={clearStores}>
+                    Clear all
+                </button>
+                <button type="button" className="primary" onClick={onClose}>
+                    Apply
+                </button>
             </div>
         </React.Fragment>
     );
 }
 
-function MobileFiltersToggle({typeOptions, advancedFilterOptions}: {
-advancedFilterOptions: AdvancedOptionGroup[];
+function MobileFiltersToggle({
+    typeOptions,
+    advancedFilterOptions
+}: {
+    advancedFilterOptions: AdvancedOptionGroup[];
     typeOptions: OptionType[];
 }) {
     const [openButton, setOpenButton] = useState<string | null>(null);
@@ -116,20 +139,28 @@ advancedFilterOptions: AdvancedOptionGroup[];
     const filterSize = bookSize + typeSize + advancedSize;
     const {setModal} = useMainClassContext();
 
-    React.useEffect(
-        () => {
-            setModal(Boolean(openButton));
+    React.useEffect(() => {
+        setModal(Boolean(openButton));
 
-            return () => setModal(false);
-        },
-        [openButton, setModal]
-    );
+        return () => setModal(false);
+    }, [openButton, setModal]);
 
     return (
         <React.Fragment>
-            <BaseButton label="Filters" {...commonButtonProps} fullScreen size={filterSize}>
+            <BaseButton
+                label="Filters"
+                {...commonButtonProps}
+                fullScreen
+                size={filterSize}
+            >
                 <MobileFilters
-                    {...{typeOptions, advancedFilterOptions, bookSize, typeSize, advancedSize}}
+                    {...{
+                        typeOptions,
+                        advancedFilterOptions,
+                        bookSize,
+                        typeSize,
+                        advancedSize
+                    }}
                     onClose={() => setOpenButton(null)}
                 />
             </BaseButton>
@@ -140,7 +171,10 @@ advancedFilterOptions: AdvancedOptionGroup[];
     );
 }
 
-function MobileControlRow({advancedFilterOptions, typeOptions}: {
+function MobileControlRow({
+    advancedFilterOptions,
+    typeOptions
+}: {
     advancedFilterOptions: AdvancedOptionGroup[];
     typeOptions: OptionType[];
 }) {
@@ -162,7 +196,9 @@ function MobileControlRow({advancedFilterOptions, typeOptions}: {
     );
 }
 
-export default function MobileControlRowWrapper(props: Parameters<typeof MobileControlRow>[0]) {
+export default function MobileControlRowWrapper(
+    props: Parameters<typeof MobileControlRow>[0]
+) {
     return (
         <WindowContextProvider>
             <MobileControlRow {...props} />

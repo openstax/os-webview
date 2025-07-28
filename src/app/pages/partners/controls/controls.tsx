@@ -4,7 +4,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import BookOptions from './book-options/book-options';
-import AdvancedOptions, {AdvancedOptionGroup} from './advanced-options/advanced-options';
+import AdvancedOptions, {
+    AdvancedOptionGroup
+} from './advanced-options/advanced-options';
 import type {OptionType} from '~/components/form-elements/form-elements';
 import {useLocation} from 'react-router-dom';
 import {useMainSticky} from '~/helpers/main-class-hooks';
@@ -25,7 +27,12 @@ export const sortOptions = [
 ];
 
 export function BaseButton({
-    label, openButton, setOpenButton, children, size = 0, fullScreen = false
+    label,
+    openButton,
+    setOpenButton,
+    children,
+    size = 0,
+    fullScreen = false
 }: React.PropsWithChildren<{
     label: string;
     openButton: string | null;
@@ -45,7 +52,8 @@ export function BaseButton({
         <div className={cn('button-with-popover', {detached: !children})}>
             <button
                 className={cn({'has-selections': size > 0})}
-                type="button" onClick={toggle}
+                type="button"
+                onClick={toggle}
                 aria-pressed={isOpen}
             >
                 <span>
@@ -66,28 +74,25 @@ function useLocationPreselects() {
     const [done, setDone] = React.useState(false);
     const {books, clearStores} = useSearchContext();
 
-    React.useEffect(
-        () => {
-            if (!done) {
-                setDone(true);
-                clearStores();
-                if (location.state?.book) {
-                    for (const book of Array.from(location.state.book)) {
-                        books.toggle(book as string);
-                    }
+    React.useEffect(() => {
+        if (!done) {
+            setDone(true);
+            clearStores();
+            if (location.state?.book) {
+                for (const book of Array.from(location.state.book)) {
+                    books.toggle(book as string);
                 }
             }
-        },
-        [location, done, books, clearStores]
-    );
+        }
+    }, [location, done, books, clearStores]);
 
-    React.useEffect(
-        () => setDone(false),
-        [location]
-    );
+    React.useEffect(() => setDone(false), [location]);
 }
 
-export default function Controls({advancedFilterOptions, typeOptions}: {
+export default function Controls({
+    advancedFilterOptions,
+    typeOptions
+}: {
     advancedFilterOptions: AdvancedOptionGroup[];
     typeOptions: OptionType[];
 }) {
@@ -97,15 +102,12 @@ export default function Controls({advancedFilterOptions, typeOptions}: {
         openButton,
         setOpenButton
     };
-    const triangleClass = React.useMemo(
-        () => {
-            if (openButton !== 'Advanced Filters') {
-                return 'triangle-white';
-            }
-            return (openTab === 0 ? 'triangle-dark' : 'triangle-light');
-        },
-        [openButton, openTab]
-    );
+    const triangleClass = React.useMemo(() => {
+        if (openButton !== 'Advanced Filters') {
+            return 'triangle-white';
+        }
+        return openTab === 0 ? 'triangle-dark' : 'triangle-light';
+    }, [openButton, openTab]);
     const {books, types, advanced, sort} = useSearchContext();
 
     useMainSticky();
@@ -123,27 +125,51 @@ export default function Controls({advancedFilterOptions, typeOptions}: {
     }, []);
 
     return (
-        <section className="desktop controls" onClick={(e) => e.stopPropagation()}>
+        <section
+            className="desktop controls"
+            onClick={(e) => e.stopPropagation()}
+        >
             <div className={`button-row ${triangleClass}`}>
-                <BaseButton label="Books" {...commonButtonProps} size={books.size} />
-                <BaseButton label="Type" {...commonButtonProps} size={types.size}>
-                    <OptionsList items={typeOptions} selected={types as Selected} />
+                <BaseButton
+                    label="Books"
+                    {...commonButtonProps}
+                    size={books.size}
+                />
+                <BaseButton
+                    label="Type"
+                    {...commonButtonProps}
+                    size={types.size}
+                >
+                    <OptionsList
+                        items={typeOptions}
+                        selected={types as Selected}
+                    />
                 </BaseButton>
-                <BaseButton label="Advanced Filters" {...commonButtonProps} size={advanced.size} />
+                <BaseButton
+                    label="Advanced Filters"
+                    {...commonButtonProps}
+                    size={advanced.size}
+                />
             </div>
             <div className="other-controls">
                 <BaseButton label="Sort" {...commonButtonProps}>
-                    <OptionsList items={sortOptions} selected={sort as Selected} />
+                    <OptionsList
+                        items={sortOptions}
+                        selected={sort as Selected}
+                    />
                 </BaseButton>
             </div>
             <div className="popover-container">
-                {openButton === 'Books' && <BookOptions store={books as Store} />}
-                {openButton === 'Advanced Filters' &&
+                {openButton === 'Books' && (
+                    <BookOptions store={books as Store} />
+                )}
+                {openButton === 'Advanced Filters' && (
                     <AdvancedOptions
                         store={advanced}
                         options={advancedFilterOptions}
                         onTabIndex={setOpenTab}
-                    />}
+                    />
+                )}
             </div>
         </section>
     );

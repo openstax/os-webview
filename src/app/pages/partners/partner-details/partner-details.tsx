@@ -1,5 +1,8 @@
 import React from 'react';
-import usePartnerContext, {PartnerContextProvider, Model} from './partner-context';
+import usePartnerContext, {
+    PartnerContextProvider,
+    Model
+} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
 import RawHTML from '~/components/jsx-helpers/raw-html';
@@ -12,7 +15,11 @@ import './partner-details.scss';
 
 function getTitlesFromAbbreviations(abbreviations: string[], bookInfo: Book[]) {
     return abbreviations
-        .map((abbrev) => bookInfo.find((b) => b.salesforce_abbreviation === abbrev) || abbrev)
+        .map(
+            (abbrev) =>
+                bookInfo.find((b) => b.salesforce_abbreviation === abbrev) ||
+                abbrev
+        )
         .filter((b) => {
             const found = typeof b === 'object';
 
@@ -27,12 +34,11 @@ function getTitlesFromAbbreviations(abbreviations: string[], bookInfo: Book[]) {
 function useRealTitles(books: Model['books']) {
     const [titles, setTitles] = React.useState(books);
 
-    React.useEffect(
-        () => {
-            booksPromise.then((results) => setTitles(getTitlesFromAbbreviations(books, results)));
-        },
-        [books]
-    );
+    React.useEffect(() => {
+        booksPromise.then((results) =>
+            setTitles(getTitlesFromAbbreviations(books, results))
+        );
+    }, [books]);
 
     return titles;
 }
@@ -48,21 +54,24 @@ function RequestInfoButton({infoText}: {infoText: string}) {
     return (
         <section>
             <button
-                type="button" className="primary"
+                type="button"
+                className="primary"
                 onClick={() => toggleForm?.()}
-            >{infoText}</button>
+            >
+                {infoText}
+            </button>
         </section>
     );
 }
 
-export function Overview({model, icon}: {
-    model: Model;
-    icon: string;
-}) {
+export function Overview({model, icon}: {model: Model; icon: string}) {
     const {
         richDescription: description,
         infoLinkText: infoText,
-        books, images, videos, title: partnerName
+        books,
+        images,
+        videos,
+        title: partnerName
     } = model;
     const titles = useRealTitles(books);
     const {toggleForm} = usePartnerContext();
@@ -91,11 +100,11 @@ export function Overview({model, icon}: {
                 <RawHTML className="main-text" html={description} />
                 <h2>Related Books</h2>
                 <div className="titles">
-                    {
-                        titles.map((title) =>
-                            <span className="title" key={title}>{title}</span>
-                        )
-                    }
+                    {titles.map((title) => (
+                        <span className="title" key={title}>
+                            {title}
+                        </span>
+                    ))}
                 </div>
             </section>
         </React.Fragment>
@@ -104,11 +113,17 @@ export function Overview({model, icon}: {
 
 function PartnerDetails({model}: {model: Model}) {
     const {
-        website, partnerWebsite, websiteLinkText: partnerLinkText,
+        website,
+        partnerWebsite,
+        websiteLinkText: partnerLinkText,
         logoUrl
     } = model;
-    const icon = logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
-    const partnerLinkProps = {partnerUrl: website || partnerWebsite, partnerLinkText};
+    const icon =
+        logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
+    const partnerLinkProps = {
+        partnerUrl: website || partnerWebsite,
+        partnerLinkText
+    };
     // ** Restore the Reviews tab when using Reviews again
     // const labels = ['Overview', 'Reviews'];
     const labels = ['Overview'];
@@ -122,7 +137,10 @@ function PartnerDetails({model}: {model: Model}) {
             </div>
             <div className="scrolling-region boxed">
                 <div className="tab-content">
-                    <ContentGroup activeIndex={labels.indexOf(selectedLabel)} labels={labels}>
+                    <ContentGroup
+                        activeIndex={labels.indexOf(selectedLabel)}
+                        labels={labels}
+                    >
                         <Overview model={model} icon={icon} />
                         {
                             // ** Restore when using Reviews again
@@ -145,14 +163,23 @@ function PartnerDetailsOrInfoRequestForm({model}: {model: Model}) {
     );
 }
 
-type ContextProps = Exclude<Parameters<typeof PartnerContextProvider>[0]['contextValueParameters'], undefined>;
+type ContextProps = Exclude<
+    Parameters<typeof PartnerContextProvider>[0]['contextValueParameters'],
+    undefined
+>;
 type Props = {
     detailData: {id: ContextProps['id']} & Model;
 } & Pick<ContextProps, 'title' | 'setTitle'>;
 
-export default function PartnerDetailsWrapper({detailData: {id, ...model}, title, setTitle}: Props) {
+export default function PartnerDetailsWrapper({
+    detailData: {id, ...model},
+    title,
+    setTitle
+}: Props) {
     return (
-        <PartnerContextProvider contextValueParameters={{id, model, title, setTitle}}>
+        <PartnerContextProvider
+            contextValueParameters={{id, model, title, setTitle}}
+        >
             <PartnerDetailsOrInfoRequestForm model={model} />
         </PartnerContextProvider>
     );

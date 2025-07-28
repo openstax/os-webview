@@ -3,9 +3,11 @@ import usePartnerContext from '../partner-context';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import BookTagsMultiselect, {BookTagsContextProvider} from '~/components/multiselect/book-tags/book-tags';
+import BookTagsMultiselect, {
+    BookTagsContextProvider
+} from '~/components/multiselect/book-tags/book-tags';
 import useSearchContext from '../../search-context';
-import SchoolSelector, { useDoSubmit } from './school-selector';
+import SchoolSelector, {useDoSubmit} from './school-selector';
 import FormRadiogroup from '~/components/form-radiogroup/form-radiogroup';
 import FormSelect from '~/components/form-select/form-select';
 import inputProps from '~/components/form-elements/input-props';
@@ -53,8 +55,8 @@ function PartnerTypeQuestion() {
     return (
         <div>
             <p className="instruction">
-                {partnerName}{' '}is {aAn} {pt} product. Would you
-                also like to receive information about our other {pt} partners?
+                {partnerName} is {aAn} {pt} product. Would you also like to
+                receive information about our other {pt} partners?
             </p>
             <FormRadiogroup
                 name="partner_category_interest"
@@ -75,14 +77,16 @@ function Page1() {
 
     return (
         <div className="form-page">
-            <input type="hidden" name="partner_product_interest" value={partnerName} />
+            <input
+                type="hidden"
+                name="partner_product_interest"
+                value={partnerName}
+            />
             <p className="headline">
-                Please give us a little more information about your interest in
-                {' '}{partnerName}.
+                Please give us a little more information about your interest in{' '}
+                {partnerName}.
             </p>
-            <p>
-                All fields are required
-            </p>
+            <p>All fields are required</p>
             <div className="form-group">
                 <label>Book(s) of interest</label>
                 <BookTagsContextProvider
@@ -90,7 +94,11 @@ function Page1() {
                     booksAllowed={booksAllowed}
                     maxSelections={5}
                 >
-                    <BookTagsMultiselect name="subjects_of_interest" required oneField />
+                    <BookTagsMultiselect
+                        name="subjects_of_interest"
+                        required
+                        oneField
+                    />
                 </BookTagsContextProvider>
             </div>
             <PartnerTypeQuestion />
@@ -103,27 +111,29 @@ type RoleSnippet = {
     id: number;
     display_name: string;
     salesforce_name: string;
-}
+};
 
 function RoleSelector() {
     const roles = useDataFromSlug<RoleSnippet[]>('snippets/roles');
     const options = React.useMemo(
-        () => roles?.map((r) => ({label: r.display_name, value: r.salesforce_name})),
+        () =>
+            roles?.map((r) => ({
+                label: r.display_name,
+                value: r.salesforce_name
+            })),
         [roles]
     );
     const {userModel} = useUserContext();
-    const optionsWithSelection = React.useMemo(
-        () => {
-            if (!options || !userModel) {
-                return options;
-            }
-            return options.map((opt) =>
-                opt.label.toLowerCase() === userModel?.self_reported_role ?
-                    {...opt, selected: true} : opt
-            );
-        },
-        [options, userModel]
-    );
+    const optionsWithSelection = React.useMemo(() => {
+        if (!options || !userModel) {
+            return options;
+        }
+        return options.map((opt) =>
+            opt.label.toLowerCase() === userModel?.self_reported_role
+                ? {...opt, selected: true}
+                : opt
+        );
+    }, [options, userModel]);
 
     if (!optionsWithSelection) {
         return null;
@@ -136,7 +146,8 @@ function RoleSelector() {
                 placeholder: 'Select your position',
                 required: true
             }}
-            label="Role" options={optionsWithSelection}
+            label="Role"
+            options={optionsWithSelection}
         />
     );
 }
@@ -146,28 +157,24 @@ function CountrySelector() {
     return (
         <div className="control-group">
             <label className="field-label">Country</label>
-            <input
-                type="text"
-                name="country"
-                required
-            />
+            <input type="text" name="country" required />
         </div>
     );
 }
 
 function Page2() {
     const {userModel, userStatus} = useUserContext();
-    const [school, setSchool] = React.useState(userModel?.accountsModel?.school_name ?? '');
+    const [school, setSchool] = React.useState(
+        userModel?.accountsModel?.school_name ?? ''
+    );
 
     return (
         <div className="form-page">
             <p className="headline">
-                Almost done! We just need the following information, and then someone
-                will be in contact with you shortly.
+                Almost done! We just need the following information, and then
+                someone will be in contact with you shortly.
             </p>
-            <p>
-                All fields are required
-            </p>
+            <p>All fields are required</p>
             <div className="grid">
                 <RoleSelector />
                 <SchoolSelector value={school} setValue={setSchool} />
@@ -187,11 +194,17 @@ function Page2() {
                 />
                 <FormInput
                     label="First name"
-                    inputProps={{...inputProps.firstName, value: userStatus.firstName}}
+                    inputProps={{
+                        ...inputProps.firstName,
+                        value: userStatus.firstName
+                    }}
                 />
                 <FormInput
                     label="Last name"
-                    inputProps={{...inputProps.lastName, value: userStatus.lastName}}
+                    inputProps={{
+                        ...inputProps.lastName,
+                        value: userStatus.lastName
+                    }}
                 />
                 <FormInput
                     label="Phone number"
@@ -213,7 +226,8 @@ export default function InfoRequestForm() {
         <React.Fragment>
             <FormTarget />
             <MultiPageForm
-                action={techScoutUrl} className="info-request-form"
+                action={techScoutUrl}
+                className="info-request-form"
                 name="partner_info_request"
                 onSubmit={doSubmit}
                 submitting={submitting}

@@ -79,7 +79,9 @@ describe('partners/results', () => {
 describe('partners full page', () => {
     const user = userEvent.setup();
 
-    function Component({initialEntries = ['/partners']}: Parameters<typeof MemoryRouter>[0]) {
+    function Component({
+        initialEntries = ['/partners']
+    }: Parameters<typeof MemoryRouter>[0]) {
         return (
             <ShellContextProvider>
                 <MemoryRouter initialEntries={initialEntries}>
@@ -107,14 +109,27 @@ describe('partners full page', () => {
     });
     it('respects location.state.book', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
-        render(<Component
-            initialEntries={[{
-                pathname: '/partners',
-                state: {book: ['Microbiology'], confirmation: true, slug: 'microbio'}
-            }]} />);
+        render(
+            <Component
+                initialEntries={[
+                    {
+                        pathname: '/partners',
+                        state: {
+                            book: ['Microbiology'],
+                            confirmation: true,
+                            slug: 'microbio'
+                        }
+                    }
+                ]}
+            />
+        );
         await screen.findByText('Microbiology');
-        await user.click(screen.getByRole('button', {name: 'close confirmation'}));
-        expect(screen.queryByRole('button', {name: 'close confirmation'})).toBeNull();
+        await user.click(
+            screen.getByRole('button', {name: 'close confirmation'})
+        );
+        expect(
+            screen.queryByRole('button', {name: 'close confirmation'})
+        ).toBeNull();
     });
     it('filters by book', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
@@ -139,20 +154,34 @@ describe('partners full page', () => {
 
         await user.click(filterButton);
         await user.click(screen.getByRole('button', {name: 'App Available'}));
-        await user.click(screen.getAllByRole('checkbox', {name: 'App Available'})[1]);
+        await user.click(
+            screen.getAllByRole('checkbox', {name: 'App Available'})[1]
+        );
         await user.click(filterButton);
-        expect(screen.getAllByRole('link').filter((l) => l.classList.contains('partner-card'))).toHaveLength(19);
+        expect(
+            screen
+                .getAllByRole('link')
+                .filter((l) => l.classList.contains('partner-card'))
+        ).toHaveLength(19);
         await user.click(filterButton);
         await user.click(screen.getByRole('button', {name: 'Cost'}));
         await user.click(screen.getByRole('checkbox', {name: '$11 - $25'}));
         await user.click(filterButton);
-        expect(screen.getAllByRole('link').filter((l) => l.classList.contains('partner-card'))).toHaveLength(6);
+        expect(
+            screen
+                .getAllByRole('link')
+                .filter((l) => l.classList.contains('partner-card'))
+        ).toHaveLength(6);
         await user.click(filterButton);
         // The triangle pointer color matches the top item (code coverage)
         await user.click(screen.getByRole('button', {name: 'Adaptivity'}));
         await user.click(screen.getByRole('button', {name: 'Adaptivity'}));
         await user.click(filterButton);
-        expect(screen.getAllByRole('link').filter((l) => l.classList.contains('partner-card'))).toHaveLength(6);
+        expect(
+            screen
+                .getAllByRole('link')
+                .filter((l) => l.classList.contains('partner-card'))
+        ).toHaveLength(6);
         // Filter remover
         await user.click(screen.getByRole('link', {name: 'Clear All'}));
     });
@@ -209,7 +238,9 @@ describe('partners full page', () => {
     it('shows details in dialog', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
-        const partnerLink = await screen.findByRole('link', {name: 'Rice Online Learning'});
+        const partnerLink = await screen.findByRole('link', {
+            name: 'Rice Online Learning'
+        });
 
         await user.click(partnerLink);
         screen.getByRole('dialog');
@@ -224,7 +255,9 @@ describe('partners full page', () => {
         const saveWarn = console.warn;
 
         console.warn = jest.fn();
-        await user.click(screen.getByRole('link', {name: 'FUVI Cognitive Intelligence'}));
+        await user.click(
+            screen.getByRole('link', {name: 'FUVI Cognitive Intelligence'})
+        );
         expect(console.warn).toHaveBeenCalledWith('Book not found:', '');
         console.warn = saveWarn;
     });
@@ -235,9 +268,14 @@ describe('partners full page', () => {
         sfPartners[2].partner_anniversary_date = '2020-03-04';
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
-        const startupHeading = await screen.findByRole('heading', {level: 2, name: 'Startups'});
+        const startupHeading = await screen.findByRole('heading', {
+            level: 2,
+            name: 'Startups'
+        });
 
-        expect(startupHeading.parentNode?.textContent).toContain(sfPartners[0].partner_name);
+        expect(startupHeading.parentNode?.textContent).toContain(
+            sfPartners[0].partner_name
+        );
         sfPartners[0].partnership_level = 'Full partner';
         sfPartners[1].partner_anniversary_date = null;
         sfPartners[2].partner_anniversary_date = null;
@@ -245,22 +283,32 @@ describe('partners full page', () => {
     });
     it('displays no sidebar when no other partners are displayed', async () => {
         /* eslint-disable camelcase */
-        sfPartners.map((p) => {p.partnership_level = 'startup';});
+        sfPartners.map((p) => {
+            p.partnership_level = 'startup';
+        });
         sfPartners[0].partnership_level = 'Full partner';
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
         await screen.findByRole('heading', {level: 2, name: 'Startups'});
-        sfPartners.map((p) => p.partnership_level = 'Full partner'); // eslint-disable-line
+        sfPartners.map((p) => (p.partnership_level = 'Full partner')); // eslint-disable-line
         /* eslint-enable camelcase */
     });
     it('toggles mobile controls', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
         render(<Component />);
-        const mobilebutton = await screen.findByRole('button', {name: 'Filters'});
+        const mobilebutton = await screen.findByRole('button', {
+            name: 'Filters'
+        });
 
         await user.click(mobilebutton);
-        await user.click((await screen.findAllByRole('button', {name: 'Advanced Filters'}))[0]);
-        await user.click((await screen.findAllByRole('button', {name: 'Adaptivity'}))[0]);
+        await user.click(
+            (
+                await screen.findAllByRole('button', {name: 'Advanced Filters'})
+            )[0]
+        );
+        await user.click(
+            (await screen.findAllByRole('button', {name: 'Adaptivity'}))[0]
+        );
 
         const buttons = screen.getAllByRole('checkbox');
 
@@ -272,10 +320,14 @@ describe('partners full page', () => {
     it('uses default infoLinkText when none is provided', async () => {
         mockSfPartners.mockResolvedValue(sfPartners);
         const pageData = {...rawPageData, partner_request_info_link: ''}; // eslint-disable-line camelcase
-        const mockLP = jest.spyOn(LP, 'default').mockImplementationOnce(({Child}) => <Child data={pageData} />);
+        const mockLP = jest
+            .spyOn(LP, 'default')
+            .mockImplementationOnce(({Child}) => <Child data={pageData} />);
 
         render(<Component />);
-        const partnerLink = await screen.findByRole('link', {name: 'Rice Online Learning'});
+        const partnerLink = await screen.findByRole('link', {
+            name: 'Rice Online Learning'
+        });
 
         await user.click(partnerLink);
         screen.getByRole('dialog');

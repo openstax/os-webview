@@ -23,19 +23,25 @@ function Confirmation() {
         <section className="above-the-banner">
             <div className="content">
                 <div>
-                    Thank you! Your form has been submitted. Check out some of the resources
-                    available for our books below
-                    {
-                        bookSlug &&
-                            <span>{' '}or return to{' '}
-                                <a href={`/details/${bookSlug}`}>your book</a>
-                            </span>
-                    }
+                    Thank you! Your form has been submitted. Check out some of
+                    the resources available for our books below
+                    {bookSlug && (
+                        <span>
+                            {' '}
+                            or return to{' '}
+                            <a href={`/details/${bookSlug}`}>your book</a>
+                        </span>
+                    )}
                     .
                 </div>
                 <button
-                    type="button" className="put-away" aria-label="close confirmation"
-                    onClick={() => toggleDone(true)}>&times;</button>
+                    type="button"
+                    className="put-away"
+                    aria-label="close confirmation"
+                    onClick={() => toggleDone(true)}
+                >
+                    &times;
+                </button>
             </div>
         </section>
     );
@@ -58,38 +64,43 @@ type PartnerPageData = {
 
 function getFilterOptions(data: PartnerPageData) {
     const excludeList = ['Book', 'Type'];
-    const categoryKeys = Object.keys(data.category_mapping)
-        .filter((title) => !excludeList.includes(title));
-    const result = categoryKeys
-        .map((title) => ({
-            title,
-            options: [] as Array<OptionType>
-        }));
+    const categoryKeys = Object.keys(data.category_mapping).filter(
+        (title) => !excludeList.includes(title)
+    );
+    const result = categoryKeys.map((title) => ({
+        title,
+        options: [] as Array<OptionType>
+    }));
     const mapToTitle = categoryKeys
         .map((k) => [k, data.category_mapping[k]])
-        .reduce((obj, [text, prefix]) => {
-            obj[prefix] = text;
-            return obj;
-        }, {} as Record<string, string>);
+        .reduce(
+            (obj, [text, prefix]) => {
+                obj[prefix] = text;
+                return obj;
+            },
+            {} as Record<string, string>
+        );
 
-    Object.entries(data.field_name_mapping)
-        .forEach(([label, value]) => {
-            const entry: OptionType = {
-                label,
-                value
-            };
-            const categoryPrefix = Object.keys(mapToTitle)
-                .find((prefix) => value.substring(0, prefix.length) === prefix);
-            const itemInResult = categoryPrefix && result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
+    Object.entries(data.field_name_mapping).forEach(([label, value]) => {
+        const entry: OptionType = {
+            label,
+            value
+        };
+        const categoryPrefix = Object.keys(mapToTitle).find(
+            (prefix) => value.substring(0, prefix.length) === prefix
+        );
+        const itemInResult =
+            categoryPrefix &&
+            result.find((obj) => obj.title === mapToTitle[categoryPrefix]);
 
-            if (itemInResult) {
-                if (label === 'Cost per semester') {
-                    costOptions.forEach((opt) => itemInResult.options.push(opt));
-                } else {
-                    itemInResult.options.push(entry);
-                }
+        if (itemInResult) {
+            if (label === 'Cost per semester') {
+                costOptions.forEach((opt) => itemInResult.options.push(opt));
+            } else {
+                itemInResult.options.push(entry);
             }
-        });
+        }
+    });
 
     return result;
 }
@@ -97,7 +108,7 @@ function getFilterOptions(data: PartnerPageData) {
 function textsFromData(data: PartnerPageData) {
     const linkTexts = {
         websiteLinkText: data.partner_landing_page_link,
-        infoLinkText: (data.partner_request_info_link || 'Request info')
+        infoLinkText: data.partner_request_info_link || 'Request info'
     };
 
     return {linkTexts};
@@ -111,9 +122,8 @@ function Partners({data}: {data: PartnerPageData}) {
         [data]
     );
     const typeOptions = React.useMemo(
-        () => data.partner_type_choices
-            .sort()
-            .map((k) => ({
+        () =>
+            data.partner_type_choices.sort().map((k) => ({
                 label: k,
                 value: k
             })),
@@ -133,14 +143,15 @@ function Partners({data}: {data: PartnerPageData}) {
                     <Controls {...{advancedFilterOptions, typeOptions}} />
                 </div>
                 <img
-                    className="strips" src="/dist/images/components/strips.svg"
-                    height="10" alt="" role="presentation" />
+                    className="strips"
+                    src="/dist/images/components/strips.svg"
+                    height="10"
+                    alt=""
+                    role="presentation"
+                />
             </section>
             <MobileControlRow {...{advancedFilterOptions, typeOptions}} />
-            <div
-                className="padding"
-                data-analytics-content-list={headline}
-            >
+            <div className="padding" data-analytics-content-list={headline}>
                 <Results linkTexts={linkTexts} />
             </div>
         </React.Fragment>
@@ -151,7 +162,12 @@ export default function PartnersLoader() {
     return (
         <main className="partners page">
             <SearchContextProvider>
-                <LoaderPage slug="pages/partners" Child={Partners} doDocumentSetup noCamelCase />
+                <LoaderPage
+                    slug="pages/partners"
+                    Child={Partners}
+                    doDocumentSetup
+                    noCamelCase
+                />
             </SearchContextProvider>
         </main>
     );

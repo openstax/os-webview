@@ -5,9 +5,7 @@ import './options-list.scss';
 
 export type Selected = {
     includes: (v: unknown) => boolean;
-} & (
-    {toggle: (v: unknown) => void}
-);
+} & {toggle: (v: unknown) => void};
 
 function Item({label, value, selected}: OptionType & {selected: Selected}) {
     const isSelected = React.useMemo(
@@ -33,22 +31,23 @@ function Item({label, value, selected}: OptionType & {selected: Selected}) {
     );
 }
 
-export default function OptionsList({items, selected}: {
+export default function OptionsList({
+    items,
+    selected
+}: {
     items: OptionType[];
     selected: Selected;
 }) {
     return (
-        <div role='listbox' className="options-list">
-            {
-                items.map((item) =>
-                    <Item
-                        key={item.value}
-                        value={item.value}
-                        label={item.label}
-                        selected={selected}
-                    />
-                )
-            }
+        <div role="listbox" className="options-list">
+            {items.map((item) => (
+                <Item
+                    key={item.value}
+                    value={item.value}
+                    label={item.label}
+                    selected={selected}
+                />
+            ))}
         </div>
     );
 }
