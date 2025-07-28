@@ -23,13 +23,20 @@ type GiveToday = PromiseData & {
     showLink: boolean;
 }
 
+type GiveTodayData = {
+    menu_start: string;
+    menu_expires: string;
+    start: string;
+    expires: string;
+}
+
+let promise: Promise<GiveTodayData>;
+
 export default function useGiveToday(): Partial<GiveToday> {
-    const giveData = useDataFromPromise<{
-        menu_start: string;
-        menu_expires: string;
-        start: string;
-        expires: string;
-    }>(cmsFetch('give-today'));
+    if (promise === undefined) {
+        promise = cmsFetch('give-today');
+    }
+    const giveData = useDataFromPromise(promise);
 
     return giveData ? {
         ...giveData,
