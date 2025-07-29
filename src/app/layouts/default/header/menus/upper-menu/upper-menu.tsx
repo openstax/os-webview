@@ -5,7 +5,7 @@ import useOptimizedImage from '~/helpers/use-optimized-image';
 import './upper-menu.scss';
 
 const menuStructure = {
-    Bookstores: 'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf',
+    'Order Print': '/print/',
     'Our Impact': '/impact',
     Supporters: '/foundation',
     Blog: '/blog',

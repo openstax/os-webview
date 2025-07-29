@@ -87,8 +87,8 @@ describe('layouts/landing', () => {
 
         // Find social links by title
         expect(await screen.findAllByTitle(/^OpenStax on .+$/)).toHaveLength(5);
-        // Default footer has 16 links + 1 link in layout = 17 links
-        expect(await screen.findAllByRole('link')).toHaveLength(17);
+        // Default footer has 17 links + 1 link in layout = 18 links
+        expect(await screen.findAllByRole('link')).toHaveLength(18);
     });
     it('renders the flex footer for flex pages', async () => {
         const title = 'some-title';
