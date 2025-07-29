@@ -55,6 +55,7 @@ export function DetailsRoutes() {
 
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
+    const {'*': path} = useParams();
 
     if (['books', 'textbooks'].includes(dir)) {
         return (
@@ -65,6 +66,10 @@ export function OtherPageRoutes() {
                 />
             </Routes>
         );
+    }
+
+    if (dir === 'general') {
+        return <Navigate to={`/${path}`} replace />;
     }
 
     if (dir === 'home') {

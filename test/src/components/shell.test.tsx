@@ -65,7 +65,7 @@ describe('shell', () => {
             case 'pages/general-page':
                 return camelCaseKeys(transformData(generalPage));
             default:
-                if (path.startsWith('errata/')) {
+                if (path.startsWith('errata/') || path.startsWith('pages/')) {
                     return [];
                 }
                 console.info('*** Requested', path);
@@ -150,6 +150,17 @@ describe('shell', () => {
 
         render(AppElement);
         await screen.findByText('-/-');
+    });
+    it('routes "general/anything" to "/anything"', async () => {
+        BrowserRouter.mockImplementationOnce(({children}) => (
+            <MR initialEntries={['/general/anything']} >
+                {children}
+                <LocationDisplay />
+            </MR>
+        ));
+
+        render(AppElement);
+        await screen.findByText('-/anything-');
     });
     it('routes "errata" paths', async () => {
         BrowserRouter.mockImplementationOnce(({children}) => (
