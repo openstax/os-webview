@@ -58,11 +58,11 @@ function SubjectListing({subject, books}: {
     );
 }
 
-export default function BookOptions() {
+export default function BookOptions({listboxId}: {listboxId: string}) {
     const {subjects, books} = useSFBookContext();
 
     return (
-        <div className="book-options">
+        <div className="book-options" role="listbox" id={listboxId}>
             {
                 subjects.map((s) =>
                     <SubjectListing key={s} subject={s} books={books} />

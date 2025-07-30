@@ -1,47 +1,51 @@
-import React, {useState, useEffect} from 'react';
-import usePartnerContext, {PartnerContextProvider} from './partner-context';
+import React from 'react';
+import usePartnerContext, {
+    PartnerContextProvider,
+    Model
+} from './partner-context';
 import Synopsis from './synopsis/synopsis';
 import Carousel from './carousel/carousel';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
 import booksPromise from '~/models/books';
+import type {Book} from '~/helpers/books';
 import InfoRequestForm from './info-request-form/info-request-form';
 import './partner-details.scss';
 
-function useRealTitles(books) {
-    const [titles, setTitles] = useState(books);
+function getTitlesFromAbbreviations(abbreviations: string[], bookInfo: Book[]) {
+    return abbreviations
+        .map(
+            (abbrev) =>
+                bookInfo.find((b) => b.salesforce_abbreviation === abbrev) ||
+                abbrev
+        )
+        .filter((b) => {
+            const found = typeof b === 'object';
 
-    function getTitlesFromAbbreviations(abbreviations, bookInfo) {
-        return abbreviations
-            .map((abbrev) => bookInfo.find((b) => b.salesforce_abbreviation === abbrev) || abbrev)
-            .filter((b) => {
-                const found = typeof b === 'object';
+            if (!found) {
+                console.warn('Book not found:', b);
+            }
+            return found;
+        })
+        .map((b) => b.salesforce_name);
+}
 
-                if (!found) {
-                    console.warn('Book not found:', b);
-                }
-                return found;
-            })
-            .map((b) => b.salesforce_name);
-    }
+function useRealTitles(books: Model['books']) {
+    const [titles, setTitles] = React.useState(books);
 
-    useEffect(
-        () =>
-            booksPromise.then((results) => setTitles(getTitlesFromAbbreviations(books, results))),
-        [books]
-    );
+    React.useEffect(() => {
+        booksPromise.then((results) =>
+            setTitles(getTitlesFromAbbreviations(books, results))
+        );
+    }, [books]);
 
     return titles;
 }
 
-function RequestInfoButton({infoText='Request info'}) {
+function RequestInfoButton({infoText}: {infoText: string}) {
     const {toggleForm, books} = usePartnerContext();
-    const validTitle = books.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
-
-    function gotoForm() {
-        toggleForm();
-    }
+    const validTitle = books?.find((b) => b.length > 0); // Quirk: no books is an array of one empty string
 
     if (!validTitle) {
         return null;
@@ -50,18 +54,24 @@ function RequestInfoButton({infoText='Request info'}) {
     return (
         <section>
             <button
-                type="button" className="primary"
-                onClick={gotoForm}
-            >{infoText}</button>
+                type="button"
+                className="primary"
+                onClick={() => toggleForm?.()}
+            >
+                {infoText}
+            </button>
         </section>
     );
 }
 
-function Overview({model, icon}) {
+export function Overview({model, icon}: {model: Model; icon: string}) {
     const {
         richDescription: description,
         infoLinkText: infoText,
-        books, images, videos, title: partnerName
+        books,
+        images,
+        videos,
+        title: partnerName
     } = model;
     const titles = useRealTitles(books);
     const {toggleForm} = usePartnerContext();
@@ -90,28 +100,34 @@ function Overview({model, icon}) {
                 <RawHTML className="main-text" html={description} />
                 <h2>Related Books</h2>
                 <div className="titles">
-                    {
-                        titles.map((title) =>
-                            <span className="title" key={title}>{title}</span>
-                        )
-                    }
+                    {titles.map((title) => (
+                        <span className="title" key={title}>
+                            {title}
+                        </span>
+                    ))}
                 </div>
             </section>
         </React.Fragment>
     );
 }
 
-function PartnerDetails({model}) {
+function PartnerDetails({model}: {model: Model}) {
     const {
-        website, partnerWebsite, websiteLinkText: partnerLinkText,
+        website,
+        partnerWebsite,
+        websiteLinkText: partnerLinkText,
         logoUrl
     } = model;
-    const icon = logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
-    const partnerLinkProps = {partnerUrl: website || partnerWebsite, partnerLinkText};
+    const icon =
+        logoUrl || 'https://via.placeholder.com/150x150?text=[no%20logo]';
+    const partnerLinkProps = {
+        partnerUrl: website || partnerWebsite,
+        partnerLinkText
+    };
     // ** Restore the Reviews tab when using Reviews again
     // const labels = ['Overview', 'Reviews'];
     const labels = ['Overview'];
-    const [selectedLabel, setSelectedLabel] = useState(labels[0]);
+    const [selectedLabel, setSelectedLabel] = React.useState(labels[0]);
 
     return (
         <div className="partner-details">
@@ -121,7 +137,10 @@ function PartnerDetails({model}) {
             </div>
             <div className="scrolling-region boxed">
                 <div className="tab-content">
-                    <ContentGroup activeIndex={labels.indexOf(selectedLabel)} labels={labels}>
+                    <ContentGroup
+                        activeIndex={labels.indexOf(selectedLabel)}
+                        labels={labels}
+                    >
                         <Overview model={model} icon={icon} />
                         {
                             // ** Restore when using Reviews again
@@ -134,7 +153,7 @@ function PartnerDetails({model}) {
     );
 }
 
-function PartnerDetailsOrInfoRequestForm({model}) {
+function PartnerDetailsOrInfoRequestForm({model}: {model: Model}) {
     const {showInfoRequestForm} = usePartnerContext();
 
     return showInfoRequestForm ? (
@@ -144,9 +163,23 @@ function PartnerDetailsOrInfoRequestForm({model}) {
     );
 }
 
-export default function PartnerDetailsWrapper({detailData: {id, ...model}, title, setTitle}) {
+type ContextProps = Exclude<
+    Parameters<typeof PartnerContextProvider>[0]['contextValueParameters'],
+    undefined
+>;
+type Props = {
+    detailData: {id: ContextProps['id']} & Model;
+} & Pick<ContextProps, 'title' | 'setTitle'>;
+
+export default function PartnerDetailsWrapper({
+    detailData: {id, ...model},
+    title,
+    setTitle
+}: Props) {
     return (
-        <PartnerContextProvider contextValueParameters={{id, model, title, setTitle}}>
+        <PartnerContextProvider
+            contextValueParameters={{id, model, title, setTitle}}
+        >
             <PartnerDetailsOrInfoRequestForm model={model} />
         </PartnerContextProvider>
     );

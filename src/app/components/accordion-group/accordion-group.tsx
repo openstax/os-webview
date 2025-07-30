@@ -12,7 +12,7 @@ import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import './accordion-group.scss';
 
-type FunctionOrFalse = false | ((n: unknown) => void);
+type FunctionOrFalse = false | ((n: string[]) => void);
 
 function useChevronDirection(
     forwardOnChange: FunctionOrFalse,

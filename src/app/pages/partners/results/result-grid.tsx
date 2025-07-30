@@ -31,7 +31,7 @@ function ResultCard({entry}: {entry: PartnerEntry}) {
             tags={tags.map((t) => t.value).filter((v) => v !== null)}
             onClick={onSelect}
             badgeImage={badgeImage}
-            analyticsContentType='Partner Profile'
+            analyticsContentType="Partner Profile"
         />
     );
 }

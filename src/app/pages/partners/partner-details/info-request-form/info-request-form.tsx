@@ -1,14 +1,15 @@
 import React from 'react';
 import usePartnerContext from '../partner-context';
-import useMatchingSchools from '~/models/use-school-suggestion-list';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
-import BookTagsMultiselect, {BookTagsContextProvider} from '~/components/multiselect/book-tags/book-tags';
+import BookTagsMultiselect, {
+    BookTagsContextProvider
+} from '~/components/multiselect/book-tags/book-tags';
 import useSearchContext from '../../search-context';
+import SchoolSelector, {useDoSubmit} from './school-selector';
 import FormRadiogroup from '~/components/form-radiogroup/form-radiogroup';
 import FormSelect from '~/components/form-select/form-select';
-import {FilteringSelect} from '~/components/form-elements/form-elements';
 import inputProps from '~/components/form-elements/input-props';
 import FormInput from '~/components/form-input/form-input';
 import useFormTarget from '~/components/form-target/form-target';
@@ -39,12 +40,11 @@ function AdoptedQuestion() {
 }
 
 function PartnerTypeQuestion() {
-    const {partnerName, partnerType} = usePartnerContext();
-
-    if (!partnerType) {
-        return null;
-    }
-
+    // They are tested for undefined in the calling function
+    const {partnerName, partnerType} = usePartnerContext() as {
+        partnerName: string;
+        partnerType: string;
+    };
     const pt = partnerType.toLowerCase();
     const aAn = (/^[aeiou]/).test(pt) ? 'an' : 'a';
     const yesNoOptions = [
@@ -55,8 +55,8 @@ function PartnerTypeQuestion() {
     return (
         <div>
             <p className="instruction">
-                {partnerName}{' '}is {aAn} {pt} product. Would you
-                also like to receive information about our other {pt} partners?
+                {partnerName} is {aAn} {pt} product. Would you also like to
+                receive information about our other {pt} partners?
             </p>
             <FormRadiogroup
                 name="partner_category_interest"
@@ -71,20 +71,34 @@ function Page1() {
     const {books} = useSearchContext();
     const {partnerName, books: booksAllowed} = usePartnerContext();
 
+    if (!partnerName) {
+        return null;
+    }
+
     return (
         <div className="form-page">
-            <input type="hidden" name="partner_product_interest" value={partnerName} />
+            <input
+                type="hidden"
+                name="partner_product_interest"
+                value={partnerName}
+            />
             <p className="headline">
-                Please give us a little more information about your interest in
-                {' '}{partnerName}.
+                Please give us a little more information about your interest in{' '}
+                {partnerName}.
             </p>
-            <p>
-                All fields are required
-            </p>
+            <p>All fields are required</p>
             <div className="form-group">
-                <label>Book of interest</label>
-                <BookTagsContextProvider selected={books.value} booksAllowed={booksAllowed}>
-                    <BookTagsMultiselect name="subjects_of_interest" required oneField />
+                <label>Book(s) of interest</label>
+                <BookTagsContextProvider
+                    selected={books.value}
+                    booksAllowed={booksAllowed}
+                    maxSelections={5}
+                >
+                    <BookTagsMultiselect
+                        name="subjects_of_interest"
+                        required
+                        oneField
+                    />
                 </BookTagsContextProvider>
             </div>
             <PartnerTypeQuestion />
@@ -93,107 +107,74 @@ function Page1() {
     );
 }
 
-function SchoolSelector({value, setValue}) {
-    const {schoolIsOk, schoolOptions} = useMatchingSchools(value);
-
-    function accept(option) {
-        setValue(option.value);
-    }
-
-    return (
-        <div className="control-group">
-            <label className="field-label">School</label>
-            <FilteringSelect
-                options={schoolOptions}
-                inputProps={{
-                    name: 'institution_name',
-                    placeholder: 'School where you work',
-                    required: true,
-                    value,
-                    autoComplete: 'off',
-                    onChange({target}) {setValue(target.value);}
-                }}
-                accept={accept}
-                accepted={schoolIsOk}
-            />
-        </div>
-    );
-}
+type RoleSnippet = {
+    id: number;
+    display_name: string;
+    salesforce_name: string;
+};
 
 function RoleSelector() {
-    const roles = useDataFromSlug('snippets/roles');
+    const roles = useDataFromSlug<RoleSnippet[]>('snippets/roles');
     const options = React.useMemo(
-        () => roles?.map((r) => ({label: r.display_name, value: r.salesforce_name})),
+        () =>
+            roles?.map((r) => ({
+                label: r.display_name,
+                value: r.salesforce_name
+            })),
         [roles]
     );
     const {userModel} = useUserContext();
-    const optionsWithSelection = React.useMemo(
-        () => {
-            if (!options || !userModel) {
-                return options;
-            }
-            return options.map((opt) =>
-                opt.label.toLowerCase() === userModel?.self_reported_role ?
-                    {...opt, selected: true} : opt
-            );
-        },
-        [options, userModel]
-    );
+    const optionsWithSelection = React.useMemo(() => {
+        if (!options || !userModel) {
+            return options;
+        }
+        return options.map((opt) =>
+            opt.label.toLowerCase() === userModel?.self_reported_role
+                ? {...opt, selected: true}
+                : opt
+        );
+    }, [options, userModel]);
+
+    if (!optionsWithSelection) {
+        return null;
+    }
 
     return (
         <FormSelect
+            name="position"
             selectAttributes={{
-                name: 'position',
                 placeholder: 'Select your position',
                 required: true
             }}
-            label="Role" options={optionsWithSelection}
+            label="Role"
+            options={optionsWithSelection}
         />
     );
 }
 
-// This is all kind of broken; just accepts anything
-function CountrySelector({value, setValue}) {
-    const countryOptions = [];
-    const isOk = true;
-
-    function accept(option) {
-        setValue(option.value);
-    }
-
+// Maybe in the future we will have a selector
+function CountrySelector() {
     return (
         <div className="control-group">
             <label className="field-label">Country</label>
-            <FilteringSelect
-                options={countryOptions}
-                inputProps={{
-                    name: 'country',
-                    required: true,
-                    value,
-                    autoComplete: 'off',
-                    onChange({target}) {setValue(target.value);}
-                }}
-                accept={accept}
-                accepted={isOk}
-            />
+            <input type="text" name="country" required />
         </div>
     );
 }
 
 function Page2() {
     const {userModel, userStatus} = useUserContext();
-    const [school, setSchool] = React.useState(userModel?.school_name);
-    const [country, setCountry] = React.useState();
+    const [school, setSchool] = React.useState(
+        userModel?.accountsModel?.school_name ?? ''
+    );
 
     return (
         <div className="form-page">
             <p className="headline">
-                Almost done! We just need the following information, and then someone
-                will be in contact with you shortly.
+                Almost done! We just need the following information, and then
+                someone will be in contact with you shortly.
             </p>
-            <p>
-                All fields are required
-            </p>
+            <p>All fields are required</p>
             <div className="grid">
                 <RoleSelector />
                 <SchoolSelector value={school} setValue={setSchool} />
@@ -213,17 +194,23 @@ function Page2() {
                 />
                 <FormInput
                     label="First name"
-                    inputProps={{...inputProps.firstName, value: userStatus.firstName}}
+                    inputProps={{
+                        ...inputProps.firstName,
+                        value: userStatus.firstName
+                    }}
                 />
                 <FormInput
                     label="Last name"
-                    inputProps={{...inputProps.lastName, value: userStatus.lastName}}
+                    inputProps={{
+                        ...inputProps.lastName,
+                        value: userStatus.lastName
+                    }}
                 />
                 <FormInput
                     label="Phone number"
                     inputProps={{...inputProps.phone, required: true}}
                 />
-                <CountrySelector value={country} setValue={setCountry} />
+                <CountrySelector />
             </div>
         </div>
     );
@@ -233,19 +220,17 @@ export default function InfoRequestForm() {
     const {toggleForm} = usePartnerContext();
     const {onSubmit, submitting, FormTarget} = useFormTarget(toggleForm);
     const {techScoutUrl} = useSalesforceContextValue();
-
-    function doSubmit(form) {
-        form.submit();
-        onSubmit();
-    }
+    const doSubmit = useDoSubmit(onSubmit);
 
     return (
         <React.Fragment>
-            <FormTarget submitting={submitting} />
+            <FormTarget />
             <MultiPageForm
-                action={techScoutUrl} className="info-request-form"
+                action={techScoutUrl}
+                className="info-request-form"
                 name="partner_info_request"
-                onSubmit={doSubmit} submitting={submitting}
+                onSubmit={doSubmit}
+                submitting={submitting}
                 target="form-target"
             >
                 <Page1 />

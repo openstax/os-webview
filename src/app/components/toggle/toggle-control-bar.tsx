@@ -7,11 +7,17 @@ import './toggle-control-bar.scss';
 
 export type ToggleFunction = ({isOpen}: {isOpen: boolean}) => JSX.Element;
 
+export function getListboxId() {
+    return `lbid-${Math.floor(Math.random() * 1010101)}`;
+}
+
 export default function ToggleControlBar({
     Indicator,
+    listboxId,
     children
 }: React.PropsWithChildren<{
     Indicator: ToggleFunction;
+    listboxId?: string;
 }>) {
     const {isOpen, toggle} = useToggleContext();
     const [hasBeenOpened, setHasBeenOpened] = React.useState(false);
@@ -24,7 +30,10 @@ export default function ToggleControlBar({
         [isOpen]
     );
     const focusRef = useRefToFocusAfterClose();
-    const listboxId = `lbid-${Math.floor(Math.random() * 1010101)}`;
+    const listboxProps = listboxId ? {
+        'aria-haspopup': 'listbox' as React.AriaAttributes['aria-haspopup'],
+        'aria-controls': listboxId
+    } : {};
 
     React.useEffect(() => {
         if (isOpen) {
@@ -51,10 +60,9 @@ export default function ToggleControlBar({
             onKeyDown={onKeyDown}
             ref={focusRef}
             role="combobox"
-            aria-controls={listboxId}
-            aria-haspopup="listbox"
+            {...listboxProps}
         >
-            <div role="listbox" id={listboxId}>
+            <div>
                 {children}
             </div>
             <Indicator isOpen={isOpen} />

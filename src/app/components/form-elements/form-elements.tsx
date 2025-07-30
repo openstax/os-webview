@@ -27,7 +27,7 @@ function Option({
     );
 }
 
-type OptionType = {
+export type OptionType = {
     label: string;
     value: string;
 };
@@ -62,8 +62,8 @@ export function FilteringSelect({
     accepted
 }: {
     options: OptionType[];
-    inputProps: JSX.IntrinsicAttributes;
-    accept: (o: unknown) => void;
+    inputProps: React.InputHTMLAttributes<HTMLInputElement>;
+    accept: (o: OptionType) => void;
     accepted?: boolean;
 }) {
     const [activeIndex, handleKeyDown, setActiveIndex] = useSelectList({
