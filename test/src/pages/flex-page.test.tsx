@@ -3,11 +3,11 @@ import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {render, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import FlexPage from '~/pages/flex-page/flex-page';
 import {CTALinkFields} from '~/pages/flex-page/blocks/CTABlock';
 import {ContentBlockConfig} from '~/pages/flex-page/blocks/ContentBlock';
-import { HeroBlockConfig } from '~/pages/flex-page/blocks/HeroBlock';
+import {HeroBlockConfig} from '~/pages/flex-page/blocks/HeroBlock';
 
 const emptyTarget = {
     type: '',
@@ -41,7 +41,7 @@ function Component() {
     return (
         <ShellContextProvider>
             <MemoryRouter initialEntries={['']}>
-                <FlexPage data={{body}} />
+                <FlexPage data={{body, layout: [{type: 'landing'}]}} />
             </MemoryRouter>
         </ShellContextProvider>
     );
@@ -49,7 +49,7 @@ function Component() {
 
 const mockColor = jest.fn();
 
-jest.mock('color', () => (() => mockColor()));
+jest.mock('color', () => () => mockColor());
 mockColor.mockReturnValue({
     isDark: () => true
 });
@@ -76,7 +76,9 @@ describe('flex-page', () => {
         body = [modBlock];
         render(<Component />);
         expect(
-            document.querySelector('section[style*="--image-vertical-align: flex-start"]')
+            document.querySelector(
+                'section[style*="--image-vertical-align: flex-start"]'
+            )
         ).not.toBe(null);
     });
     it('renders heroBlock with bottom image alignment', () => {
@@ -89,7 +91,9 @@ describe('flex-page', () => {
         body = [modBlock];
         render(<Component />);
         expect(
-            document.querySelector('section[style*="--image-vertical-align: flex-end"]')
+            document.querySelector(
+                'section[style*="--image-vertical-align: flex-end"]'
+            )
         ).not.toBe(null);
     });
     it('renders heroBlock with background color', () => {
@@ -101,9 +105,9 @@ describe('flex-page', () => {
         });
         body = [modBlock];
         render(<Component />);
-        expect(
-            document.querySelector('section.dark-background')
-        ).not.toBe(null);
+        expect(document.querySelector('section.dark-background')).not.toBe(
+            null
+        );
     });
     it('renders ctaBlock', () => {
         body = [ctaBlock()];

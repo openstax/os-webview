@@ -13,8 +13,8 @@ export type TrackingInfo = {
     resource_name?: string;
 }
 
-export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {
-    trackingInfo: TrackingInfo;
+export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement> & {
+    trackingInfo?: TrackingInfo;
 };
 
 function handleExternalLink(href: Location['href'], el: HTMLElement) {

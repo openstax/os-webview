@@ -1,8 +1,6 @@
 import cmsFetch from '~/helpers/cms-fetch';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 
-const promise = cmsFetch('give-today');
-
 type PromiseData = {
     give_link_text: string;
     give_link: string;
@@ -25,13 +23,20 @@ type GiveToday = PromiseData & {
     showLink: boolean;
 }
 
+type GiveTodayData = {
+    menu_start: string;
+    menu_expires: string;
+    start: string;
+    expires: string;
+}
+
+let promise: Promise<GiveTodayData>;
+
 export default function useGiveToday(): Partial<GiveToday> {
-    const giveData = useDataFromPromise<{
-        menu_start: string;
-        menu_expires: string;
-        start: string;
-        expires: string;
-    }>(promise);
+    if (promise === undefined) {
+        promise = cmsFetch('give-today');
+    }
+    const giveData = useDataFromPromise(promise);
 
     return giveData ? {
         ...giveData,

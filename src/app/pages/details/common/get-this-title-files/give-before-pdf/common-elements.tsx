@@ -20,7 +20,7 @@ export default function CommonElements({
     giveLink
 }: {
     data: Data;
-    onThankYouClick: (event: React.MouseEvent) => void;
+    onThankYouClick: React.MouseEventHandler;
     headerSubtitle?: string;
     giveLink: string;
 }) {
