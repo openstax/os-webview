@@ -87,7 +87,7 @@ export default {
     'pubInfo.pub.color': 'Color',
     'pubInfo.pub.b-w': 'Black and White',
     'pubInfo.pub.dig': 'Digital PDF',
-    'pubInfo.pub.assignable': 'Assignable',
+    'pubInfo.pub.assignable': 'Assignable Courseware',
     'school-type.College/University (4)': 'College/University (4)',
     'school-type.Technical/Community College (2)': 'Technical/Community College (2)',
     'school-type.Career School/For-Profit (2)': 'Career School/For-Profit (2)',
