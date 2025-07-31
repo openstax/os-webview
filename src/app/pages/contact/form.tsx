@@ -95,7 +95,9 @@ function useAfterSubmit(setSubmitted?: SetSubmitted) {
 
 function useSubjectWithInitialization() {
     const isEmbedded = useIsEmbedded();
-    const initialValue = isEmbedded ? 'OpenStax Assignable' : 'General';
+    const searchParams = new window.URLSearchParams(useLocation().search);
+    const bodyParams = searchParams.getAll('body');
+    const initialValue = isEmbedded && (bodyParams.length > 1) ? 'OpenStax Assignable' : 'General';
     const subjectState = useState(initialValue);
 
     // useEffect runs too late
