@@ -55,6 +55,7 @@ function Footer({
                                 Support Center
                             </a>
                             <a href="/faq">FAQ</a>
+                            <a href="/print/">Order Print</a>
                         </ListOfLinks>
                     </div>
                     <div className="column col2">
