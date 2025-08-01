@@ -65,7 +65,8 @@ describe('shell', () => {
             case 'pages/general-page':
                 return camelCaseKeys(transformData(generalPage));
             default:
-                if (path.startsWith('errata/') || path.startsWith('pages/')) {
+                if (path.startsWith('errata/') || path.startsWith('pages/')
+                || path.startsWith('snippets/roles')) {
                     return [];
                 }
                 console.info('*** Requested', path);
@@ -161,6 +162,15 @@ describe('shell', () => {
 
         render(AppElement);
         await screen.findByText('-/anything-');
+    });
+    it('routes adoption (no CMS page data) page', async () => {
+        BrowserRouter.mockImplementationOnce(({children}) => (
+            <MR initialEntries={['/adoption']} >{children}</MR>
+        ));
+
+        render(AppElement);
+        await screen.findByText('Adoption Form', {exact: false});
+        screen.getByRole('combobox');
     });
     it('routes "errata" paths', async () => {
         BrowserRouter.mockImplementationOnce(({children}) => (
