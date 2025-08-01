@@ -56,6 +56,7 @@ export function DetailsRoutes() {
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
     const {'*': path} = useParams();
+    const {layoutParameters, setLayoutParameters} = useLayoutContext();
 
     if (['books', 'textbooks'].includes(dir)) {
         return (
@@ -76,26 +77,53 @@ export function OtherPageRoutes() {
         return <Navigate to="/" replace />;
     }
 
+    // Some pages have no page data in the CMS!
+    if (
+        [
+            'adopters',
+            'adoption',
+            'blog',
+            'campaign',
+            'confirmation',
+            'institutional-partnership-application',
+            'interest',
+            'renewal-form',
+            'separatemap'
+        ].includes(dir)
+    ) {
+        if (layoutParameters.name === null) {
+            setLayoutParameters({name: 'default'});
+        }
+        return <ImportedPage name={dir} />;
+    }
+
     return <RouteAsPortalOrNot />;
 }
-
 
 // There are a couple of pages whose names in the CMS don't match their osweb urls
 const mismatch: Record<string, string> = {
     press: 'news',
-    'edtech-partner-program': 'openstax-ally-technology-partner-program'
+    'edtech-partner-program': 'openstax-ally-technology-partner-program',
+    foundation: 'supporters'
 };
 
 export function usePageDataFromRoute() {
     const {dir: name, '*': other} = useParams();
-    const data = usePageData<PageData>(`pages/${mismatch[name as string] ?? name}`, true);
+    const data = usePageData<PageData>(
+        `pages/${mismatch[name as string] ?? name}`,
+        true
+    );
     const hasError = data && 'error' in data;
 
     return {name, data, hasError, other};
 }
 
 export function FlexPageUsingItsOwnLayout({data}: {data: FlexPageData}) {
-    return <LayoutUsingData data={data}><FlexPage data={data} /></LayoutUsingData>;
+    return (
+        <LayoutUsingData data={data}>
+            <FlexPage data={data} />
+        </LayoutUsingData>
+    );
 }
 
 export function NonFlexPageUsingDefaultLayout({data}: {data: PageData}) {
