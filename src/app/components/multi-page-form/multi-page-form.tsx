@@ -46,8 +46,8 @@ function PageCount() {
 
 type MultiPageFormProps = {
     children: React.ReactNode[];
-    validatePage?: (p: unknown) => boolean;
-    onPageChange?: (p: unknown) => boolean;
+    validatePage?: (p: number) => boolean;
+    onPageChange?: (p: number) => void;
     onSubmit: (form: HTMLFormElement) => void;
     submitting: boolean;
     // onSubmit is redefined above to be simpler

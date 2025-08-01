@@ -2,12 +2,16 @@ import React from 'react';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import {adoptionOptions} from '~/contexts/salesforce';
+import {SalesforceBook} from '~/helpers/books';
 import {FormattedMessage, useIntl} from 'react-intl';
 import './how-using.scss';
 
-function HowManyStudents({book, dispatch}) {
+function HowManyStudents({book, dispatch}: {
+    book: SalesforceBook;
+    dispatch: React.Dispatch<object>;
+}) {
     const updateBookValue = React.useCallback(
-        ({target: {value}}) => {
+        ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
             dispatch({[book.value]: value});
         },
         [book, dispatch]
@@ -36,9 +40,12 @@ function HowManyStudents({book, dispatch}) {
     );
 }
 
-function HowUsingBook({book, dispatch}) {
+function HowUsingBook({book, dispatch}: {
+    book: SalesforceBook;
+    dispatch: React.Dispatch<object>;
+}) {
     const updateBookValue = React.useCallback(
-        (value) => dispatch({[book.value]: value}),
+        (value: string) => dispatch({[book.value]: value}),
         [book, dispatch]
     );
     const {formatMessage} = useIntl();
@@ -48,18 +55,16 @@ function HowUsingBook({book, dispatch}) {
         outside: formatMessage({id: 'how-using.outside'}),
         self: formatMessage({id: 'how-using.self'})
     };
-
-    adoptionOptions.forEach((opt) => {
-        opt.label = adoptionTexts[opt.key];
-    });
+    const adoptionOptionsWithLabels = adoptionOptions.map((opt) => ({...opt, label: adoptionTexts[opt.key]}));
 
     return (
         <FormSelect
+            name={`hufs_${book.text}`}
             label={formatMessage(
                 {id: 'how-using.how-using'},
                 {title: book.text}
             )}
-            options={adoptionOptions}
+            options={adoptionOptionsWithLabels}
             selectAttributes={{
                 name: `hu_${book.text}`,
                 placeholder: formatMessage({id: 'selector.select-one'}),
@@ -70,11 +75,14 @@ function HowUsingBook({book, dispatch}) {
     );
 }
 
-function reducer(state, action) {
+function reducer(state: Record<string, unknown>, action: object) {
     return {...state, ...action};
 }
 
-export default function HowUsing({selectedBooks, year}) {
+export default function HowUsing({selectedBooks, year}: {
+    selectedBooks: SalesforceBook[];
+    year?: string;
+}) {
     const [bookData, dispatch] = React.useReducer(reducer, {});
     const [useData, udDispatch] = React.useReducer(reducer, {});
     const json = React.useMemo(() => {

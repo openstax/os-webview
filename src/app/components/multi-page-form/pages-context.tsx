@@ -4,8 +4,8 @@ import buildContext from '~/components/jsx-helpers/build-context';
 
 function useContextValue({pages, validatePage, onPageChange}: {
     pages: number;
-    validatePage: (p: unknown) => boolean;
-    onPageChange: (p: unknown) => void;
+    validatePage: (p: number) => boolean;
+    onPageChange: (p: number) => void;
 }) {
     const [validatedPages, setValidatedPages] = useState({});
     const activeRef = useRef<HTMLDivElement>(null);

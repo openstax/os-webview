@@ -152,7 +152,7 @@ export default function FormInput({
     inputProps,
     suggestions
 }: {
-    label: string;
+    label?: string;
     longLabel?: string;
     inputProps: InputProps;
     suggestions?: string[];

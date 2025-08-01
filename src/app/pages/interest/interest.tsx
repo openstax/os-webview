@@ -16,11 +16,12 @@ import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgrou
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
 import {useIntl} from 'react-intl';
 import './interest.scss';
+import { SalesforceBook } from '~/helpers/books';
 
 function useBundledValues() {
     const [bundledValues, setBundledValues] = useState('');
     const onChange = React.useCallback(
-        (values) => setBundledValues(values.join('; ')),
+        (values: unknown[]) => setBundledValues(values.join('; ')),
         []
     );
 
@@ -54,6 +55,7 @@ function HowDidYouHear() {
     return (
         <React.Fragment>
             <FormCheckboxgroup
+                name='how_did_you_hear'
                 longLabel={formatMessage({id: 'interest.how'})}
                 instructions={formatMessage({id: 'interest.select-instruction'})}
                 options={options}
@@ -64,7 +66,9 @@ function HowDidYouHear() {
     );
 }
 
-function BookSelectorPage({ selectedBooksRef }) {
+function BookSelectorPage({ selectedBooksRef }: {
+    selectedBooksRef: React.MutableRefObject<unknown>;
+}) {
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = selectedBooks.map((b) => b.value).join('; ');
     const {formatMessage} = useIntl();
@@ -75,10 +79,9 @@ function BookSelectorPage({ selectedBooksRef }) {
         <div className="page-2">
             <BookSelector
                 prompt={formatMessage({id: 'interest.books-prompt'})}
-                required
                 selectedBooks={selectedBooks}
                 toggleBook={toggleBook}
-                limit="5"
+                limit={5}
             />
             <FormInput
                 longLabel={formatMessage({id: 'interest.students-prompt'})}
@@ -96,29 +99,31 @@ function BookSelectorPage({ selectedBooksRef }) {
     );
 }
 
-function FacultyForm({ position, onPageChange, role }) {
-    const selectedBooksRef = useRef();
+function FacultyForm({ position, onPageChange, role }: {
+    position: string;
+    onPageChange?: (p: number) => void;
+    role: string;
+}) {
+    const selectedBooksRef = useRef<SalesforceBook[]>([]);
     const afterSubmit = useAfterSubmit(selectedBooksRef);
     const { onSubmit, submitting, FormTarget } = useFormTarget(afterSubmit);
     const { interestUrl } = useSalesforceContext();
 
-    function validatePage(page) {
+    function validatePage(page: number) {
         return Boolean(page !== 1 || position !== 'Student');
     }
 
     const doSubmit = React.useCallback(
-        (form) => {
-            if (selectedBooksRef.current?.length > 0) {
-                form.submit();
-                onSubmit();
-            }
+        (form: HTMLFormElement) => {
+            form.submit();
+            onSubmit();
         },
         [onSubmit]
     );
 
     return (
         <React.Fragment>
-            <FormTarget submitting={submitting} />
+            <FormTarget />
             <MultiPageForm
                 validatePage={validatePage}
                 action={interestUrl}
@@ -147,10 +152,10 @@ function FacultyForm({ position, onPageChange, role }) {
 export function InterestForm({ role = 'Instructor' }) {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
-    const ref = useRef();
-    const onPageChange = React.useCallback((page) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const onPageChange = React.useCallback((page: number) => {
         setHideRoleSelector(page > 1);
-        ref.current.scrollIntoView();
+        ref.current?.scrollIntoView();
     }, []);
 
     return (

@@ -8,7 +8,7 @@ import './book-checkbox.scss';
 
 export default function BookCheckbox({book, name, checked, toggle, disabled}: {
     book: SalesforceBook;
-    name: string;
+    name?: string;
     checked: boolean;
     toggle: (b: SalesforceBook) => void;
     disabled?: boolean;
