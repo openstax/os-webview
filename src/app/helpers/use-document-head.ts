@@ -151,11 +151,11 @@ export default function useDocumentHead({
     noindex = false
 }: {
     title?: string;
-    description?: string;
+    description?: string | null;
     noindex?: boolean;
 }) {
     useEffect(() => {
-        setPageTitleAndDescription(title, description);
+        setPageTitleAndDescription(title, description ?? undefined);
     }, [title, description]);
 
     useEffect(() => {

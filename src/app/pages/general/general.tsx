@@ -5,7 +5,7 @@ import {useTextFromSlug} from '~/helpers/page-data-utils';
 import {useLocation} from 'react-router-dom';
 import './general.scss';
 
-function GeneralPage({html}) {
+function GeneralPage({html}: {html: string}) {
     const parser = new window.DOMParser();
     const newDoc = parser.parseFromString(html, 'text/html');
     const strips = parser
@@ -13,7 +13,7 @@ function GeneralPage({html}) {
             '<img class="strips" src="/dist/images/components/strips.svg" height="10" alt="">',
             'text/html'
         )
-        .querySelector('img');
+        .querySelector('img') as HTMLImageElement;
     const innerHTML = Array.from(newDoc.body.children)
         .reduce((arr, el) => {
             if (el.classList.contains('block-heading')) {
@@ -22,21 +22,21 @@ function GeneralPage({html}) {
             }
             arr.push(el.outerHTML);
             return arr;
-        }, [])
+        }, [] as string[])
         .join('\n');
 
     return <RawHTML className='general page' html={innerHTML} embed />;
 }
 
-function isCanonical(slug) {
+function isCanonical(slug: string) {
     return slug.includes('kinetic') || slug.endsWith('partner-program');
 }
 
-function getCanonicalPath(slug) {
+function getCanonicalPath(slug: string) {
     return `${slug.replace(/.*\/(?!$)/, '/')}${slug.endsWith('/') ? '' : '/'}`;
 }
 
-export function GeneralPageFromSlug({slug}) {
+export function GeneralPageFromSlug({slug}: {slug: string}) {
     const {head, text: html} = useTextFromSlug(slug);
     const canonicalPath = getCanonicalPath(slug);
     const putCanonicalLinkInPage = isCanonical(slug);
@@ -49,7 +49,7 @@ export function GeneralPageFromSlug({slug}) {
     useCanonicalLink(putCanonicalLinkInPage, canonicalPath);
 
     if (html instanceof Error) {
-        return <h1>Error: {head}</h1>;
+        return <h1>Error: {JSON.stringify(head)}</h1>;
     }
 
     return !html ? <h1>Loading...</h1> : <GeneralPage html={html} />;
