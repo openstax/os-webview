@@ -36,6 +36,7 @@ export default function BookCheckbox({book, name, checked, toggle, disabled}: {
                 className="indicator"
                 tabIndex={disabled ? -1 : 0}
                 role="checkbox"
+                aria-label={label}
                 aria-checked={checked}
                 aria-disabled={disabled}
                 onKeyDown={treatSpaceOrEnterAsClick}
