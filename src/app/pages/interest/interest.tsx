@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import useDocumentHead, { useCanonicalLink } from '~/helpers/use-document-head';
+import React, {useState, useRef} from 'react';
+import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import FormHeader from '~/components/form-header/form-header';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
@@ -16,7 +16,7 @@ import FormCheckboxgroup from '~/components/form-checkboxgroup/form-checkboxgrou
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
 import {useIntl} from 'react-intl';
 import './interest.scss';
-import { SalesforceBook } from '~/helpers/books';
+import {SalesforceBook} from '~/helpers/books';
 
 function useBundledValues() {
     const [bundledValues, setBundledValues] = useState('');
@@ -35,29 +35,52 @@ function useBundledValues() {
         );
     }
 
-    return { onChange, BundledValuesInput };
+    return {onChange, BundledValuesInput};
 }
 
 function HowDidYouHear() {
     const {formatMessage} = useIntl();
     const options = [
-        { value: 'Web search', label: formatMessage({id: 'interest.option.Web search'}) },
-        { value: 'Colleague', label: formatMessage({id: 'interest.option.Colleague'}) },
-        { value: 'Conference', label: formatMessage({id: 'interest.option.Conference'}) },
-        { value: 'Email', label: formatMessage({id: 'interest.option.Email'}) },
-        { value: 'Facebook', label: formatMessage({id: 'interest.option.Facebook'}) },
-        { value: 'Twitter', label: formatMessage({id: 'interest.option.Twitter'}) },
-        { value: 'Webinar', label: formatMessage({id: 'interest.option.Webinar'}) },
-        { value: 'Partner organization', label: formatMessage({id: 'interest.option.Partner organization'}) }
+        {
+            value: 'Web search',
+            label: formatMessage({id: 'interest.option.Web search'})
+        },
+        {
+            value: 'Colleague',
+            label: formatMessage({id: 'interest.option.Colleague'})
+        },
+        {
+            value: 'Conference',
+            label: formatMessage({id: 'interest.option.Conference'})
+        },
+        {value: 'Email', label: formatMessage({id: 'interest.option.Email'})},
+        {
+            value: 'Facebook',
+            label: formatMessage({id: 'interest.option.Facebook'})
+        },
+        {
+            value: 'Twitter',
+            label: formatMessage({id: 'interest.option.Twitter'})
+        },
+        {
+            value: 'Webinar',
+            label: formatMessage({id: 'interest.option.Webinar'})
+        },
+        {
+            value: 'Partner organization',
+            label: formatMessage({id: 'interest.option.Partner organization'})
+        }
     ];
-    const { onChange, BundledValuesInput } = useBundledValues();
+    const {onChange, BundledValuesInput} = useBundledValues();
 
     return (
         <React.Fragment>
             <FormCheckboxgroup
-                name='how_did_you_hear'
+                name="how_did_you_hear"
                 longLabel={formatMessage({id: 'interest.how'})}
-                instructions={formatMessage({id: 'interest.select-instruction'})}
+                instructions={formatMessage({
+                    id: 'interest.select-instruction'
+                })}
                 options={options}
                 onChange={onChange}
             />
@@ -66,7 +89,9 @@ function HowDidYouHear() {
     );
 }
 
-function BookSelectorPage({ selectedBooksRef }: {
+function BookSelectorPage({
+    selectedBooksRef
+}: {
     selectedBooksRef: React.MutableRefObject<unknown>;
 }) {
     const [selectedBooks, toggleBook] = useSelectedBooks();
@@ -99,15 +124,19 @@ function BookSelectorPage({ selectedBooksRef }: {
     );
 }
 
-function FacultyForm({ position, onPageChange, role }: {
+function FacultyForm({
+    position,
+    onPageChange,
+    role
+}: {
     position: string;
     onPageChange?: (p: number) => void;
     role: string;
 }) {
     const selectedBooksRef = useRef<SalesforceBook[]>([]);
     const afterSubmit = useAfterSubmit(selectedBooksRef);
-    const { onSubmit, submitting, FormTarget } = useFormTarget(afterSubmit);
-    const { interestUrl } = useSalesforceContext();
+    const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
+    const {interestUrl} = useSalesforceContext();
 
     function validatePage(page: number) {
         return Boolean(page !== 1 || position !== 'Student');
@@ -149,7 +178,7 @@ function FacultyForm({ position, onPageChange, role }: {
     );
 }
 
-export function InterestForm({ role = 'Instructor' }) {
+export function InterestForm({role = 'Instructor'}) {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
@@ -177,7 +206,7 @@ export function InterestForm({ role = 'Instructor' }) {
 }
 
 export default function InterestPage() {
-    useDocumentHead({ title: 'Interest Form' });
+    useDocumentHead({title: 'Interest Form'});
     useCanonicalLink();
 
     return (

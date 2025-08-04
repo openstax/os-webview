@@ -15,7 +15,10 @@ function Component() {
         <LanguageContextProvider>
             <SharedDataContextProvider>
                 <MemoryRouter
-                    initialEntries={['/details/books/college-algebra', '/adoption']}
+                    initialEntries={[
+                        '/details/books/college-algebra',
+                        '/adoption'
+                    ]}
                 >
                     <MainClassContextProvider>
                         <InterestPage />
@@ -37,12 +40,20 @@ describe('interest form', () => {
         await user.click(roleSelector);
         const options = screen.getAllByRole('option');
 
-        await user.click(options.find((o) => o.textContent === 'Student') as Element);
-        screen.findByText('Students don\'t need to fill out any forms', {exact: false});
-        await user.click(options.find((o) => o.textContent === 'Other') as Element);
+        await user.click(
+            options.find((o) => o.textContent === 'Student') as Element
+        );
+        screen.findByText("Students don't need to fill out any forms", {
+            exact: false
+        });
+        await user.click(
+            options.find((o) => o.textContent === 'Other') as Element
+        );
         await user.click(screen.getByRole('button', {name: 'Next'}));
         await user.click(screen.getByRole('button', {name: 'Submit'}));
-        await user.click((await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]);
+        await user.click(
+            (await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]
+        );
         await user.type(screen.getByRole('spinbutton'), '12');
 
         // The value in here should update, but it doesn't work in Jest.

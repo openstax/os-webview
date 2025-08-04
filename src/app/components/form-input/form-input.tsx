@@ -211,7 +211,11 @@ export default function FormInput({
     return (
         <label className="form-input">
             <div className="control-group">
-                {label && <label className="field-label" htmlFor={id}>{label}</label>}
+                {label && (
+                    <label className="field-label" htmlFor={id}>
+                        {label}
+                    </label>
+                )}
                 {longLabel && (
                     <label className="field-long-label">{longLabel}</label>
                 )}

@@ -8,7 +8,7 @@ import {SharedDataContextProvider} from '~/contexts/shared-data';
 import {LanguageContextProvider} from '~/contexts/language';
 import * as CI from '~/components/contact-info/contact-info';
 import HowUsing from '~/pages/adoption/how-using/how-using';
-import { SalesforceBook } from '~/helpers/books';
+import {SalesforceBook} from '~/helpers/books';
 
 jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
 
@@ -28,7 +28,10 @@ describe('adoption-form', () => {
             <LanguageContextProvider>
                 <SharedDataContextProvider>
                     <MemoryRouter
-                        initialEntries={['/details/books/college-algebra', '/adoption']}
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
                     >
                         <MainClassContextProvider>
                             <AdoptionForm />
@@ -45,9 +48,7 @@ describe('adoption-form', () => {
 
         await user.click(listBoxes[1]);
         const options = await screen.findAllByRole('option', {hidden: true});
-        const studentOption = options.find(
-            (o) => o.textContent === 'Student'
-        );
+        const studentOption = options.find((o) => o.textContent === 'Student');
 
         await user.click(studentOption as HTMLElement);
         expect(await screen.queryByRole('form')).toBeNull();
@@ -67,10 +68,16 @@ describe('adoption-form', () => {
         await user.click(screen.getByRole('button', {name: 'Next'}));
         // Reject submission when no books checked
         await user.click(screen.getByRole('button', {name: 'Submit'}));
-        await user.click((await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]);
+        await user.click(
+            (await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]
+        );
         await user.type(screen.getByRole('spinbutton'), '12');
         await user.click(screen.getAllByRole('combobox').pop() as Element);
-        await user.click(screen.getByRole('option', {name: 'As the core textbook for my course'}));
+        await user.click(
+            screen.getByRole('option', {
+                name: 'As the core textbook for my course'
+            })
+        );
         console.error = jest.fn();
         // Submit and get navigation error
         await user.click(screen.getByRole('button', {name: 'Submit'}));
@@ -99,7 +106,9 @@ describe('how-using', () => {
                 <HowUsing selectedBooks={selectedBooks} />
             </LanguageContextProvider>
         );
-        const jsonField = document.querySelector('[name="adoption_json"]') as HTMLInputElement;
+        const jsonField = document.querySelector(
+            '[name="adoption_json"]'
+        ) as HTMLInputElement;
         const value = JSON.parse(jsonField.value).Books[0];
 
         expect(value.name).toBe('University Physics');

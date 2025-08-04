@@ -2,11 +2,17 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
-import type { SalesforceBook } from '~/helpers/books';
+import type {SalesforceBook} from '~/helpers/books';
 import cn from 'classnames';
 import './book-checkbox.scss';
 
-export default function BookCheckbox({book, name, checked, toggle, disabled}: {
+export default function BookCheckbox({
+    book,
+    name,
+    checked,
+    toggle,
+    disabled
+}: {
     book: SalesforceBook;
     name?: string;
     checked: boolean;

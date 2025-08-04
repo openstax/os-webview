@@ -19,13 +19,17 @@ import TrackingParameters from '~/components/tracking-parameters/tracking-parame
 import {useIntl} from 'react-intl';
 import './adoption.scss';
 
-function BookSelectorPage({selectedBooksRef, year}: {
+function BookSelectorPage({
+    selectedBooksRef,
+    year
+}: {
     selectedBooksRef: React.MutableRefObject<SalesforceBook[]>;
     year?: string;
 }) {
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = React.useMemo(
-    () => selectedBooks.map((b) => b.value.replace(/ *\[.*/, '')).join('; '),
+        () =>
+            selectedBooks.map((b) => b.value.replace(/ *\[.*/, '')).join('; '),
         [selectedBooks]
     );
     const {formatMessage} = useIntl();
@@ -56,7 +60,10 @@ function BookSelectorPage({selectedBooksRef, year}: {
     );
 }
 
-function FacultyForm({position, onPageChange}: {
+function FacultyForm({
+    position,
+    onPageChange
+}: {
     position: string;
     onPageChange: (page: number) => void;
 }) {
@@ -64,15 +71,12 @@ function FacultyForm({position, onPageChange}: {
     const afterSubmit = useAfterSubmit(selectedBooksRef);
     const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const {adoptionUrl} = useSalesforceContext();
-    const validatePage = React.useCallback(
-        (page: number) => {
-            if (page === 2 && selectedBooksRef.current.length < 1) {
-                return false;
-            }
-            return true;
-        },
-        []
-    );
+    const validatePage = React.useCallback((page: number) => {
+        if (page === 2 && selectedBooksRef.current.length < 1) {
+            return false;
+        }
+        return true;
+    }, []);
     const doSubmit = React.useCallback(
         (form: HTMLFormElement) => {
             form.submit();
@@ -81,29 +85,47 @@ function FacultyForm({position, onPageChange}: {
         [onSubmit]
     );
     const {search} = useLocation();
-    const selectedYear = new window.URLSearchParams(search).get('year') ?? undefined;
+    const selectedYear =
+        new window.URLSearchParams(search).get('year') ?? undefined;
     const [copyOfYear, setCopyOfYear] = React.useState<string>();
 
     return (
         <React.Fragment>
             <FormTarget />
             <MultiPageForm
-                validatePage={validatePage} action={adoptionUrl}
-                onPageChange={onPageChange} onSubmit={doSubmit}
-                submitting={submitting} target="form-target"
+                validatePage={validatePage}
+                action={adoptionUrl}
+                onPageChange={onPageChange}
+                onSubmit={doSubmit}
+                submitting={submitting}
+                target="form-target"
             >
                 <React.Fragment>
                     <TrackingParameters />
                     <input type="hidden" name="position" value={position} />
                     <input type="hidden" name="role" value="Instructor" />
-                    <input type="hidden" name="lead_source" value="Adoption Form" />
-                    <input type="hidden" name="process_adoptions" value="true" />
+                    <input
+                        type="hidden"
+                        name="lead_source"
+                        value="Adoption Form"
+                    />
+                    <input
+                        type="hidden"
+                        name="process_adoptions"
+                        value="true"
+                    />
                     <div className="year-selector-container">
-                        <YearSelector selectedYear={selectedYear} onValueUpdate={setCopyOfYear} />
+                        <YearSelector
+                            selectedYear={selectedYear}
+                            onValueUpdate={setCopyOfYear}
+                        />
                     </div>
                     <ContactInfo />
                 </React.Fragment>
-                <BookSelectorPage selectedBooksRef={selectedBooksRef} year={copyOfYear} />
+                <BookSelectorPage
+                    selectedBooksRef={selectedBooksRef}
+                    year={copyOfYear}
+                />
             </MultiPageForm>
         </React.Fragment>
     );
@@ -113,13 +135,10 @@ export default function AdoptionForm() {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
-    const onPageChange = React.useCallback(
-        (page: number) => {
-            setHideRoleSelector(page > 1);
-            ref.current?.scrollIntoView();
-        },
-        []
-    );
+    const onPageChange = React.useCallback((page: number) => {
+        setHideRoleSelector(page > 1);
+        ref.current?.scrollIntoView();
+    }, []);
 
     useDocumentHead({title: 'Adoption Form'});
     useCanonicalLink();
@@ -127,11 +146,24 @@ export default function AdoptionForm() {
     return (
         <main className="adoption-form-v2">
             <FormHeader prefix="adoption" />
-            <img className="strips" src="/dist/images/components/strips.svg" height="10" alt="" role="presentation" />
+            <img
+                className="strips"
+                src="/dist/images/components/strips.svg"
+                height="10"
+                alt=""
+                role="presentation"
+            />
             <div className="text-content" ref={ref}>
-                <RoleSelector value={selectedRole} setValue={setSelectedRole} hidden={hideRoleSelector}>
+                <RoleSelector
+                    value={selectedRole}
+                    setValue={setSelectedRole}
+                    hidden={hideRoleSelector}
+                >
                     <StudentForm />
-                    <FacultyForm position={selectedRole} onPageChange={onPageChange} />
+                    <FacultyForm
+                        position={selectedRole}
+                        onPageChange={onPageChange}
+                    />
                 </RoleSelector>
             </div>
         </main>

@@ -25,7 +25,7 @@ function GeneralPage({html}: {html: string}) {
         }, [] as string[])
         .join('\n');
 
-    return <RawHTML className='general page' html={innerHTML} embed />;
+    return <RawHTML className="general page" html={innerHTML} embed />;
 }
 
 function isCanonical(slug: string) {
