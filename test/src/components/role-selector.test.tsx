@@ -50,9 +50,8 @@ describe('role-selector', () => {
         await user.keyboard('{Escape}');
         // Select by space
         await user.keyboard('{ArrowDown} ');
-        await waitFor(() => expect(options[1].getAttribute('aria-selected')).toBe('true'));
-        // fireEvent(options[0], new MouseEvent('mouseenter', {
-        //     bubbles: true
-        // }));
+        const i = options.findIndex((o) => o.getAttribute('aria-selected') === 'true');
+
+        expect(i).toBe(1);
     });
 });

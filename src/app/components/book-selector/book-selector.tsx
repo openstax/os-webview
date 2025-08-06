@@ -18,7 +18,7 @@ function Subject({
 }: {
     subject: string;
     books: SalesforceBook[];
-    name: string;
+    name?: string;
     selectedBooks: SalesforceBook[];
     toggleBook: (b: SalesforceBook) => void;
     limitReached: boolean;
@@ -64,12 +64,12 @@ const defaultIncludeFilter = () => true;
 
 type PropsFromOutside = {
     prompt: string;
-    name: string;
+    name?: string;
     selectedBooks: SalesforceBook[];
     toggleBook: (b: SalesforceBook) => void;
     limit?: number;
     additionalInstructions?: string;
-    includeFilter?: () => boolean;
+    includeFilter?: (b: SalesforceBook) => boolean;
 };
 
 type Books = Parameters<typeof salesforceTitles>[0]

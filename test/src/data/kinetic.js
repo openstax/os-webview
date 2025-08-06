@@ -22,7 +22,9 @@ export default `
 </head>
 <body>
 
-
+  <section class="block-heading">
+    <h1>This is a block heading</h1>
+  </section>
     
         <section class="block-html">
             <script type="application/javascript">
