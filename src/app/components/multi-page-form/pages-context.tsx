@@ -2,23 +2,24 @@ import {useState, useRef, useEffect, useCallback} from 'react';
 import usePaginatorContext from '~/components/paginator/paginator-context';
 import buildContext from '~/components/jsx-helpers/build-context';
 
-function useContextValue({pages, validatePage, onPageChange}: {
+function useContextValue({
+    pages,
+    validatePage,
+    onPageChange
+}: {
     pages: number;
-    validatePage: (p: unknown) => boolean;
-    onPageChange: (p: unknown) => void;
+    validatePage: (p: number) => boolean;
+    onPageChange: (p: number) => void;
 }) {
     const [validatedPages, setValidatedPages] = useState({});
     const activeRef = useRef<HTMLDivElement>(null);
     const {currentPage} = usePaginatorContext();
-    const validateCurrentPage = useCallback(
-        () => {
-            const invalid = activeRef.current?.querySelector(':invalid');
+    const validateCurrentPage = useCallback(() => {
+        const invalid = activeRef.current?.querySelector(':invalid');
 
-            setValidatedPages({[currentPage]: true, ...validatedPages});
-            return invalid === null && validatePage(currentPage);
-        },
-        [currentPage, validatedPages, validatePage]
-    );
+        setValidatedPages({[currentPage]: true, ...validatedPages});
+        return invalid === null && validatePage(currentPage);
+    }, [currentPage, validatedPages, validatePage]);
 
     useEffect(() => {
         onPageChange(currentPage);
@@ -29,7 +30,4 @@ function useContextValue({pages, validatePage, onPageChange}: {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as PagesContextProvider
-};
+export {useContext as default, ContextProvider as PagesContextProvider};

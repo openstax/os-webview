@@ -311,10 +311,13 @@ describe('partners full page', () => {
         );
 
         const buttons = screen.getAllByRole('checkbox');
+        const label = buttons[0].getAttribute('aria-label');
 
         await user.click(buttons[0]);
         await user.click(await screen.findByRole('button', {name: 'close'}));
         await screen.findByRole('button', {name: 'Filters (1)'});
+        await user.click(screen.getByRole('button', {name: `remove filter for ${label}`}));
+        expect(screen.queryByRole('button', {name: `remove filter for ${label}`})).toBeNull();
     });
     // This one has to be last; something doesn't reset
     it('uses default infoLinkText when none is provided', async () => {
