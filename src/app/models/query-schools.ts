@@ -13,6 +13,7 @@ export type SchoolInfo = {
     testimonial?: string;
     testimonial_name?: string;
     testimonial_position?: string;
+    current_year_savings: number;
     all_time_savings: number;
     location: string;
     total_school_enrollment: string | null;
@@ -29,13 +30,13 @@ type Item = {
     fields: SchoolInfo;
 };
 
-type AugmentedInfo = {
+export type AugmentedInfo = {
     pk: string;
     cityState: string;
     institutionalPartner: string;
     institutionType: string;
     fields: SchoolInfo;
-    lngLat?: number[];
+    lngLat?: [number, number];
     testimonial?: {
         text: string;
         name?: string;
@@ -51,7 +52,7 @@ function augmentInfo(item: Item) {
         institutionType: item.fields.type,
         fields: item.fields
     };
-    const lngLat = [Number(item.fields.long), Number(item.fields.lat)];
+    const lngLat: [number, number] = [Number(item.fields.long), Number(item.fields.lat)];
 
     if (!(lngLat[0] === 0 && lngLat[1] === 0)) {
         result.lngLat = lngLat;

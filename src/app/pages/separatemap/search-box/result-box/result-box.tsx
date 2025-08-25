@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp} from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import {faQuoteLeft} from '@fortawesome/free-solid-svg-icons/faQuoteLeft';
+import {AugmentedInfo} from '~/models/query-schools';
 import './result-box.scss';
 
 const format = new window.Intl.NumberFormat('en-US', {
@@ -10,7 +11,7 @@ const format = new window.Intl.NumberFormat('en-US', {
     currency: 'USD'
 }).format;
 
-function Testimonial({testimonial}) {
+function Testimonial({testimonial}: {testimonial: Required<AugmentedInfo>['testimonial']}) {
     return (
         <div className="testimonial-box">
             <div className="quote">
@@ -28,7 +29,7 @@ function Testimonial({testimonial}) {
     );
 }
 
-function SchoolDetails({model}) {
+function SchoolDetails({model}: {model: AugmentedInfo}) {
     const [
         savingsTotal, savingsThisYear, testimonial
     ] = [
@@ -49,9 +50,12 @@ function SchoolDetails({model}) {
     );
 }
 
-export default function ResultBox({model, theOpenOne, setTheOpenOne}) {
-    const ref = useRef();
-    const [name, location] = [model.fields.name, model.cityState];
+export default function ResultBox({model, theOpenOne, setTheOpenOne}: {
+    model: AugmentedInfo;
+    theOpenOne: AugmentedInfo | null;
+    setTheOpenOne: (m: AugmentedInfo | null) => void;
+}) {
+    const ref = useRef<HTMLDivElement>(null);
     const isOpen = theOpenOne === model;
 
     function toggle() {
@@ -60,7 +64,7 @@ export default function ResultBox({model, theOpenOne, setTheOpenOne}) {
 
     useLayoutEffect(() => {
         if (isOpen) {
-            ref.current.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+            ref.current?.scrollIntoView({block: 'nearest', behavior: 'smooth'});
         }
     });
 
@@ -71,8 +75,8 @@ export default function ResultBox({model, theOpenOne, setTheOpenOne}) {
                 onClick={toggle}
             >
                 <div className="school-info">
-                    <h2>{name}</h2>
-                    <div>{location}</div>
+                    <h2>{model.fields.name}</h2>
+                    <div>{model.cityState}</div>
                 </div>
                 <div className="toggle-indicator">
                     <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />

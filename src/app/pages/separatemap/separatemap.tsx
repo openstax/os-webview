@@ -40,7 +40,9 @@ function PopupMessage() {
             <div className="popup-msg-cross">
                 <FontAwesomeIcon
                     icon={faTimes} className="popup-msg-cross-icon"
-                    role="button" tabIndex="0"
+                    role="button" tabIndex={0}
+                    aria-hidden={false}
+                    aria-label="close popup"
                     onClick={() => togglePopup()}
                 />
             </div>

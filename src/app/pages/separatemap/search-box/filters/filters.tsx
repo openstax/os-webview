@@ -1,33 +1,34 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import FormSelect from '~/components/form-select/form-select';
+import type {SetHandle} from '~/helpers/data';
 import './filters.scss';
 
-function InstitutionSelector({setInstitution}) {
-    const options = [
-        {label: 'Any', value: '', selected: true},
-        {label: 'College/University', value: 'College/University'},
-        {label: 'Technical/Community College', value: 'Technical/Community College'},
-        {label: 'High School', value: 'High School'}
-    ];
-    const onChange = React.useCallback(
-        (event) => setInstitution(event.target.value),
-        [setInstitution]
-    );
+const options = [
+    {label: 'Any', value: '', selected: true},
+    {label: 'College/University', value: 'College/University'},
+    {label: 'Technical/Community College', value: 'Technical/Community College'},
+    {label: 'High School', value: 'High School'}
+];
 
+function InstitutionSelector({setInstitution}: {setInstitution: React.Dispatch<React.SetStateAction<string>>}) {
     return (
         <FormSelect
             name='institution-type'
-            selectAttributes={{onChange}}
             label="Type of institution"
             options={options}
+            onValueUpdate={setInstitution}
         />
     );
 }
 
-function ForCheckbox({name, label, selected}) {
+function ForCheckbox({name, label, selected}: {
+    name: string;
+    label: string;
+    selected: SetHandle;
+}) {
     const onChange = React.useCallback(
-        (event) => {
-            const {checked} = event.target;
+        (event: ChangeEvent) => {
+            const {checked} = event.target as HTMLInputElement;
 
             if (checked) {
                 selected.add(name);
@@ -46,7 +47,10 @@ function ForCheckbox({name, label, selected}) {
     );
 }
 
-export default function Filters({selected, setInstitution}) {
+export default function Filters({selected, setInstitution}: {
+    selected: SetHandle;
+    setInstitution: React.Dispatch<React.SetStateAction<string>>;
+}) {
     return (
         <div className="filters">
             <div className="institution-region">

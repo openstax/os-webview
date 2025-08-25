@@ -7,7 +7,18 @@ import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import cn from 'classnames';
 import './inputs.scss';
 
-function FilterToggleButton({filtersHidden, toggleFilters, children}) {
+type CommonViewProps = {
+    toggle: () => void;
+    minimized: boolean;
+    filtersHidden: boolean;
+    toggleFilters: () => void;
+    searchValue: string;
+    setSearchValue: (s: string) => void;
+}
+
+function FilterToggleButton({filtersHidden, toggleFilters, children}: React.PropsWithChildren<
+    Pick<CommonViewProps, 'filtersHidden' | 'toggleFilters'>
+>) {
     return (
         <button className="filter-toggle" aria-pressed={!filtersHidden} onClick={() => toggleFilters()}>
             {
@@ -21,43 +32,52 @@ function FilterToggleButton({filtersHidden, toggleFilters, children}) {
 }
 
 function SearchAndClear({
-    placeholder='Search by country, state, city, or institution name',
-    textValue='',
+    placeholder,
+    textValue,
     setTextValue
+}: {
+    placeholder: string;
+    textValue: string;
+    setTextValue: (s: string) => void;
 }) {
     const clearIconHiddenFlag = textValue.length < 1;
 
-    function updateOnEnter(event) {
-        if (event.key === 'Enter') {
-            setTextValue(event.target.value);
+    function updateOnEnter({key, target}: React.KeyboardEvent<HTMLInputElement>) {
+        if (key === 'Enter') {
+            setTextValue((target as HTMLInputElement).value);
         }
     }
 
     return (
         <div className="search-and-clear">
             <input
-                type="text" className="search-input"
+                type="text"
+                className="search-input"
                 placeholder={placeholder}
                 value={textValue}
                 onKeyDown={updateOnEnter}
             />
-            <FontAwesomeIcon
-                icon={faTimes} className="search-clear"
-                role="button" tabIndex="0"
+            <button
+                type="button"
+                className="search-clear"
+                aria-label="clear search"
                 hidden={clearIconHiddenFlag}
                 onClick={() => setTextValue('')}
-            />
+            >
+                <FontAwesomeIcon icon={faTimes} className="search-clear" />
+            </button>
         </div>
     );
 }
 
-function SearchIcon({minimized, toggle}) {
+function SearchIcon({minimized, toggle}: Pick<CommonViewProps, 'minimized' | 'toggle'>) {
     const icon = minimized ? faSearch : faChevronLeft;
 
     return (
         <div
             className="search-icon" role="button" aria-pressed={minimized}
-            tabIndex="0" onClick={() => toggle()}
+            tabIndex={0} onClick={() => toggle()}
+            aria-label="toggle search window"
         >
             <FontAwesomeIcon icon={icon} />
         </div>
@@ -66,8 +86,11 @@ function SearchIcon({minimized, toggle}) {
 
 function InputView({
     className, placeholder, children,
-    minimized, toggle, searchValue, setSearchValue, filtersHidden, toggleFilters
-}) {
+    toggle, minimized, filtersHidden, toggleFilters, searchValue, setSearchValue
+}: React.PropsWithChildren<{
+    className: string;
+    placeholder: string;
+} & CommonViewProps>) {
     return (
         <div className={cn(className, {minimized})}>
             <SearchIcon {...{minimized, toggle}} />
@@ -82,14 +105,8 @@ function InputView({
     );
 }
 
-export default function Inputs({
-    toggle, minimized, filtersHidden, toggleFilters, searchValue, setSearchValue
-}) {
-    const commonViewProps = {
-        minimized, toggle, searchValue, setSearchValue,
-        filtersHidden, toggleFilters
-    };
 
+export default function Inputs(commonViewProps: CommonViewProps) {
     return (
         <div className="search-inputs">
             <InputView

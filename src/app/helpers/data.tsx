@@ -32,6 +32,8 @@ export function useRefreshable<T>(getter: () => T) {
     return React.useReducer(getter, getter());
 }
 
+export type SetHandle = ReturnType<typeof useSet>
+
 // Each time the Set is updated, the handle is refreshed
 // That way, the Set doesn't have to be rebuilt
 export function useSet<T>(initialValue:T[]=[]) {

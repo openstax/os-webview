@@ -4,6 +4,7 @@ export type WindowWithSettings = typeof window & {
         accountHref: string;
         gatedContentEndpoint: string;
         renewalEndpoint: string;
+        mapboxPK: string;
     };
 };
 
