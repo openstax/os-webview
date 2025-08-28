@@ -11,28 +11,32 @@ const format = new window.Intl.NumberFormat('en-US', {
     currency: 'USD'
 }).format;
 
-function Testimonial({testimonial}: {testimonial: Required<AugmentedInfo>['testimonial']}) {
+function Testimonial({
+    testimonial
+}: {
+    testimonial: Required<AugmentedInfo>['testimonial'];
+}) {
     return (
         <div className="testimonial-box">
             <div className="quote">
-                <FontAwesomeIcon icon={faQuoteLeft} className="quotation-mark" />
+                <FontAwesomeIcon
+                    icon={faQuoteLeft}
+                    className="quotation-mark"
+                />
                 {testimonial.text}
             </div>
             <div className="attribution">
                 <div className="name">{testimonial.name}</div>
-                {
-                    testimonial.position &&
-                        <div className="position">{testimonial.position}</div>
-                }
+                {testimonial.position && (
+                    <div className="position">{testimonial.position}</div>
+                )}
             </div>
         </div>
     );
 }
 
 function SchoolDetails({model}: {model: AugmentedInfo}) {
-    const [
-        savingsTotal, savingsThisYear, testimonial
-    ] = [
+    const [savingsTotal, savingsThisYear, testimonial] = [
         format(model.fields.all_time_savings),
         format(model.fields.current_year_savings),
         model.testimonial
@@ -50,7 +54,11 @@ function SchoolDetails({model}: {model: AugmentedInfo}) {
     );
 }
 
-export default function ResultBox({model, theOpenOne, setTheOpenOne}: {
+export default function ResultBox({
+    model,
+    theOpenOne,
+    setTheOpenOne
+}: {
     model: AugmentedInfo;
     theOpenOne: AugmentedInfo | null;
     setTheOpenOne: (m: AugmentedInfo | null) => void;
@@ -71,7 +79,9 @@ export default function ResultBox({model, theOpenOne, setTheOpenOne}: {
     return (
         <div className="result-box" ref={ref}>
             <div
-                className="toggle-details" role="switch" aria-checked={isOpen}
+                className="toggle-details"
+                role="switch"
+                aria-checked={isOpen}
                 onClick={toggle}
             >
                 <div className="school-info">
@@ -79,7 +89,9 @@ export default function ResultBox({model, theOpenOne, setTheOpenOne}: {
                     <div>{model.cityState}</div>
                 </div>
                 <div className="toggle-indicator">
-                    <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
+                    <FontAwesomeIcon
+                        icon={isOpen ? faChevronUp : faChevronDown}
+                    />
                 </div>
             </div>
             {isOpen && <SchoolDetails model={model} />}

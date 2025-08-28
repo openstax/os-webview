@@ -5,15 +5,22 @@ import type {SetHandle} from '~/helpers/data';
 
 type Results = {TOO_MANY: unknown} | AugmentedInfo[];
 
-function useSchoolsPromise(searchString: string, filters: SetHandle, institution: string) {
+function useSchoolsPromise(
+    searchString: string,
+    filters: SetHandle,
+    institution: string
+) {
     const [promise, setPromise] = useState<Promise<Results> | null>(null);
 
     useEffect(() => {
         const filtersArray = Array.from(filters.values()) as string[];
-        const filtersDict = filtersArray.reduce((a, b) => {
-            a[b] = b;
-            return a;
-        }, {} as Record<string, string>);
+        const filtersDict = filtersArray.reduce(
+            (a, b) => {
+                a[b] = b;
+                return a;
+            },
+            {} as Record<string, string>
+        );
 
         filtersDict['institution-type'] = institution;
         const p = querySchools(searchString, filtersDict);
@@ -27,10 +34,19 @@ function useSchoolsPromise(searchString: string, filters: SetHandle, institution
 }
 
 // eslint-disable-next-line complexity
-export default function useResults(searchString: string, selectedFilters: SetHandle, institution: string) {
-    const nothingSelected = searchString === '' &&
+export default function useResults(
+    searchString: string,
+    selectedFilters: SetHandle,
+    institution: string
+) {
+    const nothingSelected =
+        searchString === '' &&
         Array.from(selectedFilters.values()).length === 0;
-    const schoolsPromise = useSchoolsPromise(searchString, selectedFilters, institution);
+    const schoolsPromise = useSchoolsPromise(
+        searchString,
+        selectedFilters,
+        institution
+    );
     const results = useDataFromPromise<Results>(schoolsPromise);
     let message = null;
 

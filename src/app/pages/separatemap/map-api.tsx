@@ -1,19 +1,22 @@
-import mapboxgl, { FilterSpecification, LngLatBoundsLike, LngLatLike, MapOptions } from 'mapbox-gl';
+import mapboxgl, {
+    FilterSpecification,
+    LngLatBoundsLike,
+    LngLatLike,
+    MapOptions
+} from 'mapbox-gl';
 import mapboxPromise from '~/models/mapbox';
 import settings from '~/helpers/window-settings';
-import { AugmentedInfo } from '~/models/query-schools';
+import {AugmentedInfo} from '~/models/query-schools';
 
 // Set up CSS once, when needed
 (() => {
-    const cssEl = Object.assign(
-    document.createElement('link'),
-        {
-            rel: 'stylesheet',
-            href: 'https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css',
-            type: 'text/css'
-        }
-    );
-    const firstLink = document.querySelector('head link[rel="stylesheet"]') ||
+    const cssEl = Object.assign(document.createElement('link'), {
+        rel: 'stylesheet',
+        href: 'https://api.tiles.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css',
+        type: 'text/css'
+    });
+    const firstLink =
+        document.querySelector('head link[rel="stylesheet"]') ||
         document.querySelector('head title');
 
     firstLink?.parentNode?.insertBefore(cssEl, firstLink.nextSibling);
@@ -74,11 +77,14 @@ export default function createMap(options: MapOptions) {
         tooltip.remove();
     }
 
-    type HasLngLat = AugmentedInfo & Required<Pick<AugmentedInfo, 'lngLat'>>
+    type HasLngLat = AugmentedInfo & Required<Pick<AugmentedInfo, 'lngLat'>>;
 
     function showPoints(pointList: AugmentedInfo[]) {
-        const mappable = ({lngLat: [lng, lat]}: HasLngLat) => !(lng === 0 && lat === 0);
-        const mappableData = (pointList.filter(hasLngLat) as HasLngLat[]).filter(mappable);
+        const mappable = ({lngLat: [lng, lat]}: HasLngLat) =>
+            !(lng === 0 && lat === 0);
+        const mappableData = (
+            pointList.filter(hasLngLat) as HasLngLat[]
+        ).filter(mappable);
 
         tooltip.remove();
         if (mappableData.length === 0) {
@@ -88,7 +94,11 @@ export default function createMap(options: MapOptions) {
                 (bound, obj) => bound.extend(obj.lngLat),
                 new mapboxgl.LngLatBounds()
             );
-            const filterSpec = ['in', 'id', ...(mappableData.map((obj) => obj.pk))];
+            const filterSpec = [
+                'in',
+                'id',
+                ...mappableData.map((obj) => obj.pk)
+            ];
 
             setFilters(filterSpec);
             setBounds(bounds);
@@ -118,22 +128,20 @@ export default function createMap(options: MapOptions) {
         });
     }
 
-    loaded.then(
-        (map) => {
-            map.on('load', () => map.loaded() && map.resize());
-            map.on('mouseenter', 'os-schools', () => {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-            map.on('mouseleave', 'os-schools', () => {
-                map.getCanvas().style.cursor = '';
-            });
-            map.on('click', (el) => {
-                if (!el.features && tooltip) {
-                    tooltip.remove();
-                }
-            });
-        }
-    );
+    loaded.then((map) => {
+        map.on('load', () => map.loaded() && map.resize());
+        map.on('mouseenter', 'os-schools', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', 'os-schools', () => {
+            map.getCanvas().style.cursor = '';
+        });
+        map.on('click', (el) => {
+            if (!el.features && tooltip) {
+                tooltip.remove();
+            }
+        });
+    });
 
     return {
         loaded,

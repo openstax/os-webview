@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, {ChangeEvent} from 'react';
 import FormSelect from '~/components/form-select/form-select';
 import type {SetHandle} from '~/helpers/data';
 import './filters.scss';
@@ -6,14 +6,21 @@ import './filters.scss';
 const options = [
     {label: 'Any', value: '', selected: true},
     {label: 'College/University', value: 'College/University'},
-    {label: 'Technical/Community College', value: 'Technical/Community College'},
+    {
+        label: 'Technical/Community College',
+        value: 'Technical/Community College'
+    },
     {label: 'High School', value: 'High School'}
 ];
 
-function InstitutionSelector({setInstitution}: {setInstitution: React.Dispatch<React.SetStateAction<string>>}) {
+function InstitutionSelector({
+    setInstitution
+}: {
+    setInstitution: React.Dispatch<React.SetStateAction<string>>;
+}) {
     return (
         <FormSelect
-            name='institution-type'
+            name="institution-type"
             label="Type of institution"
             options={options}
             onValueUpdate={setInstitution}
@@ -21,7 +28,11 @@ function InstitutionSelector({setInstitution}: {setInstitution: React.Dispatch<R
     );
 }
 
-function ForCheckbox({name, label, selected}: {
+function ForCheckbox({
+    name,
+    label,
+    selected
+}: {
     name: string;
     label: string;
     selected: SetHandle;
@@ -47,7 +58,10 @@ function ForCheckbox({name, label, selected}: {
     );
 }
 
-export default function Filters({selected, setInstitution}: {
+export default function Filters({
+    selected,
+    setInstitution
+}: {
     selected: SetHandle;
     setInstitution: React.Dispatch<React.SetStateAction<string>>;
 }) {
@@ -57,15 +71,18 @@ export default function Filters({selected, setInstitution}: {
                 <InstitutionSelector setInstitution={setInstitution} />
             </div>
             <ForCheckbox
-                name="partners" label="OpenStax institutional partners"
+                name="partners"
+                label="OpenStax institutional partners"
                 selected={selected}
             />
             <ForCheckbox
-                name="savings" label="Schools that have saved over $1 million"
+                name="savings"
+                label="Schools that have saved over $1 million"
                 selected={selected}
             />
             <ForCheckbox
-                name="testimonials" label="Have testimonials"
+                name="testimonials"
+                label="Have testimonials"
                 selected={selected}
             />
         </div>

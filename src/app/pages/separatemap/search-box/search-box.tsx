@@ -21,7 +21,9 @@ function useTheOpenOne({results}: {results: AugmentedInfo[]}) {
 
     useEffect(() => {
         if (selectedSchool) {
-            setTheOpenOne(results.find((r) => r.pk === selectedSchool.pk) ?? null);
+            setTheOpenOne(
+                results.find((r) => r.pk === selectedSchool.pk) ?? null
+            );
             map.showTooltip(selectedSchool);
         } else {
             setTheOpenOne(null);
@@ -32,49 +34,56 @@ function useTheOpenOne({results}: {results: AugmentedInfo[]}) {
         setTheOpenOne(results.length === 1 ? results[0] : null);
     }, [results]);
 
-    useEffect(
-        () => {
-            if (theOpenOne) {
-                map.showPoints([theOpenOne]);
-                map.showTooltip(theOpenOne);
-            } else if (results.length > 0) {
-                map.showPoints(results);
-            }
-        },
-        [map, theOpenOne, results]
-    );
+    useEffect(() => {
+        if (theOpenOne) {
+            map.showPoints([theOpenOne]);
+            map.showTooltip(theOpenOne);
+        } else if (results.length > 0) {
+            map.showPoints(results);
+        }
+    }, [map, theOpenOne, results]);
 
     return [theOpenOne, setTheOpenOne] as const;
 }
 
-function SearchResults({minimized, results}: {
+function SearchResults({
+    minimized,
+    results
+}: {
     minimized: boolean;
     results: AugmentedInfo[];
 }) {
     const {selectedSchool} = useMapContext();
     const showSelectedSchool = Boolean(results.length < 1 && selectedSchool);
     const resultsOrSchool = React.useMemo(
-        () => showSelectedSchool ? [selectedSchool as AugmentedInfo] : results,
+        () =>
+            showSelectedSchool ? [selectedSchool as AugmentedInfo] : results,
         [showSelectedSchool, selectedSchool, results]
     );
     const resultsHidden = resultsOrSchool.length < 1;
     const [theOpenOne, setTheOpenOne] = useTheOpenOne({results});
 
     return (
-        <div className="search-results-region" hidden={minimized || resultsHidden}>
-            {
-                resultsOrSchool?.map((school) =>
-                    <ResultBox
-                        model={school} key={school.pk}
-                        theOpenOne={theOpenOne} setTheOpenOne={setTheOpenOne}
-                    />
-                )
-            }
+        <div
+            className="search-results-region"
+            hidden={minimized || resultsHidden}
+        >
+            {resultsOrSchool?.map((school) => (
+                <ResultBox
+                    model={school}
+                    key={school.pk}
+                    theOpenOne={theOpenOne}
+                    setTheOpenOne={setTheOpenOne}
+                />
+            ))}
         </div>
     );
 }
 
-export default function SearchBox({minimized, toggle}: {
+export default function SearchBox({
+    minimized,
+    toggle
+}: {
     minimized: boolean;
     toggle: () => void;
 }) {
@@ -82,23 +91,43 @@ export default function SearchBox({minimized, toggle}: {
     const [filtersHidden, toggleFilters] = useToggle(true);
     const selectedFilters = useSet();
     const [institution, setInstitution] = useState('');
-    const [results, searchMessage] = useResults(searchValue, selectedFilters, institution);
+    const [results, searchMessage] = useResults(
+        searchValue,
+        selectedFilters,
+        institution
+    );
 
     return (
         <div className="search-box">
             <div className={cn('top-box', {minimized})}>
-                <Inputs {...{searchValue, setSearchValue, toggle, minimized, filtersHidden, toggleFilters}} />
+                <Inputs
+                    {...{
+                        searchValue,
+                        setSearchValue,
+                        toggle,
+                        minimized,
+                        filtersHidden,
+                        toggleFilters
+                    }}
+                />
             </div>
-            {
-                searchMessage &&
-                    <div className="search-message" hidden={minimized}>
-                        {searchMessage}
-                    </div>
-            }
-            <div className="filter-settings-region" hidden={minimized || filtersHidden}>
-                <Filters selected={selectedFilters} setInstitution={setInstitution} />
+            {searchMessage && (
+                <div className="search-message" hidden={minimized}>
+                    {searchMessage}
+                </div>
+            )}
+            <div
+                className="filter-settings-region"
+                hidden={minimized || filtersHidden}
+            >
+                <Filters
+                    selected={selectedFilters}
+                    setInstitution={setInstitution}
+                />
             </div>
-            {results instanceof Array && <SearchResults {...{minimized, results}} />}
+            {results instanceof Array && (
+                <SearchResults {...{minimized, results}} />
+            )}
         </div>
     );
 }
