@@ -11,9 +11,7 @@ import './separatemap.scss';
 
 function GoBackControl() {
     return (
-        <a
-            href="/global-reach" className="back-impact-div"
-        >
+        <a href="/global-reach" className="back-impact-div">
             <span className="close-map-msg">Close map</span>
             <div className="back-impact-btn">
                 <FontAwesomeIcon icon={faTimes} className="left-arrow-bak" />
@@ -35,24 +33,30 @@ function SearchBoxDiv() {
 function PopupMessage() {
     const [popupVisible, togglePopup] = useToggle(true);
 
-    return popupVisible && (
-        <div className="popup-msg-div">
-            <div className="popup-msg-cross">
-                <FontAwesomeIcon
-                    icon={faTimes} className="popup-msg-cross-icon"
-                    role="button" tabIndex="0"
-                    onClick={() => togglePopup()}
-                />
+    return (
+        popupVisible && (
+            <div className="popup-msg-div">
+                <div className="popup-msg-cross">
+                    <FontAwesomeIcon
+                        icon={faTimes}
+                        className="popup-msg-cross-icon"
+                        role="button"
+                        tabIndex={0}
+                        aria-hidden={false}
+                        aria-label="close popup"
+                        onClick={() => togglePopup()}
+                    />
+                </div>
+                <div>Not seeing your school? Numbers aren&apos;t right?</div>
+                <div className="popup-msg-link">
+                    <a href="https://openstax.org/adoption">Let us know.</a>
+                </div>
+                <div>
+                    Since our books are free, we rely on instructors to tell us
+                    they’re using our books.
+                </div>
             </div>
-            <div>Not seeing your school? Numbers aren&apos;t right?</div>
-            <div className="popup-msg-link">
-                <a href="https://openstax.org/adoption">Let us know.</a>
-            </div>
-            <div>
-                Since our books are free, we rely on instructors to
-                tell us they’re using our books.
-            </div>
-        </div>
+        )
     );
 }
 
@@ -60,7 +64,8 @@ export default function SeparateMap() {
     useMainModal();
     useDocumentHead({
         title: 'Institution Map - OpenStax',
-        description: 'Searchable map of institutions that have adopted OpenStax textbooks'
+        description:
+            'Searchable map of institutions that have adopted OpenStax textbooks'
     });
 
     return (

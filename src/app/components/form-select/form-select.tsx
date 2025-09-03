@@ -11,7 +11,7 @@ export default function FormSelect({
 }: {
     label: string;
     name: string;
-    selectAttributes: object;
+    selectAttributes?: object;
     options: SelectItem[];
     onValueUpdate?: (v: string) => void;
 }) {
