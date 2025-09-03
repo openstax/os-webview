@@ -19,7 +19,6 @@ window.SETTINGS = {};
 
     await Promise.all([
         import('../vendor/pardot'),
-        import('../vendor/pulseinsights'),
         import('../vendor/facebook')
     ]);
 

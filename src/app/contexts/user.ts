@@ -73,7 +73,7 @@ function useContextValue() {
         };
 
         if (model && model.id) {
-            w.pi('identify_client', model.id);
+            w.pi?.('identify_client', model.id);
         }
     }, [model]);
 
