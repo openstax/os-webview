@@ -5,6 +5,8 @@ export type Errata = {
     id: number;
     status: string;
     resolution: string;
+    reviewedDate: string | null;
+    correctedDate: string | null;
     created: string;
     book: Item['id'];
     location?: string;
@@ -26,28 +28,25 @@ type Detail = Pick<
     date: string;
 };
 
-
-export function approvedStatuses(created: string) {
+export function approvedStatuses(created: string, corrected: string | null) {
     const posted = new Date(created);
     const m = posted.getMonth();
     const y = posted.getFullYear();
     const correctionYear = m < 2 ? y : y + 1;
     const postedSpring = m > 10 || m < 2;
-    const correctionSeason = `${
-        postedSpring ? 'Fall' : 'Spring'
-    } ${correctionYear}`;
-    const correctionDate = new Date(
-        `${correctionYear}/${postedSpring ? 11 : 3}/1`
-    );
-    const barStatus =
-        Date.now() > correctionDate.getTime() ? 'Corrected' : 'Will correct';
+    const correctionSeason = corrected
+        ? new Intl.DateTimeFormat('en-US', {
+              year: 'numeric',
+              month: 'short'
+          }).format(new Date(corrected))
+        : `${postedSpring ? 'Fall' : 'Spring'} ${correctionYear}`;
+    const barStatus = corrected ? 'Corrected' : 'Will correct';
 
     return {
         status: `${barStatus} ${correctionSeason}`,
         barStatus
     };
 }
-
 
 export function getDisplayStatus(data?: Errata) {
     const result = {
@@ -61,7 +60,10 @@ export function getDisplayStatus(data?: Errata) {
     if (data.status.match(/New|Editorial Review/)) {
         result.status = 'In Review';
     } else if (data.resolution === 'Approved') {
-        Object.assign(result, approvedStatuses(data.created));
+        Object.assign(
+            result,
+            approvedStatuses(data.created, data.correctedDate)
+        );
     } else if (data.status === 'Completed' && data.resolution === 'Duplicate') {
         result.status = result.barStatus = 'Duplicate';
     } else {
@@ -89,9 +91,8 @@ export function useErrataDetail(data = {} as Errata) {
             const location = [data.location, data.additionalLocationInformation]
                 .filter((info) => info)
                 .join('; ');
-            const source = data.resource === 'Other'
-                ? data.resourceOther
-                : data.resource;
+            const source =
+                data.resource === 'Other' ? data.resourceOther : data.resource;
 
             setDetail({
                 id: data.id,

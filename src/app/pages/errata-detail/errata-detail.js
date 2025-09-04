@@ -41,7 +41,7 @@ function ErrataDetail({data}) {
 export default function ErrataDetailLoader() {
     return (
         <div className="errata-detail page">
-            <LoaderPage slug={window.location.pathname.substr(1)} Child={ErrataDetail} doDocumentSetup />
+            <LoaderPage slug={window.location.pathname.substring(1)} Child={ErrataDetail} doDocumentSetup />
         </div>
     );
 }
