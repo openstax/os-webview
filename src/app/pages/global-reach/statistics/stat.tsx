@@ -1,7 +1,17 @@
 import React from 'react';
 import './stat.scss';
 
-function Card({item}) {
+export type CardData = {
+    image: {
+        image: string;
+        altText: string;
+    };
+    number: string;
+    unit: string;
+    description: string;
+}
+
+function Card({item}: {item: CardData}) {
     return (
         <div className="col1">
             <div className="col-img-div">
@@ -18,11 +28,11 @@ function Card({item}) {
     );
 }
 
-export default function Statistics({cards}) {
+export default function Statistics({cards}: {cards: CardData[]}) {
     return (
         <div className="stat-bg">
             <div className="statbox">
-                {cards.map((card) => <Card item={card} key={card} />)}
+                {cards.map((card) => <Card item={card} key={card.description} />)}
             </div>
         </div>
     );

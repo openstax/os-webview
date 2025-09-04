@@ -1,14 +1,24 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import {camelCaseKeys} from '~/helpers/page-data-utils';
+import {camelCaseKeys, Json} from '~/helpers/page-data-utils';
 import Map from './map/map';
-import Statistics from './statistics/stat';
-import StudentInfo from './studentinfo/studentinfo';
+import Statistics, {CardData} from './statistics/stat';
+import StudentInfo, {StudentData} from './studentinfo/studentinfo';
 import SchoolMap from './schoolmap/schoolmap';
 
-function preprocessData(data) {
+type RawData = Record<string, Json>;
+type ProcessedData = {
+    title: string;
+    headerText: string;
+    mapImageUrl: string;
+    section1: {cards: CardData[]};
+    section2: StudentData;
+    section3: Parameters<typeof SchoolMap>[0];
+}
+
+function preprocessData(data: RawData) {
     return camelCaseKeys(
-        Reflect.ownKeys(data).reduce((result, key) => {
+        Object.keys(data).reduce((result, key) => {
             const value = data[key];
             const matches = key.match(/(section_.)_(.*)/);
 
@@ -18,16 +28,16 @@ function preprocessData(data) {
                 if (!(sectionKey in result)) {
                     result[sectionKey] = {};
                 }
-                result[sectionKey][newKey] = value;
+                (result[sectionKey] as Record<string, Json>)[newKey] = value;
             } else {
                 result[key] = value;
             }
             return result;
-        }, {})
-    );
+        }, {} as Record<string, Json>)
+    ) as ProcessedData;
 }
 
-function GlobalReachPage({data}) {
+function GlobalReachPage({data}: {data: RawData}) {
     const ppData = preprocessData(data);
 
     return (

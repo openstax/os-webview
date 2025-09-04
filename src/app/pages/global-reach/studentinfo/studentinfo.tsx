@@ -1,10 +1,23 @@
 import React from 'react';
 import './studentinfo.scss';
 
+export type StudentData = {
+    header1: string;
+    blurb1: string;
+    cta1: string;
+    link1: string;
+    image1Url: string;
+    header2: string;
+    blurb2: string;
+    cta2: string;
+    link2: string;
+    image2Url: string;
+}
+
 export default function StudentInfo({
     header1, blurb1, cta1, link1, image1Url,
     header2, blurb2, cta2, link2, image2Url
-}) {
+}: StudentData) {
     return (
         <div className="studentinfobox">
             <div className="photo-and-text">
