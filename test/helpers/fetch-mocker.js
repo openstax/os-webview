@@ -21,6 +21,7 @@ import faq from '../src/data/faq';
 import flags from '../src/data/flags';
 import footerData from '../src/data/footer';
 import formHeadings from '../src/data/form-headings';
+import globalReachData from '../src/data/global-reach';
 import impact from '../src/data/impact';
 import institutionalPartnershipData from '../src/data/institutional-partnership';
 import kineticData from '../src/data/kinetic';
@@ -74,6 +75,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isFooter = (/api\/footer/).test(args[0]);
     const isFormHeading = (/form-headings/).test(args[0]);
     const isGiveBanner = args[0].endsWith('snippets/givebanner/');
+    const isGlobalReach = args[0].includes('/global-reach/');
     const isImpact = args[0].includes('/pages/impact');
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isKinetic = args[0].endsWith('kinetic/');
@@ -144,6 +146,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = formHeadings;
             } else if (isGiveBanner) {
                 payload = {};
+            } else if (isGlobalReach) {
+                payload = globalReachData;
             } else if (isHomepage) {
                 payload = openstaxHomepageData;
             } else if (isImpact) {
