@@ -73,13 +73,14 @@ $breakpt-med: 93em * $scale-factor;
     }
 
     .button-row {
-        display: grid;
-        grid-row-gap: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
         justify-content: left;
 
         @include wider-than($breakpt-narrow) {
+            display: grid;
             grid-auto-flow: column;
-            grid-column-gap: 1rem;
         }
     }
 
