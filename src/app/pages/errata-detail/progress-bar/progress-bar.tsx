@@ -2,17 +2,23 @@ import React from 'react';
 import './progress-bar.scss';
 
 // eslint-disable-next-line complexity
-export default function ProgressBar({status, barStatus}: {
+export default function ProgressBar({
+    status,
+    barStatus
+}: {
     status: string;
     barStatus: string;
 }) {
-    const thirdNodeFill = ['Corrected', 'Will correct'].includes(barStatus) ?
-        ' filled' : ' filled-no';
-    const bars = barStatus ? 2 : {
-        'In Review': 0,
-        'Reviewed': 1,
-        'Will Correct': 1
-    }[status] as number;
+    const thirdNodeFill = ['Corrected', 'Will correct'].includes(barStatus)
+        ? ' filled'
+        : ' filled-no';
+    const bars = barStatus
+        ? 2
+        : ({
+              'In Review': 0,
+              Reviewed: 1,
+              'Will Correct': 1
+          }[status] as number);
     const firstNodeClass = bars === 0 ? ' filled ' : '';
     const secondNodeClass = bars === 1 ? ' filled' : '';
     const thirdNodeClass = bars > 1 ? thirdNodeFill : '';

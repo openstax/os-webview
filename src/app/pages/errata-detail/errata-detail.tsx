@@ -6,7 +6,6 @@ import {getDisplayStatus, Errata} from '~/helpers/errata';
 import {useLocation} from 'react-router-dom';
 import './errata-detail.scss';
 
-
 function ProgressBarBlock({data}: {data: Errata}) {
     const {status, barStatus} = getDisplayStatus(data);
 
@@ -28,7 +27,9 @@ export function ErrataDetailBlock({data}: {data: Errata}) {
 function ErrataDetail({data}: {data: Errata}) {
     return (
         <React.Fragment>
-            <div className="hero padded"><h1>Errata Submission Details</h1></div>
+            <div className="hero padded">
+                <h1>Errata Submission Details</h1>
+            </div>
             <div className="boxed">
                 <ProgressBarBlock data={data} />
                 <ErrataDetailBlock data={data} />

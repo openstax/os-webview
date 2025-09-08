@@ -11,18 +11,23 @@ jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue();
 describe('Errata Detail', () => {
     it('renders', async () => {
         render(
-            <MemoryRouter initialEntries={['/errata/7199']} >
+            <MemoryRouter initialEntries={['/errata/7199']}>
                 <ErrataDetailLoader />
             </MemoryRouter>
         );
-        await screen.findByRole('heading', {level: 1, name: 'Errata Submission Details'});
+        await screen.findByRole('heading', {
+            level: 1,
+            name: 'Errata Submission Details'
+        });
         await screen.findByText('You can check', {exact: false});
     });
     it('renders decision details', async () => {
-        const spySSED = jest.spyOn(HE, 'shouldShowDecisionDetails').mockReturnValueOnce(true);
+        const spySSED = jest
+            .spyOn(HE, 'shouldShowDecisionDetails')
+            .mockReturnValueOnce(true);
 
         render(
-            <MemoryRouter initialEntries={['/errata/7199']} >
+            <MemoryRouter initialEntries={['/errata/7199']}>
                 <ErrataDetailLoader />
             </MemoryRouter>
         );
@@ -34,7 +39,7 @@ describe('Errata Detail', () => {
     });
     describe('progress bar', () => {
         it('represents reviewed', () => {
-            render(<ProgressBar status='Reviewed' barStatus='' />);
+            render(<ProgressBar status="Reviewed" barStatus="" />);
             const bar = document.querySelectorAll('.progress-bar-layer')[1];
 
             expect(bar?.innerHTML).toBe(
@@ -42,7 +47,7 @@ describe('Errata Detail', () => {
             );
         });
         it('represents will-correct', () => {
-            render(<ProgressBar status='Will Correct' barStatus='' />);
+            render(<ProgressBar status="Will Correct" barStatus="" />);
             const bar = document.querySelectorAll('.progress-bar-layer')[1];
 
             expect(bar?.innerHTML).toBe(
@@ -50,7 +55,7 @@ describe('Errata Detail', () => {
             );
         });
         it('represents corrected', () => {
-            render(<ProgressBar status='anything' barStatus='Corrected' />);
+            render(<ProgressBar status="anything" barStatus="Corrected" />);
             const bar = document.querySelectorAll('.progress-bar-layer')[1];
 
             expect(bar?.innerHTML).toBe(
@@ -59,4 +64,3 @@ describe('Errata Detail', () => {
         });
     });
 });
-
