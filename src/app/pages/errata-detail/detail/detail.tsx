@@ -1,9 +1,11 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {useErrataDetail, shouldShowDecisionDetails} from '~/helpers/errata';
+import {useErrataDetail, shouldShowDecisionDetails, Errata, Detail as DetailData} from '~/helpers/errata';
 import './detail.scss';
 
-const detailDataPairs = [
+type Pairs = Array<[s: string, i: keyof DetailData]>;
+
+const detailDataPairs: Pairs = [
     ['Submission ID', 'id'],
     ['Title', 'bookTitle'],
     ['Source', 'source'],
@@ -13,18 +15,21 @@ const detailDataPairs = [
     ['Description', 'detail'],
     ['Date Submitted', 'date']
 ];
-const decisionDataPairs = [
+const decisionDataPairs: Pairs = [
     ['Decision', 'resolutionNotes']
 ];
 
-function LabelValuePairs({detail, pairs}) {
+function LabelValuePairs({detail, pairs}: {
+    detail: DetailData;
+    pairs: Pairs;
+}) {
     return (
         <React.Fragment>
             {
                 pairs.map((pair) =>
                     <div className="label-value-pair" key={pair[0]}>
                         <div className="label">{pair[0]}</div>
-                        <RawHTML className="value" html={detail[pair[1]] || ''} />
+                        <RawHTML className="value" html={detail[pair[1]] ?? ''} />
                     </div>
                 )
             }
@@ -32,7 +37,7 @@ function LabelValuePairs({detail, pairs}) {
     );
 }
 
-export default function Detail({data}) {
+export default function Detail({data}: {data: Errata}) {
     const detail = useErrataDetail(data);
 
     if (!detail) {
