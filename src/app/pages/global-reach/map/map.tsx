@@ -1,10 +1,21 @@
 import React from 'react';
 import './map.scss';
 
-export default function Map({title, buttonText, imageUrl}) {
+export default function Map({
+    title,
+    buttonText,
+    imageUrl
+}: {
+    title: string;
+    buttonText: string;
+    imageUrl: string;
+}) {
     return (
         <div className="mapbox">
-            <div className="map-image" style={{backgroundImage: `url(${imageUrl})`}}></div>
+            <div
+                className="map-image"
+                style={{backgroundImage: `url(${imageUrl})`}}
+            ></div>
             <div className="overlay">
                 <div className="boxed">
                     <h1>{title}</h1>
