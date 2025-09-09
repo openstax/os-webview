@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/preact';
+import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import RoleSelector from '~/components/role-selector/role-selector';
 import MR from '~/../../test/helpers/future-memory-router';

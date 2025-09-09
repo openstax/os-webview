@@ -10,7 +10,7 @@ import AdvancedOptions, {
 import type {OptionType} from '~/components/form-elements/form-elements';
 import {useLocation} from 'react-router-dom';
 import {useMainSticky} from '~/helpers/main-class-hooks';
-import useSearchContext, {Store} from '../search-context';
+import useSearchContext from '../search-context';
 import cn from 'classnames';
 import './controls.scss';
 import './button-with-popover.scss';
@@ -150,8 +150,6 @@ export default function Controls({
                     {...commonButtonProps}
                     size={advanced.size}
                 />
-            </div>
-            <div className="other-controls">
                 <BaseButton label="Sort" {...commonButtonProps}>
                     <OptionsList
                         items={sortOptions}
@@ -160,9 +158,7 @@ export default function Controls({
                 </BaseButton>
             </div>
             <div className="popover-container">
-                {openButton === 'Books' && (
-                    <BookOptions store={books as Store} />
-                )}
+                {openButton === 'Books' && <BookOptions store={books} />}
                 {openButton === 'Advanced Filters' && (
                     <AdvancedOptions
                         store={advanced}

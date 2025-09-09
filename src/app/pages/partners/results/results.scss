@@ -3,8 +3,12 @@
 
 .partners .results {
     padding: 2rem 0 20rem;
+    width: 100%;
+    max-width: $content-max;
+    margin: 0 auto;
 
     @include width-up-to($phone-max) {
+        grid-template-columns: 100%;
         padding: 0 $normal-margin 6rem;
     }
 
@@ -12,23 +16,59 @@
         min-height: 120rem;
     }
 
-    >:first-child {
-        @include width-up-to($phone-max) {
-            margin-bottom: $normal-margin;
+    .result-columns {
+        align-items: start;
+        display: grid;
+        gap: 4rem;
+        grid-template-columns: calc(100% - 38rem) 34rem;
+        max-width: 100%;
+
+        @include width-up-to($tablet-max) {
+            grid-template-columns: 100%;
+            gap: 5rem;
         }
     
-        @include wider-than($phone-max) {
-            margin-bottom: 3rem;
+        .result-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5rem;
+        }    
+    }
+
+    .heading-and-result-grid {
+        border: thin solid os-color(light-blue);
+        border-top-width: 1.1rem;
+        margin: 0 auto;
+        max-width: 100%;
+        padding: 4rem;
+
+        &.results-10 {
+            border-color: os-color(gold);
+        }
+
+        &.results-7 {
+            border-color: os-color(deep-green);
+        }
+
+        &.results-4 {
+            border-color: os-color(orange);
+        }
+
+        &.results-1 {
+            border-color: os-color(yellow);
+        }
+
+        &.results-new {
+            border-color: os-color(blue);
         }
     }
 
-    h2 {
-        margin: 0;
+    h3 {
+        @include title-font(2.6rem);
+        margin-bottom: 2rem;
         width: 100%;
         text-align: center;
-        background-color: ui-color(form-border);
-        padding: $normal-margin 0;
-        border: thin solid ui-color(black);
     }
 
     /*
@@ -49,30 +89,16 @@
 
     @mixin partner-grid {
         display: grid;
-        grid-auto-rows: minmax(min-content, 100%);
-        padding: 0;
-
-        @include width-between($phone-max, $first-break) {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        @include width-between($first-break, $second-break) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        @include width-between($second-break, $third-break) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        @include wider-than($third-break) {
-            grid-template-columns: repeat(5, 1fr);
-        }
+        grid-template-columns: repeat(auto-fill, 21rem);
+        justify-content: center;
 
         @include width-up-to($phone-max) {
             grid-gap: 1.5rem;
-            justify-content: center;
+            grid-template-columns: auto;
         }
 
         @include wider-than($phone-max) {
             grid-gap: 3rem;
-            justify-content: left;
         }
 
         .partner-card {
@@ -82,8 +108,7 @@
 
     @mixin partner-card {
         background-color: ui-color(white);
-        border-radius: 0.3rem;
-        box-shadow: $card-shadow;
+        border: thin solid os-color(light-gray);
         color: inherit;
         display: grid;
         grid-row-gap: 1rem;
@@ -156,7 +181,6 @@
 
     .boxed {
         gap: 3rem;
-        padding: 0;
 
         @include width-up-to($phone-max) {
             gap: $normal-margin;
