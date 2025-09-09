@@ -18,7 +18,7 @@ export type Errata = {
     resolutionNotes: string;
 };
 
-type Detail = Pick<
+export type Detail = Pick<
     Errata,
     'id' | 'status' | 'errorType' | 'detail' | 'resolutionNotes'
 > & {
