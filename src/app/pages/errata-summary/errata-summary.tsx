@@ -5,18 +5,41 @@ import Table from './table/table';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import './errata-summary.scss';
 
-const radioItems = [
+type RadioItem = {
+    value: string;
+    html: string;
+};
+
+type ErrataData = {
+    id: string;
+    created: string;
+    resource: string;
+    resourceOther?: string;
+    errorType: string;
+    errorTypeOther?: string;
+    location: string;
+    additionalLocationInformation?: string;
+    detail: string;
+    modified: string;
+};
+
+type ErrataSummaryProps = {
+    data: ErrataData[];
+    book: string;
+};
+
+const radioItems: RadioItem[] = [
     {value: '', html: 'View All'},
     {value: 'in-review', html: 'In Review'},
     {value: 'reviewed', html: 'Reviewed'},
     {value: 'corrected', html: 'Corrected'}
 ];
 
-function ErrataSummary({data, book}) {
-    const initialValue = window.location.hash.replace('#', '');
-    const [selectedFilter, setselectedFilter] = useState(initialValue);
+function ErrataSummary({data, book}: ErrataSummaryProps): React.ReactElement {
+    const initialValue: string = window.location.hash.replace('#', '');
+    const [selectedFilter, setselectedFilter] = useState<string>(initialValue);
     const onChange = React.useCallback(
-        (newlySelectedValue) => {
+        (newlySelectedValue: string) => {
             setselectedFilter(newlySelectedValue);
             history.replaceState('', '',
                 newlySelectedValue ? `#${newlySelectedValue}` :
@@ -47,15 +70,15 @@ function ErrataSummary({data, book}) {
     );
 }
 
-export default function ErrataSummaryLoader() {
-    const book = new window.URLSearchParams(window.location.search).get('book');
-    const slug = `errata/?book_title=${book}` +
+export default function ErrataSummaryLoader(): React.ReactElement {
+    const book: string | null = new window.URLSearchParams(window.location.search).get('book');
+    const slug: string = `errata/?book_title=${book}` +
         '&is_assessment_errata__not=Yes&archived=False&status__not=New' +
         '&status__not=OpenStax%20Editorial%20Review';
 
     return (
         <main className="errata-summary page">
-            <LoaderPage slug={slug} Child={ErrataSummary} props={{book}} />
+            <LoaderPage slug={slug} Child={ErrataSummary} props={{book: book || ''}} />
         </main>
     );
 }
