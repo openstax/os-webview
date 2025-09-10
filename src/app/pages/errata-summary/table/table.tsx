@@ -1,16 +1,9 @@
 import React, {useState} from 'react';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
-import {getDisplayStatus} from '~/helpers/errata';
+import {getDisplayStatus, Errata} from '~/helpers/errata';
 import './table.scss';
 
-type ColumnSpec = {
-    label: string;
-    id: string;
-    sortFn?: string;
-    cssClass: string;
-};
-
-type RawErrataItem = {
+export type RawErrataItem = Errata & {
     id: string;
     created: string;
     resource: string;
@@ -35,14 +28,7 @@ type ProcessedErrataItem = {
     modified: string;
 };
 
-type SortController = {
-    sortFn: string;
-    sortKey: string;
-    sortDir: number;
-    setSortFn: (fn: string) => void;
-    setSortKey: (key: string) => void;
-    setSortDir: (dir: number) => void;
-};
+type SortController = ReturnType<typeof useSortController>;
 
 type DesktopHeaderColumnProps = {
     colSpec: ColumnSpec;
@@ -85,12 +71,9 @@ type TableProps = {
     filter: string;
 };
 
-type SortFn = (
-    a: string | number | null | ProcessedErrataItem, 
-    b: string | number | null | ProcessedErrataItem
-) => number;
+type ColumnSpec = typeof columnSpecs[number];
 
-const columnSpecs: ColumnSpec[] = [
+const columnSpecs = [
     {
         label: 'Date Submitted',
         id: 'date',
@@ -131,7 +114,7 @@ const columnSpecs: ColumnSpec[] = [
         sortFn: 'sortDecision',
         cssClass: 'mid'
     }
-];
+] as const;
 
 const statusSortOrder: {[key: string]: number} = {
     'Co': 1,
@@ -141,7 +124,7 @@ const statusSortOrder: {[key: string]: number} = {
     'In': 5
 };
 
-const sortFunctions: {[key: string]: SortFn} = {
+const sortFunctions = {
     sortDate: (a: string, b: string): number => new Date(a).getTime() - new Date(b).getTime(),
     sort: (a: string | null, b: string | null): number => {
         const as = a === null ? '' : a;
@@ -166,21 +149,22 @@ const sortFunctions: {[key: string]: SortFn} = {
 
 function DesktopHeaderColumn({colSpec, sortController}: DesktopHeaderColumnProps): React.ReactElement {
     const {sortKey, sortDir, setSortFn, setSortDir, setSortKey} = sortController;
+    const sortable = 'sortFn' in colSpec;
     const onClick = (): void => {
         if (sortKey === colSpec.id) {
             setSortDir(-sortDir);
         } else {
-            if (colSpec.sortFn) {
+            if (sortable) {
                 setSortFn(colSpec.sortFn);
             }
             setSortKey(colSpec.id);
             setSortDir(1);
         }
     };
-    const sortAttributes = colSpec.sortFn ? {
+    const sortAttributes = sortable ? {
         role: 'button', tabIndex: 0, onClick, onKeyDown: treatSpaceOrEnterAsClick
     } : {};
-    const sortIndicator = colSpec.sortFn ?
+    const sortIndicator = sortable ?
         <span className={`will-sort sortdir${colSpec.sortFn === 'sort' ? 1 : -1}`} /> :
         null;
 
@@ -204,7 +188,7 @@ function DesktopHeaderRow({sortController}: DesktopHeaderRowProps): React.ReactE
     return (
         <tr>
             {
-                columnSpecs.map((colSpec: ColumnSpec) =>
+                columnSpecs.map((colSpec) =>
                     <DesktopHeaderColumn key={colSpec.id} colSpec={colSpec} sortController={sortController} />
                 )
             }
@@ -224,7 +208,7 @@ function DesktopDataColumn({colSpec, entry}: DesktopDataColumnProps): React.Reac
                         <React.Fragment>
                             {entry[colSpec.id as keyof ProcessedErrataItem]}{' '}
                             {
-                                colSpec.id === 'displayStatus' && 
+                                colSpec.id === 'displayStatus' &&
                                 entry[colSpec.id as keyof ProcessedErrataItem] === 'No Correction' &&
                                     <a href={`/errata/${entry.id}`}>Details</a>
                             }
@@ -238,16 +222,16 @@ function DesktopDataColumn({colSpec, entry}: DesktopDataColumnProps): React.Reac
 function DesktopDataRow({entry}: DesktopDataRowProps): React.ReactElement {
     return (
         <tr>
-            {columnSpecs.map((colSpec: ColumnSpec) => 
+            {columnSpecs.map((colSpec) =>
                 <DesktopDataColumn key={colSpec.id} colSpec={colSpec} entry={entry} />
             )}
         </tr>
     );
 }
 
-function useSortController(): SortController {
-    const [sortFn, setSortFn] = useState<string>('sortDate');
-    const [sortKey, setSortKey] = useState<string>('date');
+function useSortController() {
+    const [sortFn, setSortFn] = useState<keyof typeof sortFunctions>('sortDate');
+    const [sortKey, setSortKey] = useState<keyof ProcessedErrataItem>('date');
     const [sortDir, setSortDir] = useState<number>(-1);
 
     return {sortFn, sortKey, sortDir, setSortFn, setSortKey, setSortDir};
@@ -257,9 +241,11 @@ function DesktopTable({data}: DesktopTableProps): React.ReactElement {
     const sortController = useSortController();
     const {sortFn, sortKey, sortDir} = sortController;
 
-    const sortedData = [...data];
-    sortedData.sort((a: ProcessedErrataItem, b: ProcessedErrataItem) => 
-        sortFunctions[sortFn](a[sortKey as keyof ProcessedErrataItem], b[sortKey as keyof ProcessedErrataItem])
+    const sortedData = [...data] as Array<string & ProcessedErrataItem>;
+
+    sortedData.sort((a, b) =>
+        // @ts-expect-error sortKey and sortFn are guaranteed compatible
+        sortFunctions[sortFn](a[sortKey], b[sortKey])
     );
     if (sortDir < 0) {
         sortedData.reverse();
@@ -301,7 +287,7 @@ function MobileTable({entry}: MobileTableProps): React.ReactElement {
         <table className="body-block summary-table-mobile">
             <tbody>
                 {
-                    columnSpecs.map((colSpec: ColumnSpec) =>
+                    columnSpecs.map((colSpec) =>
                         <MobileRow
                             key={colSpec.label}
                             entry={entry}
