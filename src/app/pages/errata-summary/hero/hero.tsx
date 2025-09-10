@@ -8,41 +8,23 @@ import useRouterContext from '~/components/shell/router-context';
 import cn from 'classnames';
 import './hero.scss';
 
-interface BookEntry {
-    title: string;
-    meta: {
-        slug: string;
-    };
-}
-
-interface HeroData {
+type HeroData = {
     aboutHeader: string;
     aboutText: string;
     aboutPopup: string;
 }
 
-interface HeroProps {
+type HeroProps = {
     book: string;
 }
 
-interface HeroContentProps {
+type HeroContentProps = {
     data: HeroData;
 }
 
-interface PopTipProps {
+type PopTipProps = {
     html: string;
     isOpen: boolean;
-}
-
-interface PopTipState {
-    isOpen: boolean;
-    activate: () => void;
-    deactivate: () => void;
-}
-
-interface PopTipStyleResult {
-    ref: React.RefObject<HTMLDivElement>;
-    style: { left: number | string };
 }
 
 function useBookInfo(book: string): [string, string] {
@@ -50,7 +32,7 @@ function useBookInfo(book: string): [string, string] {
     const {fail} = useRouterContext();
 
     useEffect(() => {
-        bookPromise.then((bookList: BookEntry[]) => {
+        bookPromise.then((bookList) => {
             const entry = bookList.find(({title}) => title === book);
 
             if (entry) {
@@ -71,27 +53,28 @@ const middle: string = '-135';
 const margin: number = 3;
 
 function shiftIntoView(
-    ref: React.RefObject<HTMLDivElement>, 
-    leftOffset: number | string, 
+    ref: React.RefObject<HTMLDivElement>,
+    leftOffset: number | string,
     setLeftOffset: (value: number | string) => void
-): void {
-    if (!ref.current) return;
-    
+) {
+    if (!ref.current) {return;}
+
     const {left, right} = ref.current.getBoundingClientRect();
     const pageElement = ref.current.closest('.page');
-    if (!pageElement) return;
-    
+
+    if (!pageElement) {return;}
+
     const {right: pageRight} = pageElement.getBoundingClientRect();
     const overRight = right - pageRight + margin;
     const overLeft = margin - left;
-    const leftOffsetNum = typeof leftOffset === 'string' ? parseInt(leftOffset) : leftOffset;
-    const rightWants = Math.min(parseInt(middle), leftOffsetNum - overRight);
+    const leftOffsetNum = typeof leftOffset === 'string' ? parseInt(leftOffset, 10) : leftOffset;
+    const rightWants = Math.min(parseInt(middle, 10), leftOffsetNum - overRight);
     const leftWants = Math.max(rightWants, leftOffsetNum + overLeft);
 
     setLeftOffset(leftWants);
 }
 
-function usePopTipStyle(isOpen: boolean): PopTipStyleResult {
+function usePopTipStyle(isOpen: boolean) {
     const ref = React.useRef<HTMLDivElement>(null);
     const [leftOffset, setLeftOffset] = React.useState<number | string>(middle);
 
@@ -103,7 +86,7 @@ function usePopTipStyle(isOpen: boolean): PopTipStyleResult {
     return {ref, style: {left: leftOffset}};
 }
 
-function PopTip({html, isOpen}: PopTipProps): React.ReactElement {
+function PopTip({html, isOpen}: PopTipProps) {
     const {ref, style} = usePopTipStyle(isOpen);
 
     return (
@@ -118,7 +101,7 @@ function PopTip({html, isOpen}: PopTipProps): React.ReactElement {
     );
 }
 
-function usePopTipState(): PopTipState {
+function usePopTipState() {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
     return {
@@ -128,7 +111,7 @@ function usePopTipState(): PopTipState {
     };
 }
 
-function HeroContent({data}: HeroContentProps): React.ReactElement {
+function HeroContent({data}: HeroContentProps) {
     const {isOpen, activate, deactivate} = usePopTipState();
 
     return (
@@ -151,7 +134,7 @@ function HeroContent({data}: HeroContentProps): React.ReactElement {
     );
 }
 
-export default function Hero({book}: HeroProps): React.ReactElement | null {
+export default function Hero({book}: HeroProps) {
     const [slug, title] = useBookInfo(book);
 
     if (!slug) {

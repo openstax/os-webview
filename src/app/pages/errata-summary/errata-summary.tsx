@@ -1,41 +1,23 @@
 import React, {useState} from 'react';
 import Hero from './hero/hero';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
-import Table from './table/table';
+import Table, {RawErrataItem} from './table/table';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import './errata-summary.scss';
 
-type RadioItem = {
-    value: string;
-    html: string;
-};
-
-type ErrataData = {
-    id: string;
-    created: string;
-    resource: string;
-    resourceOther?: string;
-    errorType: string;
-    errorTypeOther?: string;
-    location: string;
-    additionalLocationInformation?: string;
-    detail: string;
-    modified: string;
-};
-
 type ErrataSummaryProps = {
-    data: ErrataData[];
+    data: RawErrataItem[];
     book: string;
 };
 
-const radioItems: RadioItem[] = [
+const radioItems = [
     {value: '', html: 'View All'},
     {value: 'in-review', html: 'In Review'},
     {value: 'reviewed', html: 'Reviewed'},
     {value: 'corrected', html: 'Corrected'}
 ];
 
-function ErrataSummary({data, book}: ErrataSummaryProps): React.ReactElement {
+function ErrataSummary({data, book}: ErrataSummaryProps) {
     const initialValue: string = window.location.hash.replace('#', '');
     const [selectedFilter, setselectedFilter] = useState<string>(initialValue);
     const onChange = React.useCallback(
@@ -70,7 +52,7 @@ function ErrataSummary({data, book}: ErrataSummaryProps): React.ReactElement {
     );
 }
 
-export default function ErrataSummaryLoader(): React.ReactElement {
+export default function ErrataSummaryLoader() {
     const book: string | null = new window.URLSearchParams(window.location.search).get('book');
     const slug: string = `errata/?book_title=${book}` +
         '&is_assessment_errata__not=Yes&archived=False&status__not=New' +
