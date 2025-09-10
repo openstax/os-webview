@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import Hero from './hero/hero';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
-import Table, {RawErrataItem} from './table/table';
+import Table from './table/table';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
+import type {Errata} from '~/helpers/errata';
 import './errata-summary.scss';
 
 type ErrataSummaryProps = {
-    data: RawErrataItem[];
+    data: Errata[];
     book: string;
 };
 

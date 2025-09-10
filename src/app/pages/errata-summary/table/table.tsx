@@ -3,19 +3,6 @@ import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {getDisplayStatus, Errata} from '~/helpers/errata';
 import './table.scss';
 
-export type RawErrataItem = Errata & {
-    id: string;
-    created: string;
-    resource: string;
-    resourceOther?: string;
-    errorType: string;
-    errorTypeOther?: string;
-    location: string;
-    additionalLocationInformation?: string;
-    detail: string;
-    modified: string;
-};
-
 type ProcessedErrataItem = {
     date: string;
     source: string;
@@ -67,7 +54,7 @@ type MobileTablesProps = {
 };
 
 type TableProps = {
-    data: RawErrataItem[];
+    data: Errata[];
     filter: string;
 };
 
@@ -327,7 +314,7 @@ function matchesFilter(filter: string, item: ProcessedErrataItem): boolean {
 export default function Table({data, filter}: TableProps): React.ReactElement {
     const details: ProcessedErrataItem[] = React.useMemo(
         () => data.map(
-            (item: RawErrataItem): ProcessedErrataItem => {
+            (item: Errata): ProcessedErrataItem => {
                 const displayStatus = getDisplayStatus(item);
 
                 return {

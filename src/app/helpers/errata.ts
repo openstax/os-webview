@@ -2,19 +2,21 @@ import {useState, useEffect} from 'react';
 import bookPromise, {Item} from '~/models/book-titles';
 
 export type Errata = {
-    id: number;
+    id: string;
     status: string;
     resolution: string;
     reviewedDate: string | null;
     correctedDate: string | null;
     created: string;
+    modified: string;
     book: Item['id'];
     location?: string;
     additionalLocationInformation?: string;
     resource: string;
     resourceOther: string;
-    errorType: unknown;
-    detail: unknown;
+    errorType: string;
+    errorTypeOther?: string;
+    detail: string;
     resolutionNotes: string;
 };
 
