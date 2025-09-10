@@ -8,12 +8,49 @@ import useRouterContext from '~/components/shell/router-context';
 import cn from 'classnames';
 import './hero.scss';
 
-function useBookInfo(book) {
-    const [info, setInfo] = useState([]);
+interface BookEntry {
+    title: string;
+    meta: {
+        slug: string;
+    };
+}
+
+interface HeroData {
+    aboutHeader: string;
+    aboutText: string;
+    aboutPopup: string;
+}
+
+interface HeroProps {
+    book: string;
+}
+
+interface HeroContentProps {
+    data: HeroData;
+}
+
+interface PopTipProps {
+    html: string;
+    isOpen: boolean;
+}
+
+interface PopTipState {
+    isOpen: boolean;
+    activate: () => void;
+    deactivate: () => void;
+}
+
+interface PopTipStyleResult {
+    ref: React.RefObject<HTMLDivElement>;
+    style: { left: number | string };
+}
+
+function useBookInfo(book: string): [string, string] {
+    const [info, setInfo] = useState<[string, string]>(['', '']);
     const {fail} = useRouterContext();
 
     useEffect(() => {
-        bookPromise.then((bookList) => {
+        bookPromise.then((bookList: BookEntry[]) => {
             const entry = bookList.find(({title}) => title === book);
 
             if (entry) {
@@ -30,23 +67,33 @@ function useBookInfo(book) {
     return info;
 }
 
-const middle = '-135';
-const margin = 3;
+const middle: string = '-135';
+const margin: number = 3;
 
-function shiftIntoView(ref, leftOffset, setLeftOffset) {
+function shiftIntoView(
+    ref: React.RefObject<HTMLDivElement>, 
+    leftOffset: number | string, 
+    setLeftOffset: (value: number | string) => void
+): void {
+    if (!ref.current) return;
+    
     const {left, right} = ref.current.getBoundingClientRect();
-    const {right: pageRight} = ref.current.closest('.page').getBoundingClientRect();
+    const pageElement = ref.current.closest('.page');
+    if (!pageElement) return;
+    
+    const {right: pageRight} = pageElement.getBoundingClientRect();
     const overRight = right - pageRight + margin;
     const overLeft = margin - left;
-    const rightWants = Math.min(middle, leftOffset - overRight);
-    const leftWants = Math.max(rightWants, leftOffset + overLeft);
+    const leftOffsetNum = typeof leftOffset === 'string' ? parseInt(leftOffset) : leftOffset;
+    const rightWants = Math.min(parseInt(middle), leftOffsetNum - overRight);
+    const leftWants = Math.max(rightWants, leftOffsetNum + overLeft);
 
     setLeftOffset(leftWants);
 }
 
-function usePopTipStyle(isOpen) {
-    const ref = React.useRef();
-    const [leftOffset, setLeftOffset] = React.useState(middle);
+function usePopTipStyle(isOpen: boolean): PopTipStyleResult {
+    const ref = React.useRef<HTMLDivElement>(null);
+    const [leftOffset, setLeftOffset] = React.useState<number | string>(middle);
 
     useEffect(
         () => shiftIntoView(ref, leftOffset, setLeftOffset),
@@ -56,7 +103,7 @@ function usePopTipStyle(isOpen) {
     return {ref, style: {left: leftOffset}};
 }
 
-function PopTip({html, isOpen}) {
+function PopTip({html, isOpen}: PopTipProps): React.ReactElement {
     const {ref, style} = usePopTipStyle(isOpen);
 
     return (
@@ -71,17 +118,17 @@ function PopTip({html, isOpen}) {
     );
 }
 
-function usePopTipState() {
-    const [isOpen, setIsOpen] = React.useState(false);
+function usePopTipState(): PopTipState {
+    const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
     return {
         isOpen,
-        activate() {setIsOpen(true);},
-        deactivate() {setIsOpen(false);}
+        activate(): void {setIsOpen(true);},
+        deactivate(): void {setIsOpen(false);}
     };
 }
 
-function HeroContent({data}) {
+function HeroContent({data}: HeroContentProps): React.ReactElement {
     const {isOpen, activate, deactivate} = usePopTipState();
 
     return (
@@ -92,7 +139,7 @@ function HeroContent({data}) {
                 {' '}
                 <span
                     className={cn('with-tooltip', {active: isOpen})}
-                    tabIndex="0"
+                    tabIndex={0}
                     onMouseEnter={activate} onMouseLeave={deactivate}
                     onFocus={activate} onBlur={deactivate}
                 >
@@ -104,7 +151,7 @@ function HeroContent({data}) {
     );
 }
 
-export default function Hero({book}) {
+export default function Hero({book}: HeroProps): React.ReactElement | null {
     const [slug, title] = useBookInfo(book);
 
     if (!slug) {

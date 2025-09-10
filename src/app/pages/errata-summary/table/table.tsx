@@ -1,0 +1,374 @@
+import React, {useState} from 'react';
+import {treatSpaceOrEnterAsClick} from '~/helpers/events';
+import {getDisplayStatus} from '~/helpers/errata';
+import './table.scss';
+
+type ColumnSpec = {
+    label: string;
+    id: string;
+    sortFn?: string;
+    cssClass: string;
+};
+
+type RawErrataItem = {
+    id: string;
+    created: string;
+    resource: string;
+    resourceOther?: string;
+    errorType: string;
+    errorTypeOther?: string;
+    location: string;
+    additionalLocationInformation?: string;
+    detail: string;
+    modified: string;
+};
+
+type ProcessedErrataItem = {
+    date: string;
+    source: string;
+    displayStatus: string;
+    barStatus: string;
+    errorType: string;
+    id: string;
+    location: string;
+    detail: string;
+    modified: string;
+};
+
+type SortController = {
+    sortFn: string;
+    sortKey: string;
+    sortDir: number;
+    setSortFn: (fn: string) => void;
+    setSortKey: (key: string) => void;
+    setSortDir: (dir: number) => void;
+};
+
+type DesktopHeaderColumnProps = {
+    colSpec: ColumnSpec;
+    sortController: SortController;
+};
+
+type DesktopHeaderRowProps = {
+    sortController: SortController;
+};
+
+type DesktopDataColumnProps = {
+    colSpec: ColumnSpec;
+    entry: ProcessedErrataItem;
+};
+
+type DesktopDataRowProps = {
+    entry: ProcessedErrataItem;
+};
+
+type DesktopTableProps = {
+    data: ProcessedErrataItem[];
+};
+
+type MobileRowProps = {
+    entry: ProcessedErrataItem;
+    label: string;
+    columnId: string;
+};
+
+type MobileTableProps = {
+    entry: ProcessedErrataItem;
+};
+
+type MobileTablesProps = {
+    data: ProcessedErrataItem[];
+};
+
+type TableProps = {
+    data: RawErrataItem[];
+    filter: string;
+};
+
+type SortFn = (
+    a: string | number | null | ProcessedErrataItem, 
+    b: string | number | null | ProcessedErrataItem
+) => number;
+
+const columnSpecs: ColumnSpec[] = [
+    {
+        label: 'Date Submitted',
+        id: 'date',
+        sortFn: 'sortDate',
+        cssClass: 'mid'
+    },
+    {
+        label: 'ID',
+        id: 'id',
+        sortFn: 'sortNumber',
+        cssClass: 'narrow'
+    },
+    {
+        label: 'Source',
+        id: 'source',
+        sortFn: 'sort',
+        cssClass: 'mid'
+    },
+    {
+        label: 'Error Type',
+        id: 'errorType',
+        sortFn: 'sort',
+        cssClass: 'mid'
+    },
+    {
+        label: 'Location',
+        id: 'location',
+        cssClass: 'mid-wide'
+    },
+    {
+        label: 'Description',
+        id: 'detail',
+        cssClass: ''
+    },
+    {
+        label: 'Decision',
+        id: 'displayStatus',
+        sortFn: 'sortDecision',
+        cssClass: 'mid'
+    }
+];
+
+const statusSortOrder: {[key: string]: number} = {
+    'Co': 1,
+    'Wi': 2,
+    'No': 3,
+    'Du': 4,
+    'In': 5
+};
+
+const sortFunctions: {[key: string]: SortFn} = {
+    sortDate: (a: string, b: string): number => new Date(a).getTime() - new Date(b).getTime(),
+    sort: (a: string | null, b: string | null): number => {
+        const as = a === null ? '' : a;
+        const bs = b === null ? '' : b;
+
+        return as.localeCompare(bs, 'en', {sensitivity: 'base'});
+    },
+    sortNumber: (a: number | string, b: number | string): number => Number(a) - Number(b),
+    sortDecision: (a: ProcessedErrataItem, b: ProcessedErrataItem): number => {
+        const ar = statusSortOrder[a.displayStatus.substr(0, 2)] || 6;
+        const br = statusSortOrder[b.displayStatus.substr(0, 2)] || 6;
+
+        if (ar !== br) {
+            return br - ar;
+        }
+        const ad = new Date(a.modified).valueOf();
+        const bd = new Date(b.modified).valueOf();
+
+        return bd - ad;
+    }
+};
+
+function DesktopHeaderColumn({colSpec, sortController}: DesktopHeaderColumnProps): React.ReactElement {
+    const {sortKey, sortDir, setSortFn, setSortDir, setSortKey} = sortController;
+    const onClick = (): void => {
+        if (sortKey === colSpec.id) {
+            setSortDir(-sortDir);
+        } else {
+            if (colSpec.sortFn) {
+                setSortFn(colSpec.sortFn);
+            }
+            setSortKey(colSpec.id);
+            setSortDir(1);
+        }
+    };
+    const sortAttributes = colSpec.sortFn ? {
+        role: 'button', tabIndex: 0, onClick, onKeyDown: treatSpaceOrEnterAsClick
+    } : {};
+    const sortIndicator = colSpec.sortFn ?
+        <span className={`will-sort sortdir${colSpec.sortFn === 'sort' ? 1 : -1}`} /> :
+        null;
+
+    return (
+        <th
+            key={colSpec.id}
+            className={colSpec.cssClass}
+            {...sortAttributes}
+        >
+            {colSpec.label}
+            {
+                sortKey === colSpec.id ?
+                    <span className={`sortdir${sortDir}`} /> :
+                    sortIndicator
+            }
+        </th>
+    );
+}
+
+function DesktopHeaderRow({sortController}: DesktopHeaderRowProps): React.ReactElement {
+    return (
+        <tr>
+            {
+                columnSpecs.map((colSpec: ColumnSpec) =>
+                    <DesktopHeaderColumn key={colSpec.id} colSpec={colSpec} sortController={sortController} />
+                )
+            }
+        </tr>
+    );
+}
+
+function DesktopDataColumn({colSpec, entry}: DesktopDataColumnProps): React.ReactElement {
+    return (
+        <td>
+            <div className={colSpec.cssClass}>
+                {
+                    colSpec.id === 'id' ?
+                        <a href={entry[colSpec.id as keyof ProcessedErrataItem] as string}>
+                            {entry[colSpec.id as keyof ProcessedErrataItem] || ''}
+                        </a> :
+                        <React.Fragment>
+                            {entry[colSpec.id as keyof ProcessedErrataItem]}{' '}
+                            {
+                                colSpec.id === 'displayStatus' && 
+                                entry[colSpec.id as keyof ProcessedErrataItem] === 'No Correction' &&
+                                    <a href={`/errata/${entry.id}`}>Details</a>
+                            }
+                        </React.Fragment>
+                }
+            </div>
+        </td>
+    );
+}
+
+function DesktopDataRow({entry}: DesktopDataRowProps): React.ReactElement {
+    return (
+        <tr>
+            {columnSpecs.map((colSpec: ColumnSpec) => 
+                <DesktopDataColumn key={colSpec.id} colSpec={colSpec} entry={entry} />
+            )}
+        </tr>
+    );
+}
+
+function useSortController(): SortController {
+    const [sortFn, setSortFn] = useState<string>('sortDate');
+    const [sortKey, setSortKey] = useState<string>('date');
+    const [sortDir, setSortDir] = useState<number>(-1);
+
+    return {sortFn, sortKey, sortDir, setSortFn, setSortKey, setSortDir};
+}
+
+function DesktopTable({data}: DesktopTableProps): React.ReactElement {
+    const sortController = useSortController();
+    const {sortFn, sortKey, sortDir} = sortController;
+
+    const sortedData = [...data];
+    sortedData.sort((a: ProcessedErrataItem, b: ProcessedErrataItem) => 
+        sortFunctions[sortFn](a[sortKey as keyof ProcessedErrataItem], b[sortKey as keyof ProcessedErrataItem])
+    );
+    if (sortDir < 0) {
+        sortedData.reverse();
+    }
+
+    return (
+        <table className="body-block summary-table">
+            <thead>
+                <DesktopHeaderRow sortController={sortController} />
+            </thead>
+            <tbody>
+                {sortedData.map((entry: ProcessedErrataItem) => <DesktopDataRow key={entry.id} entry={entry} />)}
+            </tbody>
+        </table>
+    );
+}
+
+function MobileRow({entry, label, columnId}: MobileRowProps): React.ReactElement {
+    return (
+        <tr>
+            <th>{label}</th>
+            <td>
+                <div>
+                    {
+                        columnId === 'id' ?
+                            <a href={entry[columnId as keyof ProcessedErrataItem] as string}>
+                                {entry[columnId as keyof ProcessedErrataItem] || ''}
+                            </a> :
+                            (entry[columnId as keyof ProcessedErrataItem] || '')
+                    }
+                </div>
+            </td>
+        </tr>
+    );
+}
+
+function MobileTable({entry}: MobileTableProps): React.ReactElement {
+    return (
+        <table className="body-block summary-table-mobile">
+            <tbody>
+                {
+                    columnSpecs.map((colSpec: ColumnSpec) =>
+                        <MobileRow
+                            key={colSpec.label}
+                            entry={entry}
+                            label={colSpec.label}
+                            columnId={colSpec.id}
+                        />
+                    )
+                }
+            </tbody>
+        </table>
+    );
+}
+
+function MobileTables({data}: MobileTablesProps): React.ReactElement {
+    return (
+        <>
+            {data.map((entry: ProcessedErrataItem) => <MobileTable entry={entry} key={entry.id} />)}
+        </>
+    );
+}
+
+function matchesFilter(filter: string, item: ProcessedErrataItem): boolean {
+    const status = item.displayStatus;
+
+    switch (filter) {
+    case '':
+        return true;
+    case 'in-review':
+        return status === 'In Review';
+    case 'reviewed':
+        return (/Reviewed|Will Correct|No Correction/).test(status);
+    default:
+        return (/^Corrected/).test(status);
+    }
+}
+
+export default function Table({data, filter}: TableProps): React.ReactElement {
+    const details: ProcessedErrataItem[] = React.useMemo(
+        () => data.map(
+            (item: RawErrataItem): ProcessedErrataItem => {
+                const displayStatus = getDisplayStatus(item);
+
+                return {
+                    date: new Date(item.created).toLocaleDateString(),
+                    source: item.resource === 'Other' ? item.resourceOther || '' : item.resource,
+                    displayStatus: displayStatus.status,
+                    barStatus: displayStatus.barStatus,
+                    errorType: item.errorType === 'Other' ? item.errorTypeOther || '' : item.errorType,
+                    id: item.id,
+                    location: [item.location, item.additionalLocationInformation]
+                        .filter((loc) => loc).join('; '),
+                    detail: item.detail,
+                    modified: item.modified
+                };
+            }
+        ).sort((a: ProcessedErrataItem, b: ProcessedErrataItem) => Number(b.id) - Number(a.id)),
+        [data]
+    );
+    const filteredDetails: ProcessedErrataItem[] = React.useMemo(
+        () => details.filter((item: ProcessedErrataItem) => matchesFilter(filter, item)),
+        [details, filter]
+    );
+
+    return (
+        <div className="boxed">
+            <MobileTables data={filteredDetails} />
+            <DesktopTable data={filteredDetails} />
+        </div>
+    );
+}
