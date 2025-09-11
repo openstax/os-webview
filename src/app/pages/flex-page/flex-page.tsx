@@ -6,7 +6,7 @@ import './flex-page.scss';
 
 export type FlexPageData = {
     meta?: {type: string};
-    layout: [{type: LayoutName}];
+    layout: [{type: LayoutName}?];
     body: ContentBlockConfig[];
 };
 
@@ -26,7 +26,7 @@ export function LayoutUsingData({data, children}: {data: FlexPageData, children:
     if (layoutParameters.name !== layoutName) {
         setLayoutParameters({
             data,
-            name: layoutName
+            name: layoutName ?? null
         });
         return null;
     }
