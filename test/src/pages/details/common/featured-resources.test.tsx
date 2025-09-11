@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import FeaturedResourcesSection from '~/pages/details/common/featured-resources/featured-resources';
 import ShellContextProvider from '../../../../helpers/shell-context';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import userEvent from '@testing-library/user-event';
 import {ResourceModel} from '~/pages/details/common/resource-box/resource-boxes';
 

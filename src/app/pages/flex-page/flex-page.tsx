@@ -6,22 +6,32 @@ import './flex-page.scss';
 
 export type FlexPageData = {
     meta?: {type: string};
-    layout: [{type: LayoutName}];
+    layout: [{type: LayoutName}?];
     body: ContentBlockConfig[];
 };
 
-export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) => (
+export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) =>
     typeof data?.meta?.type === 'string' &&
-    ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type)
-);
+    ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type);
 
 function FlexPageBody({data}: {data: FlexPageData}) {
     return <ContentBlocks data={data.body} />;
 }
 
-export function LayoutUsingData({data, children}: {data: FlexPageData, children: React.ReactNode}) {
+function warnAndUseDefault() {
+    console.warn('No layout set for page');
+    return 'default' as LayoutName;
+}
+
+export function LayoutUsingData({
+    data,
+    children
+}: {
+    data: FlexPageData;
+    children: React.ReactNode;
+}) {
     const {layoutParameters, setLayoutParameters} = useLayoutContext();
-    const layoutName = data.layout[0]?.type;
+    const layoutName = data.layout[0]?.type || warnAndUseDefault();
 
     if (layoutParameters.name !== layoutName) {
         setLayoutParameters({
