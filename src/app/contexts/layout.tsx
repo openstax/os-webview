@@ -39,20 +39,20 @@ function useContextValue() {
         ({children}: React.PropsWithChildren<object>) => {
             const layoutParameterName = layoutParameters.name;
 
-            if (layoutParameterName === null) {
-                return <div>{children}</div>;
-            }
-            const LoadableLayout = loadable({
-                loader: () => loaders[layoutParameterName](),
-                loading: LoadingPlaceholder
-            });
+            if (layoutParameterName !== null) {
+                const LoadableLayout = loadable({
+                    loader: () => loaders[layoutParameterName](),
+                    loading: LoadingPlaceholder
+                });
 
-            // Avoids initial flash default -> landing
-            return (
-                <LoadableLayout data={layoutParameters.data}>
-                    {children}
-                </LoadableLayout>
-            );
+                // Avoids initial flash default -> landing
+                return (
+                    <LoadableLayout data={layoutParameters.data}>
+                        {children}
+                    </LoadableLayout>
+                );
+            }
+            return <div>{children}</div>;
         },
         [layoutParameters.data, layoutParameters.name]
     );
