@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
-import {getDisplayStatus, Errata} from '~/helpers/errata';
+import {getDisplayStatus, Errata, DisplayStatusValue} from '~/helpers/errata';
 import './table.scss';
 
 type ProcessedErrataItem = {
@@ -114,36 +114,29 @@ const statusSortOrder: {[key: string]: number} = {
 const sortFunctions = {
     sortDate: (a: string, b: string): number => new Date(a).getTime() - new Date(b).getTime(),
     sort: (a: string | null, b: string | null): number => {
-        const as = a === null ? '' : a;
-        const bs = b === null ? '' : b;
+        const as = a ?? '';
+        const bs = b ?? '';
 
         return as.localeCompare(bs, 'en', {sensitivity: 'base'});
     },
     sortNumber: (a: number | string, b: number | string): number => Number(a) - Number(b),
-    sortDecision: (a: ProcessedErrataItem, b: ProcessedErrataItem): number => {
-        const ar = statusSortOrder[a.displayStatus.substr(0, 2)] || 6;
-        const br = statusSortOrder[b.displayStatus.substr(0, 2)] || 6;
+    sortDecision: (a: DisplayStatusValue, b: DisplayStatusValue): number => {
+        const ar = statusSortOrder[a.substring(0, 2)];
+        const br = statusSortOrder[b.substring(0, 2)];
 
-        if (ar !== br) {
-            return br - ar;
-        }
-        const ad = new Date(a.modified).valueOf();
-        const bd = new Date(b.modified).valueOf();
-
-        return bd - ad;
+        return br - ar;
     }
 };
 
 function DesktopHeaderColumn({colSpec, sortController}: DesktopHeaderColumnProps): React.ReactElement {
     const {sortKey, sortDir, setSortFn, setSortDir, setSortKey} = sortController;
     const sortable = 'sortFn' in colSpec;
-    const onClick = (): void => {
+    const onClick = () => {
         if (sortKey === colSpec.id) {
             setSortDir(-sortDir);
         } else {
-            if (sortable) {
-                setSortFn(colSpec.sortFn);
-            }
+            // @ts-expect-error onClick is only used when sortable
+            setSortFn(colSpec.sortFn);
             setSortKey(colSpec.id);
             setSortDir(1);
         }
@@ -189,14 +182,14 @@ function DesktopDataColumn({colSpec, entry}: DesktopDataColumnProps): React.Reac
             <div className={colSpec.cssClass}>
                 {
                     colSpec.id === 'id' ?
-                        <a href={entry[colSpec.id as keyof ProcessedErrataItem] as string}>
-                            {entry[colSpec.id as keyof ProcessedErrataItem] || ''}
+                        <a href={entry[colSpec.id]}>
+                            {entry[colSpec.id]}
                         </a> :
                         <React.Fragment>
-                            {entry[colSpec.id as keyof ProcessedErrataItem]}{' '}
+                            {entry[colSpec.id]}{' '}
                             {
                                 colSpec.id === 'displayStatus' &&
-                                entry[colSpec.id as keyof ProcessedErrataItem] === 'No Correction' &&
+                                entry[colSpec.id] === 'No Correction' &&
                                     <a href={`/errata/${entry.id}`}>Details</a>
                             }
                         </React.Fragment>
@@ -228,10 +221,10 @@ function DesktopTable({data}: DesktopTableProps): React.ReactElement {
     const sortController = useSortController();
     const {sortFn, sortKey, sortDir} = sortController;
 
-    const sortedData = [...data] as Array<string & ProcessedErrataItem>;
+    const sortedData = [...data];
 
     sortedData.sort((a, b) =>
-        // @ts-expect-error sortKey and sortFn are guaranteed compatible
+        // @ts-expect-error sortKey is guaranteed compatible with sortFn
         sortFunctions[sortFn](a[sortKey], b[sortKey])
     );
     if (sortDir < 0) {
@@ -258,8 +251,8 @@ function MobileRow({entry, label, columnId}: MobileRowProps): React.ReactElement
                 <div>
                     {
                         columnId === 'id' ?
-                            <a href={entry[columnId as keyof ProcessedErrataItem] as string}>
-                                {entry[columnId as keyof ProcessedErrataItem] || ''}
+                            <a href={entry[columnId]}>
+                                {entry[columnId]}
                             </a> :
                             (entry[columnId as keyof ProcessedErrataItem] || '')
                     }
@@ -297,7 +290,7 @@ function MobileTables({data}: MobileTablesProps): React.ReactElement {
 }
 
 function matchesFilter(filter: string, item: ProcessedErrataItem): boolean {
-    const status = item.displayStatus;
+    const status = item.displayStatus as string;
 
     switch (filter) {
     case '':

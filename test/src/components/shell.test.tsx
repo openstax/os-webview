@@ -178,7 +178,7 @@ describe('shell', () => {
         ));
 
         render(AppElement);
-        await screen.findByRole('radio', {name: 'In Review'});
+        await screen.findByText('No book or errata ID selected');
     });
     it('routes "details" paths (top level routes to Subjects)', async () => {
         BrowserRouter.mockImplementationOnce(({children}) => (

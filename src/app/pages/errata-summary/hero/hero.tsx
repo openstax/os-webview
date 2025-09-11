@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import {assertNotNull} from '~/helpers/data';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons/faInfoCircle';
@@ -49,37 +50,38 @@ function useBookInfo(book: string): [string, string] {
     return info;
 }
 
-const middle: string = '-135';
-const margin: number = 3;
+const middle = -135;
+const margin = 3;
 
 function shiftIntoView(
     ref: React.RefObject<HTMLDivElement>,
-    leftOffset: number | string,
-    setLeftOffset: (value: number | string) => void
+    leftOffset: number,
+    setLeftOffset: (value: number) => void
 ) {
-    if (!ref.current) {return;}
+    const poptipEl = assertNotNull(ref.current);
 
-    const {left, right} = ref.current.getBoundingClientRect();
-    const pageElement = ref.current.closest('.page');
-
-    if (!pageElement) {return;}
+    const {left, right} = poptipEl.getBoundingClientRect();
+    const pageElement = assertNotNull(poptipEl.closest('.page'));
 
     const {right: pageRight} = pageElement.getBoundingClientRect();
     const overRight = right - pageRight + margin;
     const overLeft = margin - left;
-    const leftOffsetNum = typeof leftOffset === 'string' ? parseInt(leftOffset, 10) : leftOffset;
-    const rightWants = Math.min(parseInt(middle, 10), leftOffsetNum - overRight);
-    const leftWants = Math.max(rightWants, leftOffsetNum + overLeft);
+    const rightWants = Math.min(middle, leftOffset - overRight);
+    const leftWants = Math.max(rightWants, leftOffset + overLeft);
 
     setLeftOffset(leftWants);
 }
 
 function usePopTipStyle(isOpen: boolean) {
     const ref = React.useRef<HTMLDivElement>(null);
-    const [leftOffset, setLeftOffset] = React.useState<number | string>(middle);
+    const [leftOffset, setLeftOffset] = React.useState<number>(middle);
 
     useEffect(
-        () => shiftIntoView(ref, leftOffset, setLeftOffset),
+        () => {
+            if (isOpen) {
+                shiftIntoView(ref, leftOffset, setLeftOffset);
+            }
+        },
         [isOpen, leftOffset]
     );
 
@@ -103,12 +105,10 @@ function PopTip({html, isOpen}: PopTipProps) {
 
 function usePopTipState() {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
+    const activate = React.useCallback(() => setIsOpen(true), []);
+    const deactivate = React.useCallback(() => setIsOpen(false), []);
 
-    return {
-        isOpen,
-        activate(): void {setIsOpen(true);},
-        deactivate(): void {setIsOpen(false);}
-    };
+    return {isOpen, activate, deactivate};
 }
 
 function HeroContent({data}: HeroContentProps) {
@@ -137,15 +137,15 @@ function HeroContent({data}: HeroContentProps) {
 export default function Hero({book}: HeroProps) {
     const [slug, title] = useBookInfo(book);
 
-    if (!slug) {
-        return null;
-    }
     return (
         <div className="hero">
-            <div className="text-area">
-                <h1>{title} Errata</h1>
-                <LoaderPage slug="pages/errata" Child={HeroContent} />
-            </div>
+            {slug ?
+                <div className="text-area">
+                    <h1>{title} Errata</h1>
+                    <LoaderPage slug="pages/errata" Child={HeroContent} />
+                </div> :
+                null
+            }
         </div>
     );
 }

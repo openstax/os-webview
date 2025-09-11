@@ -50,9 +50,11 @@ export function approvedStatuses(created: string, corrected: string | null) {
     };
 }
 
+export type DisplayStatusValue = 'Reviewed' | 'In Review' | 'Duplicate' | 'No Correction' | 'Will Correct';
+
 export function getDisplayStatus(data?: Errata) {
     const result = {
-        status: 'Reviewed',
+        status: 'Reviewed' as DisplayStatusValue,
         barStatus: ''
     };
 
