@@ -213,6 +213,14 @@ describe('shell', () => {
 
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
     });
+    it('routes books routes to portal/books', async () => {
+        setPortalPrefix('portal');
+        BrowserRouter.mockImplementationOnce(({children}) => (
+            <MR initialEntries={['/books/slug']} >{children}</MR>
+        ));
+        render(AppElement);
+        // Nothing can really be checked; code coverage in rex-portal
+    });
     it('renders nothing when data is null', async () => {
         setPortalPrefix('/landing-page');
 

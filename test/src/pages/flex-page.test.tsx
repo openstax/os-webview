@@ -4,10 +4,11 @@ import {render, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
-import FlexPage from '~/pages/flex-page/flex-page';
+import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
 import {CTALinkFields} from '~/pages/flex-page/blocks/CTABlock';
 import {ContentBlockConfig} from '~/pages/flex-page/blocks/ContentBlock';
 import {HeroBlockConfig} from '~/pages/flex-page/blocks/HeroBlock';
+import { LayoutContextProvider } from '~/contexts/layout';
 
 const emptyTarget = {
     type: '',
@@ -65,6 +66,25 @@ describe('flex-page', () => {
         body = [heroBlock()];
         render(<Component />);
         expect(screen.getAllByRole('img')).toHaveLength(1);
+    });
+    it('warns and renders with default when layout is not provided', () => {
+        const saveWarn = console.warn;
+
+        console.warn = jest.fn();
+        body = [heroBlock()];
+        render(
+            <ShellContextProvider>
+                <MemoryRouter initialEntries={['']}>
+                    <LayoutContextProvider>
+                        <LayoutUsingData data={{body, layout: []}} >
+                            content
+                        </LayoutUsingData>
+                    </LayoutContextProvider>
+                </MemoryRouter>
+            </ShellContextProvider>
+        );
+        expect(console.warn).toHaveBeenCalledWith('No layout set for page');
+        console.warn = saveWarn;
     });
     it('renders heroBlock with top image alignment', () => {
         const modBlock = heroBlock();
