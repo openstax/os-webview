@@ -19,7 +19,7 @@ const radioItems = [
 ];
 
 function ErrataSummary({data, book}: ErrataSummaryProps) {
-    const initialValue: string = window.location.hash.replace('#', '');
+    const initialValue = window.location.hash.replace('#', '');
     const [selectedFilter, setselectedFilter] = useState<string>(initialValue);
     const onChange = React.useCallback(
         (newlySelectedValue: string) => {
@@ -54,14 +54,18 @@ function ErrataSummary({data, book}: ErrataSummaryProps) {
 }
 
 export default function ErrataSummaryLoader() {
-    const book: string | null = new window.URLSearchParams(window.location.search).get('book');
-    const slug: string = `errata/?book_title=${book}` +
+    const book = new window.URLSearchParams(window.location.search).get('book');
+
+    if (!book) {
+        return <div>No book or errata ID selected</div>;
+    }
+    const slug = `errata/?book_title=${book}` +
         '&is_assessment_errata__not=Yes&archived=False&status__not=New' +
         '&status__not=OpenStax%20Editorial%20Review';
 
     return (
         <main className="errata-summary page">
-            <LoaderPage slug={slug} Child={ErrataSummary} props={{book: book || ''}} />
+            <LoaderPage slug={slug} Child={ErrataSummary} props={{book}} />
         </main>
     );
 }
