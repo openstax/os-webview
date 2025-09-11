@@ -10,6 +10,7 @@ import {assertDefined} from '~/helpers/data';
 import {GeneralPageFromSlug} from '~/pages/general/general';
 import {ImportedPage} from './page-loaders';
 import {RouteAsPortalOrNot} from './portal-page-routes';
+import Error404 from '~/pages/404/404';
 
 type PageData = FlexPageData & {
     meta: {slug: string};
@@ -53,13 +54,14 @@ export function DetailsRoutes() {
     );
 }
 
+// eslint-disable-next-line complexity
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
     const {'*': path} = useParams();
     const {layoutParameters, setLayoutParameters} = useLayoutContext();
 
     if (['books', 'textbooks'].includes(dir)) {
-        return (
+        return path === '' ? <Error404 /> : (
             <Routes>
                 <Route
                     path="/:title"
