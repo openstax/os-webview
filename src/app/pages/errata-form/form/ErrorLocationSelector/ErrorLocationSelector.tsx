@@ -4,11 +4,22 @@ import managedInvalidMessage from '../InvalidMessage';
 import TocSelector from './toc-selector';
 import './ErrorLocationSelector.scss';
 
-function AdditionalLocationInput({value='', readOnly=false, updateValue, required=true}) {
-    const inputRef = useRef();
+type AdditionalLocationInputProps = {
+    value?: string;
+    readOnly?: boolean;
+    updateValue?: (value: string) => void;
+    required?: boolean;
+};
+
+type InputComponentProps = {
+    defaultValue: string | null;
+};
+
+function AdditionalLocationInput({value='', readOnly=false, updateValue, required=true}: AdditionalLocationInputProps) {
+    const inputRef = useRef<HTMLInputElement>(null);
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
     const syncValue = React.useCallback(
-        (event) => updateValue(event.target.value),
+        (event: React.ChangeEvent<HTMLInputElement>) => updateValue?.(event.target.value),
         [updateValue]
     );
 
@@ -29,15 +40,15 @@ function AdditionalLocationInput({value='', readOnly=false, updateValue, require
     );
 }
 
-function DefaultValue({defaultValue}) {
+function DefaultValue({defaultValue}: InputComponentProps) {
     return (
-        <AdditionalLocationInput value={defaultValue} readOnly={true} />
+        <AdditionalLocationInput value={defaultValue as string} readOnly={true} />
     );
 }
 
-function NotDefaultValue({defaultValue}) {
-    const [tocV, updateTocV] = useState();
-    const [addlV, updateAddlV] = useState(defaultValue);
+function NotDefaultValue({defaultValue}: InputComponentProps) {
+    const [tocV, updateTocV] = useState<string | null>();
+    const [addlV, updateAddlV] = useState(defaultValue || '');
     const required = () => !tocV && !addlV;
 
     return (

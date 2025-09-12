@@ -7,13 +7,19 @@ import React, {useState, useEffect} from 'react';
  * It is important that the ref item exist when the message item is created
  */
 
-function InvalidMessage({message}) {
+type InvalidMessageProps = {
+    message: string;
+};
+
+function InvalidMessage({message}: InvalidMessageProps) {
     return (
         <span className="invalid-message">{message}</span>
     );
 }
 
-export default function (inputRef) {
+export default function (
+    inputRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+): [() => React.JSX.Element, () => void] {
     const [message, updateMessage] = useState('');
     const updateFromRef = () => {
         if (inputRef.current) {

@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import managedInvalidMessage from './InvalidMessage';
 
 function OtherErrorInput() {
-    const inputRef = useRef();
+    const inputRef = useRef<HTMLInputElement>(null);
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
 
     return (
@@ -11,7 +11,7 @@ function OtherErrorInput() {
             <input
                 type="text"
                 name="error_type_other"
-                maxLength="250"
+                maxLength={250}
                 ref={inputRef}
                 onChange={updateInvalidMessage}
                 required
@@ -29,12 +29,12 @@ export default function ErrorTypeSelector() {
         'Typo',
         'Other'
     ];
-    const inputRef = useRef();
+    const inputRef = useRef<HTMLInputElement>(null);
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
-    const [selectedError, updateSelectedError] = useState();
+    const [selectedError, updateSelectedError] = useState<string>();
     const helpBoxVisible = selectedError === 'Other' ? 'visible' : 'not-visible';
     const onChange = React.useCallback(
-        (event) => {
+        (event: React.ChangeEvent<HTMLInputElement>) => {
             updateSelectedError(event.target.value);
             updateInvalidMessage();
         },

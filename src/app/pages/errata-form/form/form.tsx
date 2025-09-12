@@ -12,10 +12,15 @@ import {useNavigate} from 'react-router-dom';
 import cn from 'classnames';
 import './form.scss';
 
+type ApiResponse = {
+    id?: string;
+    submitted_by_account_id?: string[];
+};
+
 const postEndpoint = `${$.apiOriginAndOldPrefix}/errata/`;
 
 function ErrorExplanationBox() {
-    const inputRef = useRef();
+    const inputRef = useRef<HTMLTextAreaElement>(null);
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
 
     return (
@@ -28,7 +33,7 @@ function ErrorExplanationBox() {
             </div>
             <InvalidMessage />
             <textarea
-                maxLength="4000" name="detail"
+                maxLength={4000} name="detail"
                 ref={inputRef} onChange={updateInvalidMessage}
                 required></textarea>
         </React.Fragment>
@@ -49,7 +54,7 @@ function SubmitButton() {
     );
 }
 
-const semesters = [
+const semesters: [string, string, string][] = [
     ['March', 'October', 'spring'],
     ['November', 'February', 'fall']
 ];
@@ -74,11 +79,12 @@ function RevisionSchedule() {
 function FormFields() {
     const {selectedBook} = useErrataFormContext();
     const {accountId: submittedBy} = useUserContext();
+    const id = selectedBook ? selectedBook.id : '';
 
     return (
         <React.Fragment>
             <input type="hidden" name="submitted_by_account_id" value={submittedBy} />
-            <input type="hidden" name="book" value={selectedBook.id} />
+            <input type="hidden" name="book" value={id} />
             <ErrorTypeSelector />
             <ErrorSourceSelector />
             <ErrorLocationSelector />
@@ -95,13 +101,13 @@ function FormFields() {
 
 // Safari cannot handle empty files; Edge cannot manipulate FormData
 // so we remove the file inputs that have no values
-function removeEmptyFileWidgets(formEl) {
-    const fileInputs = Array.from(formEl.querySelectorAll('[type="file"]'));
+function removeEmptyFileWidgets(formEl: HTMLFormElement) {
+    const fileInputs = Array.from(formEl.querySelectorAll<HTMLInputElement>('[type="file"]'));
     const fiParents = fileInputs.map((el) => el.parentNode);
 
     fileInputs.forEach((el) => {
         if (el.value === '') {
-            el.parentNode.removeChild(el);
+            el.parentNode?.removeChild(el);
         }
     });
     fileInputs.forEach((el, index) => {
@@ -111,16 +117,18 @@ function removeEmptyFileWidgets(formEl) {
     // Return a function to put them back
     return () => {
         fileInputs.forEach((el, i) => {
-            fiParents[i].appendChild(el);
+            if (fiParents[i]) {
+                fiParents[i]!.appendChild(el);
+            }
         });
     };
 }
 
 function useBannedDialog() {
-    const [bannedText, setBannedText] = useState();
+    const [bannedText, setBannedText] = useState<string>();
     const navigate = useNavigate();
     const handleSubmissionResponse = React.useCallback(
-        (json) => {
+        (json: ApiResponse) => {
             if (json.id) {
                 navigate(`/confirmation/errata?id=${json.id}`);
             } else if (json.submitted_by_account_id) {
@@ -141,7 +149,7 @@ function useBannedDialog() {
     function BannedDialog() {
         return (
             <Dialog
-                isOpen={bannedText} onPutAway={() => setBannedText(null)}
+                isOpen={Boolean(bannedText)} onPutAway={() => setBannedText(undefined)}
                 title="Errata submission rejected"
             >
                 <div className="banned-notice">{bannedText}</div>
@@ -149,22 +157,22 @@ function useBannedDialog() {
         );
     }
 
-    return [BannedDialog, handleSubmissionResponse];
+    return [BannedDialog, handleSubmissionResponse] as const;
 }
 
 export default function ErrataForm() {
     const {hideErrors, submitting, setHasError} = useErrataFormContext();
     const [BannedDialog, handleSubmissionResponse] = useBannedDialog();
-    const formRef = useRef();
+    const formRef = useRef<HTMLFormElement>(null);
 
     function validate() {
-        const invalid = formRef.current.querySelector(':invalid');
+        const invalid = formRef.current?.querySelector<HTMLElement>(':invalid');
 
         setHasError(invalid ? 'You have not completed the form.' : null);
     }
 
     React.useEffect(() => {
-        if (submitting) {
+        if (submitting && formRef.current) {
             const formEl = formRef.current;
             const putFileWidgetsBack = removeEmptyFileWidgets(formEl);
             const formData = new window.FormData(formEl);
@@ -181,7 +189,7 @@ export default function ErrataForm() {
                 .catch((err) => {throw new Error(`Posting errata form data: ${err}`);})
                 .then(
                     handleSubmissionResponse,
-                    (fetchError) => {
+                    (fetchError: Error) => {
                         setHasError(`Submit failed: ${fetchError}.`);
                         putFileWidgetsBack();
                     }

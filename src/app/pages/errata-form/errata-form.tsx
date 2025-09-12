@@ -4,7 +4,12 @@ import FormSelect from '~/components/form-select/form-select';
 import useErrataFormContext, {ErrataFormContextProvider} from './errata-form-context';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
+import {assertDefined} from '~/helpers/data';
 import './errata-form.scss';
+
+type Book = {
+    title: string;
+};
 
 function ErrataForm() {
     const {title} = useErrataFormContext();
@@ -26,7 +31,7 @@ function ErrataForm() {
 function TitleSelector() {
     const {books, setTitle} = useErrataFormContext();
     const options = React.useMemo(
-        () => books?.map((book) => ({label: book.title, value: book.title})),
+        () => books?.map((book: Book) => ({label: book.title, value: book.title})),
         [books]
     );
 
@@ -37,11 +42,12 @@ function TitleSelector() {
                 book you were looking at.
             </p>
             <FormSelect
+                name="title-selector"
                 selectAttributes={{
                     placeholder: 'Please select one'
                 }}
                 onValueUpdate={setTitle}
-                label="What book were you in, again?" options={options} />
+                label="What book were you in, again?" options={assertDefined(options)} />
         </div>
     );
 }

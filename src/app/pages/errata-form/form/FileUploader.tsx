@@ -3,11 +3,15 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import cn from 'classnames';
 
-export function FileButton({name}) {
+type FileButtonProps = {
+    name: string;
+};
+
+export function FileButton({name}: FileButtonProps) {
     const [filePath, updateFilePath] = useState('');
     const empty = filePath === '';
 
-    function setFile(event) {
+    function setFile(event: React.ChangeEvent<HTMLInputElement>) {
         updateFilePath(event.target.value.replace(/.*\\/, ''));
     }
 
@@ -26,7 +30,7 @@ export function FileButton({name}) {
 
     return (
         <div className={cn('file-button', {empty})}>
-            <label className="btn" role="button" tabIndex="0">
+            <label className="btn" role="button" tabIndex={0}>
                 {filePath ? 'Change' : 'Add file'}
                 <input type="file" className="hidden" name={name} onChange={setFile} />
             </label>
