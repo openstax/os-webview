@@ -18,8 +18,7 @@ window.SETTINGS = {};
     }
 
     await Promise.all([
-        import('../vendor/pardot'),
-        import('../vendor/facebook')
+        import('../vendor/pardot')
     ]);
 
     const isSupported = (await import('./helpers/device')).default;
