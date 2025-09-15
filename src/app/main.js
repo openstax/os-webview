@@ -17,10 +17,6 @@ window.SETTINGS = {};
         }
     }
 
-    await Promise.all([
-        import('../vendor/pardot')
-    ]);
-
     const isSupported = (await import('./helpers/device')).default;
     const appElement = (await import('/src/app/components/shell/shell')).default;
 
