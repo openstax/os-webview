@@ -3,7 +3,13 @@ import Hero from './hero/hero';
 import {RadioPanel} from '~/components/radio-panel/radio-panel';
 import Table from './table/table';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
+import type {Errata} from '~/helpers/errata';
 import './errata-summary.scss';
+
+type ErrataSummaryProps = {
+    data: Errata[];
+    book: string;
+};
 
 const radioItems = [
     {value: '', html: 'View All'},
@@ -12,11 +18,11 @@ const radioItems = [
     {value: 'corrected', html: 'Corrected'}
 ];
 
-function ErrataSummary({data, book}) {
+function ErrataSummary({data, book}: ErrataSummaryProps) {
     const initialValue = window.location.hash.replace('#', '');
-    const [selectedFilter, setselectedFilter] = useState(initialValue);
+    const [selectedFilter, setselectedFilter] = useState<string>(initialValue);
     const onChange = React.useCallback(
-        (newlySelectedValue) => {
+        (newlySelectedValue: string) => {
             setselectedFilter(newlySelectedValue);
             history.replaceState('', '',
                 newlySelectedValue ? `#${newlySelectedValue}` :
@@ -49,6 +55,10 @@ function ErrataSummary({data, book}) {
 
 export default function ErrataSummaryLoader() {
     const book = new window.URLSearchParams(window.location.search).get('book');
+
+    if (!book) {
+        return <div>No book or errata ID selected</div>;
+    }
     const slug = `errata/?book_title=${book}` +
         '&is_assessment_errata__not=Yes&archived=False&status__not=New' +
         '&status__not=OpenStax%20Editorial%20Review';

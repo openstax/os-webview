@@ -3,7 +3,8 @@ import {render, screen} from '@testing-library/preact';
 import {
     approvedStatuses,
     getDisplayStatus,
-    useErrataDetail
+    useErrataDetail,
+    Errata
 } from '~/helpers/errata';
 
 describe('errata helpers', () => {
@@ -38,7 +39,7 @@ describe('errata helpers', () => {
     describe('useErrataDetail', () => {
         function Component() {
             const detail = useErrataDetail({
-                id: 1,
+                id: '1',
                 resource: 'Other',
                 reviewedDate: '2025-02-06',
                 correctedDate: null,
@@ -50,7 +51,7 @@ describe('errata helpers', () => {
                 created: '2000-01-01',
                 detail: '',
                 errorType: ''
-            });
+            } as unknown as Errata);
 
             return (
                 <div>
