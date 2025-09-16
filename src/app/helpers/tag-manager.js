@@ -3,6 +3,24 @@ const tagManagerID = 'GTM-W6N7PB';
 
 window.dataLayer ||= [];
 
+function gtag(...args) {
+  window.dataLayer.push(...args);
+}
+/* eslint-disable camelcase */
+gtag('consent', 'default', {
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'denied',
+  functionality_storage: 'denied',
+  personalization_storage: 'denied',
+  security_storage: 'granted',
+  wait_for_update: 2000
+});
+gtag('set', 'ads_data_redaction', true);
+gtag('set', 'url_passthrough', false);
+/* eslint-enable camelcase */
+
 window.oxDLF ||= [];
 
 // eslint-disable-next-line max-params

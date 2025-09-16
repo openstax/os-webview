@@ -39,7 +39,7 @@ module.exports = {
             'files': ['src/**/*.js', 'src/**/*.jsx']
         }
     ],
-    'ignorePatterns': ['src/vendor/**/*.js', 'src/settings.js'],
+    'ignorePatterns': ['src/settings.js'],
     'settings': {
         'react': {
             'version': 'detect'
