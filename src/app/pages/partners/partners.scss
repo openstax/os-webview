@@ -73,10 +73,10 @@
             .text-block {
                 text-align: left;
 
-                @include wider-than($phone-max) {
-                    max-width: 57rem;
-                    width: 50%;    
-                }
+                // @include wider-than($phone-max) {
+                //     max-width: 57rem;
+                //     width: 50%;    
+                // }
             }
         }
 
