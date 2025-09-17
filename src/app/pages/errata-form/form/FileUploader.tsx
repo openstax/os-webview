@@ -32,17 +32,26 @@ export function FileButton({name}: FileButtonProps) {
         <div className={cn('file-button', {empty})}>
             <label className="btn" role="button" tabIndex={0}>
                 {filePath ? 'Change' : 'Add file'}
-                <input type="file" className="hidden" name={name} onChange={setFile} />
+                <input
+                    type="file"
+                    className="hidden"
+                    name={name}
+                    onChange={setFile}
+                />
             </label>
-            {
-                filePath &&
-                    <React.Fragment>
-                        <span className="file-name">{filePath}</span>
-                        <button type="button" className="clear-file" aria-label="Clear file" onClick={clearFile}>
-                            <FontAwesomeIcon icon={faTimes} />
-                        </button>
-                    </React.Fragment>
-            }
+            {filePath && (
+                <React.Fragment>
+                    <span className="file-name">{filePath}</span>
+                    <button
+                        type="button"
+                        className="clear-file"
+                        aria-label="Clear file"
+                        onClick={clearFile}
+                    >
+                        <FontAwesomeIcon icon={faTimes} />
+                    </button>
+                </React.Fragment>
+            )}
         </div>
     );
 }

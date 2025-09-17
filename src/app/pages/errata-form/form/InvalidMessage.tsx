@@ -12,13 +12,13 @@ type InvalidMessageProps = {
 };
 
 function InvalidMessage({message}: InvalidMessageProps) {
-    return (
-        <span className="invalid-message">{message}</span>
-    );
+    return <span className="invalid-message">{message}</span>;
 }
 
 export default function (
-    inputRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    inputRef: React.RefObject<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
 ): [() => React.JSX.Element, () => void] {
     const [message, updateMessage] = useState('');
     const updateFromRef = () => {
@@ -29,8 +29,5 @@ export default function (
 
     useEffect(updateFromRef, [inputRef]);
 
-    return [
-        () => <InvalidMessage message={message} />,
-        updateFromRef
-    ];
+    return [() => <InvalidMessage message={message} />, updateFromRef];
 }

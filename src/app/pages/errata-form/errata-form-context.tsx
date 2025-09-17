@@ -26,15 +26,22 @@ function useSearchParams() {
 
 function useContextValue(): ContextValue {
     const searchParams = useSearchParams();
-    const initialTitle = React.useMemo(() => searchParams.get('book'), [searchParams]);
+    const initialTitle = React.useMemo(
+        () => searchParams.get('book'),
+        [searchParams]
+    );
     const [title, setTitle] = useState<string | null>(initialTitle);
     const books = useDataFromPromise(fetchBooks);
     const selectedBook = React.useMemo(
         () => books?.find((b) => b.title === title) || null,
         [books, title]
     );
-    const bookInfo = useDataFromSlug<Book>(selectedBook ? selectedBook.slug : null) || selectedBook;
-    const [hasError, setHasError] = useState<string | null>('You have not completed the form');
+    const bookInfo =
+        useDataFromSlug<Book>(selectedBook ? selectedBook.slug : null) ||
+        selectedBook;
+    const [hasError, setHasError] = useState<string | null>(
+        'You have not completed the form'
+    );
     const [hideErrors, setHideErrors] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const validateBeforeSubmitting = React.useCallback(
@@ -51,7 +58,8 @@ function useContextValue(): ContextValue {
     return {
         selectedBook: bookInfo,
         books,
-        hasError, setHasError,
+        hasError,
+        setHasError,
         hideErrors,
         submitting,
         validateBeforeSubmitting,
@@ -63,7 +71,4 @@ function useContextValue(): ContextValue {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as ErrataFormContextProvider
-};
+export {useContext as default, ContextProvider as ErrataFormContextProvider};

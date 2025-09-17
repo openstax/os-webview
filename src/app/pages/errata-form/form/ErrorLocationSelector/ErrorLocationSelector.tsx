@@ -15,11 +15,18 @@ type InputComponentProps = {
     defaultValue: string | null;
 };
 
-function AdditionalLocationInput({value, readOnly=false, updateValue, required=true}: AdditionalLocationInputProps) {
+function AdditionalLocationInput({
+    value,
+    readOnly = false,
+    updateValue,
+    required = true
+}: AdditionalLocationInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
+    const [InvalidMessage, updateInvalidMessage] =
+        managedInvalidMessage(inputRef);
     const syncValue = React.useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => updateValue?.(event.target.value),
+        (event: React.ChangeEvent<HTMLInputElement>) =>
+            updateValue?.(event.target.value),
         [updateValue]
     );
 
@@ -27,16 +34,22 @@ function AdditionalLocationInput({value, readOnly=false, updateValue, required=t
 
     return (
         <React.Fragment>
-            <label className="question" htmlFor="additional_location_information">
+            <label
+                className="question"
+                htmlFor="additional_location_information"
+            >
                 Additional location information, if applicable
             </label>
             <InvalidMessage />
             <input
                 id="additional_location_information"
-                type="text" name="additional_location_information"
+                type="text"
+                name="additional_location_information"
                 placeholder="Describe where you found the error"
-                value={value} onChange={syncValue}
-                ref={inputRef} readOnly={readOnly}
+                value={value}
+                onChange={syncValue}
+                ref={inputRef}
+                readOnly={readOnly}
                 required={required}
             />
         </React.Fragment>
@@ -45,7 +58,10 @@ function AdditionalLocationInput({value, readOnly=false, updateValue, required=t
 
 function DefaultValue({defaultValue}: InputComponentProps) {
     return (
-        <AdditionalLocationInput value={defaultValue as string} readOnly={true} />
+        <AdditionalLocationInput
+            value={defaultValue as string}
+            readOnly={true}
+        />
     );
 }
 
@@ -57,7 +73,11 @@ function NotDefaultValue({defaultValue}: InputComponentProps) {
     return (
         <React.Fragment>
             <TocSelector required={required()} updateValue={updateTocV} />
-            <AdditionalLocationInput value={addlV} required={required()} updateValue={updateAddlV} />
+            <AdditionalLocationInput
+                value={addlV}
+                required={required()}
+                updateValue={updateAddlV}
+            />
         </React.Fragment>
     );
 }
@@ -66,9 +86,7 @@ export default function ErrorLocationSelector() {
     const {searchParams} = useErrataFormContext();
     const defaultValue = searchParams.get('location');
     const readOnly = defaultValue && searchParams.get('source');
-    const Input = (readOnly) ? DefaultValue : NotDefaultValue;
+    const Input = readOnly ? DefaultValue : NotDefaultValue;
 
-    return (
-        <Input defaultValue={defaultValue} />
-    );
+    return <Input defaultValue={defaultValue} />;
 }

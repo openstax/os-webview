@@ -3,7 +3,8 @@ import managedInvalidMessage from './InvalidMessage';
 
 function OtherErrorInput() {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
+    const [InvalidMessage, updateInvalidMessage] =
+        managedInvalidMessage(inputRef);
 
     return (
         <div className="other-group">
@@ -31,9 +32,11 @@ export default function ErrorTypeSelector() {
         'Other'
     ];
     const inputRef = useRef<HTMLInputElement>(null);
-    const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
+    const [InvalidMessage, updateInvalidMessage] =
+        managedInvalidMessage(inputRef);
     const [selectedError, updateSelectedError] = useState<string>();
-    const helpBoxVisible = selectedError === 'Other' ? 'visible' : 'not-visible';
+    const helpBoxVisible =
+        selectedError === 'Other' ? 'visible' : 'not-visible';
     const onChange = React.useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             updateSelectedError(event.target.value);
@@ -47,27 +50,28 @@ export default function ErrorTypeSelector() {
             <div className="question">Select the type of error below.</div>
             <fieldset className="radio-columns">
                 <InvalidMessage />
-                {
-                    errorTypes.map((eType) =>
-                        <label key={eType}>
-                            <input
-                                type="radio" name="error_type" value={eType}
-                                ref={inputRef}
-                                onChange={onChange}
-                                required
-                            />
-                            <span className="label-text">{eType}</span>
-                            {
-                                (eType === 'Other' && selectedError === 'Other') && (
-                                    <OtherErrorInput />
-                                )
-                            }
-                        </label>
-                    )
-                }
+                {errorTypes.map((eType) => (
+                    <label key={eType}>
+                        <input
+                            type="radio"
+                            name="error_type"
+                            value={eType}
+                            ref={inputRef}
+                            onChange={onChange}
+                            required
+                        />
+                        <span className="label-text">{eType}</span>
+                        {eType === 'Other' && selectedError === 'Other' && (
+                            <OtherErrorInput />
+                        )}
+                    </label>
+                ))}
             </fieldset>
             <div className={`helpbox ${helpBoxVisible}`}>
-                <span>Need help logging in or have general questions? Contact Support at </span>
+                <span>
+                    Need help logging in or have general questions? Contact
+                    Support at{' '}
+                </span>
                 <a href="mailto:support@openstax.org">support@openstax.org</a>.
             </div>
         </React.Fragment>

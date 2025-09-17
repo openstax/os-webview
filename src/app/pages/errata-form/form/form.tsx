@@ -21,36 +21,45 @@ const postEndpoint = `${$.apiOriginAndOldPrefix}/errata/`;
 
 function ErrorExplanationBox() {
     const inputRef = useRef<HTMLTextAreaElement>(null);
-    const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
+    const [InvalidMessage, updateInvalidMessage] =
+        managedInvalidMessage(inputRef);
 
     return (
         <React.Fragment>
-            <label className="question" htmlFor='error-detail'>
+            <label className="question" htmlFor="error-detail">
                 Tell us in detail about the error and your suggestion.
             </label>
             <div className="subnote wide">
                 Please limit to one error per submission and include a suggested
                 resolution if possible. If you have several to report, please
-                contact us at <a href="mailto:errata@openstax.org">errata@openstax.org</a>.
+                contact us at{' '}
+                <a href="mailto:errata@openstax.org">errata@openstax.org</a>.
             </div>
             <InvalidMessage />
             <textarea
                 id="error-detail"
-                maxLength={4000} name="detail"
-                ref={inputRef} onChange={updateInvalidMessage}
-                required></textarea>
+                maxLength={4000}
+                name="detail"
+                ref={inputRef}
+                onChange={updateInvalidMessage}
+                required
+            ></textarea>
         </React.Fragment>
     );
 }
 
 function SubmitButton() {
-    const {hasError, submitting, validateBeforeSubmitting} = useErrataFormContext();
+    const {hasError, submitting, validateBeforeSubmitting} =
+        useErrataFormContext();
 
     return (
         <div className="submit-button">
             <input
-                type="submit" className="btn" value="Submit"
-                disabled={submitting} onClick={validateBeforeSubmitting}
+                type="submit"
+                className="btn"
+                value="Submit"
+                disabled={submitting}
+                onClick={validateBeforeSubmitting}
             />
             {hasError && <div className="invalid-message">{hasError}</div>}
         </div>
@@ -69,12 +78,12 @@ function RevisionSchedule() {
 
     return (
         <div className="revision-schedule">
-            Errata received from <b>{start}</b> through <b>{end}</b> will be fixed
-            in the online format for the <b>{semester}</b> semester.
+            Errata received from <b>{start}</b> through <b>{end}</b> will be
+            fixed in the online format for the <b>{semester}</b> semester.
             <br />
-            PDF versions of OpenStax textbooks are only updated once a year, prior
-            to the fall semester, if there are substantial errata updates to the
-            book that year.
+            PDF versions of OpenStax textbooks are only updated once a year,
+            prior to the fall semester, if there are substantial errata updates
+            to the book that year.
         </div>
     );
 }
@@ -86,13 +95,20 @@ function FormFields() {
 
     return (
         <React.Fragment>
-            <input type="hidden" name="submitted_by_account_id" value={submittedBy} />
+            <input
+                type="hidden"
+                name="submitted_by_account_id"
+                value={submittedBy}
+            />
             <input type="hidden" name="book" value={id} />
             <ErrorTypeSelector />
             <ErrorSourceSelector />
             <ErrorLocationSelector />
             <ErrorExplanationBox />
-            <div className="question">Please add a screenshot or any other file that helps explain the error.</div>
+            <div className="question">
+                Please add a screenshot or any other file that helps explain the
+                error.
+            </div>
             <div className="button-group">
                 <FileUploader />
                 <SubmitButton />
@@ -105,7 +121,9 @@ function FormFields() {
 // Safari cannot handle empty files; Edge cannot manipulate FormData
 // so we remove the file inputs that have no values
 function removeEmptyFileWidgets(formEl: HTMLFormElement) {
-    const fileInputs = Array.from(formEl.querySelectorAll<HTMLInputElement>('[type="file"]'));
+    const fileInputs = Array.from(
+        formEl.querySelectorAll<HTMLInputElement>('[type="file"]')
+    );
     const fiParents = fileInputs.map((el) => el.parentNode);
 
     fileInputs.forEach((el) => {
@@ -114,7 +132,7 @@ function removeEmptyFileWidgets(formEl: HTMLFormElement) {
         }
     });
     fileInputs.forEach((el, index) => {
-        el.setAttribute('name', `file_${index+1}`);
+        el.setAttribute('name', `file_${index + 1}`);
     });
 
     // Return a function to put them back
@@ -150,7 +168,8 @@ function useBannedDialog() {
     function BannedDialog() {
         return (
             <Dialog
-                isOpen={Boolean(bannedText)} onPutAway={() => setBannedText(undefined)}
+                isOpen={Boolean(bannedText)}
+                onPutAway={() => setBannedText(undefined)}
                 title="Errata submission rejected"
             >
                 <div className="banned-notice">{bannedText}</div>
@@ -179,23 +198,18 @@ export default function ErrataForm() {
             const formData = new window.FormData(formEl);
 
             // Programmatically post the form
-            fetch(
-                postEndpoint,
-                {
-                    method: 'POST',
-                    body: formData
-                }
-            )
+            fetch(postEndpoint, {
+                method: 'POST',
+                body: formData
+            })
                 .then((r) => r.json())
-                .catch((err) => {throw new Error(`Posting errata form data: ${err}`);})
-                .then(
-                    handleSubmissionResponse,
-                    (fetchError: Error) => {
-                        setHasError(`Submit failed: ${fetchError}.`);
-                        putFileWidgetsBack();
-                    }
-                )
-            ;
+                .catch((err) => {
+                    throw new Error(`Posting errata form data: ${err}`);
+                })
+                .then(handleSubmissionResponse, (fetchError: Error) => {
+                    setHasError(`Submit failed: ${fetchError}.`);
+                    putFileWidgetsBack();
+                });
         }
     }, [submitting, setHasError, handleSubmissionResponse]);
 
@@ -203,7 +217,8 @@ export default function ErrataForm() {
         <React.Fragment>
             <form
                 className={cn('body-block', {'hide-errors': hideErrors})}
-                method="post" action={postEndpoint}
+                method="post"
+                action={postEndpoint}
                 encType="multipart/form-data"
                 onChange={validate}
                 ref={formRef}

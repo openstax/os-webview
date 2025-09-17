@@ -1,7 +1,9 @@
 import React from 'react';
 import Form from './form/form';
 import FormSelect from '~/components/form-select/form-select';
-import useErrataFormContext, {ErrataFormContextProvider} from './errata-form-context';
+import useErrataFormContext, {
+    ErrataFormContextProvider
+} from './errata-form-context';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
 import './errata-form.scss';
@@ -30,15 +32,19 @@ function ErrataForm() {
 function TitleSelector() {
     const {books, setTitle} = useErrataFormContext();
     const options = React.useMemo(
-        () => books?.map((book: Book) => ({label: book.title, value: book.title})),
+        () =>
+            books?.map((book: Book) => ({
+                label: book.title,
+                value: book.title
+            })),
         [books]
     );
 
     return (
         <div className="text-content title-selector">
             <p>
-                It looks like you got referred here but they didn&apos;t tell us what
-                book you were looking at.
+                It looks like you got referred here but they didn&apos;t tell us
+                what book you were looking at.
             </p>
             <FormSelect
                 name="title-selector"
@@ -46,7 +52,9 @@ function TitleSelector() {
                     placeholder: 'Please select one'
                 }}
                 onValueUpdate={setTitle}
-                label="What book were you in, again?" options={options ?? []} />
+                label="What book were you in, again?"
+                options={options ?? []}
+            />
         </div>
     );
 }
@@ -69,7 +77,13 @@ export default function EnsureLoggedIn() {
             <main className="errata-form page">
                 <div className="boxed">
                     <div>You need to be logged in to submit errata</div>
-                    <a className="btn primary" href={linkHelper.loginLink()} data-local="true">Log in</a>
+                    <a
+                        className="btn primary"
+                        href={linkHelper.loginLink()}
+                        data-local="true"
+                    >
+                        Log in
+                    </a>
                 </div>
             </main>
         );
