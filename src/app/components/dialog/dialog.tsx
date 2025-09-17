@@ -11,6 +11,20 @@ function PutAway({
     noTitle?: boolean;
     onClick?: () => void;
 }) {
+    React.useEffect(() => {
+        if (onClick) {
+            const closeOnEsc = (event: KeyboardEvent) => {
+                if (event.key === 'Escape') {
+                    onClick();
+                }
+            };
+
+            document.addEventListener('keydown', closeOnEsc);
+            return () => document.removeEventListener('keydown', closeOnEsc);
+        }
+        return () => null;
+    }, [onClick]);
+
     return (
         <button
             className={cn('put-away', {'no-title-bar': noTitle})}
