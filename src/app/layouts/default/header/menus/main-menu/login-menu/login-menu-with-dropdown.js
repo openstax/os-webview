@@ -14,7 +14,7 @@ function AccountItem() {
 
     return (
         mosIsAvailable ?
-            <MenuItem label="Account Dashboard" url="/#account" /> :
+            <MenuItem label="Account Dashboard" url="/account" /> :
             <MenuItem label="Account Profile" url={`${settings.accountHref}/profile`} />
     );
 }
