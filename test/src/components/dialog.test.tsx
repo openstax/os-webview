@@ -31,6 +31,17 @@ describe('components/dialog', () => {
 
         await user.click(pa);
     });
+    it('pressing Escape is the same as pressing close button', async () => {
+        render(<Component />);
+        const b = screen.getByRole('button');
+
+        await user.click(b);
+        await screen.findByRole('button', {name: 'close'});
+        await userEvent.type(document.body, '{Enter}');
+        expect(screen.queryByRole('button', {name: 'close'})).toBeTruthy();
+        await userEvent.type(document.body, '{Escape}');
+        expect(screen.queryByRole('button', {name: 'close'})).not.toBeTruthy();
+    });
     it('Handles nonmodal and no put-away', async () => {
         render(<Component showPutAway={false} modal={false} />);
         const b = screen.getByRole('button');
