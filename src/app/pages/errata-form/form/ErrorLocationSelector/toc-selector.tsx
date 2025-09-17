@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect, useMemo} from 'react';
 import useErrataFormContext from '../../errata-form-context';
 import managedInvalidMessage from '../InvalidMessage';
 import bookToc from '~/models/book-toc';
-import {htmlToText} from '~/helpers/data';
+import {assertNotNull, htmlToText} from '~/helpers/data';
 // For LOCAL TESTING when you can't reach Rex; there is another testing section below
 // import testData from './test-data';
 
@@ -31,7 +31,7 @@ type PageOptionProps = {
 };
 
 type TocSelectorProps = {
-    required?: boolean;
+    required: boolean;
     updateValue: (value: string | null) => void;
 };
 
@@ -133,7 +133,7 @@ function useTocTree(slug: string | undefined, chapterFilter: string | undefined)
     return filteredTree;
 }
 
-export default function TocSelector({required=true, updateValue}: TocSelectorProps) {
+export default function TocSelector({required, updateValue}: TocSelectorProps) {
     const {selectedBook} = useErrataFormContext();
     const inputRef = useRef<HTMLSelectElement>(null);
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
@@ -142,9 +142,7 @@ export default function TocSelector({required=true, updateValue}: TocSelectorPro
     const filteredTree = useTocTree(slug, chapterFilter);
     const deselect = React.useCallback(
         () => {
-            if (inputRef.current) {
-                inputRef.current.value = '';
-            }
+            assertNotNull(inputRef.current).value = '';
             updateValue(null);
         },
         [updateValue]
@@ -158,9 +156,10 @@ export default function TocSelector({required=true, updateValue}: TocSelectorPro
 
     return (
         <React.Fragment>
-            <div className="question">Where in the book did you find the error?</div>
+            <label className="question" htmlFor="toc-selector">Where in the book did you find the error?</label>
             <InvalidMessage />
             <select
+                id="toc-selector"
                 size={10} name="location"
                 ref={inputRef} onChange={onChange}
                 required={required}

@@ -11,6 +11,7 @@ function OtherErrorInput() {
             <input
                 type="text"
                 name="error_type_other"
+                aria-label="other error type"
                 maxLength={250}
                 ref={inputRef}
                 onChange={updateInvalidMessage}
@@ -44,7 +45,7 @@ export default function ErrorTypeSelector() {
     return (
         <React.Fragment>
             <div className="question">Select the type of error below.</div>
-            <div className="radio-columns">
+            <fieldset className="radio-columns">
                 <InvalidMessage />
                 {
                     errorTypes.map((eType) =>
@@ -64,7 +65,7 @@ export default function ErrorTypeSelector() {
                         </label>
                     )
                 }
-            </div>
+            </fieldset>
             <div className={`helpbox ${helpBoxVisible}`}>
                 <span>Need help logging in or have general questions? Contact Support at </span>
                 <a href="mailto:support@openstax.org">support@openstax.org</a>.

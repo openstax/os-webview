@@ -15,9 +15,6 @@ type SubnoteProps = {
     sType: string;
 };
 
-const sourceNames: Record<string, string> = {
-};
-
 const resourcePromise = getFields('resources')
     .then((resources: {field: string}[]) => resources.map((entry) => entry.field));
 
@@ -33,6 +30,7 @@ function OtherSourceInput() {
                 name="resource_other" maxLength={250}
                 ref={inputRef} onChange={updateInvalidMessage}
                 required
+                aria-label="other source"
             />
         </div>
     );
@@ -73,7 +71,6 @@ function LabeledButton({selectedSource, sType, onChange, radioRef}: SourceSelect
 }
 
 function filterForBook(bookInfo: Book) {
-    // eslint-disable-next-line complexity
     return function (type: string) {
         if (type.startsWith('Assignable')) {
             return bookInfo.assignable_book;
@@ -82,29 +79,23 @@ function filterForBook(bookInfo: Book) {
             return Boolean(bookInfo.kindle_link);
         }
         if (type === 'Instructor solution manual') {
-            return bookInfo.book_faculty_resources?.find(
-                (r) => (/^Instructor (Solution|Answer)/).test(r.resource_heading)
-            );
+            return bookInfo.has_faculty_resources;
         }
         if (type === 'Student solution manual') {
-            return bookInfo.book_student_resources?.find(
-                (r) => (/^Student (Solution|Answer)/).test(r.resource_heading)
-            );
+            return bookInfo.has_student_resources;
         }
         return true;
     };
 }
 
 function useSourceTypes() {
-    const {searchParams, selectedBook} = useErrataFormContext();
-    const source = searchParams.get('source');
-    const initialSource = source && sourceNames[source.toLowerCase()];
+    const {selectedBook} = useErrataFormContext();
     const [sourceTypes, updateSourceTypes] = useState<string[]>([]);
     const filteredSourceTypes = useMemo(
         () => sourceTypes.filter(filterForBook(selectedBook ?? {} as Book)),
         [sourceTypes, selectedBook]
     );
-    const [selectedSource, updateSelectedSource] = useState(initialSource);
+    const [selectedSource, updateSelectedSource] = useState<string | null>(null);
     const onChange = React.useCallback(
         ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => updateSelectedSource(value),
         []
@@ -133,7 +124,7 @@ export default function ErrorSourceSelector() {
     return (
         <React.Fragment>
             <div className="question">In which source did you find this error?</div>
-            <div className="radio-columns">
+            <fieldset className="radio-columns">
                 <RadioInvalidMessage />
                 {
                     sourceTypes.map((sType, index) => (
@@ -144,7 +135,7 @@ export default function ErrorSourceSelector() {
                         />
                     ))
                 }
-            </div>
+            </fieldset>
         </React.Fragment>
     );
 }

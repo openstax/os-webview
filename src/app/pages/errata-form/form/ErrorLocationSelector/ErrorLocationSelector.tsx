@@ -15,7 +15,7 @@ type InputComponentProps = {
     defaultValue: string | null;
 };
 
-function AdditionalLocationInput({value='', readOnly=false, updateValue, required=true}: AdditionalLocationInputProps) {
+function AdditionalLocationInput({value, readOnly=false, updateValue, required=true}: AdditionalLocationInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [InvalidMessage, updateInvalidMessage] = managedInvalidMessage(inputRef);
     const syncValue = React.useCallback(
@@ -27,9 +27,12 @@ function AdditionalLocationInput({value='', readOnly=false, updateValue, require
 
     return (
         <React.Fragment>
-            <div className="question">Additional location information, if applicable</div>
+            <label className="question" htmlFor="additional_location_information">
+                Additional location information, if applicable
+            </label>
             <InvalidMessage />
             <input
+                id="additional_location_information"
                 type="text" name="additional_location_information"
                 placeholder="Describe where you found the error"
                 value={value} onChange={syncValue}

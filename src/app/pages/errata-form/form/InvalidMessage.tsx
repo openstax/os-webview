@@ -24,8 +24,6 @@ export default function (
     const updateFromRef = () => {
         if (inputRef.current) {
             updateMessage(inputRef.current.validationMessage);
-        } else {
-            console.warn('No current ref', inputRef);
         }
     };
 

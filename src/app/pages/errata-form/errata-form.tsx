@@ -4,7 +4,6 @@ import FormSelect from '~/components/form-select/form-select';
 import useErrataFormContext, {ErrataFormContextProvider} from './errata-form-context';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
-import {assertDefined} from '~/helpers/data';
 import './errata-form.scss';
 
 type Book = {
@@ -47,7 +46,7 @@ function TitleSelector() {
                     placeholder: 'Please select one'
                 }}
                 onValueUpdate={setTitle}
-                label="What book were you in, again?" options={assertDefined(options)} />
+                label="What book were you in, again?" options={options ?? []} />
         </div>
     );
 }

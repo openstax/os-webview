@@ -25,7 +25,9 @@ function ErrorExplanationBox() {
 
     return (
         <React.Fragment>
-            <div className="question">Tell us in detail about the error and your suggestion.</div>
+            <label className="question" htmlFor='error-detail'>
+                Tell us in detail about the error and your suggestion.
+            </label>
             <div className="subnote wide">
                 Please limit to one error per submission and include a suggested
                 resolution if possible. If you have several to report, please
@@ -33,6 +35,7 @@ function ErrorExplanationBox() {
             </div>
             <InvalidMessage />
             <textarea
+                id="error-detail"
                 maxLength={4000} name="detail"
                 ref={inputRef} onChange={updateInvalidMessage}
                 required></textarea>
@@ -117,9 +120,7 @@ function removeEmptyFileWidgets(formEl: HTMLFormElement) {
     // Return a function to put them back
     return () => {
         fileInputs.forEach((el, i) => {
-            if (fiParents[i]) {
-                fiParents[i]!.appendChild(el);
-            }
+            fiParents[i]?.appendChild(el);
         });
     };
 }
@@ -206,6 +207,7 @@ export default function ErrataForm() {
                 encType="multipart/form-data"
                 onChange={validate}
                 ref={formRef}
+                name="errata-form"
             >
                 <FormFields />
             </form>

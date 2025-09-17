@@ -1,7 +1,3 @@
-type BookResource = {
-    resource_heading: string;
-};
-
 export type Book = {
     id: number;
     book_state: string;
@@ -14,8 +10,8 @@ export type Book = {
     content_warning_text: string;
     assignable_book?: boolean;
     kindle_link?: string;
-    book_faculty_resources?: BookResource[];
-    book_student_resources?: BookResource[];
+    has_faculty_resources?: boolean;
+    has_student_resources?: boolean;
 
 };
 
