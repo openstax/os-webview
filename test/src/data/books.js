@@ -32,7 +32,7 @@ export default {
     "books": [
         {
             "id": 39,
-            "slug": "books/college-algebra",
+            "slug": "v2/pages/39",
             "book_state": "live",
             "title": "College Algebra",
             "subjects": [

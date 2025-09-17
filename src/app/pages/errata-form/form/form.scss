@@ -41,7 +41,7 @@
         color: text-color(helper);
     }
 
-    label {
+    label:not(.question) {
         align-items: center;
         color: text-color(helper);
         display: flex;
