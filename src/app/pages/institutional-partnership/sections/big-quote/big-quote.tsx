@@ -1,5 +1,7 @@
 import React from 'react';
-import useOptimizedImage, {maxDimIfNarrowerThan} from '~/helpers/use-optimized-image';
+import useOptimizedImage, {
+    maxDimIfNarrowerThan
+} from '~/helpers/use-optimized-image';
 import './big-quote.scss';
 
 export type BigQuoteProps = {
@@ -10,13 +12,22 @@ export type BigQuoteProps = {
     backgroundImage: string;
 };
 
-export default function BigQuote({text, name, title, school, backgroundImage}: BigQuoteProps) {
+export default function BigQuote({
+    text,
+    name,
+    title,
+    school,
+    backgroundImage
+}: BigQuoteProps) {
     const maxDim = maxDimIfNarrowerThan(1920);
     const optimizedImage = useOptimizedImage(backgroundImage, maxDim);
 
     return (
         <section className="big-quote">
-            <div className="background-image" style={{backgroundImage: `url(${optimizedImage})`}} />
+            <div
+                className="background-image"
+                style={{backgroundImage: `url(${optimizedImage})`}}
+            />
             <div className="gradient-overlay" />
             <div className="content">
                 <div className="big-quote-mark">&quot;</div>

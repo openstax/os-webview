@@ -24,9 +24,16 @@ export type ParticipantsProps = {
 };
 
 export default function Participants({
-    heading, subheading, icons: [icons], linkTarget, linkText
+    heading,
+    subheading,
+    icons: [icons],
+    linkTarget,
+    linkText
 }: ParticipantsProps) {
-    const {true: current, false: established} = groupBy(icons, 'currentCohort') as {
+    const {true: current, false: established} = groupBy(
+        icons,
+        'currentCohort'
+    ) as {
         true: Icon[];
         false: Icon[];
     };
@@ -43,11 +50,14 @@ export default function Participants({
                 <h2>{heading}</h2>
                 <h3>{subheading}</h3>
                 <div className="icons">
-                    {
-                        current && current.map((icon) =>
-                            <img key={icon.image.image} src={icon.image.image} alt={icon.imageAltText} />
-                        )
-                    }
+                    {current &&
+                        current.map((icon) => (
+                            <img
+                                key={icon.image.image}
+                                src={icon.image.image}
+                                alt={icon.imageAltText}
+                            />
+                        ))}
                 </div>
                 <a
                     className="show-established-partners"
@@ -59,7 +69,8 @@ export default function Participants({
                 </a>
             </div>
             <Dialog
-                isOpen={isOpen} onPutAway={toggle}
+                isOpen={isOpen}
+                onPutAway={toggle}
                 title="Established Partners"
                 closeOnOutsideClick
             >

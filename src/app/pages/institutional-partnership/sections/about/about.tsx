@@ -15,8 +15,12 @@ export type AboutProps = {
 };
 
 export default function About({
-    heading, description, altText,
-    image: {meta: {downloadUrl: image}}
+    heading,
+    description,
+    altText,
+    image: {
+        meta: {downloadUrl: image}
+    }
 }: AboutProps) {
     const optimizedImage = useOptimizedImage(image);
 
