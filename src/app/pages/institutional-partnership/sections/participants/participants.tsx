@@ -7,13 +7,33 @@ import Dialog from '~/components/dialog/dialog';
 import {useToggle} from '~/helpers/data';
 import './participants.scss';
 
+export type Icon = {
+    currentCohort: boolean;
+    image: {
+        image: string;
+    };
+    // TODO - verify whether it's this or altText or what
+    imageAltText: string;
+};
+
+export type ParticipantsProps = {
+    heading: string;
+    subheading: string;
+    icons: [Icon[]];
+    linkTarget: string;
+    linkText: string;
+};
+
 export default function Participants({
     heading, subheading, icons: [icons], linkTarget, linkText
-}) {
-    const {true: current, false: established} = groupBy(icons, 'currentCohort');
+}: ParticipantsProps) {
+    const {true: current, false: established} = groupBy(icons, 'currentCohort') as {
+        true?: Icon[];
+        false?: Icon[];
+    };
     const [isOpen, toggle] = useToggle();
 
-    function showEstablished(event) {
+    function showEstablished(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         toggle();
     }
@@ -26,7 +46,7 @@ export default function Participants({
                 <div className="icons">
                     {
                         current && current.map((icon) =>
-                            <img key={icon} src={icon.image.image} alt={icon.imageAltText} />
+                            <img key={icon.image.image} src={icon.image.image} alt={icon.imageAltText} />
                         )
                     }
                 </div>

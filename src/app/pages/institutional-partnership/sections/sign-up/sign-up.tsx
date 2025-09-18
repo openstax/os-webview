@@ -5,7 +5,14 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 
 import './sign-up.scss';
 
-export default function SignUp({heading, contactHtml, submitUrl, buttonText}) {
+export type SignUpProps = {
+    heading: string;
+    contactHtml: string;
+    submitUrl: string;
+    buttonText: string;
+};
+
+export default function SignUp({heading, contactHtml, submitUrl, buttonText}: SignUpProps) {
     return (
         <section className="sign-up green">
             <div className="content">
