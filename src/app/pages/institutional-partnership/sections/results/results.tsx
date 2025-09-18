@@ -2,7 +2,19 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './results.scss';
 
-export default function Results({heading, description, cards: [cards]}) {
+type Card = {
+    headingNumber: string;
+    headingUnit: string;
+    description: string;
+};
+
+export type ResultsProps = {
+    heading: string;
+    description: string;
+    cards: [Card[]];
+};
+
+export default function Results({heading, description, cards: [cards]}: ResultsProps) {
     const images = [
         '/dist/images/institutional-partnership/first-result-icon.svg',
         '/dist/images/institutional-partnership/second-result-icon.svg'
@@ -18,7 +30,7 @@ export default function Results({heading, description, cards: [cards]}) {
                 <div className="cards">
                     {
                         cards.map((card, i) =>
-                            <div className="card" key={card}>
+                            <div className="card" key={i}>
                                 <img className="corner-icon" src={images[i]} />
                                 <div className="heading">
                                     <span className="big-text">{card.headingNumber}</span>

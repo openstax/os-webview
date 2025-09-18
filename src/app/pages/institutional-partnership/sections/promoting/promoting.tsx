@@ -2,11 +2,32 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './promoting.scss';
 
+type WideCard = {
+    icon: {
+        image: string;
+        altText: string;
+    };
+    html: string;
+};
+
+type TallCard = {
+    html: string;
+    link: string;
+    linkText: string;
+};
+
+export type PromotingProps = {
+    heading: string;
+    description: string;
+    tallCards: [TallCard[]];
+    wideCards: [WideCard[]];
+};
+
 export default function Promoting({
     heading, description,
     tallCards: [tallCards],
     wideCards: [wideCards]
-}) {
+}: PromotingProps) {
     return (
         <section className="promoting white">
             <div className="content-block">
@@ -17,8 +38,8 @@ export default function Promoting({
                 <div className="cards">
                     <div className="wide card">
                         {
-                            wideCards.map((item) =>
-                                <div className="wide-card-entry" key={item}>
+                            wideCards.map((item, index) =>
+                                <div className="wide-card-entry" key={index}>
                                     <img src={item.icon.image} alt={item.icon.altText} />
                                     <RawHTML html={item.html} />
                                 </div>
@@ -26,8 +47,8 @@ export default function Promoting({
                         }
                     </div>
                     {
-                        tallCards.map((item) =>
-                            <div className="card tall" key={item}>
+                        tallCards.map((item, index) =>
+                            <div className="card tall" key={index}>
                                 <RawHTML html={item.html} />
                                 <a
                                     href={item.link} className="btn primary"
