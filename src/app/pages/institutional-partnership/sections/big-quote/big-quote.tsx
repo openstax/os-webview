@@ -1,5 +1,5 @@
 import React from 'react';
-import useOptimizedImage from '~/helpers/use-optimized-image';
+import useOptimizedImage, {maxDimIfNarrowerThan} from '~/helpers/use-optimized-image';
 import './big-quote.scss';
 
 export type BigQuoteProps = {
@@ -11,7 +11,7 @@ export type BigQuoteProps = {
 };
 
 export default function BigQuote({text, name, title, school, backgroundImage}: BigQuoteProps) {
-    const maxDim = window.innerWidth < 1920 ? 1920 : undefined;
+    const maxDim = maxDimIfNarrowerThan(1920);
     const optimizedImage = useOptimizedImage(backgroundImage, maxDim);
 
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import useOptimizedImage from '~/helpers/use-optimized-image';
+import useOptimizedImage, {maxDimIfNarrowerThan} from '~/helpers/use-optimized-image';
 import './banner.scss';
 
 export type BannerProps = {
@@ -19,7 +19,7 @@ export default function Banner({
     heading, description, linkText, link,
     backgroundImage: {meta: {downloadUrl: backgroundImage}}
 }: BannerProps) {
-    const maxDim = window.innerWidth < 1920 ? 1920 : undefined;
+    const maxDim = maxDimIfNarrowerThan(1920);
     const optimizedImage = useOptimizedImage(backgroundImage, maxDim);
 
     return (

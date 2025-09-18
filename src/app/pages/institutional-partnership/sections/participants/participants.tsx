@@ -12,7 +12,6 @@ export type Icon = {
     image: {
         image: string;
     };
-    // TODO - verify whether it's this or altText or what
     imageAltText: string;
 };
 
@@ -28,8 +27,8 @@ export default function Participants({
     heading, subheading, icons: [icons], linkTarget, linkText
 }: ParticipantsProps) {
     const {true: current, false: established} = groupBy(icons, 'currentCohort') as {
-        true?: Icon[];
-        false?: Icon[];
+        true: Icon[];
+        false: Icon[];
     };
     const [isOpen, toggle] = useToggle();
 

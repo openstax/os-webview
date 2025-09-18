@@ -2,7 +2,7 @@ import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import LazyLoad from 'react-lazyload';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import useOptimizedImage from '~/helpers/use-optimized-image';
+import useOptimizedImage, {maxDimIfNarrowerThan} from '~/helpers/use-optimized-image';
 import './about.scss';
 
 const slug = 'pages/about';
@@ -86,7 +86,7 @@ function About({
     const mapAlt =
         whereMapAlt ||
         'animated map suggesting where our books are being adopted';
-    const maxDim = window.innerWidth < 1920 ? 1015 : undefined;
+    const maxDim = maxDimIfNarrowerThan(1920);
     const optimizedWhoImage = useOptimizedImage(whoImageUrl, maxDim);
 
     return (
