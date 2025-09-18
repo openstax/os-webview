@@ -23,7 +23,7 @@ import footerData from '../src/data/footer';
 import formHeadings from '../src/data/form-headings';
 import globalReachData from '../src/data/global-reach';
 import impact from '../src/data/impact';
-import institutionalPartnershipData from '../src/data/institutional-partnership';
+import institutionalPartnershipData from '../src/data/institutional-partnership.json';
 import kineticData from '../src/data/kinetic';
 import newSubjectsData from '../src/data/new-subjects';
 import openstaxHomepageData from '../src/data/openstax-homepage';

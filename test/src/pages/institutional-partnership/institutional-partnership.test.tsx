@@ -3,6 +3,9 @@ import InstitutionalPartnership from '~/pages/institutional-partnership/institut
 import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
+
+const user = userEvent.setup();
 
 describe('InstitutionalPartnership', () => {
     it('creates', async () => {
@@ -13,7 +16,7 @@ describe('InstitutionalPartnership', () => {
         );
 
         await screen.findByText('About the program');
-        expect(screen.queryAllByRole('link')).toHaveLength(8);
+        expect(screen.queryAllByRole('link')).toHaveLength(7);
     });
 
     it('renders the main heading', async () => {
@@ -28,18 +31,15 @@ describe('InstitutionalPartnership', () => {
         expect(mainElement).toHaveClass('institutional-partnership', 'page');
     });
 
-    it('displays LazyLoad components for performance optimization', async () => {
+    it('displays established partners in dialog', async () => {
         render(
             <MemoryRouter>
                 <InstitutionalPartnership />
             </MemoryRouter>
         );
 
-        // Check that the page loads without throwing errors
-        // LazyLoad components should be present but may not be immediately visible
-        const mainElement = await screen.findByRole('main');
-
-        expect(mainElement).toBeInTheDocument();
+        await user.click(await screen.findByRole('link', {name: 'See established partners'}));
+        expect(await screen.findByRole('dialog')).toBeInTheDocument();
     });
 
     it('has proper TypeScript structure', () => {
