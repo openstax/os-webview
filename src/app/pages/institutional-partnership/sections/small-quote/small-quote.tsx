@@ -8,7 +8,12 @@ export type SmallQuoteProps = {
     school: string;
 };
 
-export default function SmallQuote({text, name, title, school}: SmallQuoteProps) {
+export default function SmallQuote({
+    text,
+    name,
+    title,
+    school
+}: SmallQuoteProps) {
     return (
         <section className="small-quote near-white">
             <div className="content">

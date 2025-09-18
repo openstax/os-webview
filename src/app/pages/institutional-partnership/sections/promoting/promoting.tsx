@@ -24,7 +24,8 @@ export type PromotingProps = {
 };
 
 export default function Promoting({
-    heading, description,
+    heading,
+    description,
     tallCards: [tallCards],
     wideCards: [wideCards]
 }: PromotingProps) {
@@ -37,28 +38,29 @@ export default function Promoting({
                 </div>
                 <div className="cards">
                     <div className="wide card">
-                        {
-                            wideCards.map((item, index) =>
-                                <div className="wide-card-entry" key={index}>
-                                    <img src={item.icon.image} alt={item.icon.altText} />
-                                    <RawHTML html={item.html} />
-                                </div>
-                            )
-                        }
-                    </div>
-                    {
-                        tallCards.map((item, index) =>
-                            <div className="card tall" key={index}>
+                        {wideCards.map((item, index) => (
+                            <div className="wide-card-entry" key={index}>
+                                <img
+                                    src={item.icon.image}
+                                    alt={item.icon.altText}
+                                />
                                 <RawHTML html={item.html} />
-                                <a
-                                    href={item.link} className="btn primary"
-                                    target="_blank" rel="noreferrer"
-                                >
-                                    {item.linkText}
-                                </a>
                             </div>
-                        )
-                    }
+                        ))}
+                    </div>
+                    {tallCards.map((item, index) => (
+                        <div className="card tall" key={index}>
+                            <RawHTML html={item.html} />
+                            <a
+                                href={item.link}
+                                className="btn primary"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {item.linkText}
+                            </a>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

@@ -15,8 +15,13 @@ export type SpeakingProps = {
 };
 
 export default function Speaking({
-    heading, description, imageAlt, imageCaption,
-    image: {meta: {downloadUrl: image}}
+    heading,
+    description,
+    imageAlt,
+    imageCaption,
+    image: {
+        meta: {downloadUrl: image}
+    }
 }: SpeakingProps) {
     return (
         <section className="speaking white">

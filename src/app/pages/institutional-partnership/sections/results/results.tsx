@@ -14,7 +14,11 @@ export type ResultsProps = {
     cards: [Card[]];
 };
 
-export default function Results({heading, description, cards: [cards]}: ResultsProps) {
+export default function Results({
+    heading,
+    description,
+    cards: [cards]
+}: ResultsProps) {
     const images = [
         '/dist/images/institutional-partnership/first-result-icon.svg',
         '/dist/images/institutional-partnership/second-result-icon.svg'
@@ -28,18 +32,20 @@ export default function Results({heading, description, cards: [cards]}: ResultsP
                     <RawHTML className="description-block" html={description} />
                 </div>
                 <div className="cards">
-                    {
-                        cards.map((card, i) =>
-                            <div className="card" key={i}>
-                                <img className="corner-icon" src={images[i]} />
-                                <div className="heading">
-                                    <span className="big-text">{card.headingNumber}</span>
-                                    {card.headingUnit}
-                                </div>
-                                <div className="description-block">{card.description}</div>
+                    {cards.map((card, i) => (
+                        <div className="card" key={i}>
+                            <img className="corner-icon" src={images[i]} />
+                            <div className="heading">
+                                <span className="big-text">
+                                    {card.headingNumber}
+                                </span>
+                                {card.headingUnit}
                             </div>
-                        )
-                    }
+                            <div className="description-block">
+                                {card.description}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

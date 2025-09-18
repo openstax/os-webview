@@ -12,14 +12,24 @@ export type SignUpProps = {
     buttonText: string;
 };
 
-export default function SignUp({heading, contactHtml, submitUrl, buttonText}: SignUpProps) {
+export default function SignUp({
+    heading,
+    contactHtml,
+    submitUrl,
+    buttonText
+}: SignUpProps) {
     return (
         <section className="sign-up green">
             <div className="content">
-                <FontAwesomeIcon className="envelope-icon" icon={faEnvelopeOpen} />
+                <FontAwesomeIcon
+                    className="envelope-icon"
+                    icon={faEnvelopeOpen}
+                />
                 <h2>{heading}</h2>
                 <RawHTML className="contact" html={contactHtml} />
-                <a className="btn primary" href={submitUrl}>{buttonText}</a>
+                <a className="btn primary" href={submitUrl}>
+                    {buttonText}
+                </a>
             </div>
         </section>
     );

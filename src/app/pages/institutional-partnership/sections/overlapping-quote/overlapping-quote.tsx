@@ -8,7 +8,12 @@ export type OverlappingQuoteProps = {
     school: string;
 };
 
-export default function OverlappingQuote({quote, name, title, school}: OverlappingQuoteProps) {
+export default function OverlappingQuote({
+    quote,
+    name,
+    title,
+    school
+}: OverlappingQuoteProps) {
     return (
         <section className="overlapping-quote near-white">
             <div className="overlapping">
