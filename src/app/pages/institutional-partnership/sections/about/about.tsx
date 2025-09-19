@@ -3,10 +3,25 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import './about.scss';
 
+export type AboutProps = {
+    heading: string;
+    description: string;
+    altText: string;
+    image: {
+        meta: {
+            downloadUrl: string;
+        };
+    };
+};
+
 export default function About({
-    heading, description, altText,
-    image: {meta: {downloadUrl: image}}
-}) {
+    heading,
+    description,
+    altText,
+    image: {
+        meta: {downloadUrl: image}
+    }
+}: AboutProps) {
     const optimizedImage = useOptimizedImage(image);
 
     return (

@@ -1,0 +1,788 @@
+{
+    "id": 302,
+    "meta": {
+        "type": "pages.InstitutionalPartnerProgramPage",
+        "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/302/",
+        "html_url": "https://dev.openstax.org/institutional-partners/",
+        "slug": "institutional-partners",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "first_published_at": "2019-03-26T13:37:03.328000-05:00",
+        "alias_of": null,
+        "parent": {
+            "id": 542,
+            "meta": {
+                "type": "pages.RootPage",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/542/",
+                "html_url": "https://dev.openstax.org/"
+            },
+            "title": "Home"
+        },
+        "locale": "en"
+    },
+    "title": "Institutional Partner Program",
+    "section_1_heading": "Institutional Partner Program",
+    "section_1_description": "<p>We’ve updated the program for 2020 with even more training and support from our team. Let&#x27;s take your institution&#x27;s open educational resources initiative to the next level.</p>",
+    "section_1_link_text": "Apply now",
+    "section_1_link": "http://openstax.org/institutional-partnership-application",
+    "section_1_background_image": {
+        "id": 611,
+        "meta": {
+            "width": 3200,
+            "height": 1254,
+            "type": "wagtailimages.Image",
+            "detail_url": "https://dev.openstax.org/apps/cms/api/v2/images/611/",
+            "download_url": "https://assets.openstax.org/oscms-dev/media/original_images/hero2x.png"
+        },
+        "title": "hero@2x.png"
+    },
+    "quote": "Our partnership with OpenStax fostered lifelong connections that benefit not only OER collaborations but student success between institutions.",
+    "quote_name": "Brian Weston",
+    "quote_title": "Director of Distance and Accelerated Learning",
+    "quote_school": "College of the Canyons",
+    "section_2_heading": "About the program",
+    "section_2_description": "<p>The OpenStax Institutional Partner Program is designed to provide institutions with free coaching, training, and support with the goal of increasing use of OpenStax and other open educational resources. We want to build a strong community of institutions who are working together to develop a deeper understanding of what can be done with OpenStax and the larger ecosystem of OER materials.</p><p>This year, we’re looking to work with institutions who are interested in launching or expanding OER initiatives on their campuses to promote a wider and richer engagement with open materials. Our incoming institutional partners will join our community of over 50 partner schools who work together to share strategies, discuss challenges, and celebrate wins.</p><p>This year’s institutions will be selected during a competitive application process in July. Each institution admitted into the program will work with us to learn new strategies and apply them to their campus. Calls and emails with the community of institutions provide peer-to-peer support, guidance, and accountability. In addition, all partner institutions will receive free access to our OpenStax Tutor platform for their students.</p><p>If you are an existing OpenStax Institutional Partner and wish to participate in the updated program, <a href=\"https://forms.gle/rv2MWXCVbLt1nnnu5\"><b>sign up here</b></a><b>.</b></p><p>If you are a first time applicant to the OpenStax Institutional Partnership, <a href=\"/institutional-partnership-application\"><b>apply here</b></a><b>!</b></p>",
+    "section_2_image": {
+        "id": 598,
+        "meta": {
+            "width": 436,
+            "height": 468,
+            "type": "wagtailimages.Image",
+            "detail_url": "https://dev.openstax.org/apps/cms/api/v2/images/598/",
+            "download_url": "https://assets.openstax.org/oscms-dev/media/original_images/image_PgSZbHq.png"
+        },
+        "title": "image.png"
+    },
+    "section_2_image_alt": "A view of Rice",
+    "section_3_heading": "Promoting OER on your campus",
+    "section_3_description": "Institutions don't have to be in the Institutional Partnership Program to start encouraging the use of OER on campus. OpenStax and other free, flexible materials can be especially useful to instructors and students whose courses are moving online due to COVID-19. Here are a few tips to get started:",
+    "section_3_wide_cards": [
+        {
+            "type": "card",
+            "value": [
+                {
+                    "icon": {
+                        "image": 600,
+                        "alt_text": "Calendar",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "html": "<p>Plan webinars or online meetings with faculty to promote OER on your campus and discuss how OER materials can help instructors move online.</p>"
+                },
+                {
+                    "icon": {
+                        "image": 601,
+                        "alt_text": "Text bubbles",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "html": "<p>Follow up with faculty attendees to see if they&#x27;re interested in piloting or adopting OER.</p>"
+                }
+            ],
+            "id": "5cf82c63-90d2-444b-93ee-c142643969e1"
+        }
+    ],
+    "section_3_tall_cards": [
+        {
+            "type": "card",
+            "value": [
+                {
+                    "html": "<p>Share our collection of resources to help instructors move online.<br/></p>",
+                    "link": "https://openstax.org/general/online-resources",
+                    "link_text": "Access our resources"
+                }
+            ],
+            "id": "d58d9bdc-7733-4672-85df-9e68cbb62b6a"
+        }
+    ],
+    "section_4_quote_text": "The Institutional Partner Program provided the assistance, support, and accountability we needed to have rapid, successful OER expansion at our college.",
+    "section_4_quote_name": "Jennifer Kneafsey",
+    "section_4_quote_title": "Associate Professor of Biology",
+    "section_4_quote_school": "Tulsa Community College",
+    "section_4_background_image": {
+        "id": 603,
+        "meta": {
+            "width": 4800,
+            "height": 2211,
+            "type": "wagtailimages.Image",
+            "detail_url": "https://dev.openstax.org/apps/cms/api/v2/images/603/",
+            "download_url": "https://assets.openstax.org/oscms-dev/media/original_images/testimonial-box3x.png"
+        },
+        "title": "testimonial-box@3x.png"
+    },
+    "section_5_heading": "What's new in 2020",
+    "section_5_description": "<p>We’re taking the program content that has proven most valuable in past years and using it to develop monthly courses to help our partner institutions learn new strategies quickly and revisit information easily. These courses, available only to our partner schools, will include live webinars, short videos, resource downloads, and more – we want to provide a richer foundation for impactful strategy-building during monthly calls.</p><p>This year, we’re offering our OpenStax Tutor platform for free to all students at our institutional partner schools, as well as 1:1 support from our OpenStax Tutor team. OpenStax Tutor is our flagship courseware offering that keeps students engaged with their reading assignments by delivering videos, simulations, and personalized assessments. OpenStax Tutor makes assigning and managing the course easy for instructors, and is available for use for in-person, online, and hybrid courses using our <i>College Physics, Biology 2e,</i> and<i> Introduction to Sociology 2e</i> textbooks.</p><p>Our goals this year are to provide each participating institution with even more direct support and guidance, and to foster more collaboration between our community of over 50 partner schools!</p>",
+    "section_5_image": {
+        "id": 649,
+        "meta": {
+            "width": 900,
+            "height": 601,
+            "type": "wagtailimages.Image",
+            "detail_url": "https://dev.openstax.org/apps/cms/api/v2/images/649/",
+            "download_url": "https://assets.openstax.org/oscms-dev/media/original_images/Top_10_schools_recognized_for_saving_students.original.jpg"
+        },
+        "title": "Top_10_schools_recognized_for_saving_students.original.jpg"
+    },
+    "section_5_image_alt": "Girl with U.S. History textbook",
+    "section_5_image_caption": "OpenStax works with schools across the country to expand their OER program.",
+    "section_6_heading": "Big results",
+    "section_6_description": "On average, our institutional partners have increased the number of students using OER by over 150% after completing the first year of the program. In the past two years, those increases have saved students at our partner institutions more than $19.6 million dollars!",
+    "section_6_cards": [
+        {
+            "type": "card",
+            "value": [
+                {
+                    "heading_number": "150",
+                    "heading_unit": "%",
+                    "description": "increase in students using OER after an institution's first year in the program"
+                },
+                {
+                    "heading_number": "$19.6",
+                    "heading_unit": "Million",
+                    "description": "in student savings at our partner institutions over the past two years"
+                }
+            ],
+            "id": "f3c17bf1-ca9e-4b3a-80bd-fd499a2d091f"
+        }
+    ],
+    "section_7_heading": "Program Participants",
+    "section_7_subheading": "2019-2020 Partner Cohort",
+    "section_7_icons": [
+        {
+            "type": "card",
+            "value": [
+                {
+                    "image": {
+                        "image": 448,
+                        "alt_text": "Arkansas State University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Arkansas State University",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 446,
+                        "alt_text": "Harper College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Harper College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 605,
+                        "alt_text": "Louisiana's Community & Technical Colleges logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Louisiana's Community & Technical Colleges",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 444,
+                        "alt_text": "Palomar College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Palomar College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 606,
+                        "alt_text": "San Diego City College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "San Diego City College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 442,
+                        "alt_text": "San Jacinto College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "San Jacinto College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 607,
+                        "alt_text": "Santa Monica College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Santa Monica College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 450,
+                        "alt_text": "Thomas Nelson Community College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Thomas Nelson Community College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 608,
+                        "alt_text": "University of Missouri System logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "University of Missouri System",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 45,
+                        "alt_text": "Alamo Colleges logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Alamo Colleges",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 56,
+                        "alt_text": "Auburn University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Auburn University",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 57,
+                        "alt_text": "BC Campus logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "BC Campus",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 254,
+                        "alt_text": "California State University Fullerton logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "California State University Fullerton",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 672,
+                        "alt_text": "Central New Mexico logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Central New Mexico",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 46,
+                        "alt_text": "College of the Canyons logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "College of the Canyons",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 255,
+                        "alt_text": "College Lake County logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "College Lake County",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 260,
+                        "alt_text": "De Anza College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "DeAnza College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 270,
+                        "alt_text": "FIU logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "FIU",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 59,
+                        "alt_text": "Grand Rapids logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Grand Rapids",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 272,
+                        "alt_text": "Grossmont College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Grossmont College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 261,
+                        "alt_text": "Houston Community College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Houston Community College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 47,
+                        "alt_text": "Lansing Community College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Lansing Community College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 60,
+                        "alt_text": "Maricopa logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Maricopa",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 48,
+                        "alt_text": "Northern Essex logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Northern Essex",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 61,
+                        "alt_text": "Ohio State University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Ohio State Univeristy",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 673,
+                        "alt_text": "Pasadena City College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Pasadena City College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 674,
+                        "alt_text": "Saddleback College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Saddleback College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 675,
+                        "alt_text": "Salt Lake Community College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Salt Lake Community College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 676,
+                        "alt_text": "Sinclair College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Sinclair College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 677,
+                        "alt_text": "South Florida State College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "South Florida State College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 678,
+                        "alt_text": "SUNY logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "SUNY",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 679,
+                        "alt_text": "Tarrant County College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Tarrant County College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 680,
+                        "alt_text": "Tulsa Community College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Tulsa Community College",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 681,
+                        "alt_text": "University of Massachusetts Amherst logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "University of Massachusetts Amherst",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 682,
+                        "alt_text": "The University of Arizona logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "The University of Arizona",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 683,
+                        "alt_text": "University of Connecticut logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "University of Connecticut",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 684,
+                        "alt_text": "University of Idaho logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "University of Idaho",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 685,
+                        "alt_text": "The University of Georgia logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "The University of Georgia",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 686,
+                        "alt_text": "University of Hartford logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "University of Hartford",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 687,
+                        "alt_text": "The University of Kansas logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "The University of Kansas",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 688,
+                        "alt_text": "The University of Oklahoma logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "The University of Oklahoma",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 689,
+                        "alt_text": "Board of Regents of the University System of Georgia logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Board of Regents of the University System of Georgia",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 690,
+                        "alt_text": "UT San Antonio logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "UT San Antonio",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 691,
+                        "alt_text": "Utah State University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Utah State University",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 692,
+                        "alt_text": "Virginia Tech logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Virginia Tech",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 693,
+                        "alt_text": "Washington State University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Washington State University",
+                    "current_cohort": false
+                },
+                {
+                    "image": {
+                        "image": 694,
+                        "alt_text": "Austin Community College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Austin Community College",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 695,
+                        "alt_text": "College of DuPage logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "College of DuPage",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 696,
+                        "alt_text": "Fresno State logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Fresno State",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 697,
+                        "alt_text": "McHenry County College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "McHenry County College",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 698,
+                        "alt_text": "Metropolitan State University of Denver logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Metropolitan State University of Denver",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 699,
+                        "alt_text": "Millersville University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Millersville University",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 700,
+                        "alt_text": "Muskegon Community College logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Muskegon Community College",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 701,
+                        "alt_text": "NC State University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "NC State University",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 702,
+                        "alt_text": "Portland State University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Portland State University",
+                    "current_cohort": true
+                },
+                {
+                    "image": {
+                        "image": 703,
+                        "alt_text": "Prairie View A&M University logo",
+                        "link": "",
+                        "alignment": "left",
+                        "identifier": ""
+                    },
+                    "image_alt_text": "Prairie View A&M University",
+                    "current_cohort": true
+                }
+            ],
+            "id": "f534e1fc-3a1f-4a45-95b7-556cf5fb22e8"
+        }
+    ],
+    "section_7_link_text": "See established partners",
+    "section_7_link_target": "https://openstax.org/institutional-partners",
+    "section_8_quote_text": "Teaming up with the other OpenStax Institutional Partner schools provided a sense of community as we navigated launching OER initiatives at our own campuses. Learning about other schools’ successes and frustrations each month was inspiring. I learned so many new techniques and innovative ideas that I could then apply at my own campus. It’s inspiring to see how many students are impacted by OER adoption — the numbers really add up quickly.",
+    "section_8_quote_name": "Erin Davis",
+    "section_8_quote_title": "Distance Education Library Services Coordinator",
+    "section_8_quote_school": "Utah State University",
+    "section_9_heading": "Sign up for updates",
+    "section_9_submit_url": "http://www2.openstax.org/l/218812/2019-05-10/9v99x",
+    "section_9_form_prompt": "Enter your email here.",
+    "section_9_button_text": "Sign up",
+    "section_9_contact_html": "<p>Have questions about the program? Please contact</p><p><a href=\"mailto:jeffdg@rice.edu\">jeffdg@rice.edu</a></p>"
+}
