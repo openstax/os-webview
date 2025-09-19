@@ -34,8 +34,8 @@ export default function Participants({
         icons,
         'currentCohort'
     ) as {
-        true: Icon[];
-        false: Icon[];
+        true?: Icon[];
+        false?: Icon[];
     };
     const [isOpen, toggle] = useToggle();
 
@@ -50,32 +50,35 @@ export default function Participants({
                 <h2>{heading}</h2>
                 <h3>{subheading}</h3>
                 <div className="icons">
-                    {current &&
-                        current.map((icon) => (
-                            <img
-                                key={icon.image.image}
-                                src={icon.image.image}
-                                alt={icon.imageAltText}
-                            />
+                    {current?.map((icon) => (
+                        <img
+                            key={icon.image.image}
+                            src={icon.image.image}
+                            alt={icon.imageAltText}
+                        />
                         ))}
                 </div>
-                <a
-                    className="show-established-partners"
-                    href={linkTarget}
-                    onClick={showEstablished}
-                >
-                    <span>{linkText}</span>
-                    <FontAwesomeIcon icon={faChevronRight} />
-                </a>
+                {established &&
+                    <a
+                        className="show-established-partners"
+                        href={linkTarget}
+                        onClick={showEstablished}
+                    >
+                        <span>{linkText}</span>
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </a>
+                }
             </div>
-            <Dialog
-                isOpen={isOpen}
-                onPutAway={toggle}
-                title="Established Partners"
-                closeOnOutsideClick
-            >
-                <EstablishedPartners model={established} />
-            </Dialog>
+            {established &&
+                <Dialog
+                    isOpen={isOpen}
+                    onPutAway={toggle}
+                    title="Established Partners"
+                    closeOnOutsideClick
+                >
+                    <EstablishedPartners model={established} />
+                </Dialog>
+            }
         </section>
     );
 }
