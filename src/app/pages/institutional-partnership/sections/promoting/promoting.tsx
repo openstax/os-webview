@@ -38,8 +38,8 @@ export default function Promoting({
                 </div>
                 <div className="cards">
                     <div className="wide card">
-                        {wideCards.map((item, index) => (
-                            <div className="wide-card-entry" key={index}>
+                        {wideCards.map((item) => (
+                            <div className="wide-card-entry" key={item.html}>
                                 <img
                                     src={item.icon.image}
                                     alt={item.icon.altText}
