@@ -1,0 +1,79 @@
+import React, {useState, useRef} from 'react';
+import managedInvalidMessage from './InvalidMessage';
+
+function OtherErrorInput() {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [InvalidMessage, updateInvalidMessage] =
+        managedInvalidMessage(inputRef);
+
+    return (
+        <div className="other-group">
+            <InvalidMessage />
+            <input
+                type="text"
+                name="error_type_other"
+                aria-label="other error type"
+                maxLength={250}
+                ref={inputRef}
+                onChange={updateInvalidMessage}
+                required
+            />
+        </div>
+    );
+}
+
+export default function ErrorTypeSelector() {
+    const errorTypes = [
+        'Broken link',
+        'Incorrect answer, calculation, or solution',
+        'General/pedagogical suggestion or question',
+        'Other factual inaccuracy in content',
+        'Typo',
+        'Other'
+    ];
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [InvalidMessage, updateInvalidMessage] =
+        managedInvalidMessage(inputRef);
+    const [selectedError, updateSelectedError] = useState<string>();
+    const helpBoxVisible =
+        selectedError === 'Other' ? 'visible' : 'not-visible';
+    const onChange = React.useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            updateSelectedError(event.target.value);
+            updateInvalidMessage();
+        },
+        [updateSelectedError, updateInvalidMessage]
+    );
+
+    return (
+        <React.Fragment>
+            <div className="question">Select the type of error below.</div>
+            <fieldset className="radio-columns">
+                <InvalidMessage />
+                {errorTypes.map((eType) => (
+                    <label key={eType}>
+                        <input
+                            type="radio"
+                            name="error_type"
+                            value={eType}
+                            ref={inputRef}
+                            onChange={onChange}
+                            required
+                        />
+                        <span className="label-text">{eType}</span>
+                        {eType === 'Other' && selectedError === 'Other' && (
+                            <OtherErrorInput />
+                        )}
+                    </label>
+                ))}
+            </fieldset>
+            <div className={`helpbox ${helpBoxVisible}`}>
+                <span>
+                    Need help logging in or have general questions? Contact
+                    Support at{' '}
+                </span>
+                <a href="mailto:support@openstax.org">support@openstax.org</a>.
+            </div>
+        </React.Fragment>
+    );
+}

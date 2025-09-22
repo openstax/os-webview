@@ -8,6 +8,11 @@ export type Book = {
     subjects: string[];
     title: string;
     content_warning_text: string;
+    assignable_book?: boolean;
+    kindle_link?: string;
+    has_faculty_resources?: boolean;
+    has_student_resources?: boolean;
+
 };
 
 const statesToInclude = ['live', 'new_edition_available', 'coming_soon'];

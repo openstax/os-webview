@@ -34,6 +34,7 @@ import pressData from '../src/data/press';
 import pressArticleData from '../src/data/press-article';
 import researchData from '../src/data/research';
 import renewalData from '../src/data/renewal';
+import resourcesData from '../src/data/resources';
 import rolesData from '../src/data/roles';
 import salesforceData from '../src/data/salesforce';
 import salesforcePartnerData from '../src/data/salesforce-partners';
@@ -52,7 +53,8 @@ import archiveData from '../src/data/archive';
 // eslint-disable-next-line no-undef
 global.fetch = jest.fn().mockImplementation((...args) => {
     const isAdoption = (/pages\/adoption-form/).test(args[0]);
-    const isAlgebra = (/v2\/pages\/39/).test(args[0]);
+    // 81 is Astronomy, but we don't much care what the content is
+    const isAlgebra = (/v2\/pages\/(39|81)/).test(args[0]);
     const isAllBooks = (/book_subjects/).test(args[0]);
     const isAmazonBlurb = args[0].endsWith('snippets/amazonbookblurb/');
     const isBiology = (/v2\/pages\/207/).test(args[0]);
@@ -90,6 +92,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isPressArticle = (/api\/press\/[a-z]/).test(args[0]);
     const isRenewal = args[0].includes('renewal?account_uuid');
     const isResearch = args[0].includes('pages/research');
+    const isResources = args[0].endsWith('errata-fields/?field=resources');
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
     const isSearchCollection = args[0].includes('/search/?collection=');
@@ -186,6 +189,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = booksForAnalyticsData;
             } else if (isRenewal) {
                 payload = renewalData;
+            } else if (isResources) {
+                payload = resourcesData;
             } else if (isRoles) {
                 payload = rolesData;
             } else if (isSchools) {
