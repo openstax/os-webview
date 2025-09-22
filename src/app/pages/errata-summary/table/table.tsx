@@ -131,19 +131,24 @@ const sortFunctions = {
 function DesktopHeaderColumn({colSpec, sortController}: DesktopHeaderColumnProps): React.ReactElement {
     const {sortKey, sortDir, setSortFn, setSortDir, setSortKey} = sortController;
     const sortable = 'sortFn' in colSpec;
-    const onClick = () => {
-        if (sortKey === colSpec.id) {
-            setSortDir(-sortDir);
-        } else {
-            // @ts-expect-error onClick is only used when sortable
-            setSortFn(colSpec.sortFn);
-            setSortKey(colSpec.id);
-            setSortDir(1);
+    const sortAttributes = React.useMemo(() => {
+        if (!sortable) {
+            return {};
         }
-    };
-    const sortAttributes = sortable ? {
-        role: 'button', tabIndex: 0, onClick, onKeyDown: treatSpaceOrEnterAsClick
-    } : {};
+        const onClick = () => {
+            if (sortKey === colSpec.id) {
+                setSortDir(-sortDir);
+            } else {
+                setSortFn(colSpec.sortFn);
+                setSortKey(colSpec.id);
+                setSortDir(1);
+            }
+        };
+
+        return {
+            role: 'button', tabIndex: 0, onClick, onKeyDown: treatSpaceOrEnterAsClick
+        };
+    }, [colSpec, setSortDir, setSortFn, setSortKey, sortDir, sortKey, sortable]);
     const sortIndicator = sortable ?
         <span className={`will-sort sortdir${colSpec.sortFn === 'sort' ? 1 : -1}`} /> :
         null;
@@ -220,13 +225,10 @@ function useSortController() {
 function DesktopTable({data}: DesktopTableProps): React.ReactElement {
     const sortController = useSortController();
     const {sortFn, sortKey, sortDir} = sortController;
-
-    const sortedData = [...data];
-
-    sortedData.sort((a, b) =>
-        // @ts-expect-error sortKey is guaranteed compatible with sortFn
-        sortFunctions[sortFn](a[sortKey], b[sortKey])
+    const sortedData = [...data].sort((a, b) =>
+        sortFunctions[sortFn](a[sortKey] as DisplayStatusValue, b[sortKey] as DisplayStatusValue)
     );
+
     if (sortDir < 0) {
         sortedData.reverse();
     }
