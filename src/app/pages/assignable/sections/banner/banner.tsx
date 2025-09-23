@@ -3,13 +3,26 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import './banner.scss';
 
+type BannerProps = {
+    data: {
+        headingTitleImageUrl: string;
+        subheading: string;
+        headingDescription: string;
+        headingImage: {
+            meta: {
+                downloadUrl: string;
+            };
+        };
+    };
+};
+
 export default function Banner({
     data: {
         headingTitleImageUrl, subheading,
         headingDescription: description,
         headingImage: {meta: {downloadUrl: image}}
     }
-}) {
+}: BannerProps) {
     const maxDim = window.innerWidth < 1920 ? 1920 : null;
     const optimizedImage = useOptimizedImage(image, maxDim);
 

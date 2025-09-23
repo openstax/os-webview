@@ -1,7 +1,12 @@
 import React from 'react';
 import './courses.scss';
 
-function BookInfo({data}) {
+type BookData = {
+    cover: string;
+    title: string;
+};
+
+function BookInfo({data}: {data: BookData}) {
     return (
         <div>
             <img src={data.cover} alt="" />
@@ -10,7 +15,7 @@ function BookInfo({data}) {
     );
 }
 
-function CourseList({heading, courses}) {
+function CourseList({heading, courses}: {heading: string; courses: BookData[]}) {
     return (
         <div>
             <h2>{heading}</h2>
@@ -21,7 +26,16 @@ function CourseList({heading, courses}) {
     );
 }
 
-export default function Courses({data}) {
+type CoursesProps = {
+    data: {
+        availableCoursesHeader: string;
+        availableBooks: BookData[];
+        coursesComingSoonHeader: string;
+        comingSoonBooks: BookData[];
+    };
+};
+
+export default function Courses({data}: CoursesProps) {
     return (
         <section className="courses white">
             <div className="content-block">

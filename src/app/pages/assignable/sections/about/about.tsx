@@ -3,13 +3,31 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import Carousel from '~/components/carousel/carousel';
 import './about.scss';
 
+type CarouselImage = {
+    image: {
+        file: string;
+        height: number;
+        width: number;
+        title: string;
+        id: string;
+    };
+};
+
+type AboutProps = {
+    data: {
+        section2Heading: string;
+        section2Description: string;
+        imageCarousel: [CarouselImage[]];
+    };
+};
+
 export default function About({
     data: {
         section2Heading: heading,
         section2Description: description,
         imageCarousel
     }
-}) {
+}: AboutProps) {
     const images = imageCarousel[0];
 
     return (
