@@ -8,16 +8,20 @@ import MemoryRouter from '~/../../test/helpers/future-memory-router';
 const mockApplicationData = {
     headingYear: '2024',
     heading: '<strong>Institutional Partnership Application</strong>',
-    programTabContent: [[
-        {
-            heading: 'Program Overview',
-            description: '<p>Learn about our institutional partnership program.</p>'
-        },
-        {
-            heading: 'Benefits',
-            description: '<p>Discover the benefits of partnering with us.</p>'
-        }
-    ]],
+    programTabContent: [
+        [
+            {
+                heading: 'Program Overview',
+                description:
+                    '<p>Learn about our institutional partnership program.</p>'
+            },
+            {
+                heading: 'Benefits',
+                description:
+                    '<p>Discover the benefits of partnering with us.</p>'
+            }
+        ]
+    ],
     quote: 'OpenStax has transformed our teaching approach.',
     quoteAuthor: 'Dr. Jane Smith',
     quoteTitle: 'Professor of Biology',
@@ -28,23 +32,27 @@ const mockApplicationData = {
     applicationQuoteSchool: 'Community College'
 };
 
-global.fetch = jest.fn().mockImplementation(
-    (args: [string]) => {
-        const payload = args.includes('pages/institutional-partnership') ? mockApplicationData : {};
+global.fetch = jest.fn().mockImplementation((args: [string]) => {
+    const payload = args.includes('pages/institutional-partnership')
+        ? mockApplicationData
+        : {};
 
-        return Promise.resolve({
-            ok: true,
-            json() {
-                return Promise.resolve(payload);
-            }
-        });
-    }
-);
+    return Promise.resolve({
+        ok: true,
+        json() {
+            return Promise.resolve(payload);
+        }
+    });
+});
 
 function Component() {
-    return <MemoryRouter initialEntries={['/institutional-partnership-application']}>
-        <ApplicationPage />
-    </MemoryRouter>;
+    return (
+        <MemoryRouter
+            initialEntries={['/institutional-partnership-application']}
+        >
+            <ApplicationPage />
+        </MemoryRouter>
+    );
 }
 
 describe('institutional partnership application page', () => {
@@ -64,9 +72,11 @@ describe('institutional partnership application page', () => {
         expect(testimonialSection).toBeInTheDocument();
 
         // The testimonial block should contain one of our test quotes
-        const testimonialContainer = await screen.findByText((content, element) => {
-            return element?.className === 'testimonial-box' || false;
-        });
+        const testimonialContainer = await screen.findByText(
+            (content, element) => {
+                return element?.className === 'testimonial-box' || false;
+            }
+        );
 
         expect(testimonialContainer).toBeInTheDocument();
     });

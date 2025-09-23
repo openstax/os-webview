@@ -11,7 +11,8 @@ const mockFoundationData = {
         }
     },
     bannerHeading: 'Our Supporters',
-    bannerDescription: '<p>Thanks to generous funders who support our mission.</p>',
+    bannerDescription:
+        '<p>Thanks to generous funders who support our mission.</p>',
     funderGroups: [
         {
             groupTitle: 'Major Funders',
@@ -36,30 +37,40 @@ const mockFoundationData = {
     disclaimer: 'All funders listed have provided support to OpenStax.'
 };
 
-global.fetch = jest.fn().mockImplementation(
-    (args: [string]) => {
-        const payload = args.includes('pages/supporters') ? mockFoundationData : {};
+global.fetch = jest.fn().mockImplementation((args: [string]) => {
+    const payload = args.includes('pages/supporters') ? mockFoundationData : {};
 
-        return Promise.resolve({
-            ok: true,
-            json() {
-                return Promise.resolve(payload);
-            }
-        });
-    }
-);
+    return Promise.resolve({
+        ok: true,
+        json() {
+            return Promise.resolve(payload);
+        }
+    });
+});
 
 describe('foundation page', () => {
     it('displays funder groups', async () => {
-        render(<MemoryRouter initialEntries={['/foundation']}><FoundationPage /></MemoryRouter>);
+        render(
+            <MemoryRouter initialEntries={['/foundation']}>
+                <FoundationPage />
+            </MemoryRouter>
+        );
         await screen.findByText('Our Supporters');
         await screen.findByText('Major Funders');
-        await screen.findByText('Organizations that provide significant support');
+        await screen.findByText(
+            'Organizations that provide significant support'
+        );
     });
 
     it('displays funders with and without links', async () => {
-        render(<MemoryRouter initialEntries={['/foundation']}><FoundationPage /></MemoryRouter>);
-        const linkedFunder = await screen.findByRole('link', { name: 'Test Foundation' });
+        render(
+            <MemoryRouter initialEntries={['/foundation']}>
+                <FoundationPage />
+            </MemoryRouter>
+        );
+        const linkedFunder = await screen.findByRole('link', {
+            name: 'Test Foundation'
+        });
 
         expect(linkedFunder.getAttribute('href')).toBe('https://example.com');
 
@@ -67,7 +78,13 @@ describe('foundation page', () => {
     });
 
     it('displays disclaimer', async () => {
-        render(<MemoryRouter initialEntries={['/foundation']}><FoundationPage /></MemoryRouter>);
-        await screen.findByText('All funders listed have provided support to OpenStax.');
+        render(
+            <MemoryRouter initialEntries={['/foundation']}>
+                <FoundationPage />
+            </MemoryRouter>
+        );
+        await screen.findByText(
+            'All funders listed have provided support to OpenStax.'
+        );
     });
 });

@@ -35,22 +35,30 @@ type FoundationPageData = {
 const slug = 'pages/supporters';
 
 function Funder({data}: {data: FunderData}) {
-    return (
-        data.url ?
-            <a href={data.url}>{data.funderName}</a> :
-            <span>{data.funderName}</span>
+    return data.url ? (
+        <a href={data.url}>{data.funderName}</a>
+    ) : (
+        <span>{data.funderName}</span>
     );
 }
 
 function Funders({data}: {data: FunderData[]}) {
     return (
         <div className="funders">
-            {data.map((f, i) => <Funder key={i} data={f} />)}
+            {data.map((f, i) => (
+                <Funder key={i} data={f} />
+            ))}
         </div>
     );
 }
 
-function FundersWithImage({data, image}: {data: FunderData[]; image: ImageData}) {
+function FundersWithImage({
+    data,
+    image
+}: {
+    data: FunderData[];
+    image: ImageData;
+}) {
     return (
         <div className="funders-with-image">
             <Funders data={data} />
@@ -64,11 +72,11 @@ function FoundationGroup({data}: {data: FoundationGroupData}) {
         <div className="funder-group">
             <h2>{data.groupTitle}</h2>
             <div className="description">{data.description}</div>
-            {
-                data.image?.file ?
-                    <FundersWithImage data={data.funders} image={data.image} /> :
-                    <Funders data={data.funders} />
-            }
+            {data.image?.file ? (
+                <FundersWithImage data={data.funders} image={data.image} />
+            ) : (
+                <Funders data={data.funders} />
+            )}
         </div>
     );
 }
@@ -85,7 +93,9 @@ function FoundationPage({data: model}: {data: FoundationPageData}) {
                     </div>
                 </div>
             </div>
-            {model.funderGroups.map((g, i) => <FoundationGroup key={i} data={g} />)}
+            {model.funderGroups.map((g, i) => (
+                <FoundationGroup key={i} data={g} />
+            ))}
             <div className="disclaimer">{model.disclaimer}</div>
         </React.Fragment>
     );

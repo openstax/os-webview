@@ -57,8 +57,10 @@ function TestimonialBlock({data}: {data: TestimonialData}) {
                     <p className="text-block">{testimonial?.block}</p>
                     <div className="writer-info">
                         <p>
-                            <strong>-{testimonial?.name}</strong><br />
-                            {testimonial?.address1}<br />
+                            <strong>-{testimonial?.name}</strong>
+                            <br />
+                            {testimonial?.address1}
+                            <br />
                             {testimonial?.address2}
                         </p>
                     </div>
@@ -71,12 +73,12 @@ function TestimonialBlock({data}: {data: TestimonialData}) {
 function ProgramDetails({model}: {model: [ProgramSection[]]}) {
     return (
         <>
-            {model[0].map((section) =>
+            {model[0].map((section) => (
                 <div key={section.heading}>
                     <h2>{section.heading}</h2>
                     <RawHTML html={section.description} />
                 </div>
-            )}
+            ))}
         </>
     );
 }
@@ -102,7 +104,8 @@ export default function ApplicationLoader() {
     return (
         <main className="institutional-page page">
             <LoaderPage
-                slug="pages/institutional-partnership" Child={ApplicationPage}
+                slug="pages/institutional-partnership"
+                Child={ApplicationPage}
                 doDocumentSetup
             />
         </main>
