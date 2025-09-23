@@ -129,26 +129,9 @@ const sortFunctions = {
 };
 
 function DesktopHeaderColumn({colSpec, sortController}: DesktopHeaderColumnProps): React.ReactElement {
-    const {sortKey, sortDir, setSortFn, setSortDir, setSortKey} = sortController;
+    const {getSortAttributes, sortKey, sortDir} = sortController;
     const sortable = 'sortFn' in colSpec;
-    const sortAttributes = React.useMemo(() => {
-        if (!sortable) {
-            return {};
-        }
-        const onClick = () => {
-            if (sortKey === colSpec.id) {
-                setSortDir(-sortDir);
-            } else {
-                setSortFn(colSpec.sortFn);
-                setSortKey(colSpec.id);
-                setSortDir(1);
-            }
-        };
-
-        return {
-            role: 'button', tabIndex: 0, onClick, onKeyDown: treatSpaceOrEnterAsClick
-        };
-    }, [colSpec, setSortDir, setSortFn, setSortKey, sortDir, sortKey, sortable]);
+    const sortAttributes = getSortAttributes(colSpec);
     const sortIndicator = sortable ?
         <span className={`will-sort sortdir${colSpec.sortFn === 'sort' ? 1 : -1}`} /> :
         null;
@@ -218,16 +201,36 @@ function useSortController() {
     const [sortFn, setSortFn] = useState<keyof typeof sortFunctions>('sortDate');
     const [sortKey, setSortKey] = useState<keyof ProcessedErrataItem>('date');
     const [sortDir, setSortDir] = useState<number>(-1);
+    const sortFunction = sortFunctions[sortFn];
+    const sortData = (data: ProcessedErrataItem[]) => [...data].sort((a, b) =>
+        sortFunction(a[sortKey] as DisplayStatusValue, b[sortKey] as DisplayStatusValue)
+    );
+    const getSortAttributes = (colSpec: ColumnSpec) => {
+        if (!('sortFn' in colSpec)) {
+            return {};
+        }
+        const onClick = () => {
+            if (sortKey === colSpec.id) {
+                setSortDir(-sortDir);
+            } else {
+                setSortFn(colSpec.sortFn);
+                setSortKey(colSpec.id);
+                setSortDir(1);
+            }
+        };
 
-    return {sortFn, sortKey, sortDir, setSortFn, setSortKey, setSortDir};
+        return {
+            role: 'button', tabIndex: 0, onClick, onKeyDown: treatSpaceOrEnterAsClick
+        };
+    };
+
+    return {sortData, getSortAttributes, sortKey, sortDir};
 }
 
 function DesktopTable({data}: DesktopTableProps): React.ReactElement {
     const sortController = useSortController();
-    const {sortFn, sortKey, sortDir} = sortController;
-    const sortedData = [...data].sort((a, b) =>
-        sortFunctions[sortFn](a[sortKey] as DisplayStatusValue, b[sortKey] as DisplayStatusValue)
-    );
+    const {sortData, sortDir} = sortController;
+    const sortedData = sortData(data);
 
     if (sortDir < 0) {
         sortedData.reverse();
