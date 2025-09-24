@@ -1,7 +1,13 @@
 import React from 'react';
 import './people-tab.scss';
 
-function PersonCard({entry}) {
+export type PersonEntry = {
+    name: string;
+    bio: string;
+    photo?: {file: string}
+}
+
+function PersonCard({entry}: {entry: PersonEntry}) {
     return (
         <div className="card">
             <div className="content">
@@ -15,10 +21,12 @@ function PersonCard({entry}) {
     );
 }
 
-export default function PeopleTab({data}) {
+export default function PeopleTab({data}: {
+    data: {value: PersonEntry}[];
+}) {
     return (
         <div className="people-tab">
-            {data.map((entry) => <PersonCard entry={entry.value} key={entry.value.id} />)}
+            {data.map((entry, i) => <PersonCard entry={entry.value} key={i} />)}
         </div>
     );
 }
