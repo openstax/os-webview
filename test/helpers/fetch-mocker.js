@@ -2,6 +2,7 @@ import adoptionFormData from '../src/data/adoption-form';
 import allBooksData from '../src/data/all-books';
 import amazonBlurb from '../src/data/amazon-blurb';
 import algebraData from '../src/data/details-college-algebra';
+import assignableData from '../src/data/assignable.json';
 import biologyData from '../src/data/details-biology-2e';
 import blogArticleData from '../src/data/blog-article';
 import blogCollection from '../src/data/blogcollection';
@@ -57,6 +58,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isAlgebra = (/v2\/pages\/(39|81)/).test(args[0]);
     const isAllBooks = (/book_subjects/).test(args[0]);
     const isAmazonBlurb = args[0].endsWith('snippets/amazonbookblurb/');
+    const isAssignable = args[0].endsWith('/assignable/?format=json');
     const isBiology = (/v2\/pages\/207/).test(args[0]);
     const isBlogPinned = (/pin_to_top=true/).test(args[0]);
     const isBlogMoreStories = (/pin_to_top=false/).test(args[0]);
@@ -119,6 +121,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = amazonBlurb;
             } else if (isAllBooks) {
                 payload = allBooksData;
+            } else if (isAssignable) {
+                payload = assignableData;
             } else if (isPartner) {
                 payload = pageData;
             } else if (isBlogCollection) {

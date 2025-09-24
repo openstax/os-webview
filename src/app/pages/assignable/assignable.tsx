@@ -1,14 +1,8 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
-import LazyLoad from '~/components/jsx-helpers/lazy-load';
+import LazyLoad from 'react-lazyload';
+import {Banner, About, Courses, FAQ, OverlappingQuote, CTA} from './lazy-imports';
 import './assignable.scss';
-
-const Banner = React.lazy(() => import('./sections/banner/banner'));
-const About = React.lazy(() => import('./sections/about/about'));
-const Courses = React.lazy(() => import('./sections/courses/courses'));
-const FAQ = React.lazy(() => import('./sections/faq/faq'));
-const OverlappingQuote = React.lazy(() => import('./sections/overlapping-quote/overlapping-quote'));
-const CTA = React.lazy(() => import('./sections/cta/cta'));
 
 type ImageMeta = {
     meta: {
