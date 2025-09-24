@@ -37,15 +37,19 @@ export default function About({
                     <h2>{heading}</h2>
                     <RawHTML className="description-block" html={description} />
                 </div>
-                <Carousel hoverTextThing='image'>
-                    {
-                        images.map(
-                            ({image: {file: src, height, width, title, id}}) =>
-                                <div className="img-container" key={id}>
-                                    <img src={src} alt={title} width={width} height={height} />
-                                </div>
+                <Carousel hoverTextThing="image">
+                    {images.map(
+                        ({image: {file: src, height, width, title, id}}) => (
+                            <div className="img-container" key={id}>
+                                <img
+                                    src={src}
+                                    alt={title}
+                                    width={width}
+                                    height={height}
+                                />
+                            </div>
                         )
-                    }
+                    )}
                 </Carousel>
             </div>
         </section>

@@ -18,10 +18,11 @@ type FAQProps = {
 
 export default function FAQ({data}: FAQProps) {
     const accordionItems = React.useMemo(
-        () => data.faqs.map((d) => ({
-            title: htmlToText(d.question),
-            contentComponent: <RawHTML html={d.answer} />
-        })),
+        () =>
+            data.faqs.map((d) => ({
+                title: htmlToText(d.question),
+                contentComponent: <RawHTML html={d.answer} />
+            })),
         [data.faqs]
     );
 

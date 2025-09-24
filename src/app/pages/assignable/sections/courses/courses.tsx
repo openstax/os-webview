@@ -15,12 +15,20 @@ function BookInfo({data}: {data: BookData}) {
     );
 }
 
-function CourseList({heading, courses}: {heading: string; courses: BookData[]}) {
+function CourseList({
+    heading,
+    courses
+}: {
+    heading: string;
+    courses: BookData[];
+}) {
     return (
         <div>
             <h2>{heading}</h2>
             <div className="course-list">
-                { courses.map((c) => <BookInfo data={c} key={c.title} />) }
+                {courses.map((c) => (
+                    <BookInfo data={c} key={c.title} />
+                ))}
             </div>
         </div>
     );
@@ -39,8 +47,14 @@ export default function Courses({data}: CoursesProps) {
     return (
         <section className="courses white">
             <div className="content-block">
-                <CourseList heading={data.availableCoursesHeader} courses={data.availableBooks} />
-                <CourseList heading={data.coursesComingSoonHeader} courses={data.comingSoonBooks} />
+                <CourseList
+                    heading={data.availableCoursesHeader}
+                    courses={data.availableBooks}
+                />
+                <CourseList
+                    heading={data.coursesComingSoonHeader}
+                    courses={data.comingSoonBooks}
+                />
             </div>
         </section>
     );

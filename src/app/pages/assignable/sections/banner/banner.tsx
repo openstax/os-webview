@@ -1,6 +1,8 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import useOptimizedImage, {maxDimIfNarrowerThan} from '~/helpers/use-optimized-image';
+import useOptimizedImage, {
+    maxDimIfNarrowerThan
+} from '~/helpers/use-optimized-image';
 import './banner.scss';
 
 type BannerProps = {
@@ -18,9 +20,12 @@ type BannerProps = {
 
 export default function Banner({
     data: {
-        headingTitleImageUrl, subheading,
+        headingTitleImageUrl,
+        subheading,
         headingDescription: description,
-        headingImage: {meta: {downloadUrl: image}}
+        headingImage: {
+            meta: {downloadUrl: image}
+        }
     }
 }: BannerProps) {
     const maxDim = maxDimIfNarrowerThan(1920);
@@ -28,11 +33,20 @@ export default function Banner({
 
     return (
         <section className="banner">
-            <div className="background-image" style={{backgroundImage: `url(${optimizedImage})`}} />
+            <div
+                className="background-image"
+                style={{backgroundImage: `url(${optimizedImage})`}}
+            />
             <div className="content-block">
                 <div>
-                    <img src={headingTitleImageUrl} className="title-image" alt="Assignable by OpenStax" />
-                    <div><i>{subheading}</i></div>
+                    <img
+                        src={headingTitleImageUrl}
+                        className="title-image"
+                        alt="Assignable by OpenStax"
+                    />
+                    <div>
+                        <i>{subheading}</i>
+                    </div>
                 </div>
                 <RawHTML className="text-content" html={description} />
             </div>

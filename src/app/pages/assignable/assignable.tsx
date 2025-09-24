@@ -1,7 +1,14 @@
 import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import LazyLoad from 'react-lazyload';
-import {Banner, About, Courses, FAQ, OverlappingQuote, CTA} from './lazy-imports';
+import {
+    Banner,
+    About,
+    Courses,
+    FAQ,
+    OverlappingQuote,
+    CTA
+} from './lazy-imports';
 import './assignable.scss';
 
 type ImageMeta = {
@@ -82,7 +89,11 @@ function AssignablePage({data}: {data: AssignablePageData}) {
 export default function AssignableLoader() {
     return (
         <main className="assignable page">
-            <LoaderPage slug="pages/assignable" Child={AssignablePage} doDocumentSetup />
+            <LoaderPage
+                slug="pages/assignable"
+                Child={AssignablePage}
+                doDocumentSetup
+            />
         </main>
     );
 }
