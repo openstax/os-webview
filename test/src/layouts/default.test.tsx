@@ -1,11 +1,11 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen} from '@testing-library/preact';
 import {useSeenCounter, usePutAway, useStickyData} from '../../../src/app/layouts/default/shared';
 import Header from '../../../src/app/layouts/default/header/header';
 import {MenuItem} from '../../../src/app/layouts/default/header/menus/main-menu/dropdown/dropdown';
 
 // Mock external dependencies
-jest.mock('../../../src/app/helpers/cms-fetch', () => jest.fn());
+// jest.mock('../../../src/app/helpers/cms-fetch', () => jest.fn());
 jest.mock('../../../src/app/helpers/page-data-utils', () => ({
     useDataFromPromise: jest.fn(() => null)
 }));
@@ -16,14 +16,14 @@ jest.mock('../../../src/app/helpers/jit-load', () => {
 });
 jest.mock('../../../src/app/contexts/portal', () => ({
     __esModule: true,
-    default: () => ({portalPrefix: ''}),
+    default: () => ({portalPrefix: ''})
 }));
 jest.mock('../../../src/app/contexts/window', () => ({
     __esModule: true,
-    default: () => ({innerWidth: 1024}),
+    default: () => ({innerWidth: 1024})
 }));
 jest.mock('react-router-dom', () => ({
-    useLocation: () => ({pathname: '/test-path'}),
+    useLocation: () => ({pathname: '/test-path'})
 }));
 
 // Mock localStorage
@@ -38,7 +38,7 @@ const mockLocalStorage = {
     campaignId: ''
 };
 
-Object.defineProperty(window, 'localStorage', {
+Reflect.defineProperty(window, 'localStorage', {
     value: mockLocalStorage
 });
 
@@ -52,6 +52,7 @@ describe('Layouts Default TypeScript Conversions', () => {
         test('useSeenCounter hook works with TypeScript types', () => {
             const TestComponent = () => {
                 const [hasBeenSeenEnough, increment] = useSeenCounter(5);
+
                 return (
                     <div>
                         <span data-testid="seen-enough">{hasBeenSeenEnough.toString()}</span>
@@ -67,6 +68,7 @@ describe('Layouts Default TypeScript Conversions', () => {
         test('usePutAway hook returns proper TypeScript types', () => {
             const TestComponent = () => {
                 const [closed, PutAwayComponent] = usePutAway();
+
                 return (
                     <div>
                         <span data-testid="closed">{closed.toString()}</span>
@@ -82,6 +84,7 @@ describe('Layouts Default TypeScript Conversions', () => {
         test('useStickyData hook handles null return type', () => {
             const TestComponent = () => {
                 const stickyData = useStickyData();
+
                 return (
                     <div data-testid="sticky-data">
                         {stickyData ? 'has data' : 'no data'}
@@ -112,6 +115,7 @@ describe('Layouts Default TypeScript Conversions', () => {
             render(<MenuItem {...props} />);
 
             const link = screen.getByRole('link');
+
             expect(link).toHaveAttribute('href', '/test-url');
             expect(link).toHaveAttribute('data-local', 'test-local');
         });
@@ -125,6 +129,7 @@ describe('Layouts Default TypeScript Conversions', () => {
             render(<MenuItem {...props} />);
 
             const link = screen.getByRole('link');
+
             expect(link).toHaveAttribute('href', '/test-url');
         });
     });
@@ -147,6 +152,7 @@ describe('Layouts Default TypeScript Conversions', () => {
                 show_popup: boolean;
             };
 
+            /* eslint-disable camelcase */
             const validBannerInfo: BannerInfo = {
                 id: 1,
                 heading: 'Test Heading',
@@ -161,6 +167,7 @@ describe('Layouts Default TypeScript Conversions', () => {
                 emergency_expires: '2024-06-01',
                 show_popup: true
             };
+            /* eslint-enable camelcase */
 
             expect(validBannerInfo.id).toBe(1);
             expect(validStickyData.show_popup).toBe(true);

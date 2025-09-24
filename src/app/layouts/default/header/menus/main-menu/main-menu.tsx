@@ -111,6 +111,7 @@ function SubjectsMenu() {
     );
 }
 
+// eslint-disable-next-line complexity
 function navigateWithArrows(event: React.KeyboardEvent<HTMLUListElement>) {
     const target = event.target as HTMLElement;
 
