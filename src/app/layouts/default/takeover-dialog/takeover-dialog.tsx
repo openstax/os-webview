@@ -5,18 +5,21 @@ import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours
 const LS_KEY = 'takeoverLastDisplay';
 
-function deserialize(key) {
+function deserialize(key: string): unknown {
     try {
-        return JSON.parse(window.localStorage.getItem(key));
+        return JSON.parse(window.localStorage.getItem(key) || '');
     } catch {
         return null;
     }
 }
 
-function useLocalStorage(key, defaultValue='') {
+function useLocalStorage(key: string, defaultValue: string | number = ''): [
+    string | number,
+    React.Dispatch<React.SetStateAction<string | number>>
+] {
     const storedValue = deserialize(key);
     const initialValue = storedValue === null ? defaultValue : storedValue;
-    const [value, setValue] = React.useState(initialValue);
+    const [value, setValue] = React.useState<string | number>(initialValue as string | number);
 
     React.useEffect(
         () => window.localStorage?.setItem(key, JSON.stringify(value)),
@@ -26,9 +29,9 @@ function useLocalStorage(key, defaultValue='') {
     return [value, setValue];
 }
 
-function useDisplayedRecently() {
+function useDisplayedRecently(): [boolean, () => void] {
     const [lastDisplay, setLastDisplay] = useLocalStorage(LS_KEY, 0);
-    const msSince = Date.now() - lastDisplay;
+    const msSince = Date.now() - (lastDisplay as number);
     const setDisplayed = React.useCallback(
         () => setLastDisplay(Date.now()),
         [setLastDisplay]

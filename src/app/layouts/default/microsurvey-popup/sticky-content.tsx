@@ -4,7 +4,16 @@ import {useStickyData, useSeenCounter} from '../shared';
 
 const SEEN_ENOUGH = 3;
 
-function StickyContent({stickyData, children}) {
+type StickyContentProps = {
+    stickyData: {
+        body: string;
+        link: string;
+        link_text: string;
+    };
+    children: React.ReactNode;
+};
+
+function StickyContent({stickyData, children}: StickyContentProps) {
     return (
         <div
             className="microsurvey-content"
@@ -21,7 +30,10 @@ function StickyContent({stickyData, children}) {
     );
 }
 
-function useBoundStickyContent(stickyData, incrementSeenCount) {
+function useBoundStickyContent(
+    stickyData: StickyContentProps['stickyData'],
+    incrementSeenCount: () => void
+) {
     // Increment seen count on each fresh load
     React.useEffect(
         () => incrementSeenCount(),
@@ -29,15 +41,18 @@ function useBoundStickyContent(stickyData, incrementSeenCount) {
     );
 
     return React.useCallback(
-        (props) => <StickyContent stickyData={stickyData} {...props} />,
+        (props: {children: React.ReactNode}) => <StickyContent stickyData={stickyData} {...props} />,
         [stickyData]
     );
 }
 
-export default function useStickyMicrosurveyContent() {
+export default function useStickyMicrosurveyContent(): [
+    boolean,
+    (props: {children: React.ReactNode}) => JSX.Element
+] {
     const stickyData = useStickyData();
     const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
-    const BoundStickyContent = useBoundStickyContent(stickyData, incrementSeenCount);
+    const BoundStickyContent = useBoundStickyContent(stickyData?.bannerInfo, incrementSeenCount);
 
     const ready = Boolean(
         stickyData?.mode === 'popup' && !hasBeenSeenEnough

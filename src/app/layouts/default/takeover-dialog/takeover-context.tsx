@@ -1,6 +1,6 @@
 import buildContext from '~/components/jsx-helpers/build-context';
 
-function useContextValue({close}) {
+function useContextValue({close}: {close: () => void}) {
     return {close};
 }
 

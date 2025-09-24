@@ -6,7 +6,13 @@ const msPerSec = 1000;
 const msPerMin = msPerSec * 60;
 const msPerHour = msPerMin * 60;
 
-function getHMS(goalTimeMs) {
+type HMS = {
+    h: number;
+    m: number;
+    s: number;
+};
+
+function getHMS(goalTimeMs: number): HMS {
     const msDiff = goalTimeMs - Date.now();
 
     return {
@@ -16,7 +22,7 @@ function getHMS(goalTimeMs) {
     };
 }
 
-function useHMS(goalTime) {
+function useHMS(goalTime: string): HMS {
     const goalTimeMs = new Date(goalTime).getTime();
     const [hms, setHms] = React.useState(getHMS(goalTimeMs));
 
@@ -32,7 +38,7 @@ function useHMS(goalTime) {
     return (hms);
 }
 
-export function Countdown({goalTime}) {
+export function Countdown({goalTime}: {goalTime: string}) {
     const {h, m, s} = useHMS(goalTime);
 
     return (
@@ -47,7 +53,7 @@ export function Countdown({goalTime}) {
 
 const numFormat = window.Intl.NumberFormat('en-US').format; // eslint-disable-line new-cap
 
-export function Amount({amount}) {
+export function Amount({amount}: {amount: number}) {
     return (
         <div className="amount-box">
             <div className="message">our goal is to raise</div>
@@ -56,7 +62,7 @@ export function Amount({amount}) {
     );
 }
 
-export function GiveButton({text, url}) {
+export function GiveButton({text, url}: {text: string; url: string}) {
     const {close} = useTakeoverContext();
 
     return (

@@ -7,7 +7,14 @@ import DesktopContent from './content-desktop';
 import MobileContent from './content-mobile';
 import './takeover-dialog.scss';
 
-function goalHasPassed(data) {
+type TakeoverData = {
+    goalTime?: string;
+    fundraiserImage: string;
+    image?: string;
+    colorScheme: string;
+};
+
+function goalHasPassed(data: TakeoverData): boolean {
     if (!data.goalTime) {
         return false;
     }
@@ -16,8 +23,11 @@ function goalHasPassed(data) {
     return goalTimeMs < Date.now();
 }
 
-export default function TakeoverBanner({data, setDisplayed}) {
-    const [Dialog, _, close, isOpen] = useDialog(true);
+export default function TakeoverBanner({data, setDisplayed}: {
+    data: TakeoverData;
+    setDisplayed: () => void;
+}) {
+    const [Dialog, , close, isOpen] = useDialog(true);
     const location = useLocation();
     const initialLoc = React.useRef(location);
 

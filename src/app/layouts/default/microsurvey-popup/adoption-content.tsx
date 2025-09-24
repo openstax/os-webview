@@ -6,9 +6,9 @@ import Cookies from 'js-cookie';
 const DISMISSED_KEY = 'renewal_dialog_dismissed';
 // const YESTERDAY = Date.now() - 60 * 60 * 24 * 1000;
 
-function useCookieKey(key) {
+function useCookieKey(key: string): [string | undefined, (value: string) => void] {
     return React.useReducer(
-        (_, value) => {
+        (_: string | undefined, value: string) => {
             Cookies.set(key, value);
             return value ? value : '0';
         },
@@ -16,7 +16,7 @@ function useCookieKey(key) {
     );
 }
 
-function useDismissalCookie() {
+function useDismissalCookie(): [boolean, () => void] {
     const [cookieValue, setCookieValue] = useCookieKey(DISMISSED_KEY);
     const clicked = React.useMemo(
         () => +Number(cookieValue) > 0,
@@ -58,7 +58,10 @@ function useDismissalCookie() {
     return [ready, disable];
 }
 
-function AdoptionContentBase({children, disable}) {
+function AdoptionContentBase({children, disable}: {
+    children: React.ReactNode;
+    disable: () => void;
+}) {
     const {userModel} = useUserContext();
     const {first_name: name} = userModel || {};
     const {pathname} = useLocation();
@@ -92,10 +95,13 @@ function AdoptionContentBase({children, disable}) {
     );
 }
 
-export default function useAdoptionMicrosurveyContent() {
+export default function useAdoptionMicrosurveyContent(): [
+    boolean,
+    (props: {children: React.ReactNode}) => JSX.Element
+] {
     const [ready, disable] = useDismissalCookie();
     const AdoptionContent = React.useCallback(
-        ({children}) => (
+        ({children}: {children: React.ReactNode}) => (
             <AdoptionContentBase disable={disable}>
                 {children}
             </AdoptionContentBase>

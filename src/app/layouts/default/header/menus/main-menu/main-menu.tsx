@@ -14,14 +14,21 @@ import GiveButton from '../give-button/give-button';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
-function DropdownOrMenuItem({item}) {
+type MenuItemData = {
+    name?: string;
+    label?: string;
+    partial_url?: string;
+    menu?: MenuItemData[];
+};
+
+function DropdownOrMenuItem({item}: {item: MenuItemData}) {
     if (! item.name && ! item.label) {
         return null;
     }
-    if ('menu' in item) {
+    if ('menu' in item && item.menu) {
         return (
             <Dropdown
-                label={item.name}
+                label={item.name!}
                 navAnalytics={`Main Menu (${item.name})`}
             >
                 <MenusFromStructure structure={item.menu} />
@@ -29,10 +36,10 @@ function DropdownOrMenuItem({item}) {
         );
     }
 
-    return <MenuItem label={item.label} url={item.partial_url} />;
+    return <MenuItem label={item.label!} url={item.partial_url!} />;
 }
 
-function MenusFromStructure({structure}) {
+function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
     return (
         <React.Fragment>
             {structure.map((item) => (
@@ -43,7 +50,7 @@ function MenusFromStructure({structure}) {
 }
 
 function MenusFromCMS() {
-    const structure = useDataFromSlug('oxmenus');
+    const structure = useDataFromSlug('oxmenus') as MenuItemData[] | null;
 
     if (!structure) {
         return null;
@@ -60,7 +67,7 @@ function SubjectsMenu() {
     const categories = useSubjectCategoryContext();
     const {language} = useLanguageContext();
     // This will have to be revisited if/when we implement more languages
-    const otherLocale = ['en', 'es'].filter((la) => la !== language)[0];
+    const otherLocale = (['en', 'es'] as const).filter((la) => la !== language)[0];
     const {pathname} = useLocation();
 
     if (!categories.length) {
@@ -104,23 +111,25 @@ function SubjectsMenu() {
     );
 }
 
-function navigateWithArrows(event) {
+function navigateWithArrows(event: React.KeyboardEvent<HTMLUListElement>) {
+    const target = event.target as HTMLElement;
+
     switch (event.key) {
         case 'ArrowRight':
             event.preventDefault();
             event.stopPropagation();
-            event.target
+            (target
                 .closest('li')
-                .nextElementSibling?.querySelector('a')
-                .focus();
+                ?.nextElementSibling?.querySelector('a') as HTMLAnchorElement)
+                ?.focus();
             break;
         case 'ArrowLeft':
             event.preventDefault();
             event.stopPropagation();
-            event.target
+            (target
                 .closest('li')
-                .previousElementSibling?.querySelector('a')
-                .focus();
+                ?.previousElementSibling?.querySelector('a') as HTMLAnchorElement)
+                ?.focus();
             break;
         default:
             break;

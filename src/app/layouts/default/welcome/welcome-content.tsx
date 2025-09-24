@@ -6,7 +6,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useNavigate} from 'react-router-dom';
 import './welcome.scss';
 
-function WalkthroughButtons({welcomeDone}) {
+function WalkthroughButtons({welcomeDone}: {welcomeDone: () => void}) {
     const navigate = useNavigate();
 
     function goToMyOpenStax() {
@@ -22,7 +22,7 @@ function WalkthroughButtons({welcomeDone}) {
     }
 
     function showWalkthrough() {
-        window.localStorage.showMyOpenStaxWalkthrough = true;
+        window.localStorage.showMyOpenStaxWalkthrough = 'true';
         goToMyOpenStax();
     }
 
@@ -34,7 +34,7 @@ function WalkthroughButtons({welcomeDone}) {
     );
 }
 
-function CloseButton({welcomeDone}) {
+function CloseButton({welcomeDone}: {welcomeDone: () => void}) {
     return (
         <div className="button-row">
             <button className="primary" onClick={welcomeDone}>Close</button>
@@ -44,20 +44,26 @@ function CloseButton({welcomeDone}) {
 
 const HOUR_IN_MS = 3600000;
 
-function dialogData(isNew, isFaculty, firstName) {
+type DialogData = {
+    title: string;
+    body: string;
+    walkthrough: boolean;
+};
+
+function dialogData(isNew: boolean, isFaculty: boolean, firstName: string): DialogData | null {
     if (isNew) {
         return isFaculty ?
             {
                 title: `Welcome to OpenStax, ${firstName}!`,
                 body: `<p>Your books, additional resources, and profile information are
                 saved here.</p>
-                <p>To get a quick walkthrough of My OpenStax, click “Show me around” –
+                <p>To get a quick walkthrough of My OpenStax, click "Show me around" –
                 or skip the tour and explore on your own.</p>`,
                 walkthrough: true
             } :
             {
                 title: `Thanks, ${firstName}!`,
-                body: `You’re just clicks away from accessing free textbooks and
+                body: `You're just clicks away from accessing free textbooks and
                 resources. Take full advantage of your OpenStax account by using
                 features like highlighting and notetaking in our digital reading
                 experience.`,
@@ -74,7 +80,10 @@ function dialogData(isNew, isFaculty, firstName) {
         } : null;
 }
 
-function CustomDialog({data, welcomeDone}) {
+function CustomDialog({data, welcomeDone}: {
+    data: DialogData;
+    welcomeDone: () => void;
+}) {
     const [Dialog] = useDialog(true);
 
     return (
@@ -98,10 +107,14 @@ export default function Welcome() {
         return null;
     }
 
-    const elapsedHours = (Date.now() - new Date(createdAt)) / HOUR_IN_MS;
+    const elapsedHours = (Date.now() - new Date(createdAt).getTime()) / HOUR_IN_MS;
     const isNew = elapsedHours < 1000; // *** CHANGE THIS TO LIKE 24
     const isFaculty = role === 'Faculty';
     const data = dialogData(isNew, isFaculty, firstName);
+
+    if (!data) {
+        return null;
+    }
 
     return (
         <CustomDialog data={data} welcomeDone={welcomeDone} />
