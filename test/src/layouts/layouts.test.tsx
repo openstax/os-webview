@@ -1,7 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {describe, it} from '@jest/globals';
-import { MemoryRouter } from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import LandingLayout from '~/layouts/landing/landing';
 
 // @ts-expect-error does not exist on

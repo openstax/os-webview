@@ -4,7 +4,7 @@ import {useLocation} from 'react-router-dom';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './menu-expander.scss';
 
-function useCloseOnLocationChange(onClick: (event: object) => void, active: boolean) {
+function useCloseOnLocationChange(toggleActive: (v?: boolean) => void, active: boolean) {
     const location = useLocation();
     const {setActiveDropdown} = useDropdownContext();
     const activeRef = React.useRef<boolean>();
@@ -13,27 +13,27 @@ function useCloseOnLocationChange(onClick: (event: object) => void, active: bool
 
     React.useEffect(() => {
         if (activeRef.current) {
-            onClick({});
+            toggleActive(false);
             setActiveDropdown({});
         }
-    }, [location, onClick, setActiveDropdown]);
+    }, [location, toggleActive, setActiveDropdown]);
 }
 
 type MenuExpanderProps = {
     active: boolean;
-    onClick: (event: React.MouseEvent | React.KeyboardEvent | object) => void;
+    toggleActive: (v?: boolean) => void;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function MenuExpander({active, onClick, ...props}: MenuExpanderProps) {
+export default function MenuExpander({active, toggleActive, ...props}: MenuExpanderProps) {
     const onClickAndBlur = React.useCallback(
         (event: React.MouseEvent<HTMLButtonElement>) => {
-            onClick(event);
+            toggleActive();
             event.currentTarget.blur();
         },
-        [onClick]
+        [toggleActive]
     );
 
-    useCloseOnLocationChange(onClick, active);
+    useCloseOnLocationChange(toggleActive, active);
 
     return (
         <button
