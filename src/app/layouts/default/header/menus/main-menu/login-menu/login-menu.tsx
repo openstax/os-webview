@@ -34,7 +34,7 @@ export default function LoginMenu() {
 
     return (
         loggedIn ?
-            <JITLoad importFn={() => import('./login-menu-with-dropdown')} /> :
+            <JITLoad importFn={() => import('./load-login-menu-with-dropdown.js')} /> :
             <LoginLink />
     );
 }

@@ -14,43 +14,41 @@ import GiveButton from '../give-button/give-button';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
+type MenuDropDown = {
+    name: string;
+    menu: MenuItemData[];
+}
 type MenuItemData = {
-    name?: string;
-    label?: string;
-    partial_url?: string;
-    menu?: MenuItemData[];
+    label: string;
+    partial_url: string;
 };
 
-function DropdownOrMenuItem({item}: {item: MenuItemData}) {
-    if (! item.name && ! item.label) {
-        return null;
-    }
-    if ('menu' in item && item.menu) {
-        return (
-            <Dropdown
-                label={item.name!}
-                navAnalytics={`Main Menu (${item.name})`}
-            >
-                <MenusFromStructure structure={item.menu} />
-            </Dropdown>
-        );
-    }
-
-    return <MenuItem label={item.label!} url={item.partial_url!} />;
+function DropdownItem({item}: {item: MenuDropDown}) {
+    return (
+        <Dropdown
+            label={item.name}
+            navAnalytics={`Main Menu (${item.name})`}
+        >
+            {item.menu.map((menuItem) => (
+                <MenuItem key={menuItem.label} label={menuItem.label} url={menuItem.partial_url} />
+            ))}
+        </Dropdown>
+    );
 }
 
-function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
+
+function MenusFromStructure({structure}: {structure: MenuDropDown[]}) {
     return (
         <React.Fragment>
             {structure.map((item) => (
-                <DropdownOrMenuItem key={item.label} item={item} />
+                <DropdownItem key={item.name} item={item} />
             ))}
         </React.Fragment>
     );
 }
 
 function MenusFromCMS() {
-    const structure = useDataFromSlug('oxmenus') as MenuItemData[] | null;
+    const structure = useDataFromSlug('oxmenus') as MenuDropDown[] | null;
 
     if (!structure) {
         return null;

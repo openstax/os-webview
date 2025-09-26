@@ -15,7 +15,7 @@ export default function MicroSurvey() {
 
     return (
         <div id='microsurvey' style={style}>
-            <QueuedItem onDone={nextItem}>
+            <QueuedItem>
                 <PutAway onClick={nextItem} />
             </QueuedItem>
         </div>

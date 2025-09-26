@@ -33,6 +33,7 @@ export type AccountsUserModel = {
   salesforce_contact_id: string;
   is_instructor_verification_stale: boolean;
   faculty_status: string;
+  using_openstax: boolean;
   contact_infos: {
       type: string;
       value: string;

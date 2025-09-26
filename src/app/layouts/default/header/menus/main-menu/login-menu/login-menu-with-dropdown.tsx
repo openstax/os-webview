@@ -3,8 +3,10 @@ import {useLocation} from 'react-router-dom';
 import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from '../dropdown/dropdown';
+import getSettings from '~/helpers/window-settings';
+import {assertDefined} from '~/helpers/data';
 
-const settings = window.SETTINGS;
+const settings = getSettings();
 const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
 const profileLink = `${settings.accountHref}/profile`;
 
@@ -21,7 +23,7 @@ function AccountItem() {
 
 
 export default function LoginMenuWithDropdown() {
-    const {userModel} = useUserContext();
+    const userModel = assertDefined(useUserContext().userModel);
 
     // updates logoutLink
     useLocation();

@@ -1,6 +1,7 @@
 import React from 'react';
 import JITLoad from '~/helpers/jit-load';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
+import type {TakeoverData} from './common';
 
 const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours
 const LS_KEY = 'takeoverLastDisplay';
@@ -41,7 +42,7 @@ function useDisplayedRecently(): [boolean, () => void] {
 }
 
 export default function TakeOverDialogGateKeeper() {
-    const [data] = [].concat(camelCaseKeys(useDataFromSlug('donations/fundraiser')));
+    const [data] = ([] as unknown[]).concat(camelCaseKeys(useDataFromSlug('donations/fundraiser')));
     const [displayedRecently, setDisplayed] = useDisplayedRecently();
 
     if (!data || displayedRecently) {
@@ -50,8 +51,8 @@ export default function TakeOverDialogGateKeeper() {
 
     return (
         <JITLoad
-            importFn={() => import('./takeover-dialog-content')}
-            data={data} setDisplayed={setDisplayed}
+            importFn={() => import('./load-content.js')}
+            data={data as TakeoverData} setDisplayed={setDisplayed}
         />
     );
 }

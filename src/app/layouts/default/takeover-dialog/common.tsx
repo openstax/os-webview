@@ -12,6 +12,24 @@ type HMS = {
     s: number;
 };
 
+export type BoxData = {
+    messageType: string;
+    message: string;
+    buttonText: string;
+    buttonUrl: string;
+    boxHeadline?: string;
+    boxHtml?: string;
+    goalAmount?: number;
+    goalTime?: string;
+};
+
+export type TakeoverData = BoxData & {
+    fundraiserImage: string;
+    image: string;
+    colorScheme: string;
+    headline: string;
+};
+
 function getHMS(goalTimeMs: number): HMS {
     const msDiff = goalTimeMs - Date.now();
 

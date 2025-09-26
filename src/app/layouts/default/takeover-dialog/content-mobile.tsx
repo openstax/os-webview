@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {Countdown, Amount, GiveButton} from './common';
+import {Countdown, Amount, GiveButton, BoxData, TakeoverData} from './common';
 import './content-mobile.scss';
 
 function HeadlineImage({headline, image}: {headline: string; image: string}) {
@@ -48,17 +48,6 @@ function GoalBox({buttonText, buttonUrl, goalAmount, goalTime, message}: {
     );
 }
 
-type BoxData = {
-    messageType: string;
-    buttonText: string;
-    buttonUrl: string;
-    message: string;
-    boxHeadline?: string;
-    boxHtml?: string;
-    goalAmount?: number;
-    goalTime?: string;
-};
-
 function Box({data}: {data: BoxData}) {
     const boxComponents: Record<string, React.ReactNode> = {
         message: <MessageBox
@@ -76,12 +65,7 @@ function Box({data}: {data: BoxData}) {
     return boxComponents[data.messageType] || <h1>OOPS, {data.messageType}</h1>;
 }
 
-type MobileContentData = BoxData & {
-    headline: string;
-    image: string;
-};
-
-export default function MobileContent({data}: {data: MobileContentData}) {
+export default function MobileContent({data}: {data: TakeoverData}) {
     React.useEffect(() => {
         document.getElementById('header')?.classList.add('over-mobile-dialog');
 

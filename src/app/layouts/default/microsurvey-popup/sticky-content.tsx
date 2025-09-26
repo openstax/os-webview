@@ -5,11 +5,7 @@ import {useStickyData, useSeenCounter} from '../shared';
 const SEEN_ENOUGH = 3;
 
 type StickyContentProps = {
-    stickyData: {
-        body: string;
-        link: string;
-        link_text: string;
-    };
+    stickyData: ReturnType<typeof useStickyData>;
     children: React.ReactNode;
 };
 
@@ -22,9 +18,9 @@ function StickyContent({stickyData, children}: StickyContentProps) {
             data-nudge-placement="popup"
         >
             {children}
-            <RawHTML className="blurb" html={stickyData.body} />
-            <a className="btn primary" href={stickyData.link} data-nudge-action="interacted">
-                {stickyData.link_text}
+            <RawHTML className="blurb" html={stickyData?.bannerInfo.body} />
+            <a className="btn primary" href={stickyData?.bannerInfo.link_url} data-nudge-action="interacted">
+                {stickyData?.bannerInfo.link_text}
             </a>
         </div>
     );
@@ -52,7 +48,7 @@ export default function useStickyMicrosurveyContent(): [
 ] {
     const stickyData = useStickyData();
     const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
-    const BoundStickyContent = useBoundStickyContent(stickyData?.bannerInfo, incrementSeenCount);
+    const BoundStickyContent = useBoundStickyContent(stickyData, incrementSeenCount);
 
     const ready = Boolean(
         stickyData?.mode === 'popup' && !hasBeenSeenEnough

@@ -118,7 +118,7 @@ export function useStickyData(): StickyDataWithBanner | null {
         })),
         []
     );
-    const stickyData = useDataFromPromise(stickyDataPromise);
+    const stickyData = useDataFromPromise(stickyDataPromise) ?? null;
 
     useCampaign(stickyData);
 

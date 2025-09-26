@@ -1,6 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {Countdown, Amount, GiveButton} from './common';
+import {Countdown, Amount, GiveButton, BoxData, TakeoverData} from './common';
 import './content-desktop.scss';
 
 function Logo() {
@@ -69,15 +69,6 @@ function GoalBox({buttonText, buttonUrl, goalAmount, goalTime}: {
     );
 }
 
-type BoxData = {
-    messageType: string;
-    buttonText: string;
-    buttonUrl: string;
-    boxHeadline?: string;
-    boxHtml?: string;
-    goalAmount?: number;
-    goalTime?: string;
-};
 
 function Box({data}: {data: BoxData}) {
     const boxComponents: Record<string, React.ReactNode> = {
@@ -94,13 +85,7 @@ function Box({data}: {data: BoxData}) {
     return boxComponents[data.messageType] || <h1>OOPS, {data.messageType}</h1>;
 }
 
-type DesktopContentData = BoxData & {
-    headline: string;
-    message: string;
-    image: string;
-};
-
-export default function DesktopContent({data}: {data: DesktopContentData}) {
+export default function DesktopContent({data}: {data: TakeoverData}) {
     return (
         <Basic
             headline={data.headline} message={data.message}

@@ -8,11 +8,11 @@ const DISMISSED_KEY = 'renewal_dialog_dismissed';
 
 function useCookieKey(key: string): [string | undefined, (value: string) => void] {
     return React.useReducer(
-        (_: string | undefined, value: string) => {
+        (_: string, value: string) => {
             Cookies.set(key, value);
             return value ? value : '0';
         },
-        Cookies.get(key)
+        Cookies.get(key) ?? '0'
     );
 }
 
@@ -55,7 +55,7 @@ function useDismissalCookie(): [boolean, () => void] {
         [pathname, disable, clicked]
     );
 
-    return [ready, disable];
+    return [Boolean(ready), disable];
 }
 
 function AdoptionContentBase({children, disable}: {

@@ -1,18 +1,13 @@
 import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import {TakeoverContextProvider} from './takeover-context';
+import type {TakeoverData} from './common';
 import {useLocation} from 'react-router-dom';
 import cn from 'classnames';
 import DesktopContent from './content-desktop';
 import MobileContent from './content-mobile';
 import './takeover-dialog.scss';
 
-type TakeoverData = {
-    goalTime?: string;
-    fundraiserImage: string;
-    image?: string;
-    colorScheme: string;
-};
 
 function goalHasPassed(data: TakeoverData): boolean {
     if (!data.goalTime) {
