@@ -9,7 +9,6 @@ import useMainClassContext, {
 } from '~/contexts/main-class';
 import useLanguageContext from '~/contexts/language';
 import ReactModal from 'react-modal';
-import Welcome from './welcome/welcome';
 import TakeoverDialog from './takeover-dialog/takeover-dialog';
 import cn from 'classnames';
 import './default.scss';
@@ -53,7 +52,6 @@ function Main({children}: React.PropsWithChildren<object>) {
             ref={ref}
             tabIndex={-1}
         >
-            <Welcome />
             <TakeoverDialog />
             {children}
         </div>
