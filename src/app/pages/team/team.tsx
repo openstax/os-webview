@@ -2,7 +2,7 @@ import React from 'react';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import Hero from '~/components/hero/hero';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import PeopleTab from './people-tab/people-tab';
+import PeopleTab, {PersonEntry} from './people-tab/people-tab';
 import {Tabs, Item} from '~/components/tablist/tablist';
 import './team.scss';
 
@@ -22,7 +22,7 @@ function TeamPage({
         teamHeader: string;
         openstaxPeople: Array<{
             heading: string;
-            people: unknown[];
+            people: {value: PersonEntry}[];
         }>;
     };
 }) {
