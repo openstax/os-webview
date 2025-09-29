@@ -3,10 +3,17 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {usePutAway} from '../../shared';
 import './sticky-note.scss';
 
-export default function StickyNote({stickyData}) {
+export type StickyNoteProps = {
+    stickyData: {
+        mode: 'emergency';
+        emergency_content: string;
+    } | object | null;
+};
+
+export default function StickyNote({stickyData}: StickyNoteProps) {
     const [closed, PutAway] = usePutAway();
 
-    if (!stickyData || closed || stickyData.mode !== 'emergency') {
+    if (!stickyData || closed || !('emergency_content' in stickyData)) {
         return null;
     }
 

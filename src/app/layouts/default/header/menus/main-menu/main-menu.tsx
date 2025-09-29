@@ -14,36 +14,41 @@ import GiveButton from '../give-button/give-button';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
-function DropdownOrMenuItem({item}) {
-    if (! item.name && ! item.label) {
-        return null;
-    }
-    if ('menu' in item) {
-        return (
-            <Dropdown
-                label={item.name}
-                navAnalytics={`Main Menu (${item.name})`}
-            >
-                <MenusFromStructure structure={item.menu} />
-            </Dropdown>
-        );
-    }
+type MenuDropDown = {
+    name: string;
+    menu: MenuItemData[];
+}
+type MenuItemData = {
+    label: string;
+    partial_url: string;
+};
 
-    return <MenuItem label={item.label} url={item.partial_url} />;
+function DropdownItem({item}: {item: MenuDropDown}) {
+    return (
+        <Dropdown
+            label={item.name}
+            navAnalytics={`Main Menu (${item.name})`}
+        >
+            {item.menu.map((menuItem) => (
+                <MenuItem key={menuItem.label} label={menuItem.label} url={menuItem.partial_url} />
+            ))}
+        </Dropdown>
+    );
 }
 
-function MenusFromStructure({structure}) {
+
+function MenusFromStructure({structure}: {structure: MenuDropDown[]}) {
     return (
         <React.Fragment>
             {structure.map((item) => (
-                <DropdownOrMenuItem key={item.label} item={item} />
+                <DropdownItem key={item.name} item={item} />
             ))}
         </React.Fragment>
     );
 }
 
 function MenusFromCMS() {
-    const structure = useDataFromSlug('oxmenus');
+    const structure = useDataFromSlug('oxmenus') as MenuDropDown[] | null;
 
     if (!structure) {
         return null;
@@ -60,7 +65,7 @@ function SubjectsMenu() {
     const categories = useSubjectCategoryContext();
     const {language} = useLanguageContext();
     // This will have to be revisited if/when we implement more languages
-    const otherLocale = ['en', 'es'].filter((la) => la !== language)[0];
+    const otherLocale = (['en', 'es'] as const).filter((la) => la !== language)[0];
     const {pathname} = useLocation();
 
     if (!categories.length) {
@@ -104,23 +109,26 @@ function SubjectsMenu() {
     );
 }
 
-function navigateWithArrows(event) {
+// eslint-disable-next-line complexity
+function navigateWithArrows(event: React.KeyboardEvent<HTMLUListElement>) {
+    const target = event.target as HTMLElement;
+
     switch (event.key) {
         case 'ArrowRight':
             event.preventDefault();
             event.stopPropagation();
-            event.target
+            (target
                 .closest('li')
-                .nextElementSibling?.querySelector('a')
-                .focus();
+                ?.nextElementSibling?.querySelector('a') as HTMLAnchorElement)
+                ?.focus();
             break;
         case 'ArrowLeft':
             event.preventDefault();
             event.stopPropagation();
-            event.target
+            (target
                 .closest('li')
-                .previousElementSibling?.querySelector('a')
-                .focus();
+                ?.previousElementSibling?.querySelector('a') as HTMLAnchorElement)
+                ?.focus();
             break;
         default:
             break;

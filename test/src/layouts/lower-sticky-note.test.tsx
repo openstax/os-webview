@@ -26,7 +26,7 @@ const stickyData = {
         banner_thumbnail:
             'https://assets.openstax.org/oscms-dev/media/original_images/subj-icon-science.png'
     }
-};
+} as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 /* eslint-disable camelcase */
 describe('lower-sticky-note', () => {

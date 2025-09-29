@@ -38,7 +38,9 @@ type RawHTMLArgs = {
     Tag?: string;
     html?: TrustedHTML;
     embed?: boolean;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & React.HTMLAttributes<HTMLDivElement> & {
+    href?: string;
+};
 
 export default function RawHTML({
     Tag = 'div',

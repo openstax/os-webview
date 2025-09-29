@@ -1,13 +1,15 @@
 import React from 'react';
 import {useDialog} from '~/components/dialog/dialog';
 import {TakeoverContextProvider} from './takeover-context';
+import type {TakeoverData} from './common';
 import {useLocation} from 'react-router-dom';
 import cn from 'classnames';
 import DesktopContent from './content-desktop';
 import MobileContent from './content-mobile';
 import './takeover-dialog.scss';
 
-function goalHasPassed(data) {
+
+function goalHasPassed(data: TakeoverData): boolean {
     if (!data.goalTime) {
         return false;
     }
@@ -16,8 +18,11 @@ function goalHasPassed(data) {
     return goalTimeMs < Date.now();
 }
 
-export default function TakeoverBanner({data, setDisplayed}) {
-    const [Dialog, _, close, isOpen] = useDialog(true);
+export default function TakeoverBanner({data, setDisplayed}: {
+    data: TakeoverData;
+    setDisplayed: () => void;
+}) {
+    const [Dialog, , close, isOpen] = useDialog(true);
     const location = useLocation();
     const initialLoc = React.useRef(location);
 

@@ -1,0 +1,15 @@
+[
+    {
+        "color_scheme": "orange",
+        "message_type": "message",
+        "headline": "Congratulations, OpenStax Class of 2025!",
+        "message": "Every year, millions of students use OpenStax resources to get an amazing education and launch the next phase of their careers. Now, let’s help the next generation reach the graduation stage.",
+        "button_text": "Celebrate grads. Support the future.",
+        "button_url": "https://riceconnect.rice.edu/donation/openstax-homepage-takeover",
+        "box_headline": "Education changes everything. Help it stay free.",
+        "box_html": "\"OpenStax reignited my passion for learning and opened doors to a future I once only dreamed of.” — Julie, OpenStax Class of 2025",
+        "fundraiser_image": "https://assets.openstax.org/oscms-prodcms/media/graduation_homepage_takeover-2.jpg",
+        "goal_amount": 0,
+        "goal_time": "2025-05-21T20:00:00-05:00"
+    }
+]

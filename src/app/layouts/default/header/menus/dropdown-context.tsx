@@ -3,7 +3,7 @@ import {useState} from 'react';
 
 function useContextValue({prefix} = {prefix: 'menulabel'}) {
     const [activeDropdown, setActiveDropdown] = useState<
-        React.MutableRefObject<HTMLAnchorElement> | Record<string, never>
+        React.MutableRefObject<HTMLAnchorElement | null> | Record<string, never>
     >({});
     const [submenuLabel, setSubmenuLabel] = useState<string>();
 

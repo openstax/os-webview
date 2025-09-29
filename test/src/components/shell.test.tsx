@@ -10,7 +10,6 @@ import * as GP from '~/pages/general/general';
 import * as LDH from '~/layouts/default/header/header';
 import * as MM from '~/layouts/default/header/menus/menus';
 import * as MSP from '~/layouts/default/microsurvey-popup/microsurvey-popup';
-import * as WC from '~/layouts/default/welcome/welcome-content';
 import * as TD from '~/layouts/default/takeover-dialog/takeover-dialog';
 import * as LSN from '~/layouts/default/lower-sticky-note/lower-sticky-note';
 import * as DH from '~/helpers/use-document-head';
@@ -89,7 +88,6 @@ describe('shell', () => {
         jest.spyOn(LDH, 'default').mockReturnValue(<></>);
         jest.spyOn(MM, 'default').mockReturnValue(<></>);
         jest.spyOn(MSP, 'default').mockReturnValue(null);
-        jest.spyOn(WC, 'default').mockReturnValue(null);
         jest.spyOn(TD, 'default').mockReturnValue(null);
         jest.spyOn(LSN, 'default').mockReturnValue(null);
         jest.spyOn(DH, 'setPageDescription').mockReturnValue(undefined);
