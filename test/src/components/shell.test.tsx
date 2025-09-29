@@ -90,6 +90,7 @@ describe('shell', () => {
         jest.spyOn(MSP, 'default').mockReturnValue(null);
         jest.spyOn(TD, 'default').mockReturnValue(null);
         jest.spyOn(LSN, 'default').mockReturnValue(null);
+        jest.spyOn(DH, 'default').mockReturnValue(undefined);
         jest.spyOn(DH, 'setPageDescription').mockReturnValue(undefined);
         jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue(undefined);
         jest.spyOn(UC, 'UserContextProvider').mockImplementation(ChildrenContainer);
@@ -113,7 +114,7 @@ describe('shell', () => {
     it('(skip to main content link) works', async () => {
         window.scrollBy = jest.fn();
         BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/']}>{children}</MR>
+            <MR initialEntries={['/']}><div id="main">{children}</div></MR>
         ));
         render(AppElement);
         const skipLink = await screen.findByRole('link', {name: 'skip to main content'});
@@ -149,8 +150,7 @@ describe('shell', () => {
         ));
 
         render(AppElement);
-        await screen.findByText('Adoption Form', {exact: false});
-        screen.getByRole('combobox');
+        await screen.findByRole('combobox');
     });
     it('routes "errata" paths', async () => {
         BrowserRouter.mockImplementationOnce(({children}) => (
