@@ -4,25 +4,61 @@ import LoaderPage from '~/components/jsx-helpers/loader-page';
 import ClippedImage from '~/components/clipped-image/clipped-image';
 import './foundation.scss';
 
+type FunderData = {
+    funderName: string;
+    url?: string;
+};
+
+type ImageData = {
+    file: string;
+};
+
+type FoundationGroupData = {
+    groupTitle: string;
+    description: string;
+    funders: FunderData[];
+    image?: ImageData;
+};
+
+type FoundationPageData = {
+    bannerImage: {
+        meta: {
+            downloadUrl: string;
+        };
+    };
+    bannerHeading: string;
+    bannerDescription: string;
+    funderGroups: FoundationGroupData[];
+    disclaimer: string;
+};
+
 const slug = 'pages/supporters';
 
-function Funder({data}) {
-    return (
-        data.url ?
-            <a href={data.url}>{data.funderName}</a> :
-            <span>{data.funderName}</span>
+function Funder({data}: {data: FunderData}) {
+    return data.url ? (
+        <a href={data.url}>{data.funderName}</a>
+    ) : (
+        <span>{data.funderName}</span>
     );
 }
 
-function Funders({data}) {
+function Funders({data}: {data: FunderData[]}) {
     return (
         <div className="funders">
-            {data.map((f, i) => <Funder key={i} data={f} />)}
+            {data.map((f, i) => (
+                <Funder key={i} data={f} />
+            ))}
         </div>
     );
 }
 
-function FundersWithImage({data, image}) {
+function FundersWithImage({
+    data,
+    image
+}: {
+    data: FunderData[];
+    image: ImageData;
+}) {
     return (
         <div className="funders-with-image">
             <Funders data={data} />
@@ -31,21 +67,21 @@ function FundersWithImage({data, image}) {
     );
 }
 
-function FoundationGroup({data}) {
+function FoundationGroup({data}: {data: FoundationGroupData}) {
     return (
         <div className="funder-group">
             <h2>{data.groupTitle}</h2>
             <div className="description">{data.description}</div>
-            {
-                data.image?.file ?
-                    <FundersWithImage data={data.funders} image={data.image} /> :
-                    <Funders data={data.funders} />
-            }
+            {data.image?.file ? (
+                <FundersWithImage data={data.funders} image={data.image} />
+            ) : (
+                <Funders data={data.funders} />
+            )}
         </div>
     );
 }
 
-function FoundationPage({data: model}) {
+function FoundationPage({data: model}: {data: FoundationPageData}) {
     return (
         <React.Fragment>
             <div className="banner">
@@ -57,7 +93,9 @@ function FoundationPage({data: model}) {
                     </div>
                 </div>
             </div>
-            {model.funderGroups.map((g, i) => <FoundationGroup key={i} data={g} />)}
+            {model.funderGroups.map((g, i) => (
+                <FoundationGroup key={i} data={g} />
+            ))}
             <div className="disclaimer">{model.disclaimer}</div>
         </React.Fragment>
     );
