@@ -24,18 +24,6 @@ type StickyDataWithBanner = StickyDataRaw & {
     mode: 'emergency' | 'popup' | 'banner' | null;
 };
 
-// Shim for incognito windows that disable localStorage
-if (!window.localStorage) {
-    window.localStorage = {
-        getItem(key: string) {return window.localStorage[key];},
-        setItem() {},
-        removeItem() {},
-        clear() {},
-        key() {return null;},
-        length: 0
-    };
-}
-
 export function useSeenCounter(seenEnough: number): [boolean, () => void] {
     const [counter, increment] = React.useReducer(
         (s: number) => s + 1,

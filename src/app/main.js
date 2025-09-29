@@ -6,6 +6,16 @@ const GLOBAL_SETTINGS = ['piAId', 'piCId', 'piHostname'];
 
 window.SETTINGS = {};
 
+// Shim for incognito windows that disable localStorage
+window.localStorage ??= {
+    getItem(key) {return window.localStorage[key];},
+    setItem() {},
+    removeItem() {},
+    clear() {},
+    key() {return null;},
+    length: 0
+};
+
 (async () => {
     const settings = (await cmsFetch('webview-settings')).settings;
 

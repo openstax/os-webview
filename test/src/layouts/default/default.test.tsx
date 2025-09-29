@@ -33,12 +33,12 @@ let mockPathname = {pathname: '/test-path'};
 jest.mock('react-router-dom', () => ({
     useLocation: () => mockPathname
 }));
-jest.mock('~/layouts/default/microsurvey-popup/microsurvey-popup', () => ({
-    __esModule: true,
-    default: () => <></>
-}));
+// jest.mock('~/layouts/default/microsurvey-popup/microsurvey-popup', () => ({
+//     __esModule: true,
+//     default: () => <></>
+// }));
 
-const mockUseSharedDataContext = jest.fn().mockReturnValue(false);
+const mockUseSharedDataContext = jest.fn().mockReturnValue({stickyFooterState: [false, () => undefined]});
 
 jest.mock('~/contexts/shared-data', () => ({
     __esModule: true,
@@ -70,7 +70,7 @@ describe('Layouts Default TypeScript Conversions', () => {
     });
 
     describe('shared.tsx utilities', () => {
-        test('useSeenCounter hook works with TypeScript types', () => {
+        test('useSeenCounter hook works with TypeScript types', async () => {
             const TestComponent = () => {
                 const [hasBeenSeenEnough, increment] = useSeenCounter(5);
 
@@ -84,6 +84,15 @@ describe('Layouts Default TypeScript Conversions', () => {
 
             render(<TestComponent />);
             expect(screen.getByTestId('seen-enough')).toHaveTextContent('false');
+            const saveLS = window.localStorage;
+            const saveWarn = console.warn;
+
+            console.warn = jest.fn();
+            Reflect.deleteProperty(window, 'localStorage');
+            await user.click(screen.getByRole('button'));
+            expect(console.warn).toHaveBeenCalledWith('LocalStorage restricted');
+            Reflect.defineProperty(window, 'localStorage', {value: saveLS});
+            console.warn = saveWarn;
         });
 
         test('usePutAway hook returns proper TypeScript types', () => {
