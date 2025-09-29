@@ -38,16 +38,19 @@ export function RouteAsPortalOrNot() {
             setPortal(assertDefined(name));
             return null;
         }
+
         if (!other) {
             return <FlexPageUsingItsOwnLayout data={data} />;
         }
-        if (isNoDataPage(assertDefined(name))) {
+
+        if (isNoDataPage(other)) {
             return (
                 <LayoutUsingData data={data}>
-                    <ImportedPage name={name} />
+                    <ImportedPage name={other} />
                 </LayoutUsingData>
             );
         }
+
         return (
             <LayoutUsingData data={data}>
                 <Routes>
@@ -69,20 +72,15 @@ export function RouteAsPortalOrNot() {
     return <NonFlexPageUsingDefaultLayout data={data} />;
 }
 
-// eslint-disable-next-line complexity
 function PortalSubRoute() {
     const {name, data, hasError} = usePageDataFromRoute();
-
-    if (!data) {
-        return null;
-    }
 
     if (hasError) {
         return <Error404 />;
     }
 
     if (isFlexPage(data)) {
-        return <FlexPage data={data} />;
+        return <FlexPage data={assertDefined(data)} />;
     }
 
     if (data?.body) {

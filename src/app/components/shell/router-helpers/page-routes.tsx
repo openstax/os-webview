@@ -54,7 +54,6 @@ export function DetailsRoutes() {
     );
 }
 
-// eslint-disable-next-line complexity
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
     const {'*': path} = useParams();

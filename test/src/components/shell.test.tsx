@@ -1,6 +1,7 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 import AppElement from '~/components/shell/shell';
 import * as RRD from 'react-router-dom';
 import MR from '~/../../test/helpers/future-memory-router';
@@ -18,6 +19,7 @@ import * as UC from '~/contexts/user';
 import {camelCaseKeys, transformData} from '~/helpers/page-data-utils';
 import landingPage from '../data/landing-page';
 import contactPage from '../data/contact-page';
+import formHeadings from '../data/form-headings';
 import homePage from '../data/home-page';
 import subjectPage from '../data/new-subjects';
 import flexPage from '../data/flex-page';
@@ -26,8 +28,16 @@ import ChildrenContainer from '~/../../test/helpers/mock-children-container';
 
 const {useLocation} = RRD;
 const BrowserRouter = jest.spyOn(RRD, 'BrowserRouter').mockImplementation(({children}) => (
-    <MR initialEntries={['/']}>{children}</MR>
+    <MR initialEntries={['/']}><div id="main">{children}</div></MR>
 ));
+
+function mockBrowserInitialEntries(entries: string[]) {
+    BrowserRouter.mockImplementationOnce(({children}) => (
+        <MR initialEntries={entries} >
+            {children}
+        </MR>
+    ));
+}
 
 jest.mock('react-modal', () => ({
     setAppElement: jest.fn()
@@ -42,13 +52,24 @@ describe('shell', () => {
 
         return <div>-{loc.pathname}-</div>;
     }
+    function mockBrowserInitialEntriesWithLocation(entries: string[]) {
+        BrowserRouter.mockImplementationOnce(({children}) => (
+            <MR initialEntries={entries} >
+                {children}
+                <LocationDisplay />
+            </MR>
+        ));
+    }
+
     // eslint-disable-next-line complexity
     const spyUpd = jest.spyOn(UPD, 'default').mockImplementation((path) => {
         switch (path) {
+            case 'pages/form-headings?locale=en':
+                return camelCaseKeys(formHeadings);
             case 'pages/landing-page':
                 return camelCaseKeys(landingPage);
             case 'pages/flex-page':
-                // @ts-expect-error some format thing
+                // @ts-expect-error flexPage type
                 return camelCaseKeys(flexPage);
             case 'pages/contact':
                 return camelCaseKeys(transformData(contactPage));
@@ -75,6 +96,7 @@ describe('shell', () => {
     });
     const setPortal = jest.fn();
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
+    const saveWarn = console.warn;
 
     function setPortalPrefix(portalPrefix: string) {
         jest.spyOn(PC, 'default').mockReturnValue({
@@ -92,6 +114,7 @@ describe('shell', () => {
         jest.spyOn(WC, 'default').mockReturnValue(null);
         jest.spyOn(TD, 'default').mockReturnValue(null);
         jest.spyOn(LSN, 'default').mockReturnValue(null);
+        jest.spyOn(DH, 'default').mockReturnValue(undefined);
         jest.spyOn(DH, 'setPageDescription').mockReturnValue(undefined);
         jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue(undefined);
         jest.spyOn(UC, 'UserContextProvider').mockImplementation(ChildrenContainer);
@@ -103,9 +126,7 @@ describe('shell', () => {
     });
 
     it('Delivers embedded contact page', async () => {
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/embedded/contact']} >{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/embedded/contact']);
         spyUpd.mockReturnValueOnce(null);
 
         render(AppElement);
@@ -120,10 +141,7 @@ describe('shell', () => {
         const piTracker = jest.fn();
 
         w.piTracker = (path: string) => piTracker(path);
-
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/']}>{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/']);
 
         render(AppElement);
 
@@ -132,9 +150,7 @@ describe('shell', () => {
     });
     it('(skip to main content link) works', async () => {
         window.scrollBy = jest.fn();
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/']}>{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/']);
         render(AppElement);
         const skipLink = await screen.findByRole('link', {name: 'skip to main content'});
 
@@ -142,174 +158,163 @@ describe('shell', () => {
         await waitFor(() => expect(window.scrollBy).toHaveBeenCalled());
     });
     it('routes "home/anything" to top-level', async () => {
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/home/anything']} >
-                {children}
-                <LocationDisplay />
-            </MR>
-        ));
+        mockBrowserInitialEntriesWithLocation(['/home/anything']);
 
         render(AppElement);
         await screen.findByText('-/-');
     });
     it('routes "general/anything" to "/anything"', async () => {
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/general/anything']} >
-                {children}
-                <LocationDisplay />
-            </MR>
-        ));
+        mockBrowserInitialEntriesWithLocation(['/general/anything']);
 
         render(AppElement);
         await screen.findByText('-/anything-');
     });
     it('routes adoption (no CMS page data) page', async () => {
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/adoption']} >{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/adoption']);
 
         render(AppElement);
-        await screen.findByText('Adoption Form', {exact: false});
-        screen.getByRole('combobox');
+        await screen.findByRole('combobox');
+        await screen.findByText('Let us know you\'re using OpenStax');
+    });
+    it('sets portal before routing to page in a portal', async () => {
+        setPortalPrefix('');
+        mockBrowserInitialEntries(['/landing-page/adoption']);
+        render(AppElement);
+
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+    });
+
+    it('routes adoption (no CMS page data) page when in portal', async () => {
+        console.warn = jest.fn();
+        setPortalPrefix('/landing-page');
+        mockBrowserInitialEntries(['/landing-page/adoption']);
+
+        render(AppElement);
+
+        await screen.findByRole('combobox');
+        await screen.findByText('Let us know you\'re using OpenStax');
+        await waitFor(() => expect(console.warn).toHaveBeenCalled());
+        console.warn = saveWarn;
     });
     it('routes "errata" paths', async () => {
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/errata']} >{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/errata']);
 
         render(AppElement);
         await screen.findByText('No book or errata ID selected');
     });
     it('routes "details" paths (top level routes to Subjects)', async () => {
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/details']} >{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/details']);
 
         render(AppElement);
         await screen.findByRole('heading', {level: 1, name: 'Browse our subjects'});
     });
-    it('routes "books" to details', async () => {
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/books/some-book']} >{children}</MR>
-        ));
+    it('routes "books/*" to details', async () => {
+        mockBrowserInitialEntries(['/books/some-book']);
+
+        render(AppElement);
+        await waitFor(() => expect(document.querySelector('main.details-page')).toBeTruthy);
+    });
+    it('routes "books" to 404', async () => {
+        mockBrowserInitialEntries(['/books']);
 
         render(AppElement);
         await waitFor(() => expect(document.querySelector('main.details-page')).toBeTruthy);
     });
     it('returns 404 for unknown path', async () => {
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/invalid']} >{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/invalid']);
 
         render(AppElement);
         await screen.findByText('Uh-oh', {exact: false});
     });
+    it('routes general page to fetch spike/slug', async () => {
+        mockBrowserInitialEntries(['/general-page']);
+        render(AppElement);
+        await screen.findByText('Loaded page ""');
+    });
     it('sets portal when handling a portal page', async () => {
         setPortalPrefix('');
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/landing-page']} >{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/landing-page']);
         render(AppElement);
 
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
-    });
-    it('routes books routes to portal/books', async () => {
-        setPortalPrefix('portal');
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/books/slug']} >{children}</MR>
-        ));
-        render(AppElement);
-        // Nothing can really be checked; code coverage in rex-portal
     });
     it('renders nothing when data is null', async () => {
         setPortalPrefix('/landing-page');
 
         spyUpd.mockReturnValueOnce(null);
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/landing-page']} >{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/landing-page']);
         render(AppElement);
 
         await expect(screen.findByRole('link', {name: 'K12 resources'})).rejects.toThrow();
     });
-    it('renders as a portal route', async () => {
+    it('renders page within a portal route', async () => {
         setPortalPrefix('/');
 
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/landing-page/contact']} >{children}</MR>
-        ));
+        mockBrowserInitialEntries(['/landing-page/contact']);
         render(AppElement);
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
     });
-    it('routes general page properly', async () => {
-        setPortalPrefix('');
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/general-page']} >{children}</MR>
-        ));
+    // -- Warnings are generated from failed reads
+    it('renders as a portal route with nothing beyond the portal', async () => {
+        console.warn = jest.fn();
+        setPortalPrefix('/landing-page');
 
+        mockBrowserInitialEntries(['/landing-page/']);
+        render(AppElement);
+        await screen.findByText('Loaded page ""');
+        await waitFor(() => expect(console.warn).toHaveBeenCalled());
+        console.warn = saveWarn;
+    });
+        it('renders page within a portal route', async () => {
+        setPortalPrefix('/');
+
+        mockBrowserInitialEntries(['/landing-page/contact']);
+        render(AppElement);
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+    });
+    it('renders ordinary page through portal', async () => {
+        console.warn = jest.fn();
+        setPortalPrefix('/landing-page');
+
+        mockBrowserInitialEntries(['/landing-page/contact']);
+        render(AppElement);
+        expect(await screen.findByText('What is your question about?')).toBeInTheDocument();
+        await waitFor(() => expect(console.warn).toHaveBeenCalled());
+        console.warn = saveWarn;
+    });
+    it('returns 404 for unknown portal path', async () => {
+        console.warn = jest.fn();
+        setPortalPrefix('/landing-page');
+
+        mockBrowserInitialEntries(['/landing-page/invalid']);
+        render(AppElement);
+        await screen.findByText('Uh-oh, no page here');
+        await waitFor(() => expect(console.warn).toHaveBeenCalled());
+        console.warn = saveWarn;
+    });
+    it('loads flex page within a portal route', async () => {
+        console.warn = jest.fn();
+        setPortalPrefix('/landing-page');
+        mockBrowserInitialEntries(['/landing-page/flex-page']);
+        render(AppElement);
+        await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
+        await waitFor(() => expect(console.warn).toHaveBeenCalled());
+        console.warn = saveWarn;
+    });
+    it('reroutes flex pages with extra path components to the page', async () => {
+        setPortalPrefix('');
+        mockBrowserInitialEntries(['/flex-page/extra/junk']);
+        render(AppElement);
+        await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
+    });
+    it('loads general page within a portal route', async () => {
+        console.warn = jest.fn();
+        setPortalPrefix('/landing-page');
+        mockBrowserInitialEntries(['/landing-page/general-page']);
         render(AppElement);
         await waitFor(() => expect(spyGP).toHaveBeenCalled());
         spyGP.mockClear();
+        await waitFor(() => expect(console.warn).toHaveBeenCalled());
+        console.warn = saveWarn;
     });
-    /* Below: tests that fail in strange ways */
-    // it('renders as FlexPage when portal is properly set', async () => {
-    //     setPortalPrefix('/landing-page');
-
-    //     BrowserRouter.mockImplementationOnce(({children}) => (
-    //         <MR initialEntries={['/landing-page']} >{children}</MR>
-    //     ));
-    //     render(AppElement);
-
-    //     await screen.findByRole('link', {name: 'K12 resources'});
-    // });
-    // it('renders nothing when portal route data is null', async () => {
-    //     setPortalPrefix('/landing-page');
-
-    //     BrowserRouter.mockImplementationOnce(({children}) => (
-    //         <MR initialEntries={['/landing-page/contact']} >{children}</MR>
-    //     ));
-    //     render(AppElement);
-    //     await expect(screen.findByRole('form')).rejects.toThrow();
-    // });
-    // it('returns 404 for unknown portal path', async () => {
-    //     BrowserRouter.mockImplementationOnce(({children}) => (
-    //         <MR initialEntries={['/landing-page/invalid']} >{children}</MR>
-    //     ));
-
-    //     render(AppElement);
-    //     await screen.findByText('Uh-oh', {exact: false});
-    // });
-    // it('loads flex pages that are not landing pages', async () => {
-    //     setPortalPrefix('');
-    //     BrowserRouter.mockImplementationOnce(({children}) => (
-    //         <MR initialEntries={['/flex-page']} >{children}</MR>
-    //     ));
-    //     render(AppElement);
-    //     await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
-    // });
-    // it('loads flex page within a portal route', async () => {
-    //     setPortalPrefix('/landing-page');
-    //     BrowserRouter.mockImplementationOnce(({children}) => (
-    //         <MR initialEntries={['/landing-page/flex-page']} >{children}</MR>
-    //     ));
-    //     render(AppElement);
-    //     await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
-    // });
-    // it('reroutes flex pages with extra path components to the page', async () => {
-    //     setPortalPrefix('');
-    //     BrowserRouter.mockImplementationOnce(({children}) => (
-    //         <MR initialEntries={['/flex-page/extra/junk']} >{children}</MR>
-    //     ));
-    //     render(AppElement);
-    //     await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
-    // });
-    // it('loads general page within a portal route', async () => {
-    //     setPortalPrefix('/landing-page');
-    //     BrowserRouter.mockImplementationOnce(({children}) => (
-    //         <MR initialEntries={['/landing-page/general-page']} >{children}</MR>
-    //     ));
-    //     render(AppElement);
-    //     await waitFor(() => expect(spyGP).toHaveBeenCalled());
-    //     spyGP.mockClear();
-    // });
 });
