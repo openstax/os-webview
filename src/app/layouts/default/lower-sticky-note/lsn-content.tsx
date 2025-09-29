@@ -7,7 +7,7 @@ import cn from 'classnames';
 import './lower-sticky-note.scss';
 
 type BannerInfo = {
-    html_message: string;
+    html_message?: string;
     link_url: string;
     link_text: string;
     banner_thumbnail?: string;

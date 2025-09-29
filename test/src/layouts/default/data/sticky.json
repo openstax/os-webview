@@ -1,0 +1,11 @@
+{
+    "start": "2024-06-10T04:00:00Z",
+    "expires": "2027-03-31T04:00:00Z",
+    "show_popup": false,
+    "header": "Give Now!",
+    "body": "Imagine a world where every student has free access to education. By making a monthly gift, you help build that future. Start your recurring donation today.",
+    "link_text": "Give now!",
+    "link": "https://riceconnect.rice.edu/donation/support-openstax-banner",
+    "emergency_expires": "2024-05-31T23:00:00Z",
+    "emergency_content": "The OpenStax office will be closed on Friday, May 05. We will resume normal business hours on May 08. OpenStax textbooks and resources are always available anytime, anywhere."
+}

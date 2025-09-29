@@ -1,0 +1,35 @@
+[
+    {
+        "name": "Technology",
+        "menu": [
+            {"label": "OpenStax Assignable", "partial_url": "/assignable"},
+            {"label": "OpenStax Kinetic", "partial_url": "/kinetic"},
+            {
+                "label": "OpenStax Technology Partners",
+                "partial_url": "/partners"
+            },
+            {
+                "label": "SafeInsights",
+                "partial_url": "https://www.safeinsights.org/"
+            }
+        ]
+    },
+    {
+        "name": "What we do",
+        "menu": [
+            {"label": "About us", "partial_url": "/about"},
+            {"label": "Team", "partial_url": "/team"},
+            {"label": "Research", "partial_url": "/research"},
+            {"label": "K12 Books & Resources", "partial_url": "/k12"},
+            {
+                "label": "Institutional Partnerships",
+                "partial_url": "/institutional-partnership"
+            },
+            {
+                "label": "Technology Partnerships",
+                "partial_url": "/openstax-ally-technology-partner-program"
+            },
+            {"label": "Webinars", "partial_url": "/webinars"}
+        ]
+    }
+]

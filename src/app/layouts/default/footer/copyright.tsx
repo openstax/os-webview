@@ -7,9 +7,7 @@ type Props = {
 }
 
 export default function Copyright({copyright, apStatement}: Props) {
-    const updatedCopyright = copyright
-        ? copyright.replace(/-\d+/, `-${new Date().getFullYear()}`)
-        : copyright;
+    const updatedCopyright = copyright?.replace(/-\d+/, `-${new Date().getFullYear()}`);
 
     return (
         <React.Fragment>

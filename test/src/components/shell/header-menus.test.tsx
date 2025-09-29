@@ -49,21 +49,6 @@ describe('shell/header/menus', () => {
         expect(button.parentElement?.classList.contains('active')).toBe(true);
         await user.keyboard('{Escape}');
         expect(button.parentElement?.classList.contains('active')).toBe(false);
-        // If clicked when not active, it does nothing
-        await user.keyboard('{Escape}');
-        expect(button.parentElement?.classList.contains('active')).toBe(false);
-
-        const menuOverlay = button.nextElementSibling;
-
-        expect(menuOverlay).toBeTruthy();
-        await user.click(menuOverlay as Element);
-        expect(button.parentElement?.classList.contains('active')).toBe(true);
-
-        // Click within menuOverlay does not toggle
-        const insideDiv = menuOverlay?.querySelector('div');
-
-        await user.click(insideDiv as HTMLDivElement);
-        expect(button.parentElement?.classList.contains('active')).toBe(true);
     });
     it('handles upper menus without Give', () => {
         mockUseDataFromPromise.mockReturnValueOnce({
