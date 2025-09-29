@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import {assertNotNull} from '~/helpers/data';
 import LoaderPage from '~/components/jsx-helpers/loader-page';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons/faInfoCircle';
@@ -8,8 +9,27 @@ import useRouterContext from '~/components/shell/router-context';
 import cn from 'classnames';
 import './hero.scss';
 
-function useBookInfo(book) {
-    const [info, setInfo] = useState([]);
+type HeroData = {
+    aboutHeader: string;
+    aboutText: string;
+    aboutPopup: string;
+}
+
+type HeroProps = {
+    book: string;
+}
+
+type HeroContentProps = {
+    data: HeroData;
+}
+
+type PopTipProps = {
+    html: string;
+    isOpen: boolean;
+}
+
+function useBookInfo(book: string): [string, string] {
+    const [info, setInfo] = useState<[string, string]>(['', '']);
     const {fail} = useRouterContext();
 
     useEffect(() => {
@@ -30,12 +50,20 @@ function useBookInfo(book) {
     return info;
 }
 
-const middle = '-135';
+const middle = -135;
 const margin = 3;
 
-function shiftIntoView(ref, leftOffset, setLeftOffset) {
-    const {left, right} = ref.current.getBoundingClientRect();
-    const {right: pageRight} = ref.current.closest('.page').getBoundingClientRect();
+function shiftIntoView(
+    ref: React.RefObject<HTMLDivElement>,
+    leftOffset: number,
+    setLeftOffset: (value: number) => void
+) {
+    const poptipEl = assertNotNull(ref.current);
+
+    const {left, right} = poptipEl.getBoundingClientRect();
+    const pageElement = assertNotNull(poptipEl.closest('.page'));
+
+    const {right: pageRight} = pageElement.getBoundingClientRect();
     const overRight = right - pageRight + margin;
     const overLeft = margin - left;
     const rightWants = Math.min(middle, leftOffset - overRight);
@@ -44,19 +72,23 @@ function shiftIntoView(ref, leftOffset, setLeftOffset) {
     setLeftOffset(leftWants);
 }
 
-function usePopTipStyle(isOpen) {
-    const ref = React.useRef();
-    const [leftOffset, setLeftOffset] = React.useState(middle);
+function usePopTipStyle(isOpen: boolean) {
+    const ref = React.useRef<HTMLDivElement>(null);
+    const [leftOffset, setLeftOffset] = React.useState<number>(middle);
 
     useEffect(
-        () => shiftIntoView(ref, leftOffset, setLeftOffset),
+        () => {
+            if (isOpen) {
+                shiftIntoView(ref, leftOffset, setLeftOffset);
+            }
+        },
         [isOpen, leftOffset]
     );
 
     return {ref, style: {left: leftOffset}};
 }
 
-function PopTip({html, isOpen}) {
+function PopTip({html, isOpen}: PopTipProps) {
     const {ref, style} = usePopTipStyle(isOpen);
 
     return (
@@ -72,16 +104,14 @@ function PopTip({html, isOpen}) {
 }
 
 function usePopTipState() {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = React.useState<boolean>(false);
+    const activate = React.useCallback(() => setIsOpen(true), []);
+    const deactivate = React.useCallback(() => setIsOpen(false), []);
 
-    return {
-        isOpen,
-        activate() {setIsOpen(true);},
-        deactivate() {setIsOpen(false);}
-    };
+    return {isOpen, activate, deactivate};
 }
 
-function HeroContent({data}) {
+function HeroContent({data}: HeroContentProps) {
     const {isOpen, activate, deactivate} = usePopTipState();
 
     return (
@@ -92,7 +122,7 @@ function HeroContent({data}) {
                 {' '}
                 <span
                     className={cn('with-tooltip', {active: isOpen})}
-                    tabIndex="0"
+                    tabIndex={0}
                     onMouseEnter={activate} onMouseLeave={deactivate}
                     onFocus={activate} onBlur={deactivate}
                 >
@@ -104,18 +134,18 @@ function HeroContent({data}) {
     );
 }
 
-export default function Hero({book}) {
+export default function Hero({book}: HeroProps) {
     const [slug, title] = useBookInfo(book);
 
-    if (!slug) {
-        return null;
-    }
     return (
         <div className="hero">
-            <div className="text-area">
-                <h1>{title} Errata</h1>
-                <LoaderPage slug="pages/errata" Child={HeroContent} />
-            </div>
+            {slug ?
+                <div className="text-area">
+                    <h1>{title} Errata</h1>
+                    <LoaderPage slug="pages/errata" Child={HeroContent} />
+                </div> :
+                null
+            }
         </div>
     );
 }
