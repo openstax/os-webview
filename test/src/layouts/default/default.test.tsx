@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {useSeenCounter, usePutAway, useStickyData} from '~/layouts/default/shared';
-import {MenuItem} from '~/layouts/default/header/menus/main-menu/dropdown/dropdown';
+// import {MenuItem} from '~/layouts/default/header/menus/main-menu/dropdown/dropdown';
 import DefaultLayout from '~/layouts/default/default';
 import stickyData from './data/sticky.json';
 import fundraiserData from './data/fundraiser.json';
