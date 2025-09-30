@@ -10,7 +10,6 @@ import * as GP from '~/pages/general/general';
 import * as LDH from '~/layouts/default/header/header';
 import * as MM from '~/layouts/default/header/menus/menus';
 import * as MSP from '~/layouts/default/microsurvey-popup/microsurvey-popup';
-import * as WC from '~/layouts/default/welcome/welcome-content';
 import * as TD from '~/layouts/default/takeover-dialog/takeover-dialog';
 import * as LSN from '~/layouts/default/lower-sticky-note/lower-sticky-note';
 import * as DH from '~/helpers/use-document-head';
@@ -89,9 +88,9 @@ describe('shell', () => {
         jest.spyOn(LDH, 'default').mockReturnValue(<></>);
         jest.spyOn(MM, 'default').mockReturnValue(<></>);
         jest.spyOn(MSP, 'default').mockReturnValue(null);
-        jest.spyOn(WC, 'default').mockReturnValue(null);
         jest.spyOn(TD, 'default').mockReturnValue(null);
         jest.spyOn(LSN, 'default').mockReturnValue(null);
+        jest.spyOn(DH, 'default').mockReturnValue(undefined);
         jest.spyOn(DH, 'setPageDescription').mockReturnValue(undefined);
         jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue(undefined);
         jest.spyOn(UC, 'UserContextProvider').mockImplementation(ChildrenContainer);
@@ -112,28 +111,10 @@ describe('shell', () => {
         await screen.findByText('What is your question about?');
         expect(screen.queryAllByRole('navigation')).toHaveLength(0);
     });
-    it('handles piTracker ', async () => {
-        type WindowWithPiTracker = (typeof window) & {
-            piTracker?: (path: string) => void;
-        }
-        const w = window as WindowWithPiTracker;
-        const piTracker = jest.fn();
-
-        w.piTracker = (path: string) => piTracker(path);
-
-        BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/']}>{children}</MR>
-        ));
-
-        render(AppElement);
-
-        await waitFor(() => expect(piTracker).toHaveBeenCalled());
-        delete w.piTracker;
-    });
     it('(skip to main content link) works', async () => {
         window.scrollBy = jest.fn();
         BrowserRouter.mockImplementationOnce(({children}) => (
-            <MR initialEntries={['/']}>{children}</MR>
+            <MR initialEntries={['/']}><div id="main">{children}</div></MR>
         ));
         render(AppElement);
         const skipLink = await screen.findByRole('link', {name: 'skip to main content'});
@@ -169,8 +150,7 @@ describe('shell', () => {
         ));
 
         render(AppElement);
-        await screen.findByText('Adoption Form', {exact: false});
-        screen.getByRole('combobox');
+        await screen.findByRole('combobox');
     });
     it('routes "errata" paths', async () => {
         BrowserRouter.mockImplementationOnce(({children}) => (

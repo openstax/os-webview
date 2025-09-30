@@ -59,7 +59,6 @@ jest.useFakeTimers();
 jest.mock('~/layouts/default/microsurvey-popup/microsurvey-popup', () => jest.fn());
 jest.mock('~/layouts/default/header/header', () => jest.fn());
 jest.mock('~/layouts/default/lower-sticky-note/lower-sticky-note', () => jest.fn());
-jest.mock('~/layouts/default/welcome/welcome', () => jest.fn());
 jest.mock('~/layouts/default/footer/footer', () => jest.fn());
 jest.mock('~/layouts/default/takeover-dialog/takeover-dialog', () => jest.fn());
 

@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 
 /* eslint-disable camelcase */
 const stickyData = {
-    mode: 'banner',
+    mode: 'banner' as const,
     start: '2024-05-10T15:00:00Z',
     expires: '2025-10-01T19:58:00Z',
     show_popup: false,
@@ -24,7 +24,10 @@ const stickyData = {
         link_text: 'Make a difference now',
         link_url: 'https://dev.openstax.org/give',
         banner_thumbnail:
-            'https://assets.openstax.org/oscms-dev/media/original_images/subj-icon-science.png'
+            'https://assets.openstax.org/oscms-dev/media/original_images/subj-icon-science.png',
+        id: 0,
+        heading: '',
+        body: ''
     }
 };
 

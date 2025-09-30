@@ -4,38 +4,43 @@ import {useLocation} from 'react-router-dom';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './menu-expander.scss';
 
-function useCloseOnLocationChange(onClick, active) {
+function useCloseOnLocationChange(toggleActive: (v?: boolean) => void, active: boolean) {
     const location = useLocation();
     const {setActiveDropdown} = useDropdownContext();
-    const activeRef = React.useRef();
+    const activeRef = React.useRef<boolean>();
 
     activeRef.current = active;
 
     React.useEffect(() => {
         if (activeRef.current) {
-            onClick({});
+            toggleActive(false);
             setActiveDropdown({});
         }
-    }, [location, onClick, setActiveDropdown]);
+    }, [location, toggleActive, setActiveDropdown]);
 }
 
-export default function MenuExpander({active, onClick, ...props}) {
+type MenuExpanderProps = {
+    active: boolean;
+    toggleActive: (v?: boolean) => void;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+export default function MenuExpander({active, toggleActive, ...props}: MenuExpanderProps) {
     const onClickAndBlur = React.useCallback(
-        (event) => {
-            onClick(event);
+        (event: React.MouseEvent<HTMLButtonElement>) => {
+            toggleActive();
             event.currentTarget.blur();
         },
-        [onClick]
+        [toggleActive]
     );
 
-    useCloseOnLocationChange(onClick, active);
+    useCloseOnLocationChange(toggleActive, active);
 
     return (
         <button
             type="button"
             className="expand"
             aria-haspopup="true" aria-label="Toggle Meta Navigation Menu"
-            tabIndex="0"
+            tabIndex={0}
             onClick={onClickAndBlur}
             onKeyDown={treatSpaceOrEnterAsClick}
             {...props}
