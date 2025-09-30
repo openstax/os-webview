@@ -1,0 +1,491 @@
+{
+    "id": 697,
+    "meta": {
+        "seo_title": "Assignable",
+        "search_description": "OpenStax Assignable",
+        "type": "pages.Assignable",
+        "detail_url": "https://openstax.org/apps/cms/api/v2/pages/697/",
+        "html_url": "https://openstax.org/assignable/",
+        "slug": "assignable",
+        "show_in_menus": false,
+        "first_published_at": "2023-04-11T09:19:44.118000-05:00",
+        "alias_of": null,
+        "parent": {
+            "id": 821,
+            "meta": {
+                "type": "pages.RootPage",
+                "detail_url": "https://openstax.org/apps/cms/api/v2/pages/821/",
+                "html_url": "https://openstax.org/"
+            },
+            "title": "Home"
+        },
+        "locale": "en"
+    },
+    "title": "Assignable",
+    "heading_image": {
+        "id": 1882,
+        "meta": {
+            "width": 1920,
+            "height": 818,
+            "type": "wagtailimages.Image",
+            "detail_url": "https://openstax.org/apps/cms/api/v2/images/1882/",
+            "download_url": "https://assets.openstax.org/oscms-prodcms/media/original_images/Assignable_header_1.jpg"
+        },
+        "title": "AssignableHeaderBlank_Assignable_2024"
+    },
+    "heading_title_image_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Assignable-white2.svg",
+    "subheading": "Flexible learning experiences within your LMS workflow",
+    "heading_description": "<p data-block-key=\"j4u3w\">Build customized assignments directly in your Learning Management System. Designed to keep your students engaged with a wide range of content and question types.</p><p data-block-key=\"abjo0\">Assignable seamlessly integrates a wealth of enrichment and support materials, documents, assessments, and other assets to meet your students’ needs.</p>",
+    "add_assignable_cta_header": "Add Assignable to your LMS now!",
+    "add_assignable_cta_description": "Instructors may need to coordinate with administrators to complete this process.",
+    "add_assignable_cta_link": "https://lti-gateway.openstax.org/register?_gl=1*29q2uu*_ga*MTA3MzY5NDY1Mi4xNjcwODYyMTU0*_ga_T746F8B0QC*MTY4MTkyNzQ3Ni4zOS4xLjE2ODE5Mjc0ODIuNTQuMC4w",
+    "add_assignable_cta_button_text": "Start the process",
+    "available_courses_header": "Available now:",
+    "available_books": [
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/american_government_3e_web_card.svg",
+                "title": "American Government 3e"
+            },
+            "id": "8d7c06a0-aa3e-4285-aa19-76dc0e5b5f26"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/american_government_4e_web_card.svg",
+                "title": "American Government 4e"
+            },
+            "id": "dc726a07-5584-4390-9f4b-c3afd33402b2"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/anatomy_and_physiology_2e_webcard.svg",
+                "title": "Anatomy & Physiology 2e"
+            },
+            "id": "32615a17-10b1-44bf-8127-ca6fe274d006"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/astronomy_2e_webcard.svg",
+                "title": "Astronomy 2e"
+            },
+            "id": "0c9b050e-e052-4bde-9a1f-2c8d90e37634"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/biology_book_card_2e.svg",
+                "title": "Biology 2e"
+            },
+            "id": "3e9d782f-6700-49b7-a62b-9d0e031f8205"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/business_ethics_card.svg",
+                "title": "Business Ethics"
+            },
+            "id": "5624f3ab-eb58-4b38-9e38-fcb3856e85f6"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/clinical_nursing_skills_web_card.svg",
+                "title": "Clinical Nursing Skills"
+            },
+            "id": "1166d6f6-badd-4e34-8f51-d709b1bce38b"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/college_success_web_card.svg",
+                "title": "College Success"
+            },
+            "id": "3e324883-6741-48ac-9d01-1baa6e6b601a"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/concepts_biology_webcard.svg",
+                "title": "Concepts of Biology"
+            },
+            "id": "2b907d5e-76e9-47d3-9e9b-698ef4f6d1d8"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/fundamentals_of_nursing_web_card.svg",
+                "title": "Fundamentals of Nursing"
+            },
+            "id": "28a9eb17-a151-4286-8f30-daff27584d44"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/introduction_to_business.svg",
+                "title": "Introduction to Business"
+            },
+            "id": "38759f2f-b272-43fc-908b-7d0200c69191"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/introduction_to_sociology_3e_web_card.svg",
+                "title": "Introduction to Sociology 3e"
+            },
+            "id": "7cdc21f7-ce14-49ca-821b-7fe35319fa77"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/microbiology.svg",
+                "title": "Microbiology"
+            },
+            "id": "45c71b0d-5b89-4276-8689-04947c0dee35"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/Economics3e_webcard.svg",
+                "title": "Principles of Economics 3e"
+            },
+            "id": "34ed9276-f8a7-48f8-8300-2d5dc65ab5a6"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-macroeconomics-3e-web-card.svg",
+                "title": "Principles of Macroeconomics 3e"
+            },
+            "id": "c90a7363-6220-4b3b-a64b-303fc3fa4f52"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/principles_of_management_book_card.svg",
+                "title": "Principles of Management"
+            },
+            "id": "79921fa8-4c32-409d-bb94-55eb79ef9e2d"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-microeconomics-3e-web-card.svg",
+                "title": "Principles of Microeconomics 3e"
+            },
+            "id": "d217abef-a6e3-49a9-8c6c-4ec8e0e0f44f"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/psychology_2e_web_card_Nic1ENA.svg",
+                "title": "Psychology 2e"
+            },
+            "id": "5f75c9cb-9e2e-4d6e-bed3-9f463d300879"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/US_history.svg",
+                "title": "U.S. History"
+            },
+            "id": "2dce1e41-f625-47e0-95ae-0d6bd05124a6"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/World_History_volume_1_WebCard.svg",
+                "title": "World History, Volume 1: to 1500"
+            },
+            "id": "32b8fec1-bd8c-4c3a-8259-3d8cb223c9a5"
+        }
+    ],
+    "courses_coming_soon_header": "Coming soon:",
+    "coming_soon_books": [
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/algebra_1_web_card.svg",
+                "title": "Algebra I"
+            },
+            "id": "67e560b8-19f8-4909-aeaf-c6e843d708d2"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/college_algebra_2e_web_card_yGpCxyC.svg",
+                "title": "College Algebra 2e"
+            },
+            "id": "bb0a9c55-773a-4f1a-8d39-9da9b952f77d"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/college_success_concise_web_card.svg",
+                "title": "College Success Concise"
+            },
+            "id": "1e4f8be6-86e6-46e9-b543-7cf3569dd650"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/introduction_to_political_science_webcard.svg",
+                "title": "Introduction to Political Science"
+            },
+            "id": "aef59e2c-47a7-4c85-bc39-8989a13d586e"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/lifespan_development_lifespan_development_web_card.svg",
+                "title": "Lifespan Development"
+            },
+            "id": "76257325-1edf-45ec-b4e7-a6402f2f6311"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/maternal-newborn_nursing_web_card.svg",
+                "title": "Maternal-Newborn Nursing"
+            },
+            "id": "88cb8f09-4e59-4925-ba3a-e83971ece567"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/medical-surgical_nursing_web_card.svg",
+                "title": "Medical-Surgical Nursing"
+            },
+            "id": "50725d34-d6ec-4967-859f-3b1b14aa9abd"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/nutrition_for_nurses_web_card.svg",
+                "title": "Nutrition for Nurses"
+            },
+            "id": "f7fd94f7-7fd6-492b-a37c-7f89789ee33d"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/organizational_behavior_book_card.svg",
+                "title": "Organizational Behavior"
+            },
+            "id": "c412a266-87f6-40d6-9543-e3da4d9e3a0e"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/pharmacology_for_nurses_web_card.svg",
+                "title": "Pharmacology for Nurses"
+            },
+            "id": "92c73434-076d-4bb1-a35a-7bef35212ff3"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/population_health_for_nurses_web_card.svg",
+                "title": "Population Health for Nurses"
+            },
+            "id": "2ea0c46b-d01e-42fd-91c2-924107c1e122"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/principles.marketing.web.card_1.svg",
+                "title": "Principles of Marketing"
+            },
+            "id": "b6e9db57-d6e7-4fea-9b7e-ab905f4c9dfa"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/psychiatric-mental_health_nursing_web_card.svg",
+                "title": "Psychiatric-Mental Health Nursing"
+            },
+            "id": "b5e1dbab-caa9-4944-a0e1-fadf01facfbf"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/World_History_volume_2_WebCard_uh6dUHf.svg",
+                "title": "World History, Volume 2: from 1400"
+            },
+            "id": "db3e7ef1-0240-4894-8049-777d5edd0fab"
+        },
+        {
+            "type": "course",
+            "value": {
+                "cover": "https://assets.openstax.org/oscms-prodcms/media/documents/writing_guide_with_handbook_web_card.svg",
+                "title": "Writing Guide with Handbook"
+            },
+            "id": "ad938f6e-0fca-405d-81fe-c32d350a3b14"
+        }
+    ],
+    "assignable_cta_text": "Want to see your OpenStax book in Assignable? Let us know!",
+    "assignable_cta_link": "https://www2.openstax.org/l/218812/2023-02-22/21csr52",
+    "assignable_cta_button_text": "Let us know",
+    "section_2_heading": "Take your teaching to the next level",
+    "section_2_description": "<p>With Assignable, instructors are able to:</p>\r\n<p><ul>\r\n<li>Assign OpenStax readings from select textbooks directly within their LMS</li>\r\n<li>Assign pre- and post-reading assessment questions</li>\r\n<li>Assign additional culturally responsive and interactive materials from the OpenStax Resource Library</li>\r\n</ul></p>\r\n<p>In the future, Assignable will meet more core instructor and student needs by providing more content, courses, and insights to ensure academic success.</p>",
+    "image_carousel": [
+        {
+            "type": "carousel_image",
+            "value": [
+                {
+                    "image": {
+                        "id": 1932,
+                        "file": "https://assets.openstax.org/oscms-prodcms/media/original_images/Assignable_ipad_1.png",
+                        "title": "AssignableIpad1Graphic_ Assignable_2024",
+                        "height": 323,
+                        "width": 565,
+                        "created_at": "2023-06-08T10:02:52.489112-05:00"
+                    }
+                },
+                {
+                    "image": {
+                        "id": 1933,
+                        "file": "https://assets.openstax.org/oscms-prodcms/media/original_images/Assignable_ipad_2.png",
+                        "title": "AssignableIpad2Graphic_Assignable_2024",
+                        "height": 323,
+                        "width": 565,
+                        "created_at": "2023-06-08T10:03:14.470386-05:00"
+                    }
+                },
+                {
+                    "image": {
+                        "id": 1934,
+                        "file": "https://assets.openstax.org/oscms-prodcms/media/original_images/Assignable_ipad_3.png",
+                        "title": "AssignableIpad3Graphic_SubjectPage_2024",
+                        "height": 323,
+                        "width": 565,
+                        "created_at": "2023-06-08T10:03:34.690165-05:00"
+                    }
+                },
+                {
+                    "image": {
+                        "id": 1916,
+                        "file": "https://assets.openstax.org/oscms-prodcms/media/original_images/Assignable_ipad.png",
+                        "title": "AssignableIpadGraphic_Assignable_2024",
+                        "height": 323,
+                        "width": 565,
+                        "created_at": "2023-05-09T10:14:12.869861-05:00"
+                    }
+                }
+            ],
+            "id": "d263d914-8e2b-4c0e-a67c-e0d91f9be4fe"
+        }
+    ],
+    "faq_header": "Frequently Asked Questions",
+    "faqs": [
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"qysai\"><b>What is OpenStax Assignable?</b></p>",
+                "slug": "what-is-assignable",
+                "answer": "<p data-block-key=\"xnjaj\">OpenStax Assignable is a tool that allows instructors to build customized assignments directly in their Learning Management Systems (LMS). Students are able to complete these assignments directly from the LMS, too. The OpenStax Assignable tool allows instructors to assign OpenStax textbooks as readings, assessment questions that correspond to chapters/sections in the textbook, and additional interactive and culturally responsive material designed to keep students engaged and meet a wide range of learning needs.</p>",
+                "document": null
+            },
+            "id": "7fb12aa2-d777-472e-a3de-878b741349b7"
+        },
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"y99k7\">Where can I watch a demo of Assignable?</p>",
+                "slug": "watch-demo",
+                "answer": "<p data-block-key=\"3xy20\">You can watch the on-demand recording of our August 2025 demo <a href=\"https://riceuniversity.zoom.us/rec/share/yXcBd_vq8FGwkGwMK7fmKXlHBSVkU3zbJHgxVzkClQ8W_Af5pxwYoVYCQmQszFbU.VTjBxUuXh9lxiOWh\">here</a>.</p>",
+                "document": null
+            },
+            "id": "e101a0df-7b7d-48c1-8f18-8f3ee5e43a2c"
+        },
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"qysai\"><b>How much does OpenStax Assignable cost?</b></p>",
+                "slug": "assignable-cost",
+                "answer": "<p data-block-key=\"xnjaj\"><b>Assignable costs $15 per student, per semester.</b> Students receive a two-week free trial starting on the first day of access.</p><p data-block-key=\"741dd\">There are several flexible payment options:</p><ul><li data-block-key=\"9e5k4\">Students can pay directly online.</li><li data-block-key=\"7qltb\">Institutions can purchase site licenses to cover costs for students.</li><li data-block-key=\"8ie3g\">Other institutional programs for providing access to course materials.</li></ul><p data-block-key=\"bl8ju\">By offering Assignable as a paid option, we can continue investing in free and open educational resources while also developing new tools that meet faculty and student needs. To learn more about our decision to transition to a low-cost tool and upcoming enhancements to Assignable, <a href=\"https://openstax.org/blog/more-choice-for-instructors-introducing-openstax-assignable-as-a-paid-offering\">please read this blog post</a> by OpenStax managing director Daniel Williamson.</p>",
+                "document": null
+            },
+            "id": "b6a4ed67-4a56-4d7f-9702-eb8c6f404cb8"
+        },
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"psudl\">What are the ISBNs for each Assignable subject?</p>",
+                "slug": "assignable-isbn",
+                "answer": "<p data-block-key=\"nyevy\">Each Assignable subject has its own unique ISBN.</p><p data-block-key=\"7e5cn\"><b><i>American Government 3e</i></b><b>:</b> 978-1-961584-67-9</p><p data-block-key=\"do9gq\"><b><i>American Government 4e</i></b><b>:</b> 978-1-961584-92-1</p><p data-block-key=\"618qc\"><b><i>Anatomy and Physiology 2e</i></b><b>:</b> 978-1-961584-68-6</p><p data-block-key=\"3eb5n\"><b><i>Astronomy 2e</i></b><b>:</b> 978-1-961584-78-5</p><p data-block-key=\"d7njc\"><b><i>Biology 2e</i></b><b>:</b> 978-1-961584-69-3</p><p data-block-key=\"b5q6a\"><b><i>Clinical Nursing Skills</i></b><b>:</b> 978-1-961584-85-3</p><p data-block-key=\"8pbua\"><b><i>College Success</i></b><b>:</b> 978-1-961584-70-9</p><p data-block-key=\"d87ol\"><b><i>Concepts of Biology</i></b><b>:</b> 978-1-961584-71-6</p><p data-block-key=\"cmvv2\"><b><i>Fundamentals of Nursing</i></b><b>:</b> 978-1-961584-87-7</p><p data-block-key=\"cooa4\"><b><i>Introduction to Business</i></b><b>:</b> 978-1-961584-83-9</p><p data-block-key=\"d0kfv\"><b><i>Introduction to Sociology 3e</i></b><b>:</b> 978-1-961584-72-3</p><p data-block-key=\"ddnep\"><b><i>Microbiology</i></b><b>:</b> 978-1-961584-82-2</p><p data-block-key=\"4om62\"><b><i>Principles of Economics 3e</i></b><b>:</b> 978-1-961584-73-0</p><p data-block-key=\"ftlh8\"><b><i>Principles of Macroeconomics 3e</i></b><b>:</b> 978-1-961584-74-7</p><p data-block-key=\"4907v\"><b><i>Principles of Management</i></b><b>:</b> 978-1-947172-94-4</p><p data-block-key=\"eoouc\"><b><i>Principles of Microeconomics 3e</i></b><b>:</b> 978-1-961584-75-4</p><p data-block-key=\"ahhm\"><b><i>Psychology 2e</i></b><b>:</b> 978-1-961584-76-1</p><p data-block-key=\"eq4jc\"><b><i>U.S. History</i></b><b>:</b> 978-1-961584-77-8</p><p data-block-key=\"442gk\"><b><i>World History, Volume 1: to 1500</i></b><b>:</b> 978-1-961584-80-8</p>",
+                "document": null
+            },
+            "id": "177c4e1a-5b68-482d-9519-16dcb50a8539"
+        },
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"93bjo\"><b>Does OpenStax Assignable integrate with my LMS?</b></p>",
+                "slug": "lms-integration",
+                "answer": "<p data-block-key=\"sgjbl\">OpenStax Assignable is only available for use via learning management systems (LMS). OpenStax Assignable integrates with the most popular LMSs used by colleges and universities. It integrates with Canvas, Blackboard, Moodle, D2L/Brightspace, and Schoology; additional LMSs may also be supported on a case-by-case basis.</p><p data-block-key=\"50nk7\">To integrate OpenStax Assignable with your LMS, <a href=\"https://lti-gateway.openstax.org/register?_gl=1*1ppcel7*_ga*MTEyNTY1NzU0NS4xNjU3NTQ3NzU0*_ga_T746F8B0QC*MTY4MTkzNjI3MS4xNDkuMS4xNjgxOTM2NjMxLjYwLjAuMA..\">click here</a>. You may need to contact your institution’s LTI administrator for support with this process.</p><p data-block-key=\"e40dd\">For help with your specific LMS, please refer to the following:</p><ul><li data-block-key=\"5i7df\"><a href=\"https://help.openstax.org/s/article/Blackboard-LMS-integration\">Integrate Assignable with Blackboard Learn</a></li><li data-block-key=\"1sn10\"><a href=\"https://help.openstax.org/s/article/How-do-I-integrate-OpenStax-Assignable-with-Blackboard-Ultra\">Integrate Assignable with Blackboard Ultra</a></li><li data-block-key=\"edu18\"><a href=\"https://help.openstax.org/s/article/D2L-Brightspace-LMS-integration\">Integrate Assignable with Brightspace by D2L</a></li><li data-block-key=\"3f0d2\"><a href=\"https://help.openstax.org/s/article/Canvas-LMS-integration\">Integrate Assignable with Canvas</a></li><li data-block-key=\"a4uam\"><a href=\"https://help.openstax.org/s/article/Moodle-LMS-integration\">Integrate Assignable with Moodle</a></li><li data-block-key=\"f2scq\"><a href=\"https://help.openstax.org/s/article/Schoology-Integration-with-Assignable\">Integrate Assignable with Schoology</a></li></ul>",
+                "document": null
+            },
+            "id": "f91db0bf-8af6-4f46-a702-0d97b40e0efa"
+        },
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"93bjo\"><b>How can I get started in Assignable?</b></p>",
+                "slug": "get-started",
+                "answer": "<p data-block-key=\"sgjbl\">To learn more about Assignable and find help setting up assignments in your specific LMS, you can reference Assignable's instructor guide tailored to your LMS. This guide will give you more information on OpenStax Assignable’s features, how to get started, and answers to common questions.</p><ul><li data-block-key=\"1ioqs\"><a href=\"https://www2.openstax.org/openstax-assignable-instructor-guide-canvas\">Instructor guide: Canvas</a></li><li data-block-key=\"e6ivf\"><a href=\"https://www2.openstax.org/openstax-assignable-instructor-guide-moodle\">Instructor guide: Moodle</a></li><li data-block-key=\"60qj0\"><a href=\"https://www2.openstax.org/openstax-assignable-instructor-guide-blackboard-learn-ultra\">Instructor guide: Blackboard Learn &amp; Ultra</a></li><li data-block-key=\"517b7\"><a href=\"https://www2.openstax.org/openstax-assignable-instructor-guide-d2l-brightspace\">Instructor guide: D2L/Brightspace</a></li><li data-block-key=\"5bju6\"><a href=\"https://help.openstax.org/s/article/Schoology-Integration-with-Assignable\">Instructor guide: Schoology</a></li></ul><p data-block-key=\"5trph\">To get started as a student, click <a href=\"https://help.openstax.org/s/article/How-do-I-get-started-in-OpenStax-Assignable-as-a-student\">here</a>.</p>",
+                "document": null
+            },
+            "id": "96fca0e3-b3cd-4b93-a712-dee2053e3efd"
+        },
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"k8fob\"><b>Where can I find HECVAT and VPAT forms?</b></p>",
+                "slug": "hecvat-vpat",
+                "answer": "<p data-block-key=\"9ddon\">If you need to request access to our HECVAT or VPAT forms, please do so <a href=\"https://help.openstax.org/s/contactsupport\">here</a>. To read OpenStax’s full accessibility statement, click <a href=\"https://openstax.org/accessibility-statement\">here</a>.</p>",
+                "document": null
+            },
+            "id": "35decc37-309e-4f67-b378-387ce75bb2f9"
+        },
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"k8fob\"><b>Where can I learn more about Assignable?</b></p>",
+                "slug": "learn-more",
+                "answer": "<p data-block-key=\"9ddon\"><a href=\"https://help.openstax.org/s/global-search/assignable\">Check out our help center here.</a> If you have more questions, please contact our customer support team by emailing support@openstax.org or filling out <a href=\"https://openstax.org/contact\">this form</a>.</p>",
+                "document": null
+            },
+            "id": "491ae181-e266-447e-bded-8693d55836d3"
+        },
+        {
+            "type": "faq",
+            "value": {
+                "question": "<p data-block-key=\"y2z4t\"><b>Can I provide feedback on OpenStax Assignable?</b></p>",
+                "slug": "feedback",
+                "answer": "<p data-block-key=\"01j1u\">Yes! We welcome your feedback as we work to improve this product for instructors and students. You’re welcome to provide feedback via <a href=\"https://docs.google.com/forms/d/e/1FAIpQLSftHd3-SK3ElNk83hGPkq43MXZY8q3gwt4kKrW1nz52BjhruA/viewform?usp=sf_link\">this form</a> which goes directly to our product team, or you can reach out to our Customer Support team at support@openstax.org.</p>",
+                "document": null
+            },
+            "id": "4ee747ba-2498-4f84-83b9-5cc81bc906b8"
+        }
+    ],
+    "quote": "",
+    "quote_author": null,
+    "quote_title": null,
+    "quote_school": null,
+    "tos_link": "https://openstax.org/general/assignable/assignable-terms-of-service/",
+    "promote_image": {
+        "id": 2151,
+        "meta": {
+            "width": 800,
+            "height": 533,
+            "type": "wagtailimages.Image",
+            "detail_url": "https://openstax.org/apps/cms/api/v2/images/2151/",
+            "download_url": "https://assets.openstax.org/oscms-prodcms/media/original_images/OpenStax_August_2023-78.jpg"
+        },
+        "title": "OpenStaxBooksVariety_NewsIndex_2024"
+    }
+}

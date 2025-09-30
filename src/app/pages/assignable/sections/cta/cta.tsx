@@ -2,7 +2,16 @@ import React from 'react';
 
 import './cta.scss';
 
-export default function Cta({data}) {
+type CtaProps = {
+    data: {
+        assignableCtaText: string;
+        assignableCtaLink: string;
+        assignableCtaButtonText: string;
+        tosLink: string;
+    };
+};
+
+export default function Cta({data}: CtaProps) {
     return (
         <section className="cta green">
             <div className="content">

@@ -4,12 +4,25 @@ import {htmlToText} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import './faq.scss';
 
-export default function FAQ({data}) {
+type FAQItem = {
+    question: string;
+    answer: string;
+};
+
+type FAQProps = {
+    data: {
+        faqHeader: string;
+        faqs: FAQItem[];
+    };
+};
+
+export default function FAQ({data}: FAQProps) {
     const accordionItems = React.useMemo(
-        () => data.faqs.map((d) => ({
-            title: htmlToText(d.question),
-            contentComponent: <RawHTML html={d.answer} />
-        })),
+        () =>
+            data.faqs.map((d) => ({
+                title: htmlToText(d.question),
+                contentComponent: <RawHTML html={d.answer} />
+            })),
         [data.faqs]
     );
 
