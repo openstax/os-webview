@@ -79,23 +79,25 @@ export function OtherPageRoutes() {
     }
 
     // Some pages have no page data in the CMS!
-    if (
-        [
-            'adopters',
-            'adoption',
-            'blog',
-            'campaign',
-            'confirmation',
-            'institutional-partnership-application',
-            'interest',
-            'renewal-form',
-            'separatemap'
-        ].includes(dir)
-    ) {
+    if (isNoDataPage(dir)) {
         return <ImportedPage name={dir} />;
     }
 
     return <RouteAsPortalOrNot />;
+}
+
+export function isNoDataPage(dir: string) {
+    return [
+        'adopters',
+        'adoption',
+        'blog',
+        'campaign',
+        'confirmation',
+        'institutional-partnership-application',
+        'interest',
+        'renewal-form',
+        'separatemap'
+    ].includes(dir);
 }
 
 // There are a couple of pages whose names in the CMS don't match their osweb urls

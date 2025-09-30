@@ -11,7 +11,8 @@ import {
     usePageDataFromRoute,
     FlexPageUsingItsOwnLayout,
     NonFlexPageUsingDefaultLayout,
-    DetailsRoutes
+    DetailsRoutes,
+    isNoDataPage
 } from './page-routes';
 import {assertDefined} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
@@ -40,6 +41,13 @@ export function RouteAsPortalOrNot() {
         if (!other) {
             return <FlexPageUsingItsOwnLayout data={data} />;
         }
+        if (isNoDataPage(name)) {
+            return (
+                <LayoutUsingData data={data}>
+                    <ImportedPage name={name} />
+                </LayoutUsingData>
+            );
+        }
         return (
             <LayoutUsingData data={data}>
                 <Routes>
@@ -61,8 +69,8 @@ export function RouteAsPortalOrNot() {
     return <NonFlexPageUsingDefaultLayout data={data} />;
 }
 
-// eslint-disable-next-line complexity
-export function PortalSubRoute() {
+
+function PortalSubRoute() {
     const {name, data, hasError} = usePageDataFromRoute();
 
     if (!data) {
@@ -73,17 +81,14 @@ export function PortalSubRoute() {
         return <Error404 />;
     }
 
-    const isFlex = !hasError && isFlexPage(data);
-
-    if (isFlex) {
+    if (isFlexPage(data)) {
         return <FlexPage data={data} />;
     }
-    const isGeneral = Boolean(data?.body);
 
-    return isGeneral ? (
-        <GeneralPageFromSlug slug={`spike/${data?.meta.slug}`} />
-    ) : (
-        <ImportedPage name={name} />
-    );
+    if (data?.body) {
+        return <GeneralPageFromSlug slug={`spike/${data?.meta.slug}`} />;
+    }
+
+    return <ImportedPage name={name} />;
 }
 
