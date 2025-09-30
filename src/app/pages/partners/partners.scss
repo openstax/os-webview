@@ -40,9 +40,17 @@
     }
 
     .banner {
+        background-image: url('/dist/images/partners/header-right.jpg');
+        background-position: right;
+        background-repeat: no-repeat;
+        background-size: 55%;
         border-bottom: thin solid os-color(green);
         padding-bottom: 8rem;
         position: relative;
+
+        @include width-up-to($tablet-max) {
+            background-image: none;
+        }
 
         a {
             color: adjust-color(text-color(link), $lightness: + 30%);
@@ -73,10 +81,10 @@
             .text-block {
                 text-align: left;
 
-                // @include wider-than($phone-max) {
-                //     max-width: 57rem;
-                //     width: 50%;    
-                // }
+                @include wider-than($tablet-max) {
+                    max-width: 57rem;
+                    width: 50%;    
+                }
             }
         }
 
