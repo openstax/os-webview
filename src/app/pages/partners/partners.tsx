@@ -150,7 +150,7 @@ function Partners({data}: {data: PartnerPageData}) {
                             </a>
                             <a
                                 className="btn"
-                                href="/webinars/explore/collections/Ally%20Partners"
+                                href="/webinars/explore/collections/Technology%20Partners"
                             >
                                 Watch webinars
                             </a>
