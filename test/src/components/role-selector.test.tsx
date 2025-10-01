@@ -47,11 +47,20 @@ describe('role-selector', () => {
         expect(options[0].getAttribute('aria-selected')).toBe('false');
         await user.keyboard('{Enter}');
         expect(options[0].getAttribute('aria-selected')).toBe('true');
+        listbox.focus();
         await user.keyboard('{Escape}');
         // Select by space
+        listbox.focus();
         await user.keyboard('{ArrowDown} ');
-        const i = options.findIndex((o) => o.getAttribute('aria-selected') === 'true');
+        const i = options.findIndex(
+            (o) => o.getAttribute('aria-selected') === 'true'
+        );
 
         expect(i).toBe(1);
+        // Select by mouse
+        listbox.focus();
+        // fireEvent.mouseEnter(options[1]);
+        await user.click(options[1]);
+        expect(options[1].getAttribute('aria-selected')).toBe('true');
     });
 });
