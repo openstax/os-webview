@@ -31,7 +31,7 @@ export function RouteAsPortalOrNot() {
     }
 
     const isFlex = !hasError && isFlexPage(data);
-    const isPortal = isFlex && data.layout[0].type === 'landing';
+    const isPortal = isFlex && data.layout[0]?.type === 'landing';
 
     if (isPortal) {
         if (portalPrefix !== `/${name}`) {
@@ -41,7 +41,7 @@ export function RouteAsPortalOrNot() {
         if (!other) {
             return <FlexPageUsingItsOwnLayout data={data} />;
         }
-        if (isNoDataPage(name)) {
+        if (isNoDataPage(assertDefined(name))) {
             return (
                 <LayoutUsingData data={data}>
                     <ImportedPage name={name} />
@@ -69,7 +69,7 @@ export function RouteAsPortalOrNot() {
     return <NonFlexPageUsingDefaultLayout data={data} />;
 }
 
-
+// eslint-disable-next-line complexity
 function PortalSubRoute() {
     const {name, data, hasError} = usePageDataFromRoute();
 
@@ -91,4 +91,3 @@ function PortalSubRoute() {
 
     return <ImportedPage name={name} />;
 }
-
