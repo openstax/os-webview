@@ -5,7 +5,7 @@ import BookViewer from '~/pages/subjects/new/specific/book-viewer';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {SpecificSubjectContextProvider} from '~/pages/subjects/new/specific/context';
 import businessBooksData from '~/../../test/src/data/business-books';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 const mockUsePageData = jest.fn();
 

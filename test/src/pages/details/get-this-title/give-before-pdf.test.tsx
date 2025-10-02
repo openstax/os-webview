@@ -1,7 +1,7 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {LanguageContextProvider} from '~/contexts/language';
 import GiveBeforePdf from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-pdf';
 // eslint-disable-next-line max-len

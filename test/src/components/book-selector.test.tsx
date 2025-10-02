@@ -5,7 +5,7 @@ import BookSelector, {
     useSelectedBooks
 } from '~/components/book-selector/book-selector';
 import {useAfterSubmit} from '~/components/book-selector/after-form-submit';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {describe, it, expect} from '@jest/globals';
 import {LanguageContextProvider} from '~/contexts/language';
 

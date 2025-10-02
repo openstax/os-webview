@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import * as UPD from '~/helpers/use-page-data';
 import FooterPage from '~/pages/footer-page/footer-page';
 

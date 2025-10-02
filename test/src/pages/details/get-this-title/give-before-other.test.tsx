@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GiveBeforeOther from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-other';
-import { MemoryRouter } from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {LanguageContextProvider} from '~/contexts/language';
 import * as TY from '~/pages/details/common/get-this-title-files/give-before-pdf/thank-you-form';
 

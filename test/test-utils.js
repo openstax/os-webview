@@ -16,7 +16,7 @@ const keyCodes = {
 function keyEvent(eventName, el, key) {
     el.dispatchEvent(
         new KeyboardEvent(eventName, {
-            key: key,
+            key,
             keyCode: keyCodes[key],
             bubbles: true,
             cancelable: true

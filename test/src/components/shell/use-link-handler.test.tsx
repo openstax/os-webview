@@ -6,7 +6,8 @@ import useLinkHandler, {
     TrackedMouseEvent
 } from '~/components/shell/router-helpers/use-link-handler';
 import linkHelper from '~/helpers/link';
-import {useNavigate, MemoryRouter} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),

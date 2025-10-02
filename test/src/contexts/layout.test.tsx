@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import useLayoutContext, { LayoutContextProvider } from '~/contexts/layout';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 function Component() {
     const {Layout, setLayoutParameters} = useLayoutContext();

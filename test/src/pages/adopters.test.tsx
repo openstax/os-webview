@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import AdoptersPage from '~/pages/adopters/adopters';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 const pageData = [
     {

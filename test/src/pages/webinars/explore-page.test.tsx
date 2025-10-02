@@ -2,11 +2,12 @@ import React from 'react';
 import {describe, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
-import {MemoryRouter, Routes, Route} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import ExplorePage from '~/pages/webinars/explore-page/explore-page';
 import useWebinarContext from '~/pages/webinars/webinar-context';
 import {pastWebinar} from '../../data/webinars';
 import type {Webinar} from '~/pages/webinars/types';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 // @ts-expect-error does not exist on
 const {routerFuture} = global;

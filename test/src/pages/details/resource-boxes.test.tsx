@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import ShellContextProvider from '../../../helpers/shell-context';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 import * as detailCtx from '~/pages/details/context';
 import ResourceBoxes, {ResourceModel} from '~/pages/details/common/resource-box/resource-boxes';

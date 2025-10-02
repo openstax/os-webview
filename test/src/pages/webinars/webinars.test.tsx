@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, it} from '@jest/globals';
 import {render} from '@testing-library/preact';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import WebinarsLoader from '~/pages/webinars/webinars';
 
 function Component({path}: {path: string}) {

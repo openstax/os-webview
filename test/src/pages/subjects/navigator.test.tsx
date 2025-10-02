@@ -5,7 +5,7 @@ import Navigator from '~/pages/subjects/new/specific/navigator';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {SpecificSubjectContextProvider} from '~/pages/subjects/new/specific/context';
 import businessBooksData from '~/../../test/src/data/business-books';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {NavigatorContextProvider} from '~/pages/subjects/new/specific/navigator-context';
 
 const mockUsePageData = jest.fn();
