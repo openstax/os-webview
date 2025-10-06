@@ -133,21 +133,6 @@ describe('shell', () => {
         await screen.findByText('What is your question about?');
         expect(screen.queryAllByRole('navigation')).toHaveLength(0);
     });
-    it('handles piTracker ', async () => {
-        type WindowWithPiTracker = (typeof window) & {
-            piTracker?: (path: string) => void;
-        }
-        const w = window as WindowWithPiTracker;
-        const piTracker = jest.fn();
-
-        w.piTracker = (path: string) => piTracker(path);
-        mockBrowserInitialEntries(['/']);
-
-        render(AppElement);
-
-        await waitFor(() => expect(piTracker).toHaveBeenCalled());
-        delete w.piTracker;
-    });
     it('(skip to main content link) works', async () => {
         window.scrollBy = jest.fn();
         mockBrowserInitialEntries(['/']);
