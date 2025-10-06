@@ -125,14 +125,6 @@ describe('shell', () => {
         setPortal.mockClear();
     });
 
-    it('Delivers embedded contact page', async () => {
-        mockBrowserInitialEntries(['/embedded/contact']);
-        spyUpd.mockReturnValueOnce(null);
-
-        render(AppElement);
-        await screen.findByText('What is your question about?');
-        expect(screen.queryAllByRole('navigation')).toHaveLength(0);
-    });
     it('(skip to main content link) works', async () => {
         window.scrollBy = jest.fn();
         mockBrowserInitialEntries(['/']);
@@ -141,6 +133,14 @@ describe('shell', () => {
 
         await user.click(skipLink);
         await waitFor(() => expect(window.scrollBy).toHaveBeenCalled());
+    });
+    it('Delivers embedded contact page', async () => {
+        mockBrowserInitialEntries(['/embedded/contact']);
+        spyUpd.mockReturnValueOnce(null);
+
+        render(AppElement);
+        await screen.findByText('What is your question about?');
+        expect(screen.queryAllByRole('navigation')).toHaveLength(0);
     });
     it('routes "home/anything" to top-level', async () => {
         mockBrowserInitialEntriesWithLocation(['/home/anything']);
