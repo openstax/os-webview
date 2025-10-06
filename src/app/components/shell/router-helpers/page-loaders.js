@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import loadable from 'react-loadable';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import useLayoutContext from '~/contexts/layout';
 
 function useAnalyticsPageView() {
     const location = useLocation();
@@ -57,6 +58,11 @@ function usePage(name) {
 export function ImportedPage({name}) {
     const {pathname} = useLocation();
     const Page = usePage(name);
+    const {layoutParameters, setLayoutParameters} = useLayoutContext();
+
+    if (layoutParameters.name === null) {
+        setLayoutParameters();
+    }
 
     useAnalyticsPageView();
 

@@ -58,7 +58,6 @@ export function DetailsRoutes() {
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
     const {'*': path} = useParams();
-    const {layoutParameters, setLayoutParameters} = useLayoutContext();
 
     if (['books', 'textbooks'].includes(dir)) {
         return path === '' ? <Error404 /> : (
@@ -93,9 +92,6 @@ export function OtherPageRoutes() {
             'separatemap'
         ].includes(dir)
     ) {
-        if (layoutParameters.name === null) {
-            setLayoutParameters({name: 'default'});
-        }
         return <ImportedPage name={dir} />;
     }
 

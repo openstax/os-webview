@@ -45,6 +45,7 @@
 
         &.results-10 {
             border-color: os-color(gold);
+            margin-bottom: 4rem;
         }
 
         &.results-7 {
@@ -66,7 +67,7 @@
 
     h3 {
         @include title-font(2.6rem);
-        margin-bottom: 2rem;
+        margin: 0 0 2rem;
         width: 100%;
         text-align: center;
     }
