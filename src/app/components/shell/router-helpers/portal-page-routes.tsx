@@ -87,5 +87,5 @@ function PortalSubRoute() {
         return <GeneralPageFromSlug slug={`spike/${data?.meta.slug}`} />;
     }
 
-    return <ImportedPage name={name} />;
+    return <ImportedPage name={assertDefined(name)} />;
 }
