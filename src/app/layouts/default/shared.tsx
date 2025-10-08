@@ -15,7 +15,7 @@ type BannerInfo = {
 type StickyDataRaw = {
     start: string;
     expires: string;
-    emergency_expires?: string;
+    emergency_expires: string;
     show_popup: boolean;
 };
 
@@ -62,7 +62,7 @@ function getMode(stickyData: StickyDataRaw | null): 'emergency' | 'popup' | 'ban
         return null;
     }
 
-    const expireDate = new Date(stickyData.emergency_expires ?? '');
+    const expireDate = new Date(stickyData.emergency_expires);
     const useEmergency = stickyData.emergency_expires && Date.now() < expireDate.getTime();
 
     if (useEmergency) {

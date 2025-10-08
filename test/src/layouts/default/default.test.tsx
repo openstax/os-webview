@@ -2,13 +2,14 @@ import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {useSeenCounter, usePutAway, useStickyData} from '~/layouts/default/shared';
-// import {MenuItem} from '~/layouts/default/header/menus/main-menu/dropdown/dropdown';
 import DefaultLayout from '~/layouts/default/default';
 import stickyData from './data/sticky.json';
 import fundraiserData from './data/fundraiser.json';
 import footerData from './data/footer.json';
 import oxmenuData from './data/osmenu.json';
 import giveTodayData from './data/give-today.json';
+import giveBannerData from './data/givebanner.json';
+import * as CF from '~/helpers/cms-fetch';
 import '@testing-library/jest-dom';
 
 // Mock external dependencies
@@ -33,10 +34,6 @@ let mockPathname = {pathname: '/test-path'};
 jest.mock('react-router-dom', () => ({
     useLocation: () => mockPathname
 }));
-// jest.mock('~/layouts/default/microsurvey-popup/microsurvey-popup', () => ({
-//     __esModule: true,
-//     default: () => <></>
-// }));
 
 const mockUseSharedDataContext = jest.fn().mockReturnValue({stickyFooterState: [false, () => undefined]});
 
@@ -62,6 +59,22 @@ Reflect.defineProperty(window, 'localStorage', {
 });
 
 const user = userEvent.setup();
+const basicImplementation = (path: string) => {
+    if (path === 'sticky/') {
+        return Promise.resolve({
+            ...stickyData
+        });
+    }
+    if (path === 'snippets/givebanner') {
+        return Promise.resolve(giveBannerData);
+    }
+    if (path === 'give-today') {
+        return Promise.resolve(giveTodayData);
+    }
+    console.info('**** Whoops', path);
+    return Promise.resolve([]);
+};
+const mockCmsFetch = jest.spyOn(CF, 'default').mockImplementation(basicImplementation);
 
 describe('Layouts Default TypeScript Conversions', () => {
     beforeEach(() => {
@@ -126,135 +139,89 @@ describe('Layouts Default TypeScript Conversions', () => {
             render(<TestComponent />);
             expect(screen.getByTestId('sticky-data')).toHaveTextContent('no data');
         });
+        test('useStickyData hook handles emergency mode', async () => {
+            mockCmsFetch.mockImplementation(
+                (path: string) => {
+                    if (path === 'sticky/') {
+                        /* eslint-disable camelcase */
+                        return Promise.resolve({
+                            ...stickyData,
+                            emergency_expires: '2044-05-31T23:00:00Z'
+                        });
+                        /* eslint-enable camelcase */
+                    }
+                    return basicImplementation(path);
+                }
+            );
+            const TestComponent = () => {
+                const data = useStickyData();
+
+                return (
+                    <div data-testid="sticky-data">
+                        {data ? data.mode : 'no data'}
+                    </div>
+                );
+            };
+
+            render(<TestComponent />);
+            expect(await screen.findByTestId('sticky-data')).toHaveTextContent('emergency');
+            mockCmsFetch.mockImplementation(basicImplementation);
+        });
+        test('useStickyData hook handles microdonation not active', async () => {
+            mockCmsFetch.mockImplementation(
+                (path: string) => {
+                    if (path === 'sticky/') {
+                        return Promise.resolve({
+                            ...stickyData,
+                            expires: '2024-05-31T23:00:00Z'
+                        });
+                    }
+                    return basicImplementation(path);
+                }
+            );
+            const TestComponent = () => {
+                const data = useStickyData();
+
+                return (
+                    <div data-testid="sticky-data">
+                        {data && data.mode === null ? 'mode is null' : 'no data'}
+                    </div>
+                );
+            };
+
+            render(<TestComponent />);
+            expect(await screen.findByTestId('sticky-data')).toHaveTextContent('mode is null');
+            mockCmsFetch.mockImplementation(basicImplementation);
+        });
+        test('useStickyData hook handles show_popup', async () => {
+            mockCmsFetch.mockImplementation(
+                (path: string) => {
+                    if (path === 'sticky/') {
+                        /* eslint-disable camelcase */
+                        return Promise.resolve({
+                            ...stickyData,
+                            show_popup: true
+                        });
+                        /* eslint-enable camelcase */
+                    }
+                    return basicImplementation(path);
+                }
+            );
+            const TestComponent = () => {
+                const data = useStickyData();
+
+                return (
+                    <div data-testid="sticky-data">
+                        {data && data.mode === 'popup' ? 'mode is popup' : 'no data'}
+                    </div>
+                );
+            };
+
+            render(<TestComponent />);
+            expect(await screen.findByTestId('sticky-data')).toHaveTextContent('mode is popup');
+            mockCmsFetch.mockImplementation(basicImplementation);
+        });
     });
-
-//     describe('MenuItem component TypeScript props', () => {
-//         test('MenuItem accepts proper TypeScript props', () => {
-//             const props = {
-//                 label: 'Test Label',
-//                 url: '/test-url',
-//                 local: 'test-local'
-//             };
-
-//             render(<MenuItem {...props} />);
-
-//             const link = screen.getByRole('link');
-
-//             expect(link).toHaveAttribute('href', '/test-url');
-//             expect(link).toHaveAttribute('data-local', 'test-local');
-//         });
-
-//         test('MenuItem works without optional local prop', () => {
-//             const props = {
-//                 label: 'Test Label',
-//                 url: '/test-url'
-//             };
-
-//             render(<MenuItem {...props} />);
-
-//             const link = screen.getByRole('link');
-
-//             expect(link).toHaveAttribute('href', '/test-url');
-//         });
-//     });
-
-//     describe('TypeScript type safety tests', () => {
-//         test('StickyData type structure is properly defined', () => {
-//             // This test verifies TypeScript compilation and type checking
-//             type BannerInfo = {
-//                 id: number;
-//                 heading: string;
-//                 body: string;
-//                 link_text: string;
-//                 link_url: string;
-//             };
-
-//             type StickyDataRaw = {
-//                 start: string;
-//                 expires: string;
-//                 emergency_expires?: string;
-//                 show_popup: boolean;
-//             };
-
-//             /* eslint-disable camelcase */
-//             const validBannerInfo: BannerInfo = {
-//                 id: 1,
-//                 heading: 'Test Heading',
-//                 body: 'Test Body',
-//                 link_text: 'Test Link',
-//                 link_url: 'https://example.com'
-//             };
-
-//             const validStickyData: StickyDataRaw = {
-//                 start: '2024-01-01',
-//                 expires: '2024-12-31',
-//                 emergency_expires: '2024-06-01',
-//                 show_popup: true
-//             };
-//             /* eslint-enable camelcase */
-
-//             expect(validBannerInfo.id).toBe(1);
-//             expect(validStickyData.show_popup).toBe(true);
-//         });
-
-//         test('localStorage type safety is maintained', () => {
-//             // Test that our localStorage shim types work correctly
-//             const testKey = 'testKey';
-//             const testValue = 'testValue';
-
-//             if (window.localStorage) {
-//                 window.localStorage.setItem(testKey, testValue);
-//                 expect(mockLocalStorage.setItem).toHaveBeenCalledWith(testKey, testValue);
-//             }
-//         });
-
-//         test('Component prop types are properly enforced', () => {
-//             // This test ensures our prop types compile correctly
-//             type TestComponentProps = {
-//                 label: string;
-//                 url: string;
-//                 local?: string;
-//             };
-
-//             const TestComponent = ({label, url, local}: TestComponentProps) => (
-//                 <div>
-//                     <span>{label}</span>
-//                     <span>{url}</span>
-//                     <span>{local || 'default'}</span>
-//                 </div>
-//             );
-
-//             const props: TestComponentProps = {
-//                 label: 'Test',
-//                 url: '/test'
-//             };
-
-//             render(<TestComponent {...props} />);
-//             expect(screen.getByText('Test')).toBeInTheDocument();
-//         });
-//     });
-
-//     describe('Hook return type validation', () => {
-//         test('useSeenCounter returns correct tuple type', () => {
-//             const TestComponent = () => {
-//                 const result = useSeenCounter(3);
-
-//                 // TypeScript should enforce this is a tuple with specific types
-//                 const [hasBeenSeenEnough, increment]: [boolean, () => void] = result;
-
-//                 return (
-//                     <div>
-//                         <span data-testid="boolean-type">{typeof hasBeenSeenEnough}</span>
-//                         <span data-testid="function-type">{typeof increment}</span>
-//                     </div>
-//                 );
-//             };
-
-//             render(<TestComponent />);
-//             expect(screen.getByTestId('boolean-type')).toHaveTextContent('boolean');
-//             expect(screen.getByTestId('function-type')).toHaveTextContent('function');
-//         });
-//     });
 });
 
 describe('default layout', () => {
@@ -321,55 +288,3 @@ describe('default layout', () => {
         expect(toggle.getAttribute('aria-expanded')).toBe('false');
     });
 });
-
-// Integration tests for complex TypeScript interactions
-// describe('TypeScript Integration Tests', () => {
-//     test('Complex type interactions work correctly', async () => {
-//         // Test that complex types work together without compilation errors
-//         type ComplexData = {
-//             id: number;
-//             metadata: {
-//                 created: string;
-//                 modified?: string;
-//             };
-//             items: Array<{
-//                 name: string;
-//                 value: number;
-//             }>;
-//         };
-
-//         const testData: ComplexData = {
-//             id: 1,
-//             metadata: {
-//                 created: '2024-01-01'
-//             },
-//             items: [
-//                 {name: 'item1', value: 100},
-//                 {name: 'item2', value: 200}
-//             ]
-//         };
-
-//         expect(testData.id).toBe(1);
-//         expect(testData.items).toHaveLength(2);
-//         expect(testData.metadata.modified).toBeUndefined();
-//     });
-
-//     test('Event handler types are properly defined', () => {
-//         type EventHandlerProps = {
-//             onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-//             onKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
-//         };
-
-//         const TestComponent = ({onClick, onKeyDown}: EventHandlerProps) => (
-//             <button onClick={onClick} onKeyDown={onKeyDown}>
-//                 Test Button
-//             </button>
-//         );
-
-//         const mockClick = jest.fn();
-//         const mockKeyDown = jest.fn();
-
-//         render(<TestComponent onClick={mockClick} onKeyDown={mockKeyDown} />);
-//         expect(screen.getByRole('button')).toBeInTheDocument();
-//     });
-// });
