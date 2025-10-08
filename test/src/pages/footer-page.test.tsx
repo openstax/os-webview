@@ -6,9 +6,6 @@ import FooterPage from '~/pages/footer-page/footer-page';
 
 const mockUsePageData = jest.spyOn(UPD, 'default');
 
-// @ts-expect-error does not exist on
-const {routerFuture} = global;
-
 window.scrollTo = jest.fn();
 
 describe('footer-page', () => {
@@ -26,7 +23,7 @@ describe('footer-page', () => {
         console.warn = jest.fn();
 
         render(
-            <MemoryRouter initialEntries={['/aslug']} future={routerFuture}>
+            <MemoryRouter initialEntries={['/aslug']}>
                 <FooterPage />
             </MemoryRouter>);
         expect((screen.getByRole('heading', {level: 1})).textContent).toBe('heading');
@@ -36,7 +33,7 @@ describe('footer-page', () => {
     it('renders nothing until page data is received', async () => {
         mockUsePageData.mockReturnValue(null);
         render(
-            <MemoryRouter initialEntries={['/aslug']} future={routerFuture}>
+            <MemoryRouter initialEntries={['/aslug']}>
                 <FooterPage />
             </MemoryRouter>);
         expect(document.body.textContent).toBe('');

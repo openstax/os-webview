@@ -9,9 +9,6 @@ import GatedContentDialog from '~/pages/blog/gated-content-dialog/gated-content-
 import type {ArticleData} from '~/pages/blog/article/article';
 import userEvent from '@testing-library/user-event';
 
-// @ts-expect-error does not exist on
-const {routerFuture} = global;
-
 const articleData: ArticleData = {
     gatedContent: true,
     heading: 'heading',
@@ -70,7 +67,6 @@ function Component({path}: {path: string}) {
         <MemoryRouter
             basename="/blog"
             initialEntries={[path]}
-            future={routerFuture}
         >
             <ShellContextProvider>
                 <MainClassContextProvider>
