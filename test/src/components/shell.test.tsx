@@ -97,6 +97,12 @@ describe('shell', () => {
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
     const saveWarn = console.warn;
 
+    type WindowWithPiTracker = (typeof window) & {
+        piTracker: (path: string) => void;
+    }
+    const w = window as WindowWithPiTracker;
+    const piTracker = jest.fn();
+
     function setPortalPrefix(portalPrefix: string) {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix,
@@ -160,11 +166,13 @@ describe('shell', () => {
         await screen.findByText('Let us know you\'re using OpenStax');
     });
     it('sets portal before routing to page in a portal', async () => {
+        w.piTracker = (path: string) => piTracker(path);
         setPortalPrefix('');
         mockBrowserInitialEntries(['/landing-page/adoption']);
         render(AppElement);
 
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+        await waitFor(() => expect(piTracker).toHaveBeenCalled());
     });
 
     it('routes adoption (no CMS page data) page when in portal', async () => {
