@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, it, expect} from '@jest/globals';
 import {render, screen, fireEvent} from '@testing-library/preact';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import SearchBar from '~/components/search-bar/search-bar';
 
 describe('search-bar', () => {

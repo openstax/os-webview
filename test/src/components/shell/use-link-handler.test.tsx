@@ -6,13 +6,25 @@ import useLinkHandler, {
     TrackedMouseEvent
 } from '~/components/shell/router-helpers/use-link-handler';
 import linkHelper from '~/helpers/link';
-import {useNavigate, MemoryRouter} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import * as PC from '~/contexts/portal';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     __esModule: true,
     useNavigate: jest.fn()
 }));
+
+const setPortal = jest.fn();
+
+function setPortalPrefix(portalPrefix: string) {
+    jest.spyOn(PC, 'default').mockReturnValue({
+        portalPrefix,
+        setPortal,
+        rewriteLinks: jest.fn()
+    });
+}
 
 describe('use-link-handler', () => {
     const user = userEvent.setup();
@@ -68,6 +80,7 @@ describe('use-link-handler', () => {
         expect(notPrevented).toBeCalledWith(true);
     });
     it('goes on when left click on valid URL', async () => {
+        setPortalPrefix('/portal');
         const navigate = jest.fn();
         const el = document.createElement('a');
 
@@ -83,6 +96,7 @@ describe('use-link-handler', () => {
         expect(navigate).toBeCalledWith('whatever', {x: 0, y: 0});
     });
     it('calls piTracker if available', async () => {
+        setPortalPrefix('/portal');
         type WindowWithPiTracker = (typeof window) & {
             piTracker: (path: string) => void;
         }
@@ -109,6 +123,7 @@ describe('use-link-handler', () => {
         expect(piTracker).toBeCalledWith('clickHref');
     });
     it('handles external URL opening local', async () => {
+        setPortalPrefix('/portal');
         const navigate = jest.fn();
 
         jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({
@@ -129,6 +144,7 @@ describe('use-link-handler', () => {
         expect(navigate).not.toBeCalled();
     });
     it('handles external URL opening in current tab when new window fails', async () => {
+        setPortalPrefix('/portal');
         const navigate = jest.fn();
 
         jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({
@@ -150,6 +166,7 @@ describe('use-link-handler', () => {
         expect(navigate).not.toBeCalled();
     });
     it('does the tracking info fetch', async () => {
+        setPortalPrefix('/portal');
         const navigate = jest.fn();
 
         jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({
@@ -170,6 +187,7 @@ describe('use-link-handler', () => {
         await user.click(screen.getByRole('link'));
     });
     it('catches tracking fetch failure', async () => {
+        setPortalPrefix('/');
         const navigate = jest.fn();
 
         jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({

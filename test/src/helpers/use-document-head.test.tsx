@@ -6,7 +6,7 @@ import useDocumentHead, {
     getPageDescription,
     useCanonicalLink
 } from '~/helpers/use-document-head';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 describe('use-document-head', () => {
     console.warn = jest.fn();

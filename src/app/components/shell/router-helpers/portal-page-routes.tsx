@@ -11,7 +11,8 @@ import {
     usePageDataFromRoute,
     FlexPageUsingItsOwnLayout,
     NonFlexPageUsingDefaultLayout,
-    DetailsRoutes
+    DetailsRoutes,
+    isNoDataPage
 } from './page-routes';
 import {assertDefined} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
@@ -30,16 +31,26 @@ export function RouteAsPortalOrNot() {
     }
 
     const isFlex = !hasError && isFlexPage(data);
-    const isPortal = isFlex && data.layout[0].type === 'landing';
+    const isPortal = isFlex && data.layout[0]?.type === 'landing';
 
     if (isPortal) {
         if (portalPrefix !== `/${name}`) {
             setPortal(assertDefined(name));
             return null;
         }
+
         if (!other) {
             return <FlexPageUsingItsOwnLayout data={data} />;
         }
+
+        if (isNoDataPage(other)) {
+            return (
+                <LayoutUsingData data={data}>
+                    <ImportedPage name={other} />
+                </LayoutUsingData>
+            );
+        }
+
         return (
             <LayoutUsingData data={data}>
                 <Routes>
@@ -61,29 +72,20 @@ export function RouteAsPortalOrNot() {
     return <NonFlexPageUsingDefaultLayout data={data} />;
 }
 
-// eslint-disable-next-line complexity
-export function PortalSubRoute() {
+function PortalSubRoute() {
     const {name, data, hasError} = usePageDataFromRoute();
-
-    if (!data) {
-        return null;
-    }
 
     if (hasError) {
         return <Error404 />;
     }
 
-    const isFlex = !hasError && isFlexPage(data);
-
-    if (isFlex) {
-        return <FlexPage data={data} />;
+    if (isFlexPage(data)) {
+        return <FlexPage data={assertDefined(data)} />;
     }
-    const isGeneral = Boolean(data?.body);
 
-    return isGeneral ? (
-        <GeneralPageFromSlug slug={`spike/${data?.meta.slug}`} />
-    ) : (
-        <ImportedPage name={name} />
-    );
+    if (data?.body) {
+        return <GeneralPageFromSlug slug={`spike/${data?.meta.slug}`} />;
+    }
+
+    return <ImportedPage name={assertDefined(name)} />;
 }
-

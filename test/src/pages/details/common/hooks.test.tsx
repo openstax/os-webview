@@ -5,6 +5,7 @@ import {
     usePartnerFeatures
 } from '~/pages/details/common/hooks';
 import * as UDC from '~/pages/details/context';
+import * as PC from '~/contexts/portal';
 
 const mockTocHtml = jest.fn();
 
@@ -44,6 +45,28 @@ describe('details/common/hooks', () => {
             const tocHtml = useTableOfContents();
 
             return <div>{tocHtml}</div>;
+        }
+
+        render(<Component />);
+        expect(document.body.textContent).toBe('');
+    });
+    it('(useTableOfContents) is ok in a portal', async () => {
+        // This is about making TOC links to Rex work with a portal there.
+        // Will probably need to be revisited.
+        const setPortal = jest.fn();
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        jest.spyOn(UDC, 'default').mockReturnValue({webviewRexLink: ''} as any);
+        jest.spyOn(PC, 'default').mockReturnValue({
+            portalPrefix: '/landing-page',
+            setPortal,
+            rewriteLinks: jest.fn()
+        });
+
+        function Component() {
+            const tocHtml = useTableOfContents();
+
+            return <div id="main" dangerouslySetInnerHTML={{__html: tocHtml}} />;
         }
 
         render(<Component />);

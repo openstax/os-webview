@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, it} from '@jest/globals';
 import {render} from '@testing-library/preact';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import useWebinarContext, {WebinarContextProvider} from '~/pages/webinars/webinar-context';
 import useData from '~/helpers/use-data';
 import {upcomingWebinar} from '../../data/webinars';

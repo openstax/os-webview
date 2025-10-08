@@ -21,6 +21,8 @@ describe('partner-details', () => {
         infoLinkText: 'info text'
     };
 
+    console.warn = jest.fn();
+
     it('shows no synopsis if there is no partnerName', () => {
         const data = {...partnerData, ...linkTexts, title: ''}; // title is partnerName
         const setTitle = jest.fn();

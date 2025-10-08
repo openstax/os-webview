@@ -1,7 +1,10 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import Confirmation from '~/pages/confirmation/confirmation';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import * as DH from '~/helpers/use-document-head';
+
+jest.spyOn(DH, 'default').mockReturnValue(undefined);
 
 describe('confirmation', () => {
     it('does a contact thank you', () => {

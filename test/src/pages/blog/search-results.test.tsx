@@ -3,7 +3,7 @@ import {describe, expect, it} from '@jest/globals';
 import {render, screen, waitFor} from '@testing-library/preact';
 import PinnedArticle from '~/pages/blog/pinned-article/pinned-article';
 import {LatestBlurbs} from '~/pages/blog/more-stories/more-stories';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import SearchResults from '~/pages/blog/search-results/search-results';
 import * as PDU from '~/helpers/page-data-utils';
 import * as AS from '~/pages/blog/article-summary/article-summary';
@@ -31,7 +31,7 @@ describe('search-results', () => {
         jest.clearAllMocks();
     });
     it('renders with paginator context when there are articles', async () => {
-        /* eslint-disable camelcase, max-len */
+        /* eslint-disable camelcase */
         jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((id) => ({
                 id,

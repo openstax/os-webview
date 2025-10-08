@@ -133,6 +133,7 @@
         "setupFiles": [
             "<rootDir>/test/setupFile.js"
         ],
+        "maxWorkers": "60%",
         "modulePathIgnorePatterns": [
             "package.json"
         ],

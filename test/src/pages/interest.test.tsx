@@ -36,7 +36,6 @@ describe('interest form', () => {
         render(<Component />);
         const roleSelector = await screen.findByRole('combobox');
 
-        console.info('*** RS:', roleSelector.outerHTML);
         await user.click(roleSelector);
         const options = screen.getAllByRole('option');
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {LanguageContextProvider} from '~/contexts/language';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import LeftContent from '~/pages/details/common/resource-box/left-content';
 
 const mockUseUserContext = jest.fn();

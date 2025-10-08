@@ -4,7 +4,7 @@ import {describe, it, expect} from '@jest/globals';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {MainClassContextProvider} from '~/contexts/main-class';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import GatedContentDialog from '~/pages/blog/gated-content-dialog/gated-content-dialog';
 import type {ArticleData} from '~/pages/blog/article/article';
 import userEvent from '@testing-library/user-event';

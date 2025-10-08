@@ -2,7 +2,7 @@ import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import ShellContextProvider from '../../helpers/shell-context';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import RenewalForm from '~/pages/renewal-form/renewal-form';
 import * as UUC from '~/contexts/user';
 import * as UA from '~/models/renewals';
@@ -13,7 +13,7 @@ import * as SFBC from '~/components/multiselect/book-tags/sf-book-context';
 
 // @ts-expect-error does not exist on
 const {routerFuture} = global;
-/* eslint-enable camelcase */
+
 const mockNavigate = jest.fn();
 // option necessary when using fake timers
 const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});

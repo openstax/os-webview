@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import AboutPage from '~/pages/about/about';
 import aboutData from '../../src/data/about';
-import { MemoryRouter } from 'react-router-dom';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 const anImage = {
     id: 482,
