@@ -2,6 +2,7 @@ import {useState} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import type {ResourceData} from './common/resource-box/resource-box-utils';
 import type {PromoteData} from './desktop-view/promo';
+import type {Model as GetThisTitleModel} from './common/get-this-title';
 
 export type LocaleType = {
     locale: string;
@@ -24,7 +25,7 @@ type StuffContent = {
         heading: string;
     };
 };
-type VideoContent = {
+export type VideoContent = {
     title: string;
     description: string;
     embed: string;
@@ -37,13 +38,14 @@ type Author = {
 
 export type IsbnType = 'print' | 'printSoftcover' | 'digital' | 'assignable';
 
-export type ContextValues = {
+export type ContextValues = GetThisTitleModel & {
     id: number;
     slug: string;
     translations: Array<TranslationType>;
     bookState: string;
     comingSoon: boolean;
     coverColor: string;
+    description: string;
     meta: LocaleType;
     reverseGradient: boolean;
     title: string;
@@ -59,7 +61,7 @@ export type ContextValues = {
     webinarContent?: WebinarContent;
     freeStuffStudent: StuffContent;
     freeStuffInstructor: StuffContent;
-    videos: VideoContent[];
+    videos: [VideoContent[]] | never[];
     setUseCardBackground?: React.Dispatch<React.SetStateAction<boolean>>;
     authors: Author[];
     created: string;

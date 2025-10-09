@@ -6,9 +6,10 @@ import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
 import SavingsBlurb from '../../common/savings-blurb';
 import Promo from '../promo';
+import type {ContextValues} from '../../context';
 import './details-tab.scss';
 
-function PolishTab({model}) {
+function PolishTab({model}: {model: ContextValues}) {
     return (
         <div className="details-tab">
             <div className="sidebar">
@@ -33,13 +34,16 @@ function PolishTab({model}) {
     );
 }
 
-function EnglishTab({model}) {
+function EnglishTab({model}: {model: ContextValues}) {
     return (
         <div className="details-tab">
             <div className="sidebar">
                 <div>
                     <h3>
-                        <FormattedMessage id="getTheBook" defaultMessage="Get the book" />
+                        <FormattedMessage
+                            id="getTheBook"
+                            defaultMessage="Get the book"
+                        />
                     </h3>
                     <GetThisTitle model={model} />
                 </div>
@@ -51,7 +55,10 @@ function EnglishTab({model}) {
                 <Promo promoteSnippet={model.promoteSnippet} />
                 <div className="loc-summary-text">
                     <h3>
-                        <FormattedMessage id="summary" defaultMessage="Summary" />
+                        <FormattedMessage
+                            id="summary"
+                            defaultMessage="Summary"
+                        />
                     </h3>
                     <RawHTML html={model.description} />
                 </div>
@@ -66,8 +73,14 @@ function EnglishTab({model}) {
     );
 }
 
-export default function DetailsTab({model, polish}) {
+export default function DetailsTab({
+    model,
+    polish
+}: {
+    model: ContextValues;
+    polish: boolean;
+}) {
     const Child = polish ? PolishTab : EnglishTab;
 
-    return (<Child model={model} />);
+    return <Child model={model} />;
 }
