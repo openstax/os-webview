@@ -6,7 +6,6 @@ import {
     About,
     Courses,
     FAQ,
-    OverlappingQuote,
     CTA
 } from './lazy-imports';
 import './assignable.scss';
@@ -55,6 +54,14 @@ type AssignablePageData = {
     addAssignableCtaDescription: string;
     addAssignableCtaLink: string;
     addAssignableCtaButtonText: string;
+    instructorInterestCtaHeader: string;
+    instructorInterestCtaDescription: string;
+    instructorInterestCtaLink: string;
+    instructorInterestCtaButtonText: string;
+    instructorHelpCtaHeader: string;
+    instructorHelpCtaDescription: string;
+    instructorHelpCtaLink: string;
+    instructorHelpCtaButtonText: string;
     assignableCtaText: string;
     assignableCtaLink: string;
     assignableCtaButtonText: string;
@@ -75,9 +82,6 @@ function AssignablePage({data}: {data: AssignablePageData}) {
             </LazyLoad>
             <LazyLoad>
                 <FAQ data={data} />
-            </LazyLoad>
-            <LazyLoad>
-                <OverlappingQuote data={data} />
             </LazyLoad>
             <LazyLoad>
                 <CTA data={data} />
