@@ -15,8 +15,18 @@
         padding-bottom: 6rem;
     }
 
+    .content-block {
+        justify-items: center;
+        text-align: center;
+
+        h1 {
+            @include scale-set-font(h1, hero-h1);
+        }
+    }
+
     .title-image {
         max-width: 100%;
+        max-height: 12rem;
     }
 
     .background-image {
@@ -33,10 +43,44 @@
     }
 
     .text-content {
+        @include body-font(2.2rem);
         padding: 0;
+
+        @include width-up-to($tablet-max) {
+            @include set-font(body-large);
+        }
     }
 
     .btn {
         justify-self: left;
+    }
+
+    .button-row {
+        display: flex;
+        flex-direction: row;
+        gap: $normal-margin;
+
+        @include width-up-to($phone-max) {
+            flex-direction: column;
+        }
+
+        .button-shaped {
+            background-color: ui-color(white);
+            border: thin solid os-color(orange);
+            border-radius: 1.2rem;
+            color: text-color(normal);
+            justify-items: center;
+            padding: 1rem 2rem;
+
+            p {
+                @include body-font(2rem);
+                margin: 0;
+            }
+
+            a {
+                @include set-font(body-regular);
+                line-height: 1;
+            }
+        }
     }
 }
