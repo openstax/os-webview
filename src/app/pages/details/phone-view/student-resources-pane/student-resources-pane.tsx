@@ -22,8 +22,7 @@ function resourceBoxModel(
         },
         studentResourceBoxPermissions(
             resourceData,
-            userStatus,
-            'Student resources'
+            userStatus
         )
     ) as ResourceModel;
 }

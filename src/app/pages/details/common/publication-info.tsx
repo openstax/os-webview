@@ -7,7 +7,7 @@ import useDetailsContext, {ContextValues, IsbnType} from '../context';
 
 function PdfUpdateInfo({updateDate, url}: {
     updateDate?: string | null;
-    url?: string;
+    url: string | null;
 }) {
     if (!updateDate) {
         return null;
@@ -209,8 +209,8 @@ function LabeledDate({label, date, className}: {
     );
 }
 
-export default function PublicationInfo({url, polish}: {
-    url: string;
+export default function PublicationInfo({url = null, polish}: {
+    url?: string | null;
     polish?: boolean;
 }) {
     const model = useDetailsContext();

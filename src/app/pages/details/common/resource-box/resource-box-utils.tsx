@@ -31,6 +31,7 @@ export type ResourceData = {
         resourceUnlocked: boolean;
         creatorFestResource: boolean;
         description: string;
+        comingSoonText?: string;
     };
     comingSoonText: string | null;
     videoReferenceNumber?: number | null;

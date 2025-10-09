@@ -17,8 +17,8 @@ const importInstructorPane = () =>
 const importStudentPane = () =>
     import('./student-resources-pane/student-resources-pane');
 
-function TocPane({model}: {model: ContextValues}) {
-    const tocHtml = useTableOfContents(model);
+function TocPane() {
+    const tocHtml = useTableOfContents();
 
     return (
         <div className="toc-drawer">
@@ -27,23 +27,24 @@ function TocPane({model}: {model: ContextValues}) {
     );
 }
 
-function ErrataPane({model, polish}: {model: ContextValues; polish: boolean}) {
+function ErrataPane() {
     return (
         <div className="errata-pane">
-            <ErrataContents model={model} polish={polish} />
+            <ErrataContents />
         </div>
     );
 }
 
 type AccordionItem = {
-    title?: string;
+    title: string;
     titleTag?: string;
     openTitle?: string;
-    contentComponent?: React.ReactNode;
-    inline?: React.ReactNode;
+    contentComponent: React.ReactNode;
+} | {
+    inline: React.ReactNode;
 };
 
-function items(model: ContextValues): AccordionItem[] {
+function items(model: ContextValues) {
     const polish = $.isPolish(model.title);
     const result: AccordionItem[] = polish
         ? [
@@ -92,11 +93,11 @@ function items(model: ContextValues): AccordionItem[] {
     if (includeTOC) {
         result.splice(1, 0, {
             title: polish ? 'Spis treści' : 'Table of contents',
-            contentComponent: <TocPane model={model} />
+            contentComponent: <TocPane />
         });
         result.push({
             title: polish ? 'Zgłoś erratę' : 'Report errata',
-            contentComponent: <ErrataPane model={model} polish={polish} />
+            contentComponent: <ErrataPane />
         });
     }
 
@@ -111,7 +112,8 @@ export default function PhoneView() {
     const model = useDetailsContext();
     const accordionItems = items(model);
     const selectedTab = findSelectedTab(
-        accordionItems.map((i) => i.title).filter(Boolean) as string[]
+        accordionItems.filter((i) => 'title' in i)
+        .map((i) => i.title)
     );
 
     return (
@@ -121,7 +123,7 @@ export default function PhoneView() {
                 <div className="accordion-region">
                     <AccordionGroup
                         data-analytics-nav="Book Details Accordion"
-                        items={items(model)}
+                        items={accordionItems}
                         preExpanded={[selectedTab]}
                     />
                 </div>

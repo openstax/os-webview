@@ -27,7 +27,7 @@ export default function DetailsPane({
                 <CollapsingPane
                     title={polish ? 'Szczegóły Produktu' : 'Product details'}
                 >
-                    <PublicationInfo model={model} polish={polish} />
+                    <PublicationInfo polish={polish} />
                 </CollapsingPane>
             </div>
         </div>

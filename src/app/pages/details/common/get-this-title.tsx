@@ -14,7 +14,7 @@ import './get-this-title-files/get-this-title.scss';
 import trackLink from './track-link';
 
 export type Model = {
-    id: string;
+    id: number;
     slug: string;
     bookState: string;
     comingSoon: boolean;
@@ -23,13 +23,13 @@ export type Model = {
     kindleLink: string;
     webviewRexLink: string;
     webviewLink: string;
-    contentWarningText?: string;
+    contentWarningText: string | null;
     rexCalloutTitle?: string;
     rexCalloutBlurb?: string;
-    highResolutionPdfUrl: string;
-    lowResolutionPdfUrl: string;
-    cheggLink: string; // These may not be supported at all anymore,
-    cheggLinkText: string; // but the CMS is still serving them.
+    highResolutionPdfUrl: string | null;
+    lowResolutionPdfUrl: string | null;
+    cheggLink: string | null; // These may not be supported at all anymore,
+    cheggLinkText: string | null; // but the CMS is still serving them.
 };
 type ModelKey = 'bookshareLink' | 'kindleLink';
 type TrackedMouseEvent = Parameters<typeof trackLink>[0];
@@ -50,7 +50,7 @@ export default function GetThisTitle({model}: {model: Model}) {
     const [expanded, toggleExpanded] = useToggle(additionalOptions < 1);
     const interceptLinkClicks = React.useCallback<React.MouseEventHandler>(
         (event: TrackedMouseEvent) => {
-            trackLink(event, model.id);
+            trackLink(event, model.id.toString());
         },
         [model.id]
     );

@@ -9,7 +9,7 @@ type PartnerBlurb = {
     type: string;
     image: string;
     cost?: string;
-    verifiedFeatures: string[];
+    verifiedFeatures?: string[];
 };
 
 type PartnersModel = {
@@ -47,7 +47,7 @@ export default function Partners({
         <div className="partners">
             <div className="callout"></div>
             <div className="title-bar" data-analytics-nav={title}>
-                <span role="heading" aria-level="3">
+                <span role="heading" aria-level={3}>
                     {title}
                 </span>
                 <a
@@ -72,10 +72,10 @@ export default function Partners({
                                 logoUrl={blurb.image}
                                 tags={[blurb.cost, blurb.type].filter(
                                     (x) => x
-                                )}
+                                ) as string[]}
                                 onClick={onClick}
                                 badgeImage={badgeImage}
-                                verifiedFeatures={blurb.verifiedFeatures}
+                                verifiedFeatures={blurb.verifiedFeatures?.join(', ')}
                                 analyticsContentType="Partner Profile"
                             />
                         </li>

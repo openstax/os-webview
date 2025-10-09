@@ -1,14 +1,9 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import type {VideoContent} from '../../context';
 import './videos-tab.scss';
 
-type Video = {
-    title: string;
-    description: string;
-    embed: string;
-};
-
-export default function VideoTab({videos}: {videos: Video[]}) {
+export default function VideoTab({videos}: {videos: VideoContent[]}) {
     return (
         <div className="videos-tab">
             {videos.map(({title, description, embed}) => (

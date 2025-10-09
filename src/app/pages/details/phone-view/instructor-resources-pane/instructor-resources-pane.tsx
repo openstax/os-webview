@@ -21,19 +21,20 @@ export function InstructorResourcesPane({
     const {bookVideoFacultyResources, bookFacultyResources} = useResources(
         model.slug
     );
-    const bookId = model.id;
 
     for (const r of bookFacultyResources) {
-        r.resource.description = '';
-        r.resource.comingSoonText = '';
+        if (r.resource) {
+            r.resource.description = '';
+            r.resource.comingSoonText = '';
+        }
     }
     const featuredResources = bookFacultyResources.filter((r) => r.featured);
     const featuredModels = featuredResources.map((res) =>
-        resourceBoxModel(res, userStatus, bookId)
+        resourceBoxModel(res, userStatus, model)
     );
     const referenceModels = bookFacultyResources
         .filter((r) => r.videoReferenceNumber !== null)
-        .map((res) => resourceBoxModel(res, userStatus, bookId));
+        .map((res) => resourceBoxModel(res, userStatus, model));
     const otherModels = bookFacultyResources
         .filter(
             (r) =>
@@ -41,7 +42,7 @@ export function InstructorResourcesPane({
                 r.videoReferenceNumber === null &&
                 r.linkText !== 'View resources'
         )
-        .map((res) => resourceBoxModel(res, userStatus, bookId));
+        .map((res) => resourceBoxModel(res, userStatus, model));
     const navigate = useNavigate();
 
     function goToPartners(event: React.MouseEvent) {
@@ -91,7 +92,7 @@ function StubUnlessDisplayed({
     const {innerWidth, scrollY} = useWindowContext();
 
     React.useEffect(
-        () => setY(y || ref.current?.getBoundingClientRect().y ?? null),
+        () => setY((y || ref.current?.getBoundingClientRect().y) ?? null),
         [innerWidth, scrollY, y]
     );
 

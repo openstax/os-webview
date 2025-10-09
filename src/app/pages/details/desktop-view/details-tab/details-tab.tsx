@@ -9,6 +9,11 @@ import Promo from '../promo';
 import type {ContextValues} from '../../context';
 import './details-tab.scss';
 
+export type DetailsTabArgs = {
+    model: ContextValues;
+    polish: boolean;
+}
+
 function PolishTab({model}: {model: ContextValues}) {
     return (
         <div className="details-tab">
@@ -28,7 +33,7 @@ function PolishTab({model}: {model: ContextValues}) {
                 </div>
                 <Authors />
                 <ErrataSection />
-                <PublicationInfo model={model} polish={true} />
+                <PublicationInfo polish={true} />
             </div>
         </div>
     );
@@ -65,7 +70,7 @@ function EnglishTab({model}: {model: ContextValues}) {
                 <Authors />
                 <ErrataSection />
                 <div className="publication-info">
-                    <PublicationInfo model={model} url={null} />
+                    <PublicationInfo url={null} />
                 </div>
                 {model.adoptions && <SavingsBlurb />}
             </div>
@@ -76,10 +81,7 @@ function EnglishTab({model}: {model: ContextValues}) {
 export default function DetailsTab({
     model,
     polish
-}: {
-    model: ContextValues;
-    polish: boolean;
-}) {
+}: DetailsTabArgs) {
     const Child = polish ? PolishTab : EnglishTab;
 
     return <Child model={model} />;

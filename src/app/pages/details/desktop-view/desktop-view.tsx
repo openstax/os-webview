@@ -11,7 +11,7 @@ import JITLoad from '~/helpers/jit-load';
 import {findSelectedTab, replaceSearchTerm} from '../common/tab-utils';
 import './desktop-view.scss';
 
-const importDetailsTab = () => import('./details-tab/details-tab');
+const importDetailsTab = () => import('./details-tab/import-details-tab');
 const importInstructorTab = () =>
     import('./instructor-resource-tab/import-instructor-resource-tab');
 const importStudentTab = () =>
@@ -70,10 +70,9 @@ function useSelectedLabelTiedToSearchString(labels: string[]) {
 
 type StubUntilSeenProps = {
     active: boolean;
-    importFn: () => Promise<{default: React.ComponentType<unknown>}>;
     polish?: boolean;
     model?: ContextValues;
-};
+} & Parameters<typeof JITLoad>[0]
 
 function StubUntilSeen({active, ...JLParams}: StubUntilSeenProps) {
     const [seen, setSeen] = useState(false);
@@ -118,7 +117,7 @@ export default function DesktopView() {
                 <ContentGroup activeIndex={activeIndex} labels={labels}>
                     <StubUntilSeen
                         active={activeIndex === 0}
-                        importFn={importDetailsTab}
+                        importFn={importDetailsTab as Parameters<typeof JITLoad>[0]['importFn']}
                         polish={polish}
                         model={model}
                     />
