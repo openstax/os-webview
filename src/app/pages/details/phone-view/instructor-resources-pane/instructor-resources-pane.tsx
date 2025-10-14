@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
-import {useNavigate} from 'react-router-dom';
+import {NavigateOptions, useNavigate} from 'react-router-dom';
 import {resourceBoxModel, useResources} from '../../common/resource-box/resource-box-utils';
 import FeaturedResourcesSection from '../../common/featured-resources/featured-resources';
 import ResourceBoxes from '../../common/resource-box/resource-boxes';
@@ -10,6 +10,7 @@ import useUserContext, {type UserStatus} from '~/contexts/user';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
 import type {ContextValues} from '../../context';
 import './instructor-resources-pane.scss';
+import {assertNotNull} from '~/helpers/data';
 
 export function InstructorResourcesPane({
     model,
@@ -50,7 +51,7 @@ export function InstructorResourcesPane({
         navigate('/partners', {
             book: model.salesforceAbbreviation,
             redirect: true
-        } as never);
+        } as NavigateOptions);
     }
 
     return (
@@ -62,7 +63,7 @@ export function InstructorResourcesPane({
                     models={featuredModels}
                 />
             )}
-            <a className="card filter-for-book" onClick={goToPartners}>
+            <a className="card filter-for-book" href="/partners" onClick={goToPartners}>
                 OpenStax Partners <FontAwesomeIcon icon={faSignOutAlt} />
             </a>
             <div
@@ -92,7 +93,7 @@ function StubUnlessDisplayed({
     const {innerWidth, scrollY} = useWindowContext();
 
     React.useEffect(
-        () => setY((y || ref.current?.getBoundingClientRect().y) ?? null),
+        () => setY(y || assertNotNull(ref.current).getBoundingClientRect().y),
         [innerWidth, scrollY, y]
     );
 
@@ -112,9 +113,6 @@ export default function LoadUserStatusThenInstructorPane({
 }) {
     const {userStatus} = useUserContext();
 
-    if (!userStatus) {
-        return null;
-    }
     return (
         <WindowContextProvider>
             <StubUnlessDisplayed model={model} userStatus={userStatus} />

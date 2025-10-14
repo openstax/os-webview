@@ -1,6 +1,7 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import {NavigateOptions, useNavigate} from 'react-router-dom';
 import PartnerCard from '~/components/partner-card/partner-card';
+import {assertNotNull} from '~/helpers/data';
 import './partners.scss';
 
 type PartnerBlurb = {
@@ -32,12 +33,10 @@ export default function Partners({
         (event: React.MouseEvent<HTMLAnchorElement>) => {
             const destUrl = event.currentTarget.getAttribute('href');
 
-            if (destUrl) {
-                navigate(destUrl, {
-                    book: bookAbbreviation,
-                    redirect: true
-                } as never);
-            }
+            navigate(assertNotNull(destUrl), {
+                book: bookAbbreviation,
+                redirect: true
+            } as NavigateOptions);
             event.preventDefault();
         },
         [navigate, bookAbbreviation]

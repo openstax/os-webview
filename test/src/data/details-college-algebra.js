@@ -1313,7 +1313,19 @@ const details = {
     },
     "partner_list_label": "Technology Partners",
     "partner_page_link_text": "See all partners",
-    "videos": [],
+    "videos": [
+        {
+            "type": "video",
+            "value": [
+                {
+                    "title": "Interface",
+                    "description": "<p data-block-key=\"ftocg\">As the world’s largest producer of carpet tile and other flooring materials, Interface is everywhere. Their modular products foster a great degree of creativity and innovation in interior design and function, and allow their clients to have a positive impact on the world around them. Interface’s sustainability principles and initiatives -- Mission Zero and Climate Take Back -- have led to powerful community engagement and revolutionary technological enhancements.<br/><br/>This video is part of the OpenStax Business series, which showcases entrepreneurs and businesses with a focus on purpose, principles, and best business practices. It can be used with any OpenStax business textbook.</p>",
+                    "embed": "<script src=\"https://fast.wistia.com/embed/medias/hyb2pj6nrg.jsonp\" async></script><script src=\"https://fast.wistia.com/assets/external/E-v1.js\" async></script><div class=\"wistia_embed wistia_async_hyb2pj6nrg\" style=\"height:360px;position:relative;width:640px\"><div class=\"wistia_swatch\" style=\"height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;\"><img src=\"https://fast.wistia.com/embed/medias/hyb2pj6nrg/swatch\" style=\"filter:blur(5px);height:100%;object-fit:contain;width:100%;\" alt=\"\" aria-hidden=\"true\" onload=\"this.parentNode.style.opacity=1;\" /></div></div>"
+                }
+            ],
+            "id": "28d0ee63-04e0-4128-ba2b-9239b7da5e4e"
+        }
+    ],
     "promote_image": null,
     "last_updated_pdf": null,
     "featured_resources_header": null

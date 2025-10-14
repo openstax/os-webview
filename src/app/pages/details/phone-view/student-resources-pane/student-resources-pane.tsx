@@ -52,8 +52,5 @@ export default function LoadUserStatusThenStudentPane({
 }) {
     const {userStatus} = useUserContext();
 
-    if (!userStatus) {
-        return null;
-    }
     return <StudentResourcesPane model={model} userStatus={userStatus} />;
 }

@@ -18,8 +18,8 @@ function encodeLocation(search: string) {
 }
 
 export type ResourceData = {
-    linkExternal: string;
-    linkDocumentUrl: string;
+    linkExternal?: string;
+    linkDocumentUrl?: string;
     linkDocument?: {
         file: string;
     };
@@ -29,7 +29,7 @@ export type ResourceData = {
         heading: string;
         resourceCategory: string;
         resourceUnlocked: boolean;
-        creatorFestResource: boolean;
+        creatorFestResource?: boolean;
         description: string;
         comingSoonText?: string;
     };
@@ -37,10 +37,10 @@ export type ResourceData = {
     videoReferenceNumber?: number | null;
     k12?: boolean;
     printLink: string | null;
-    resourceUnlocked: boolean;
+    resourceUnlocked?: boolean;
     lockedText?: string;
-    resourceHeading: string;
-    resourceDescription: string;
+    resourceHeading?: string;
+    resourceDescription?: string;
     featured?: boolean;
 };
 
