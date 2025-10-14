@@ -12,7 +12,7 @@ type ResourcesProps = {
 function FeaturedResources({header, models, ...props}: ResourcesProps) {
     const modResources = models.map((res) => {
         const storageKey = `featured-resource-${res.heading}`;
-        const seenTimes = 1 + Number(window.localStorage[storageKey] || 0);
+        const seenTimes = 1 + Number(window.localStorage?.getItem(storageKey) || 0);
         const model = Object.assign(
             {
                 isNew: seenTimes <= 3
@@ -21,7 +21,7 @@ function FeaturedResources({header, models, ...props}: ResourcesProps) {
             res
         );
 
-        window.localStorage[storageKey] = seenTimes;
+        window.localStorage?.setItem(storageKey, seenTimes.toString());
 
         return model;
     });
