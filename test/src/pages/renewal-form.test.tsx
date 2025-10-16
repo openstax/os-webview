@@ -11,9 +11,6 @@ import userStatus from '../data/userStatus';
 import allBooks from '../data/sf-all-books';
 import * as SFBC from '~/components/multiselect/book-tags/sf-book-context';
 
-// @ts-expect-error does not exist on
-const {routerFuture} = global;
-
 const mockNavigate = jest.fn();
 // option necessary when using fake timers
 const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
@@ -33,7 +30,7 @@ describe('renewal-form', () => {
     function Component({path = '/'}) {
         return (
             <ShellContextProvider>
-                <MemoryRouter initialEntries={[path]} future={routerFuture}>
+                <MemoryRouter initialEntries={[path]}>
                     <RenewalForm />
                 </MemoryRouter>
             </ShellContextProvider>

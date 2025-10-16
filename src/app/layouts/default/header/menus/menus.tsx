@@ -12,23 +12,22 @@ import { treatSpaceOrEnterAsClick } from '~/helpers/events';
 
 export default function Menus() {
     const ref = React.useRef<HTMLDivElement>(null);
-    const [active, toggle] = useToggle();
-    const expandMenu = React.useCallback(() => toggle(), [toggle]);
+    const [active, toggleActive] = useToggle();
     const clickOverlay = React.useCallback(
         (event: React.MouseEvent) => {
             if (event.currentTarget === event.target) {
-                expandMenu();
+                toggleActive(false);
             }
         },
-        [expandMenu]
+        [toggleActive]
     );
     const closeOnEsc = React.useCallback(
         (event: React.KeyboardEvent) => {
-            if (active && event.key === 'Escape') {
-                expandMenu();
+            if (event.key === 'Escape') {
+                toggleActive(false);
             }
         },
-        [active, expandMenu]
+        [toggleActive]
     );
 
     React.useEffect(() => {
@@ -66,7 +65,7 @@ export default function Menus() {
                     <Logo />
                     <MenuExpander
                         active={active}
-                        onClick={expandMenu}
+                        toggleActive={toggleActive}
                         aria-controls='menu-popover'
                         aria-expanded={active}
                     />

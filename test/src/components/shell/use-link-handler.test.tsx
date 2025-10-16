@@ -26,6 +26,13 @@ function setPortalPrefix(portalPrefix: string) {
     });
 }
 
+type WindowWithPiTracker = (typeof window) & {
+    piTracker: (path: string) => void;
+}
+const w = window as WindowWithPiTracker;
+const piTracker = jest.fn();
+
+
 describe('use-link-handler', () => {
     const user = userEvent.setup();
     const notPrevented = jest.fn();
@@ -97,11 +104,6 @@ describe('use-link-handler', () => {
     });
     it('calls piTracker if available', async () => {
         setPortalPrefix('/portal');
-        type WindowWithPiTracker = (typeof window) & {
-            piTracker: (path: string) => void;
-        }
-        const w = window as WindowWithPiTracker;
-        const piTracker = jest.fn();
         const navigate = jest.fn();
 
         w.piTracker = (path: string) => piTracker(path);

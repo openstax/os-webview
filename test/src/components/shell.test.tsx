@@ -11,7 +11,6 @@ import * as GP from '~/pages/general/general';
 import * as LDH from '~/layouts/default/header/header';
 import * as MM from '~/layouts/default/header/menus/menus';
 import * as MSP from '~/layouts/default/microsurvey-popup/microsurvey-popup';
-import * as WC from '~/layouts/default/welcome/welcome-content';
 import * as TD from '~/layouts/default/takeover-dialog/takeover-dialog';
 import * as LSN from '~/layouts/default/lower-sticky-note/lower-sticky-note';
 import * as DH from '~/helpers/use-document-head';
@@ -98,6 +97,12 @@ describe('shell', () => {
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
     const saveWarn = console.warn;
 
+    type WindowWithPiTracker = (typeof window) & {
+        piTracker: (path: string) => void;
+    }
+    const w = window as WindowWithPiTracker;
+    const piTracker = jest.fn();
+
     function setPortalPrefix(portalPrefix: string) {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix,
@@ -111,7 +116,6 @@ describe('shell', () => {
         jest.spyOn(LDH, 'default').mockReturnValue(<></>);
         jest.spyOn(MM, 'default').mockReturnValue(<></>);
         jest.spyOn(MSP, 'default').mockReturnValue(null);
-        jest.spyOn(WC, 'default').mockReturnValue(null);
         jest.spyOn(TD, 'default').mockReturnValue(null);
         jest.spyOn(LSN, 'default').mockReturnValue(null);
         jest.spyOn(DH, 'default').mockReturnValue(undefined);
@@ -162,11 +166,13 @@ describe('shell', () => {
         await screen.findByText('Let us know you\'re using OpenStax');
     });
     it('sets portal before routing to page in a portal', async () => {
+        w.piTracker = (path: string) => piTracker(path);
         setPortalPrefix('');
         mockBrowserInitialEntries(['/landing-page/adoption']);
         render(AppElement);
 
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+        await waitFor(() => expect(piTracker).toHaveBeenCalled());
     });
 
     it('routes adoption (no CMS page data) page when in portal', async () => {

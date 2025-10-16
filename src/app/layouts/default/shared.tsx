@@ -4,17 +4,30 @@ import {useDataFromPromise} from '~/helpers/page-data-utils';
 import PutAway from '~/components/put-away/put-away';
 import './shared.scss';
 
-// Shim for incognito windows that disable localStorage
-if (!window.localStorage) {
-    window.localStorage = {
-        getItem(key) {return window.localStorage[key];}
-    };
-}
+type BannerInfo = {
+    id: number;
+    heading: string;
+    body: string;
+    link_text: string;
+    link_url: string;
+};
 
-export function useSeenCounter(seenEnough) {
+type StickyDataRaw = {
+    start: string;
+    expires: string;
+    emergency_expires: string;
+    show_popup: boolean;
+};
+
+type StickyDataWithBanner = StickyDataRaw & {
+    bannerInfo: BannerInfo;
+    mode: 'emergency' | 'popup' | 'banner' | null;
+};
+
+export function useSeenCounter(seenEnough: number): [boolean, () => void] {
     const [counter, increment] = React.useReducer(
-        (s) => s + 1,
-        window.localStorage?.visitedGive || 0
+        (s: number) => s + 1,
+        Number(window.localStorage?.visitedGive) || 0
     );
     const hasBeenSeenEnough = React.useMemo(
         () => counter > seenEnough,
@@ -24,7 +37,7 @@ export function useSeenCounter(seenEnough) {
     useEffect(
         () => {
             try {
-                window.localStorage.visitedGive = counter;
+                window.localStorage.visitedGive = String(counter);
             } catch {
                 console.warn('LocalStorage restricted');
             }
@@ -37,20 +50,20 @@ export function useSeenCounter(seenEnough) {
 
 export {PutAway};
 
-export function usePutAway() {
+export function usePutAway(): [boolean, () => JSX.Element] {
     const [closed, setClosed] = useState(false);
 
     return [closed, () => <PutAway onClick={() => setClosed(true)} />];
 }
 
 // eslint-disable-next-line complexity
-function getMode(stickyData) {
+function getMode(stickyData: StickyDataRaw | null): 'emergency' | 'popup' | 'banner' | null {
     if (!stickyData) {
         return null;
     }
 
     const expireDate = new Date(stickyData.emergency_expires);
-    const useEmergency = stickyData.emergency_expires && Date.now() < expireDate;
+    const useEmergency = stickyData.emergency_expires && Date.now() < expireDate.getTime();
 
     if (useEmergency) {
         return 'emergency';
@@ -58,7 +71,7 @@ function getMode(stickyData) {
 
     const startDate = new Date(stickyData.start);
     const endDate = new Date(stickyData.expires);
-    const microdonationActive = startDate < Date.now() && endDate > Date.now();
+    const microdonationActive = startDate.getTime() < Date.now() && endDate.getTime() > Date.now();
 
     if (!microdonationActive) {
         return null;
@@ -67,7 +80,7 @@ function getMode(stickyData) {
     return (stickyData.show_popup ? 'popup' : 'banner');
 }
 
-function useCampaign(stickyData) {
+function useCampaign(stickyData: StickyDataRaw | null) {
     const {start} = (stickyData || {});
     const mode = getMode(stickyData);
 
@@ -78,22 +91,22 @@ function useCampaign(stickyData) {
 
             if (savedId !== campaignId) {
                 window.localStorage.campaignId = campaignId;
-                window.localStorage.visitedGive = 0;
+                window.localStorage.visitedGive = '0';
             }
         }
     }, [start, mode]);
 }
 
-
-export function useStickyData() {
+export function useStickyData(): StickyDataWithBanner | null {
     const stickyDataPromise = React.useMemo(
         () => Promise.all([cmsFetch('sticky/'), cmsFetch('snippets/givebanner')])
-        .then(([sd, bd]) => {
-            sd.bannerInfo = bd[0];
-            return sd;
-        }),
-        []);
-    const stickyData = useDataFromPromise(stickyDataPromise);
+        .then(([sd, bd]: [StickyDataRaw, BannerInfo[]]) => ({
+            ...sd,
+            bannerInfo: bd[0]
+        })),
+        []
+    );
+    const stickyData = useDataFromPromise(stickyDataPromise) ?? null;
 
     useCampaign(stickyData);
 

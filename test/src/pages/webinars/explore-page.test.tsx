@@ -9,12 +9,9 @@ import {pastWebinar} from '../../data/webinars';
 import type {Webinar} from '~/pages/webinars/types';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
-// @ts-expect-error does not exist on
-const {routerFuture} = global;
-
 function Component({path}: {path: string}) {
     return (
-        <MemoryRouter basename='/webinars' initialEntries={[path]} future={routerFuture}>
+        <MemoryRouter basename='/webinars' initialEntries={[path]}>
             <Routes>
                 <Route
                     path='explore/:exploreType/:topic'

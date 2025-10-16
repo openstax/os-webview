@@ -13,19 +13,19 @@ const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
 describe('exercise the fallback subdomain', () => {
-    it('fetches from salesforce (no subdomain)', async () => {
-        const returnValue = {
-            ok: true,
-            data: 'whatever'
-        };
+    const saveWarn = console.warn;
 
-        mockFetch.mockResolvedValue(returnValue);
+    it('handles fetch fail from salesforce (no subdomain)', async () => {
+        console.warn = jest.fn();
+
         expect(await sfApiFetch('thing')).toBeNull();
+        expect(console.warn).toHaveBeenCalled();
         expect(mockFetch).toHaveBeenCalledWith(
             'https://salesforce.openstax.org/api/v1/thing',
             expect.objectContaining({
                 credentials: 'include'
             })
         );
+        console.warn = saveWarn;
     });
 });
