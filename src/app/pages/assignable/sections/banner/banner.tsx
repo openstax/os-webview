@@ -5,7 +5,7 @@ import useOptimizedImage, {
 } from '~/helpers/use-optimized-image';
 import './banner.scss';
 
-type BannerData = {
+export type BannerData = {
     headingTitleImageUrl: string;
     subheading: string;
     headingDescription: string;
@@ -26,6 +26,7 @@ type BannerData = {
     instructorHelpCtaDescription: string;
     instructorHelpCtaLink: string;
     instructorHelpCtaButtonText: string;
+    ctaSectionFooter: string;
 };
 
 export default function Banner({data}: {data: BannerData}) {
@@ -66,6 +67,7 @@ export default function Banner({data}: {data: BannerData}) {
                         linkText={data.instructorHelpCtaButtonText}
                     />
                 </div>
+                <RawHTML className="text-content" html={data.ctaSectionFooter} />
             </div>
         </section>
     );
