@@ -1,5 +1,6 @@
 import React from 'react';
 import Cookies from 'js-cookie';
+import RawHTML from '~/components/jsx-helpers/raw-html';
 
 export default function ContentWarning({
     link, track, close, onDownload, variant, warning, id
@@ -28,7 +29,7 @@ export default function ContentWarning({
     return (
         <div className="give-before-pdf">
             <div className="text-content">
-                {warning}
+                <RawHTML html={warning} />
             </div>
             <a
                 href={link}
