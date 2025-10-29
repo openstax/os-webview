@@ -46,7 +46,7 @@ type PartnerData = {
 }
 
 export function usePartnerFeatures(bookAbbreviation: string) {
-    const [blurbs, setBlurbs] = useState<object[]>([]);
+    const [blurbs, setBlurbs] = useState<ReturnType<typeof toBlurb>[]>([]);
     const [includePartners, setIncludePartners] = useState('');
 
     useEffect(() => {
@@ -64,5 +64,5 @@ export function usePartnerFeatures(bookAbbreviation: string) {
             });
     }, [bookAbbreviation]);
 
-    return [blurbs, includePartners];
+    return [blurbs, includePartners] as const;
 }

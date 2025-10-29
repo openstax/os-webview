@@ -109,8 +109,9 @@ function Item({
 
 type ItemType = {
     title: string;
-    inline?: React.ReactNode;
     contentComponent: React.ReactNode;
+} | {
+    inline: React.ReactNode;
 };
 
 export default function AccordionGroup({
@@ -161,16 +162,15 @@ export default function AccordionGroup({
                 preExpanded={preExpandedUuids}
                 data-analytics-nav={analyticsNav}
             >
-                {items.map(
-                    (item) =>
-                        item.inline || (
-                            <Item
-                                analytics={!!analyticsNav}
-                                key={item.title}
-                                {...item}
-                                checkChevronDirection={chevronDirection}
-                            />
-                        )
+                {items.filter((i) => 'title' in i).map(
+                    (item) => (
+                        <Item
+                            analytics={!!analyticsNav}
+                            key={item.title}
+                            {...item}
+                            checkChevronDirection={chevronDirection}
+                        />
+                    )
                 )}
             </Accordion>
         </div>

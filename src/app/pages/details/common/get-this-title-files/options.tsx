@@ -121,7 +121,7 @@ export function WebviewOption({model}: {model: Model}) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
     const trackDownload = React.useCallback(
         (event: TrackedMouseEvent) => {
-            trackLink(event, model.id);
+            trackLink(event, model.id.toString());
         },
         [model.id]
     );
@@ -140,10 +140,10 @@ export function WebviewOption({model}: {model: Model}) {
                 <GiveDialog
                     link={webviewLink}
                     variant="View online"
-                    warning={model.contentWarningText}
+                    warning={model.contentWarningText ?? undefined}
                     track="Online"
                     onDownload={trackDownload}
-                    id={model.id}
+                    id={model.id.toString()}
                 />
                 {showCallout && (
                     <div className="callout recommended-callout">
@@ -173,12 +173,12 @@ export function PdfOption({model}: {model: Model}) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
     const trackDownload = React.useCallback(
         (event: TrackedMouseEvent) => {
-            trackLink(event, model.id);
+            trackLink(event, model.id.toString());
         },
         [model.id]
     );
 
-    return (
+    return pdfLink ? (
         <React.Fragment>
             <SimpleLinkOption
                 link={pdfLink}
@@ -190,11 +190,11 @@ export function PdfOption({model}: {model: Model}) {
                 link={pdfLink}
                 track="PDF"
                 onDownload={trackDownload}
-                id={model.id}
-                warning={model.contentWarningText}
+                id={model.id.toString()}
+                warning={model.contentWarningText ?? undefined}
             />
         </React.Fragment>
-    );
+    ) : null;
 }
 
 export function usePrintCopyDialog() {
@@ -254,8 +254,8 @@ export function KindleOption({model}: {model: Model}) {
 
 export function CheggOption({model}: {model: Model}) {
     return (
-        <Option condition={model.cheggLink}>
-            <a href={model.cheggLink} data-track="Chegg Reader">
+        <Option condition={model.cheggLink ?? false}>
+            <a href={model.cheggLink as string} data-track="Chegg Reader">
                 <img
                     className="logo-img"
                     src="/dist/images/icons/Chegglogo.svg"

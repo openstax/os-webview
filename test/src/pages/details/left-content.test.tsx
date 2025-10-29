@@ -19,8 +19,11 @@ describe('left-content', () => {
         comingSoon: false,
         iconType: 'lock',
         heading: 'heading',
-        double: false
-    } as unknown as ModelType; // incomplete, but it's enough for testing
+        double: false,
+        bookModel: {
+            id: 1
+        }
+    } as ModelType; // incomplete, but it's enough for testing
     const link = {url: '#good-url', text: 'button-label'};
     // Setup option prevents await click from hanging when using faketimers
     const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});

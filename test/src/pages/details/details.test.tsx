@@ -8,6 +8,7 @@ import ShellContextProvider from '~/../../test/helpers/shell-context';
 import * as DH from '~/helpers/use-document-head';
 import $ from '~/helpers/$';
 import * as WC from '~/contexts/window';
+import * as RBU from '~/pages/details/common/resource-box/resource-box-utils';
 
 // Tamp down meaningless errors
 jest.mock('~/models/rex-release', () =>
@@ -23,14 +24,15 @@ jest.mock('~/models/table-of-contents-html', () =>
     jest.fn().mockReturnValue(Promise.resolve({}))
 );
 
+jest.spyOn(window, 'scrollBy').mockImplementation(() => null);
 jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue();
 const spyIsPolish = jest.spyOn($, 'isPolish');
 const spyWindowContext = jest.spyOn(WC, 'default');
 
-function Component() {
+function Component({path='/details/books/college-algebra'}) {
     return (
         <ShellContextProvider>
-            <MemoryRouter initialEntries={['/details/books/college-algebra']}>
+            <MemoryRouter initialEntries={[path]}>
                 <Routes>
                     <Route
                         path="/details/books/:title"
@@ -58,6 +60,9 @@ function lengthOfView(phoneOrBigger: string) {
 }
 
 describe('Details page', () => {
+    const user = userEvent.setup();
+    const saveWarn = console.warn;
+
     beforeEach(() => {
         document.head.innerHTML = '';
         const el = document.createElement('meta');
@@ -65,20 +70,64 @@ describe('Details page', () => {
         el.setAttribute('name', 'description');
         document.head.appendChild(el);
     });
+    console.debug = jest.fn();
 
-    it('renders book', async () => {
+    it('renders book with video data', async () => {
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         spyWindowContext.mockReturnValue({innerWidth: 1280} as any);
         render(<Component />);
         await finishedRendering();
         expect(lengthOfView('phone')).toBeUndefined();
-        expect(lengthOfView('bigger')).toBe(98);
+        expect(lengthOfView('bigger')).toBe(794);
 
         const jsonLdScript = document.head.querySelector('script');
 
         expect(jsonLdScript?.textContent).toEqual(
             expect.stringContaining('mainEntity')
         );
+        const tabs = screen.getAllByRole('tab');
+
+        expect(tabs).toHaveLength(4);
+        // These do not seem to update the tab state as expected, though they
+        // do exercise some code.
+        await user.click(tabs[1]);
+    });
+    it('renders with Student tab selected', async () => {
+        const mockLocation = jest.spyOn(window, 'location', 'get').mockReturnValue({
+            ...window.location,
+            search: '?Student%20resources'
+        });
+
+        render(<Component path='/details/books/biology-2e' />);
+        const tabs = await screen.findAllByRole('tab');
+
+        expect(tabs[2].getAttribute('aria-selected')).toBe('true');
+        await user.click(tabs[1]);
+        mockLocation.mockRestore();
+    });
+    it('renders with Instructor tab selected', async () => {
+        jest.spyOn(RBU, 'useResources').mockReturnValue({
+            bookVideoFacultyResources: [],
+            bookFacultyResources: []
+        });
+        const mockLocation = jest.spyOn(window, 'location', 'get').mockReturnValue({
+            ...window.location,
+            search: '?Instructor%20resources'
+        });
+
+        render(<Component />);
+        await finishedRendering();
+        const tabs = screen.getAllByRole('tab');
+
+        expect(tabs[1].getAttribute('aria-selected')).toBe('true');
+        await user.click(tabs[2]);
+
+        screen.getByRole('heading', {name: 'Technology Partners'});
+        console.warn = jest.fn();
+        await user.click(screen.getByRole('link', {name: 'MagicBox E-Reader'}));
+        expect(console.warn).toHaveBeenCalled();
+        console.warn = saveWarn;
+        mockLocation.mockRestore();
     });
     it('renders Polish book', async () => {
         spyIsPolish.mockReturnValue(true);
@@ -104,11 +153,46 @@ describe('Details page', () => {
         );
     });
     it('renders only phone-view at phone width', async () => {
+        jest.spyOn(RBU, 'useResources').mockReturnValue({
+            bookVideoFacultyResources: [],
+            bookFacultyResources: [
+                {
+                    featured: true,
+                    linkText: 'Link text',
+                    comingSoonText: '',
+                    printLink: 'print-link',
+                    videoReferenceNumber: 13
+                },
+                {
+                    featured: false,
+                    linkText: 'Link text2',
+                    comingSoonText: '',
+                    printLink: 'print-link2',
+                    videoReferenceNumber: null,
+                    resource: {
+                        id: 1,
+                        heading: 'resource-heading',
+                        resourceCategory: 'any',
+                        resourceUnlocked: true,
+                        description: 'resource-description'
+                    }
+                }
+            ]
+        });
         spyWindowContext.mockReturnValue({innerWidth: 480} as any); // eslint-disable-line
         render(<Component />);
         await finishedRendering();
         expect(lengthOfView('phone')).toBe(346);
         expect(lengthOfView('bigger')).toBeUndefined();
+
+        jest.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
+            y: 100
+        } as any); // eslint-disable-line
+        await user.click(screen.getByRole('button', {name: 'Instructor resources updated'}));
+        console.warn = jest.fn();
+        await user.click(await screen.findByRole('link', {name: 'OpenStax Partners'}));
+        expect(console.warn).toHaveBeenCalled();
+        console.warn = saveWarn;
     });
     it('toggles authors at phone width', async () => {
         spyWindowContext.mockReturnValue({innerWidth: 480} as any); // eslint-disable-line
@@ -116,7 +200,6 @@ describe('Details page', () => {
         await finishedRendering();
         const authorToggle = await screen.findByText('Authors');
         const detailsEl = authorToggle.closest('details');
-        const user = userEvent.setup();
 
         await user.click(authorToggle);
         expect(detailsEl?.open).toBe(true);
