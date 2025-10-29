@@ -42,7 +42,7 @@ type RawHTMLArgs = {
 
 export default function RawHTML({
     Tag = 'div',
-    html,
+    html = '',
     embed = false,
     ...otherProps
 }: RawHTMLArgs) {

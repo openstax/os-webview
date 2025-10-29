@@ -6,16 +6,10 @@ import {
     About,
     Courses,
     FAQ,
-    OverlappingQuote,
     CTA
 } from './lazy-imports';
+import type {BannerData} from './sections/banner/banner';
 import './assignable.scss';
-
-type ImageMeta = {
-    meta: {
-        downloadUrl: string;
-    };
-};
 
 type CarouselImage = {
     image: {
@@ -37,11 +31,7 @@ type FAQItem = {
     answer: string;
 };
 
-type AssignablePageData = {
-    headingTitleImageUrl: string;
-    subheading: string;
-    headingDescription: string;
-    headingImage: ImageMeta;
+type AssignablePageData = BannerData & {
     section2Heading: string;
     section2Description: string;
     imageCarousel: [CarouselImage[]];
@@ -51,10 +41,6 @@ type AssignablePageData = {
     comingSoonBooks: BookData[];
     faqHeader: string;
     faqs: FAQItem[];
-    addAssignableCtaHeader: string;
-    addAssignableCtaDescription: string;
-    addAssignableCtaLink: string;
-    addAssignableCtaButtonText: string;
     assignableCtaText: string;
     assignableCtaLink: string;
     assignableCtaButtonText: string;
@@ -75,9 +61,6 @@ function AssignablePage({data}: {data: AssignablePageData}) {
             </LazyLoad>
             <LazyLoad>
                 <FAQ data={data} />
-            </LazyLoad>
-            <LazyLoad>
-                <OverlappingQuote data={data} />
             </LazyLoad>
             <LazyLoad>
                 <CTA data={data} />
