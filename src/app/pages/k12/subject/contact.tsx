@@ -12,7 +12,7 @@ export default function Contact({data}: {data: K12SubjectData}) {
                     <h1>{data.rfiHeading}</h1>
                     <div>{data.rfiText}</div>
                 </div>
-                <InterestForm role="K12 Instructor" />
+                <InterestForm role="Instructor" />
             </div>
         </section>
     );
