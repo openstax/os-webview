@@ -5,22 +5,8 @@ import {useLocation} from 'react-router-dom';
 import cn from 'classnames';
 import DesktopContent from './content-desktop';
 import MobileContent from './content-mobile';
+import {TakeoverData} from './common';
 import './takeover-dialog.scss';
-
-type TakeoverData = {
-    goalTime?: string;
-    fundraiserImage: string;
-    colorScheme: string;
-    headline: string;
-    message: string;
-    image: string;
-    buttonText: string;
-    buttonUrl: string;
-    messageType: 'message' | 'goal';
-    boxHeadline?: string;
-    boxHtml?: string;
-    goalAmount?: number;
-};
 
 function goalHasPassed(data: TakeoverData) {
     if (!data.goalTime) {

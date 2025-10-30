@@ -1,20 +1,7 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {Countdown, Amount, GiveButton} from './common';
+import {Countdown, Amount, GiveButton, TakeoverData} from './common';
 import './content-mobile.scss';
-
-type TakeoverData = {
-    headline: string;
-    message: string;
-    image: string;
-    buttonText: string;
-    buttonUrl: string;
-    messageType: 'message' | 'goal';
-    boxHeadline?: string;
-    boxHtml?: string;
-    goalAmount?: number;
-    goalTime?: string;
-};
 
 function HeadlineImage({headline, image}: {headline: string; image: string}) {
     return (

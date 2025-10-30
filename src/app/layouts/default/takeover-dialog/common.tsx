@@ -6,6 +6,21 @@ const msPerSec = 1000;
 const msPerMin = msPerSec * 60;
 const msPerHour = msPerMin * 60;
 
+export type TakeoverData = {
+    goalTime?: string;
+    fundraiserImage: string;
+    colorScheme: string;
+    headline: string;
+    message: string;
+    image: string;
+    buttonText: string;
+    buttonUrl: string;
+    messageType: 'message' | 'goal';
+    boxHeadline?: string;
+    boxHtml?: string;
+    goalAmount?: number;
+};
+
 function getHMS(goalTimeMs: number) {
     const msDiff = goalTimeMs - Date.now();
 
