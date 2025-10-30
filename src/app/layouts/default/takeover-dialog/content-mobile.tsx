@@ -3,7 +3,20 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {Countdown, Amount, GiveButton} from './common';
 import './content-mobile.scss';
 
-function HeadlineImage({headline, image}) {
+type TakeoverData = {
+    headline: string;
+    message: string;
+    image: string;
+    buttonText: string;
+    buttonUrl: string;
+    messageType: 'message' | 'goal';
+    boxHeadline?: string;
+    boxHtml?: string;
+    goalAmount?: number;
+    goalTime?: string;
+};
+
+function HeadlineImage({headline, image}: {headline: string; image: string}) {
     return (
         <div className="headline-image" style={{backgroundImage: `url(${image})`}}>
             <div className="gradient" />
@@ -12,7 +25,13 @@ function HeadlineImage({headline, image}) {
     );
 }
 
-function MessageBox({buttonText, buttonUrl, headline, html, message}) {
+function MessageBox({buttonText, buttonUrl, headline, html, message}: {
+    buttonText: string;
+    buttonUrl: string;
+    headline: string;
+    html: string;
+    message: string;
+}) {
     return (
         <React.Fragment>
             <div className="blue-section">
@@ -25,7 +44,13 @@ function MessageBox({buttonText, buttonUrl, headline, html, message}) {
     );
 }
 
-function GoalBox({buttonText, buttonUrl, goalAmount, goalTime, message}) {
+function GoalBox({buttonText, buttonUrl, goalAmount, goalTime, message}: {
+    buttonText: string;
+    buttonUrl: string;
+    goalAmount: number;
+    goalTime: string;
+    message: string;
+}) {
     return (
         <div className="goal-info">
             <GiveButton text={buttonText} url={buttonUrl} />
@@ -36,26 +61,28 @@ function GoalBox({buttonText, buttonUrl, goalAmount, goalTime, message}) {
     );
 }
 
-function Box({data}) {
+function Box({data}: {data: TakeoverData}) {
     return ({
         message: <MessageBox
             buttonText={data.buttonText} buttonUrl={data.buttonUrl}
-            headline={data.boxHeadline} html={data.boxHtml}
+            headline={data.boxHeadline!} html={data.boxHtml!}
             message={data.message}
         />,
         goal: <GoalBox
             buttonText={data.buttonText} buttonUrl={data.buttonUrl}
-            goalAmount={data.goalAmount} goalTime={data.goalTime}
+            goalAmount={data.goalAmount!} goalTime={data.goalTime!}
             message={data.message}
         />
     }[data.messageType] || <h1>OOPS, {data.messageType}</h1>);
 }
 
-export default function MobileContent({data}) {
+export default function MobileContent({data}: {data: TakeoverData}) {
     React.useEffect(() => {
-        document.getElementById('header').classList.add('over-mobile-dialog');
+        document.getElementById('header')?.classList.add('over-mobile-dialog');
 
-        return () => document.getElementById('header')?.classList.remove('over-mobile-dialog');
+        return () => {
+            document.getElementById('header')?.classList.remove('over-mobile-dialog');
+        };
     }, []);
 
     return (

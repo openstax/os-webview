@@ -5,15 +5,15 @@ import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours
 const LS_KEY = 'takeoverLastDisplay';
 
-function deserialize(key) {
+function deserialize(key: string) {
     try {
-        return JSON.parse(window.localStorage.getItem(key));
+        return JSON.parse(window.localStorage.getItem(key) || 'null');
     } catch {
         return null;
     }
 }
 
-function useLocalStorage(key, defaultValue='') {
+function useLocalStorage(key: string, defaultValue: string | number = '') {
     const storedValue = deserialize(key);
     const initialValue = storedValue === null ? defaultValue : storedValue;
     const [value, setValue] = React.useState(initialValue);
@@ -23,22 +23,24 @@ function useLocalStorage(key, defaultValue='') {
         [key, value]
     );
 
-    return [value, setValue];
+    return [value, setValue] as const;
 }
 
 function useDisplayedRecently() {
     const [lastDisplay, setLastDisplay] = useLocalStorage(LS_KEY, 0);
-    const msSince = Date.now() - lastDisplay;
+    const msSince = Date.now() - Number(lastDisplay);
     const setDisplayed = React.useCallback(
         () => setLastDisplay(Date.now()),
         [setLastDisplay]
     );
 
-    return [msSince < RECENT_DELTA_MS, setDisplayed];
+    return [msSince < RECENT_DELTA_MS, setDisplayed] as const;
 }
 
 export default function TakeOverDialogGateKeeper() {
-    const [data] = [].concat(camelCaseKeys(useDataFromSlug('donations/fundraiser')));
+    const rawData = camelCaseKeys(useDataFromSlug('donations/fundraiser'));
+    const dataArray = Array.isArray(rawData) ? rawData : rawData ? [rawData] : [];
+    const [data] = dataArray;
     const [displayedRecently, setDisplayed] = useDisplayedRecently();
 
     if (!data || displayedRecently) {

@@ -3,6 +3,19 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {Countdown, Amount, GiveButton} from './common';
 import './content-desktop.scss';
 
+type TakeoverData = {
+    headline: string;
+    message: string;
+    image: string;
+    buttonText: string;
+    buttonUrl: string;
+    messageType: 'message' | 'goal';
+    boxHeadline?: string;
+    boxHtml?: string;
+    goalAmount?: number;
+    goalTime?: string;
+};
+
 function Logo() {
     return (
         <img
@@ -12,7 +25,12 @@ function Logo() {
     );
 }
 
-function Basic({headline, message, image, children}) {
+function Basic({headline, message, image, children}: {
+    headline: string;
+    message: string;
+    image: string;
+    children?: React.ReactNode;
+}) {
     return (
         <div className="takeover-content desktop-only">
             <div className="text-side">
@@ -21,12 +39,20 @@ function Basic({headline, message, image, children}) {
                 <div className="message">{message}</div>
                 {children}
             </div>
-            <div className="picture-side" style={{backgroundImage: `url(${image})`}} />
+            <div
+                className="picture-side"
+                style={{backgroundImage: `url(${image})`}}
+            />
         </div>
     );
 }
 
-function MessageBox({buttonText, buttonUrl, headline, html}) {
+function MessageBox({buttonText, buttonUrl, headline, html}: {
+    buttonText: string;
+    buttonUrl: string;
+    headline: string;
+    html: string;
+}) {
     return (
         <React.Fragment>
             <GiveButton text={buttonText} url={buttonUrl} />
@@ -41,7 +67,12 @@ function MessageBox({buttonText, buttonUrl, headline, html}) {
     );
 }
 
-function GoalBox({buttonText, buttonUrl, goalAmount, goalTime}) {
+function GoalBox({buttonText, buttonUrl, goalAmount, goalTime}: {
+    buttonText: string;
+    buttonUrl: string;
+    goalAmount: number;
+    goalTime: string;
+}) {
     return (
         <div className="goal-box">
             <Amount amount={goalAmount} />
@@ -54,20 +85,20 @@ function GoalBox({buttonText, buttonUrl, goalAmount, goalTime}) {
     );
 }
 
-function Box({data}) {
+function Box({data}: {data: TakeoverData}) {
     return ({
         message: <MessageBox
             buttonText={data.buttonText} buttonUrl={data.buttonUrl}
-            headline={data.boxHeadline} html={data.boxHtml}
+            headline={data.boxHeadline!} html={data.boxHtml!}
         />,
         goal: <GoalBox
             buttonText={data.buttonText} buttonUrl={data.buttonUrl}
-            goalAmount={data.goalAmount} goalTime={data.goalTime}
+            goalAmount={data.goalAmount!} goalTime={data.goalTime!}
         />
     }[data.messageType] || <h1>OOPS, {data.messageType}</h1>);
 }
 
-export default function DesktopContent({data}) {
+export default function DesktopContent({data}: {data: TakeoverData}) {
     return (
         <Basic
             headline={data.headline} message={data.message}

@@ -7,7 +7,22 @@ import DesktopContent from './content-desktop';
 import MobileContent from './content-mobile';
 import './takeover-dialog.scss';
 
-function goalHasPassed(data) {
+type TakeoverData = {
+    goalTime?: string;
+    fundraiserImage: string;
+    colorScheme: string;
+    headline: string;
+    message: string;
+    image: string;
+    buttonText: string;
+    buttonUrl: string;
+    messageType: 'message' | 'goal';
+    boxHeadline?: string;
+    boxHtml?: string;
+    goalAmount?: number;
+};
+
+function goalHasPassed(data: TakeoverData) {
     if (!data.goalTime) {
         return false;
     }
@@ -16,7 +31,10 @@ function goalHasPassed(data) {
     return goalTimeMs < Date.now();
 }
 
-export default function TakeoverBanner({data, setDisplayed}) {
+export default function TakeoverBanner({data, setDisplayed}: {
+    data: TakeoverData;
+    setDisplayed: () => void;
+}) {
     const [Dialog, _, close, isOpen] = useDialog(true);
     const location = useLocation();
     const initialLoc = React.useRef(location);
@@ -43,11 +61,14 @@ export default function TakeoverBanner({data, setDisplayed}) {
     data.image = data.fundraiserImage;
     /*
         takeover-headline is the id of the h1 in content-desktop
-        aria-labelledby can reference hidden content, so even in mobile, the value in content-desktop
-        will be used
+        aria-labelledby can reference hidden content, so even in mobile, the value in
+        content-desktop will be used
     */
     return (
-        <Dialog className={cn('takeover-dialog', data.colorScheme)} aria={{labelledby: 'takeover-headline'}}>
+        <Dialog
+            className={cn('takeover-dialog', data.colorScheme)}
+            aria={{labelledby: 'takeover-headline'}}
+        >
             <TakeoverContextProvider contextValueParameters={{close}}>
                 <DesktopContent data={data} />
                 <MobileContent data={data} />
