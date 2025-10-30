@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/preact';
+import mockLocalStorage from '../../helpers/mock-local-storage';
 import userEvent from '@testing-library/user-event';
 import {useSeenCounter, usePutAway, useStickyData} from '~/layouts/default/shared';
 import DefaultLayout from '~/layouts/default/default';
@@ -41,22 +42,6 @@ jest.mock('~/contexts/shared-data', () => ({
     __esModule: true,
     default: () => mockUseSharedDataContext()
 }));
-
-// Mock localStorage
-const mockLocalStorage = {
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-    clear: jest.fn(),
-    key: jest.fn(),
-    length: 0,
-    visitedGive: '0',
-    campaignId: ''
-};
-
-Reflect.defineProperty(window, 'localStorage', {
-    value: mockLocalStorage
-});
 
 const user = userEvent.setup();
 const basicImplementation = (path: string) => {

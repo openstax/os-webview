@@ -14,7 +14,7 @@ function deserialize(key: string) {
     }
 }
 
-function useLocalStorage(key: string, defaultValue: string | number = '') {
+function useLocalStorage(key: string, defaultValue: number) {
     const storedValue = deserialize(key);
     const initialValue = storedValue === null ? defaultValue : storedValue;
     const [value, setValue] = React.useState(initialValue);
@@ -49,7 +49,7 @@ export default function TakeOverDialogGateKeeper() {
 
     return (
         <JITLoad
-            importFn={() => import('./takeover-dialog-content')}
+            importFn={() => import('./import-takeover-dialog-content.js')}
             data={data as TakeoverData} setDisplayed={setDisplayed}
         />
     );
