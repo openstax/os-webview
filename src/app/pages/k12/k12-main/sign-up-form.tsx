@@ -16,7 +16,7 @@ export default function SignUpForm({data}: {data: K12Data}) {
             <div className="boxed">
                 <h1>{data.rfiHeader}</h1>
                 <div>{data.rfiDescription}</div>
-                <InterestForm role="K12 Instructor" />
+                <InterestForm role="Instructor" />
             </div>
         </section>
     );
