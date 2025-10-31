@@ -44,11 +44,11 @@ function Component({path='/details/books/college-algebra'}) {
     );
 }
 
-async function finishedRendering() {
+async function finishedRendering(color='light-blue') {
     const main = await screen.findByRole('main');
 
     return await waitFor(() =>
-        expect(main.getAttribute('class')).toBe('details-page light-blue')
+        expect(main.getAttribute('class')).toBe(`details-page ${color}`)
     );
 }
 
@@ -211,6 +211,14 @@ describe('Details page', () => {
         );
         render(<Component />);
         await finishedRendering();
+        expect(document.head.querySelector('script')).toBeNull();
+    });
+    it('does not show TOC for retired', async () => {
+        document.head.removeChild(
+            document.head.querySelector('meta[name="description"]') as Node
+        );
+        render(<Component path='/details/books/chemistry-atoms-first' />);
+        await finishedRendering('deep-green');
         expect(document.head.querySelector('script')).toBeNull();
     });
 });
