@@ -50,7 +50,8 @@ export default function TakeOverDialogGateKeeper() {
     return (
         <JITLoad
             importFn={() => import('./import-takeover-dialog-content.js')}
-            data={data as TakeoverData} setDisplayed={setDisplayed}
+            data={data as TakeoverData}
+            setDisplayed={setDisplayed}
         />
     );
 }

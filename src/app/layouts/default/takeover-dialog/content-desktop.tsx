@@ -6,13 +6,21 @@ import './content-desktop.scss';
 function Logo() {
     return (
         <img
-            className="logo-color" src="/dist/images/logo.svg" alt="OpenStax logo"
-            width="354" height="81"
+            className="logo-color"
+            src="/dist/images/logo.svg"
+            alt="OpenStax logo"
+            width="354"
+            height="81"
         />
     );
 }
 
-function Basic({headline, message, image, children}: {
+function Basic({
+    headline,
+    message,
+    image,
+    children
+}: {
     headline: string;
     message: string;
     image: string;
@@ -34,7 +42,12 @@ function Basic({headline, message, image, children}: {
     );
 }
 
-function MessageBox({buttonText, buttonUrl, headline, html}: {
+function MessageBox({
+    buttonText,
+    buttonUrl,
+    headline,
+    html
+}: {
     buttonText: string;
     buttonUrl: string;
     headline: string;
@@ -54,7 +67,12 @@ function MessageBox({buttonText, buttonUrl, headline, html}: {
     );
 }
 
-function GoalBox({buttonText, buttonUrl, goalAmount, goalTime}: {
+function GoalBox({
+    buttonText,
+    buttonUrl,
+    goalAmount,
+    goalTime
+}: {
     buttonText: string;
     buttonUrl: string;
     goalAmount: number;
@@ -64,7 +82,9 @@ function GoalBox({buttonText, buttonUrl, goalAmount, goalTime}: {
         <div className="goal-box">
             <Amount amount={goalAmount} />
             <div className="timer-side">
-                <a className="btn primary" href={buttonUrl}>{buttonText}</a>
+                <a className="btn primary" href={buttonUrl}>
+                    {buttonText}
+                </a>
                 <div className="message">help us meet our goal in the next</div>
                 <Countdown goalTime={goalTime} />
             </div>
@@ -73,22 +93,33 @@ function GoalBox({buttonText, buttonUrl, goalAmount, goalTime}: {
 }
 
 function Box({data}: {data: TakeoverData}) {
-    return ({
-        message: <MessageBox
-            buttonText={data.buttonText} buttonUrl={data.buttonUrl}
-            headline={data.boxHeadline!} html={data.boxHtml!}
-        />,
-        goal: <GoalBox
-            buttonText={data.buttonText} buttonUrl={data.buttonUrl}
-            goalAmount={data.goalAmount!} goalTime={data.goalTime!}
-        />
-    }[data.messageType] || <h1>OOPS, {data.messageType}</h1>);
+    return (
+        {
+            message: (
+                <MessageBox
+                    buttonText={data.buttonText}
+                    buttonUrl={data.buttonUrl}
+                    headline={data.boxHeadline!}
+                    html={data.boxHtml!}
+                />
+            ),
+            goal: (
+                <GoalBox
+                    buttonText={data.buttonText}
+                    buttonUrl={data.buttonUrl}
+                    goalAmount={data.goalAmount!}
+                    goalTime={data.goalTime!}
+                />
+            )
+        }[data.messageType] || <h1>OOPS, {data.messageType}</h1>
+    );
 }
 
 export default function DesktopContent({data}: {data: TakeoverData}) {
     return (
         <Basic
-            headline={data.headline} message={data.message}
+            headline={data.headline}
+            message={data.message}
             image={data.image}
         >
             <Box data={data} />

@@ -44,7 +44,7 @@ function useHMS(goalTime: string) {
         return () => window.clearInterval(i);
     }, [goalTimeMs]);
 
-    return (hms);
+    return hms;
 }
 
 export function Countdown({goalTime}: {goalTime: string}) {
@@ -52,13 +52,18 @@ export function Countdown({goalTime}: {goalTime: string}) {
 
     return (
         <div className="countdown-numbers">
-            <div><span className="number">{h}</span> hours</div>
-            <div><span className="number">{m}</span> minutes</div>
-            <div><span className="number">{s}</span> seconds</div>
+            <div>
+                <span className="number">{h}</span> hours
+            </div>
+            <div>
+                <span className="number">{m}</span> minutes
+            </div>
+            <div>
+                <span className="number">{s}</span> seconds
+            </div>
         </div>
     );
 }
-
 
 const numFormat = window.Intl.NumberFormat('en-US').format; // eslint-disable-line new-cap
 
@@ -75,6 +80,8 @@ export function GiveButton({text, url}: {text: string; url: string}) {
     const {close} = useTakeoverContext();
 
     return (
-        <a className="btn primary" href={url} onClick={close}>{text}</a>
+        <a className="btn primary" href={url} onClick={close}>
+            {text}
+        </a>
     );
 }

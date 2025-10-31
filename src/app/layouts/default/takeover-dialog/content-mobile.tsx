@@ -5,14 +5,23 @@ import './content-mobile.scss';
 
 function HeadlineImage({headline, image}: {headline: string; image: string}) {
     return (
-        <div className="headline-image" style={{backgroundImage: `url(${image})`}}>
+        <div
+            className="headline-image"
+            style={{backgroundImage: `url(${image})`}}
+        >
             <div className="gradient" />
             <RawHTML Tag="h1" html={headline} />
         </div>
     );
 }
 
-function MessageBox({buttonText, buttonUrl, headline, html, message}: {
+function MessageBox({
+    buttonText,
+    buttonUrl,
+    headline,
+    html,
+    message
+}: {
     buttonText: string;
     buttonUrl: string;
     headline: string;
@@ -31,7 +40,13 @@ function MessageBox({buttonText, buttonUrl, headline, html, message}: {
     );
 }
 
-function GoalBox({buttonText, buttonUrl, goalAmount, goalTime, message}: {
+function GoalBox({
+    buttonText,
+    buttonUrl,
+    goalAmount,
+    goalTime,
+    message
+}: {
     buttonText: string;
     buttonUrl: string;
     goalAmount: number;
@@ -49,18 +64,28 @@ function GoalBox({buttonText, buttonUrl, goalAmount, goalTime, message}: {
 }
 
 function Box({data}: {data: TakeoverData}) {
-    return ({
-        message: <MessageBox
-            buttonText={data.buttonText} buttonUrl={data.buttonUrl}
-            headline={data.boxHeadline!} html={data.boxHtml!}
-            message={data.message}
-        />,
-        goal: <GoalBox
-            buttonText={data.buttonText} buttonUrl={data.buttonUrl}
-            goalAmount={data.goalAmount!} goalTime={data.goalTime!}
-            message={data.message}
-        />
-    }[data.messageType] || <h1>OOPS, {data.messageType}</h1>);
+    return (
+        {
+            message: (
+                <MessageBox
+                    buttonText={data.buttonText}
+                    buttonUrl={data.buttonUrl}
+                    headline={data.boxHeadline!}
+                    html={data.boxHtml!}
+                    message={data.message}
+                />
+            ),
+            goal: (
+                <GoalBox
+                    buttonText={data.buttonText}
+                    buttonUrl={data.buttonUrl}
+                    goalAmount={data.goalAmount!}
+                    goalTime={data.goalTime!}
+                    message={data.message}
+                />
+            )
+        }[data.messageType] || <h1>OOPS, {data.messageType}</h1>
+    );
 }
 
 export default function MobileContent({data}: {data: TakeoverData}) {
@@ -68,7 +93,9 @@ export default function MobileContent({data}: {data: TakeoverData}) {
         document.getElementById('header')?.classList.add('over-mobile-dialog');
 
         return () => {
-            document.getElementById('header')?.classList.remove('over-mobile-dialog');
+            document
+                .getElementById('header')
+                ?.classList.remove('over-mobile-dialog');
         };
     }, []);
 

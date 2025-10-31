@@ -17,7 +17,10 @@ function goalHasPassed(data: TakeoverData) {
     return goalTimeMs < Date.now();
 }
 
-export default function TakeoverBanner({data, setDisplayed}: {
+export default function TakeoverBanner({
+    data,
+    setDisplayed
+}: {
     data: TakeoverData;
     setDisplayed: () => void;
 }) {
@@ -31,14 +34,11 @@ export default function TakeoverBanner({data, setDisplayed}: {
         }
     }, [location, initialLoc, close]);
 
-    React.useEffect(
-        () => {
-            if (!isOpen) {
-                setDisplayed();
-            }
-        },
-        [isOpen, setDisplayed]
-    );
+    React.useEffect(() => {
+        if (!isOpen) {
+            setDisplayed();
+        }
+    }, [isOpen, setDisplayed]);
 
     if (goalHasPassed(data)) {
         return null;

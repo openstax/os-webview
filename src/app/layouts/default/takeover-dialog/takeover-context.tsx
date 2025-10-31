@@ -10,7 +10,4 @@ function useContextValue({close}: ContextValueParameters) {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as TakeoverContextProvider
-};
+export {useContext as default, ContextProvider as TakeoverContextProvider};
