@@ -15,7 +15,11 @@ import './dropdown.scss';
 // for ordinary website navigations, per
 // https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/
 
-export function MenuItem({label, url, local=undefined}) {
+export function MenuItem({label, url, local = undefined}: {
+    label: string;
+    url: string;
+    local?: string;
+}) {
     const {innerWidth: _} = useWindowContext();
     const urlPath = url.replace('/view-all', '');
     const {pathname} = useLocation();
@@ -33,7 +37,10 @@ export function MenuItem({label, url, local=undefined}) {
     );
 }
 
-function OptionalWrapper({isWrapper = true, children}) {
+function OptionalWrapper({isWrapper, children}: {
+    isWrapper: boolean;
+    children?: React.ReactNode;
+}) {
     return isWrapper ? (
         <div className="nav-menu-item dropdown">{children}</div>
     ) : (
@@ -48,9 +55,16 @@ export default function Dropdown({
     children,
     excludeWrapper = false,
     navAnalytics
+}: {
+    Tag?: React.ElementType;
+    className?: string;
+    label: string;
+    children?: React.ReactNode;
+    excludeWrapper?: boolean;
+    navAnalytics?: string;
 }) {
-    const topRef = useRef();
-    const dropdownRef = useRef(null);
+    const topRef = useRef<HTMLAnchorElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const ddId = `ddId-${label}`;
     const {
         closeMenu, closeDesktopMenu, openMenu, openDesktopMenu
@@ -98,12 +112,19 @@ function DropdownController({
     closeMenu,
     openMenu,
     label
+}: {
+    ddId: string;
+    closeDesktopMenu: () => void;
+    topRef: React.RefObject<HTMLAnchorElement>;
+    closeMenu: () => void;
+    openMenu: (event: React.MouseEvent) => void;
+    label: string;
 }) {
     const {activeDropdown, prefix} = useDropdownContext();
     const isOpen = activeDropdown === topRef;
     const labelId = `${prefix}-${label}`;
     const toggleMenu = React.useCallback(
-        (event) => {
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
             if (activeDropdown === topRef) {
                 event.preventDefault();
                 closeMenu();
@@ -114,8 +135,8 @@ function DropdownController({
         [openMenu, closeMenu, activeDropdown, topRef]
     );
     const closeOnBlur = React.useCallback(
-        ({currentTarget, relatedTarget}) => {
-            if (currentTarget.parentNode.contains(relatedTarget)) {
+        ({currentTarget, relatedTarget}: React.FocusEvent<HTMLAnchorElement>) => {
+            if (currentTarget.parentNode?.contains(relatedTarget)) {
                 return;
             }
             closeDesktopMenu();
@@ -125,7 +146,7 @@ function DropdownController({
 
     React.useEffect(() => {
         if (isOpen) {
-            const handler = ({key}) => {
+            const handler = ({key}: KeyboardEvent) => {
                 if (key === 'Escape') {
                     closeDesktopMenu();
                 }
@@ -134,7 +155,7 @@ function DropdownController({
             document.addEventListener('keydown', handler);
             return () => document.removeEventListener('keydown', handler);
         }
-        return null;
+        return undefined;
     }, [isOpen, closeDesktopMenu]);
 
 
@@ -169,7 +190,13 @@ function DropdownController({
     );
 }
 
-function DropdownContents({id, label, dropdownRef, navAnalytics, children}) {
+function DropdownContents({id, label, dropdownRef, navAnalytics, children}: {
+    id: string;
+    label: string;
+    dropdownRef: React.RefObject<HTMLDivElement>;
+    navAnalytics?: string;
+    children?: React.ReactNode;
+}) {
     return (
         <div className="dropdown-container">
             <div

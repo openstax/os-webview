@@ -14,14 +14,22 @@ import GiveButton from '../give-button/give-button';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
-function DropdownOrMenuItem({item}) {
-    if (! item.name && ! item.label) {
+type MenuItemData = {
+    name: string;
+    menu: MenuItemData[];
+} | {
+    label: string;
+    partial_url: string;
+} | object;
+
+function DropdownOrMenuItem({item}: {item: MenuItemData}) {
+    if (! ('name' in item) && ! ('label' in item)) {
         return null;
     }
     if ('menu' in item) {
         return (
             <Dropdown
-                label={item.name}
+                label={item.name!}
                 navAnalytics={`Main Menu (${item.name})`}
             >
                 <MenusFromStructure structure={item.menu} />
@@ -32,18 +40,18 @@ function DropdownOrMenuItem({item}) {
     return <MenuItem label={item.label} url={item.partial_url} />;
 }
 
-function MenusFromStructure({structure}) {
+function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
     return (
         <React.Fragment>
-            {structure.map((item) => (
-                <DropdownOrMenuItem key={item.label} item={item} />
+            {structure.map((item, index) => (
+                <DropdownOrMenuItem key={'label' in item ? item.label : index} item={item} />
             ))}
         </React.Fragment>
     );
 }
 
 function MenusFromCMS() {
-    const structure = useDataFromSlug('oxmenus');
+    const structure = useDataFromSlug('oxmenus') as MenuItemData[] | undefined;
 
     if (!structure) {
         return null;
@@ -74,8 +82,8 @@ function SubjectsMenu() {
             navAnalytics="Main Menu (Subjects)"
         >
             {categories
-                .filter((obj) => obj.html !== 'K12')
-                .map((obj) => (
+                .filter((obj: {html: string; value: string}) => obj.html !== 'K12')
+                .map((obj: {html: string; value: string}) => (
                     <MenuItem
                         key={obj.value}
                         label={obj.html}
@@ -104,23 +112,24 @@ function SubjectsMenu() {
     );
 }
 
-function navigateWithArrows(event) {
+// eslint-disable-next-line complexity
+function navigateWithArrows(event: React.KeyboardEvent<HTMLUListElement>) {
     switch (event.key) {
         case 'ArrowRight':
             event.preventDefault();
             event.stopPropagation();
-            event.target
+            (event.target as HTMLElement)
                 .closest('li')
-                .nextElementSibling?.querySelector('a')
-                .focus();
+                ?.nextElementSibling?.querySelector('a')
+                ?.focus();
             break;
         case 'ArrowLeft':
             event.preventDefault();
             event.stopPropagation();
-            event.target
+            (event.target as HTMLElement)
                 .closest('li')
-                .previousElementSibling?.querySelector('a')
-                .focus();
+                ?.previousElementSibling?.querySelector('a')
+                ?.focus();
             break;
         default:
             break;
