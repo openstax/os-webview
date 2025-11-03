@@ -14,25 +14,32 @@ import GiveButton from '../give-button/give-button';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
-function DropdownOrMenuItem({item}) {
+type MenuItemData = {
+    name?: string;
+    label?: string;
+    partial_url?: string;
+    menu?: MenuItemData[];
+};
+
+function DropdownOrMenuItem({item}: {item: MenuItemData}) {
     if (! item.name && ! item.label) {
         return null;
     }
     if ('menu' in item) {
         return (
             <Dropdown
-                label={item.name}
+                label={item.name!}
                 navAnalytics={`Main Menu (${item.name})`}
             >
-                <MenusFromStructure structure={item.menu} />
+                <MenusFromStructure structure={item.menu!} />
             </Dropdown>
         );
     }
 
-    return <MenuItem label={item.label} url={item.partial_url} />;
+    return <MenuItem label={item.label!} url={item.partial_url!} />;
 }
 
-function MenusFromStructure({structure}) {
+function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
     return (
         <React.Fragment>
             {structure.map((item) => (
@@ -43,7 +50,7 @@ function MenusFromStructure({structure}) {
 }
 
 function MenusFromCMS() {
-    const structure = useDataFromSlug('oxmenus');
+    const structure = useDataFromSlug('oxmenus') as MenuItemData[] | undefined;
 
     if (!structure) {
         return null;
@@ -104,23 +111,23 @@ function SubjectsMenu() {
     );
 }
 
-function navigateWithArrows(event) {
+function navigateWithArrows(event: React.KeyboardEvent<HTMLUListElement>) {
     switch (event.key) {
         case 'ArrowRight':
             event.preventDefault();
             event.stopPropagation();
-            event.target
+            (event.target as HTMLElement)
                 .closest('li')
-                .nextElementSibling?.querySelector('a')
-                .focus();
+                ?.nextElementSibling?.querySelector('a')
+                ?.focus();
             break;
         case 'ArrowLeft':
             event.preventDefault();
             event.stopPropagation();
-            event.target
+            (event.target as HTMLElement)
                 .closest('li')
-                .previousElementSibling?.querySelector('a')
-                .focus();
+                ?.previousElementSibling?.querySelector('a')
+                ?.focus();
             break;
         default:
             break;
