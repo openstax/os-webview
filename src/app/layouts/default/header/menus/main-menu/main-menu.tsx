@@ -42,8 +42,8 @@ function DropdownOrMenuItem({item}: {item: MenuItemData}) {
 function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
     return (
         <React.Fragment>
-            {structure.map((item) => (
-                <DropdownOrMenuItem key={item.label} item={item} />
+            {structure.map((item, index) => (
+                <DropdownOrMenuItem key={item.label || index} item={item} />
             ))}
         </React.Fragment>
     );
@@ -81,8 +81,8 @@ function SubjectsMenu() {
             navAnalytics="Main Menu (Subjects)"
         >
             {categories
-                .filter((obj) => obj.html !== 'K12')
-                .map((obj) => (
+                .filter((obj: {html: string; value: string}) => obj.html !== 'K12')
+                .map((obj: {html: string; value: string}) => (
                     <MenuItem
                         key={obj.value}
                         label={obj.html}

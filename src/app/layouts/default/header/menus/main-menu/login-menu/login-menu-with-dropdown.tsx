@@ -4,7 +4,7 @@ import useUserContext from '~/contexts/user';
 import linkHelper from '~/helpers/link';
 import Dropdown, {MenuItem} from '../dropdown/dropdown';
 
-const settings = window.SETTINGS;
+const settings = (window as {SETTINGS: {accountHref: string}}).SETTINGS;
 const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
 const profileLink = `${settings.accountHref}/profile`;
 

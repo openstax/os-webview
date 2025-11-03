@@ -39,7 +39,7 @@ export function MenuItem({label, url, local = undefined}: {
 
 function OptionalWrapper({isWrapper = true, children}: {
     isWrapper?: boolean;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }) {
     return isWrapper ? (
         <div className="nav-menu-item dropdown">{children}</div>
@@ -59,7 +59,7 @@ export default function Dropdown({
     Tag?: React.ElementType;
     className?: string;
     label: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
     excludeWrapper?: boolean;
     navAnalytics?: string;
 }) {
@@ -180,7 +180,7 @@ function DropdownContents({id, label, dropdownRef, navAnalytics, children}: {
     label: string;
     dropdownRef: React.RefObject<HTMLDivElement>;
     navAnalytics?: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }) {
     return (
         <div className="dropdown-container">
