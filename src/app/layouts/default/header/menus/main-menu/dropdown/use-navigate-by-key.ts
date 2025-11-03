@@ -1,29 +1,30 @@
 import useDropdownContext from '../../dropdown-context';
 import {isMobileDisplay} from '~/helpers/device';
 
-function findNext(dropdownRef: React.MutableRefObject<HTMLDivElement>) {
+function findNext(dropdownRef: React.MutableRefObject<HTMLDivElement | null>) {
     const nextSib = document.activeElement?.nextElementSibling;
 
     if (nextSib?.matches('a')) {
         return nextSib as HTMLAnchorElement;
     }
-    const targets = Array.from(dropdownRef.current.querySelectorAll('a'));
+    const targets = Array.from(dropdownRef.current?.querySelectorAll('a') ?? []);
     const idx = targets.indexOf(document.activeElement as HTMLAnchorElement);
     const nextIdx = (idx + 1) % targets.length;
 
     return targets[nextIdx];
 }
 
+// eslint-disable-next-line complexity
 function findPrev(
-    topRef: React.MutableRefObject<HTMLAnchorElement>,
-    dropdownRef: React.MutableRefObject<HTMLDivElement>
+    topRef: React.MutableRefObject<HTMLAnchorElement | null>,
+    dropdownRef: React.MutableRefObject<HTMLDivElement | null>
 ) {
     const prevSib = document.activeElement?.previousElementSibling;
 
     if (prevSib?.matches('a')) {
         return prevSib as HTMLAnchorElement;
     }
-    const targets = Array.from(dropdownRef.current.querySelectorAll('a'));
+    const targets = Array.from(dropdownRef.current?.querySelectorAll('a') ?? []);
     const idx = targets.indexOf(document.activeElement as HTMLAnchorElement);
 
     if (idx === 0) {
@@ -40,8 +41,8 @@ export default function useNavigateByKey({
     closeMenu,
     closeDesktopMenu
 }: {
-    topRef: React.MutableRefObject<HTMLAnchorElement>;
-    dropdownRef: React.MutableRefObject<HTMLDivElement>;
+    topRef: React.MutableRefObject<HTMLAnchorElement | null>;
+    dropdownRef: React.MutableRefObject<HTMLDivElement | null>;
     closeMenu: () => void;
     closeDesktopMenu: () => void;
 }) {
@@ -69,7 +70,7 @@ export default function useNavigateByKey({
             case 'ArrowDown':
                 event.preventDefault();
                 if (document.activeElement === topRef.current) {
-                    (dropdownRef.current.firstChild as HTMLAnchorElement)?.focus();
+                    (dropdownRef.current?.firstChild as HTMLAnchorElement)?.focus();
                 } else {
                     findNext(dropdownRef).focus();
                 }
@@ -77,7 +78,7 @@ export default function useNavigateByKey({
             case 'ArrowUp':
                 event.preventDefault();
                 if (document.activeElement !== topRef.current) {
-                    findPrev(topRef, dropdownRef).focus();
+                    findPrev(topRef, dropdownRef)?.focus();
                 }
                 break;
             case 'Escape':

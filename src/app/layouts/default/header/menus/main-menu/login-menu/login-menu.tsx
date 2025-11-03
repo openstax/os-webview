@@ -8,7 +8,7 @@ function LoginLink() {
     // It's not used directly, but loginLink changes when it does
     useLocation();
     const addressHinkyQAIssue = React.useCallback(
-        (e) => {
+        (e: React.MouseEvent<HTMLAnchorElement>) => {
             if (e.defaultPrevented) {
                 e.defaultPrevented = false;
             }

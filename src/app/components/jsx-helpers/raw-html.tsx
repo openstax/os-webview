@@ -34,11 +34,12 @@ function activateScripts(el: HTMLElement) {
     processOne();
 }
 
-type RawHTMLArgs = {
+type RawHTMLArgs = ({
     Tag?: string;
     html?: TrustedHTML;
     embed?: boolean;
-} & React.HTMLAttributes<HTMLDivElement>;
+    href?: string;
+} & React.HTMLAttributes<HTMLDivElement>);
 
 export default function RawHTML({
     Tag = 'div',

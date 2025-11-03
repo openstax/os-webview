@@ -6,7 +6,7 @@ export default function useMenuControls({
     topRef,
     label
 }: {
-    topRef: React.MutableRefObject<HTMLAnchorElement>;
+    topRef: React.MutableRefObject<HTMLAnchorElement | null>;
     label: string;
 }) {
     const {setSubmenuLabel, setActiveDropdown} = useDropdownContext();
