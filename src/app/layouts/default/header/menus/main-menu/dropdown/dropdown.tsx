@@ -117,7 +117,7 @@ function DropdownController({
     closeDesktopMenu: () => void;
     topRef: React.RefObject<HTMLAnchorElement>;
     closeMenu: () => void;
-    openMenu: (event: React.MouseEvent | React.KeyboardEvent) => void;
+    openMenu: (event: React.MouseEvent) => void;
     label: string;
 }) {
     const {activeDropdown, prefix} = useDropdownContext();
