@@ -12,6 +12,7 @@ import booksData from '../src/data/books';
 import booksForAnalyticsData from '../src/data/books-for-analytics';
 import bookTitleData from '../src/data/book-titles';
 import buyprintData from '../src/data/buyprint';
+import chemistryData from '../src/data/chemistry-atoms-first.json';
 import donationPopupData from '../src/data/donation-popup';
 import errataData from '../src/data/errata';
 import errataBookData from '../src/data/errata-book';
@@ -68,6 +69,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
     const isBookTitles = (/fields=title,id/).test(args[0]);
     const isBuyprint = args[0].includes('buyprint');
+    const isChemistry = args[0].endsWith('pages/93/?format=json');
     const isDonationPopup = args[0].includes('donation-popup');
     const isErrata = (/pages\/errata\//).test(args[0]);
     const isErrataBook = (/errata\/\?book_title/).test(args[0]);
@@ -131,6 +133,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = blogMoreStories;
             } else if (isBlogPinned) {
                 payload = blogPinned;
+            } else if (isChemistry) {
+                payload = chemistryData;
             } else if (isDonationPopup) {
                 payload = donationPopupData;
             } else if (isErrata) {

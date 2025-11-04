@@ -6,7 +6,22 @@ const msPerSec = 1000;
 const msPerMin = msPerSec * 60;
 const msPerHour = msPerMin * 60;
 
-function getHMS(goalTimeMs) {
+export type TakeoverData = {
+    goalTime: string;
+    fundraiserImage: string;
+    colorScheme: string;
+    headline: string;
+    message: string;
+    image: string;
+    buttonText: string;
+    buttonUrl: string;
+    messageType: 'message' | 'goal';
+    boxHeadline: string;
+    boxHtml: string;
+    goalAmount: number;
+};
+
+function getHMS(goalTimeMs: number) {
     const msDiff = goalTimeMs - Date.now();
 
     return {
@@ -16,7 +31,7 @@ function getHMS(goalTimeMs) {
     };
 }
 
-function useHMS(goalTime) {
+function useHMS(goalTime: string) {
     const goalTimeMs = new Date(goalTime).getTime();
     const [hms, setHms] = React.useState(getHMS(goalTimeMs));
 
@@ -29,25 +44,30 @@ function useHMS(goalTime) {
         return () => window.clearInterval(i);
     }, [goalTimeMs]);
 
-    return (hms);
+    return hms;
 }
 
-export function Countdown({goalTime}) {
+export function Countdown({goalTime}: {goalTime: string}) {
     const {h, m, s} = useHMS(goalTime);
 
     return (
         <div className="countdown-numbers">
-            <div><span className="number">{h}</span> hours</div>
-            <div><span className="number">{m}</span> minutes</div>
-            <div><span className="number">{s}</span> seconds</div>
+            <div>
+                <span className="number">{h}</span> hours
+            </div>
+            <div>
+                <span className="number">{m}</span> minutes
+            </div>
+            <div>
+                <span className="number">{s}</span> seconds
+            </div>
         </div>
     );
 }
 
-
 const numFormat = window.Intl.NumberFormat('en-US').format; // eslint-disable-line new-cap
 
-export function Amount({amount}) {
+export function Amount({amount}: {amount: number}) {
     return (
         <div className="amount-box">
             <div className="message">our goal is to raise</div>
@@ -56,10 +76,12 @@ export function Amount({amount}) {
     );
 }
 
-export function GiveButton({text, url}) {
+export function GiveButton({text, url}: {text: string; url: string}) {
     const {close} = useTakeoverContext();
 
     return (
-        <a className="btn primary" href={url} onClick={close}>{text}</a>
+        <a className="btn primary" href={url} onClick={close}>
+            {text}
+        </a>
     );
 }

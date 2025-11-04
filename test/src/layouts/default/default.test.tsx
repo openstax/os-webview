@@ -1,7 +1,12 @@
 import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/preact';
+import mockLocalStorage from '../../helpers/mock-local-storage';
 import userEvent from '@testing-library/user-event';
-import {useSeenCounter, usePutAway, useStickyData} from '~/layouts/default/shared';
+import {
+    useSeenCounter,
+    usePutAway,
+    useStickyData
+} from '~/layouts/default/shared';
 import DefaultLayout from '~/layouts/default/default';
 import stickyData from './data/sticky.json';
 import fundraiserData from './data/fundraiser.json';
@@ -35,28 +40,14 @@ jest.mock('react-router-dom', () => ({
     useLocation: () => mockPathname
 }));
 
-const mockUseSharedDataContext = jest.fn().mockReturnValue({stickyFooterState: [false, () => undefined]});
+const mockUseSharedDataContext = jest
+    .fn()
+    .mockReturnValue({stickyFooterState: [false, () => undefined]});
 
 jest.mock('~/contexts/shared-data', () => ({
     __esModule: true,
     default: () => mockUseSharedDataContext()
 }));
-
-// Mock localStorage
-const mockLocalStorage = {
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-    clear: jest.fn(),
-    key: jest.fn(),
-    length: 0,
-    visitedGive: '0',
-    campaignId: ''
-};
-
-Reflect.defineProperty(window, 'localStorage', {
-    value: mockLocalStorage
-});
 
 const user = userEvent.setup();
 const basicImplementation = (path: string) => {
@@ -74,7 +65,9 @@ const basicImplementation = (path: string) => {
     console.info('**** Whoops', path);
     return Promise.resolve([]);
 };
-const mockCmsFetch = jest.spyOn(CF, 'default').mockImplementation(basicImplementation);
+const mockCmsFetch = jest
+    .spyOn(CF, 'default')
+    .mockImplementation(basicImplementation);
 
 describe('Layouts Default TypeScript Conversions', () => {
     beforeEach(() => {
@@ -89,21 +82,27 @@ describe('Layouts Default TypeScript Conversions', () => {
 
                 return (
                     <div>
-                        <span data-testid="seen-enough">{hasBeenSeenEnough.toString()}</span>
+                        <span data-testid="seen-enough">
+                            {hasBeenSeenEnough.toString()}
+                        </span>
                         <button onClick={increment}>Increment</button>
                     </div>
                 );
             };
 
             render(<TestComponent />);
-            expect(screen.getByTestId('seen-enough')).toHaveTextContent('false');
+            expect(screen.getByTestId('seen-enough')).toHaveTextContent(
+                'false'
+            );
             const saveLS = window.localStorage;
             const saveWarn = console.warn;
 
             console.warn = jest.fn();
             Reflect.deleteProperty(window, 'localStorage');
             await user.click(screen.getByRole('button'));
-            expect(console.warn).toHaveBeenCalledWith('LocalStorage restricted');
+            expect(console.warn).toHaveBeenCalledWith(
+                'LocalStorage restricted'
+            );
             Reflect.defineProperty(window, 'localStorage', {value: saveLS});
             console.warn = saveWarn;
         });
@@ -137,22 +136,22 @@ describe('Layouts Default TypeScript Conversions', () => {
             };
 
             render(<TestComponent />);
-            expect(screen.getByTestId('sticky-data')).toHaveTextContent('no data');
+            expect(screen.getByTestId('sticky-data')).toHaveTextContent(
+                'no data'
+            );
         });
         test('useStickyData hook handles emergency mode', async () => {
-            mockCmsFetch.mockImplementation(
-                (path: string) => {
-                    if (path === 'sticky/') {
-                        /* eslint-disable camelcase */
-                        return Promise.resolve({
-                            ...stickyData,
-                            emergency_expires: '2044-05-31T23:00:00Z'
-                        });
-                        /* eslint-enable camelcase */
-                    }
-                    return basicImplementation(path);
+            mockCmsFetch.mockImplementation((path: string) => {
+                if (path === 'sticky/') {
+                    /* eslint-disable camelcase */
+                    return Promise.resolve({
+                        ...stickyData,
+                        emergency_expires: '2044-05-31T23:00:00Z'
+                    });
+                    /* eslint-enable camelcase */
                 }
-            );
+                return basicImplementation(path);
+            });
             const TestComponent = () => {
                 const data = useStickyData();
 
@@ -164,61 +163,67 @@ describe('Layouts Default TypeScript Conversions', () => {
             };
 
             render(<TestComponent />);
-            expect(await screen.findByTestId('sticky-data')).toHaveTextContent('emergency');
+            expect(await screen.findByTestId('sticky-data')).toHaveTextContent(
+                'emergency'
+            );
             mockCmsFetch.mockImplementation(basicImplementation);
         });
         test('useStickyData hook handles microdonation not active', async () => {
-            mockCmsFetch.mockImplementation(
-                (path: string) => {
-                    if (path === 'sticky/') {
-                        return Promise.resolve({
-                            ...stickyData,
-                            expires: '2024-05-31T23:00:00Z'
-                        });
-                    }
-                    return basicImplementation(path);
+            mockCmsFetch.mockImplementation((path: string) => {
+                if (path === 'sticky/') {
+                    return Promise.resolve({
+                        ...stickyData,
+                        expires: '2024-05-31T23:00:00Z'
+                    });
                 }
-            );
+                return basicImplementation(path);
+            });
             const TestComponent = () => {
                 const data = useStickyData();
 
                 return (
                     <div data-testid="sticky-data">
-                        {data && data.mode === null ? 'mode is null' : 'no data'}
+                        {data && data.mode === null
+                            ? 'mode is null'
+                            : 'no data'}
                     </div>
                 );
             };
 
             render(<TestComponent />);
-            expect(await screen.findByTestId('sticky-data')).toHaveTextContent('mode is null');
+            expect(await screen.findByTestId('sticky-data')).toHaveTextContent(
+                'mode is null'
+            );
             mockCmsFetch.mockImplementation(basicImplementation);
         });
         test('useStickyData hook handles show_popup', async () => {
-            mockCmsFetch.mockImplementation(
-                (path: string) => {
-                    if (path === 'sticky/') {
-                        /* eslint-disable camelcase */
-                        return Promise.resolve({
-                            ...stickyData,
-                            show_popup: true
-                        });
-                        /* eslint-enable camelcase */
-                    }
-                    return basicImplementation(path);
+            mockCmsFetch.mockImplementation((path: string) => {
+                if (path === 'sticky/') {
+                    /* eslint-disable camelcase */
+                    return Promise.resolve({
+                        ...stickyData,
+                        show_popup: true
+                    });
+                    /* eslint-enable camelcase */
                 }
-            );
+                return basicImplementation(path);
+            });
             const TestComponent = () => {
                 const data = useStickyData();
 
                 return (
                     <div data-testid="sticky-data">
-                        {data && data.mode === 'popup' ? 'mode is popup' : 'no data'}
+                        {data && data.mode === 'popup'
+                            ? 'mode is popup'
+                            : 'no data'}
                     </div>
                 );
             };
 
             render(<TestComponent />);
-            expect(await screen.findByTestId('sticky-data')).toHaveTextContent('mode is popup');
+            expect(await screen.findByTestId('sticky-data')).toHaveTextContent(
+                'mode is popup'
+            );
             mockCmsFetch.mockImplementation(basicImplementation);
         });
     });
@@ -234,32 +239,38 @@ describe('default layout', () => {
     }
 
     beforeAll(() => {
-        global.fetch = jest.fn().mockImplementation((...args: Parameters<typeof saveFetch>) => {
-            const url = args[0] as string;
+        global.fetch = jest
+            .fn()
+            .mockImplementation((...args: Parameters<typeof saveFetch>) => {
+                const url = args[0] as string;
 
-            if (url.includes('/sticky/')) {
-                return fetchResponse(stickyData);
-            }
-            if (url.endsWith('/fundraiser/?format=json')) {
-                return fetchResponse(fundraiserData);
-            }
-            if (url.endsWith('/footer/?format=json')) {
-                return fetchResponse(footerData);
-            }
-            if (url.endsWith('/oxmenus/?format=json')) {
-                return fetchResponse(oxmenuData);
-            }
-            if (url.endsWith('/give-today/')) {
-                return fetchResponse(giveTodayData);
-            }
-            // console.info('*** Fetch args:', args);
-            return saveFetch(...args);
-        });
+                if (url.includes('/sticky/')) {
+                    return fetchResponse(stickyData);
+                }
+                if (url.endsWith('/fundraiser/?format=json')) {
+                    return fetchResponse(fundraiserData);
+                }
+                if (url.endsWith('/footer/?format=json')) {
+                    return fetchResponse(footerData);
+                }
+                if (url.endsWith('/oxmenus/?format=json')) {
+                    return fetchResponse(oxmenuData);
+                }
+                if (url.endsWith('/give-today/')) {
+                    return fetchResponse(giveTodayData);
+                }
+                // console.info('*** Fetch args:', args);
+                return saveFetch(...args);
+            });
     });
     it('renders; menu opens and closes', async () => {
         render(<DefaultLayout />);
-        expect(await screen.findAllByText('JIT Load Component')).toHaveLength(2);
-        const toggle = screen.getByRole('button', {name: 'Toggle Meta Navigation Menu'});
+        expect(await screen.findAllByText('JIT Load Component')).toHaveLength(
+            2
+        );
+        const toggle = screen.getByRole('button', {
+            name: 'Toggle Meta Navigation Menu'
+        });
 
         expect(toggle.getAttribute('aria-expanded')).toBe('false');
         await user.click(toggle);

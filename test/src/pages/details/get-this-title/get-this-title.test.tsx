@@ -181,4 +181,13 @@ describe('get-this-title', () => {
         render(<GTTinContext model={comingSoonModel} />);
         await screen.findByText('Download a PDF sample');
     });
+    it('shows no PDF link when there is none', async () => {
+        const noPdfModel = {
+            ...baseModel,
+            highResolutionPdfUrl: null
+        };
+
+        render(<GTTinContext model={noPdfModel} />);
+        await expect(screen.findByText('Download a PDF sample')).rejects.toThrow();
+    });
 });

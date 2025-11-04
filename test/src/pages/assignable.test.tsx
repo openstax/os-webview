@@ -6,7 +6,6 @@ import Banner from '~/pages/assignable/sections/banner/banner';
 import About from '~/pages/assignable/sections/about/about';
 import Courses from '~/pages/assignable/sections/courses/courses';
 import FAQ from '~/pages/assignable/sections/faq/faq';
-import OverlappingQuote from '~/pages/assignable/sections/overlapping-quote/overlapping-quote';
 import CTA from '~/pages/assignable/sections/cta/cta';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import * as DH from '~/helpers/use-document-head';
@@ -24,11 +23,6 @@ jest.spyOn(LI, 'Courses').mockImplementation(
 jest.spyOn(LI, 'FAQ').mockImplementation((args: Parameters<typeof FAQ>[0]) => (
     <FAQ {...args} />
 ));
-jest.spyOn(LI, 'OverlappingQuote').mockImplementation(
-    (args: Parameters<typeof OverlappingQuote>[0]) => (
-        <OverlappingQuote {...args} />
-    )
-);
 jest.spyOn(LI, 'CTA').mockImplementation((args: Parameters<typeof CTA>[0]) => (
     <CTA {...args} />
 ));
