@@ -37,8 +37,8 @@ export function MenuItem({label, url, local = undefined}: {
     );
 }
 
-function OptionalWrapper({isWrapper = true, children}: {
-    isWrapper?: boolean;
+function OptionalWrapper({isWrapper, children}: {
+    isWrapper: boolean;
     children?: React.ReactNode;
 }) {
     return isWrapper ? (
