@@ -15,11 +15,12 @@ type BannerInfo = {
 type StickyDataRaw = {
     start: string;
     expires: string;
-    emergency_expires: string;
+    emergency_expires: string | null;
+    emergency_content: string;
     show_popup: boolean;
 };
 
-type StickyDataWithBanner = StickyDataRaw & {
+export type StickyDataWithBanner = StickyDataRaw & {
     bannerInfo: BannerInfo;
     mode: 'emergency' | 'popup' | 'banner' | null;
 };
@@ -62,7 +63,7 @@ function getMode(stickyData: StickyDataRaw | null): 'emergency' | 'popup' | 'ban
         return null;
     }
 
-    const expireDate = new Date(stickyData.emergency_expires);
+    const expireDate = new Date(stickyData.emergency_expires ?? 0);
     const useEmergency = stickyData.emergency_expires && Date.now() < expireDate.getTime();
 
     if (useEmergency) {
