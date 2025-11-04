@@ -99,8 +99,8 @@ function Box({data}: {data: TakeoverData}) {
                 <MessageBox
                     buttonText={data.buttonText}
                     buttonUrl={data.buttonUrl}
-                    headline={data.boxHeadline!}
-                    html={data.boxHtml!}
+                    headline={data.boxHeadline}
+                    html={data.boxHtml}
                 />
             ),
             goal: (
@@ -108,7 +108,7 @@ function Box({data}: {data: TakeoverData}) {
                     buttonText={data.buttonText}
                     buttonUrl={data.buttonUrl}
                     goalAmount={data.goalAmount!}
-                    goalTime={data.goalTime!}
+                    goalTime={data.goalTime}
                 />
             )
         }[data.messageType] || <h1>OOPS, {data.messageType}</h1>
