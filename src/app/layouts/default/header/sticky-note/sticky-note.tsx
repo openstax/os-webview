@@ -1,19 +1,12 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {usePutAway} from '../../shared';
+import {usePutAway, StickyDataWithBanner} from '../../shared';
 import './sticky-note.scss';
 
-export type StickyNoteProps = {
-    stickyData: {
-        mode: 'emergency';
-        emergency_content: string;
-    } | object | null;
-};
-
-export default function StickyNote({stickyData}: StickyNoteProps) {
+export default function StickyNote({stickyData}: {stickyData: StickyDataWithBanner | null}) {
     const [closed, PutAway] = usePutAway();
 
-    if (!stickyData || closed || !('emergency_content' in stickyData)) {
+    if (!stickyData || closed || stickyData.mode !== 'emergency') {
         return null;
     }
 
