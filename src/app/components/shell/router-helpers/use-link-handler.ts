@@ -42,7 +42,13 @@ export default function useLinkHandler() {
     const navigate = useNavigate();
     const navigateTo = useCallback(
         (path: Location['href'], state: State = {x: 0, y: 0}) => {
-            navigate(linkHelper.stripOpenStaxDomain(path), state);
+            const stripped = linkHelper.stripOpenStaxDomain(path);
+
+            if (stripped.startsWith('http')) {
+                window.location.href = stripped;
+            } else {
+                navigate(stripped, state);
+            }
         },
         [navigate]
     );

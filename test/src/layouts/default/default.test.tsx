@@ -5,9 +5,11 @@ import userEvent from '@testing-library/user-event';
 import {
     useSeenCounter,
     usePutAway,
-    useStickyData
+    useStickyData,
+    StickyDataWithBanner
 } from '~/layouts/default/shared';
 import DefaultLayout from '~/layouts/default/default';
+import StickyNote from '~/layouts/default/header/sticky-note/sticky-note';
 import stickyData from './data/sticky.json';
 import fundraiserData from './data/fundraiser.json';
 import footerData from './data/footer.json';
@@ -225,6 +227,47 @@ describe('Layouts Default TypeScript Conversions', () => {
                 'mode is popup'
             );
             mockCmsFetch.mockImplementation(basicImplementation);
+        });
+        test('useStickyData hook handles null emergency_expires', async () => {
+            mockCmsFetch.mockImplementation((path: string) => {
+                if (path === 'sticky/') {
+                    /* eslint-disable camelcase */
+                    return Promise.resolve({
+                        ...stickyData,
+                        emergency_expires: null
+                    });
+                    /* eslint-enable camelcase */
+                }
+                return basicImplementation(path);
+            });
+            const TestComponent = () => {
+                const data = useStickyData();
+
+                return (
+                    <div data-testid="sticky-data">
+                        {data && data.mode === 'banner'
+                            ? 'mode is banner'
+                            : 'no data'}
+                    </div>
+                );
+            };
+
+            render(<TestComponent />);
+            expect(await screen.findByTestId('sticky-data')).toHaveTextContent(
+                'mode is banner'
+            );
+            mockCmsFetch.mockImplementation(basicImplementation);
+        });
+        test('sticky-note (emergency) renders', () => {
+            const data = {
+                mode: 'emergency',
+                emergency_content: 'The message' // eslint-disable-line camelcase
+            } as StickyDataWithBanner;
+
+            render(<StickyNote stickyData={data} />);
+            const alert = screen.getByRole('alert');
+
+            expect(alert.textContent).toBe('The message');
         });
     });
 });
