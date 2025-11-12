@@ -5,6 +5,10 @@
     padding: 0;
     position: relative;
 
+    .text-content a {
+        color: os-color(light-blue);
+    }
+
     @include scale-feature(padding-top, 4rem, 16rem);
 
     @include wider-than($phone-max) {
