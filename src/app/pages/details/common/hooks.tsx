@@ -43,6 +43,8 @@ function toBlurb(partner: PartnerData) {
 
 type PartnerData = {
     books: string;
+    visible_on_website: boolean;
+    partnership_level: string | null;
 }
 
 export function usePartnerFeatures(bookAbbreviation: string) {
@@ -54,7 +56,10 @@ export function usePartnerFeatures(bookAbbreviation: string) {
             .then((pd: PartnerData[]) => pd.filter((p) => {
                 const books = (p.books || '').split(';');
 
-                return books.includes(bookAbbreviation);
+                // Apply the same filters as the main partners page to ensure consistency
+                return books.includes(bookAbbreviation) &&
+                       p.visible_on_website === true &&
+                       p.partnership_level !== null;
             }))
             .then((pd) => {
                 if (pd.length > 0) {

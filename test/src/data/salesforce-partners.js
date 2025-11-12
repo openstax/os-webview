@@ -1250,5 +1250,71 @@ export default [
         partner_anniversary_date: null,
         account_id: '0016f00002dh3a4AAA',
         partner_status: null
+    },
+    {
+        id: 9001,
+        average_rating: {
+            rating__avg: 0
+        },
+        rating_count: 0,
+        salesforce_id: 'test-hidden-partner',
+        partner_name: 'Hidden Partner Test',
+        partner_logo: null,
+        image_1: null,
+        image_2: null,
+        image_3: null,
+        image_4: null,
+        image_5: null,
+        video_1: null,
+        video_2: null,
+        partner_list_label: null,
+        visible_on_website: false, // Should be filtered out
+        partner_type: 'Test',
+        rich_description: null,
+        partner_description: 'This partner should not appear due to visible_on_website being false',
+        short_partner_description: 'Hidden test partner',
+        partner_website: null,
+        books: 'Economics', // Matches Economics but should still be filtered out
+        landing_page: null,
+        partner_sf_account_id: 'test-account-1',
+        affordability_cost: null,
+        partnership_level: 'Full partner',
+        equity_rating: null,
+        partner_anniversary_date: null,
+        account_id: 'test-account-1',
+        partner_status: null
+    },
+    {
+        id: 9002,
+        average_rating: {
+            rating__avg: 0
+        },
+        rating_count: 0,
+        salesforce_id: 'test-null-partnership',
+        partner_name: 'Null Partnership Level Test',
+        partner_logo: null,
+        image_1: null,
+        image_2: null,
+        image_3: null,
+        image_4: null,
+        image_5: null,
+        video_1: null,
+        video_2: null,
+        partner_list_label: null,
+        visible_on_website: true,
+        partner_type: 'Test',
+        rich_description: null,
+        partner_description: 'This partner should not appear due to partnership_level being null',
+        short_partner_description: 'Null partnership test partner',
+        partner_website: null,
+        books: 'Economics', // Matches Economics but should still be filtered out
+        landing_page: null,
+        partner_sf_account_id: 'test-account-2',
+        affordability_cost: null,
+        partnership_level: null, // Should be filtered out
+        equity_rating: null,
+        partner_anniversary_date: null,
+        account_id: 'test-account-2',
+        partner_status: null
     }
 ];

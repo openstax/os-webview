@@ -96,4 +96,34 @@ describe('details/common/hooks', () => {
         // not a great test; this happens immediately
         await screen.findByText('nothing found');
     });
+    it('(usePartnerFeatures) filters out partners with visible_on_website=false', async () => {
+        function Component() {
+            const [blurbs] = usePartnerFeatures('Economics');
+            const ids = (blurbs as {id: number}[]).map((b) => b.id).sort();
+            // Should not include id 9001 (visible_on_website: false)
+            const hasHiddenPartner = ids.includes(9001);
+
+            return <div data-testid="result">{hasHiddenPartner ? 'has-hidden' : 'correctly-filtered'}</div>;
+        }
+
+        render(<Component />);
+
+        await screen.findByTestId('result');
+        expect(screen.getByTestId('result').textContent).toBe('correctly-filtered');
+    });
+    it('(usePartnerFeatures) filters out partners with partnership_level=null', async () => {
+        function Component() {
+            const [blurbs] = usePartnerFeatures('Economics');
+            const ids = (blurbs as {id: number}[]).map((b) => b.id).sort();
+            // Should not include id 9002 (partnership_level: null)
+            const hasNullPartnershipPartner = ids.includes(9002);
+
+            return <div data-testid="result">{hasNullPartnershipPartner ? 'has-null-partnership' : 'correctly-filtered'}</div>;
+        }
+
+        render(<Component />);
+
+        await screen.findByTestId('result');
+        expect(screen.getByTestId('result').textContent).toBe('correctly-filtered');
+    });
 });
