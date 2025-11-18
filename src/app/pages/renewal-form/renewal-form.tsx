@@ -61,15 +61,23 @@ function HiddenFields({
     const source = fromValue || 'email';
     const {selectedItems} = useBookTagsContext();
     const json = React.useMemo(
-        () =>
-            JSON.stringify({
-                Books: selectedItems.map(({value: name}) => ({
-                    name,
+        () => {
+            const rewrittenBookData = selectedItems.map(({value: name}) => {
+                const match = name.match(/(.*?) *\[(.*)\]/);
+                const [title, language] = match ? match.slice(1) : [name, 'English'];
+
+                return ({
+                    name: title,
                     students: +counts[name],
+                    language,
                     baseYear: year
-                }))
-            }),
-        [selectedItems, counts, year]
+                });
+            });
+
+            return JSON.stringify({
+                Books: rewrittenBookData
+            });
+        }, [selectedItems, counts, year]
     );
     const subjects = React.useMemo(
         () => selectedItems.map((i) => i.value).join(';'),
