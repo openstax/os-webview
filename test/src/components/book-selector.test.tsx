@@ -47,7 +47,7 @@ describe('book-selector', () => {
         render(<Component route='/selector?Calculus' />);
         const checkboxes = await screen.findAllByRole('checkbox');
 
-        expect(checkboxes).toHaveLength(9);
+        expect(checkboxes).toHaveLength(58);
         const checked = await screen.findByRole('checkbox', {checked: true});
         const unchecked = screen.getAllByRole('checkbox', {checked: false});
 

@@ -1,0 +1,3708 @@
+{
+    "meta": {
+        "total_count": 131
+    },
+    "items": [
+        {
+            "id": 46,
+            "meta": {
+                "slug": "prealgebra",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/46/",
+                "html_url": "https://dev.openstax.org/details/books/prealgebra",
+                "first_published_at": "2016-03-09T10:00:11.787802-06:00",
+                "locale": "en"
+            },
+            "title": "Prealgebra",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Prealgebra",
+            "salesforce_name": "Prealgebra",
+            "book_subjects": [
+                {
+                    "id": 234,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/prealgebra_1.svg"
+        },
+        {
+            "id": 130,
+            "meta": {
+                "slug": "elementary-algebra",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/130/",
+                "html_url": "https://dev.openstax.org/details/books/elementary-algebra",
+                "first_published_at": "2017-02-13T15:16:38.440710-06:00",
+                "locale": "en"
+            },
+            "title": "Elementary Algebra",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Elementary Algebra",
+            "salesforce_name": "Elementary Algebra",
+            "book_subjects": [
+                {
+                    "id": 235,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/elementary-algebra.svg"
+        },
+        {
+            "id": 131,
+            "meta": {
+                "slug": "intermediate-algebra",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/131/",
+                "html_url": "https://dev.openstax.org/details/books/intermediate-algebra",
+                "first_published_at": "2017-02-17T15:15:54.212862-06:00",
+                "locale": "en"
+            },
+            "title": "Intermediate Algebra",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Intermediate Algebra",
+            "salesforce_name": "Intermediate Algebra",
+            "book_subjects": [
+                {
+                    "id": 236,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/intermediate-algebra.svg"
+        },
+        {
+            "id": 39,
+            "meta": {
+                "slug": "college-algebra",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/39/",
+                "html_url": "https://dev.openstax.org/details/books/college-algebra",
+                "first_published_at": "2016-03-09T09:54:06.207750-06:00",
+                "locale": "en"
+            },
+            "title": "College Algebra",
+            "book_state": "retired",
+            "salesforce_abbreviation": "College Algebra",
+            "salesforce_name": "College Algebra",
+            "book_subjects": [
+                {
+                    "id": 286,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_algebra.svg"
+        },
+        {
+            "id": 38,
+            "meta": {
+                "slug": "algebra-and-trigonometry-old",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/38/",
+                "html_url": "https://dev.openstax.org/details/books/algebra-and-trigonometry-old",
+                "first_published_at": "2016-03-09T09:53:01.890636-06:00",
+                "locale": "en"
+            },
+            "title": "Algebra and Trigonometry old",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Algebra and Trigonometry",
+            "salesforce_name": "Algebra and Trigonometry",
+            "book_subjects": [
+                {
+                    "id": 175,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/algebra_trigonometry.svg"
+        },
+        {
+            "id": 37,
+            "meta": {
+                "slug": "precalculus",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/37/",
+                "html_url": "https://dev.openstax.org/details/books/precalculus",
+                "first_published_at": "2016-03-09T09:50:20.975884-06:00",
+                "locale": "en"
+            },
+            "title": "Precalculus",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Precalc",
+            "salesforce_name": "Precalculus",
+            "book_subjects": [
+                {
+                    "id": 284,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/precalculus.svg"
+        },
+        {
+            "id": 74,
+            "meta": {
+                "slug": "calculus-volume-1",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/74/",
+                "html_url": "https://dev.openstax.org/details/books/calculus-volume-1",
+                "first_published_at": "2016-03-10T14:37:26.063299-06:00",
+                "locale": "en"
+            },
+            "title": "Calculus Volume 1",
+            "book_state": "live",
+            "salesforce_abbreviation": "Calculus",
+            "salesforce_name": "Calculus",
+            "book_subjects": [
+                {
+                    "id": 177,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": "Starting 𝗡𝗼𝘃𝗲𝗺𝗯𝗲𝗿 𝟭𝟬, 𝟮𝟬𝟮𝟱, a free OpenStax account will be required to view this book. Need an account? <a href=\"https://openstax.org/accounts/i/signup/?r=https://openstax.org/subjects\">Create one today!</a>",
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/calculus-v1.svg"
+        },
+        {
+            "id": 75,
+            "meta": {
+                "slug": "calculus-volume-2",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/75/",
+                "html_url": "https://dev.openstax.org/details/books/calculus-volume-2",
+                "first_published_at": "2016-03-10T14:37:26.063299-06:00",
+                "locale": "en"
+            },
+            "title": "Calculus Volume 2",
+            "book_state": "live",
+            "salesforce_abbreviation": "Calculus",
+            "salesforce_name": "Calculus",
+            "book_subjects": [
+                {
+                    "id": 178,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/calculus-v2.svg"
+        },
+        {
+            "id": 76,
+            "meta": {
+                "slug": "calculus-volume-3",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/76/",
+                "html_url": "https://dev.openstax.org/details/books/calculus-volume-3",
+                "first_published_at": "2016-03-10T14:37:26.063299-06:00",
+                "locale": "en"
+            },
+            "title": "Calculus Volume 3",
+            "book_state": "live",
+            "salesforce_abbreviation": "Calculus",
+            "salesforce_name": "Calculus",
+            "book_subjects": [
+                {
+                    "id": 179,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/calculus-v3.svg"
+        },
+        {
+            "id": 36,
+            "meta": {
+                "slug": "introductory-statistics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/36/",
+                "html_url": "https://dev.openstax.org/details/books/introductory-statistics",
+                "first_published_at": "2016-03-09T09:49:10.790493-06:00",
+                "locale": "en"
+            },
+            "title": "Introductory Statistics",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Introductory Statistics",
+            "salesforce_name": "Introductory Statistics",
+            "book_subjects": [
+                {
+                    "id": 180,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/statistics.svg"
+        },
+        {
+            "id": 189,
+            "meta": {
+                "slug": "introductory-business-statistics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/189/",
+                "html_url": "https://dev.openstax.org/details/books/introductory-business-statistics",
+                "first_published_at": "2017-11-30T11:15:17.997949-06:00",
+                "locale": "en"
+            },
+            "title": "Introductory Business Statistics",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Business Statistics",
+            "salesforce_name": "Introductory Business Statistics",
+            "book_subjects": [
+                {
+                    "id": 221,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                },
+                {
+                    "id": 222,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/IntroductoryBusinessStatistics-bookcard.svg"
+        },
+        {
+            "id": 35,
+            "meta": {
+                "slug": "anatomy-and-physiology",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/35/",
+                "html_url": "https://dev.openstax.org/details/books/anatomy-and-physiology",
+                "first_published_at": "2016-03-09T09:48:12.654796-06:00",
+                "locale": "en"
+            },
+            "title": "Anatomy and Physiology",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Anatomy & Physiology",
+            "salesforce_name": "Anatomy & Physiology",
+            "book_subjects": [
+                {
+                    "id": 181,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/anatomy_physiology.svg"
+        },
+        {
+            "id": 81,
+            "meta": {
+                "slug": "astronomy",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/81/",
+                "html_url": "https://dev.openstax.org/details/books/astronomy",
+                "first_published_at": "2016-04-22T12:11:50.319882-05:00",
+                "locale": "en"
+            },
+            "title": "Astronomy",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Astronomy",
+            "salesforce_name": "Astronomy",
+            "book_subjects": [
+                {
+                    "id": 283,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/astronomy.svg"
+        },
+        {
+            "id": 121,
+            "meta": {
+                "slug": "biology",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/121/",
+                "html_url": "https://dev.openstax.org/details/books/biology",
+                "first_published_at": "2016-12-16T09:52:20.369252-06:00",
+                "locale": "en"
+            },
+            "title": "Biology",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Biology",
+            "salesforce_name": "Biology",
+            "book_subjects": [
+                {
+                    "id": 240,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/biology.svg"
+        },
+        {
+            "id": 207,
+            "meta": {
+                "slug": "biology-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/207/",
+                "html_url": "https://dev.openstax.org/details/books/biology-2e",
+                "first_published_at": "2018-03-09T15:44:46.846000-06:00",
+                "locale": "en"
+            },
+            "title": "Biology 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Biology",
+            "salesforce_name": "Biology 2e",
+            "book_subjects": [
+                {
+                    "id": 282,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                },
+                {
+                    "id": 346,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "K12",
+                    "subject_page_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": "Starting 𝗡𝗼𝘃𝗲𝗺𝗯𝗲𝗿 𝟭𝟬, 𝟮𝟬𝟮𝟱, a free OpenStax account will be required to view this book. Need an account? <a href=\"https://openstax.org/accounts/i/signup/?r=https://openstax.org/subjects\">Create one today!</a>",
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/biology_book_card_2e.svg"
+        },
+        {
+            "id": 34,
+            "meta": {
+                "slug": "concepts-biology",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/34/",
+                "html_url": "https://dev.openstax.org/details/books/concepts-biology",
+                "first_published_at": "2016-03-09T09:47:29.653246-06:00",
+                "locale": "en"
+            },
+            "title": "Concepts of Biology",
+            "book_state": "live",
+            "salesforce_abbreviation": "Concepts of Bio (non-majors)",
+            "salesforce_name": "Concepts of Biology",
+            "book_subjects": [
+                {
+                    "id": 350,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/concpets_biology_eZrc8yQ.svg"
+        },
+        {
+            "id": 83,
+            "meta": {
+                "slug": "microbiology",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/83/",
+                "html_url": "https://dev.openstax.org/details/books/microbiology",
+                "first_published_at": "2016-04-26T10:41:48.505644-05:00",
+                "locale": "en"
+            },
+            "title": "Microbiology",
+            "book_state": "live",
+            "salesforce_abbreviation": "Microbiology",
+            "salesforce_name": "Microbiology",
+            "book_subjects": [
+                {
+                    "id": 186,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/microbiology.svg"
+        },
+        {
+            "id": 43,
+            "meta": {
+                "slug": "chemistry",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/43/",
+                "html_url": "https://dev.openstax.org/details/books/chemistry",
+                "first_published_at": "2016-03-09T09:57:39.246931-06:00",
+                "locale": "en"
+            },
+            "title": "Chemistry",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Chemistry",
+            "salesforce_name": "Chemistry",
+            "book_subjects": [
+                {
+                    "id": 237,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/chemistry.svg"
+        },
+        {
+            "id": 294,
+            "meta": {
+                "slug": "chemistry-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/294/",
+                "html_url": "https://dev.openstax.org/details/books/chemistry-2e",
+                "first_published_at": "2019-05-10T14:10:07.021393-05:00",
+                "locale": "en"
+            },
+            "title": "Chemistry 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Chemistry",
+            "salesforce_name": "Chemistry 2e",
+            "book_subjects": [
+                {
+                    "id": 187,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/chemistry_2e_book_card.svg"
+        },
+        {
+            "id": 93,
+            "meta": {
+                "slug": "chemistry-atoms-first",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/93/",
+                "html_url": "https://dev.openstax.org/details/books/chemistry-atoms-first",
+                "first_published_at": "2016-07-19T11:18:52.182148-05:00",
+                "locale": "en"
+            },
+            "title": "Chemistry: Atoms First",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Chem: Atoms First",
+            "salesforce_name": "Chemistry: Atoms First",
+            "book_subjects": [
+                {
+                    "id": 238,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/Chmistry-Atoms-First.svg"
+        },
+        {
+            "id": 339,
+            "meta": {
+                "slug": "chemistry-atoms-first-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/339/",
+                "html_url": "https://dev.openstax.org/details/books/chemistry-atoms-first-2e",
+                "first_published_at": "2019-02-14T09:43:18.022000-06:00",
+                "locale": "en"
+            },
+            "title": "Chemistry: Atoms First 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Chem: Atoms First",
+            "salesforce_name": "Chemistry: Atoms First 2e",
+            "book_subjects": [
+                {
+                    "id": 188,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/chemistry_atoms_first_2e_book_card.svg"
+        },
+        {
+            "id": 31,
+            "meta": {
+                "slug": "college-physics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/31/",
+                "html_url": "https://dev.openstax.org/details/books/college-physics",
+                "first_published_at": "2016-03-09T09:05:28.982257-06:00",
+                "locale": "en"
+            },
+            "title": "College Physics",
+            "book_state": "retired",
+            "salesforce_abbreviation": "College Physics (Algebra)",
+            "salesforce_name": "College Physics",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/physics.svg"
+        },
+        {
+            "id": 82,
+            "meta": {
+                "slug": "university-physics-volume-1",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/82/",
+                "html_url": "https://dev.openstax.org/details/books/university-physics-volume-1",
+                "first_published_at": "2016-04-22T12:13:54.743756-05:00",
+                "locale": "en"
+            },
+            "title": "University Physics Volume 1",
+            "book_state": "live",
+            "salesforce_abbreviation": "University Physics (Calc)",
+            "salesforce_name": "University Physics",
+            "book_subjects": [
+                {
+                    "id": 290,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/university_physics-v1.png"
+        },
+        {
+            "id": 94,
+            "meta": {
+                "slug": "university-physics-volume-2",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/94/",
+                "html_url": "https://dev.openstax.org/details/books/university-physics-volume-2",
+                "first_published_at": "2016-04-22T12:13:54.743756-05:00",
+                "locale": "en"
+            },
+            "title": "University Physics Volume 2",
+            "book_state": "live",
+            "salesforce_abbreviation": "University Physics (Calc)",
+            "salesforce_name": "University Physics",
+            "book_subjects": [
+                {
+                    "id": 291,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/university_physics-v2.png"
+        },
+        {
+            "id": 95,
+            "meta": {
+                "slug": "university-physics-volume-3",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/95/",
+                "html_url": "https://dev.openstax.org/details/books/university-physics-volume-3",
+                "first_published_at": "2016-04-22T12:13:54.743756-05:00",
+                "locale": "en"
+            },
+            "title": "University Physics Volume 3",
+            "book_state": "live",
+            "salesforce_abbreviation": "University Physics (Calc)",
+            "salesforce_name": "University Physics",
+            "book_subjects": [
+                {
+                    "id": 192,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/university_physics-v3.png"
+        },
+        {
+            "id": 162,
+            "meta": {
+                "slug": "biology-ap-courses",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/162/",
+                "html_url": "https://dev.openstax.org/details/books/biology-ap-courses",
+                "first_published_at": "2017-07-27T09:56:13.901502-05:00",
+                "locale": "en"
+            },
+            "title": "Biology for AP® Courses",
+            "book_state": "live",
+            "salesforce_abbreviation": "AP Bio",
+            "salesforce_name": "AP Biology",
+            "book_subjects": [
+                {
+                    "id": 193,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                },
+                {
+                    "id": 194,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "K12",
+                    "subject_page_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/biology-AP.png"
+        },
+        {
+            "id": 47,
+            "meta": {
+                "slug": "college-physics-ap-courses",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/47/",
+                "html_url": "https://dev.openstax.org/details/books/college-physics-ap-courses",
+                "first_published_at": "2016-03-09T10:01:26.391128-06:00",
+                "locale": "en"
+            },
+            "title": "The AP Physics Collection",
+            "book_state": "retired",
+            "salesforce_abbreviation": "AP Physics",
+            "salesforce_name": "AP Physics",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_physics_for_ap_course_book_card.svg"
+        },
+        {
+            "id": 190,
+            "meta": {
+                "slug": "fizyka-dla-szkół-wyższych-tom-1",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/190/",
+                "html_url": "https://dev.openstax.org/details/books/fizyka-dla-szkół-wyższych-tom-1",
+                "first_published_at": "2017-12-05T14:46:42.214564-06:00",
+                "locale": "en"
+            },
+            "title": "Fizyka dla szkół wyższych. Tom 1",
+            "book_state": "unlisted",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 199,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/university_physics_book_card_outlined.svg"
+        },
+        {
+            "id": 219,
+            "meta": {
+                "slug": "fizyka-dla-szkół-wyższych-tom-2",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/219/",
+                "html_url": "https://dev.openstax.org/details/books/fizyka-dla-szkół-wyższych-tom-2",
+                "first_published_at": "2018-06-18T12:34:42.916050-05:00",
+                "locale": "en"
+            },
+            "title": "Fizyka dla szkół wyższych. Tom 2",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": "Polska University Physics",
+            "book_subjects": [
+                {
+                    "id": 200,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/university_physics_book_card_volume_2_1.svg"
+        },
+        {
+            "id": 245,
+            "meta": {
+                "slug": "fizyka-dla-szkół-wyższych-tom-3",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/245/",
+                "html_url": "https://dev.openstax.org/details/books/fizyka-dla-szkół-wyższych-tom-3",
+                "first_published_at": "2018-08-09T10:57:12.454940-05:00",
+                "locale": "en"
+            },
+            "title": "Fizyka dla szkół wyższych. Tom 3",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": "Polska University Physics",
+            "book_subjects": [
+                {
+                    "id": 201,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/university_physics_book_card_volume_3_TdcUIkT.svg"
+        },
+        {
+            "id": 84,
+            "meta": {
+                "slug": "american-government",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/84/",
+                "html_url": "https://dev.openstax.org/details/books/american-government",
+                "first_published_at": "2016-05-13T16:29:19.973695-05:00",
+                "locale": "en"
+            },
+            "title": "American Government",
+            "book_state": "retired",
+            "salesforce_abbreviation": "American Government",
+            "salesforce_name": "American Government",
+            "book_subjects": [
+                {
+                    "id": 242,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/american_government.svg"
+        },
+        {
+            "id": 295,
+            "meta": {
+                "slug": "american-government-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/295/",
+                "html_url": "https://dev.openstax.org/details/books/american-government-2e",
+                "first_published_at": "2019-05-10T14:19:06.656218-05:00",
+                "locale": "en"
+            },
+            "title": "American Government 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "American Government",
+            "salesforce_name": "American Government 2e",
+            "book_subjects": [
+                {
+                    "id": 202,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/american_government_2e_book_card.svg"
+        },
+        {
+            "id": 177,
+            "meta": {
+                "slug": "principles-economics-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/177/",
+                "html_url": "https://dev.openstax.org/details/books/principles-economics-2e",
+                "first_published_at": "2017-11-01T11:54:44.174463-05:00",
+                "locale": "en"
+            },
+            "title": "Principles of Economics 2e",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Economics",
+            "salesforce_name": "Principles of Economics 2e",
+            "book_subjects": [
+                {
+                    "id": 203,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/Economics2e-BookCard.png"
+        },
+        {
+            "id": 178,
+            "meta": {
+                "slug": "principles-macroeconomics-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/178/",
+                "html_url": "https://dev.openstax.org/details/books/principles-macroeconomics-2e",
+                "first_published_at": "2017-11-08T12:14:11.093682-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Macroeconomics 2e",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Macro Econ",
+            "salesforce_name": "Principles of Macroeconomics 2e",
+            "book_subjects": [
+                {
+                    "id": 204,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/Macroeconomics2e-BookCard.png"
+        },
+        {
+            "id": 155,
+            "meta": {
+                "slug": "principles-microeconomics-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/155/",
+                "html_url": "https://dev.openstax.org/details/books/principles-microeconomics-2e",
+                "first_published_at": "2017-06-28T11:30:43.785365-05:00",
+                "locale": "en"
+            },
+            "title": "Principles of Microeconomics 2e",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Micro Econ",
+            "salesforce_name": "Principles of Microeconomics 2e",
+            "book_subjects": [
+                {
+                    "id": 213,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/micro_economics_2e.svg"
+        },
+        {
+            "id": 40,
+            "meta": {
+                "slug": "principles-economics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/40/",
+                "html_url": "https://dev.openstax.org/details/books/principles-economics",
+                "first_published_at": "2016-03-09T09:55:09.132673-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Economics",
+            "book_state": "live",
+            "salesforce_abbreviation": "Economics",
+            "salesforce_name": "Principles of Economics",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/economics_8mNeBU3.svg"
+        },
+        {
+            "id": 41,
+            "meta": {
+                "slug": "principles-macroeconomics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/41/",
+                "html_url": "https://dev.openstax.org/details/books/principles-macroeconomics",
+                "first_published_at": "2016-03-09T09:56:04.159079-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Macroeconomics",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Macro Econ",
+            "salesforce_name": "Principles of Macroeconomics",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/macro_economics.svg"
+        },
+        {
+            "id": 42,
+            "meta": {
+                "slug": "principles-microeconomics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/42/",
+                "html_url": "https://dev.openstax.org/details/books/principles-microeconomics",
+                "first_published_at": "2016-03-09T09:57:02.235352-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Microeconomics",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Micro Econ",
+            "salesforce_name": "Principles of Microeconomics",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/micro_economics.svg"
+        },
+        {
+            "id": 45,
+            "meta": {
+                "slug": "psychology",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/45/",
+                "html_url": "https://dev.openstax.org/details/books/psychology",
+                "first_published_at": "2016-03-09T09:58:52.534763-06:00",
+                "locale": "en"
+            },
+            "title": "Psychology",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Psychology",
+            "salesforce_name": "Psychology",
+            "book_subjects": [
+                {
+                    "id": 209,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/psychology.svg"
+        },
+        {
+            "id": 32,
+            "meta": {
+                "slug": "introduction-sociology-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/32/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-sociology-2e",
+                "first_published_at": "2016-03-09T09:45:10.681907-06:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Sociology 2e",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Introduction to Sociology",
+            "salesforce_name": "Introduction to Sociology 2e",
+            "book_subjects": [
+                {
+                    "id": 210,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/sociology_2e.svg"
+        },
+        {
+            "id": 186,
+            "meta": {
+                "slug": "principles-macroeconomics-ap-courses-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/186/",
+                "html_url": "https://dev.openstax.org/details/books/principles-macroeconomics-ap-courses-2e",
+                "first_published_at": "2017-11-29T11:53:53.654175-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Macroeconomics for AP® Courses 2e",
+            "book_state": "retired",
+            "salesforce_abbreviation": "AP Macro Econ",
+            "salesforce_name": "Principles of Macroeconomics for AP Courses 2e",
+            "book_subjects": [
+                {
+                    "id": 211,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                },
+                {
+                    "id": 348,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "K12",
+                    "subject_page_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/APMacroeconomics2e-bookcard.svg"
+        },
+        {
+            "id": 188,
+            "meta": {
+                "slug": "principles-microeconomics-ap-courses-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/188/",
+                "html_url": "https://dev.openstax.org/details/books/principles-microeconomics-ap-courses-2e",
+                "first_published_at": "2017-11-29T11:55:46.299107-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Microeconomics for AP® Courses 2e",
+            "book_state": "retired",
+            "salesforce_abbreviation": "AP Micro Econ",
+            "salesforce_name": "Principles of Microeconomics for AP Courses 2e",
+            "book_subjects": [
+                {
+                    "id": 214,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                },
+                {
+                    "id": 347,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "K12",
+                    "subject_page_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/APMicroeconomics2e-bookcard.svg"
+        },
+        {
+            "id": 48,
+            "meta": {
+                "slug": "principles-macroeconomics-ap-courses",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/48/",
+                "html_url": "https://dev.openstax.org/details/books/principles-macroeconomics-ap-courses",
+                "first_published_at": "2016-03-09T10:02:28.621686-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Macroeconomics for AP® Courses",
+            "book_state": "retired",
+            "salesforce_abbreviation": "AP Macro Econ",
+            "salesforce_name": "Principles of Macroeconomics for AP® Courses",
+            "book_subjects": [
+                {
+                    "id": 345,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/principles_of_macroeconomics_for_ap_courses_book_card.svg"
+        },
+        {
+            "id": 49,
+            "meta": {
+                "slug": "principles-microeconomics-ap-courses",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/49/",
+                "html_url": "https://dev.openstax.org/details/books/principles-microeconomics-ap-courses",
+                "first_published_at": "2016-03-09T10:02:43.769668-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Microeconomics for AP® Courses",
+            "book_state": "retired",
+            "salesforce_abbreviation": "AP Micro Econ",
+            "salesforce_name": "Principles of Microeconomics for AP® Courses",
+            "book_subjects": [
+                {
+                    "id": 344,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/micro_economics_AP_2vxFCOM.svg"
+        },
+        {
+            "id": 44,
+            "meta": {
+                "slug": "us-history",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/44/",
+                "html_url": "https://dev.openstax.org/details/books/us-history",
+                "first_published_at": "2016-03-09T09:58:20.010727-06:00",
+                "locale": "en"
+            },
+            "title": "U.S. History",
+            "book_state": "live",
+            "salesforce_abbreviation": "US History",
+            "salesforce_name": "U.S. History",
+            "book_subjects": [
+                {
+                    "id": 216,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Humanities",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is humanities search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/US_history.svg"
+        },
+        {
+            "id": 259,
+            "meta": {
+                "slug": "introduction-business",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/259/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-business",
+                "first_published_at": "2018-09-18T05:37:19.622356-05:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Business",
+            "book_state": "live",
+            "salesforce_abbreviation": "Introduction to Business",
+            "salesforce_name": "Introduction to Business",
+            "book_subjects": [
+                {
+                    "id": 217,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_business.svg"
+        },
+        {
+            "id": 261,
+            "meta": {
+                "slug": "business-ethics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/261/",
+                "html_url": "https://dev.openstax.org/details/books/business-ethics",
+                "first_published_at": "2018-09-24T11:43:19.961933-05:00",
+                "locale": "en"
+            },
+            "title": "Business Ethics",
+            "book_state": "live",
+            "salesforce_abbreviation": "Business Ethics",
+            "salesforce_name": "Business Ethics",
+            "book_subjects": [
+                {
+                    "id": 218,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/business_ethics_card.svg"
+        },
+        {
+            "id": 313,
+            "meta": {
+                "slug": "principles-financial-accounting",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/313/",
+                "html_url": "https://dev.openstax.org/details/books/principles-financial-accounting",
+                "first_published_at": "2019-02-26T13:46:30.136000-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Accounting, Volume 1: Financial Accounting",
+            "book_state": "live",
+            "salesforce_abbreviation": "Financial Accounting",
+            "salesforce_name": "Financial Accounting",
+            "book_subjects": [
+                {
+                    "id": 219,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/principles_of_acounting_volume_1_web_card.svg"
+        },
+        {
+            "id": 335,
+            "meta": {
+                "slug": "principles-managerial-accounting",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/335/",
+                "html_url": "https://dev.openstax.org/details/books/principles-managerial-accounting",
+                "first_published_at": "2019-01-25T11:24:11.351000-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Accounting, Volume 2: Managerial Accounting",
+            "book_state": "live",
+            "salesforce_abbreviation": "Managerial Accounting",
+            "salesforce_name": "Managerial Accounting",
+            "book_subjects": [
+                {
+                    "id": 220,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/principles_of_acounting_volume_2_book_card_Vu9ykSz.svg"
+        },
+        {
+            "id": 338,
+            "meta": {
+                "slug": "principles-management",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/338/",
+                "html_url": "https://dev.openstax.org/details/books/principles-management",
+                "first_published_at": "2019-02-28T14:08:03.807000-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Management",
+            "book_state": "live",
+            "salesforce_abbreviation": "Management",
+            "salesforce_name": "Management",
+            "book_subjects": [
+                {
+                    "id": 223,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/principles_of_management_book_card.svg"
+        },
+        {
+            "id": 337,
+            "meta": {
+                "slug": "entrepreneurship",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/337/",
+                "html_url": "https://dev.openstax.org/details/books/entrepreneurship",
+                "first_published_at": "2019-04-15T14:36:29.383000-05:00",
+                "locale": "en"
+            },
+            "title": "Entrepreneurship",
+            "book_state": "live",
+            "salesforce_abbreviation": "Entrepreneurship",
+            "salesforce_name": "Entrepreneurship",
+            "book_subjects": [
+                {
+                    "id": 224,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/entrepreneurship_book_card.svg"
+        },
+        {
+            "id": 336,
+            "meta": {
+                "slug": "organizational-behavior",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/336/",
+                "html_url": "https://dev.openstax.org/details/books/organizational-behavior",
+                "first_published_at": "2019-04-15T14:39:27.380000-05:00",
+                "locale": "en"
+            },
+            "title": "Organizational Behavior",
+            "book_state": "live",
+            "salesforce_abbreviation": "Organizational Behavior",
+            "salesforce_name": "Organizational Behavior",
+            "book_subjects": [
+                {
+                    "id": 225,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/organizational_behavior_book_card.svg"
+        },
+        {
+            "id": 354,
+            "meta": {
+                "slug": "business-law-i-essentials",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/354/",
+                "html_url": "https://dev.openstax.org/details/books/business-law-i-essentials",
+                "first_published_at": "2019-09-27T09:25:32.654000-05:00",
+                "locale": "en"
+            },
+            "title": "Business Law I Essentials",
+            "book_state": "live",
+            "salesforce_abbreviation": "Business Law I Essentials",
+            "salesforce_name": "Business Law I Essentials",
+            "book_subjects": [
+                {
+                    "id": 226,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                },
+                {
+                    "id": 227,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Essentials",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/business_law_l_essentials_web_card_1.svg"
+        },
+        {
+            "id": 356,
+            "meta": {
+                "slug": "college-success",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/356/",
+                "html_url": "https://dev.openstax.org/details/books/college-success",
+                "first_published_at": "2020-02-24T14:26:34.042919-06:00",
+                "locale": "en"
+            },
+            "title": "College Success",
+            "book_state": "live",
+            "salesforce_abbreviation": "College Success",
+            "salesforce_name": "College Success",
+            "book_subjects": [
+                {
+                    "id": 228,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "College Success",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_success_web_card.svg"
+        },
+        {
+            "id": 359,
+            "meta": {
+                "slug": "prealgebra-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/359/",
+                "html_url": "https://dev.openstax.org/details/books/prealgebra-2e",
+                "first_published_at": "2020-03-02T14:49:22.864621-06:00",
+                "locale": "en"
+            },
+            "title": "Prealgebra 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Prealgebra",
+            "salesforce_name": "Prealgebra",
+            "book_subjects": [
+                {
+                    "id": 171,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/prealgebra_2e_web_card.svg"
+        },
+        {
+            "id": 360,
+            "meta": {
+                "slug": "elementary-algebra-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/360/",
+                "html_url": "https://dev.openstax.org/details/books/elementary-algebra-2e",
+                "first_published_at": "2020-03-18T15:57:51.428112-05:00",
+                "locale": "en"
+            },
+            "title": "Elementary Algebra 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Elementary Algebra",
+            "salesforce_name": "Elementary Algebra",
+            "book_subjects": [
+                {
+                    "id": 172,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/elementary_algebra_2e_web_card.svg"
+        },
+        {
+            "id": 361,
+            "meta": {
+                "slug": "statistics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/361/",
+                "html_url": "https://dev.openstax.org/details/books/statistics",
+                "first_published_at": "2020-03-26T15:43:52.438007-05:00",
+                "locale": "en"
+            },
+            "title": "Statistics",
+            "book_state": "live",
+            "salesforce_abbreviation": "HS Statistics",
+            "salesforce_name": "HS Statistics",
+            "book_subjects": [
+                {
+                    "id": 231,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                },
+                {
+                    "id": 232,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "K12",
+                    "subject_page_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/high_school_statistics_web_card.svg"
+        },
+        {
+            "id": 362,
+            "meta": {
+                "slug": "physics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/362/",
+                "html_url": "https://dev.openstax.org/details/books/physics",
+                "first_published_at": "2020-03-26T15:51:27.702690-05:00",
+                "locale": "en"
+            },
+            "title": "Physics",
+            "book_state": "live",
+            "salesforce_abbreviation": "HS Physics",
+            "salesforce_name": "HS Physics",
+            "book_subjects": [
+                {
+                    "id": 197,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                },
+                {
+                    "id": 198,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "K12",
+                    "subject_page_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/high_school_physics_web_card.svg"
+        },
+        {
+            "id": 363,
+            "meta": {
+                "slug": "psychology-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/363/",
+                "html_url": "https://dev.openstax.org/details/books/psychology-2e",
+                "first_published_at": "2020-03-27T14:43:17.915781-05:00",
+                "locale": "en"
+            },
+            "title": "Psychology 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Psychology",
+            "salesforce_name": "Psychology",
+            "book_subjects": [
+                {
+                    "id": 317,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/psychology_2e_web_card.svg"
+        },
+        {
+            "id": 364,
+            "meta": {
+                "slug": "intermediate-algebra-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/364/",
+                "html_url": "https://dev.openstax.org/details/books/intermediate-algebra-2e",
+                "first_published_at": "2020-04-15T09:23:48.303284-05:00",
+                "locale": "en"
+            },
+            "title": "Intermediate Algebra 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Intermediate Algebra",
+            "salesforce_name": "Intermediate Algebra",
+            "book_subjects": [
+                {
+                    "id": 173,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/intermediate_algebra_2e_web_card.svg"
+        },
+        {
+            "id": 365,
+            "meta": {
+                "slug": "life-liberty-and-pursuit-happiness",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/365/",
+                "html_url": "https://dev.openstax.org/details/books/life-liberty-and-pursuit-happiness",
+                "first_published_at": "2020-04-17T13:57:14.508364-05:00",
+                "locale": "en"
+            },
+            "title": "Life, Liberty, and the Pursuit of Happiness",
+            "book_state": "live",
+            "salesforce_abbreviation": "LLPH",
+            "salesforce_name": "Life, Liberty and the Pursuit of Happiness",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/life_libery_and_the_pursuit_of_happiness_QFfFHz3_cover.svg"
+        },
+        {
+            "id": 370,
+            "meta": {
+                "slug": "college-algebra-corequisite-support",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/370/",
+                "html_url": "https://dev.openstax.org/details/books/college-algebra-corequisite-support",
+                "first_published_at": "2020-07-21T09:50:18.965183-05:00",
+                "locale": "en"
+            },
+            "title": "College Algebra with Corequisite Support",
+            "book_state": "live",
+            "salesforce_abbreviation": "College Algebra with Corequisite Support",
+            "salesforce_name": "College Algebra with Corequisite Support",
+            "book_subjects": [
+                {
+                    "id": 245,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_algebra__with_corequisite_support_web_card.svg"
+        },
+        {
+            "id": 375,
+            "meta": {
+                "slug": "introduction-sociology",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/375/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-sociology",
+                "first_published_at": "2016-03-09T09:45:10.681000-06:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Sociology",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Introduction to Sociology",
+            "salesforce_name": "Introduction to Sociology",
+            "book_subjects": [
+                {
+                    "id": 248,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/sociology_1e.png"
+        },
+        {
+            "id": 376,
+            "meta": {
+                "slug": "psychologia-polska",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/376/",
+                "html_url": "https://dev.openstax.org/details/books/psychologia-polska",
+                "first_published_at": "2020-09-28T15:05:23.453246-05:00",
+                "locale": "en"
+            },
+            "title": "Psychologia",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 258,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/psychologia_web_card.svg"
+        },
+        {
+            "id": 386,
+            "meta": {
+                "slug": "introduction-intellectual-property",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/386/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-intellectual-property",
+                "first_published_at": "2021-01-29T10:11:30.829113-06:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Intellectual Property",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Introduction to Intellectual Property",
+            "salesforce_name": "Introduction to Intellectual Property",
+            "book_subjects": [
+                {
+                    "id": 250,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_intellectual_property_web_card.svg"
+        },
+        {
+            "id": 390,
+            "meta": {
+                "slug": "introduction-sociology-3e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/390/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-sociology-3e",
+                "first_published_at": "2021-05-20T18:45:59.926997-05:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Sociology 3e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Introduction to Sociology",
+            "salesforce_name": "Introduction to Sociology 3e",
+            "book_subjects": [
+                {
+                    "id": 253,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_sociology_3e_web_card_5kxvAao.svg"
+        },
+        {
+            "id": 392,
+            "meta": {
+                "slug": "american-government-3e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/392/",
+                "html_url": "https://dev.openstax.org/details/books/american-government-3e",
+                "first_published_at": "2021-07-06T16:02:12.632125-05:00",
+                "locale": "en"
+            },
+            "title": "American Government 3e",
+            "book_state": "live",
+            "salesforce_abbreviation": "American Government",
+            "salesforce_name": "American Government 3e",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/american_government_3e_web_card.svg"
+        },
+        {
+            "id": 402,
+            "meta": {
+                "slug": "writing-guide",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/402/",
+                "html_url": "https://dev.openstax.org/details/books/writing-guide",
+                "first_published_at": "2021-10-19T12:16:45.861512-05:00",
+                "locale": "en"
+            },
+            "title": "Writing Guide with Handbook",
+            "book_state": "live",
+            "salesforce_abbreviation": "Writing Guide",
+            "salesforce_name": "Writing Guide",
+            "book_subjects": [
+                {
+                    "id": 280,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Humanities",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is humanities search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/writing_guide_with_handbook_web_card.svg"
+        },
+        {
+            "id": 406,
+            "meta": {
+                "slug": "college-algebra-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/406/",
+                "html_url": "https://dev.openstax.org/details/books/college-algebra-2e",
+                "first_published_at": "2021-12-01T11:13:54.604074-06:00",
+                "locale": "en"
+            },
+            "title": "College Algebra 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "College Algebra",
+            "salesforce_name": "College Algebra",
+            "book_subjects": [
+                {
+                    "id": 285,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_algebra_2e_web_card.svg"
+        },
+        {
+            "id": 407,
+            "meta": {
+                "slug": "precalculus-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/407/",
+                "html_url": "https://dev.openstax.org/details/books/precalculus-2e",
+                "first_published_at": "2021-12-01T11:29:52.147784-06:00",
+                "locale": "en"
+            },
+            "title": "Precalculus 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Precalc",
+            "salesforce_name": "Precalculus",
+            "book_subjects": [
+                {
+                    "id": 281,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/precalculus_2e.svg"
+        },
+        {
+            "id": 408,
+            "meta": {
+                "slug": "algebra-and-trigonometry-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/408/",
+                "html_url": "https://dev.openstax.org/details/books/algebra-and-trigonometry-2e",
+                "first_published_at": "2021-12-01T13:03:21.491840-06:00",
+                "locale": "en"
+            },
+            "title": "Algebra and Trigonometry 2e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Algebra and Trigonometry",
+            "salesforce_name": "Algebra and Trigonometry",
+            "book_subjects": [
+                {
+                    "id": 278,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/algebra_trigonometry_2e.svg"
+        },
+        {
+            "id": 409,
+            "meta": {
+                "slug": "college-algebra-corequisite-support-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/409/",
+                "html_url": "https://dev.openstax.org/details/books/college-algebra-corequisite-support-2e",
+                "first_published_at": "2021-12-01T13:27:13.037006-06:00",
+                "locale": "en"
+            },
+            "title": "College Algebra 2e with Corequisite Support",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "College Algebra with Corequisite Support",
+            "salesforce_name": "College Algebra with Corequisite Support",
+            "book_subjects": [
+                {
+                    "id": 279,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_algebra_with_corequisite_support_2e.svg"
+        },
+        {
+            "id": 412,
+            "meta": {
+                "slug": "introduction-anthropology",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/412/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-anthropology",
+                "first_published_at": "2022-02-10T11:36:16.893992-06:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Anthropology",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_anthropology.svg"
+        },
+        {
+            "id": 415,
+            "meta": {
+                "slug": "test-book",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/415/",
+                "html_url": "https://dev.openstax.org/details/books/test-book",
+                "first_published_at": "2022-02-10T11:29:38.339501-06:00",
+                "locale": "en"
+            },
+            "title": "test book",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 293,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_physics_for_ap_course_2e.svg"
+        },
+        {
+            "id": 416,
+            "meta": {
+                "slug": "astronomy-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/416/",
+                "html_url": "https://dev.openstax.org/details/books/astronomy-2e",
+                "first_published_at": "2022-02-18T11:36:04.150235-06:00",
+                "locale": "en"
+            },
+            "title": "Astronomy 2e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 294,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/astronomy_2e_webcard.svg"
+        },
+        {
+            "id": 428,
+            "meta": {
+                "slug": "principles-finance",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/428/",
+                "html_url": "https://dev.openstax.org/details/books/principles-finance",
+                "first_published_at": "2022-03-09T11:17:30.547416-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Finance",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "finance",
+            "salesforce_name": "finance",
+            "book_subjects": [
+                {
+                    "id": 304,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/principles_of_finance.svg"
+        },
+        {
+            "id": 429,
+            "meta": {
+                "slug": "anatomy-and-physiology-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/429/",
+                "html_url": "https://dev.openstax.org/details/books/anatomy-and-physiology-2e",
+                "first_published_at": "2022-03-25T10:54:32.774374-05:00",
+                "locale": "en"
+            },
+            "title": "Anatomy and Physiology 2e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Anatomy & Physiology 2e",
+            "salesforce_name": "Anatomy & Physiology 2e",
+            "book_subjects": [
+                {
+                    "id": 305,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/anatomy_and_physiology_2e_webcard_GWZ72NN.svg"
+        },
+        {
+            "id": 431,
+            "meta": {
+                "slug": "introduction-political-science",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/431/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-political-science",
+                "first_published_at": "2022-05-02T12:12:10.100473-05:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Political Science",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 307,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_political_science_webcard.svg"
+        },
+        {
+            "id": 438,
+            "meta": {
+                "slug": "introduction-philosophy",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/438/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-philosophy",
+                "first_published_at": "2022-05-31T16:16:00.566870-05:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Philosophy",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Introduction to Philosophy",
+            "salesforce_name": "Introduction to Philosophy",
+            "book_subjects": [
+                {
+                    "id": 310,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Humanities",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is humanities search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_philosophy_webcard.svg"
+        },
+        {
+            "id": 443,
+            "meta": {
+                "slug": "college-physics-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/443/",
+                "html_url": "https://dev.openstax.org/details/books/college-physics-2e",
+                "first_published_at": "2022-06-24T11:12:49.206531-05:00",
+                "locale": "en"
+            },
+            "title": "College Physics 2e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "College Physics (Algebra) 2e",
+            "salesforce_name": "College Physics 2e",
+            "book_subjects": [
+                {
+                    "id": 251,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_physics_2e.svg"
+        },
+        {
+            "id": 444,
+            "meta": {
+                "slug": "college-physics-ap-courses-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/444/",
+                "html_url": "https://dev.openstax.org/details/books/college-physics-ap-courses-2e",
+                "first_published_at": "2022-06-24T11:23:59.533208-05:00",
+                "locale": "en"
+            },
+            "title": "College Physics for AP® Courses 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "AP Physics 2e",
+            "salesforce_name": "AP Physics 2e",
+            "book_subjects": [
+                {
+                    "id": 195,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                },
+                {
+                    "id": 349,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "K12",
+                    "subject_page_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_physics_for_ap_course_2e.svg"
+        },
+        {
+            "id": 446,
+            "meta": {
+                "slug": "mikroekonomia-podstawy",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/446/",
+                "html_url": "https://dev.openstax.org/details/books/mikroekonomia-podstawy",
+                "first_published_at": "2022-08-09T14:48:01.882207-05:00",
+                "locale": "en"
+            },
+            "title": "Mikroekonomia – Podstawy",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 318,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/mikroekonomia_a4.pdf"
+        },
+        {
+            "id": 448,
+            "meta": {
+                "slug": "world-history-volume-2",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/448/",
+                "html_url": "https://dev.openstax.org/details/books/world-history-volume-2",
+                "first_published_at": "2022-11-17T11:22:04.054839-06:00",
+                "locale": "en"
+            },
+            "title": "World History, Volume 2: from 1400",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 410,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Humanities",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is humanities search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/World_History_volume_2_WebCard.svg"
+        },
+        {
+            "id": 449,
+            "meta": {
+                "slug": "principles-economics-3e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/449/",
+                "html_url": "https://dev.openstax.org/details/books/principles-economics-3e",
+                "first_published_at": "2022-11-18T11:57:02.093585-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Economics 3e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 320,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                },
+                {
+                    "id": 323,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": ""
+        },
+        {
+            "id": 450,
+            "meta": {
+                "slug": "principles-macroeconomics-3e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/450/",
+                "html_url": "https://dev.openstax.org/details/books/principles-macroeconomics-3e",
+                "first_published_at": "2022-11-18T14:25:38.181779-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Macroeconomics 3e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 321,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                },
+                {
+                    "id": 322,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": ""
+        },
+        {
+            "id": 451,
+            "meta": {
+                "slug": "principles-microeconomics-3e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/451/",
+                "html_url": "https://dev.openstax.org/details/books/principles-microeconomics-3e",
+                "first_published_at": "2022-11-18T14:36:12.687039-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Microeconomics 3e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 324,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                },
+                {
+                    "id": 325,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": ""
+        },
+        {
+            "id": 455,
+            "meta": {
+                "slug": "principles-marketing",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/455/",
+                "html_url": "https://dev.openstax.org/details/books/principles-marketing",
+                "first_published_at": "2022-12-21T14:25:09.227572-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Marketing",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 326,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/principles.marketing.web.card.svg"
+        },
+        {
+            "id": 481,
+            "meta": {
+                "slug": "import-test-sub",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/481/",
+                "html_url": "https://dev.openstax.org/details/books/import-test-sub",
+                "first_published_at": "2023-02-08T08:18:46.900000-06:00",
+                "locale": "en"
+            },
+            "title": "Import Test",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 342,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/biology_book_card_2e.svg"
+        },
+        {
+            "id": 482,
+            "meta": {
+                "slug": "contemporary-mathematics",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/482/",
+                "html_url": "https://dev.openstax.org/details/books/contemporary-mathematics",
+                "first_published_at": "2023-03-01T15:11:16.933382-06:00",
+                "locale": "en"
+            },
+            "title": "Contemporary Mathematics",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 327,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/contemporary_mathematics_web_card.svg"
+        },
+        {
+            "id": 499,
+            "meta": {
+                "slug": "world-history-volume-1",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/499/",
+                "html_url": "https://dev.openstax.org/details/books/world-history-volume-1",
+                "first_published_at": "2023-03-27T11:18:18.928299-05:00",
+                "locale": "en"
+            },
+            "title": "World History, Volume 1: to 1500",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 319,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Humanities",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is humanities search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/World_History_volume_1_WebCard.svg"
+        },
+        {
+            "id": 500,
+            "meta": {
+                "slug": "college-success-concise",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/500/",
+                "html_url": "https://dev.openstax.org/details/books/college-success-concise",
+                "first_published_at": "2023-03-30T12:06:41.884818-05:00",
+                "locale": "en"
+            },
+            "title": "College Success Concise",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 339,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "College Success",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/college_success_concise_web_card.svg"
+        },
+        {
+            "id": 502,
+            "meta": {
+                "slug": "organic-chemistry",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/502/",
+                "html_url": "https://dev.openstax.org/details/books/organic-chemistry",
+                "first_published_at": "2023-04-25T11:49:31.476366-05:00",
+                "locale": "en"
+            },
+            "title": "Organic Chemistry: A Tenth Edition",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Organic Chemistry",
+            "salesforce_name": "Organic Chemistry",
+            "book_subjects": [
+                {
+                    "id": 340,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/organic_chemistry_web_card.svg"
+        },
+        {
+            "id": 506,
+            "meta": {
+                "slug": "preparing-for-college-success",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/506/",
+                "html_url": "https://dev.openstax.org/details/books/preparing-for-college-success",
+                "first_published_at": "2023-06-21T14:03:43.594000-05:00",
+                "locale": "en"
+            },
+            "title": "Preparing for College Success",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 341,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "College Success",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/preparing_for_college_success_web_card.svg"
+        },
+        {
+            "id": 515,
+            "meta": {
+                "slug": "algebra-and-trigonometry",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/515/",
+                "html_url": "https://dev.openstax.org/details/books/algebra-and-trigonometry",
+                "first_published_at": "2016-03-09T09:53:01.890000-06:00",
+                "locale": "en"
+            },
+            "title": "Algebra and Trigonometry",
+            "book_state": "retired",
+            "salesforce_abbreviation": "Algebra and Trigonometry",
+            "salesforce_name": "Algebra and Trigonometry",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/algebra_trigonometry.svg"
+        },
+        {
+            "id": 516,
+            "meta": {
+                "slug": "makroekonomia-podstawy",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/516/",
+                "html_url": "https://dev.openstax.org/details/books/makroekonomia-podstawy",
+                "first_published_at": "2023-10-06T12:11:13.291776-05:00",
+                "locale": "en"
+            },
+            "title": "Makroekonomia – podstawy",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 351,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                },
+                {
+                    "id": 352,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/makroekonomia_square_tgUFDNh.svg"
+        },
+        {
+            "id": 517,
+            "meta": {
+                "slug": "workplace-software-skills",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/517/",
+                "html_url": "https://dev.openstax.org/details/books/workplace-software-skills",
+                "first_published_at": "2023-10-19T13:05:50.347778-05:00",
+                "locale": "en"
+            },
+            "title": "Workplace Software and Skills",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 353,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/workplace_software_and_skills_web_card.svg"
+        },
+        {
+            "id": 518,
+            "meta": {
+                "slug": "introductory-statistics-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/518/",
+                "html_url": "https://dev.openstax.org/details/books/introductory-statistics-2e",
+                "first_published_at": "2023-11-20T12:12:04.200833-06:00",
+                "locale": "en"
+            },
+            "title": "Introductory Statistics 2e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 354,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introductory_statistics_2e_web_card.svg"
+        },
+        {
+            "id": 519,
+            "meta": {
+                "slug": "introductory-business-statistics-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/519/",
+                "html_url": "https://dev.openstax.org/details/books/introductory-business-statistics-2e",
+                "first_published_at": "2023-11-21T09:57:29.749261-06:00",
+                "locale": "en"
+            },
+            "title": "Introductory Business Statistics 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 355,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                },
+                {
+                    "id": 356,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introductory_business_statistics_2e_web_card.svg"
+        },
+        {
+            "id": 520,
+            "meta": {
+                "slug": "pharmacology",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/520/",
+                "html_url": "https://dev.openstax.org/details/books/pharmacology",
+                "first_published_at": "2024-02-15T17:29:15.719802-06:00",
+                "locale": "en"
+            },
+            "title": "Pharmacology for Nurses",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 357,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Nursing",
+                    "subject_page_content": "Nursing page content",
+                    "subject_search_description": "This is nursing search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/pharmacology_for_nurses_web_card.svg"
+        },
+        {
+            "id": 521,
+            "meta": {
+                "slug": "nutrition",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/521/",
+                "html_url": "https://dev.openstax.org/details/books/nutrition",
+                "first_published_at": "2024-02-19T15:36:32.335894-06:00",
+                "locale": "en"
+            },
+            "title": "Nutrition for Nurses",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 358,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Nursing",
+                    "subject_page_content": "Nursing page content",
+                    "subject_search_description": "This is nursing search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/nutrition_for_nurses_web_card.svg"
+        },
+        {
+            "id": 522,
+            "meta": {
+                "slug": "population-health",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/522/",
+                "html_url": "https://dev.openstax.org/details/books/population-health",
+                "first_published_at": "2024-02-20T10:53:16.199819-06:00",
+                "locale": "en"
+            },
+            "title": "Population Health for Nurses",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Population Health for Nurses",
+            "salesforce_name": "Population Health for Nurses",
+            "book_subjects": [
+                {
+                    "id": 374,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Nursing",
+                    "subject_page_content": "Nursing page content",
+                    "subject_search_description": "This is nursing search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/population_health_for_nurses_web_card_trw09PZ.svg"
+        },
+        {
+            "id": 523,
+            "meta": {
+                "slug": "introduction-python-programming",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/523/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-python-programming",
+                "first_published_at": "2024-02-23T11:29:03.734319-06:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Python Programming",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_python_programming_web_card.svg"
+        },
+        {
+            "id": 533,
+            "meta": {
+                "slug": "psychiatric-mental-health",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/533/",
+                "html_url": "https://dev.openstax.org/details/books/psychiatric-mental-health",
+                "first_published_at": "2024-05-21T13:11:48.819609-05:00",
+                "locale": "en"
+            },
+            "title": "Psychiatric-Mental Health Nursing",
+            "book_state": "live",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 373,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Nursing",
+                    "subject_page_content": "Nursing page content",
+                    "subject_search_description": "This is nursing search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/psychiatric-mental_health_nursing_web_card.svg"
+        },
+        {
+            "id": 536,
+            "meta": {
+                "slug": "clinical-nursing-skills",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/536/",
+                "html_url": "https://dev.openstax.org/details/books/clinical-nursing-skills",
+                "first_published_at": "2024-05-31T12:31:28.379009-05:00",
+                "locale": "en"
+            },
+            "title": "Clinical Nursing Skills",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 376,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Nursing",
+                    "subject_page_content": "Nursing page content",
+                    "subject_search_description": "This is nursing search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/clinical_nursing_skills_web_card.svg"
+        },
+        {
+            "id": 537,
+            "meta": {
+                "slug": "maternal-newborn-nursing",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/537/",
+                "html_url": "https://dev.openstax.org/details/books/maternal-newborn-nursing",
+                "first_published_at": "2024-06-06T11:46:26.562449-05:00",
+                "locale": "en"
+            },
+            "title": "Maternal-Newborn Nursing",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 377,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Nursing",
+                    "subject_page_content": "Nursing page content",
+                    "subject_search_description": "This is nursing search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/maternal-newborn_nursing_web_card.svg"
+        },
+        {
+            "id": 538,
+            "meta": {
+                "slug": "fundamentals-nursing",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/538/",
+                "html_url": "https://dev.openstax.org/details/books/fundamentals-nursing",
+                "first_published_at": "2024-06-17T11:42:38.504590-05:00",
+                "locale": "en"
+            },
+            "title": "Fundamentals of Nursing",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Fundamentals of Nursing",
+            "salesforce_name": "Fundamentals of Nursing",
+            "book_subjects": [
+                {
+                    "id": 378,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Nursing",
+                    "subject_page_content": "Nursing page content",
+                    "subject_search_description": "This is nursing search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/fundamentals_of_nursing_web_card.svg"
+        },
+        {
+            "id": 544,
+            "meta": {
+                "slug": "medical-surgical-nursing",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/544/",
+                "html_url": "https://dev.openstax.org/details/books/medical-surgical-nursing",
+                "first_published_at": "2024-07-23T16:20:10.066038-05:00",
+                "locale": "en"
+            },
+            "title": "Medical-Surgical Nursing",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Medical-Surgical Nursing",
+            "salesforce_name": "Medical-Surgical Nursing",
+            "book_subjects": [
+                {
+                    "id": 379,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Nursing",
+                    "subject_page_content": "Nursing page content",
+                    "subject_search_description": "This is nursing search meta"
+                }
+            ],
+            "content_warning_text": "Starting 𝗡𝗼𝘃𝗲𝗺𝗯𝗲𝗿 𝟭𝟬, 𝟮𝟬𝟮𝟱, a free OpenStax account will be required to view this book. Need an account? <a href=\"https://openstax.org/accounts/i/signup/?r=https://openstax.org/subjects\">Create one today!</a>",
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/medical-surgical_nursing_web_card.svg"
+        },
+        {
+            "id": 547,
+            "meta": {
+                "slug": "lifespan-development",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/547/",
+                "html_url": "https://dev.openstax.org/details/books/lifespan-development",
+                "first_published_at": "2024-08-26T10:24:28.017641-05:00",
+                "locale": "en"
+            },
+            "title": "Lifespan Development",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 380,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/lifespan_development_lifespan_development_web_card.svg"
+        },
+        {
+            "id": 550,
+            "meta": {
+                "slug": "introduction-behavioral-neuroscience",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/550/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-behavioral-neuroscience",
+                "first_published_at": "2024-10-15T11:33:12.348566-05:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Behavioral Neuroscience",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Introduction to Behavioral Neuroscience",
+            "salesforce_name": "Introduction to Behavioral Neuroscience",
+            "book_subjects": [
+                {
+                    "id": 381,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_behavioral_neuroscience_web_card.svg"
+        },
+        {
+            "id": 551,
+            "meta": {
+                "slug": "marketing-podstawy",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/551/",
+                "html_url": "https://dev.openstax.org/details/books/marketing-podstawy",
+                "first_published_at": "2024-10-16T16:09:17.743768-05:00",
+                "locale": "en"
+            },
+            "title": "Marketing Podstawy",
+            "book_state": "unlisted",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": ""
+        },
+        {
+            "id": 552,
+            "meta": {
+                "slug": "introduction-computer-science",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/552/",
+                "html_url": "https://dev.openstax.org/details/books/introduction-computer-science",
+                "first_published_at": "2024-10-24T12:20:18.605926-05:00",
+                "locale": "en"
+            },
+            "title": "Introduction to Computer Science",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Introduction to Computer Science",
+            "salesforce_name": "Introduction to Computer Science",
+            "book_subjects": [
+                {
+                    "id": 382,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Computer Science",
+                    "subject_page_content": "Simple to use, simple to adopt. Our computer science textbooks are designed to meet the standard scope and sequence requirements of their respective courses – and are 100% free online. Complete with free resources for educators (like LMS course shells, lecture slides, instructor answer keys, and more), all OpenStax textbooks are fully customizable. Explore our texts below and adopt any and all parts useful to your course.",
+                    "subject_search_description": "Computer Science"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduction_to_computer_science_web_card.svg"
+        },
+        {
+            "id": 556,
+            "meta": {
+                "slug": "principles-data-science",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/556/",
+                "html_url": "https://dev.openstax.org/details/books/principles-data-science",
+                "first_published_at": "2024-12-16T10:34:23.559720-06:00",
+                "locale": "en"
+            },
+            "title": "Principles of Data Science",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Principles of Data Science",
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 383,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Computer Science",
+                    "subject_page_content": "Simple to use, simple to adopt. Our computer science textbooks are designed to meet the standard scope and sequence requirements of their respective courses – and are 100% free online. Complete with free resources for educators (like LMS course shells, lecture slides, instructor answer keys, and more), all OpenStax textbooks are fully customizable. Explore our texts below and adopt any and all parts useful to your course.",
+                    "subject_search_description": "Computer Science"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/principles_of_data_science_web_card.svg"
+        },
+        {
+            "id": 558,
+            "meta": {
+                "slug": "additive-manufacturing-essentials",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/558/",
+                "html_url": "https://dev.openstax.org/details/books/additive-manufacturing-essentials",
+                "first_published_at": "2025-02-03T15:24:24.761090-06:00",
+                "locale": "en"
+            },
+            "title": "Additive Manufacturing Essentials",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Additive Manufacturing",
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 405,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Science",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is science search meta"
+                },
+                {
+                    "id": 406,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/additive_manufacturing_web_card.svg"
+        },
+        {
+            "id": 559,
+            "meta": {
+                "slug": "foundations-information-systems",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/559/",
+                "html_url": "https://dev.openstax.org/details/books/foundations-information-systems",
+                "first_published_at": "2025-02-10T11:12:44.231180-06:00",
+                "locale": "en"
+            },
+            "title": "Foundations of Information Systems",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Foundations of Information Systems",
+            "salesforce_name": "Foundations of Information Systems",
+            "book_subjects": [
+                {
+                    "id": 387,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Computer Science",
+                    "subject_page_content": "Simple to use, simple to adopt. Our computer science textbooks are designed to meet the standard scope and sequence requirements of their respective courses – and are 100% free online. Complete with free resources for educators (like LMS course shells, lecture slides, instructor answer keys, and more), all OpenStax textbooks are fully customizable. Explore our texts below and adopt any and all parts useful to your course.",
+                    "subject_search_description": "Computer Science"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/foundations_of_information_systems_web_card.svg"
+        },
+        {
+            "id": 563,
+            "meta": {
+                "slug": "algebra-1",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/563/",
+                "html_url": "https://dev.openstax.org/details/books/algebra-1",
+                "first_published_at": "2025-05-16T16:07:53.435698-05:00",
+                "locale": "en"
+            },
+            "title": "Algebra 1",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 407,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Math",
+                    "subject_page_content": "About this much text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    "subject_search_description": "This is math search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/algebra_1_web_card.svg"
+        },
+        {
+            "id": 565,
+            "meta": {
+                "slug": "american-government-4e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/565/",
+                "html_url": "https://dev.openstax.org/details/books/american-government-4e",
+                "first_published_at": "2025-07-03T09:59:24.973922-05:00",
+                "locale": "en"
+            },
+            "title": "American Government 4e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "American Government",
+            "salesforce_name": "American Government 4e",
+            "book_subjects": [
+                {
+                    "id": 409,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/american_government_4e_web_card.svg"
+        },
+        {
+            "id": 567,
+            "meta": {
+                "slug": "zywienie",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/567/",
+                "html_url": "https://dev.openstax.org/details/books/zywienie",
+                "first_published_at": "2025-09-16T08:59:01.951000-05:00",
+                "locale": "en"
+            },
+            "title": "Zywienie",
+            "book_state": "unlisted",
+            "salesforce_abbreviation": "zywienie",
+            "salesforce_name": "zywienie",
+            "book_subjects": [],
+            "content_warning_text": null,
+            "cover_url": ""
+        },
+        {
+            "id": 396,
+            "meta": {
+                "slug": "gobierno-estadounidense-3e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/396/",
+                "html_url": "https://dev.openstax.org/details/books/gobierno-estadounidense-3e",
+                "first_published_at": "2025-01-09T14:52:17.994106-06:00",
+                "locale": "es"
+            },
+            "title": "Gobierno estadounidense 3e",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "American Government",
+            "salesforce_name": "American Government 3e",
+            "book_subjects": [
+                {
+                    "id": 384,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                },
+                {
+                    "id": 385,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Social Sciences",
+                    "subject_page_content": "",
+                    "subject_search_description": "This is social sciences search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/american_government_3e_web_card.svg"
+        },
+        {
+            "id": 397,
+            "meta": {
+                "slug": "psicologia-2e",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/397/",
+                "html_url": "https://dev.openstax.org/details/books/psicologia-2e",
+                "first_published_at": "2021-07-21T13:00:20.366215-05:00",
+                "locale": "es"
+            },
+            "title": "Psicología 2e",
+            "book_state": "live",
+            "salesforce_abbreviation": "Psychology",
+            "salesforce_name": "Psychology",
+            "book_subjects": [
+                {
+                    "id": 266,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Ciencias Sociales",
+                    "subject_page_content": "",
+                    "subject_search_description": "Este es el meta de búsqueda de ciencias sociales"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/psychology_2e_web_card.svg"
+        },
+        {
+            "id": 399,
+            "meta": {
+                "slug": "física-universitaria-volumen-1",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/399/",
+                "html_url": "https://dev.openstax.org/details/books/física-universitaria-volumen-1",
+                "first_published_at": "2021-09-01T11:53:16.517225-05:00",
+                "locale": "es"
+            },
+            "title": "Física Universitaria Volumen 1",
+            "book_state": "live",
+            "salesforce_abbreviation": "University Physics Volume 1 [Spanish]",
+            "salesforce_name": "Física universitaria volumen 1",
+            "book_subjects": [
+                {
+                    "id": 265,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Ciencia",
+                    "subject_page_content": "",
+                    "subject_search_description": "Este es el meta de búsqueda de ciencia"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/fisica_universitaria_volumen_1_1.svg"
+        },
+        {
+            "id": 400,
+            "meta": {
+                "slug": "física-universitaria-volumen-2",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/400/",
+                "html_url": "https://dev.openstax.org/details/books/física-universitaria-volumen-2",
+                "first_published_at": "2021-11-03T16:54:30.985407-05:00",
+                "locale": "es"
+            },
+            "title": "Física Universitaria Volumen 2",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "University Physics Volume 2 [Spanish]",
+            "salesforce_name": "Física universitaria volumen 2",
+            "book_subjects": [
+                {
+                    "id": 271,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Ciencia",
+                    "subject_page_content": "",
+                    "subject_search_description": "Este es el meta de búsqueda de ciencia"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/fisica_universitaria_volumen_2_1.svg"
+        },
+        {
+            "id": 403,
+            "meta": {
+                "slug": "física-universitaria-volumen-3",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/403/",
+                "html_url": "https://dev.openstax.org/details/books/física-universitaria-volumen-3",
+                "first_published_at": "2021-11-01T16:37:47.561556-05:00",
+                "locale": "es"
+            },
+            "title": "Física Universitaria Volumen 3",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "University Physics Volume 3 [Spanish]",
+            "salesforce_name": "Física universitaria Volumen 3",
+            "book_subjects": [
+                {
+                    "id": 270,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Ciencia",
+                    "subject_page_content": "",
+                    "subject_search_description": "Este es el meta de búsqueda de ciencia"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/fisica_universitaria_volumen_3_1_pKG0vlk.svg"
+        },
+        {
+            "id": 405,
+            "meta": {
+                "slug": "conceptos-de-biologia",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/405/",
+                "html_url": "https://dev.openstax.org/details/books/conceptos-de-biologia",
+                "first_published_at": "2021-11-17T13:56:17.940966-06:00",
+                "locale": "es"
+            },
+            "title": "Conceptos de biología",
+            "book_state": "live",
+            "salesforce_abbreviation": "Concepts of Bio (non-majors)",
+            "salesforce_name": "Concepts of Biology",
+            "book_subjects": [
+                {
+                    "id": 272,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Ciencia",
+                    "subject_page_content": "",
+                    "subject_search_description": "Este es el meta de búsqueda de ciencia"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/concpets_biology_eZrc8yQ.svg"
+        },
+        {
+            "id": 410,
+            "meta": {
+                "slug": "introducción-estadística",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/410/",
+                "html_url": "https://dev.openstax.org/details/books/introducción-estadística",
+                "first_published_at": "2022-01-10T10:44:17.378205-06:00",
+                "locale": "es"
+            },
+            "title": "Introducción a la estadística",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 287,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Business",
+                    "subject_page_content": "This is a little description of the Business topic.",
+                    "subject_search_description": "This is business search meta"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduccion_a_la_estadistica_3VW3Mik.svg"
+        },
+        {
+            "id": 411,
+            "meta": {
+                "slug": "introducción-estadística-empresarial",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/411/",
+                "html_url": "https://dev.openstax.org/details/books/introducción-estadística-empresarial",
+                "first_published_at": "2022-01-10T11:27:41.159963-06:00",
+                "locale": "es"
+            },
+            "title": "Introducción a la estadística empresarial",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 288,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Matemáticas",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                },
+                {
+                    "id": 289,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Empresarial",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/introduccion_a_la_estadistica_empresarial.svg"
+        },
+        {
+            "id": 425,
+            "meta": {
+                "slug": "cálculo-volumen-1",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/425/",
+                "html_url": "https://dev.openstax.org/details/books/cálculo-volumen-1",
+                "first_published_at": "2022-02-28T13:39:36.855021-06:00",
+                "locale": "es"
+            },
+            "title": "Cálculo volumen 1",
+            "book_state": "live",
+            "salesforce_abbreviation": "Calculus Volume 1 [Spanish]",
+            "salesforce_name": "Cálculo",
+            "book_subjects": [
+                {
+                    "id": 301,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Matemáticas",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/caliculo_volumen_1_cover_card.svg"
+        },
+        {
+            "id": 426,
+            "meta": {
+                "slug": "cálculo-volumen-2",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/426/",
+                "html_url": "https://dev.openstax.org/details/books/cálculo-volumen-2",
+                "first_published_at": "2022-02-28T13:43:33.142744-06:00",
+                "locale": "es"
+            },
+            "title": "Cálculo volumen 2",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 302,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Matemáticas",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/caliculo_volumen_2_cover_card.svg"
+        },
+        {
+            "id": 427,
+            "meta": {
+                "slug": "cálculo-volumen-3",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/427/",
+                "html_url": "https://dev.openstax.org/details/books/cálculo-volumen-3",
+                "first_published_at": "2022-02-28T15:03:40.837063-06:00",
+                "locale": "es"
+            },
+            "title": "Cálculo volumen 3",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 303,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Matemáticas",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/caliculo_volumen_3_cover_card.svg"
+        },
+        {
+            "id": 430,
+            "meta": {
+                "slug": "precálculo-2ed",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/430/",
+                "html_url": "https://dev.openstax.org/details/books/precálculo-2ed",
+                "first_published_at": "2022-04-28T16:21:51.306544-05:00",
+                "locale": "es"
+            },
+            "title": "Precálculo 2ed",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": "Precalc [Spanish]",
+            "salesforce_name": "Precálculo",
+            "book_subjects": [
+                {
+                    "id": 306,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Matemáticas",
+                    "subject_page_content": "",
+                    "subject_search_description": null
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/precalculo_2ed_WebCard.svg"
+        },
+        {
+            "id": 432,
+            "meta": {
+                "slug": "química-2ed",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/432/",
+                "html_url": "https://dev.openstax.org/details/books/química-2ed",
+                "first_published_at": "2022-05-20T10:12:21.782465-05:00",
+                "locale": "es"
+            },
+            "title": "Química 2ed",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 313,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Ciencia",
+                    "subject_page_content": "",
+                    "subject_search_description": "Este es el meta de búsqueda de ciencia"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/quimica_2ed_webcard.svg"
+        },
+        {
+            "id": 433,
+            "meta": {
+                "slug": "química-comenzando-átomos-2ed",
+                "type": "books.Book",
+                "detail_url": "https://dev.openstax.org/apps/cms/api/v2/pages/433/",
+                "html_url": "https://dev.openstax.org/details/books/química-comenzando-átomos-2ed",
+                "first_published_at": "2022-05-20T10:32:19.817873-05:00",
+                "locale": "es"
+            },
+            "title": "Química: Comenzando con los átomos 2ed",
+            "book_state": "coming_soon",
+            "salesforce_abbreviation": null,
+            "salesforce_name": null,
+            "book_subjects": [
+                {
+                    "id": 309,
+                    "meta": {
+                        "type": "books.BookSubjects"
+                    },
+                    "subject_name": "Ciencia",
+                    "subject_page_content": "",
+                    "subject_search_description": "Este es el meta de búsqueda de ciencia"
+                }
+            ],
+            "content_warning_text": null,
+            "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/quimica_comenzando_con_los_atomos_2ed_webcard.svg"
+        }
+    ]
+}
