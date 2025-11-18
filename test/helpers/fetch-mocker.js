@@ -1,5 +1,5 @@
 import adoptionFormData from '../src/data/adoption-form';
-import allBooksData from '../src/data/all-books';
+import allBooksData from '../src/data/all-books.json';
 import amazonBlurb from '../src/data/amazon-blurb';
 import algebraData from '../src/data/details-college-algebra';
 import assignableData from '../src/data/assignable.json';
@@ -67,7 +67,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBlogCollection = args[0].includes('blogcollection');
     const isBooks = (/api\/books/).test(args[0]);
     const isBooksForAnalytics = (/book_student_resources/).test(args[0]);
-    const isBookTitles = (/fields=title,id/).test(args[0]);
+    const isBookTitles = args[0].endsWith('pages/?type=books.Book&fields=title,id,book_state,promote_snippet&limit=250');
     const isBuyprint = args[0].includes('buyprint');
     const isChemistry = args[0].endsWith('pages/93/?format=json');
     const isDonationPopup = args[0].includes('donation-popup');
