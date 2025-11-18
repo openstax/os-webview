@@ -28,7 +28,7 @@
                     "subject_search_description": "This is math search meta"
                 }
             ],
-            "content_warning_text": null,
+            "content_warning_text": "Warning text",
             "cover_url": "https://assets.openstax.org/oscms-dev/media/documents/prealgebra_1.svg"
         },
         {
