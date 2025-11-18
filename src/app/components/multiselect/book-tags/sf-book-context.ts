@@ -11,7 +11,7 @@ import { useDataFromPromise } from '~/helpers/page-data-utils';
 
 function useSFBooks() {
     const [books, setBooks] = React.useState<SalesforceBook[]>([]);
-    const fetched = useDataFromPromise(fetchAllBooks) as Parameters<typeof salesforceTitles>[0] | undefined;
+    const fetched = useDataFromPromise(fetchAllBooks);
 
     React.useEffect(() => {
         if (fetched) {
