@@ -1,5 +1,6 @@
 import useDropdownContext from '../../dropdown-context';
 import {isMobileDisplay} from '~/helpers/device';
+import { assertDefined } from '~/helpers/data';
 
 function findNext(dropdownRef: React.MutableRefObject<HTMLDivElement | null>) {
     const nextSib = document.activeElement?.nextElementSibling;
@@ -7,14 +8,13 @@ function findNext(dropdownRef: React.MutableRefObject<HTMLDivElement | null>) {
     if (nextSib?.matches('a')) {
         return nextSib as HTMLAnchorElement;
     }
-    const targets = Array.from(dropdownRef.current?.querySelectorAll('a') ?? []);
+    const targets = Array.from(assertDefined(dropdownRef.current?.querySelectorAll('a')));
     const idx = targets.indexOf(document.activeElement as HTMLAnchorElement);
     const nextIdx = (idx + 1) % targets.length;
 
     return targets[nextIdx];
 }
 
-// eslint-disable-next-line complexity
 function findPrev(
     topRef: React.MutableRefObject<HTMLAnchorElement | null>,
     dropdownRef: React.MutableRefObject<HTMLDivElement | null>
@@ -24,7 +24,7 @@ function findPrev(
     if (prevSib?.matches('a')) {
         return prevSib as HTMLAnchorElement;
     }
-    const targets = Array.from(dropdownRef.current?.querySelectorAll('a') ?? []);
+    const targets = Array.from(assertDefined(dropdownRef.current?.querySelectorAll('a')));
     const idx = targets.indexOf(document.activeElement as HTMLAnchorElement);
 
     if (idx === 0) {
