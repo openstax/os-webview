@@ -7,20 +7,12 @@ import linkHelper from '~/helpers/link';
 function LoginLink() {
     // It's not used directly, but loginLink changes when it does
     useLocation();
-    const addressHinkyQAIssue = React.useCallback(
-        (e: React.MouseEvent<HTMLAnchorElement>) => {
-            if (e.defaultPrevented) {
-                e.defaultPrevented = false;
-            }
-        },
-        []
-    );
 
     return (
         <li className="login-menu nav-menu-item rightmost">
             <a
                 href={linkHelper.loginLink()} className="pardotTrackClick"
-                data-local="true" role="menuitem" onClick={addressHinkyQAIssue}
+                data-local="true" role="menuitem"
             >
                 Log in
             </a>

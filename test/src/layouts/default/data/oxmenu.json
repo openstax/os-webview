@@ -31,5 +31,8 @@
             },
             {"label": "Webinars", "partial_url": "/webinars"}
         ]
+    },
+    {
+        "oops": "Not a valid menu"
     }
 ]
