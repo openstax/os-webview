@@ -31,6 +31,6 @@ export default {
     mailing_address:
         '<h3 data-block-key="nek5u">OpenStax</h3><p data-block-key="4sbtp">Rice University<br/>6100 Main Street MS-375<br/>Houston, TX 77005</p>',
     customer_service:
-        '<p data-block-key="9iesw"><b>Need help?</b><br/>Visit our <a href="https://openstax.secure.force.com/help">Support Center</a>.<br/></p>',
+        '<p data-block-key="9iesw"><b>Need help?</b><br/>Visit our <a href="https://help.openstax.org">Support Center</a>.<br/></p>',
     promote_image: null
 };
