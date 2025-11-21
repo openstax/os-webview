@@ -64,6 +64,7 @@ export default function GiveBeforeOther({
                 className='btn go-to'
                 {...(track ? {'data-track': track} : {})}
                 data-variant={lookupVariant(variant)}
+                data-local="true"
             >
                 Go to your {lookupVariant(variant)}
             </a>
