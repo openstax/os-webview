@@ -36,6 +36,7 @@ export default function ContentWarning({
                 {...(track ? {'data-track': track} : {})}
                 onClick={closeAfterDelay}
                 className="btn go-to"
+                data-local="true"
             >
                 Go to your {variant === 'View online' ? 'book' : 'file'}
             </a>
