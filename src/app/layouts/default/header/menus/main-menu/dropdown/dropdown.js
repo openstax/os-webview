@@ -123,6 +123,21 @@ function DropdownController({
         [closeDesktopMenu]
     );
 
+    React.useEffect(() => {
+        if (isOpen) {
+            const handler = ({key}) => {
+                if (key === 'Escape') {
+                    closeDesktopMenu();
+                }
+            };
+
+            document.addEventListener('keydown', handler);
+            return () => document.removeEventListener('keydown', handler);
+        }
+        return null;
+    }, [isOpen, closeDesktopMenu]);
+
+
     return (
         <a
             role="button"
