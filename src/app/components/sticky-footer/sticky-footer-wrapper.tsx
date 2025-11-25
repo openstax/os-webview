@@ -13,7 +13,7 @@ function useCollapsedState() {
     return scrollY < 100 || distanceFromBottom < 100;
 }
 
-function StickyFooterWrapper({children}) {
+function StickyFooterWrapper({children}: {children: React.ReactNode}) {
     const collapsed = useCollapsedState();
 
     useMainSticky();
@@ -25,7 +25,7 @@ function StickyFooterWrapper({children}) {
     );
 }
 
-export default function StickyFooter({children}) {
+export default function StickyFooter({children}: {children: React.ReactNode}) {
     return (
         <WindowContextProvider>
             <StickyFooterWrapper children={children} />
