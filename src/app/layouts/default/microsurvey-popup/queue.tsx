@@ -2,12 +2,18 @@ import React from 'react';
 import useStickyMicrosurveyContent from './sticky-content';
 import useAdoptionMicrosurveyContent from './adoption-content';
 
-function useEnqueueWhenReady(useContent, queue, setQueue) {
+type MicrosurveyComponent = React.ComponentType<{children: React.ReactNode}>;
+type UseContentHook = () => [boolean, MicrosurveyComponent];
+
+function useEnqueueWhenReady(
+    useContent: UseContentHook,
+    queue: MicrosurveyComponent[],
+    setQueue: (queue: MicrosurveyComponent[]) => void
+) {
     const [ready, Item] = useContent();
     const [hasQueued, setHasQueued] = React.useState(false);
 
     React.useEffect(
-
         () => {
             if (!hasQueued && ready && !queue.includes(Item)) {
                 setQueue([...queue, Item]);
@@ -21,8 +27,8 @@ function useEnqueueWhenReady(useContent, queue, setQueue) {
     );
 }
 
-export default function useMSQueue() {
-    const [queue, setQueue] = React.useState([]);
+export default function useMSQueue(): [MicrosurveyComponent | null, () => void] {
+    const [queue, setQueue] = React.useState<MicrosurveyComponent[]>([]);
     const nextItem = React.useCallback(
         () => setQueue(queue.slice(1)),
         [queue]
