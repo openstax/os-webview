@@ -1,7 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
-import {RouterContextProvider} from '~/components/shell/router-context';
 import GeneralPageLoader from '~/pages/general/general';
 import * as DH from '~/helpers/use-document-head';
 import * as PDU from '~/helpers/page-data-utils';
@@ -15,9 +14,7 @@ describe('general page', () => {
         async () => {
             render(
                 <MemoryRouter initialEntries={['/general/kinetic']}>
-                    <RouterContextProvider>
-                        <GeneralPageLoader />
-                    </RouterContextProvider>
+                    <GeneralPageLoader />
                 </MemoryRouter>
             );
             await screen.findByText(/Example activities/i);
@@ -27,9 +24,7 @@ describe('general page', () => {
         document.title = 'OpenStax Test';
         render(
             <MemoryRouter initialEntries={['/general/kinetic/']}>
-                <RouterContextProvider>
-                    <GeneralPageLoader />
-                </RouterContextProvider>
+                <GeneralPageLoader />
             </MemoryRouter>
         );
         await screen.findByText(/Example activities/i);
@@ -43,9 +38,7 @@ describe('general page', () => {
 
         render(
             <MemoryRouter initialEntries={['/general/whoops/']}>
-                <RouterContextProvider>
-                    <GeneralPageLoader />
-                </RouterContextProvider>
+                <GeneralPageLoader />
             </MemoryRouter>
         );
 

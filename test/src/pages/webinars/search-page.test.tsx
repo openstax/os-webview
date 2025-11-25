@@ -2,7 +2,6 @@ import React from 'react';
 import {describe, expect, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
-import {RouterContextProvider} from '~/components/shell/router-context';
 import SearchPage from '~/pages/webinars/search-page/search-page';
 import * as UFD from '~/helpers/use-data';
 import {upcomingWebinar} from '../../data/webinars';
@@ -11,9 +10,7 @@ import * as UWC from '~/pages/webinars/webinar-context';
 function Component({term = ''}: {term?: string}) {
     return (
         <MemoryRouter initialEntries={[`/webinars/search?q=${term}`]}>
-            <RouterContextProvider>
-                <SearchPage />
-            </RouterContextProvider>
+            <SearchPage />
         </MemoryRouter>
     );
 }

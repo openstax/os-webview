@@ -4,7 +4,6 @@ import {waitFor, within} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import ErrataSummaryLoader from '~/pages/errata-summary/errata-summary';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
-import * as RC from '~/components/shell/router-context';
 
 const searchStr = '/errata/?book=Anatomy%20and%20Physiology';
 
@@ -96,19 +95,13 @@ describe('errata-summary', () => {
     });
     it('fails for unknown book', async () => {
         window.history.pushState('', '', '/errata/?book=Unknown%20Book');
-        const fail = jest.fn();
-        const mockUseContext = jest.spyOn(RC, 'default');
-
-        mockUseContext.mockReturnValue({fail} as any); // eslint-disable-line
 
         render(
             <MemoryRouter>
                 <ErrataSummaryLoader />
             </MemoryRouter>
         );
-        await new Promise((resolve) => setTimeout(resolve, 10));
-        expect(fail).toHaveBeenCalled();
-        mockUseContext.mockReset();
+        await screen.findByText('Unknown Book not found');
     });
     it('aborts if not book or errata ID is selected', () => {
         window.history.pushState('', '', '/errata/');

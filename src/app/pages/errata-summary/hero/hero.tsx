@@ -5,7 +5,6 @@ import LoaderPage from '~/components/jsx-helpers/loader-page';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import bookPromise from '~/models/book-titles';
-import useRouterContext from '~/components/shell/router-context';
 import cn from 'classnames';
 import './hero.scss';
 
@@ -28,9 +27,10 @@ type PopTipProps = {
     isOpen: boolean;
 }
 
+const NOT_FOUND = '*error*';
+
 function useBookInfo(book: string): [string, string] {
     const [info, setInfo] = useState<[string, string]>(['', '']);
-    const {fail} = useRouterContext();
 
     useEffect(() => {
         bookPromise.then((bookList) => {
@@ -42,10 +42,10 @@ function useBookInfo(book: string): [string, string] {
 
                 setInfo([slug, title]);
             } else {
-                fail(`Could not find book info for ${book}`);
+                setInfo([NOT_FOUND, `${book} not found`]);
             }
         });
-    }, [book, fail]);
+    }, [book]);
 
     return info;
 }
@@ -136,6 +136,10 @@ function HeroContent({data}: HeroContentProps) {
 
 export default function Hero({book}: HeroProps) {
     const [slug, title] = useBookInfo(book);
+
+    if (slug === NOT_FOUND) {
+        return <div className="hero">{title}</div>;
+    }
 
     return (
         <div className="hero">
