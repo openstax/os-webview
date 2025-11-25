@@ -4,10 +4,14 @@ import './a-page-template.scss';
 
 const slug = 'books/biology-2e';
 
-function Pagename({data: {heading}}) {
+type PageData = {
+    heading: string;
+};
+
+function Pagename({data}: {data: PageData}) {
     return (
         <div className="content">
-            <h1>{heading}</h1>
+            <h1>{data.heading}</h1>
         </div>
     );
 }
