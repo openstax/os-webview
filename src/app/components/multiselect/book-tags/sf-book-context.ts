@@ -1,19 +1,23 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useMultiselectContext from '../multiselect-context';
-import fetchBooks from '~/models/books';
+import {fetchAllBooks} from '~/models/books';
 import {
     salesforceTitles,
     subjects as getSubjects,
     SalesforceBook
 } from '~/helpers/books';
+import { useDataFromPromise } from '~/helpers/page-data-utils';
 
 function useSFBooks() {
     const [books, setBooks] = React.useState<SalesforceBook[]>([]);
+    const fetched = useDataFromPromise(fetchAllBooks);
 
     React.useEffect(() => {
-        fetchBooks.then(salesforceTitles).then(setBooks);
-    }, []);
+        if (fetched) {
+            setBooks(salesforceTitles(fetched));
+        }
+    }, [fetched]);
     return books;
 }
 

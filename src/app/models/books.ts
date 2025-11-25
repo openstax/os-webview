@@ -24,19 +24,14 @@ const bookFields = [
 
 type RawBook = Omit<Book, 'subjects'> & {book_subjects: {subject_name: string}[];};
 
-function rawToBook(b: RawBook): Book {
-    const result = b as Book & RawBook;
-
-    result.subjects = b.book_subjects.map((sObj) => sObj.subject_name);
-
-    return result;
+function rawToBook(b: RawBook) {
+    return {
+        ...b,
+        subjects: b.book_subjects.map((sObj) => sObj.subject_name)
+    };
 }
 
 export const fetchAllBooks = cmsFetch(`pages/?type=books.Book&fields=${bookFields}&limit=250`)
 .then((r: {items: RawBook[]}) => {
-    for (const b of r.items) {
-        rawToBook(b);
-    }
-
-    return r.items;
+    return r.items.map(rawToBook);
 });

@@ -20,12 +20,12 @@ export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement> & {
 function handleExternalLink(href: Location['href'], el: HTMLElement) {
     if (el.dataset.local === 'true') {
         // REX books open in the current window; track them
-        window.location.href = href;
+        window.location.assign(href);
     } else {
         const newWindow = window.open(href, '_blank');
 
         if (newWindow === null) {
-            window.location.href = href;
+            window.location.assign(href);
         }
     }
 }
@@ -45,7 +45,7 @@ export default function useLinkHandler() {
             const stripped = linkHelper.stripOpenStaxDomain(path);
 
             if (stripped.startsWith('http')) {
-                window.location.href = stripped;
+                window.location.assign(stripped);
             } else {
                 navigate(stripped, state);
             }
