@@ -14,16 +14,16 @@ function useContextValue() {
             }
         }
     );
-    const [goto404, setGoto404] = useState(false);
+    const [goto404, setGoto404] = useState<string | boolean | undefined>(false);
     const loc = useLocation();
-    const fail = useCallback((info = 'Router force fail') => {
+    const fail = useCallback((info: string | boolean = 'Router force fail') => {
         setGoto404(info);
     }, []);
 
     useEffect(() => {
         resetError();
-        setGoto404();
-    }, [loc, resetError, setGoto404]);
+        setGoto404(undefined);
+    }, [loc, resetError]);
 
     return {
         isValid: !error,

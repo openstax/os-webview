@@ -15,7 +15,19 @@ function useCollapsedState() {
     return scrollY < 100 || distanceFromBottom < 100;
 }
 
-export function StickyFooterBody({leftButton, rightButton}) {
+type ButtonModel = {
+    link: string;
+    text: string;
+    description?: string;
+    descriptionHtml?: string;
+};
+
+type StickyFooterBodyProps = {
+    leftButton: ButtonModel;
+    rightButton?: ButtonModel;
+};
+
+export function StickyFooterBody({leftButton, rightButton}: StickyFooterBodyProps) {
     const collapsed = useCollapsedState();
     const {stickyFooterState: [_, setSFS]} = useSharedDataContext();
 
@@ -53,7 +65,7 @@ export function StickyFooterBody({leftButton, rightButton}) {
     );
 }
 
-export default function StickyFooter(model) {
+export default function StickyFooter(model: StickyFooterBodyProps) {
     return (
         <WindowContextProvider>
             <StickyFooterBody {...model} />
