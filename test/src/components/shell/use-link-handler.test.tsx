@@ -60,6 +60,7 @@ describe('use-link-handler', () => {
             <InnerComponent {...props} />
         </MemoryRouter>
     );
+    const saveError = console.error;
 
     afterEach(jest.resetAllMocks);
 
@@ -98,9 +99,28 @@ describe('use-link-handler', () => {
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
         render(<Component />);
+        console.error = jest.fn();
         await user.click(screen.getByRole('link'));
+        expect(console.error).toHaveBeenCalled();
+        console.error = saveError;
         expect(notPrevented).not.toBeCalled();
         expect(navigate).toBeCalledWith('whatever', {x: 0, y: 0});
+    });
+    it('Changes window location when stripping does nothing', async () => {
+        setPortalPrefix('/portal');
+        const el = document.createElement('a');
+
+        jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue(el);
+        jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
+            'http://whatever'
+        );
+
+        render(<Component />);
+        console.error = jest.fn();
+        await user.click(screen.getByRole('link'));
+        expect(console.error).toHaveBeenCalled();
+        console.error = saveError;
+        expect(notPrevented).not.toBeCalled();
     });
     it('calls piTracker if available', async () => {
         setPortalPrefix('/portal');
@@ -141,7 +161,10 @@ describe('use-link-handler', () => {
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
         render(<Component />);
+        console.error = jest.fn();
         await user.click(screen.getByRole('link'));
+        expect(console.error).toHaveBeenCalled();
+        console.error = saveError;
         expect(notPrevented).not.toBeCalled();
         expect(navigate).not.toBeCalled();
     });
@@ -163,7 +186,10 @@ describe('use-link-handler', () => {
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
         render(<Component />);
+        console.error = jest.fn();
         await user.click(screen.getByRole('link'));
+        expect(console.error).toHaveBeenCalled();
+        console.error = saveError;
         expect(notPrevented).not.toBeCalled();
         expect(navigate).not.toBeCalled();
     });
@@ -212,5 +238,6 @@ describe('use-link-handler', () => {
         );
         await user.click(screen.getByRole('link'));
         expect(console.error).toBeCalled();
+        console.error = saveError;
     });
 });

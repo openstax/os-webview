@@ -50,7 +50,12 @@ describe('renewal-form', () => {
         render(<Component />);
 
         screen.getByText('You need to be logged in', {exact: false});
+        const saveError = console.error;
+
+        console.error = jest.fn();
         jest.runAllTimers();
+        expect(console.error).toHaveBeenCalled();
+        console.error = saveError;
     });
     it('shows form when uuid received', () => {
         // @ts-expect-error missing properties
@@ -79,9 +84,9 @@ describe('renewal-form', () => {
         const filterInput = screen.getByRole('textbox');
 
         await user.click(filterInput);
-        await user.type(filterInput, 'math');
+        await user.type(filterInput, 'mat');
 
-        expect(screen.getAllByRole('option')).toHaveLength(6);
+        expect(screen.getAllByRole('option')).toHaveLength(12);
 
         // Remove an adoption
         const remove = screen.getByRole('button', {name: 'remove'});
@@ -92,14 +97,17 @@ describe('renewal-form', () => {
         // Operate BookOption by key
         const options = screen.getAllByRole('option');
 
-        expect(options).toHaveLength(6);
-        options[0].focus();
+        expect(options).toHaveLength(12);
+        // Selects Spanish Calculus
+        const myOption = options[1];
+
+        myOption.focus();
         // Select book
-        fireEvent.keyDown(options[0], {key: ' '});
+        fireEvent.keyDown(myOption, {key: ' '});
         // Deselect book
-        fireEvent.keyDown(options[0], {key: ' '});
+        fireEvent.keyDown(myOption, {key: ' '});
         // Toggle book section
-        fireEvent.keyDown(options[0], {key: 'Escape'});
+        fireEvent.keyDown(myOption, {key: 'Escape'});
     });
     it('handles missing adoptions', async () => {
         // @ts-expect-error missing properties
