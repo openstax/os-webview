@@ -8,11 +8,11 @@ const DISMISSED_KEY = 'renewal_dialog_dismissed';
 
 function useCookieKey(key: string) {
     return React.useReducer(
-        (_: string | undefined, value: string) => {
+        (_: string, value: string) => {
             Cookies.set(key, value);
             return value ? value : '0';
         },
-        Cookies.get(key)
+        Cookies.get(key) ?? ''
     );
 }
 
@@ -31,7 +31,7 @@ function useDismissalCookie(): [boolean, () => void] {
             if (pathname === '/renewal-form') {
                 return false;
             }
-            return !clicked && isFaculty && isAdopter;
+            return !clicked && isFaculty && Boolean(isAdopter);
         },
         [clicked, isFaculty, isAdopter, pathname]
     );
@@ -55,7 +55,7 @@ function useDismissalCookie(): [boolean, () => void] {
         [pathname, disable, clicked]
     );
 
-    return [ready, disable];
+    return [ready, disable] as const;
 }
 
 function AdoptionContentBase({children, disable}: {children: React.ReactNode; disable: () => void}) {
