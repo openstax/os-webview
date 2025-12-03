@@ -11,8 +11,10 @@ function LoginLink() {
     return (
         <li className="login-menu nav-menu-item rightmost">
             <a
-                href={linkHelper.loginLink()} className="pardotTrackClick"
-                data-local="true" role="menuitem"
+                href={linkHelper.loginLink()}
+                className="pardotTrackClick"
+                data-local="true"
+                role="menuitem"
             >
                 Log in
             </a>
@@ -24,9 +26,9 @@ export default function LoginMenu() {
     const {userModel} = useUserContext();
     const loggedIn = Boolean(typeof userModel === 'object' && userModel.id);
 
-    return (
-        loggedIn ?
-            <JITLoad importFn={() => import('./login-menu-with-dropdown')} /> :
-            <LoginLink />
+    return loggedIn ? (
+        <JITLoad importFn={() => import('./login-menu-with-dropdown')} />
+    ) : (
+        <LoginLink />
     );
 }

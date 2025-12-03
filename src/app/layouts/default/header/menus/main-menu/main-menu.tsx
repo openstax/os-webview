@@ -14,16 +14,19 @@ import GiveButton from '../give-button/give-button';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
-type MenuItemData = {
-    name: string;
-    menu: MenuItemData[];
-} | {
-    label: string;
-    partial_url: string;
-} | object;
+type MenuItemData =
+    | {
+          name: string;
+          menu: MenuItemData[];
+      }
+    | {
+          label: string;
+          partial_url: string;
+      }
+    | object;
 
 function DropdownOrMenuItem({item}: {item: MenuItemData}) {
-    if (! ('name' in item) && ! ('label' in item)) {
+    if (!('name' in item) && !('label' in item)) {
         return null;
     }
     if ('menu' in item) {
@@ -44,7 +47,10 @@ function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
     return (
         <React.Fragment>
             {structure.map((item, index) => (
-                <DropdownOrMenuItem key={'label' in item ? item.label : index} item={item} />
+                <DropdownOrMenuItem
+                    key={'label' in item ? item.label : index}
+                    item={item}
+                />
             ))}
         </React.Fragment>
     );
@@ -82,7 +88,9 @@ function SubjectsMenu() {
             navAnalytics="Main Menu (Subjects)"
         >
             {categories
-                .filter((obj: {html: string; value: string}) => obj.html !== 'K12')
+                .filter(
+                    (obj: {html: string; value: string}) => obj.html !== 'K12'
+                )
                 .map((obj: {html: string; value: string}) => (
                     <MenuItem
                         key={obj.value}

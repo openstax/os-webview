@@ -1,6 +1,6 @@
 import useDropdownContext from '../../dropdown-context';
 import {isMobileDisplay} from '~/helpers/device';
-import { assertDefined } from '~/helpers/data';
+import {assertDefined} from '~/helpers/data';
 
 function findNext(dropdownRef: React.MutableRefObject<HTMLDivElement | null>) {
     const nextSib = document.activeElement?.nextElementSibling;
@@ -8,7 +8,9 @@ function findNext(dropdownRef: React.MutableRefObject<HTMLDivElement | null>) {
     if (nextSib?.matches('a')) {
         return nextSib as HTMLAnchorElement;
     }
-    const targets = Array.from(assertDefined(dropdownRef.current?.querySelectorAll('a')));
+    const targets = Array.from(
+        assertDefined(dropdownRef.current?.querySelectorAll('a'))
+    );
     const idx = targets.indexOf(document.activeElement as HTMLAnchorElement);
     const nextIdx = (idx + 1) % targets.length;
 
@@ -24,7 +26,9 @@ function findPrev(
     if (prevSib?.matches('a')) {
         return prevSib as HTMLAnchorElement;
     }
-    const targets = Array.from(assertDefined(dropdownRef.current?.querySelectorAll('a')));
+    const targets = Array.from(
+        assertDefined(dropdownRef.current?.querySelectorAll('a'))
+    );
     const idx = targets.indexOf(document.activeElement as HTMLAnchorElement);
 
     if (idx === 0) {
@@ -70,7 +74,9 @@ export default function useNavigateByKey({
             case 'ArrowDown':
                 event.preventDefault();
                 if (document.activeElement === topRef.current) {
-                    (dropdownRef.current?.firstChild as HTMLAnchorElement)?.focus();
+                    (
+                        dropdownRef.current?.firstChild as HTMLAnchorElement
+                    )?.focus();
                 } else {
                     findNext(dropdownRef).focus();
                 }
