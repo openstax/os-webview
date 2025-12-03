@@ -15,7 +15,11 @@ import './dropdown.scss';
 // for ordinary website navigations, per
 // https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/
 
-export function MenuItem({label, url, local = undefined}: {
+export function MenuItem({
+    label,
+    url,
+    local = undefined
+}: {
     label: string;
     url: string;
     local?: string;
@@ -37,7 +41,10 @@ export function MenuItem({label, url, local = undefined}: {
     );
 }
 
-function OptionalWrapper({isWrapper, children}: {
+function OptionalWrapper({
+    isWrapper,
+    children
+}: {
     isWrapper: boolean;
     children?: React.ReactNode;
 }) {
@@ -66,9 +73,8 @@ export default function Dropdown({
     const topRef = useRef<HTMLAnchorElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const ddId = `ddId-${label}`;
-    const {
-        closeMenu, closeDesktopMenu, openMenu, openDesktopMenu
-    } = useMenuControls({topRef, label});
+    const {closeMenu, closeDesktopMenu, openMenu, openDesktopMenu} =
+        useMenuControls({topRef, label});
     const navigateByKey = useNavigateByKey({
         topRef,
         dropdownRef,
@@ -135,7 +141,10 @@ function DropdownController({
         [openMenu, closeMenu, activeDropdown, topRef]
     );
     const closeOnBlur = React.useCallback(
-        ({currentTarget, relatedTarget}: React.FocusEvent<HTMLAnchorElement>) => {
+        ({
+            currentTarget,
+            relatedTarget
+        }: React.FocusEvent<HTMLAnchorElement>) => {
             if (currentTarget.parentNode?.contains(relatedTarget)) {
                 return;
             }
@@ -157,7 +166,6 @@ function DropdownController({
         }
         return undefined;
     }, [isOpen, closeDesktopMenu]);
-
 
     return (
         <a
@@ -190,7 +198,13 @@ function DropdownController({
     );
 }
 
-function DropdownContents({id, label, dropdownRef, navAnalytics, children}: {
+function DropdownContents({
+    id,
+    label,
+    dropdownRef,
+    navAnalytics,
+    children
+}: {
     id: string;
     label: string;
     dropdownRef: React.RefObject<HTMLDivElement>;
