@@ -1,16 +1,13 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import {useStickyData, useSeenCounter} from '../shared';
+import {useStickyData, useSeenCounter, BannerInfo as StickyData} from '../shared';
 
 const SEEN_ENOUGH = 3;
 
-type StickyData = {
-    body: string;
-    link: string;
-    link_text: string;
-};
-
-function StickyContent({stickyData, children}: {stickyData: StickyData; children: React.ReactNode}) {
+function StickyContent({stickyData, children}: {stickyData: StickyData | undefined; children: React.ReactNode}) {
+    if (!stickyData) {
+        return null;
+    }
     return (
         <div
             className="microsurvey-content"
@@ -20,14 +17,14 @@ function StickyContent({stickyData, children}: {stickyData: StickyData; children
         >
             {children}
             <RawHTML className="blurb" html={stickyData.body} />
-            <a className="btn primary" href={stickyData.link} data-nudge-action="interacted">
+            <a className="btn primary" href={stickyData.link_url} data-nudge-action="interacted">
                 {stickyData.link_text}
             </a>
         </div>
     );
 }
 
-function useBoundStickyContent(stickyData: StickyData, incrementSeenCount: () => void) {
+function useBoundStickyContent(stickyData: StickyData | undefined, incrementSeenCount: () => void) {
     // Increment seen count on each fresh load
     React.useEffect(
         () => incrementSeenCount(),
@@ -45,7 +42,7 @@ type StickyContentComponent = React.ComponentType<{children: React.ReactNode}>;
 export default function useStickyMicrosurveyContent(): [boolean, StickyContentComponent] {
     const stickyData = useStickyData();
     const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
-    const BoundStickyContent = useBoundStickyContent(stickyData, incrementSeenCount);
+    const BoundStickyContent = useBoundStickyContent(stickyData?.bannerInfo, incrementSeenCount);
 
     const ready = Boolean(
         stickyData?.mode === 'popup' && !hasBeenSeenEnough
