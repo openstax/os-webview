@@ -56,6 +56,9 @@ function Footer({
                             </a>
                             <a href="/faq">FAQ</a>
                             <a href="/print/">Order Print</a>
+                            <a href="https://status.openstax.org/">
+                                System Status
+                            </a>
                         </ListOfLinks>
                     </div>
                     <div className="column col2">
