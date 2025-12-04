@@ -4,7 +4,7 @@ import {useDataFromPromise} from '~/helpers/page-data-utils';
 import PutAway from '~/components/put-away/put-away';
 import './shared.scss';
 
-type BannerInfo = {
+export type BannerInfo = {
     id: number;
     heading: string;
     body: string;
