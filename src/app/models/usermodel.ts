@@ -13,7 +13,7 @@ export type UserModelType = {
     last_name: string;
     instructorEligible: boolean;
     pending_verification: boolean;
-    stale_verification: boolean;
+    stale_verification?: boolean;
     incompleteSignup: boolean;
     pendingInstructorAccess: boolean;
     emailUnverified: boolean;

@@ -23,9 +23,10 @@ function useEnqueueWhenReady(
                 setQueue([...queue, Item]);
                 setHasQueued(true);
             }
-            if (!ready && queue.includes(Item)) {
-                setQueue(queue.slice(1));
-            }
+            // It doens't look like this (double-loading) is possible as it is set up now.
+            // if (!ready && queue.includes(Item)) {
+            //     setQueue(queue.slice(1));
+            // }
         },
         [ready, queue, setQueue, Item, hasQueued]
     );

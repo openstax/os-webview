@@ -1,6 +1,7 @@
 import React from 'react';
 import useUserContext from '~/contexts/user';
 import {useLocation} from 'react-router-dom';
+import {assertDefined} from '~/helpers/data';
 import Cookies from 'js-cookie';
 
 const DISMISSED_KEY = 'renewal_dialog_dismissed';
@@ -10,7 +11,7 @@ function useCookieKey(key: string) {
     return React.useReducer(
         (_: string, value: string) => {
             Cookies.set(key, value);
-            return value ? value : '0';
+            return value;
         },
         Cookies.get(key) ?? ''
     );
@@ -60,7 +61,7 @@ function useDismissalCookie(): [boolean, () => void] {
 
 function AdoptionContentBase({children, disable}: {children: React.ReactNode; disable: () => void}) {
     const {userModel} = useUserContext();
-    const {first_name: name} = userModel || {};
+    const {first_name: name} = assertDefined(userModel); // ready ensures this
     const {pathname} = useLocation();
     const href = `${window.location.origin}${pathname}`;
     const renewalFormHref = `/renewal-form?from=popup&returnTo=${encodeURIComponent(href)}`;

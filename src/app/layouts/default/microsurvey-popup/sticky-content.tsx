@@ -1,13 +1,13 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useStickyData, useSeenCounter, BannerInfo as StickyData} from '../shared';
+import {assertDefined} from '~/helpers/data';
 
 const SEEN_ENOUGH = 3;
 
 function StickyContent({stickyData, children}: {stickyData: StickyData | undefined; children: React.ReactNode}) {
-    if (!stickyData) {
-        return null;
-    }
+    const {body, link_url: url, link_text: text} = assertDefined(stickyData);
+
     return (
         <div
             className="microsurvey-content"
@@ -16,9 +16,9 @@ function StickyContent({stickyData, children}: {stickyData: StickyData | undefin
             data-nudge-placement="popup"
         >
             {children}
-            <RawHTML className="blurb" html={stickyData.body} />
-            <a className="btn primary" href={stickyData.link_url} data-nudge-action="interacted">
-                {stickyData.link_text}
+            <RawHTML className="blurb" html={body} />
+            <a className="btn primary" href={url} data-nudge-action="interacted">
+                {text}
             </a>
         </div>
     );
@@ -43,7 +43,6 @@ export default function useStickyMicrosurveyContent(): [boolean, StickyContentCo
     const stickyData = useStickyData();
     const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
     const BoundStickyContent = useBoundStickyContent(stickyData?.bannerInfo, incrementSeenCount);
-
     const ready = Boolean(
         stickyData?.mode === 'popup' && !hasBeenSeenEnough
     );
