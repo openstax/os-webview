@@ -9,7 +9,4 @@ function useContextValue() {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-export {
-    useContext as default,
-    ContextProvider as RouterContextProvider
-};
+export {useContext as default, ContextProvider as RouterContextProvider};
