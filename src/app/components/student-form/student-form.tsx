@@ -5,10 +5,7 @@ import './student-form.scss';
 
 export default function StudentForm() {
     const navigate = useNavigate();
-    const goBack = React.useCallback(
-        () => navigate(-1),
-        [navigate]
-    );
+    const goBack = React.useCallback(() => navigate(-1), [navigate]);
 
     return (
         <div className="student-form text-content">
