@@ -1,5 +1,4 @@
 import React from 'react';
-import {describe, expect, it} from '@jest/globals';
 import {render} from '@testing-library/preact';
 import ShellContextProvider from '../../../helpers/shell-context';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
