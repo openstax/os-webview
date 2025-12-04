@@ -2,7 +2,7 @@ import React from 'react';
 import LanguageSelector from '~/components/language-selector/language-selector';
 import {FormattedMessage} from 'react-intl';
 
-export default function LanguageSelectorSection(props) {
+export default function LanguageSelectorSection(props: Record<string, unknown>) {
     return (
         <section className='language-selector-section'>
             <div className='content'>
