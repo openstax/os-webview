@@ -2,16 +2,13 @@ import React from 'react';
 import {describe, expect, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
-import {RouterContextProvider} from '~/components/shell/router-context';
 import {upcomingWebinar} from '../../data/webinars';
 import ViewWebinarsPage from '~/pages/webinars/view-webinars-page/view-webinars-page';
 
 function Component(props: Parameters<typeof ViewWebinarsPage>[0]) {
     return (
         <MemoryRouter initialEntries={['/general/kinetic']}>
-            <RouterContextProvider>
-                <ViewWebinarsPage {...props} />
-            </RouterContextProvider>
+            <ViewWebinarsPage {...props} />
         </MemoryRouter>
     );
 }

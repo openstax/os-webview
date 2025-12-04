@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/helpers/cms-fetch';
 import {usePromise} from '~/helpers/use-data';
@@ -24,11 +23,9 @@ function useFlags() {
 
 function useContextValue() {
     const flags = useFlags();
-    const stickyFooterState = useState<boolean | null>(null);
 
     return {
-        flags,
-        stickyFooterState
+        flags
     } as const;
 }
 
