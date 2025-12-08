@@ -2,7 +2,6 @@ import React from 'react';
 import {describe, expect, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
-import {RouterContextProvider} from '~/components/shell/router-context';
 import MainPage from '~/pages/webinars/main-page/main-page';
 import * as UWC from '~/pages/webinars/webinar-context';
 import * as UDH from '~/helpers/use-document-head';
@@ -11,9 +10,7 @@ import {pageData} from '../../data/webinars';
 function Component() {
     return (
         <MemoryRouter initialEntries={['/webinars']}>
-            <RouterContextProvider>
-                <MainPage />
-            </RouterContextProvider>
+            <MainPage />
         </MemoryRouter>
     );
 }

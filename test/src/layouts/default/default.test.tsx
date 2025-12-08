@@ -44,7 +44,7 @@ jest.mock('react-router-dom', () => ({
 
 const mockUseSharedDataContext = jest
     .fn()
-    .mockReturnValue({stickyFooterState: [false, () => undefined]});
+    .mockReturnValue({});
 
 jest.mock('~/contexts/shared-data', () => ({
     __esModule: true,

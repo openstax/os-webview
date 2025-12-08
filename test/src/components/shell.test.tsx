@@ -95,7 +95,6 @@ describe('shell', () => {
     });
     const setPortal = jest.fn();
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
-    const saveWarn = console.warn;
 
     type WindowWithPiTracker = (typeof window) & {
         piTracker: (path: string) => void;
@@ -176,7 +175,6 @@ describe('shell', () => {
     });
 
     it('routes adoption (no CMS page data) page when in portal', async () => {
-        console.warn = jest.fn();
         setPortalPrefix('/landing-page');
         mockBrowserInitialEntries(['/landing-page/adoption']);
 
@@ -184,8 +182,6 @@ describe('shell', () => {
 
         await screen.findByRole('combobox');
         await screen.findByText('Let us know you\'re using OpenStax');
-        await waitFor(() => expect(console.warn).toHaveBeenCalled());
-        console.warn = saveWarn;
     });
     it('routes "errata" paths', async () => {
         mockBrowserInitialEntries(['/errata']);
@@ -247,14 +243,11 @@ describe('shell', () => {
     });
     // -- Warnings are generated from failed reads
     it('renders as a portal route with nothing beyond the portal', async () => {
-        console.warn = jest.fn();
         setPortalPrefix('/landing-page');
 
         mockBrowserInitialEntries(['/landing-page/']);
         render(AppElement);
         await screen.findByText('Loaded page ""');
-        await waitFor(() => expect(console.warn).toHaveBeenCalled());
-        console.warn = saveWarn;
     });
         it('renders page within a portal route', async () => {
         setPortalPrefix('/');
@@ -264,33 +257,24 @@ describe('shell', () => {
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
     });
     it('renders ordinary page through portal', async () => {
-        console.warn = jest.fn();
         setPortalPrefix('/landing-page');
 
         mockBrowserInitialEntries(['/landing-page/contact']);
         render(AppElement);
         expect(await screen.findByText('What is your question about?')).toBeInTheDocument();
-        await waitFor(() => expect(console.warn).toHaveBeenCalled());
-        console.warn = saveWarn;
     });
     it('returns 404 for unknown portal path', async () => {
-        console.warn = jest.fn();
         setPortalPrefix('/landing-page');
 
         mockBrowserInitialEntries(['/landing-page/invalid']);
         render(AppElement);
         await screen.findByText('Uh-oh, no page here');
-        await waitFor(() => expect(console.warn).toHaveBeenCalled());
-        console.warn = saveWarn;
     });
     it('loads flex page within a portal route', async () => {
-        console.warn = jest.fn();
         setPortalPrefix('/landing-page');
         mockBrowserInitialEntries(['/landing-page/flex-page']);
         render(AppElement);
         await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
-        await waitFor(() => expect(console.warn).toHaveBeenCalled());
-        console.warn = saveWarn;
     });
     it('reroutes flex pages with extra path components to the page', async () => {
         setPortalPrefix('');
@@ -299,13 +283,10 @@ describe('shell', () => {
         await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
     });
     it('loads general page within a portal route', async () => {
-        console.warn = jest.fn();
         setPortalPrefix('/landing-page');
         mockBrowserInitialEntries(['/landing-page/general-page']);
         render(AppElement);
         await waitFor(() => expect(spyGP).toHaveBeenCalled());
         spyGP.mockClear();
-        await waitFor(() => expect(console.warn).toHaveBeenCalled());
-        console.warn = saveWarn;
     });
 });

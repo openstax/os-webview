@@ -13,11 +13,10 @@ jest.mock('~/contexts/shared-data', () => jest.fn());
 jest.useFakeTimers();
 
 describe('microsurvey-popup', () => {
-    it('renders without sticky footer', () => {
+    it('renders', () => {
         (useMSQueue as jest.Mock).mockReturnValue(['item', () => null]);
         (useSharedDataContext as jest.Mock).mockReturnValue({
-            flags: {},
-            stickyFooterState: [true]
+            flags: {}
         });
         render(
             <ShellContextProvider>
@@ -28,23 +27,5 @@ describe('microsurvey-popup', () => {
         );
         jest.runAllTimers();
         expect(document.getElementById('microsurvey')).toBeTruthy();
-    });
-    it('renders with sticky footer', () => {
-        (useMSQueue as jest.Mock).mockReturnValue([null, () => null]);
-        (useSharedDataContext as jest.Mock).mockReturnValue({
-            flags: {},
-            stickyFooterState: [null]
-        });
-
-        render(
-            <ShellContextProvider>
-                <MemoryRouter initialEntries={['/']}>
-                    <MicroSurvey />
-                    <div className="sticky-footer" />
-                </MemoryRouter>
-            </ShellContextProvider>
-        );
-        jest.runAllTimers();
-        expect(document.getElementById('microsurvey')).toBeNull();
     });
 });
