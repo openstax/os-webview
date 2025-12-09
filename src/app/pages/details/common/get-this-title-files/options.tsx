@@ -113,7 +113,7 @@ export function WebviewOption({model}: {model: Model}) {
         link: intl.formatMessage({id: 'getit.webview.link'})
     };
     const isRex = Boolean(model.webviewRexLink);
-    const webviewLink = useRexPortalLinkOrNot(model.webviewRexLink) || model.webviewLink;
+    const webviewLink = useRexPortalLinkOrNot(model.webviewRexLink);
     const iconAndTextArgs = {
         icon: faLaptop,
         text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : texts.link

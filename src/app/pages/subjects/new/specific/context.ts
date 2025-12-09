@@ -13,7 +13,7 @@ export type Book = {
     id: number;
     slug: string;
     title: string;
-    webviewRexLink: string;
+    webviewRexLink: string | null;
     webviewLink: string;
     highResolutionPdfUrl: string;
     lowResolutionPdfUrl: string;
