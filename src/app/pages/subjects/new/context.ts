@@ -26,6 +26,7 @@ type SubjectsPageData = {
     translations: Array<{value: LocaleEntry[]}>;
     books?: {
         bookState: string;
+        subjects: string[];
     }[];
     aboutBlurbs?: ReturnType<typeof aboutBlurbs>;
     heading: string;

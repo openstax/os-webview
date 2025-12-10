@@ -7,7 +7,14 @@ type FeaturedInRollup = {
     image: string;
 };
 
-// This will need more filling in as other components move to TSX
+export type TestimonialData = {
+    image: {
+        title: string;
+        file: string;
+    },
+    testimonial: string;
+};
+
 type PressPageData = {
     meta: object;
     title: string;
@@ -55,6 +62,7 @@ type PressPageData = {
             author: string;
         };
     };
+    testimonials: [TestimonialData[]]
 };
 
 function useContextValue() {
