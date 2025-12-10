@@ -47,6 +47,18 @@ describe('main-menu dropdowns', () => {
         }));
         expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
     });
+    it('closes by escape key if opened by mouse enter', async () => {
+        render(<Component />);
+        const buttons = screen.getAllByRole('button');
+
+        expect(buttons).toHaveLength(2);
+        fireEvent(buttons[0], new MouseEvent('mouseenter', {
+            bubbles: true
+        }));
+        expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
+        await user.keyboard('{Escape}');
+        expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
+    });
     it('mobile menu opens and closes', async () => {
         mobileSpy.mockReturnValue(true);
         render(<Component />);
