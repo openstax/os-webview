@@ -68,10 +68,10 @@ export function LanguageSelectorWrapper({children}: React.PropsWithChildren<Reco
 }
 
 export default function LanguageSelector({
-    LeadIn, otherLocales=[], LinkPresentation=LanguageLink, addPolish=false
+    LeadIn, otherLocales, LinkPresentation=LanguageLink, addPolish=false
 }: {
     LeadIn: () => React.JSX.Element;
-    otherLocales?: string[];
+    otherLocales: string[];
     LinkPresentation?: LinkPresentationType;
     addPolish?: boolean;
 }) {
