@@ -17,13 +17,21 @@ export default function SchoolSelector({value, setValue}: {value: string; setVal
                     required: true,
                     value,
                     autoComplete: 'off',
-                    onChange({target}: React.ChangeEvent<HTMLInputElement>) {setValue(target.value);}
+                    onChange: useSetValueFromTarget(setValue)
                 }}
-                accept={(option: {value: string}) => setValue(option.value)}
+                accept={useAcceptValue(setValue)}
                 accepted={schoolIsOk}
             />
         </div>
     );
+}
+
+export function useAcceptValue(setValue: (value: string) => void) {
+    return React.useCallback(({value}: {value: string}) => setValue(value), [setValue]);
+}
+
+export function useSetValueFromTarget(setValue: (value: string) => void) {
+    return React.useCallback(({target}: React.ChangeEvent<HTMLInputElement>) => setValue(target.value), [setValue]);
 }
 
 export function useDoSubmit(afterSubmit: () => void) {
