@@ -39,6 +39,7 @@ export type AccountsUserModel = {
       is_verified: boolean;
       is_guessed_preferred: boolean;
   }[];
+  using_openstax: boolean;
 };
 
 declare global {
