@@ -19,7 +19,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
     const {slug} = bookInfo;
     const buttonId = `${slug}-ddb`;
     const menuId = `${slug}-ddm`;
-    const webviewLink = bookInfo.webviewRexLink || bookInfo.webviewLink;
+    const webviewLink = bookInfo.webviewRexLink;
     const pdfLink =
         bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
     const warning = useWarning(bookInfo.id);
@@ -36,13 +36,16 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
                 menuId={menuId}
             />
             <div id={menuId} role="menu" aria-labelledby={buttonId}>
-                <MenuItemWithGiveDialog
-                    defaultMessage="View online"
-                    url={webviewLink}
-                    variant="View online"
-                    warning={warning}
-                    id={bookInfo.id.toString()}
-                />
+                {
+                    webviewLink &&
+                    <MenuItemWithGiveDialog
+                        defaultMessage="View online"
+                        url={webviewLink}
+                        variant="View online"
+                        warning={warning}
+                        id={bookInfo.id.toString()}
+                    />
+                }
                 <MenuItemWithGiveDialog
                     defaultMessage="Download a PDF"
                     url={pdfLink}
