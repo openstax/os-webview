@@ -4,6 +4,7 @@ import type {Item} from '~/models/book-titles';
 import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import GetTheBookDropdown from './dropdown-menu';
 import cn from 'classnames';
+import usePortalContext from '~/contexts/portal';
 import './book-tile.scss';
 
 type AdditionalFields = Partial<{
@@ -16,6 +17,7 @@ export default function BookTile({book}: {book: BookInfo & AdditionalFields}) {
     const comingSoon = book.bookState === 'coming_soon';
     const snippets = book.promoteSnippet?.filter((s) => s.value.image);
     const promoteSnippet = snippets?.find((s) => s.value.image);
+    const {portalPrefix} = usePortalContext();
     const classes = cn({
         'book-tile': true,
         'coming-soon': comingSoon,
@@ -24,7 +26,7 @@ export default function BookTile({book}: {book: BookInfo & AdditionalFields}) {
 
     return (
         <div className={classes}>
-            <a href={`/details/${slug}`} aria-label={`${title} book`}>
+            <a href={`${portalPrefix}/details/${slug}`} aria-label={`${title} book`}>
                 <img
                     src={coverUrl}
                     role='presentation'

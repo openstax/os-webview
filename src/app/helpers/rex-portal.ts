@@ -8,5 +8,5 @@ export function useRexPortalLinkOrNot(link: string) {
     if (!portalPrefix) {
         return link;
     }
-    return link.replace('books/', `portal${portalPrefix}/books/`);
+    return link.replace('books/', `apps/rex/portal${portalPrefix}/books/`);
 }
