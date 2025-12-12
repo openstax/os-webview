@@ -7,6 +7,11 @@ import * as SFBC from '~/components/multiselect/book-tags/sf-book-context';
 import sfBooks from '~/../../test/src/data/sf-all-books';
 import InfoRequestForm from '~/pages/partners/partner-details/info-request-form/info-request-form';
 import {SearchContextProvider} from '~/pages/partners/search-context';
+import {
+    useAcceptValue,
+    useSetValueFromTarget,
+    useDoSubmit
+} from '~/pages/partners/partner-details/info-request-form/school-selector';
 
 async function renderForm() {
     render(
@@ -57,23 +62,57 @@ describe('partners/info-rquest-form', () => {
 
         await user.click(screen.getAllByRole('radio', {name: 'No'})[1]);
         await user.click(screen.getByRole('button', {name: 'Next'}));
-
-        // -- The book selector is not working right in tests, so all of this
-        // -- can't be tested until that gets figured out.
-        // const schoolSelector = await screen.findByRole('textbox', {name: 'School'});
-        // const roleSelector = screen.getByRole('combobox');
-        // const studentField = screen.getByRole('spinbutton');
-
-        // await user.click(roleSelector);
-        // await user.click(screen.getByRole('option', {name: 'Other'}));
-        // await user.type(schoolSelector, 'Ric');
-        // await user.type(studentField, '12');
-
-        // await user.click(screen.getByRole('button', {name: 'Submit', hidden: true}));
+        // Going past the first page is unreliable in testing, so the pieces
+        // are tested separately
     });
     it('does a partner type beginning with a vowel', () => {
         mockPC.mockReturnValue(mockPC2);
         renderForm();
         screen.getByText('is an abnormal', {exact: false});
+    });
+});
+
+describe('school-selector utilities', () => {
+    it('useAcceptValue sets a value', () => {
+        const setValue = jest.fn();
+
+        function Component() {
+            const accept = useAcceptValue(setValue);
+
+            accept({value: 'a value'});
+            return null;
+        }
+
+        render(<Component />);
+        expect(setValue).toHaveBeenCalledWith('a value');
+    });
+    it('useSetValueFromTarget sets a value', () => {
+        const setValue = jest.fn();
+
+        function Component() {
+            const accept = useSetValueFromTarget(setValue);
+
+            accept({target: {value: 'a value'}} as unknown as React.ChangeEvent<HTMLInputElement>);
+            return null;
+        }
+
+        render(<Component />);
+        expect(setValue).toHaveBeenCalledWith('a value');
+    });
+    it('useDoSubmit calls form.submit and afterSubmit', () => {
+        const form = {submit: jest.fn()} as unknown as HTMLFormElement;
+        const afterSubmit = jest.fn();
+
+        function Component() {
+            const doSubmit = useDoSubmit(afterSubmit);
+
+            doSubmit(form);
+
+            return null;
+        }
+
+        render(<Component />);
+        expect(form.submit).toHaveBeenCalled();
+        expect(afterSubmit).toHaveBeenCalled();
     });
 });
