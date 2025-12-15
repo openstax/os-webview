@@ -2,8 +2,7 @@ import React from 'react';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
 import {FilteringSelect} from '~/components/form-elements/form-elements';
 
-// Left as JS because I couldn't get the tests to cover these
-export default function SchoolSelector({value, setValue}) {
+export default function SchoolSelector({value, setValue}: {value: string; setValue: (value: string) => void}) {
     const {schoolIsOk, schoolOptions} = useMatchingSchools(value);
 
     return (
@@ -18,17 +17,25 @@ export default function SchoolSelector({value, setValue}) {
                     required: true,
                     value,
                     autoComplete: 'off',
-                    onChange({target}) {setValue(target.value);}
+                    onChange: useSetValueFromTarget(setValue)
                 }}
-                accept={(option) => setValue(option.value)}
+                accept={useAcceptValue(setValue)}
                 accepted={schoolIsOk}
             />
         </div>
     );
 }
 
-export function useDoSubmit(afterSubmit) {
-    return React.useCallback((form) => {
+export function useAcceptValue(setValue: (value: string) => void) {
+    return React.useCallback(({value}: {value: string}) => setValue(value), [setValue]);
+}
+
+export function useSetValueFromTarget(setValue: (value: string) => void) {
+    return React.useCallback(({target}: React.ChangeEvent<HTMLInputElement>) => setValue(target.value), [setValue]);
+}
+
+export function useDoSubmit(afterSubmit: () => void) {
+    return React.useCallback((form: HTMLFormElement) => {
         form.submit();
         afterSubmit();
     }, [afterSubmit]);

@@ -72,7 +72,7 @@ export default function LanguageSelector({
 }: {
     LeadIn: () => React.JSX.Element;
     otherLocales: string[];
-    LinkPresentation: LinkPresentationType;
+    LinkPresentation?: LinkPresentationType;
     addPolish?: boolean;
 }) {
     if (addPolish) {
