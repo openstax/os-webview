@@ -12,7 +12,7 @@ export default function ContentGroup({
     return (
         <div className="content-group">
             {React.Children.map(children, (child, i) => (
-                <Panel label={labels[i]} key={i} active={activeIndex === i}>
+                <Panel label={labels[i] ?? ''} key={i} active={activeIndex === i}>
                     {child}
                 </Panel>
             ))}
