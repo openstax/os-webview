@@ -43,7 +43,7 @@ export default function UpperMenu() {
     const riceLogo = useOptimizedImage('https://openstax.org/dist/images/rice.webp', 80);
 
     return (
-        <menu className="container" data-analytics-nav="Upper Menu">
+        <ul className="container" data-analytics-nav="Upper Menu">
             {
                 menuData.map(
                     ({label, url}) => <MenuItem key={label} label={label} url={url} showButton={showButton} />
@@ -53,6 +53,6 @@ export default function UpperMenu() {
                 <img src={riceLogo} alt="Rice University logo" height="30" width="79" />
             </a></li>
             {showButton ? <JITLoad importFn={importGiveButton} /> : null}
-        </menu>
+        </ul>
     );
 }
