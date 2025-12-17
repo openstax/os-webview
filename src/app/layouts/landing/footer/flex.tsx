@@ -87,15 +87,14 @@ function FlexFooter({data}: Props) {
                                 contactFormParams={contactFormParams}
                             />
                         </button>
-                        <a href="/tos">Terms of Use</a>
-                        <a href="/privacy">Privacy Notice</a>
+                        <CookieYesToggle />
                     </ListOfLinks>
                 </div>
                 <div className="column col2">
                     <ListOfLinks>
                         <a href="/accessibility-statement">Accessibility Statement</a>
+                        <a href="/tos">Terms of Use</a>
                         <a href="/privacy">Privacy Notice</a>
-                        <CookieYesToggle />
                     </ListOfLinks>
                 </div>
             </div>
