@@ -150,7 +150,7 @@ export function MainMenuItems() {
         <React.Fragment>
             <SubjectsMenu />
             <MenusFromCMS />
-            <li className="give-button-item" role="presentation">
+            <li className="give-button-item">
                 <GiveButton />
             </li>
             <LoginMenu />
