@@ -8,7 +8,12 @@
         grid-template-columns: auto auto;
     }
 
+    h2 {
+        @include set-font(h3);
+    }
+
     p,
+    h2,
     h3 {
         margin: 0;
     }
@@ -65,11 +70,13 @@
         }
     }
 
+    h2,
     h3,
     h4 {
         letter-spacing: normal;
     }
 
+    h2,
     h3 {
         margin-bottom: 0.3rem;
     }
