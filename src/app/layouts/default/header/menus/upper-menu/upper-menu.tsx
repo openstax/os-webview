@@ -43,7 +43,7 @@ export default function UpperMenu() {
     const riceLogo = useOptimizedImage('https://openstax.org/dist/images/rice.webp', 80);
 
     return (
-        <ul className="container" data-analytics-nav="Upper Menu">
+        <ul className="container no-bullets" data-analytics-nav="Upper Menu">
             {
                 menuData.map(
                     ({label, url}) => <MenuItem key={label} label={label} url={url} showButton={showButton} />
