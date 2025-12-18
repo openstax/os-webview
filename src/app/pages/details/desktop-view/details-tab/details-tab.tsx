@@ -19,7 +19,7 @@ function PolishTab({model}: {model: ContextValues}) {
         <div className="details-tab">
             <div className="sidebar">
                 <div>
-                    <h3>Przejdź do książki</h3>
+                    <h2>Przejdź do książki</h2>
                     <GetThisTitle model={model} />
                 </div>
                 <div className="let-us-know-region">
@@ -28,7 +28,7 @@ function PolishTab({model}: {model: ContextValues}) {
             </div>
             <div className="main">
                 <div className="loc-summary-text">
-                    <h3>Podsumowanie</h3>
+                    <h2>Podsumowanie</h2>
                     <RawHTML html={model.description} />
                 </div>
                 <Authors />
@@ -44,12 +44,12 @@ function EnglishTab({model}: {model: ContextValues}) {
         <div className="details-tab">
             <div className="sidebar">
                 <div>
-                    <h3>
+                    <h2>
                         <FormattedMessage
                             id="getTheBook"
                             defaultMessage="Get the book"
                         />
-                    </h3>
+                    </h2>
                     <GetThisTitle model={model} />
                 </div>
                 <div className="let-us-know-region">
@@ -59,12 +59,12 @@ function EnglishTab({model}: {model: ContextValues}) {
             <div className="main">
                 <Promo promoteSnippet={model.promoteSnippet} />
                 <div className="loc-summary-text">
-                    <h3>
+                    <h2>
                         <FormattedMessage
                             id="summary"
                             defaultMessage="Summary"
                         />
-                    </h3>
+                    </h2>
                     <RawHTML html={model.description} />
                 </div>
                 <Authors />
