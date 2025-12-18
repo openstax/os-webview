@@ -6,11 +6,10 @@ type TabArgs = {
     label: string;
     selectedLabel: string;
     setSelectedLabel: (s: string) => void;
-    TabTag: keyof JSX.IntrinsicElements;
     analytics: boolean;
 }
 
-function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}: TabArgs) {
+function Tab({label, selectedLabel, setSelectedLabel, analytics}: TabArgs) {
     const blurAndSetLabel = React.useCallback(
         (event: React.MouseEvent) => {
             (event as React.MouseEvent<HTMLElement>).currentTarget.blur();
@@ -24,7 +23,7 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}: TabArg
     , [label, selectedLabel]);
 
     return (
-        <TabTag
+        <li
             role="tab"
             id={ariaTabId(label)}
             aria-controls={ariaPanelId(label)}
@@ -35,21 +34,24 @@ function Tab({label, selectedLabel, setSelectedLabel, TabTag, analytics}: TabArg
             data-analytics-link={analytics && !isSelected ? '' : undefined}
         >
             {label}
-        </TabTag>
+        </li>
     );
 }
 
+function removeSpaces(label: string) {
+    return label.replace(/\s/g, '_');
+}
+
 export function ariaTabId(label: string) {
-    return `${label}-tab`;
+    return `${removeSpaces(label)}-tab`;
 }
 
 export function ariaPanelId(label: string) {
-    return `${label}-panel`;
+    return `${removeSpaces(label)}-panel`;
 }
 
 type TabGroupArgs = React.PropsWithChildren<
     Pick<TabArgs, 'selectedLabel' | 'setSelectedLabel'> &
-    Pick<Partial<TabArgs>, 'TabTag'> &
     {
         labels: TabArgs['label'][];
         'data-analytics-nav'?: string;
@@ -58,7 +60,7 @@ type TabGroupArgs = React.PropsWithChildren<
 >
 
 export default function TabGroup({
-    labels, selectedLabel, setSelectedLabel, TabTag='div', children, ...props
+    labels, selectedLabel, setSelectedLabel, children, ...props
 }: TabGroupArgs) {
     const analyticsNav = props['data-analytics-nav'];
     const listLabel = props.listLabel ?? 'Tabs';
@@ -66,7 +68,7 @@ export default function TabGroup({
     return (
         <div className="tab-heading">
             <div className="tabs-and-extras">
-                <div
+                <ul
                   role="tablist"
                   aria-label={listLabel}
                   data-analytics-nav={analyticsNav}
@@ -74,9 +76,9 @@ export default function TabGroup({
                     {labels.map((label) => <Tab
                         key={label}
                         analytics={!!analyticsNav}
-                        {...{label, selectedLabel, setSelectedLabel, TabTag}}
+                        {...{label, selectedLabel, setSelectedLabel}}
                     />)}
-                </div>
+                </ul>
                 {children}
             </div>
             <hr className="tab-baseline" />

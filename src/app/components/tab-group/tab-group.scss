@@ -10,6 +10,7 @@
 
     [role="tablist"] {
         @include tab-group();
+        margin: 0;
 
         [role="tab"] {
             @extend %tab;
