@@ -3,9 +3,9 @@ import useUserContext from '~/contexts/user';
 import {useLocation} from 'react-router-dom';
 import {assertDefined} from '~/helpers/data';
 import Cookies from 'js-cookie';
+import type {QueuedItemType} from './queue';
 
 const DISMISSED_KEY = 'renewal_dialog_dismissed';
-// const YESTERDAY = Date.now() - 60 * 60 * 24 * 1000;
 
 function useCookieKey(key: string) {
     return React.useReducer(
@@ -93,9 +93,7 @@ function AdoptionContentBase({children, disable}: {children: React.ReactNode; di
     );
 }
 
-type AdoptionContentComponent = React.ComponentType<{children: React.ReactNode}>;
-
-export default function useAdoptionMicrosurveyContent(): [boolean, AdoptionContentComponent] {
+export default function useAdoptionMicrosurveyContent(): [boolean, QueuedItemType] {
     const [ready, disable] = useDismissalCookie();
     const AdoptionContent = React.useCallback(
         ({children}: {children: React.ReactNode}) => (

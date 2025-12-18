@@ -7,6 +7,7 @@ import * as UM from '~/models/usermodel';
 import userModelData from '~/../../test/src/data/userModel';
 import { UserContextProvider } from '~/contexts/user';
 
+/* eslint-disable camelcase */
 function userModelAdopter(isAdopter: boolean) {
     const adopterFields = {
         using_openstax: isAdopter,
@@ -15,6 +16,7 @@ function userModelAdopter(isAdopter: boolean) {
 
     return {...userModelData, accountsModel: {...userModelData.accountsModel, ...adopterFields}};
 }
+/* eslint-enable camelcase */
 
 describe('microsurvey-popup/adoption-content', () => {
     const user = userEvent.setup();

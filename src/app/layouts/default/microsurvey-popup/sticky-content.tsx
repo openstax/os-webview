@@ -2,11 +2,12 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {useStickyData, useSeenCounter, BannerInfo as StickyData} from '../shared';
 import {assertDefined} from '~/helpers/data';
+import type {QueuedItemType} from './queue';
 
 const SEEN_ENOUGH = 3;
 
-function StickyContent({stickyData, children}: {stickyData: StickyData | undefined; children: React.ReactNode}) {
-    const {body, link_url: url, link_text: text} = assertDefined(stickyData);
+function StickyContent({stickyData, children}: {stickyData: StickyData; children: React.ReactNode}) {
+    const {body, link_url: url, link_text: text} = stickyData;
 
     return (
         <div
@@ -31,15 +32,14 @@ function useBoundStickyContent(stickyData: StickyData | undefined, incrementSeen
         [incrementSeenCount]
     );
 
+    // ready ensures it will not be called unless stickyData is defined
     return React.useCallback(
-        (props: {children: React.ReactNode}) => <StickyContent stickyData={stickyData} {...props} />,
+        (props: {children: React.ReactNode}) => <StickyContent stickyData={assertDefined(stickyData)} {...props} />,
         [stickyData]
     );
 }
 
-type StickyContentComponent = React.ComponentType<{children: React.ReactNode}>;
-
-export default function useStickyMicrosurveyContent(): [boolean, StickyContentComponent] {
+export default function useStickyMicrosurveyContent(): [boolean, QueuedItemType] {
     const stickyData = useStickyData();
     const [hasBeenSeenEnough, incrementSeenCount] = useSeenCounter(SEEN_ENOUGH);
     const BoundStickyContent = useBoundStickyContent(stickyData?.bannerInfo, incrementSeenCount);
