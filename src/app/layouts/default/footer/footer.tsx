@@ -54,7 +54,7 @@ function Footer({
                             <a href="https://help.openstax.org/s/">
                                 Support Center
                             </a>
-                            <a href="/faq">FAQ</a>
+                            <a href="/faq" aria-label="frequently asked questions">FAQ</a>
                             <a href="/print/">Order Print</a>
                             <a href="https://status.openstax.org/">
                                 System Status
