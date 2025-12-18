@@ -4,7 +4,9 @@
     padding: 1rem 1.5rem;
     background-color: ui-color(page-bg);
 
-    h3 {
+    h2 {
+        @include set-font(h3);
+        letter-spacing: normal;
         margin-bottom: 1rem;
     }
 }

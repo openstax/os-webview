@@ -49,7 +49,7 @@ function useContextValue() {
     const myOpenStaxUser = useMyOpenStaxUser(isVerified, fetchTime);
     const value = React.useMemo(
         () =>
-            model?.last_name
+            model.last_name
                 ? {
                       accountId: model.id,
                       userName: `${model.first_name} ${model.last_name.substr(

@@ -52,7 +52,7 @@ export default function Banner({data}: {data: K12Data}) {
             </div>
             <div
                 className="right-bg clipped-image"
-                style={{backgroundImage: `url(${bannerImgUrl});`}}
+                style={{backgroundImage: `url(${bannerImgUrl})`}}
             ></div>
         </section>
     );
