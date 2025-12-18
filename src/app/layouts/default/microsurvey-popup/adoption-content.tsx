@@ -1,22 +1,23 @@
 import React from 'react';
 import useUserContext from '~/contexts/user';
 import {useLocation} from 'react-router-dom';
+import {assertDefined} from '~/helpers/data';
 import Cookies from 'js-cookie';
+import type {QueuedItemType} from './queue';
 
 const DISMISSED_KEY = 'renewal_dialog_dismissed';
-// const YESTERDAY = Date.now() - 60 * 60 * 24 * 1000;
 
-function useCookieKey(key) {
+function useCookieKey(key: string) {
     return React.useReducer(
-        (_, value) => {
+        (_: string, value: string) => {
             Cookies.set(key, value);
-            return value ? value : '0';
+            return value;
         },
-        Cookies.get(key)
+        Cookies.get(key) ?? ''
     );
 }
 
-function useDismissalCookie() {
+function useDismissalCookie(): [boolean, () => void] {
     const [cookieValue, setCookieValue] = useCookieKey(DISMISSED_KEY);
     const clicked = React.useMemo(
         () => +Number(cookieValue) > 0,
@@ -31,7 +32,7 @@ function useDismissalCookie() {
             if (pathname === '/renewal-form') {
                 return false;
             }
-            return !clicked && isFaculty && isAdopter;
+            return !clicked && isFaculty && Boolean(isAdopter);
         },
         [clicked, isFaculty, isAdopter, pathname]
     );
@@ -55,12 +56,12 @@ function useDismissalCookie() {
         [pathname, disable, clicked]
     );
 
-    return [ready, disable];
+    return [ready, disable] as const;
 }
 
-function AdoptionContentBase({children, disable}) {
+function AdoptionContentBase({children, disable}: {children: React.ReactNode; disable: () => void}) {
     const {userModel} = useUserContext();
-    const {first_name: name} = userModel || {};
+    const {first_name: name} = assertDefined(userModel); // ready ensures this
     const {pathname} = useLocation();
     const href = `${window.location.origin}${pathname}`;
     const renewalFormHref = `/renewal-form?from=popup&returnTo=${encodeURIComponent(href)}`;
@@ -92,10 +93,10 @@ function AdoptionContentBase({children, disable}) {
     );
 }
 
-export default function useAdoptionMicrosurveyContent() {
+export default function useAdoptionMicrosurveyContent(): [boolean, QueuedItemType] {
     const [ready, disable] = useDismissalCookie();
     const AdoptionContent = React.useCallback(
-        ({children}) => (
+        ({children}: {children: React.ReactNode}) => (
             <AdoptionContentBase disable={disable}>
                 {children}
             </AdoptionContentBase>
