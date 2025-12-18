@@ -62,17 +62,19 @@
     }
 
     @include width-up-to($tablet-max) {
-        menu,
+        ul,
         .pseudo-menu {
+            padding-inline-start: 4rem;
+            margin-block: 0;
             width: 100%;
         }
-        menu li {
+        ul li {
             float: left;
         }
-        menu li:last-child {
+        ul li:last-child {
             float: right;
         }
-        menu:first-child {
+        ul:first-child {
             display: none;
         }
     }

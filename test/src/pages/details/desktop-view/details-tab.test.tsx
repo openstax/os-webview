@@ -27,10 +27,10 @@ function Component(props: Props) {
 describe('details-tab', () => {
     it('renders (English)', () => {
         render(<Component model={model} polish={false} />);
-        screen.getByRole('heading', {level: 3, name: 'Summary'});
+        screen.getByRole('heading', {level: 2, name: 'Summary'});
     });
     it('renders (Polish)', () => {
         render(<Component model={model} polish={true} />);
-        screen.getByRole('heading', {level: 3, name: 'Przejdź do książki'});
+        screen.getByRole('heading', {level: 2, name: 'Przejdź do książki'});
     });
 });

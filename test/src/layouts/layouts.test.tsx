@@ -101,7 +101,7 @@ describe('layouts/landing', () => {
             /Unable to find an element/
         );
         // Default footer has 4 links + 1 link in layout = 5 links
-        expect(await screen.findAllByRole('link')).toHaveLength(5);
+        expect(await screen.findAllByRole('link')).toHaveLength(4);
     });
     it('rewrites footer links in portal', async () => {
         const title = 'some-title';
@@ -128,6 +128,6 @@ describe('layouts/landing', () => {
         // Default footer has 4 links + 1 link in layout = 5 links
         const links = await screen.findAllByRole('link');
 
-        expect(links[1]).toHaveAttribute('href', '//a-portal/tos');
+        expect(links[1]).toHaveAttribute('href', '//a-portal/accessibility-statement');
     });
 });
