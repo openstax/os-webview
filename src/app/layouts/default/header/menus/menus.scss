@@ -18,7 +18,7 @@
             flex-direction: column;
         }
 
-        ul {
+        ul:not(.container) {
             font-size: 1.8rem;
             font-weight: bold;
             grid-row-gap: 2rem;
