@@ -40,7 +40,7 @@ function ButtonWithIcon({url, icon, text, reverse=false}: {
     reverse?: boolean;
 }) {
     return (
-        <a className="button-with-icon" href={url}>
+        <a className="button-with-icon" href={url} data-analytics-link>
             <span className={cn('book-icon', {reverse})}>
                 <FontAwesomeIcon icon={icon} />
             </span>

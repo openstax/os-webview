@@ -50,7 +50,7 @@ export default function Banner({data}: {data: BannerData}) {
                     <h1>{data.subheading}</h1>
                 </div>
                 <RawHTML className="text-content" html={data.headingDescription} />
-                <div className="button-row">
+                <div className="button-row" data-analytics-nav="Assignable CTAs">
                     <CTAButton
                         header={data.addAssignableCtaHeader}
                         href={data.addAssignableCtaLink}
