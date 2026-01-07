@@ -60,6 +60,7 @@ export default function Partners({
             <div
                 className="blurb-scroller"
                 data-analytics-content-list={title}
+                data-analytics-nav={title}
             >
                 <ul className="blurbs">
                     {blurbs.map((blurb) => (

@@ -139,7 +139,7 @@ export default function OrderPrintCopy({slug}: {slug: string}) {
     }
 
     return (
-        <nav className="order-print-copy">
+        <nav className="order-print-copy" data-analytics-nav="Order print copy">
             <PhoneBoxes {...{contentArray}} />
             <DesktopBoxes {...{contentArray}} />
         </nav>
