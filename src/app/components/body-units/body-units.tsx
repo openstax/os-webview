@@ -17,8 +17,8 @@ type CTAData = {
     alignment: string;
     heading: string;
     description: string;
-    button_href: string;
-    button_text: string;
+    buttonHref: string;
+    buttonText: string;
 };
 
 function CTA({data}: {data: CTAData}) {
@@ -28,8 +28,8 @@ function CTA({data}: {data: CTAData}) {
         <div className={`blog-cta ${alignment}`}>
             <h2>{data.heading}</h2>
             <div>{data.description}</div>
-            <a className="btn primary" href={data.button_href}>
-                {data.button_text}
+            <a className="btn primary" href={data.buttonHref}>
+                {data.buttonText}
             </a>
         </div>
     );

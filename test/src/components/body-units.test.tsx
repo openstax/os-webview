@@ -47,7 +47,6 @@ describe('body-units', () => {
         screen.getByText('terrible mistake', {exact: false});
     });
     it('handles CTA', () => {
-        /* eslint-disable camelcase */
         const unit: UnitType = {
             id: 'meh',
             type: 'blog_cta',
@@ -55,8 +54,8 @@ describe('body-units', () => {
                 alignment: 'left',
                 heading: 'Heading',
                 description: 'description text',
-                button_href: '#',
-                button_text: 'click me'
+                buttonHref: '#',
+                buttonText: 'click me'
             }
         };
 

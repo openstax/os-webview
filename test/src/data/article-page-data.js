@@ -115,8 +115,8 @@ export default {
                 alignment: 'left',
                 heading: 'Heading',
                 description: 'description text',
-                button_href: '#',
-                button_text: 'click me'
+                buttonHref: '#',
+                buttonText: 'click me'
             }
         },
         {
