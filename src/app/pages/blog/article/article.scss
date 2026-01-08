@@ -279,7 +279,6 @@
 
             .btn {
                 @include button();
-                @include body-font(2rem);
 
                 margin-top: 1rem;
 
