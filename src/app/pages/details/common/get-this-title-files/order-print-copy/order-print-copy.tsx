@@ -159,9 +159,9 @@ export default function OrderPrintCopy({slug}: {slug: string}) {
             }
         ];
 
-        // Add audiobook option at the beginning if link is available
+        // Add audiobook option at the end if link is available
         if (audiobookLink) {
-            content.unshift({
+            content.push({
                 headerText: audiobook,
                 headerIcon: faVolumeUp,
                 buttonText: audiobookButtonText,
