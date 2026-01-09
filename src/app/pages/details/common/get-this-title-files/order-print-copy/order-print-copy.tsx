@@ -2,6 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 import {faUsers} from '@fortawesome/free-solid-svg-icons/faUsers';
+import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {useIntl} from 'react-intl';
 import './order-print-copy.scss';
 import cmsFetch from '~/helpers/cms-fetch';
@@ -11,6 +12,7 @@ type Content = {
     headerIcon: typeof faUser;
     buttonText: string;
     buttonUrl: string;
+    trackingLabel: string;
 };
 
 function Header({entry}: {entry: Content}) {
@@ -26,7 +28,7 @@ function Header({entry}: {entry: Content}) {
 
 function PhoneBox({entry}: {entry: Content}) {
     return (
-        <a className="box" href={entry.buttonUrl} data-track="Print">
+        <a className="box" href={entry.buttonUrl} data-track={entry.trackingLabel}>
             <Header entry={entry} />
         </a>
     );
@@ -45,21 +47,23 @@ function PhoneBoxes({contentArray}: {contentArray: Content[]}) {
 function Button({
     href,
     text,
-    buttonClass
+    buttonClass,
+    trackingLabel
 }: {
     href: string;
     text: string;
     buttonClass: string;
+    trackingLabel: string;
 }) {
     return (
-        <a className={`btn ${buttonClass}`} href={href} data-track="Print">
+        <a className={`btn ${buttonClass}`} href={href} data-track={trackingLabel}>
             {text}
         </a>
     );
 }
 
 function DesktopBox({index, entry}: {index: number; entry: Content}) {
-    const buttonClass = ['primary', 'secondary'][index];
+    const buttonClass = ['primary', 'primary', 'secondary'][index] || 'primary';
 
     return (
         <div className="box" key={entry.headerText}>
@@ -68,6 +72,7 @@ function DesktopBox({index, entry}: {index: number; entry: Content}) {
                 buttonClass={buttonClass}
                 href={entry.buttonUrl}
                 text={entry.buttonText}
+                trackingLabel={entry.trackingLabel}
             />
         </div>
     );
@@ -93,9 +98,20 @@ function useBookstoreContentLink(slug: string) {
     return url;
 }
 
+function useAudiobookLink(slug: string) {
+    const [url, setUrl] = React.useState<string | null>(null);
+
+    React.useEffect(() => {
+        cmsFetch(slug).then((data) => setUrl(data.audiobook_link));
+    }, [slug]);
+
+    return url;
+}
+
 export default function OrderPrintCopy({slug}: {slug: string}) {
     const {formatMessage} = useIntl();
     const bookstoreLink = useBookstoreContentLink(slug);
+    const audiobookLink = useAudiobookLink(slug);
     const contentArray = React.useMemo(() => {
         if (!bookstoreLink) {
             return null;
@@ -116,23 +132,46 @@ export default function OrderPrintCopy({slug}: {slug: string}) {
             id: 'printcopy.button2',
             defaultMessage: 'Order options'
         });
+        const audiobook = formatMessage({
+            id: 'printcopy.audiobook',
+            defaultMessage: 'Audiobook'
+        });
+        const audiobookButtonText = formatMessage({
+            id: 'printcopy.audiobook-button',
+            defaultMessage: 'Purchase options'
+        });
 
-        return [
+        const content = [
             {
                 headerText: individual,
                 headerIcon: faUser,
                 buttonText: button1Text,
-                buttonUrl: bookstoreLink
+                buttonUrl: bookstoreLink,
+                trackingLabel: 'Print'
             },
             {
                 headerText: bookstore,
                 headerIcon: faUsers,
                 buttonText: button2Text,
                 buttonUrl:
-                    'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf'
+                    'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf',
+                trackingLabel: 'Print'
             }
         ];
-    }, [formatMessage, bookstoreLink]);
+
+        // Add audiobook option at the beginning if link is available
+        if (audiobookLink) {
+            content.unshift({
+                headerText: audiobook,
+                headerIcon: faVolumeUp,
+                buttonText: audiobookButtonText,
+                buttonUrl: audiobookLink,
+                trackingLabel: 'Audiobook'
+            });
+        }
+
+        return content;
+    }, [formatMessage, bookstoreLink, audiobookLink]);
 
     if (!contentArray) {
         return null;
