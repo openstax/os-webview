@@ -142,7 +142,7 @@ function Footer({
                         <li>
                             <a className="rice-logo" href="http://www.rice.edu">
                                 <img
-                                    src="/dist/images/rice-white-text.webp"
+                                    src="/dist/images/rice-logo-white.png"
                                     alt="Rice University logo"
                                     width="99"
                                     height="40"
