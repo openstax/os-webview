@@ -69,7 +69,7 @@ function Bottom({model}: {model: ResourceModel}) {
         <div className="bottom">
             <LeftContent model={model} />
             {model.printLink && (
-                <a className="print-link" aria-label="Buy print" href={model.printLink}>
+                <a className="print-link" href={model.printLink}>
                     <FontAwesomeIcon icon={faShoppingCart} />
                     <span>Buy print</span>
                 </a>
