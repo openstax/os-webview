@@ -139,8 +139,8 @@ export default function OrderPrintCopy({slug}: {slug: string}) {
     }
 
     return (
-        <nav 
-          className="order-print-copy" 
+        <nav
+          className="order-print-copy"
           aria-label="Order print copy Navigation"
           data-analytics-nav="Order print copy"
         >
