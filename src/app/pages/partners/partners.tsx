@@ -51,6 +51,7 @@ type PartnerPageData = {
     title: string;
     heading: string;
     description: string;
+    header_image_url: string;
     partner_landing_page_link: string;
     partner_request_info_link: string;
     partner_full_partner_heading: string;
@@ -132,11 +133,12 @@ function Partners({data}: {data: PartnerPageData}) {
     const headline = data.heading;
     const description = data.description;
     const {linkTexts} = textsFromData(data);
+    const headerImageUrl = data.header_image_url || '/dist/images/partners/header-right.jpg';
 
     return (
         <React.Fragment>
             {confirmation && <Confirmation />}
-            <section className="banner hero">
+            <section className="banner hero" style={{backgroundImage: `url(${headerImageUrl})`}}>
                 <div className="boxed">
                     <div className="text-block">
                         <h1>{headline}</h1>
@@ -157,7 +159,6 @@ function Partners({data}: {data: PartnerPageData}) {
                         </div>
                     </div>
                 </div>
-                <div className="right-bg clipped-image" />
             </section>
             <section>
                 <div className="text-content">
