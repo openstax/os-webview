@@ -5,6 +5,7 @@ import {faUsers} from '@fortawesome/free-solid-svg-icons/faUsers';
 import {useIntl} from 'react-intl';
 import './order-print-copy.scss';
 import cmsFetch from '~/helpers/cms-fetch';
+import linkHelper from '~/helpers/link';
 
 type Content = {
     headerText: string;
@@ -93,7 +94,7 @@ function useBookstoreContentLink(slug: string) {
     return url;
 }
 
-export default function OrderPrintCopy({slug}: {slug: string}) {
+export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign: string}) {
     const {formatMessage} = useIntl();
     const bookstoreLink = useBookstoreContentLink(slug);
     const contentArray = React.useMemo(() => {
@@ -122,7 +123,7 @@ export default function OrderPrintCopy({slug}: {slug: string}) {
                 headerText: individual,
                 headerIcon: faUser,
                 buttonText: button1Text,
-                buttonUrl: bookstoreLink
+                buttonUrl: linkHelper.setUtmCampaign(bookstoreLink, campaign)
             },
             {
                 headerText: bookstore,
@@ -132,7 +133,7 @@ export default function OrderPrintCopy({slug}: {slug: string}) {
                     'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf'
             }
         ];
-    }, [formatMessage, bookstoreLink]);
+    }, [formatMessage, bookstoreLink, campaign]);
 
     if (!contentArray) {
         return null;

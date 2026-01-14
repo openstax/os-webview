@@ -197,15 +197,15 @@ export function PdfOption({model}: {model: Model}) {
     ) : null;
 }
 
-export function usePrintCopyDialog() {
+export function usePrintCopyDialog(campaign: string) {
     const [Dialog, open] = useDialog();
     const PCDialog = React.useCallback(
         ({text, slug}: {text: string; slug: string}) => (
             <Dialog title={text}>
-                <OrderPrintCopy slug={slug} />
+                <OrderPrintCopy slug={slug} campaign={campaign} />
             </Dialog>
         ),
-        [Dialog]
+        [Dialog, campaign]
     );
     const onClick = React.useCallback(
         (event: React.MouseEvent) => {

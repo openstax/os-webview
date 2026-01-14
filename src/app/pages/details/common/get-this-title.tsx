@@ -74,7 +74,7 @@ export default function GetThisTitle({model}: {model: Model}) {
                     />
                 </div>
             </div>
-            <OrderPrintCopy slug={model.slug} />
+            <OrderPrintCopy slug={model.slug} campaign="book-details" />
         </div>
     );
 }
