@@ -53,8 +53,8 @@ function logoutLink() {
 function setUtmCampaign(url: string, campaign: string) {
     try {
         const parsed = new URL(url);
-        parsed.searchParams.set('utm_campaign', campaign);
 
+        parsed.searchParams.set('utm_campaign', campaign);
         return parsed.toString();
     } catch {
         return url;
