@@ -50,10 +50,24 @@ function logoutLink() {
     return loginOrOutLink('logout');
 }
 
+export type UtmCampaign = 'book-details' | 'subjects-dropdown';
+
+function setUtmCampaign(url: string, campaign: UtmCampaign) {
+    try {
+        const parsed = new URL(url);
+
+        parsed.searchParams.set('utm_campaign', campaign);
+        return parsed.toString();
+    } catch {
+        return url;
+    }
+}
+
 export default {
     isExternal,
     validUrlClick,
     loginLink,
     logoutLink,
-    stripOpenStaxDomain
+    stripOpenStaxDomain,
+    setUtmCampaign
 };

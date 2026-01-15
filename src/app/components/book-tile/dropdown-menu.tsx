@@ -213,7 +213,7 @@ function MenuItemWithGiveDialog({
 }
 
 function PrintOption({slug}: {slug: string}) {
-    const {onClick, PCDialog} = usePrintCopyDialog();
+    const {onClick, PCDialog} = usePrintCopyDialog('subjects-dropdown');
     const {formatMessage} = useIntl();
     const text = formatMessage({
         id: 'getit.print',
