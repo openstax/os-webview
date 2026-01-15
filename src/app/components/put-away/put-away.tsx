@@ -26,7 +26,7 @@ export default function PutAway(
             onKeyDown={closeUsingKeyboard}
             data-nudge-action='dismissed'
         >
-            <FontAwesomeIcon icon={faTimes} />
+            <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
         </span>
     );
 }
