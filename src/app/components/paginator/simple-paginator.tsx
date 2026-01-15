@@ -104,7 +104,7 @@ export default function SimplePaginator({currentPage, setPage, totalPages}: Pagi
     const prevPage = () => setPage(currentPage - 1);
 
     return (
-        <nav className="simple-paginator">
+        <nav className="simple-paginator" aria-label="Pagination Navigation">
             <ControlButton active={currentPage > 1} direction='previous' onClick={prevPage} />
             <PagesBeforeCurrent {...{currentPage, totalPages, setPage}} />
             <span className="current-page">{currentPage}</span>
