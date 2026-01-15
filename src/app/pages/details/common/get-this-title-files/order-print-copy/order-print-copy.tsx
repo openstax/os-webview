@@ -5,7 +5,7 @@ import {faUsers} from '@fortawesome/free-solid-svg-icons/faUsers';
 import {useIntl} from 'react-intl';
 import './order-print-copy.scss';
 import cmsFetch from '~/helpers/cms-fetch';
-import linkHelper from '~/helpers/link';
+import linkHelper, {type UtmCampaign} from '~/helpers/link';
 
 type Content = {
     headerText: string;
@@ -94,7 +94,7 @@ function useBookstoreContentLink(slug: string) {
     return url;
 }
 
-export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign: string}) {
+export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign: UtmCampaign}) {
     const {formatMessage} = useIntl();
     const bookstoreLink = useBookstoreContentLink(slug);
     const contentArray = React.useMemo(() => {

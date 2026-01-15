@@ -9,6 +9,7 @@ import {faCloudDownloadAlt} from '@fortawesome/free-solid-svg-icons/faCloudDownl
 import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import $ from '~/helpers/$';
+import {type UtmCampaign} from '~/helpers/link';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {useIntl, FormattedMessage} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
@@ -197,7 +198,7 @@ export function PdfOption({model}: {model: Model}) {
     ) : null;
 }
 
-export function usePrintCopyDialog(campaign: string) {
+export function usePrintCopyDialog(campaign: UtmCampaign) {
     const [Dialog, open] = useDialog();
     const PCDialog = React.useCallback(
         ({text, slug}: {text: string; slug: string}) => (

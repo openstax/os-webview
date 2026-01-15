@@ -50,7 +50,9 @@ function logoutLink() {
     return loginOrOutLink('logout');
 }
 
-function setUtmCampaign(url: string, campaign: string) {
+export type UtmCampaign = 'book-details' | 'subjects-dropdown';
+
+function setUtmCampaign(url: string, campaign: UtmCampaign) {
     try {
         const parsed = new URL(url);
 
