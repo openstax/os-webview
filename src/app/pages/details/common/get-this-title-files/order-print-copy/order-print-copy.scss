@@ -118,5 +118,9 @@
         grid-template-columns: 1fr 1fr;
         padding: $normal-margin;
         width: max-content;
+
+        &.boxes-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
     }
 }
