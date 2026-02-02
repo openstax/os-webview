@@ -33,7 +33,7 @@ function NoteWithImage({bannerInfo}: {bannerInfo: BannerInfo}) {
                 <RawHTML className="blurb" html={bannerInfo.html_message} />
                 <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
                     {bannerInfo.link_text}
-                    <FontAwesomeIcon icon={faChevronRight} />
+                    <FontAwesomeIcon icon={faChevronRight} aria-hidden="true" />
                 </a>
             </div>
         </NoteContainer>
@@ -45,9 +45,9 @@ function NoteWithoutImage({bannerInfo}: {bannerInfo: BannerInfo}) {
         <NoteContainer withImage={false}>
             <RawHTML className="blurb" html={bannerInfo.html_message} />
             <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
-                <FontAwesomeIcon icon={faHeart} className="red-heart" />
+                <FontAwesomeIcon icon={faHeart} className="red-heart" aria-hidden="true" />
                 {bannerInfo.link_text}
-                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronRight} aria-hidden="true" />
             </a>
         </NoteContainer>
     );
@@ -68,8 +68,10 @@ export default function LowerStickyNote({stickyData, PutAway}: {
             data-analytics-view
             data-analytics-nudge="donate"
             data-nudge-placement="banner"
-            role="dialog"
-            aria-label="sticky note"
+            role="complementary"
+            aria-label="Donation campaign announcement"
+            aria-live="polite"
+            aria-atomic="true"
         >
             <PutAway />
             {

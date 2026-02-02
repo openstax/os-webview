@@ -6,6 +6,7 @@ import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
 import {useIntl} from 'react-intl';
 import './order-print-copy.scss';
 import cmsFetch from '~/helpers/cms-fetch';
+import linkHelper, {type UtmCampaign} from '~/helpers/link';
 
 type Content = {
     headerText: string;
@@ -108,7 +109,7 @@ function useAudiobookLink(slug: string) {
     return url;
 }
 
-export default function OrderPrintCopy({slug}: {slug: string}) {
+export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign: UtmCampaign}) {
     const {formatMessage} = useIntl();
     const bookstoreLink = useBookstoreContentLink(slug);
     const audiobookLink = useAudiobookLink(slug);
@@ -146,7 +147,7 @@ export default function OrderPrintCopy({slug}: {slug: string}) {
                 headerText: individual,
                 headerIcon: faUser,
                 buttonText: button1Text,
-                buttonUrl: bookstoreLink,
+                buttonUrl: linkHelper.setUtmCampaign(bookstoreLink, campaign),
                 trackingLabel: 'Print'
             },
             {
@@ -171,14 +172,18 @@ export default function OrderPrintCopy({slug}: {slug: string}) {
         }
 
         return content;
-    }, [formatMessage, bookstoreLink, audiobookLink]);
+    }, [formatMessage, bookstoreLink, audiobookLink, campaign]);
 
     if (!contentArray) {
         return null;
     }
 
     return (
-        <nav className="order-print-copy" data-analytics-nav="Order print copy">
+        <nav
+          className="order-print-copy"
+          aria-label="Order print copy Navigation"
+          data-analytics-nav="Order print copy"
+        >
             <PhoneBoxes {...{contentArray}} />
             <DesktopBoxes {...{contentArray}} />
         </nav>

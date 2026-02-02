@@ -45,7 +45,7 @@ export default function Menus() {
         <React.Fragment>
             <DropdownContextProvider>
                 <div className='menus desktop'>
-                    <nav className='meta-nav'>
+                    <nav className='meta-nav' aria-label='Upper Menu'>
                         <UpperMenu />
                     </nav>
                     <nav className='nav' aria-label='Main menu'>

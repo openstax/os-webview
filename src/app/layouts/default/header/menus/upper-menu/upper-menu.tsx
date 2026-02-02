@@ -40,7 +40,7 @@ const importGiveButton = () => import('../give-button/give-button');
 
 export default function UpperMenu() {
     const {showButton}: {showButton?: boolean} = useGiveToday();
-    const riceLogo = useOptimizedImage('https://openstax.org/dist/images/rice.webp', 80);
+    const riceLogo = useOptimizedImage('https://assets.openstax.org/oscms-prodcms/media/images/rice-logo-blue.original.webp', 80);
 
     return (
         <ul className="container no-bullets" data-analytics-nav="Upper Menu">
