@@ -63,7 +63,7 @@ export default function Router() {
     );
 }
 
-const FOOTER_PAGES = [
+export const FOOTER_PAGES = [
     'license',
     'tos',
     'privacy',

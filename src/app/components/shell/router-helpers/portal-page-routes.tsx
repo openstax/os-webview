@@ -16,6 +16,7 @@ import {
 } from './page-routes';
 import {assertDefined} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
+import {FOOTER_PAGES} from '../router';
 
 // eslint-disable-next-line complexity
 export function RouteAsPortalOrNot() {
@@ -54,6 +55,13 @@ export function RouteAsPortalOrNot() {
         return (
             <LayoutUsingData data={data}>
                 <Routes>
+                    {FOOTER_PAGES.map((path) => (
+                        <Route
+                            path={path}
+                            key={path}
+                            element={<ImportedPage name="footer-page" />}
+                        />
+                    ))}
                     <Route path="/details/*" element={<DetailsRoutes />} />
                     <Route path="/:dir/*" element={<PortalSubRoute />} />
                 </Routes>
