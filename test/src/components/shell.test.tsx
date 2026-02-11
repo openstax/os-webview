@@ -23,6 +23,7 @@ import homePage from '../data/home-page';
 import subjectPage from '../data/new-subjects';
 import flexPage from '../data/flex-page';
 import generalPage from '../data/general-page';
+import footerPageTos from '../data/footer-page-tos';
 import ChildrenContainer from '~/../../test/helpers/mock-children-container';
 
 const {useLocation} = RRD;
@@ -84,6 +85,8 @@ describe('shell', () => {
                 return {error: 'intentional'};
             case 'pages/general-page':
                 return camelCaseKeys(transformData(generalPage));
+            case 'pages/tos':
+                return camelCaseKeys(transformData(footerPageTos));
             default:
                 if (path.startsWith('errata/') || path.startsWith('pages/')
                 || path.startsWith('snippets/roles')) {
@@ -288,5 +291,25 @@ describe('shell', () => {
         render(AppElement);
         await waitFor(() => expect(spyGP).toHaveBeenCalled());
         spyGP.mockClear();
+    });
+    it('routes footer page (tos) at top level', async () => {
+        setPortalPrefix('');
+        mockBrowserInitialEntries(['/tos/']);
+        render(AppElement);
+        await screen.findByRole('heading', {level: 1, name: 'Terms of Service'});
+    });
+    it('routes footer page (tos) within a portal route', async () => {
+        setPortalPrefix('/landing-page');
+        mockBrowserInitialEntries(['/landing-page/tos/']);
+        render(AppElement);
+        await screen.findByRole('heading', {level: 1, name: 'Terms of Service'});
+    });
+    it('does not fall through to generic portal flex page for footer pages', async () => {
+        setPortalPrefix('/landing-page');
+        mockBrowserInitialEntries(['/landing-page/license/']);
+        render(AppElement);
+        // Should render footer-page component, not the portal flex page
+        // The footer page component should be attempting to load pages/license
+        await waitFor(() => expect(spyUpd).toHaveBeenCalledWith('pages/license'));
     });
 });
