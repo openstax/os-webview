@@ -144,3 +144,22 @@ function RedirectToCanonicalDetailsPage() {
 
     return <Navigate to={`/details/books/${title}`} replace />;
 }
+
+const FOOTER_PAGES = [
+    'license',
+    'tos',
+    'privacy',
+    'privacy-policy',
+    'accessibility-statement',
+    'careers'
+].map((s) => `/${s}/`);
+
+export function generateFooterPageRoutes() {
+    return FOOTER_PAGES.map((path) => (
+        <Route
+            path={path}
+            key={path}
+            element={<ImportedPage name="footer-page" />}
+        />
+    ));
+}
