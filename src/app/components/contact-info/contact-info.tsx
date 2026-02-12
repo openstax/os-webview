@@ -1,13 +1,22 @@
 import React from 'react';
 import FormInput from '~/components/form-input/form-input';
 import {useIntl} from 'react-intl';
+import useUserContext from '~/contexts/user';
 import SchoolSelector from '~/components/school-selector/school-selector';
+import { useLocation } from 'react-router-dom';
 import './contact-info.scss';
 
 export default function ContactInfo({
     children
 }: React.PropsWithChildren<Record<never, never>>) {
     const {formatMessage} = useIntl();
+    const {userModel} = useUserContext();
+    const firstName = userModel?.first_name;
+    const lastName = userModel?.last_name;
+    const email = userModel?.email;
+    const school = userModel?.accountsModel?.school_name;
+    const {pathname} = useLocation();
+    const phoneRequired = !pathname.endsWith('adoption');
 
     return (
         <div className="contact-info">
@@ -18,7 +27,8 @@ export default function ContactInfo({
                     name: 'first_name',
                     required: true,
                     autoComplete: 'given-name',
-                    maxLength: 35
+                    maxLength: 35,
+                    value: firstName
                 }}
             />
             <FormInput
@@ -28,7 +38,8 @@ export default function ContactInfo({
                     name: 'last_name',
                     required: true,
                     autoComplete: 'family-name',
-                    maxLength: 35
+                    maxLength: 35,
+                    value: lastName
                 }}
             />
             <FormInput
@@ -38,7 +49,8 @@ export default function ContactInfo({
                     name: 'email',
                     required: true,
                     autoComplete: 'email',
-                    maxLength: 64
+                    maxLength: 64,
+                    value: email
                 }}
             />
             <FormInput
@@ -46,14 +58,14 @@ export default function ContactInfo({
                 inputProps={{
                     type: 'tel',
                     name: 'phone',
-                    required: true,
+                    required: phoneRequired,
                     autoComplete: 'tel-national',
                     minLength: 9,
                     maxLength: 20,
                     pattern: '[^a-zA-Z]{9,20}'
                 }}
             />
-            <SchoolSelector />
+            <SchoolSelector initialValue={school} />
             {children}
         </div>
     );
