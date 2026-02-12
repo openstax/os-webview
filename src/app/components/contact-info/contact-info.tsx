@@ -3,7 +3,7 @@ import FormInput from '~/components/form-input/form-input';
 import {useIntl} from 'react-intl';
 import useUserContext from '~/contexts/user';
 import SchoolSelector from '~/components/school-selector/school-selector';
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import './contact-info.scss';
 
 export default function ContactInfo({
