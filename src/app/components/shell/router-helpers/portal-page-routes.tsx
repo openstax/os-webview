@@ -12,7 +12,8 @@ import {
     FlexPageUsingItsOwnLayout,
     NonFlexPageUsingDefaultLayout,
     DetailsRoutes,
-    isNoDataPage
+    isNoDataPage,
+    generateFooterPageRoutes
 } from './page-routes';
 import {assertDefined} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
@@ -54,6 +55,7 @@ export function RouteAsPortalOrNot() {
         return (
             <LayoutUsingData data={data}>
                 <Routes>
+                    {generateFooterPageRoutes()}
                     <Route path="/details/*" element={<DetailsRoutes />} />
                     <Route path="/:dir/*" element={<PortalSubRoute />} />
                 </Routes>

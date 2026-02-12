@@ -6,12 +6,12 @@ import {assertNotNull, assertDefined} from '~/helpers/data';
 import useLinkHandler from './router-helpers/use-link-handler';
 import {RouterContextProvider} from './router-context';
 import useLayoutContext, {LayoutContextProvider} from '~/contexts/layout';
-import {ImportedPage} from './router-helpers/page-loaders';
 import {
     HomePage,
     ErrataRoutes,
     DetailsRoutes,
-    OtherPageRoutes
+    OtherPageRoutes,
+    generateFooterPageRoutes
 } from './router-helpers/page-routes';
 import './skip-to-content.scss';
 
@@ -63,15 +63,6 @@ export default function Router() {
     );
 }
 
-const FOOTER_PAGES = [
-    'license',
-    'tos',
-    'privacy',
-    'privacy-policy',
-    'accessibility-statement',
-    'careers'
-].map((s) => `/${s}/`);
-
 function MainRoutes() {
     const {Layout} = useLayoutContext();
 
@@ -79,13 +70,7 @@ function MainRoutes() {
         <Layout>
             <Routes>
                 <Route index element={<HomePage />} />
-                {FOOTER_PAGES.map((path) => (
-                    <Route
-                        path={path}
-                        key={path}
-                        element={<ImportedPage name="footer-page" />}
-                    />
-                ))}
+                {generateFooterPageRoutes()}
                 <Route path="/errata/*" element={<ErrataRoutes />} />
                 <Route path="/details/*" element={<DetailsRoutes />} />
                 <Route path="/:dir/*" element={<OtherPageRoutes />} />
