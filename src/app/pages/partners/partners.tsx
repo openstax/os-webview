@@ -133,16 +133,16 @@ function Partners({data}: {data: PartnerPageData}) {
     const headline = data.heading;
     const description = data.description;
     const {linkTexts} = textsFromData(data);
-    const bannerStyle = React.useMemo(() => (
-        data.header_image_url ? {
-            backgroundImage: `url(${data.header_image_url})`
-        } : undefined
-    ), [data]);
+    const bannerRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        bannerRef.current?.style.setProperty('--background-url', `url(${data.header_image_url})`);
+    }, [data.header_image_url]);
 
     return (
         <React.Fragment>
             {confirmation && <Confirmation />}
-            <section className="banner hero" style={bannerStyle}>
+            <section className="banner hero" ref={bannerRef}>
                 <div className="boxed">
                     <div className="text-block">
                         <h1>{headline}</h1>

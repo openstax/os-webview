@@ -2,6 +2,7 @@
 @import 'mixins/placeholder-selectors';
 
 .partners.page {
+    --background-url: url('/dist/images/partners/header-right.jpg');
     background-color: ui-color(white);
 
     .above-the-banner {
@@ -40,7 +41,7 @@
     }
 
     .banner {
-        background-image: url('/dist/images/partners/header-right.jpg');
+        background-image: var(--background-url);
         background-position: right;
         background-repeat: no-repeat;
         background-size: 55%;
