@@ -9,6 +9,7 @@ import {SharedDataContextProvider} from '~/contexts/shared-data';
 import {LanguageContextProvider} from '~/contexts/language';
 import * as CI from '~/components/contact-info/contact-info';
 import * as DH from '~/helpers/use-document-head';
+import '~/../../test/src/helpers/mock-recaptcha';
 
 jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
 jest.spyOn(DH, 'default').mockReturnValue();

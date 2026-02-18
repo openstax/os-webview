@@ -12,6 +12,7 @@ import * as CI from '~/components/contact-info/contact-info';
 import HowUsing from '~/pages/adoption/how-using/how-using';
 import {SalesforceBook} from '~/helpers/books';
 import userModel from '~/../../test/src/data/userModel';
+import '~/../../test/src/helpers/mock-recaptcha';
 
 jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
 
@@ -144,16 +145,19 @@ describe('adoption-form logged-in flow', () => {
         const hiddenFirst = document.querySelector(
             'input[name="first_name"]'
         ) as HTMLInputElement;
+
         expect(hiddenFirst.value).toBe('Roy');
 
         const hiddenLast = document.querySelector(
             'input[name="last_name"]'
         ) as HTMLInputElement;
+
         expect(hiddenLast.value).toBe('Johnson');
 
         const hiddenEmail = document.querySelector(
             'input[name="email"]'
         ) as HTMLInputElement;
+
         expect(hiddenEmail.value).toBe('rej2+verify.1@rice.edu');
 
         // Search to expand the subject section containing Biology
