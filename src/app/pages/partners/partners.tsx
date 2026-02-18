@@ -59,6 +59,7 @@ type PartnerPageData = {
     partner_ally_description: string;
     category_mapping: {[label: string]: string};
     field_name_mapping: {[label: string]: string};
+    header_image_url: string | null;
     partner_type_choices: string[];
 };
 
@@ -132,11 +133,16 @@ function Partners({data}: {data: PartnerPageData}) {
     const headline = data.heading;
     const description = data.description;
     const {linkTexts} = textsFromData(data);
+    const bannerRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        bannerRef.current?.style.setProperty('--background-url', `url(${data.header_image_url})`);
+    }, [data.header_image_url]);
 
     return (
         <React.Fragment>
             {confirmation && <Confirmation />}
-            <section className="banner hero">
+            <section className="banner hero" ref={bannerRef}>
                 <div className="boxed">
                     <div className="text-block">
                         <h1>{headline}</h1>
@@ -157,7 +163,6 @@ function Partners({data}: {data: PartnerPageData}) {
                         </div>
                     </div>
                 </div>
-                <div className="right-bg clipped-image" />
             </section>
             <section>
                 <div className="text-content">
