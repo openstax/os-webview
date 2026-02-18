@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import {LanguageContextProvider} from '~/contexts/language';
 import {it, expect} from '@jest/globals';
+import '~/../../test/src/helpers/mock-recaptcha';
 import '@testing-library/jest-dom';
 
 let submitted = false;
@@ -32,7 +33,7 @@ describe('multi-page-form', () => {
         expect(screen.queryByText('Back')?.getAttribute('hidden')).toBe('');
         expect(screen.queryAllByRole('button')).toHaveLength(1);
         await user.click(screen.getByText('Next'));
-        expect(screen.queryByText('Submit')?.getAttribute('hidden')).toBe('');
+        expect(screen.queryByText('Submit')).toBeNull();
         await user.click(screen.getByText('Back'));
         expect(screen.queryByText('Back')?.getAttribute('hidden')).toBe('');
         await user.click(screen.getByText('Next'));
