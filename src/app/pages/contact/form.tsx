@@ -4,6 +4,7 @@ import DropdownSelect from '~/components/select/drop-down/drop-down';
 import {useNavigate, useLocation} from 'react-router-dom';
 import { FileButton } from '../errata-form/form/FileUploader';
 import useUserContext from '~/contexts/user';
+import useRecaptchaToken from '~/components/recaptcha';
 import './form.scss';
 
 type SetSubmitted = React.Dispatch<React.SetStateAction<boolean>>;
@@ -145,6 +146,7 @@ export default function ContactForm({setSubmitted}: {setSubmitted?: SetSubmitted
     const bodyParams = searchParams.getAll('body').join('\n');
     const {userStatus} = useUserContext();
     const userUuid = searchParams.get('user_id') ?? userStatus?.uuid;
+    const {token, Recaptcha} = useRecaptchaToken();
 
     return (
         <SalesforceForm postTo={postTo} afterSubmit={afterSubmit}>
@@ -152,6 +154,7 @@ export default function ContactForm({setSubmitted}: {setSubmitted?: SetSubmitted
             <input type="hidden" name="product" value={product} />
             <input type="hidden" name="user_id" value={userUuid} />
             <input type="hidden" name="support_context" value={bodyParams} />
+            <input type="hidden" name="recaptcha_token" value={token} />
             <label>
                 <div className="label-text">
                     What is your question about?
@@ -194,7 +197,9 @@ export default function ContactForm({setSubmitted}: {setSubmitted?: SetSubmitted
                 Please add a screenshot or any other file that helps explain your request.
             </div>
             <FileButton name="attachment" />
-            <input type="submit" className="btn btn-orange" onClick={beforeSubmit} />
+            <Recaptcha>
+                <input type="submit" className="btn btn-orange" onClick={beforeSubmit} />
+            </Recaptcha>
         </SalesforceForm>
     );
 }
