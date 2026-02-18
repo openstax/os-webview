@@ -3,11 +3,6 @@ import {isMobileDisplay} from '~/helpers/device';
 import {assertDefined} from '~/helpers/data';
 
 function findNext(dropdownRef: React.MutableRefObject<HTMLElement | null>) {
-    const nextSib = document.activeElement?.nextElementSibling;
-
-    if (nextSib?.matches('a')) {
-        return nextSib as HTMLAnchorElement;
-    }
     const targets = Array.from(
         assertDefined(dropdownRef.current?.querySelectorAll('a'))
     );
@@ -21,11 +16,6 @@ function findPrev(
     topRef: React.MutableRefObject<HTMLAnchorElement | null>,
     dropdownRef: React.MutableRefObject<HTMLElement | null>
 ) {
-    const prevSib = document.activeElement?.previousElementSibling;
-
-    if (prevSib?.matches('a')) {
-        return prevSib as HTMLAnchorElement;
-    }
     const targets = Array.from(
         assertDefined(dropdownRef.current?.querySelectorAll('a'))
     );
