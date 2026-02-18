@@ -12,7 +12,7 @@
 
     &:hover,
     &:focus {
-        background-color: darken(os-color(gold), 20%);
-        color: text-color(white);
+        background-color: darken(os-color(gold), 5%);
+        color: text-color(normal);
     }
 }
