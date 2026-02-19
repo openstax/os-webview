@@ -7,8 +7,10 @@
     box-shadow: 0 0.5rem 0.5rem 0 rgba(black, 0.1);
     color: os-color(gray);
     display: none;
+    margin: 0;
     padding: 1rem;
     width: auto;
+    list-style-type: none;
 
     a {
         color: os-color(gray);

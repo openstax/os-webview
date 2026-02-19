@@ -2,12 +2,7 @@ import useDropdownContext from '../../dropdown-context';
 import {isMobileDisplay} from '~/helpers/device';
 import {assertDefined} from '~/helpers/data';
 
-function findNext(dropdownRef: React.MutableRefObject<HTMLDivElement | null>) {
-    const nextSib = document.activeElement?.nextElementSibling;
-
-    if (nextSib?.matches('a')) {
-        return nextSib as HTMLAnchorElement;
-    }
+function findNext(dropdownRef: React.MutableRefObject<HTMLElement | null>) {
     const targets = Array.from(
         assertDefined(dropdownRef.current?.querySelectorAll('a'))
     );
@@ -19,13 +14,8 @@ function findNext(dropdownRef: React.MutableRefObject<HTMLDivElement | null>) {
 
 function findPrev(
     topRef: React.MutableRefObject<HTMLAnchorElement | null>,
-    dropdownRef: React.MutableRefObject<HTMLDivElement | null>
+    dropdownRef: React.MutableRefObject<HTMLElement | null>
 ) {
-    const prevSib = document.activeElement?.previousElementSibling;
-
-    if (prevSib?.matches('a')) {
-        return prevSib as HTMLAnchorElement;
-    }
     const targets = Array.from(
         assertDefined(dropdownRef.current?.querySelectorAll('a'))
     );
@@ -46,7 +36,7 @@ export default function useNavigateByKey({
     closeDesktopMenu
 }: {
     topRef: React.MutableRefObject<HTMLAnchorElement | null>;
-    dropdownRef: React.MutableRefObject<HTMLDivElement | null>;
+    dropdownRef: React.MutableRefObject<HTMLElement | null>;
     closeMenu: () => void;
     closeDesktopMenu: () => void;
 }) {
@@ -74,9 +64,7 @@ export default function useNavigateByKey({
             case 'ArrowDown':
                 event.preventDefault();
                 if (document.activeElement === topRef.current) {
-                    (
-                        dropdownRef.current?.firstChild as HTMLAnchorElement
-                    )?.focus();
+                    dropdownRef.current?.querySelector('a')?.focus();
                 } else {
                     findNext(dropdownRef).focus();
                 }

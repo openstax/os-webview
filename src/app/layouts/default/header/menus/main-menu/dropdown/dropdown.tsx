@@ -71,7 +71,7 @@ export default function Dropdown({
     navAnalytics?: string;
 }) {
     const topRef = useRef<HTMLAnchorElement>(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLUListElement>(null);
     const ddId = `ddId-${label}`;
     const {closeMenu, closeDesktopMenu, openMenu, openDesktopMenu} =
         useMenuControls({topRef, label});
@@ -207,21 +207,21 @@ function DropdownContents({
 }: {
     id: string;
     label: string;
-    dropdownRef: React.RefObject<HTMLDivElement>;
+    dropdownRef: React.RefObject<HTMLUListElement>;
     navAnalytics?: string;
     children?: React.ReactNode;
 }) {
     return (
         <div className="dropdown-container">
-            <div
+            <ul
                 className="dropdown-menu"
                 id={id}
                 aria-label={`${label} menu`}
                 ref={dropdownRef}
                 data-analytics-nav={navAnalytics || undefined}
             >
-                {children}
-            </div>
+                {React.Children.map(children, (c) => <li>{c}</li>)}
+            </ul>
         </div>
     );
 }
