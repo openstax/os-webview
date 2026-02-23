@@ -64,7 +64,7 @@ function Button({
 }
 
 function DesktopBox({index, entry}: {index: number; entry: Content}) {
-    const buttonClass = ['primary', 'primary', 'secondary'][index] || 'primary';
+    const buttonClass = index === 2 ? 'secondary' : 'primary';
 
     return (
         <div className="box" key={entry.headerText}>
@@ -89,30 +89,22 @@ function DesktopBoxes({contentArray}: {contentArray: Content[]}) {
     );
 }
 
-function useBookstoreContentLink(slug: string) {
-    const [url, setUrl] = React.useState<string | null>(null);
+function useBookstoreAndAudiobookLinks(slug: string) {
+    const [urls, setUrls] = React.useState<(string | null)[]>([null, null]);
 
     React.useEffect(() => {
-        cmsFetch(slug).then((data) => setUrl(data.amazon_link));
+        cmsFetch(slug).then((data) => setUrls([
+            data.amazon_link,
+            data.audiobook_link
+        ]));
     }, [slug]);
 
-    return url;
-}
-
-function useAudiobookLink(slug: string) {
-    const [url, setUrl] = React.useState<string | null>(null);
-
-    React.useEffect(() => {
-        cmsFetch(slug).then((data) => setUrl(data.audiobook_link));
-    }, [slug]);
-
-    return url;
+    return urls;
 }
 
 export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign: UtmCampaign}) {
     const {formatMessage} = useIntl();
-    const bookstoreLink = useBookstoreContentLink(slug);
-    const audiobookLink = useAudiobookLink(slug);
+    const [bookstoreLink, audiobookLink] = useBookstoreAndAudiobookLinks(slug);
     const contentArray = React.useMemo(() => {
         if (!bookstoreLink) {
             return null;
