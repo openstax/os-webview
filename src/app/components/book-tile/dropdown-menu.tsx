@@ -13,16 +13,21 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import type {Book as BookInfo} from '~/pages/subjects/new/specific/context';
+import usePortalContext from '~/contexts/portal';
+import { useRexPortalLinkOrNot } from '~/helpers/rex-portal';
 
 export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
     const ref = React.useRef<HTMLDivElement>(null);
     const {slug} = bookInfo;
     const buttonId = `${slug}-ddb`;
     const menuId = `${slug}-ddm`;
-    const webviewLink = bookInfo.webviewRexLink;
+    const webviewLink = useRexPortalLinkOrNot(bookInfo.webviewRexLink ?? '');
     const pdfLink =
         bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
     const warning = useWarning(bookInfo.id);
+    const {rewriteLinks} = usePortalContext();
+
+    React.useLayoutEffect(() => rewriteLinks?.(ref.current as HTMLElement), [rewriteLinks]);
 
     return (
         <div
