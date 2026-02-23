@@ -6,14 +6,15 @@ import SchoolSelector from '~/components/school-selector/school-selector';
 import {useLocation} from 'react-router-dom';
 import './contact-info.scss';
 
+// eslint-disable-next-line complexity
 export default function ContactInfo({
     children
 }: React.PropsWithChildren<Record<never, never>>) {
     const {formatMessage} = useIntl();
     const {userModel} = useUserContext();
-    const firstName = userModel?.first_name;
-    const lastName = userModel?.last_name;
-    const email = userModel?.email;
+    const firstName = userModel?.first_name ?? '';
+    const lastName = userModel?.last_name ?? '';
+    const email = userModel?.email ?? '';
     const school = userModel?.accountsModel?.school_name;
     const {pathname} = useLocation();
     const phoneRequired = !pathname.endsWith('adoption');
@@ -30,6 +31,7 @@ export default function ContactInfo({
                     maxLength: 35,
                     value: firstName
                 }}
+                key={firstName}
             />
             <FormInput
                 label={formatMessage({id: 'contact-info.last-name'})}
@@ -41,6 +43,7 @@ export default function ContactInfo({
                     maxLength: 35,
                     value: lastName
                 }}
+                key={lastName}
             />
             <FormInput
                 label={formatMessage({id: 'contact-info.email'})}
@@ -52,6 +55,7 @@ export default function ContactInfo({
                     maxLength: 64,
                     value: email
                 }}
+                key={email}
             />
             <FormInput
                 label={formatMessage({id: 'contact-info.phone'})}
@@ -65,7 +69,7 @@ export default function ContactInfo({
                     pattern: '[^a-zA-Z]{9,20}'
                 }}
             />
-            <SchoolSelector initialValue={school} />
+            <SchoolSelector key={school} initialValue={school} />
             {children}
         </div>
     );
