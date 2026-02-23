@@ -167,8 +167,8 @@ describe('book-tile', () => {
         render(<Component book={[bd]} />);
         const menuItems = screen.getAllByRole('menuitem').map((i) => i.textContent);
 
-        expect(menuItems.includes('View online'));
-        expect(!menuItems.includes('Order a print copy'));
+        expect(menuItems.includes('View online')).toBe(true);
+        expect(menuItems.includes('Order a print copy')).toBe(false);
     });
     it('suppresses "View online" if no Rex link', async () => {
         const bd = {...bookData, webviewRexLink: null};
@@ -176,7 +176,7 @@ describe('book-tile', () => {
         render(<Component book={[bd]} />);
         const menuItems = screen.getAllByRole('menuitem').map((i) => i.textContent);
 
-        expect(!menuItems.includes('View online'));
-        expect(menuItems.includes('Order a print copy'));
+        expect(menuItems.includes('View online')).toBe(false);
+        expect(menuItems.includes('Order a print copy')).toBe(true);
     });
 });
