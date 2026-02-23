@@ -156,10 +156,9 @@ describe('book-tile', () => {
         });
 
         await userEvent.click(printCopyLink);
-
-        expect(screen.getAllByRole('dialog')).toHaveLength(2);
-        expect(screen.getAllByRole('button')).toHaveLength(2);
         mockCmsFetch.mockRestore();
+
+        expect(screen.getAllByText('Audiobook')).toHaveLength(2);
     });
     it('suppresses the print order item when bookstoreComingSoon is true', async () => {
         const bd = {...bookData, bookstoreComingSoon: true};
