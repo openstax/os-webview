@@ -1,5 +1,5 @@
 import React from 'react';
-import {Webinar} from '../types';
+import { Webinar } from '../types';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import Byline from '~/components/byline/byline';
 import './webinar-grid.scss';
@@ -7,7 +7,7 @@ import './webinar-grid.scss';
 type WebinarGridArgs = {
     webinars: Webinar[];
 };
-export default function WebinarGrid({webinars}: WebinarGridArgs) {
+export default function WebinarGrid({ webinars }: WebinarGridArgs) {
     return (
         <div className='card-grid'>
             {webinars.map((w) => (
@@ -17,28 +17,31 @@ export default function WebinarGrid({webinars}: WebinarGridArgs) {
     );
 }
 
-function WebinarCard({data}: {data: Webinar}) {
+function WebinarCard({ data }: { data: Webinar }) {
     if (data.start.valueOf() < Date.now()) {
         return <PastWebinar data={data} />;
     }
     return <UpcomingWebinar data={data} />;
 }
 
-function PastWebinar({data}: {data: Webinar}) {
+function PastWebinar({ data }: { data: Webinar }) {
+    const isZoom = data.registrationUrl.includes('zoom.us');
+    const linkText = !isZoom ? 'Watch now!' : data.registrationLinkText;
+
     return (
         <div className='card past'>
             <h3>{data.title}</h3>
             <Byline author={data.speakers} date={data.start.toDateString()} />
             <div>{data.description}</div>
             <LinkWithChevron href={data.registrationUrl}>
-                {data.registrationLinkText}
+                {linkText}
             </LinkWithChevron>
         </div>
     );
 }
 
-function UpcomingWebinar({data}: {data: Webinar}) {
-    const day = data.start.toLocaleString('en-us', {weekday: 'long'});
+function UpcomingWebinar({ data }: { data: Webinar }) {
+    const day = data.start.toLocaleString('en-us', { weekday: 'long' });
     const startTime = data.start.toLocaleString('en-us', {
         hour: 'numeric',
         minute: 'numeric'
@@ -55,7 +58,7 @@ function UpcomingWebinar({data}: {data: Webinar}) {
                 <div className='date'>
                     <div className='day-of-month'>{data.start.getDate()}</div>
                     <div className='month'>
-                        {data.start.toLocaleString('en', {month: 'short'})}
+                        {data.start.toLocaleString('en', { month: 'short' })}
                     </div>
                 </div>
                 <div className='title-and-time'>
