@@ -9,7 +9,7 @@ type WebinarGridArgs = {
 };
 export default function WebinarGrid({webinars}: WebinarGridArgs) {
     return (
-        <div className='card-grid'>
+        <div className="card-grid">
             {webinars.map((w) => (
                 <WebinarCard key={w.id} data={w} />
             ))}
@@ -25,13 +25,16 @@ function WebinarCard({data}: {data: Webinar}) {
 }
 
 function PastWebinar({data}: {data: Webinar}) {
+    const isZoom = data.registrationUrl.includes('zoom.us');
+    const linkText = !isZoom ? 'Watch now!' : data.registrationLinkText;
+
     return (
-        <div className='card past'>
+        <div className="card past">
             <h3>{data.title}</h3>
             <Byline author={data.speakers} date={data.start.toDateString()} />
             <div>{data.description}</div>
             <LinkWithChevron href={data.registrationUrl}>
-                {data.registrationLinkText}
+                {linkText}
             </LinkWithChevron>
         </div>
     );
@@ -50,26 +53,26 @@ function UpcomingWebinar({data}: {data: Webinar}) {
     });
 
     return (
-        <div className='card upcoming'>
-            <div className='dated-heading'>
-                <div className='date'>
-                    <div className='day-of-month'>{data.start.getDate()}</div>
-                    <div className='month'>
+        <div className="card upcoming">
+            <div className="dated-heading">
+                <div className="date">
+                    <div className="day-of-month">{data.start.getDate()}</div>
+                    <div className="month">
                         {data.start.toLocaleString('en', {month: 'short'})}
                     </div>
                 </div>
-                <div className='title-and-time'>
+                <div className="title-and-time">
                     <h3>{data.title}</h3>
-                    <div className='day-and-time'>
+                    <div className="day-and-time">
                         {day}, {startTime} - {endTime}
                     </div>
                 </div>
             </div>
             <hr />
             <div>{data.description}</div>
-            <div className='speakers-and-spaces'>
-                <div className='speakers'>
-                    <span className='label'>Speakers: </span>
+            <div className="speakers-and-spaces">
+                <div className="speakers">
+                    <span className="label">Speakers: </span>
                     {data.speakers}
                 </div>
             </div>
