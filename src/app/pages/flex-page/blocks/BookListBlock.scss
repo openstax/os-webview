@@ -1,9 +1,13 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .flex-page.page div.content-block-book-list {
+    // Dropdown menu can wind up in back of things below it
+    $dropdown-padding: 18rem;
+
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
     margin: $normal-margin 0;
+    padding-bottom: $dropdown-padding;
     width: 100%;
 
     @include width-up-to($phone-max) {

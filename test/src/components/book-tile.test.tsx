@@ -132,23 +132,50 @@ describe('book-tile', () => {
         const printCopyLink = screen.getByRole('menuitem', {
             name: 'Order a print copy'
         });
-        const mockCmsFetch = jest
-            .spyOn(CF, 'default')
-            .mockImplementation(() => {
-                return Promise.resolve({
-                    amazon_link: 'where you go'
-                });
-            });
+        const mockCmsFetch = jest.spyOn(CF, 'default');
+
+        mockCmsFetch.mockResolvedValue({
+            amazon_link: 'where you go'
+        });
 
         await userEvent.click(printCopyLink);
 
         expect(screen.getAllByRole('dialog')).toHaveLength(2);
         mockCmsFetch.mockRestore();
     });
+    it('includes audiobook link', async () => {
+        render(<Component book={[bookData]} />);
+        const printCopyLink = screen.getByRole('menuitem', {
+            name: 'Order a print copy'
+        });
+        const mockCmsFetch = jest.spyOn(CF, 'default');
+
+        mockCmsFetch.mockResolvedValue({
+            amazon_link: 'where you go',
+            audiobook_link: 'audio-book-link'
+        });
+
+        await userEvent.click(printCopyLink);
+        mockCmsFetch.mockRestore();
+
+        expect(screen.getAllByText('Audiobook')).toHaveLength(2);
+    });
     it('suppresses the print order item when bookstoreComingSoon is true', async () => {
         const bd = {...bookData, bookstoreComingSoon: true};
 
         render(<Component book={[bd]} />);
-        expect(screen.getAllByRole('menuitem')).toHaveLength(4);
+        const menuItems = screen.getAllByRole('menuitem').map((i) => i.textContent);
+
+        expect(menuItems.includes('View online')).toBe(true);
+        expect(menuItems.includes('Order a print copy')).toBe(false);
+    });
+    it('suppresses "View online" if no Rex link', async () => {
+        const bd = {...bookData, webviewRexLink: null};
+
+        render(<Component book={[bd]} />);
+        const menuItems = screen.getAllByRole('menuitem').map((i) => i.textContent);
+
+        expect(menuItems.includes('View online')).toBe(false);
+        expect(menuItems.includes('Order a print copy')).toBe(true);
     });
 });
