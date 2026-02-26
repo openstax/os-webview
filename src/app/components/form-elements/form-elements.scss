@@ -27,7 +27,6 @@
     display: flex;
 }
 
-
 .input-with-suggestions {
     position: relative;
 
@@ -40,6 +39,10 @@
             background: ui-color(white);
             cursor: pointer;
             padding: 0.5rem;
+
+            @include width-up-to($phone-max) {
+                padding: 1.2rem 0.5rem;
+            }
 
             &.active {
                 background-color: ui-color(page-bg);
