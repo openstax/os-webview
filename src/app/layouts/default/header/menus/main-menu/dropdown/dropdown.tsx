@@ -81,6 +81,16 @@ export default function Dropdown({
         closeMenu,
         closeDesktopMenu
     });
+    const closeOnBlur = React.useCallback(
+        (event: React.FocusEvent) => {
+            const {currentTarget, relatedTarget} = event;
+
+            if (!relatedTarget || !currentTarget.contains(relatedTarget)) {
+                closeDesktopMenu();
+            }
+        },
+        [closeDesktopMenu]
+    );
 
     return (
         <Tag
@@ -88,6 +98,7 @@ export default function Dropdown({
             onMouseEnter={openDesktopMenu}
             onMouseLeave={closeDesktopMenu}
             onKeyDown={navigateByKey}
+            onBlur={closeOnBlur}
         >
             <OptionalWrapper isWrapper={!excludeWrapper}>
                 <DropdownController
@@ -220,7 +231,9 @@ function DropdownContents({
                 ref={dropdownRef}
                 data-analytics-nav={navAnalytics || undefined}
             >
-                {React.Children.map(children, (c) => <li>{c}</li>)}
+                {React.Children.map(children, (c) => (
+                    <li>{c}</li>
+                ))}
             </ul>
         </div>
     );
