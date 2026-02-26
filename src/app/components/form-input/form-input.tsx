@@ -53,7 +53,7 @@ function useMatches(pattern: string, suggestions: string[] = []) {
     );
     const exactMatch = React.useMemo(
         () =>
-            matches.includes(pattern) ||
+            matches.some((m) => m.toLowerCase() === pattern) ||
             (matches.length === 1 && pattern === matches[0].toLowerCase()),
         [matches, pattern]
     );
@@ -76,9 +76,11 @@ function SuggestionBox({
     activeIndex: number;
     setActiveIndex: (n: number) => void;
 }) {
-    if (exactMatch) {
-        accept(matches[0]);
-    }
+    React.useEffect(() => {
+        if (exactMatch) {
+            accept(matches[0]);
+        }
+    }, [exactMatch, accept, matches]);
     useMainSticky();
 
     return (
