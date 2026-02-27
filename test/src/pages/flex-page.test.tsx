@@ -8,6 +8,7 @@ import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
 import { LayoutContextProvider } from '~/contexts/layout';
 
 type Data = Parameters<typeof FlexPage>[0]['data'];
+type BodyBlock = Data['body'][number];
 let body: Data['body'];
 
 function Component() {
@@ -54,7 +55,7 @@ describe('flex-page', () => {
     it('renders heroBlock with top image alignment', () => {
         const modBlock = heroBlock();
 
-        modBlock.value.config.push({
+        modBlock.value.config!.push({
             type: 'image_alignment',
             value: 'top'
         });
@@ -69,7 +70,7 @@ describe('flex-page', () => {
     it('renders heroBlock with bottom image alignment', () => {
         const modBlock = heroBlock();
 
-        modBlock.value.config.push({
+        modBlock.value.config!.push({
             type: 'image_alignment',
             value: 'bottom'
         });
@@ -84,7 +85,7 @@ describe('flex-page', () => {
     it('renders heroBlock with background color', () => {
         const modBlock = heroBlock();
 
-        modBlock.value.config.push({
+        modBlock.value.config!.push({
             type: 'background_color',
             value: '#242424'
         });
@@ -164,8 +165,7 @@ function imageBlock(name: string) {
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function heroBlock(): any {
+function heroBlock(): BodyBlock {
     return {
         id: 'hero-id',
         type: 'hero',
@@ -175,11 +175,10 @@ function heroBlock(): any {
             image: imageBlock('hero'),
             imageAlt: ''
         }
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function ctaBlock(): any {
+function ctaBlock(): BodyBlock {
     return {
         id: 'cta-id',
         type: 'cta_block',
@@ -209,11 +208,10 @@ function ctaBlock(): any {
             ],
             config: []
         }
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function cardsBlock(withStyle?: boolean): any {
+function cardsBlock(withStyle?: boolean): BodyBlock {
     return {
         id: 'cards-id',
         type: 'cards_block',
@@ -240,17 +238,15 @@ function cardsBlock(withStyle?: boolean): any {
                 ? [
                       {
                           type: 'card_style',
-                          id: '',
                           value: 'rounded'
                       }
                   ]
                 : []
         }
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function dividerBlock(aligned: boolean): any {
+function dividerBlock(aligned: boolean): BodyBlock {
     return {
         id: 'divider-id',
         type: 'divider',
@@ -265,11 +261,10 @@ function dividerBlock(aligned: boolean): any {
                   ]
                 : []
         }
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function faqBlock(): any {
+function faqBlock(): BodyBlock {
     return {
         id: 'faq-id',
         type: 'faq',
@@ -284,20 +279,18 @@ function faqBlock(): any {
                 }
             }
         ]
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function htmlBlock(): any {
+function htmlBlock(): BodyBlock {
     return {
         id: 'html-id',
         type: 'html',
         value: '<p>Some html</p>'
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function linksBlock(): any {
+function linksBlock(): BodyBlock {
     return {
         id: 'links-id',
         type: 'links_group',
@@ -327,11 +320,10 @@ function linksBlock(): any {
             ],
             config: []
         }
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function quoteBlock(title?: string): any {
+function quoteBlock(title?: string): BodyBlock {
     return {
         id: 'quote-id',
         type: 'quote',
@@ -342,20 +334,18 @@ function quoteBlock(title?: string): any {
             title,
             config: []
         }
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function rtBlock(): any {
+function rtBlock(): BodyBlock {
     return {
         id: 'rt-id',
         type: 'text',
         value: 'Some text with <b>formatting</b>'
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function sectionBlock(): any {
+function sectionBlock(): BodyBlock {
     return {
         id: 'section-id',
         type: 'section',
@@ -378,11 +368,10 @@ function sectionBlock(): any {
                 }
             ]
         }
-    };
+    } as BodyBlock;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function bookListBlock(): any {
+function bookListBlock(): BodyBlock {
     return {
         id: 'book-list-id',
         type: 'book_list',
@@ -404,5 +393,5 @@ function bookListBlock(): any {
                 }
             ]
         }
-    };
+    } as BodyBlock;
 }

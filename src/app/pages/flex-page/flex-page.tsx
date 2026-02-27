@@ -53,7 +53,7 @@ export default function FlexPage({data}: {data: FlexPageData}) {
         if (ref.current) {
             rewriteLinks(ref.current);
         }
-    });
+    }, [data, rewriteLinks]);
 
     return (
         <main className="flex-page page" ref={ref}>
