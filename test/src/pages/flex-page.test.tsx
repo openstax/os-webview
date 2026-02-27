@@ -5,35 +5,7 @@ import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
-import {CTALinkFields} from '~/pages/flex-page/blocks/CTABlock';
-import {ContentBlockConfig} from '~/pages/flex-page/blocks/ContentBlock';
-import {HeroBlockConfig} from '~/pages/flex-page/blocks/HeroBlock';
 import { LayoutContextProvider } from '~/contexts/layout';
-
-const emptyTarget = {
-    type: '',
-    value: ''
-};
-const ctaActions: CTALinkFields[] = [
-    {
-        config: [
-            {
-                type: 'style',
-                value: 'string'
-            }
-        ],
-        text: 'cta-text',
-        target: {
-            type: 'cta-target-type',
-            value: 'cta-target-value'
-        }
-    },
-    {
-        config: [],
-        text: 'cta-text2',
-        target: emptyTarget
-    }
-];
 
 type Data = Parameters<typeof FlexPage>[0]['data'];
 let body: Data['body'];
@@ -47,13 +19,6 @@ function Component() {
         </ShellContextProvider>
     );
 }
-
-const mockColor = jest.fn();
-
-jest.mock('color', () => () => mockColor());
-mockColor.mockReturnValue({
-    isDark: () => true
-});
 
 describe('flex-page', () => {
     beforeAll(() => {
@@ -199,7 +164,8 @@ function imageBlock(name: string) {
     };
 }
 
-function heroBlock(): HeroBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function heroBlock(): any {
     return {
         id: 'hero-id',
         type: 'hero',
@@ -212,18 +178,42 @@ function heroBlock(): HeroBlockConfig {
     };
 }
 
-function ctaBlock(): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function ctaBlock(): any {
     return {
         id: 'cta-id',
         type: 'cta_block',
         value: {
-            actions: ctaActions,
+            actions: [
+                {
+                    config: [
+                        {
+                            type: 'style',
+                            value: 'string'
+                        }
+                    ],
+                    text: 'cta-text',
+                    target: {
+                        type: 'cta-target-type',
+                        value: 'cta-target-value'
+                    }
+                },
+                {
+                    config: [],
+                    text: 'cta-text2',
+                    target: {
+                        type: '',
+                        value: ''
+                    }
+                }
+            ],
             config: []
         }
     };
 }
 
-function cardsBlock(withStyle?: boolean): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function cardsBlock(withStyle?: boolean): any {
     return {
         id: 'cards-id',
         type: 'cards_block',
@@ -231,7 +221,19 @@ function cardsBlock(withStyle?: boolean): ContentBlockConfig {
             cards: [
                 {
                     text: 'first card',
-                    ctaBlock: withStyle ? ctaActions : []
+                    ctaBlock: withStyle ? [{
+                        config: [
+                            {
+                                type: 'style',
+                                value: 'string'
+                            }
+                        ],
+                        text: 'cta-text',
+                        target: {
+                            type: 'cta-target-type',
+                            value: 'cta-target-value'
+                        }
+                    }] : []
                 }
             ],
             config: withStyle
@@ -247,7 +249,8 @@ function cardsBlock(withStyle?: boolean): ContentBlockConfig {
     };
 }
 
-function dividerBlock(aligned: boolean): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function dividerBlock(aligned: boolean): any {
     return {
         id: 'divider-id',
         type: 'divider',
@@ -265,7 +268,8 @@ function dividerBlock(aligned: boolean): ContentBlockConfig {
     };
 }
 
-function faqBlock(): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function faqBlock(): any {
     return {
         id: 'faq-id',
         type: 'faq',
@@ -283,7 +287,8 @@ function faqBlock(): ContentBlockConfig {
     };
 }
 
-function htmlBlock(): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function htmlBlock(): any {
     return {
         id: 'html-id',
         type: 'html',
@@ -291,7 +296,8 @@ function htmlBlock(): ContentBlockConfig {
     };
 }
 
-function linksBlock(): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function linksBlock(): any {
     return {
         id: 'links-id',
         type: 'links_group',
@@ -324,7 +330,8 @@ function linksBlock(): ContentBlockConfig {
     };
 }
 
-function quoteBlock(title?: string): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function quoteBlock(title?: string): any {
     return {
         id: 'quote-id',
         type: 'quote',
@@ -332,12 +339,14 @@ function quoteBlock(title?: string): ContentBlockConfig {
             image: imageBlock('quote'),
             content: 'quote-content',
             name: 'quote-name',
-            title
+            title,
+            config: []
         }
     };
 }
 
-function rtBlock(): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rtBlock(): any {
     return {
         id: 'rt-id',
         type: 'text',
@@ -345,7 +354,8 @@ function rtBlock(): ContentBlockConfig {
     };
 }
 
-function sectionBlock(): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function sectionBlock(): any {
     return {
         id: 'section-id',
         type: 'section',
@@ -355,7 +365,7 @@ function sectionBlock(): ContentBlockConfig {
                     id: 'oops-id',
                     type: 'mistake',
                     value: 'This is invalid content'
-                } as unknown as ContentBlockConfig
+                }
             ],
             config: [
                 {
@@ -371,7 +381,8 @@ function sectionBlock(): ContentBlockConfig {
     };
 }
 
-function bookListBlock(): ContentBlockConfig {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function bookListBlock(): any {
     return {
         id: 'book-list-id',
         type: 'book_list',

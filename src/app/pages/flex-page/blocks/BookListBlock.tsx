@@ -28,10 +28,12 @@ export type BookListBlockConfig = {
     };
 };
 
-export function BookListBlock({data}: {data: BookListBlockConfig}) {
+export function BookListBlock({data}: {data: BookListBlockConfig}): React.ReactElement {
     return (
         <div className={cn('content-block-book-list')}>
             {data.value.books.map((book) => <BookTile key={book.id} book={book} />)}
         </div>
     );
 }
+
+BookListBlock.blockConfig = {type: 'book_list' as const, label: 'Book List', categories: [] as string[]};

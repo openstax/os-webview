@@ -1,13 +1,15 @@
 import React from 'react';
 import {LoadedPage} from '~/components/jsx-helpers/loader-page';
 import useLayoutContext, {LayoutName} from '~/contexts/layout';
-import {ContentBlocks, ContentBlockConfig} from './blocks/ContentBlock';
+import {ContentBlockRoot, BlockData} from '@openstax/flex-page-renderer/ContentBlockRoot';
+import {blockMap} from './block-map';
+import usePortalContext from '~/contexts/portal';
 import './flex-page.scss';
 
 export type FlexPageData = {
     meta?: {type: string};
     layout: [{type: LayoutName}?];
-    body: ContentBlockConfig[];
+    body: BlockData<typeof blockMap>;
 };
 
 export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) =>
@@ -15,7 +17,20 @@ export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) =>
     ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type);
 
 function FlexPageBody({data}: {data: FlexPageData}) {
-    return <ContentBlocks data={data.body} />;
+    const ref = React.useRef<HTMLDivElement>(null);
+    const {rewriteLinks} = usePortalContext();
+
+    React.useLayoutEffect(() => {
+        if (ref.current) {
+            rewriteLinks(ref.current);
+        }
+    });
+
+    return (
+        <div ref={ref}>
+            <ContentBlockRoot data={data.body} blocks={blockMap} />
+        </div>
+    );
 }
 
 function warnAndUseDefault() {

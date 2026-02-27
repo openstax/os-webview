@@ -7,7 +7,7 @@ import useMainClassContext, {
 import useLanguageContext from '~/contexts/language';
 import ReactModal from 'react-modal';
 import cn from 'classnames';
-import {LinkFields} from '../../pages/flex-page/components/Link';
+import {LinkFields} from '@openstax/flex-page-renderer/components/Link';
 import JITLoad from '~/helpers/jit-load';
 import {isFlexPage} from '~/pages/flex-page/flex-page';
 import './landing.scss';

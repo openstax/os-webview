@@ -1,6 +1,6 @@
 import React from 'react';
 import useOptimizedImage from '~/helpers/use-optimized-image';
-import {LinkFields, Link} from '../../../pages/flex-page/components/Link';
+import {LinkFields, Link} from '@openstax/flex-page-renderer/components/Link';
 import './header.scss';
 
 export default function Header({
