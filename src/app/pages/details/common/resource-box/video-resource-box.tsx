@@ -11,7 +11,7 @@ import {ResourceModel} from './resource-boxes';
 export type VideoResourceBoxModelType = {
     heading: string;
     resourceHeading: string;
-    resourceDescription: TrustedHTML;
+    resourceDescription: string;
     videoFile: string;
     videoTitle: string;
     resourceCategory: string;
