@@ -17,20 +17,7 @@ export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) =>
     ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type);
 
 function FlexPageBody({data}: {data: FlexPageData}) {
-    const ref = React.useRef<HTMLDivElement>(null);
-    const {rewriteLinks} = usePortalContext();
-
-    React.useLayoutEffect(() => {
-        if (ref.current) {
-            rewriteLinks(ref.current);
-        }
-    });
-
-    return (
-        <div ref={ref}>
-            <ContentBlockRoot data={data.body} blocks={blockMap} />
-        </div>
-    );
+    return <ContentBlockRoot data={data.body} blocks={blockMap} />;
 }
 
 function warnAndUseDefault() {
@@ -59,8 +46,17 @@ export function LayoutUsingData({
 }
 
 export default function FlexPage({data}: {data: FlexPageData}) {
+    const ref = React.useRef<HTMLElement>(null);
+    const {rewriteLinks} = usePortalContext();
+
+    React.useLayoutEffect(() => {
+        if (ref.current) {
+            rewriteLinks(ref.current);
+        }
+    });
+
     return (
-        <main className="flex-page page">
+        <main className="flex-page page" ref={ref}>
             <LoadedPage
                 data={data}
                 Child={FlexPageBody}
