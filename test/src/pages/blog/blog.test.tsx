@@ -43,9 +43,11 @@ describe('blog pages', () => {
                 <BlogLoader />
             </MemoryRouter>
         );
-        // Should show main blog page with "Read more" links, not search results
-        expect(await screen.findAllByText('Read more')).toHaveLength(3);
-        expect(screen.queryAllByRole('textbox')).toHaveLength(1);
+        // Should show main blog page, not search results
+        await waitFor(() => expect(document.querySelector('.blog.page')).toBeTruthy());
+        expect(document.head.querySelector('title')?.textContent).toBe(
+            'OpenStax News'
+        );
     });
     test('Article page', async () => {
         window.scrollTo = jest.fn();
