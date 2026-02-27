@@ -56,7 +56,7 @@ export default function FlexPage({data}: {data: FlexPageData}) {
     }, [data, rewriteLinks]);
 
     return (
-        <main className="flex-page page" ref={ref}>
+        <main className="flex-page page flex-structure-container" ref={ref}>
             <LoadedPage
                 data={data}
                 Child={FlexPageBody}
