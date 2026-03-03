@@ -42,7 +42,7 @@ describe('shell/header/menus', () => {
         expect(listitems.filter((i) => i.textContent === 'Give').length).toBe(1);
         const button = screen.getByRole('button');
 
-        expect(screen.getAllByRole('menuitem')).toHaveLength(2);
+        expect(screen.getAllByRole('link', {name: 'Log in'})).toHaveLength(2);
         await user.click(button);
         button.focus();
         expect(document.activeElement).toBe(button);

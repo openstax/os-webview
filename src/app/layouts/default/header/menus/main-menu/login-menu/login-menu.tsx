@@ -14,7 +14,6 @@ function LoginLink() {
                 href={linkHelper.loginLink()}
                 className="pardotTrackClick"
                 data-local="true"
-                role="menuitem"
             >
                 Log in
             </a>
