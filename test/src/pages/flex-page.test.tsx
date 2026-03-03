@@ -5,37 +5,10 @@ import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
-import {CTALinkFields} from '~/pages/flex-page/blocks/CTABlock';
-import {ContentBlockConfig} from '~/pages/flex-page/blocks/ContentBlock';
-import {HeroBlockConfig} from '~/pages/flex-page/blocks/HeroBlock';
 import { LayoutContextProvider } from '~/contexts/layout';
 
-const emptyTarget = {
-    type: '',
-    value: ''
-};
-const ctaActions: CTALinkFields[] = [
-    {
-        config: [
-            {
-                type: 'style',
-                value: 'string'
-            }
-        ],
-        text: 'cta-text',
-        target: {
-            type: 'cta-target-type',
-            value: 'cta-target-value'
-        }
-    },
-    {
-        config: [],
-        text: 'cta-text2',
-        target: emptyTarget
-    }
-];
-
 type Data = Parameters<typeof FlexPage>[0]['data'];
+type BodyBlock = Data['body'][number];
 let body: Data['body'];
 
 function Component() {
@@ -47,13 +20,6 @@ function Component() {
         </ShellContextProvider>
     );
 }
-
-const mockColor = jest.fn();
-
-jest.mock('color', () => () => mockColor());
-mockColor.mockReturnValue({
-    isDark: () => true
-});
 
 describe('flex-page', () => {
     beforeAll(() => {
@@ -89,7 +55,7 @@ describe('flex-page', () => {
     it('renders heroBlock with top image alignment', () => {
         const modBlock = heroBlock();
 
-        modBlock.value.config.push({
+        modBlock.value.config!.push({
             type: 'image_alignment',
             value: 'top'
         });
@@ -104,7 +70,7 @@ describe('flex-page', () => {
     it('renders heroBlock with bottom image alignment', () => {
         const modBlock = heroBlock();
 
-        modBlock.value.config.push({
+        modBlock.value.config!.push({
             type: 'image_alignment',
             value: 'bottom'
         });
@@ -119,7 +85,7 @@ describe('flex-page', () => {
     it('renders heroBlock with background color', () => {
         const modBlock = heroBlock();
 
-        modBlock.value.config.push({
+        modBlock.value.config!.push({
             type: 'background_color',
             value: '#242424'
         });
@@ -199,7 +165,7 @@ function imageBlock(name: string) {
     };
 }
 
-function heroBlock(): HeroBlockConfig {
+function heroBlock(): BodyBlock {
     return {
         id: 'hero-id',
         type: 'hero',
@@ -209,21 +175,43 @@ function heroBlock(): HeroBlockConfig {
             image: imageBlock('hero'),
             imageAlt: ''
         }
-    };
+    } as BodyBlock;
 }
 
-function ctaBlock(): ContentBlockConfig {
+function ctaBlock(): BodyBlock {
     return {
         id: 'cta-id',
         type: 'cta_block',
         value: {
-            actions: ctaActions,
+            actions: [
+                {
+                    config: [
+                        {
+                            type: 'style',
+                            value: 'string'
+                        }
+                    ],
+                    text: 'cta-text',
+                    target: {
+                        type: 'cta-target-type',
+                        value: 'cta-target-value'
+                    }
+                },
+                {
+                    config: [],
+                    text: 'cta-text2',
+                    target: {
+                        type: '',
+                        value: ''
+                    }
+                }
+            ],
             config: []
         }
-    };
+    } as BodyBlock;
 }
 
-function cardsBlock(withStyle?: boolean): ContentBlockConfig {
+function cardsBlock(withStyle?: boolean): BodyBlock {
     return {
         id: 'cards-id',
         type: 'cards_block',
@@ -231,23 +219,34 @@ function cardsBlock(withStyle?: boolean): ContentBlockConfig {
             cards: [
                 {
                     text: 'first card',
-                    ctaBlock: withStyle ? ctaActions : []
+                    ctaBlock: withStyle ? [{
+                        config: [
+                            {
+                                type: 'style',
+                                value: 'string'
+                            }
+                        ],
+                        text: 'cta-text',
+                        target: {
+                            type: 'cta-target-type',
+                            value: 'cta-target-value'
+                        }
+                    }] : []
                 }
             ],
             config: withStyle
                 ? [
                       {
                           type: 'card_style',
-                          id: '',
                           value: 'rounded'
                       }
                   ]
                 : []
         }
-    };
+    } as BodyBlock;
 }
 
-function dividerBlock(aligned: boolean): ContentBlockConfig {
+function dividerBlock(aligned: boolean): BodyBlock {
     return {
         id: 'divider-id',
         type: 'divider',
@@ -262,10 +261,10 @@ function dividerBlock(aligned: boolean): ContentBlockConfig {
                   ]
                 : []
         }
-    };
+    } as BodyBlock;
 }
 
-function faqBlock(): ContentBlockConfig {
+function faqBlock(): BodyBlock {
     return {
         id: 'faq-id',
         type: 'faq',
@@ -280,18 +279,18 @@ function faqBlock(): ContentBlockConfig {
                 }
             }
         ]
-    };
+    } as BodyBlock;
 }
 
-function htmlBlock(): ContentBlockConfig {
+function htmlBlock(): BodyBlock {
     return {
         id: 'html-id',
         type: 'html',
         value: '<p>Some html</p>'
-    };
+    } as BodyBlock;
 }
 
-function linksBlock(): ContentBlockConfig {
+function linksBlock(): BodyBlock {
     return {
         id: 'links-id',
         type: 'links_group',
@@ -321,10 +320,10 @@ function linksBlock(): ContentBlockConfig {
             ],
             config: []
         }
-    };
+    } as BodyBlock;
 }
 
-function quoteBlock(title?: string): ContentBlockConfig {
+function quoteBlock(title?: string): BodyBlock {
     return {
         id: 'quote-id',
         type: 'quote',
@@ -332,20 +331,21 @@ function quoteBlock(title?: string): ContentBlockConfig {
             image: imageBlock('quote'),
             content: 'quote-content',
             name: 'quote-name',
-            title
+            title,
+            config: []
         }
-    };
+    } as BodyBlock;
 }
 
-function rtBlock(): ContentBlockConfig {
+function rtBlock(): BodyBlock {
     return {
         id: 'rt-id',
         type: 'text',
         value: 'Some text with <b>formatting</b>'
-    };
+    } as BodyBlock;
 }
 
-function sectionBlock(): ContentBlockConfig {
+function sectionBlock(): BodyBlock {
     return {
         id: 'section-id',
         type: 'section',
@@ -355,7 +355,7 @@ function sectionBlock(): ContentBlockConfig {
                     id: 'oops-id',
                     type: 'mistake',
                     value: 'This is invalid content'
-                } as unknown as ContentBlockConfig
+                }
             ],
             config: [
                 {
@@ -368,10 +368,10 @@ function sectionBlock(): ContentBlockConfig {
                 }
             ]
         }
-    };
+    } as BodyBlock;
 }
 
-function bookListBlock(): ContentBlockConfig {
+function bookListBlock(): BodyBlock {
     return {
         id: 'book-list-id',
         type: 'book_list',
@@ -393,5 +393,5 @@ function bookListBlock(): ContentBlockConfig {
                 }
             ]
         }
-    };
+    } as BodyBlock;
 }

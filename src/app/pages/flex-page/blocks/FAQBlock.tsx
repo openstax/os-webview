@@ -18,7 +18,7 @@ export interface FAQBlockConfig {
     }>;
 }
 
-export function FAQBlock({data}: {data: FAQBlockConfig}) {
+export function FAQBlock({data}: {data: FAQBlockConfig}): React.ReactElement {
     const accordionItems = React.useMemo(() =>
         data.value.map((d) => ({
             title: htmlToText(d.value.question),
@@ -32,3 +32,5 @@ export function FAQBlock({data}: {data: FAQBlockConfig}) {
         </div>
     </div>;
 }
+
+FAQBlock.blockConfig = {type: 'faq' as const, label: 'FAQ', categories: [] as string[]};

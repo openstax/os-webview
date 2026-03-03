@@ -35,7 +35,11 @@ const config = {
                 use: 'ts-loader'
             },
             {
-                test: /\.s?css$/,
+                test: /\.css$/,
+                use: ['style-loader', 'fast-css-loader']
+            },
+            {
+                test: /\.scss$/,
                 use: [
                     'style-loader',
                     'fast-css-loader',

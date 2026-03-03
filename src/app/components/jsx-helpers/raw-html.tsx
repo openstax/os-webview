@@ -36,7 +36,7 @@ function activateScripts(el: HTMLElement) {
 
 type RawHTMLArgs = ({
     Tag?: string;
-    html?: TrustedHTML;
+    html?: string;
     embed?: boolean;
     href?: string;
 } & React.HTMLAttributes<HTMLDivElement>);
