@@ -48,7 +48,7 @@ export default function Menus() {
                     <nav className='meta-nav' aria-label='Upper Menu'>
                         <UpperMenu />
                     </nav>
-                    <nav className='nav' aria-label='Main menu'>
+                    <nav className='nav' aria-label='Main'>
                         <div className='container'>
                             <Logo />
                             <MainMenu />
