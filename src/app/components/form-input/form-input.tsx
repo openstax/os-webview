@@ -51,41 +51,29 @@ function useMatches(pattern: string, suggestions: string[] = []) {
                 : [],
         [pattern, suggestions]
     );
-    const exactMatch = React.useMemo(
-        () =>
-            matches.includes(pattern) ||
-            (matches.length === 1 && pattern === matches[0].toLowerCase()),
-        [matches, pattern]
-    );
 
-    return [matches, exactMatch] as const;
+    return matches;
 }
 
 function SuggestionBox({
     matches,
-    exactMatch,
     accepted,
     accept,
     activeIndex,
     setActiveIndex
 }: {
     matches: string[];
-    exactMatch: boolean;
     accepted: boolean;
     accept: (v: string) => void;
     activeIndex: number;
     setActiveIndex: (n: number) => void;
 }) {
-    if (exactMatch) {
-        accept(matches[0]);
-    }
     useMainSticky();
 
     return (
         <div className="suggestions">
             <div className="suggestion-box">
-                {!exactMatch &&
-                    !accepted &&
+                {!accepted &&
                     matches
                         .slice(0, LIMIT_SUGGESTIONS)
                         .map((match, i) => (
@@ -159,7 +147,7 @@ export default function FormInput({
 }) {
     const [value, setValue] = useState(inputProps.value?.toString() ?? '');
     const {onChange: otherOnChange, ...otherProps} = inputProps;
-    const [matches, exactMatch] = useMatches(
+    const matches = useMatches(
         value.toString().toLowerCase(),
         suggestions
     );
@@ -228,7 +216,6 @@ export default function FormInput({
                 {suggestions && (
                     <SuggestionBox
                         matches={matches}
-                        exactMatch={exactMatch}
                         accepted={accepted}
                         accept={accept}
                         activeIndex={activeIndex}
