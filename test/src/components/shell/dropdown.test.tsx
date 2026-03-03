@@ -101,4 +101,21 @@ describe('main-menu dropdowns', () => {
         await user.keyboard('{ArrowRight}{Home}');
         expect(document.activeElement?.textContent).toContain('First item arrow');
     });
+    it('desktop: closes menu when focus tabs away', async () => {
+        mobileSpy.mockReturnValue(false);
+        render(<Component />);
+        const buttons = screen.getAllByRole('button');
+
+        // Open the first dropdown via keyboard
+        buttons[0].focus();
+        await user.keyboard(' ');
+        expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
+
+        // Focus the button and tab through 3 items to the next button
+        buttons[0].focus();
+        await user.keyboard('{Tab}{Tab}{Tab}{Tab}');
+
+        // The first menu should be closed
+        expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
+    });
 });
