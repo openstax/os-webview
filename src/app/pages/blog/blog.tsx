@@ -8,7 +8,8 @@ import {BlogContextProvider} from './blog-context';
 
 export default function LoadBlog() {
     const location = useLocation();
-    const TopLevelPage = location.search ? SearchResultsPage : MainBlogPage;
+    const searchParam = new window.URLSearchParams(location.search).get('q');
+    const TopLevelPage = searchParam ? SearchResultsPage : MainBlogPage;
 
     useCanonicalLink();
 

@@ -37,6 +37,18 @@ describe('blog pages', () => {
         // Actual search results are tested below; this just exercises the branch
         await waitFor(() => expect(document.querySelector('.blog.page')).toBeTruthy());
     });
+    test('Loader page with UTM parameters shows main page, not search', async () => {
+        render(
+            <MemoryRouter initialEntries={['/blog/?utm_source=email&utm_campaign=newsletter']}>
+                <BlogLoader />
+            </MemoryRouter>
+        );
+        // Should show main blog page, not search results
+        expect(document.querySelector('.blog.page')).toBeTruthy();
+        await waitFor(() => expect(document.head.querySelector('title')?.textContent).toBe(
+            'OpenStax News'
+        ));
+    });
     test('Article page', async () => {
         window.scrollTo = jest.fn();
 
