@@ -4,6 +4,7 @@ import useLayoutContext, {LayoutName} from '~/contexts/layout';
 import {ContentBlockRoot, BlockData} from '@openstax/flex-page-renderer/ContentBlockRoot';
 import {blockMap} from './block-map';
 import usePortalContext from '~/contexts/portal';
+import {assertNotNull} from '~/helpers/data';
 import './flex-page.scss';
 
 export type FlexPageData = {
@@ -50,9 +51,7 @@ export default function FlexPage({data}: {data: FlexPageData}) {
     const {rewriteLinks} = usePortalContext();
 
     React.useLayoutEffect(() => {
-        if (ref.current) {
-            rewriteLinks(ref.current);
-        }
+        rewriteLinks(assertNotNull(ref.current));
     }, [data, rewriteLinks]);
 
     return (
