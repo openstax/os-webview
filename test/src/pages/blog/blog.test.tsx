@@ -44,10 +44,10 @@ describe('blog pages', () => {
             </MemoryRouter>
         );
         // Should show main blog page, not search results
-        await waitFor(() => expect(document.querySelector('.blog.page')).toBeTruthy());
-        expect(document.head.querySelector('title')?.textContent).toBe(
+        expect(document.querySelector('.blog.page')).toBeTruthy();
+        await waitFor(() => expect(document.head.querySelector('title')?.textContent).toBe(
             'OpenStax News'
-        );
+        ));
     });
     test('Article page', async () => {
         window.scrollTo = jest.fn();
