@@ -6,12 +6,95 @@
 
 # OpenStax
 
-[![Build Status](https://travis-ci.org/openstax/os-webview.svg?branch=master)](https://travis-ci.org/openstax/os-webview)
-[![Code Climate](https://codeclimate.com/github/openstax/os-webview/badges/gpa.svg)](https://codeclimate.com/github/openstax/os-webview)
+[![Build Status](https://github.com/openstax/os-webview/actions/workflows/build.yml/badge.svg)](https://github.com/openstax/os-webview/actions/workflows/build.yml)
 
 ## Requirements
 
 * [nvm](https://github.com/creationix/nvm)
+
+## Release process
+
+Releases are based on a GitHub [tag](https://github.com/openstax/os-webview/tags), which is based on
+the version number of the release. The normal process is:
+
+1. Check out a new branch
+2. Update the version number in package.json
+3. Update dependencies
+4. Commit changes
+5. Create and push a tag
+6. Create a GitHub release
+
+### Detailed Release Steps
+
+Steps are given for command-line Git, but they can also be done in GitHub Desktop.
+
+#### 1. Check out a new branch
+
+Create a new branch for the release:
+
+```bash
+git checkout -b release-v2.148.0
+```
+
+#### 2. Update the version number
+
+Update the version in `package.json` to the new version number (e.g., `2.148.0`). This is the only
+file that needs to be updated for versioning. We typically increment the middle number. The right
+number increments for hotfixes.
+
+```bash
+# Edit package.json and update the "version" field
+```
+
+#### 3. Update dependencies
+
+Run `yarn upgrade` to update the yarn.lock file with the latest compatible dependency versions:
+
+```bash
+yarn upgrade
+```
+
+After upgrading, run tests to ensure everything still works:
+
+```bash
+./script/build
+./script/test
+```
+
+If tests fail, investigate and fix any issues before proceeding.
+
+#### 4. Commit changes
+
+Commit the version bump and any dependency updates:
+
+```bash
+git add package.json yarn.lock
+git commit -m "Release v2.148.0"
+git push origin release-v2.148.0
+```
+
+#### 5. Create and push a tag
+
+Create a tag with the version number (note the `v` prefix):
+
+```bash
+git tag v2.148.0
+git push origin v2.148.0
+```
+
+The tag name should match the format `v{major}.{minor}.{patch}` (e.g., `v2.148.0`).
+
+#### 6. Create a GitHub release
+
+Go to [Releases on GitHub](https://github.com/openstax/os-webview/releases) and click "Draft a new release":
+
+1. Select the tag you just created (e.g., `v2.148.0`)
+2. Set the release title to match the tag (e.g., `v2.148.0`)
+3. Add release notes describing the changes
+4. Click "Publish release"
+
+We use the release to document which is the latest published version. Keep it as a pre-release
+until it has been deployed to production.
 
 ## Installation
 
@@ -73,15 +156,3 @@ You must configure your web server to host the files in the `dist` directory tha
 The API_ORIGIN environment variable can be used to specify which [CMS](https://github.com/openstax/openstax-cms) instance is used by os-webview.
 os-webview settings are loaded from the specified CMS instance's webview-settings API.
 The default API_ORIGIN for script/dev is https://dev.openstax.org
-
-## Upgrading Dependencies
-
-You can upgrade dependencies manually or you can upgrade all of them by running `./script/upgrade && ./script/test`.
-
-## Updating Version
-
-The version must be updated in each release to help prevent browser caching issues. The version is updated in 3 locations.
-
-1. [version.js](https://github.com/openstax/os-webview/blob/master/src/app/version.js) Update the constant.
-2. [index.html](https://github.com/openstax/os-webview/blob/master/src/index.html) Update the version on reference to main.css and bundle.js
-3. [package.json](https://github.com/openstax/os-webview/blob/master/package.json) Update the version element
