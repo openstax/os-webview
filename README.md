@@ -13,6 +13,18 @@
 
 * [nvm](https://github.com/creationix/nvm)
 
+## Release process
+
+Releases are based on a GitHub [tag](https://github.com/openstax/os-webview/tags), which is based on
+the version number of the release. The normal process is:
+1. Check out a new branch
+2. Update the version number in package.json
+3. `yarn upgrade`
+4. Commit changes
+5. Create a tag based on the version number
+6. In [Releases on GitHub](https://github.com/openstax/os-webview/releases), Draft a new release
+based on the newly-created tag.
+
 ## Installation
 
 All Mac installation instructions assume you already have [Homebrew](http://brew.sh) installed.
