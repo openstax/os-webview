@@ -16,6 +16,7 @@ import HowUsing from './how-using/how-using';
 import useSalesforceContext from '~/contexts/salesforce';
 import useFormTarget from '~/components/form-target/form-target';
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
+import useUserContext from '~/contexts/user';
 import {useIntl} from 'react-intl';
 import './adoption.scss';
 
@@ -60,6 +61,23 @@ function BookSelectorPage({
     );
 }
 
+function HiddenField({name, value}: {name: string; value?: string}) {
+    return <input type="hidden" name={name} value={value ?? ''} />;
+}
+
+function HiddenContactInfo() {
+    const {userModel} = useUserContext();
+
+    return (
+        <React.Fragment>
+            <HiddenField name="first_name" value={userModel?.first_name} />
+            <HiddenField name="last_name" value={userModel?.last_name} />
+            <HiddenField name="email" value={userModel?.email} />
+            <HiddenField name="school" value={userModel?.accountsModel?.school_name} />
+        </React.Fragment>
+    );
+}
+
 function FacultyForm({
     position,
     onPageChange
@@ -71,12 +89,16 @@ function FacultyForm({
     const afterSubmit = useAfterSubmit(selectedBooksRef);
     const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const {adoptionUrl} = useSalesforceContext();
+    const {userModel} = useUserContext();
+    const isLoggedIn = Boolean(userModel?.last_name);
     const validatePage = React.useCallback((page: number) => {
-        if (page === 2 && selectedBooksRef.current.length < 1) {
+        const booksPage = isLoggedIn ? 1 : 2;
+
+        if (page === booksPage && selectedBooksRef.current.length < 1) {
             return false;
         }
         return true;
-    }, []);
+    }, [isLoggedIn]);
     const doSubmit = React.useCallback(
         (form: HTMLFormElement) => {
             form.submit();
@@ -89,6 +111,60 @@ function FacultyForm({
         new window.URLSearchParams(search).get('year') ?? undefined;
     const [copyOfYear, setCopyOfYear] = React.useState<string>();
 
+    const hiddenFields = (
+        <React.Fragment>
+            <TrackingParameters />
+            <input type="hidden" name="position" value={position} />
+            <input type="hidden" name="role" value="Instructor" />
+            <input
+                type="hidden"
+                name="lead_source"
+                value="Adoption Form"
+            />
+            <input
+                type="hidden"
+                name="process_adoptions"
+                value="true"
+            />
+        </React.Fragment>
+    );
+
+    const yearSelector = (
+        <div className="year-selector-container">
+            <YearSelector
+                selectedYear={selectedYear}
+                onValueUpdate={setCopyOfYear}
+            />
+        </div>
+    );
+
+    const bookPage = (
+        <BookSelectorPage
+            selectedBooksRef={selectedBooksRef}
+            year={copyOfYear}
+        />
+    );
+
+    const pages = isLoggedIn
+        ? [
+            <React.Fragment key="books">
+                {hiddenFields}
+                <HiddenContactInfo />
+                {yearSelector}
+                {bookPage}
+            </React.Fragment>
+        ]
+        : [
+            <React.Fragment key="contact">
+                {hiddenFields}
+                {yearSelector}
+                <ContactInfo />
+            </React.Fragment>,
+            <React.Fragment key="books">
+                {bookPage}
+            </React.Fragment>
+        ];
+
     return (
         <React.Fragment>
             <FormTarget />
@@ -100,32 +176,7 @@ function FacultyForm({
                 submitting={submitting}
                 target="form-target"
             >
-                <React.Fragment>
-                    <TrackingParameters />
-                    <input type="hidden" name="position" value={position} />
-                    <input type="hidden" name="role" value="Instructor" />
-                    <input
-                        type="hidden"
-                        name="lead_source"
-                        value="Adoption Form"
-                    />
-                    <input
-                        type="hidden"
-                        name="process_adoptions"
-                        value="true"
-                    />
-                    <div className="year-selector-container">
-                        <YearSelector
-                            selectedYear={selectedYear}
-                            onValueUpdate={setCopyOfYear}
-                        />
-                    </div>
-                    <ContactInfo />
-                </React.Fragment>
-                <BookSelectorPage
-                    selectedBooksRef={selectedBooksRef}
-                    year={copyOfYear}
-                />
+                {pages}
             </MultiPageForm>
         </React.Fragment>
     );
@@ -135,6 +186,8 @@ export default function AdoptionForm() {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
+    const {userModel} = useUserContext();
+    const isLoggedIn = Boolean(userModel?.last_name);
     const onPageChange = React.useCallback((page: number) => {
         setHideRoleSelector(page > 1);
         ref.current?.scrollIntoView();
@@ -154,17 +207,24 @@ export default function AdoptionForm() {
                 role="presentation"
             />
             <div className="text-content" ref={ref}>
-                <RoleSelector
-                    value={selectedRole}
-                    setValue={setSelectedRole}
-                    hidden={hideRoleSelector}
-                >
-                    <StudentForm />
+                {isLoggedIn ? (
                     <FacultyForm
-                        position={selectedRole}
+                        position="Instructor"
                         onPageChange={onPageChange}
                     />
-                </RoleSelector>
+                ) : (
+                    <RoleSelector
+                        value={selectedRole}
+                        setValue={setSelectedRole}
+                        hidden={hideRoleSelector}
+                    >
+                        <StudentForm />
+                        <FacultyForm
+                            position={selectedRole}
+                            onPageChange={onPageChange}
+                        />
+                    </RoleSelector>
+                )}
             </div>
         </main>
     );
