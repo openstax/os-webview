@@ -103,7 +103,7 @@ describe('how-using', () => {
 
         render(
             <LanguageContextProvider>
-                <HowUsing selectedBooks={selectedBooks} />
+                <HowUsing selectedBooks={selectedBooks} years={['2025']} />
             </LanguageContextProvider>
         );
         const jsonField = document.querySelector(

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useCallback} from 'react';
 import {useLocation} from 'react-router-dom';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import FormHeader from '~/components/form-header/form-header';
@@ -6,7 +6,6 @@ import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import ContactInfo from '~/components/contact-info/contact-info';
-import YearSelector from '~/components/year-selector/year-selector';
 import {useAfterSubmit} from '~/components/book-selector/after-form-submit';
 import BookSelector, {
     useSelectedBooks
@@ -17,15 +16,16 @@ import useSalesforceContext from '~/contexts/salesforce';
 import useFormTarget from '~/components/form-target/form-target';
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
 import useUserContext from '~/contexts/user';
+import type {UserModelType} from '~/models/usermodel';
 import {useIntl} from 'react-intl';
 import './adoption.scss';
 
 function BookSelectorPage({
     selectedBooksRef,
-    year
+    years
 }: {
     selectedBooksRef: React.MutableRefObject<SalesforceBook[]>;
-    year?: string;
+    years: string[];
 }) {
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = React.useMemo(
@@ -54,27 +54,150 @@ function BookSelectorPage({
             <input type="hidden" name="subject_interest" value={bookList} />
             <label>
                 <div className="control-group">
-                    <HowUsing selectedBooks={selectedBooks} year={year} />
+                    <HowUsing selectedBooks={selectedBooks} years={years} />
                 </div>
             </label>
         </React.Fragment>
     );
 }
 
+const roleToPosition: Record<string, string> = {
+    instructor: 'Faculty',
+    administrator: 'Administrator',
+    librarian: 'Librarian',
+    designer: 'Instructional Designer',
+    adjunct: 'Adjunct Faculty',
+    homeschool: 'Home School Teacher'
+};
+
+function positionFromRole(role?: string) {
+    return roleToPosition[role ?? ''] ?? 'Other';
+}
+
 function HiddenField({name, value}: {name: string; value?: string}) {
     return <input type="hidden" name={name} value={value ?? ''} />;
 }
 
+function hiddenContactFields(userModel: UserModelType) {
+    const a = userModel.accountsModel;
+
+    return [
+        ['first_name', userModel.first_name],
+        ['last_name', userModel.last_name],
+        ['email', userModel.email],
+        ['school', a?.school_name],
+        ['school_type', a?.school_type],
+        ['school_location', a?.school_location],
+        ['salesforce_contact_id', userModel.salesforce_contact_id]
+    ] as [string, string | undefined][];
+}
+
 function HiddenContactInfo() {
     const {userModel} = useUserContext();
+    const fields = userModel ? hiddenContactFields(userModel) : [];
 
     return (
         <React.Fragment>
-            <HiddenField name="first_name" value={userModel?.first_name} />
-            <HiddenField name="last_name" value={userModel?.last_name} />
-            <HiddenField name="email" value={userModel?.email} />
-            <HiddenField name="school" value={userModel?.accountsModel?.school_name} />
+            {fields.map(([name, value]) => (
+                <HiddenField key={name} name={name} value={value} />
+            ))}
         </React.Fragment>
+    );
+}
+
+function shouldShowAssignable(accounts?: {
+    assignable_school_integrated?: boolean;
+    assignable_user?: boolean;
+}) {
+    return accounts?.assignable_school_integrated && !accounts.assignable_user;
+}
+
+const now = new Date();
+const defaultStartYear = now.getFullYear() - (now.getMonth() < 6 ? 2 : 1);
+const academicYears = [0, 1, 2].map((n) => defaultStartYear + n);
+
+function YearCheckboxes({
+    selectedYears,
+    toggleYear
+}: {
+    selectedYears: string[];
+    toggleYear: (year: string) => void;
+}) {
+    return (
+        <div className="year-checkboxes">
+            <span className="year-label">
+                Which school year(s) are you reporting for?
+            </span>
+            <div className="year-options">
+                {academicYears.map((startYear) => {
+                    const value = startYear.toString();
+                    const label = `${startYear}\u2013${startYear + 1}`;
+
+                    return (
+                        <label key={value} className="year-option">
+                            <input
+                                type="checkbox"
+                                checked={selectedYears.includes(value)}
+                                onChange={() => toggleYear(value)}
+                            />
+                            {label}
+                        </label>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+function useSelectedYears(initialYear?: string) {
+    const defaultYear = (initialYear ?? (defaultStartYear + 1)).toString();
+    const [years, setYears] = useState<string[]>([defaultYear]);
+    const toggleYear = useCallback(
+        (year: string) =>
+            setYears((prev) =>
+                prev.includes(year)
+                    ? prev.filter((y) => y !== year)
+                    : [...prev, year]
+            ),
+        []
+    );
+
+    return [years, toggleYear] as const;
+}
+
+
+function PersonalizedHeader() {
+    const {userModel} = useUserContext();
+
+    if (!userModel) {
+        return null;
+    }
+
+    return (
+        <div className="form-header personalized-header">
+            <div className="text-content subhead">
+                <h1>Hi {userModel.first_name}, thanks for using OpenStax!</h1>
+                <p>
+                    This form helps us track our mission impact by
+                    recording faculty usage and the number of students
+                    reached. Our future grant funding depends on it.
+                </p>
+                <p className="note">
+                    This form is for instructors and faculty only and does
+                    not provide access to instructor resources.
+                </p>
+                {shouldShowAssignable(userModel.accountsModel) && (
+                    <p className="assignable-callout">
+                        Your school is integrated with{' '}
+                        <a href="/assignable">OpenStax Assignable</a> &mdash;
+                        a courseware tool built to work seamlessly with
+                        OpenStax textbooks. It includes homework, readings,
+                        and a gradebook that syncs directly with your LMS.{' '}
+                        <a href="/assignable">Learn more</a>.
+                    </p>
+                )}
+            </div>
+        </div>
     );
 }
 
@@ -91,25 +214,28 @@ function FacultyForm({
     const {adoptionUrl} = useSalesforceContext();
     const {userModel} = useUserContext();
     const isLoggedIn = Boolean(userModel?.last_name);
-    const validatePage = React.useCallback((page: number) => {
+
+    const {search} = useLocation();
+    const initialYear =
+        new window.URLSearchParams(search).get('year') ?? undefined;
+    const [selectedYears, toggleYear] = useSelectedYears(initialYear);
+
+    const validatePage = useCallback((page: number) => {
         const booksPage = isLoggedIn ? 1 : 2;
 
         if (page === booksPage && selectedBooksRef.current.length < 1) {
             return false;
         }
-        return true;
-    }, [isLoggedIn]);
-    const doSubmit = React.useCallback(
+        return selectedYears.length > 0;
+    }, [isLoggedIn, selectedYears]);
+
+    const doSubmit = useCallback(
         (form: HTMLFormElement) => {
             form.submit();
             onSubmit();
         },
         [onSubmit]
     );
-    const {search} = useLocation();
-    const selectedYear =
-        new window.URLSearchParams(search).get('year') ?? undefined;
-    const [copyOfYear, setCopyOfYear] = React.useState<string>();
 
     const hiddenFields = (
         <React.Fragment>
@@ -129,11 +255,11 @@ function FacultyForm({
         </React.Fragment>
     );
 
-    const yearSelector = (
+    const yearCheckboxes = (
         <div className="year-selector-container">
-            <YearSelector
-                selectedYear={selectedYear}
-                onValueUpdate={setCopyOfYear}
+            <YearCheckboxes
+                selectedYears={selectedYears}
+                toggleYear={toggleYear}
             />
         </div>
     );
@@ -141,7 +267,7 @@ function FacultyForm({
     const bookPage = (
         <BookSelectorPage
             selectedBooksRef={selectedBooksRef}
-            year={copyOfYear}
+            years={selectedYears}
         />
     );
 
@@ -150,14 +276,14 @@ function FacultyForm({
             <React.Fragment key="books">
                 {hiddenFields}
                 <HiddenContactInfo />
-                {yearSelector}
+                {yearCheckboxes}
                 {bookPage}
             </React.Fragment>
         ]
         : [
             <React.Fragment key="contact">
                 {hiddenFields}
-                {yearSelector}
+                {yearCheckboxes}
                 <ContactInfo />
             </React.Fragment>,
             <React.Fragment key="books">
@@ -197,8 +323,12 @@ export default function AdoptionForm() {
     useCanonicalLink();
 
     return (
-        <main className="adoption-form-v2">
-            <FormHeader prefix="adoption" />
+        <main className={`adoption-form-v2${isLoggedIn ? ' logged-in' : ''}`}>
+            {isLoggedIn ? (
+                <PersonalizedHeader />
+            ) : (
+                <FormHeader prefix="adoption" />
+            )}
             <img
                 className="strips"
                 src="/dist/images/components/strips.svg"
@@ -209,7 +339,7 @@ export default function AdoptionForm() {
             <div className="text-content" ref={ref}>
                 {isLoggedIn ? (
                     <FacultyForm
-                        position="Instructor"
+                        position={positionFromRole(userModel?.self_reported_role)}
                         onPageChange={onPageChange}
                     />
                 ) : (

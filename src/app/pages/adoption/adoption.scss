@@ -1,10 +1,59 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .adoption-form-v2 {
-    .year-selector-container {
-        margin-bottom: $normal-margin;
+    .personalized-header {
+        .note {
+            font-style: italic;
+        }
+
+        .assignable-callout {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background-color: ui-color(form-bg);
+            border-left: 4px solid os-color(gold);
+            border-radius: 0.25rem;
+        }
     }
-    
+
+    .year-selector-container {
+        margin-bottom: 2rem;
+    }
+
+    .year-checkboxes {
+        .year-label {
+            @include set-font(h4);
+
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .year-options {
+            display: flex;
+            gap: 1rem;
+
+            @include width-up-to($phone-max) {
+                flex-direction: column;
+            }
+        }
+
+        .year-option {
+            @include form-border();
+
+            align-items: center;
+            background-color: ui-color(white);
+            cursor: pointer;
+            display: flex;
+            flex: 1;
+            gap: 0.75rem;
+            min-height: $form-element-height;
+            padding: 0.75rem 1rem;
+
+            &:has(input:checked) {
+                background-color: darken(ui-color(page-bg), 3%);
+            }
+        }
+    }
+
     .hint {
         @include set-font(helper-label);
         color: text-color(helper);
@@ -19,7 +68,17 @@
     }
 
     .multi-page-form {
-        margin: 4rem auto;
+        margin: 2rem auto;
         max-width: 47rem;
+    }
+
+    &.logged-in .multi-page-form {
+        max-width: 72rem;
+
+        .two-columns {
+            @include wider-than($tablet-max) {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
     }
 }

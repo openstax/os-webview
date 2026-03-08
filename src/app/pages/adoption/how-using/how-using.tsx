@@ -79,30 +79,32 @@ function reducer(state: Record<string, unknown>, action: object) {
     return {...state, ...action};
 }
 
-export default function HowUsing({selectedBooks, year}: {
+export default function HowUsing({selectedBooks, years}: {
     selectedBooks: SalesforceBook[];
-    year?: string;
+    years: string[];
 }) {
     const [bookData, dispatch] = React.useReducer(reducer, {});
     const [useData, udDispatch] = React.useReducer(reducer, {});
     const json = React.useMemo(() => {
-        const rewrittenBookData = selectedBooks.map(({value: name}) => {
-            const match = name.match(/(.*?) *\[(.*)\]/);
-            const [title, language] = match ? match.slice(1) : [name, 'English'];
+        const rewrittenBookData = years.flatMap((year) =>
+            selectedBooks.map(({value: name}) => {
+                const match = name.match(/(.*?) *\[(.*)\]/);
+                const [title, language] = match ? match.slice(1) : [name, 'English'];
 
-            return ({
-                name: title,
-                students: Number(bookData[name]),
-                howUsing: useData[name],
-                language,
-                baseYear: year
-            });
-        });
+                return ({
+                    name: title,
+                    students: Number(bookData[name]),
+                    howUsing: useData[name],
+                    language,
+                    baseYear: year
+                });
+            })
+        );
 
         return JSON.stringify({
             Books: rewrittenBookData
         });
-    }, [bookData, useData, selectedBooks, year]);
+    }, [bookData, useData, selectedBooks, years]);
 
     return (
         <div className="how-using">
