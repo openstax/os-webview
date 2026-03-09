@@ -11,7 +11,7 @@ export type FlexPageData = {
     meta?: {type: string};
     layout: [{type: LayoutName}?];
     body: BlockData<typeof blockMap>;
-    schoolData: {
+    schoolData?: {
         industry: string
     }
 };

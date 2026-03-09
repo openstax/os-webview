@@ -22,7 +22,9 @@ function setPortalPrefix(portalPrefix: string) {
     jest.spyOn(PC, 'default').mockReturnValue({
         portalPrefix,
         setPortal,
-        rewriteLinks: jest.fn()
+        rewriteLinks: jest.fn(),
+        isK12Portal: false,
+        setIsK12Portal: jest.fn()
     });
 }
 
