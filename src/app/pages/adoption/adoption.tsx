@@ -105,13 +105,6 @@ function HiddenContactInfo() {
     );
 }
 
-function shouldShowAssignable(accounts?: {
-    assignable_school_integrated?: boolean;
-    assignable_user?: boolean;
-}) {
-    return accounts?.assignable_school_integrated && !accounts.assignable_user;
-}
-
 const now = new Date();
 const defaultStartYear = now.getFullYear() - (now.getMonth() < 6 ? 2 : 1);
 const academicYears = [0, 1, 2].map((n) => defaultStartYear + n);
@@ -186,16 +179,6 @@ function PersonalizedHeader() {
                     This form is for instructors and faculty only and does
                     not provide access to instructor resources.
                 </p>
-                {shouldShowAssignable(userModel.accountsModel) && (
-                    <p className="assignable-callout">
-                        Your school is integrated with{' '}
-                        <a href="/assignable">OpenStax Assignable</a> &mdash;
-                        a courseware tool built to work seamlessly with
-                        OpenStax textbooks. It includes homework, readings,
-                        and a gradebook that syncs directly with your LMS.{' '}
-                        <a href="/assignable">Learn more</a>.
-                    </p>
-                )}
             </div>
         </div>
     );
