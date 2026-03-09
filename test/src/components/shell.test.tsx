@@ -103,7 +103,7 @@ describe('shell', () => {
     const w = window as WindowWithPiTracker;
     const piTracker = jest.fn();
 
-    function setPortalPrefix(portalPrefix: string, isK12Portal: boolean | undefined = undefined) {
+    function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix,
             setPortal,
@@ -293,6 +293,8 @@ describe('shell', () => {
         spyGP.mockClear();
     });
     it('does not load GTM script for K12 portals', async () => {
+        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+
         // Create a K12 portal page data
         const k12PortalPage = {
             ...camelCaseKeys(landingPage) as object,
@@ -300,16 +302,15 @@ describe('shell', () => {
         };
 
         spyUpd.mockReturnValueOnce(k12PortalPage);
-        setPortalPrefix('');
+        // Set portal context to indicate K12 portal (isK12Portal === true)
+        setPortalPrefix('', true);
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
-        // GTM script should not be added to the document for K12 portals
-        const gtmScripts = document.querySelectorAll('script[src*="googletagmanager.com"]');
-
-        expect(gtmScripts.length).toBe(0);
+        // GTM should NOT be initialized for K12 portals
+        expect(spyInitializeGTM).not.toHaveBeenCalled();
     });
     it('loads GTM script for non-K12 portals', async () => {
         const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');

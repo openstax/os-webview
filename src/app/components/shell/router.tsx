@@ -55,8 +55,8 @@ export default function Router() {
         }
     }, [canonicalUrl]);
 
-    // Initialize GTM only when K12 status is explicitly determined to be false
-    // Don't initialize when undefined (status unknown) to avoid race condition
+    // Initialize GTM only when isK12Portal is explicitly false
+    // isK12Portal starts as true (GTM disabled), then routing logic sets it to false when safe
     useEffect(() => {
         if (isK12Portal === false) {
             initializeGTM();
@@ -74,17 +74,34 @@ export default function Router() {
     );
 }
 
+// Wrapper component that enables GTM for all non-portal top-level routes
+// Portal routes handle their own GTM enablement via RouteAsPortalOrNot
+function NonPortalRouteWrapper({children}: {children: React.ReactNode}) {
+    const {setIsK12Portal} = usePortalContext();
+
+    useEffect(() => {
+        // These are all non-portal routes, so enable GTM
+        setIsK12Portal(false);
+    }, [setIsK12Portal]);
+
+    return <>{children}</>;
+}
+
 function MainRoutes() {
     const {Layout} = useLayoutContext();
 
     return (
         <Layout>
             <Routes>
-                <Route index element={<HomePage />} />
-                {generateFooterPageRoutes()}
-                <Route path="/errata/*" element={<ErrataRoutes />} />
-                <Route path="/details/*" element={<DetailsRoutes />} />
-                <Route path="/:dir/*" element={<OtherPageRoutes />} />
+                <Route index element={<NonPortalRouteWrapper><HomePage /></NonPortalRouteWrapper>} />
+                {generateFooterPageRoutes().map((route) =>
+                    React.cloneElement(route, {
+                        element: <NonPortalRouteWrapper>{route.props.element}</NonPortalRouteWrapper>
+                    })
+                )}
+                <Route path="/errata/*" element={<NonPortalRouteWrapper><ErrataRoutes /></NonPortalRouteWrapper>} />
+                <Route path="/details/*" element={<NonPortalRouteWrapper><DetailsRoutes /></NonPortalRouteWrapper>} />
+                <Route path="/:dir/*" element={<NonPortalRouteWrapper><OtherPageRoutes /></NonPortalRouteWrapper>} />
             </Routes>
         </Layout>
     );
