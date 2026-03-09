@@ -61,7 +61,7 @@ describe('details/common/hooks', () => {
             portalPrefix: '/landing-page',
             setPortal,
             rewriteLinks: jest.fn(),
-            isK12Portal: false,
+            isK12Portal: undefined,
             setIsK12Portal: jest.fn()
         });
 

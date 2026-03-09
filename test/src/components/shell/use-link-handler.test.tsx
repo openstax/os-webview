@@ -18,12 +18,12 @@ jest.mock('react-router-dom', () => ({
 
 const setPortal = jest.fn();
 
-function setPortalPrefix(portalPrefix: string) {
+function setPortalPrefix(portalPrefix: string, isK12Portal: boolean | undefined = undefined) {
     jest.spyOn(PC, 'default').mockReturnValue({
         portalPrefix,
         setPortal,
         rewriteLinks: jest.fn(),
-        isK12Portal: false,
+        isK12Portal,
         setIsK12Portal: jest.fn()
     });
 }

@@ -3,7 +3,7 @@ import buildContext from '~/components/jsx-helpers/build-context';
 
 function useContextValue() {
     const [portal, setPortal] = React.useState('');
-    const [isK12Portal, setIsK12Portal] = React.useState(false);
+    const [isK12Portal, setIsK12Portal] = React.useState<boolean | undefined>(undefined);
     const portalPrefix = portal ? `/${portal}` : '';
     const rewriteLinks = React.useCallback((container: HTMLElement) => {
         if (!portalPrefix) {return;}

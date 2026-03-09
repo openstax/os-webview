@@ -55,9 +55,10 @@ export default function Router() {
         }
     }, [canonicalUrl]);
 
-    // Initialize GTM only if NOT in a K12 portal
+    // Initialize GTM only when K12 status is explicitly determined to be false
+    // Don't initialize when undefined (status unknown) to avoid race condition
     useEffect(() => {
-        if (!isK12Portal) {
+        if (isK12Portal === false) {
             initializeGTM();
         }
     }, [isK12Portal]);

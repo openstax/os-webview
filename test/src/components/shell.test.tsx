@@ -102,12 +102,12 @@ describe('shell', () => {
     const w = window as WindowWithPiTracker;
     const piTracker = jest.fn();
 
-    function setPortalPrefix(portalPrefix: string) {
+    function setPortalPrefix(portalPrefix: string, isK12Portal: boolean | undefined = undefined) {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix,
             setPortal,
             rewriteLinks: jest.fn(),
-            isK12Portal: false,
+            isK12Portal,
             setIsK12Portal: jest.fn()
         });
     }
@@ -290,5 +290,24 @@ describe('shell', () => {
         render(AppElement);
         await waitFor(() => expect(spyGP).toHaveBeenCalled());
         spyGP.mockClear();
+    });
+    it('does not load GTM script for K12 portals', async () => {
+        // Create a K12 portal page data
+        const k12PortalPage = {
+            ...camelCaseKeys(landingPage),
+            schoolData: {industry: 'K12'}
+        };
+
+        spyUpd.mockReturnValueOnce(k12PortalPage);
+        setPortalPrefix('');
+        mockBrowserInitialEntries(['/landing-page']);
+
+        render(AppElement);
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+
+        // GTM script should not be added to the document for K12 portals
+        const gtmScripts = document.querySelectorAll('script[src*="googletagmanager.com"]');
+
+        expect(gtmScripts.length).toBe(0);
     });
 });
