@@ -11,6 +11,9 @@ export type FlexPageData = {
     meta?: {type: string};
     layout: [{type: LayoutName}?];
     body: BlockData<typeof blockMap>;
+    schoolData: {
+        industry: string
+    }
 };
 
 export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) =>
