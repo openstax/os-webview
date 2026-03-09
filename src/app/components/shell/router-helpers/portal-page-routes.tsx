@@ -21,7 +21,7 @@ import {ImportedPage} from './page-loaders';
 // eslint-disable-next-line complexity
 export function RouteAsPortalOrNot() {
     const {name, data, hasError, other} = usePageDataFromRoute();
-    const {portalPrefix, setPortal} = usePortalContext();
+    const {portalPrefix, setPortal, setIsK12Portal} = usePortalContext();
 
     if (!data) {
         return null;
@@ -37,6 +37,10 @@ export function RouteAsPortalOrNot() {
     if (isPortal) {
         if (portalPrefix !== `/${name}`) {
             setPortal(assertDefined(name));
+            // Check if this portal is linked to a K12 school
+            const isK12 = data.schoolData?.industry === 'K12';
+
+            setIsK12Portal(isK12);
             return null;
         }
 
@@ -64,6 +68,7 @@ export function RouteAsPortalOrNot() {
     }
 
     setPortal('');
+    setIsK12Portal(false);
     if (isFlex) {
         if (other) {
             // Non-portal flex pages do not have children; keep it canonical

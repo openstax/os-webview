@@ -6,6 +6,8 @@ import {assertNotNull, assertDefined} from '~/helpers/data';
 import useLinkHandler from './router-helpers/use-link-handler';
 import {RouterContextProvider} from './router-context';
 import useLayoutContext, {LayoutContextProvider} from '~/contexts/layout';
+import usePortalContext from '~/contexts/portal';
+import {initializeGTM} from '~/helpers/tag-manager';
 import {
     HomePage,
     ErrataRoutes,
@@ -39,6 +41,7 @@ export default function Router() {
     const {origin} = window.location; // React-Router Location does not have origin
     const {pathname} = useLocation();
     const canonicalUrl = `${origin}${pathname}`;
+    const {isK12Portal} = usePortalContext();
 
     useEffect(() => {
         document.addEventListener('click', linkHandler);
@@ -51,6 +54,13 @@ export default function Router() {
             window.piTracker(canonicalUrl);
         }
     }, [canonicalUrl]);
+
+    // Initialize GTM only if NOT in a K12 portal
+    useEffect(() => {
+        if (!isK12Portal) {
+            initializeGTM();
+        }
+    }, [isK12Portal]);
 
     return (
         <RouterContextProvider>
