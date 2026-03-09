@@ -15,6 +15,7 @@ import * as TD from '~/layouts/default/takeover-dialog/takeover-dialog';
 import * as LSN from '~/layouts/default/lower-sticky-note/lower-sticky-note';
 import * as DH from '~/helpers/use-document-head';
 import * as UC from '~/contexts/user';
+import * as TM from '~/helpers/tag-manager';
 import {camelCaseKeys, transformData} from '~/helpers/page-data-utils';
 import landingPage from '../data/landing-page';
 import contactPage from '../data/contact-page';
@@ -294,7 +295,7 @@ describe('shell', () => {
     it('does not load GTM script for K12 portals', async () => {
         // Create a K12 portal page data
         const k12PortalPage = {
-            ...camelCaseKeys(landingPage),
+            ...camelCaseKeys(landingPage) as object,
             schoolData: {industry: 'K12'}
         };
 
@@ -309,5 +310,27 @@ describe('shell', () => {
         const gtmScripts = document.querySelectorAll('script[src*="googletagmanager.com"]');
 
         expect(gtmScripts.length).toBe(0);
+    });
+    it('loads GTM script for non-K12 portals', async () => {
+        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+
+        // Create a non-K12 portal page data
+        const nonK12PortalPage = {
+            ...camelCaseKeys(landingPage) as object,
+            schoolData: {industry: 'Higher Education'}
+        };
+
+        spyUpd.mockReturnValueOnce(nonK12PortalPage);
+        // Set portal context to indicate non-K12 portal (isK12Portal === false)
+        setPortalPrefix('', false);
+        mockBrowserInitialEntries(['/landing-page']);
+
+        render(AppElement);
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+
+        // GTM should be initialized for non-K12 portals
+        await waitFor(() => {
+            expect(spyInitializeGTM).toHaveBeenCalled();
+        });
     });
 });
