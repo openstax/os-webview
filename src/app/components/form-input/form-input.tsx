@@ -146,7 +146,7 @@ export default function FormInput({
     suggestions?: string[];
 }) {
     const [value, setValue] = useState(inputProps.value?.toString() ?? '');
-    const {onChange: otherOnChange, ...otherProps} = inputProps;
+    const {onChange: otherOnChange, value: _initialValue, ...otherProps} = inputProps;
     const matches = useMatches(
         value.toString().toLowerCase(),
         suggestions
