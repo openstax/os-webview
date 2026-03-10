@@ -52,6 +52,8 @@ export default {
     'how-using.how-many': 'How many students are using {title} each semester?',
     'how-using.hint': 'Include sections taught by TAs that you oversee',
     'how-using.how-using': 'How are you using {title}?',
+    'how-using.students-label': 'Students per semester',
+    'how-using.usage-label': 'How are you using this book?',
     'how-using.core': 'As the core textbook for my course',
     'how-using.recommended': 'As an optional/recommended textbook for my course',
     'how-using.outside': 'To teach, tutor, or support students outside of a course setting',

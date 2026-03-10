@@ -52,6 +52,8 @@ export default {
     'how-using.how-many': '¿Cuántos estudiantes utilizan {title} cada semestre?',
     'how-using.hint': 'Incluya secciones impartidas por asistentes técnicos que usted supervise',
     'how-using.how-using': '¿Cómo estás usando {title}?',
+    'how-using.students-label': 'Estudiantes por semestre',
+    'how-using.usage-label': '¿Cómo estás usando este libro?',
     'how-using.core': 'Como libro de texto básico de mi curso',
     'how-using.recommended': 'Como libro de texto opcional/recomendado para mi curso',
     'how-using.outside': 'Para enseñar, dar tutoría o apoyar a los estudiantes fuera del entorno del curso',
