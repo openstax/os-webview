@@ -48,8 +48,12 @@
 
     .field-group {
         display: grid;
-        align-content: end;
+        align-content: start;
         gap: 0.25rem;
+
+        &:last-child {
+            align-self: end;
+        }
     }
 
     .compact-label {
