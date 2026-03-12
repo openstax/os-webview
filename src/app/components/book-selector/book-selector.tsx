@@ -80,6 +80,46 @@ function useHintText(selectedCount: number, limit?: number) {
     return `Maximum ${limit} selected`;
 }
 
+function useBooksToPreselect(
+    books: SalesforceBook[],
+    preselectedValues?: string[]
+) {
+    const urlTitle = useFirstSearchArgument();
+    const allValues = React.useMemo(() => {
+        const vals = preselectedValues ? [...preselectedValues] : [];
+
+        if (urlTitle) {
+            vals.push(urlTitle);
+        }
+        return vals;
+    }, [preselectedValues, urlTitle]);
+
+    return React.useMemo(
+        () => books.filter((b) => allValues.includes(b.value)),
+        [books, allValues]
+    );
+}
+
+function usePreselection(
+    books: SalesforceBook[],
+    selectedBooks: SalesforceBook[],
+    toggleBook: (b: SalesforceBook) => void,
+    preselectedValues?: string[]
+) {
+    const toSelect = useBooksToPreselect(books, preselectedValues);
+    const [done, setDone] = React.useState(false);
+
+    React.useEffect(() => {
+        if (done || toSelect.length === 0) {
+            return;
+        }
+        toSelect
+            .filter((b) => !selectedBooks.includes(b))
+            .forEach(toggleBook);
+        setDone(true);
+    }, [done, toSelect, selectedBooks, toggleBook]);
+}
+
 const defaultIncludeFilter = () => true;
 
 type PropsFromOutside = {
@@ -137,35 +177,12 @@ function BookSelector({
         },
         [books, searchLower]
     );
+
     const validationMessage =
         selectedBooks.length > 0 ? '' : 'Please select at least one book';
     const limitReached = limit !== undefined && selectedBooks.length >= limit;
-    const preselectedTitle = useFirstSearchArgument();
-    const preselectedBook = React.useMemo(
-        () => books.find((book) => preselectedTitle === book.value),
-        [books, preselectedTitle]
-    );
 
-    React.useEffect(() => {
-        if (preselectedBook && !selectedBooks.includes(preselectedBook)) {
-            toggleBook(preselectedBook);
-        }
-    }, [selectedBooks, preselectedBook, toggleBook]);
-
-    const [preselected, setPreselected] = React.useState(false);
-
-    React.useEffect(() => {
-        if (!preselected && preselectedValues?.length) {
-            for (const val of preselectedValues) {
-                const book = books.find((b) => b.value === val);
-
-                if (book && !selectedBooks.includes(book)) {
-                    toggleBook(book);
-                }
-            }
-            setPreselected(true);
-        }
-    }, [preselected, preselectedValues, books, selectedBooks, toggleBook]);
+    usePreselection(books, selectedBooks, toggleBook, preselectedValues);
 
     return (
         <div className="book-selector">
