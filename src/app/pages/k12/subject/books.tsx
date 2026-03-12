@@ -39,7 +39,7 @@ function AdoptionBox({data}: {data: K12SubjectData}) {
         <div className="adoption-box boxed">
             <h2>{data.adoptionHeading}</h2>
             <RawHTML html={data.adoptionText} />
-            <a href={data.adoptionLink} className="btn primary">
+            <a href={data.adoptionLink} className="btn primary" data-analytics-link>
                 {data.adoptionLinkText}
             </a>
         </div>
@@ -52,7 +52,7 @@ export default function Books({data}: {data: K12SubjectData}) {
             <div className="boxed">
                 <Overview data={data} />
                 <AboutTheBooks data={data} />
-                <a className="resource-link" href="#resources">
+                <a className="resource-link" href="#resources" data-analytics-link>
                     Find Supplemental Resources
                 </a>
                 <AdoptionBox data={data} />

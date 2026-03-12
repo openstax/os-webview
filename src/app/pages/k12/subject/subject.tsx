@@ -63,7 +63,7 @@ function QuickLinks({
         <section className="quick-links">
             <div className="boxed">
                 <strong>Quick links:</strong>
-                <div className="items">
+                <div className="items" data-analytics-nav="k12-quick-links">
                     <a href="#books">Books</a>
                     {labels.map((text) => (
                         <a
