@@ -297,9 +297,14 @@ export default function AdoptionForm() {
     const ref = useRef<HTMLDivElement>(null);
     const {userModel} = useUserContext();
     const isLoggedIn = Boolean(userModel?.last_name);
+    const initialRender = useRef(true);
     const onPageChange = React.useCallback((page: number) => {
         setHideRoleSelector(page > 1);
-        ref.current?.scrollIntoView();
+        if (initialRender.current) {
+            initialRender.current = false;
+        } else {
+            ref.current?.scrollIntoView();
+        }
     }, []);
 
     useDocumentHead({title: 'Adoption Form'});
