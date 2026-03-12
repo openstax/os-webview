@@ -16,18 +16,67 @@
         font-style: italic;
     }
 
+    .search-and-tags {
+        display: grid;
+        grid-gap: 0.8rem;
+    }
+
     .book-search {
         @include form-border();
 
-        font-size: 1.6rem;
-        padding: 0.8rem 1.2rem;
+        font-size: 1.8rem;
+        padding: 1.2rem 1.5rem;
         width: 100%;
+
+        &::placeholder {
+            color: text-color(helper);
+        }
+    }
+
+    .selected-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .selected-tag {
+        @include set-font(helper-label);
+
+        align-items: center;
+        background-color: rgba(text-color(link), 0.1);
+        border: thin solid text-color(link);
+        border-radius: 0.3rem;
+        display: inline-flex;
+        gap: 0.6rem;
+        padding: 0.4rem 0.8rem;
+
+        .remove-tag {
+            background: none !important;
+            border: 0;
+            box-shadow: none;
+            color: text-color(link);
+            cursor: pointer;
+            font-size: 1.4rem;
+            line-height: 1;
+            padding: 0;
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
     }
 
     .subject-section {
         @include form-border();
 
         background-color: ui-color(white);
+        overflow: hidden;
+
+        &.expanded {
+            .subject-toggle {
+                border-bottom: thin solid ui-color(form-border);
+            }
+        }
 
         .subject-toggle {
             align-items: center;
@@ -36,11 +85,11 @@
             cursor: pointer;
             display: flex;
             justify-content: space-between;
-            padding: 1rem 1.2rem;
+            padding: 0.8rem 1.2rem;
             width: 100%;
 
             .field-label {
-                @include set-font(body-large);
+                @include set-font(helper-label);
 
                 font-weight: bold;
                 margin: 0;
@@ -48,17 +97,30 @@
             }
 
             .toggle-icon {
-                font-size: 0.8rem;
+                font-size: 0.7rem;
                 color: text-color(helper);
             }
         }
+    }
+
+    .subject-body {
+        display: grid;
+        grid-gap: 0.8rem;
+        padding: 0.8rem 1.2rem 1.2rem;
+    }
+
+    .sub-subject-label {
+        @include set-font(helper-label);
+
+        color: text-color(helper);
+        font-style: italic;
+        padding-top: 0.4rem;
     }
 
     .two-columns {
         display: grid;
         grid-gap: 1rem;
         grid-template-columns: 1fr 1fr;
-        padding: 0.5rem 1.2rem 1.2rem;
 
         @include width-up-to($phone-max) {
             grid-template-columns: 1fr;

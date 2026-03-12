@@ -8,57 +8,161 @@ import {useIntl} from 'react-intl';
 import {useFirstSearchArgument} from './after-form-submit';
 import './book-selector.scss';
 
-function Subject({
-    subject,
+const spanishPairings: Record<string, string> = {
+    Ciencia: 'Science',
+    'Ciencias Sociales': 'Social Sciences',
+    Empresarial: 'Business',
+    'Matemáticas': 'Math'
+};
+
+function spanishPartner(subject: string, subjects: string[]) {
+    const entry = Object.entries(spanishPairings).find(
+        ([, en]) => en === subject
+    );
+
+    return entry && subjects.includes(entry[0]) ? entry[0] : undefined;
+}
+
+function groupSubjects(subjects: string[]) {
+    const spanishSet = new Set(Object.keys(spanishPairings));
+    const grouped = new Set<string>();
+
+    return subjects
+        .filter((s) => !spanishSet.has(s))
+        .map((subject) => {
+            const partner = spanishPartner(subject, subjects);
+
+            if (partner) {
+                grouped.add(partner);
+            }
+            return partner
+                ? {label: `${subject} / ${partner}`, subjects: [subject, partner]}
+                : {label: subject, subjects: [subject]};
+        })
+        .concat(
+            subjects
+                .filter((s) => spanishSet.has(s) && !grouped.has(s))
+                .map((s) => ({label: s, subjects: [s]}))
+        );
+}
+
+function SubjectBooks({
+    subSubject,
     books,
+    name,
+    selectedBooks,
+    toggleBook,
+    limitReached
+}: {
+    subSubject?: string;
+    books: SalesforceBook[];
+    name?: string;
+    selectedBooks: SalesforceBook[];
+    toggleBook: (b: SalesforceBook) => void;
+    limitReached: boolean;
+}) {
+    return (
+        <React.Fragment>
+            {subSubject && (
+                <div className="sub-subject-label">{subSubject}</div>
+            )}
+            <div className="two-columns">
+                {books.map((book) => (
+                    <BookCheckbox
+                        key={book.value}
+                        book={book}
+                        name={name}
+                        checked={selectedBooks.includes(book)}
+                        toggle={toggleBook}
+                        disabled={
+                            limitReached && !selectedBooks.includes(book)
+                        }
+                    />
+                ))}
+            </div>
+        </React.Fragment>
+    );
+}
+
+function Subject({
+    group,
+    getBooks,
     name,
     selectedBooks,
     toggleBook,
     limitReached,
     forceOpen
 }: {
-    subject: string;
-    books: SalesforceBook[];
+    group: {label: string; subjects: string[]};
+    getBooks: (subject: string) => SalesforceBook[];
     name?: string;
     selectedBooks: SalesforceBook[];
     toggleBook: (b: SalesforceBook) => void;
     limitReached: boolean;
     forceOpen: boolean;
 }) {
-    const hasSelected = books.some((b) => selectedBooks.includes(b));
     const [manualOpen, setManualOpen] = useState(false);
-    const open = forceOpen || hasSelected || manualOpen;
+    const open = forceOpen || manualOpen;
+    const hasSubgroups = group.subjects.length > 1;
 
     return (
-        <div className="subject-section">
+        <div className={`subject-section${open ? ' expanded' : ''}`}>
             <button
                 type="button"
                 className={`subject-toggle${open ? ' open' : ''}`}
                 onClick={() => setManualOpen((v) => !v)}
                 aria-expanded={open}
             >
-                <span className="field-label">{subject}</span>
+                <span className="field-label">{group.label}</span>
                 <span className="toggle-icon" aria-hidden="true">
                     {open ? '\u25B2' : '\u25BC'}
                 </span>
             </button>
             {open && (
-                <div className="two-columns">
-                    {books.map((book) => (
-                        <BookCheckbox
-                            key={book.value}
-                            book={book}
-                            name={name}
-                            checked={selectedBooks.includes(book)}
-                            toggle={toggleBook}
-                            disabled={
-                                limitReached && !selectedBooks.includes(book)
-                            }
-                        />
-                    ))}
+                <div className="subject-body">
+                    {group.subjects.map((sub) => {
+                        const books = getBooks(sub);
+
+                        if (books.length === 0) {
+                            return null;
+                        }
+                        return (
+                            <SubjectBooks
+                                key={sub}
+                                subSubject={hasSubgroups ? sub : undefined}
+                                books={books}
+                                name={name}
+                                selectedBooks={selectedBooks}
+                                toggleBook={toggleBook}
+                                limitReached={limitReached}
+                            />
+                        );
+                    })}
                 </div>
             )}
         </div>
+    );
+}
+
+function SelectedTag({
+    book,
+    onRemove
+}: {
+    book: SalesforceBook;
+    onRemove: (b: SalesforceBook) => void;
+}) {
+    return (
+        <span className="selected-tag">
+            {book.text}
+            <button
+                type="button"
+                className="remove-tag"
+                onClick={() => onRemove(book)}
+                aria-label={`Remove ${book.text}`}
+            >
+                &times;
+            </button>
+        </span>
     );
 }
 
@@ -162,6 +266,10 @@ function BookSelector({
     const subjects = books
         .reduce<string[]>((a, b) => a.concat(b.subjects), [])
         .reduce<string[]>((a, b) => (a.includes(b) ? a : a.concat(b)), []);
+    const subjectGroups = React.useMemo(
+        () => groupSubjects(subjects),
+        [subjects]
+    );
     const booksBySubject = useCallback(
         (subject: string) => {
             const subjectBooks = books.filter((b) =>
@@ -184,6 +292,12 @@ function BookSelector({
 
     usePreselection(books, selectedBooks, toggleBook, preselectedValues);
 
+    const hasGroupResults = useCallback(
+        (group: {subjects: string[]}) =>
+            group.subjects.some((s) => booksBySubject(s).length > 0),
+        [booksBySubject]
+    );
+
     return (
         <div className="book-selector">
             <div>
@@ -195,24 +309,35 @@ function BookSelector({
                     <div className="hint">{additionalInstructions}</div>
                 )}
             </div>
-            <input
-                type="search"
-                className="book-search"
-                placeholder="Search for a book…"
-                value={search}
-                onChange={onSearchChange}
-            />
-            {subjects.map((subject) => {
-                const filtered = booksBySubject(subject);
-
-                if (searchLower && filtered.length === 0) {
+            <div className="search-and-tags">
+                <input
+                    type="search"
+                    className="book-search"
+                    placeholder="Search for a book…"
+                    value={search}
+                    onChange={onSearchChange}
+                />
+                {selectedBooks.length > 0 && (
+                    <div className="selected-tags">
+                        {selectedBooks.map((book) => (
+                            <SelectedTag
+                                key={book.value}
+                                book={book}
+                                onRemove={toggleBook}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+            {subjectGroups.map((group) => {
+                if (searchLower && !hasGroupResults(group)) {
                     return null;
                 }
                 return (
                     <Subject
-                        key={subject}
-                        subject={subject}
-                        books={filtered}
+                        key={group.label}
+                        group={group}
+                        getBooks={booksBySubject}
                         name={name}
                         selectedBooks={selectedBooks}
                         toggleBook={toggleBook}
