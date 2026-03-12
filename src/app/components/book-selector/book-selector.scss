@@ -2,7 +2,7 @@
 
 .book-selector {
     display: grid;
-    grid-gap: 3rem;
+    grid-gap: 1rem;
 
     .prompt {
         @include set-font(h4);
@@ -16,17 +16,52 @@
         font-style: italic;
     }
 
+    .book-search {
+        @include form-border();
+
+        font-size: 1.6rem;
+        padding: 0.8rem 1.2rem;
+        width: 100%;
+    }
+
+    .subject-section {
+        @include form-border();
+
+        background-color: ui-color(white);
+
+        .subject-toggle {
+            align-items: center;
+            background: none;
+            border: 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 1.2rem;
+            width: 100%;
+
+            .field-label {
+                @include set-font(body-large);
+
+                font-weight: bold;
+                margin: 0;
+                pointer-events: none;
+            }
+
+            .toggle-icon {
+                font-size: 0.8rem;
+                color: text-color(helper);
+            }
+        }
+    }
+
     .two-columns {
         display: grid;
         grid-gap: 1rem;
         grid-template-columns: 1fr 1fr;
+        padding: 0.5rem 1.2rem 1.2rem;
 
         @include width-up-to($phone-max) {
             grid-template-columns: 1fr;
         }
-    }
-
-    .field-label {
-        margin-bottom: 1rem;
     }
 }

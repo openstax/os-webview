@@ -62,6 +62,8 @@ describe('interest form', () => {
         );
         await user.click(screen.getByRole('button', {name: 'Next'}));
         await user.click(screen.getByRole('button', {name: 'Submit'}));
+        // Search to expand the subject section containing Biology
+        await user.type(screen.getByRole('searchbox'), 'Biology');
         await user.click(
             (await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]
         );

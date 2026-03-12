@@ -21,11 +21,12 @@
         }
 
         .year-options {
-            display: flex;
+            display: grid;
             gap: 1rem;
+            grid-template-columns: repeat(3, 1fr);
 
             @include width-up-to($phone-max) {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
         }
 
@@ -36,7 +37,6 @@
             background-color: ui-color(white);
             cursor: pointer;
             display: flex;
-            flex: 1;
             gap: 0.75rem;
             min-height: $form-element-height;
             padding: 0.75rem 1rem;
@@ -63,6 +63,7 @@
     .multi-page-form {
         margin: 2rem auto;
         max-width: 47rem;
+        width: 100%;
     }
 
     &.logged-in .multi-page-form {

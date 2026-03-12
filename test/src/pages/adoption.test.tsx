@@ -71,6 +71,8 @@ describe('adoption-form', () => {
         await user.click(screen.getByRole('button', {name: 'Next'}));
         // Reject submission when no books checked
         await user.click(screen.getByRole('button', {name: 'Submit'}));
+        // Search to expand the subject section containing Biology
+        await user.type(screen.getByRole('searchbox'), 'Biology');
         await user.click(
             (await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]
         );
@@ -154,7 +156,8 @@ describe('adoption-form logged-in flow', () => {
         ) as HTMLInputElement;
         expect(hiddenEmail.value).toBe('rej2+verify.1@rice.edu');
 
-        // Select a book and submit
+        // Search to expand the subject section containing Biology
+        await user.type(screen.getByRole('searchbox'), 'Biology');
         await user.click(
             (await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]
         );

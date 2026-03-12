@@ -45,18 +45,17 @@ describe('book-selector', () => {
 
     it('preselects a book based on path', async () => {
         render(<Component route='/selector?Calculus' />);
-        const checkboxes = await screen.findAllByRole('checkbox');
-
-        expect(checkboxes).toHaveLength(58);
         const checked = await screen.findByRole('checkbox', {checked: true});
-        const unchecked = screen.getAllByRole('checkbox', {checked: false});
 
         expect(checked).toBeTruthy();
+        // The math section is open because Calculus is preselected
+        const unchecked = screen.getAllByRole('checkbox', {checked: false});
+
         await user.click(unchecked[0]);
         const nowChecked = screen.getAllByRole('checkbox', {checked: true});
 
-        expect(nowChecked).toHaveLength(3); // due to listing more than once
-        await user.click(nowChecked[2]);
+        expect(nowChecked).toHaveLength(2);
+        await user.click(nowChecked[1]);
     });
     it('shows additional instructions', async () => {
         delete (props as Partial<typeof props>).limit;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useCallback} from 'react';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import {fetchAllBooks} from '~/models/books';
@@ -14,7 +14,8 @@ function Subject({
     name,
     selectedBooks,
     toggleBook,
-    limitReached
+    limitReached,
+    forceOpen
 }: {
     subject: string;
     books: SalesforceBook[];
@@ -22,22 +23,41 @@ function Subject({
     selectedBooks: SalesforceBook[];
     toggleBook: (b: SalesforceBook) => void;
     limitReached: boolean;
+    forceOpen: boolean;
 }) {
+    const hasSelected = books.some((b) => selectedBooks.includes(b));
+    const [manualOpen, setManualOpen] = useState(false);
+    const open = forceOpen || hasSelected || manualOpen;
+
     return (
-        <div>
-            <label className="field-label">{subject}</label>
-            <div className="two-columns">
-                {books.map((book) => (
-                    <BookCheckbox
-                        key={book.value}
-                        book={book}
-                        name={name}
-                        checked={selectedBooks.includes(book)}
-                        toggle={toggleBook}
-                        disabled={limitReached && !selectedBooks.includes(book)}
-                    />
-                ))}
-            </div>
+        <div className="subject-section">
+            <button
+                type="button"
+                className={`subject-toggle${open ? ' open' : ''}`}
+                onClick={() => setManualOpen((v) => !v)}
+                aria-expanded={open}
+            >
+                <span className="field-label">{subject}</span>
+                <span className="toggle-icon" aria-hidden="true">
+                    {open ? '\u25B2' : '\u25BC'}
+                </span>
+            </button>
+            {open && (
+                <div className="two-columns">
+                    {books.map((book) => (
+                        <BookCheckbox
+                            key={book.value}
+                            book={book}
+                            name={name}
+                            checked={selectedBooks.includes(book)}
+                            toggle={toggleBook}
+                            disabled={
+                                limitReached && !selectedBooks.includes(book)
+                            }
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
@@ -90,11 +110,31 @@ function BookSelector({
         () => salesforceTitles(data.books).filter(includeFilter),
         [data.books, includeFilter]
     );
+    const [search, setSearch] = useState('');
+    const onSearchChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearch(e.target.value),
+        []
+    );
+    const searchLower = search.toLowerCase();
     const subjects = books
         .reduce<string[]>((a, b) => a.concat(b.subjects), [])
         .reduce<string[]>((a, b) => (a.includes(b) ? a : a.concat(b)), []);
-    const booksBySubject = (subject: string) =>
-        books.filter((b) => b.subjects.includes(subject));
+    const booksBySubject = useCallback(
+        (subject: string) => {
+            const subjectBooks = books.filter((b) =>
+                b.subjects.includes(subject)
+            );
+
+            if (!searchLower) {
+                return subjectBooks;
+            }
+            return subjectBooks.filter((b) =>
+                (b.text ?? '').toLowerCase().includes(searchLower)
+            );
+        },
+        [books, searchLower]
+    );
     const validationMessage =
         selectedBooks.length > 0 ? '' : 'Please select at least one book';
     const limitReached = limit !== undefined && selectedBooks.length >= limit;
@@ -121,17 +161,32 @@ function BookSelector({
                     <div className="hint">{additionalInstructions}</div>
                 )}
             </div>
-            {subjects.map((subject) => (
-                <Subject
-                    key={subject}
-                    subject={subject}
-                    books={booksBySubject(subject)}
-                    name={name}
-                    selectedBooks={selectedBooks}
-                    toggleBook={toggleBook}
-                    limitReached={limitReached}
-                />
-            ))}
+            <input
+                type="search"
+                className="book-search"
+                placeholder="Search for a book…"
+                value={search}
+                onChange={onSearchChange}
+            />
+            {subjects.map((subject) => {
+                const filtered = booksBySubject(subject);
+
+                if (searchLower && filtered.length === 0) {
+                    return null;
+                }
+                return (
+                    <Subject
+                        key={subject}
+                        subject={subject}
+                        books={filtered}
+                        name={name}
+                        selectedBooks={selectedBooks}
+                        toggleBook={toggleBook}
+                        limitReached={limitReached}
+                        forceOpen={searchLower.length > 0}
+                    />
+                );
+            })}
             <div className="invalid-message">{validationMessage}</div>
         </div>
     );
