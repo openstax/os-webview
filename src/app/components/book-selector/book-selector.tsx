@@ -90,6 +90,7 @@ type PropsFromOutside = {
     limit?: number;
     additionalInstructions?: string;
     includeFilter?: (b: SalesforceBook) => boolean;
+    preselectedValues?: string[];
 };
 
 type Books = Parameters<typeof salesforceTitles>[0]
@@ -102,7 +103,8 @@ function BookSelector({
     toggleBook,
     limit,
     additionalInstructions,
-    includeFilter = defaultIncludeFilter
+    includeFilter = defaultIncludeFilter,
+    preselectedValues
 }: {
     data: {books: Books};
 } & PropsFromOutside) {
@@ -149,6 +151,21 @@ function BookSelector({
             toggleBook(preselectedBook);
         }
     }, [selectedBooks, preselectedBook, toggleBook]);
+
+    const [preselected, setPreselected] = React.useState(false);
+
+    React.useEffect(() => {
+        if (!preselected && preselectedValues?.length) {
+            for (const val of preselectedValues) {
+                const book = books.find((b) => b.value === val);
+
+                if (book && !selectedBooks.includes(book)) {
+                    toggleBook(book);
+                }
+            }
+            setPreselected(true);
+        }
+    }, [preselected, preselectedValues, books, selectedBooks, toggleBook]);
 
     return (
         <div className="book-selector">

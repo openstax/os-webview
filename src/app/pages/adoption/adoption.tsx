@@ -17,15 +17,18 @@ import useFormTarget from '~/components/form-target/form-target';
 import TrackingParameters from '~/components/tracking-parameters/tracking-parameters';
 import useUserContext from '~/contexts/user';
 import type {UserModelType} from '~/models/usermodel';
+import useAdoptions from '~/models/renewals';
 import {useIntl} from 'react-intl';
 import './adoption.scss';
 
 function BookSelectorPage({
     selectedBooksRef,
-    years
+    years,
+    preselectedValues
 }: {
     selectedBooksRef: React.MutableRefObject<SalesforceBook[]>;
     years: string[];
+    preselectedValues?: string[];
 }) {
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = React.useMemo(
@@ -50,6 +53,7 @@ function BookSelectorPage({
                 limit={5}
                 additionalInstructions={instructions}
                 includeFilter={includeFilter}
+                preselectedValues={preselectedValues}
             />
             <input type="hidden" name="subject_interest" value={bookList} />
             <label>
@@ -195,8 +199,13 @@ function FacultyForm({
     const afterSubmit = useAfterSubmit(selectedBooksRef);
     const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const {adoptionUrl} = useSalesforceContext();
-    const {userModel} = useUserContext();
+    const {userModel, uuid} = useUserContext();
     const isLoggedIn = Boolean(userModel?.last_name);
+    const adoptions = useAdoptions(uuid);
+    const preselectedValues = React.useMemo(
+        () => adoptions?.Books.map((b) => b.name),
+        [adoptions]
+    );
 
     const {search} = useLocation();
     const initialYear =
@@ -251,6 +260,7 @@ function FacultyForm({
         <BookSelectorPage
             selectedBooksRef={selectedBooksRef}
             years={selectedYears}
+            preselectedValues={preselectedValues}
         />
     );
 
