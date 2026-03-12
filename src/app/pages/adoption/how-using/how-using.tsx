@@ -59,14 +59,12 @@ function BookCard({
             </div>
             <div className="book-card-fields">
                 <div className="field-group">
-                    <label className="compact-label">
-                        <FormattedMessage id="how-using.students-label" defaultMessage="Students per semester" />
-                    </label>
                     <div className="hint">
                         <FormattedMessage id="how-using.hint" />
                     </div>
                     <input type="hidden" value={book.value} />
                     <FormInput
+                        label={formatMessage({id: 'how-using.students-label', defaultMessage: 'Students per semester'})}
                         inputProps={{
                             type: 'number',
                             min: '1',
