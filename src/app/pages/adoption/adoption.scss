@@ -62,12 +62,8 @@
 
     .multi-page-form {
         margin: 2rem auto;
-        max-width: 47rem;
-        width: 100%;
-    }
-
-    &.logged-in .multi-page-form {
         max-width: 72rem;
+        width: 100%;
 
         .two-columns {
             @include wider-than($tablet-max) {
