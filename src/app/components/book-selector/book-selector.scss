@@ -72,12 +72,6 @@
         background-color: ui-color(white);
         overflow: hidden;
 
-        &.expanded {
-            .subject-toggle {
-                border-bottom: thin solid ui-color(form-border);
-            }
-        }
-
         .subject-toggle {
             align-items: center;
             background: none;
@@ -99,6 +93,12 @@
             .toggle-icon {
                 font-size: 0.7rem;
                 color: text-color(helper);
+            }
+        }
+
+        &.expanded {
+            .subject-toggle {
+                border-bottom: thin solid ui-color(form-border);
             }
         }
     }
