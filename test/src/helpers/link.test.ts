@@ -40,3 +40,23 @@ describe('logoutLink', () => {
         expect(link).toMatch('accounts/logout');
     });
 });
+describe('setUtmCampaign', () => {
+    it('adds utm_campaign parameter to valid URL', () => {
+        const url = 'https://example.com/path?existing=param';
+        const result = linkHelper.setUtmCampaign(url, 'book-details');
+
+        expect(result).toBe('https://example.com/path?existing=param&utm_campaign=book-details');
+    });
+    it('adds utm_campaign parameter to URL without existing params', () => {
+        const url = 'https://example.com/path';
+        const result = linkHelper.setUtmCampaign(url, 'subjects-dropdown');
+
+        expect(result).toBe('https://example.com/path?utm_campaign=subjects-dropdown');
+    });
+    it('returns original URL when URL parsing fails', () => {
+        const invalidUrl = 'not a valid url';
+        const result = linkHelper.setUtmCampaign(invalidUrl, 'book-details');
+
+        expect(result).toBe(invalidUrl);
+    });
+});

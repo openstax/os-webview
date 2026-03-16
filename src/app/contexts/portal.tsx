@@ -3,6 +3,8 @@ import buildContext from '~/components/jsx-helpers/build-context';
 
 function useContextValue() {
     const [portal, setPortal] = React.useState('');
+    // Start with true (GTM disabled) until we determine it's safe to enable
+    const [isK12Portal, setIsK12Portal] = React.useState<boolean>(true);
     const portalPrefix = portal ? `/${portal}` : '';
     const rewriteLinks = React.useCallback((container: HTMLElement) => {
         if (!portalPrefix) {return;}
@@ -16,7 +18,7 @@ function useContextValue() {
     },
     [portalPrefix]);
 
-    return {portalPrefix, setPortal, rewriteLinks};
+    return {portalPrefix, setPortal, rewriteLinks, isK12Portal, setIsK12Portal};
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});

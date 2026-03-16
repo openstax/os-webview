@@ -15,7 +15,7 @@ function Component() {
     return (
         <ShellContextProvider>
             <MemoryRouter initialEntries={['']}>
-                <FlexPage data={{body, layout: [{type: 'landing'}]}} />
+                <FlexPage data={{body, layout: [{type: 'landing'}], schoolData: null}} />
             </MemoryRouter>
         </ShellContextProvider>
     );
@@ -42,7 +42,7 @@ describe('flex-page', () => {
             <ShellContextProvider>
                 <MemoryRouter initialEntries={['']}>
                     <LayoutContextProvider>
-                        <LayoutUsingData data={{body, layout: []}} >
+                        <LayoutUsingData data={{body, layout: [], schoolData: null}} >
                             content
                         </LayoutUsingData>
                     </LayoutContextProvider>
