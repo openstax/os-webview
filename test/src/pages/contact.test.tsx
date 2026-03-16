@@ -9,6 +9,7 @@ import * as UDH from '~/helpers/use-document-head';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import * as SFF from '~/components/salesforce-form/salesforce-form';
+import '~/../../test/src/helpers/mock-recaptcha';
 
 const spyUsePageData = jest.spyOn(UPD, 'default');
 /* eslint-disable max-len */

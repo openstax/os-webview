@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
 import usePaginatorContext from '~/components/paginator/paginator-context';
 import usePagesContext from './pages-context';
+import useRecaptchaToken from '../recaptcha';
 
 type Args = {
     formRef: React.RefObject<HTMLFormElement>;
@@ -54,17 +55,24 @@ function SubmitButton({disabled, formRef, onSubmit}: Args) {
         },
         [validateCurrentPage, onSubmit, formRef]
     );
+    const {token, Recaptcha} = useRecaptchaToken();
+
+    if (currentPage < pages) {
+        return null;
+    }
 
     return (
-        <button
-            type="submit"
-            className="primary"
-            hidden={currentPage < pages}
-            onClick={validateAndSubmit}
-            disabled={disabled}
-        >
-            Submit
-        </button>
+        <Recaptcha>
+            <input type="hidden" name="recaptcha_token" value={token} />
+            <button
+                type="submit"
+                className="primary"
+                onClick={validateAndSubmit}
+                disabled={disabled}
+            >
+                Submit
+            </button>
+        </Recaptcha>
     );
 }
 
