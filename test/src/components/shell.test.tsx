@@ -15,6 +15,7 @@ import * as TD from '~/layouts/default/takeover-dialog/takeover-dialog';
 import * as LSN from '~/layouts/default/lower-sticky-note/lower-sticky-note';
 import * as DH from '~/helpers/use-document-head';
 import * as UC from '~/contexts/user';
+import * as TM from '~/helpers/tag-manager';
 import {camelCaseKeys, transformData} from '~/helpers/page-data-utils';
 import landingPage from '../data/landing-page';
 import contactPage from '../data/contact-page';
@@ -102,11 +103,13 @@ describe('shell', () => {
     const w = window as WindowWithPiTracker;
     const piTracker = jest.fn();
 
-    function setPortalPrefix(portalPrefix: string) {
+    function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix,
             setPortal,
-            rewriteLinks: jest.fn()
+            rewriteLinks: jest.fn(),
+            isK12Portal,
+            setIsK12Portal: jest.fn()
         });
     }
 
@@ -288,5 +291,47 @@ describe('shell', () => {
         render(AppElement);
         await waitFor(() => expect(spyGP).toHaveBeenCalled());
         spyGP.mockClear();
+    });
+    it('does not load GTM script for K12 portals', async () => {
+        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+
+        // Create a K12 portal page data
+        const k12PortalPage = {
+            ...camelCaseKeys(landingPage) as object,
+            schoolData: {industry: 'K12'}
+        };
+
+        spyUpd.mockReturnValueOnce(k12PortalPage);
+        // Set portal context to indicate K12 portal (isK12Portal === true)
+        setPortalPrefix('', true);
+        mockBrowserInitialEntries(['/landing-page']);
+
+        render(AppElement);
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+
+        // GTM should NOT be initialized for K12 portals
+        expect(spyInitializeGTM).not.toHaveBeenCalled();
+    });
+    it('loads GTM script for non-K12 portals', async () => {
+        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+
+        // Create a non-K12 portal page data
+        const nonK12PortalPage = {
+            ...camelCaseKeys(landingPage) as object,
+            schoolData: {industry: 'Higher Education'}
+        };
+
+        spyUpd.mockReturnValueOnce(nonK12PortalPage);
+        // Set portal context to indicate non-K12 portal (isK12Portal === false)
+        setPortalPrefix('', false);
+        mockBrowserInitialEntries(['/landing-page']);
+
+        render(AppElement);
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+
+        // GTM should be initialized for non-K12 portals
+        await waitFor(() => {
+            expect(spyInitializeGTM).toHaveBeenCalled();
+        });
     });
 });
