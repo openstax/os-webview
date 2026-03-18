@@ -1,10 +1,52 @@
 @import 'pattern-library/core/pattern-library/headers';
 
 .adoption-form-v2 {
-    .year-selector-container {
-        margin-bottom: $normal-margin;
+    .personalized-header {
+        .note {
+            font-style: italic;
+        }
+
     }
-    
+
+    .year-selector-container {
+        margin-bottom: 2rem;
+    }
+
+    .year-checkboxes {
+        .year-label {
+            @include set-font(h4);
+
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .year-options {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(3, 1fr);
+
+            @include width-up-to($phone-max) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .year-option {
+            @include form-border();
+
+            align-items: center;
+            background-color: ui-color(white);
+            cursor: pointer;
+            display: flex;
+            gap: 0.75rem;
+            min-height: $form-element-height;
+            padding: 0.75rem 1rem;
+
+            &:has(input:checked) {
+                background-color: darken(ui-color(page-bg), 3%);
+            }
+        }
+    }
+
     .hint {
         @include set-font(helper-label);
         color: text-color(helper);
@@ -19,7 +61,14 @@
     }
 
     .multi-page-form {
-        margin: 4rem auto;
-        max-width: 47rem;
+        margin: 2rem auto;
+        max-width: 72rem;
+        width: 100%;
+
+        .two-columns {
+            @include wider-than($tablet-max) {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
     }
 }

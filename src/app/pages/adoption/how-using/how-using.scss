@@ -2,26 +2,77 @@
 
 .how-using {
     display: grid;
-    margin-top: 4rem;
+    gap: 1.5rem;
+    margin-top: 2rem;
 
-    > div {
-        border-top: thin solid ui-color(form-border);
-        display: grid;
-        grid-gap: 3rem;
-        padding: 2rem 0;
+    .book-card {
+        @include form-border();
+
+        background-color: ui-color(white);
+        border-radius: 0.5rem;
+        overflow: hidden;
     }
 
-    label:not(.form-input) {
+    .book-card-header {
         align-items: center;
-        color: text-color(helper);
+        background-color: darken(ui-color(page-bg), 2%);
+        border-bottom: thin solid ui-color(form-border);
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+    }
+
+    .book-cover {
+        border-radius: 0.2rem;
+        height: 4rem;
+        object-fit: cover;
+        width: 3rem;
+    }
+
+    .book-title {
+        @include set-font(body-large);
+
+        color: text-color(normal);
+        font-weight: 600;
+    }
+
+    .book-card-fields {
         display: grid;
-        grid-gap: 0.5rem;
-        grid-template-columns: auto 1fr;
-        margin-top: 1rem;
+        gap: 1.5rem;
+        padding: 1.5rem;
+
+        @include wider-than($phone-max) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .field-group {
+        display: grid;
+        align-content: start;
+        gap: 0.25rem;
+
+        &:last-child {
+            align-self: end;
+        }
+    }
+
+    .compact-label {
+        @include set-font(body-regular);
+
+        color: text-color(normal);
+        font-weight: 600;
+    }
+
+    .hint {
+        @include set-font(helper-label);
+
+        color: text-color(helper);
+        font-style: italic;
+        margin-bottom: 0.25rem;
     }
 
     [type="number"] {
-        max-width: 20rem;
+        max-width: 100%;
     }
 
     .has-error {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useCallback} from 'react';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import {fetchAllBooks} from '~/models/books';
@@ -8,15 +8,53 @@ import {useIntl} from 'react-intl';
 import {useFirstSearchArgument} from './after-form-submit';
 import './book-selector.scss';
 
-function Subject({
-    subject,
+const spanishPairings: Record<string, string> = {
+    Ciencia: 'Science',
+    'Ciencias Sociales': 'Social Sciences',
+    Empresarial: 'Business',
+    'Matemáticas': 'Math'
+};
+
+function spanishPartner(subject: string, subjects: string[]) {
+    const entry = Object.entries(spanishPairings).find(
+        ([, en]) => en === subject
+    );
+
+    return entry && subjects.includes(entry[0]) ? entry[0] : undefined;
+}
+
+function groupSubjects(subjects: string[]) {
+    const spanishSet = new Set(Object.keys(spanishPairings));
+    const grouped = new Set<string>();
+
+    return subjects
+        .filter((s) => !spanishSet.has(s))
+        .map((subject) => {
+            const partner = spanishPartner(subject, subjects);
+
+            if (partner) {
+                grouped.add(partner);
+            }
+            return partner
+                ? {label: `${subject} / ${partner}`, subjects: [subject, partner]}
+                : {label: subject, subjects: [subject]};
+        })
+        .concat(
+            subjects
+                .filter((s) => spanishSet.has(s) && !grouped.has(s))
+                .map((s) => ({label: s, subjects: [s]}))
+        );
+}
+
+function SubjectBooks({
+    subSubject,
     books,
     name,
     selectedBooks,
     toggleBook,
     limitReached
 }: {
-    subject: string;
+    subSubject?: string;
     books: SalesforceBook[];
     name?: string;
     selectedBooks: SalesforceBook[];
@@ -24,8 +62,10 @@ function Subject({
     limitReached: boolean;
 }) {
     return (
-        <div>
-            <label className="field-label">{subject}</label>
+        <React.Fragment>
+            {subSubject && (
+                <div className="sub-subject-label">{subSubject}</div>
+            )}
             <div className="two-columns">
                 {books.map((book) => (
                     <BookCheckbox
@@ -34,11 +74,95 @@ function Subject({
                         name={name}
                         checked={selectedBooks.includes(book)}
                         toggle={toggleBook}
-                        disabled={limitReached && !selectedBooks.includes(book)}
+                        disabled={
+                            limitReached && !selectedBooks.includes(book)
+                        }
                     />
                 ))}
             </div>
+        </React.Fragment>
+    );
+}
+
+function Subject({
+    group,
+    getBooks,
+    name,
+    selectedBooks,
+    toggleBook,
+    limitReached,
+    forceOpen
+}: {
+    group: {label: string; subjects: string[]};
+    getBooks: (subject: string) => SalesforceBook[];
+    name?: string;
+    selectedBooks: SalesforceBook[];
+    toggleBook: (b: SalesforceBook) => void;
+    limitReached: boolean;
+    forceOpen: boolean;
+}) {
+    const [manualOpen, setManualOpen] = useState(false);
+    const open = forceOpen || manualOpen;
+    const hasSubgroups = group.subjects.length > 1;
+
+    return (
+        <div className={`subject-section${open ? ' expanded' : ''}`}>
+            <button
+                type="button"
+                className={`subject-toggle${open ? ' open' : ''}`}
+                onClick={() => setManualOpen((v) => !v)}
+                aria-expanded={open}
+            >
+                <span className="field-label">{group.label}</span>
+                <span className="toggle-icon" aria-hidden="true">
+                    {open ? '\u25B2' : '\u25BC'}
+                </span>
+            </button>
+            {open && (
+                <div className="subject-body">
+                    {group.subjects.map((sub) => {
+                        const books = getBooks(sub);
+
+                        if (books.length === 0) {
+                            return null;
+                        }
+                        return (
+                            <SubjectBooks
+                                key={sub}
+                                subSubject={hasSubgroups ? sub : undefined}
+                                books={books}
+                                name={name}
+                                selectedBooks={selectedBooks}
+                                toggleBook={toggleBook}
+                                limitReached={limitReached}
+                            />
+                        );
+                    })}
+                </div>
+            )}
         </div>
+    );
+}
+
+function SelectedTag({
+    book,
+    onRemove
+}: {
+    book: SalesforceBook;
+    onRemove: (b: SalesforceBook) => void;
+}) {
+    return (
+        <span className="selected-tag">
+            {book.text}
+            <button
+                type="button"
+                className="remove-tag"
+                onClick={() => onRemove(book)}
+                aria-label={`Remove ${book.text}`}
+            >
+                &times;
+            </button>
+        </span>
     );
 }
 
@@ -60,6 +184,46 @@ function useHintText(selectedCount: number, limit?: number) {
     return `Maximum ${limit} selected`;
 }
 
+function useBooksToPreselect(
+    books: SalesforceBook[],
+    preselectedValues?: string[]
+) {
+    const urlTitle = useFirstSearchArgument();
+    const allValues = React.useMemo(() => {
+        const vals = preselectedValues ? [...preselectedValues] : [];
+
+        if (urlTitle) {
+            vals.push(urlTitle);
+        }
+        return vals;
+    }, [preselectedValues, urlTitle]);
+
+    return React.useMemo(
+        () => books.filter((b) => allValues.includes(b.value)),
+        [books, allValues]
+    );
+}
+
+function usePreselection(
+    books: SalesforceBook[],
+    selectedBooks: SalesforceBook[],
+    toggleBook: (b: SalesforceBook) => void,
+    preselectedValues?: string[]
+) {
+    const toSelect = useBooksToPreselect(books, preselectedValues);
+    const [done, setDone] = React.useState(false);
+
+    React.useEffect(() => {
+        if (done || toSelect.length === 0) {
+            return;
+        }
+        toSelect
+            .filter((b) => !selectedBooks.includes(b))
+            .forEach(toggleBook);
+        setDone(true);
+    }, [done, toSelect, selectedBooks, toggleBook]);
+}
+
 const defaultIncludeFilter = () => true;
 
 type PropsFromOutside = {
@@ -70,6 +234,7 @@ type PropsFromOutside = {
     limit?: number;
     additionalInstructions?: string;
     includeFilter?: (b: SalesforceBook) => boolean;
+    preselectedValues?: string[];
 };
 
 type Books = Parameters<typeof salesforceTitles>[0]
@@ -82,7 +247,8 @@ function BookSelector({
     toggleBook,
     limit,
     additionalInstructions,
-    includeFilter = defaultIncludeFilter
+    includeFilter = defaultIncludeFilter,
+    preselectedValues
 }: {
     data: {books: Books};
 } & PropsFromOutside) {
@@ -90,25 +256,47 @@ function BookSelector({
         () => salesforceTitles(data.books).filter(includeFilter),
         [data.books, includeFilter]
     );
+    const [search, setSearch] = useState('');
+    const onSearchChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearch(e.target.value),
+        []
+    );
+    const searchLower = search.toLowerCase();
     const subjects = books
         .reduce<string[]>((a, b) => a.concat(b.subjects), [])
         .reduce<string[]>((a, b) => (a.includes(b) ? a : a.concat(b)), []);
-    const booksBySubject = (subject: string) =>
-        books.filter((b) => b.subjects.includes(subject));
+    const subjectGroups = React.useMemo(
+        () => groupSubjects(subjects),
+        [subjects]
+    );
+    const booksBySubject = useCallback(
+        (subject: string) => {
+            const subjectBooks = books.filter((b) =>
+                b.subjects.includes(subject)
+            );
+
+            if (!searchLower) {
+                return subjectBooks;
+            }
+            return subjectBooks.filter((b) =>
+                (b.text ?? '').toLowerCase().includes(searchLower)
+            );
+        },
+        [books, searchLower]
+    );
+
     const validationMessage =
         selectedBooks.length > 0 ? '' : 'Please select at least one book';
     const limitReached = limit !== undefined && selectedBooks.length >= limit;
-    const preselectedTitle = useFirstSearchArgument();
-    const preselectedBook = React.useMemo(
-        () => books.find((book) => preselectedTitle === book.value),
-        [books, preselectedTitle]
-    );
 
-    React.useEffect(() => {
-        if (preselectedBook && !selectedBooks.includes(preselectedBook)) {
-            toggleBook(preselectedBook);
-        }
-    }, [selectedBooks, preselectedBook, toggleBook]);
+    usePreselection(books, selectedBooks, toggleBook, preselectedValues);
+
+    const hasGroupResults = useCallback(
+        (group: {subjects: string[]}) =>
+            group.subjects.some((s) => booksBySubject(s).length > 0),
+        [booksBySubject]
+    );
 
     return (
         <div className="book-selector">
@@ -121,17 +309,43 @@ function BookSelector({
                     <div className="hint">{additionalInstructions}</div>
                 )}
             </div>
-            {subjects.map((subject) => (
-                <Subject
-                    key={subject}
-                    subject={subject}
-                    books={booksBySubject(subject)}
-                    name={name}
-                    selectedBooks={selectedBooks}
-                    toggleBook={toggleBook}
-                    limitReached={limitReached}
+            <div className="search-and-tags">
+                <input
+                    type="search"
+                    className="book-search"
+                    placeholder="Search for a book…"
+                    value={search}
+                    onChange={onSearchChange}
                 />
-            ))}
+                {selectedBooks.length > 0 && (
+                    <div className="selected-tags">
+                        {selectedBooks.map((book) => (
+                            <SelectedTag
+                                key={book.value}
+                                book={book}
+                                onRemove={toggleBook}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+            {subjectGroups.map((group) => {
+                if (searchLower && !hasGroupResults(group)) {
+                    return null;
+                }
+                return (
+                    <Subject
+                        key={group.label}
+                        group={group}
+                        getBooks={booksBySubject}
+                        name={name}
+                        selectedBooks={selectedBooks}
+                        toggleBook={toggleBook}
+                        limitReached={limitReached}
+                        forceOpen={searchLower.length > 0}
+                    />
+                );
+            })}
             <div className="invalid-message">{validationMessage}</div>
         </div>
     );

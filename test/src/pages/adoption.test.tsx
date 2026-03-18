@@ -6,9 +6,12 @@ import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {MainClassContextProvider} from '~/contexts/main-class';
 import {SharedDataContextProvider} from '~/contexts/shared-data';
 import {LanguageContextProvider} from '~/contexts/language';
+import {UserContextProvider} from '~/contexts/user';
+import * as UM from '~/models/usermodel';
 import * as CI from '~/components/contact-info/contact-info';
 import HowUsing from '~/pages/adoption/how-using/how-using';
 import {SalesforceBook} from '~/helpers/books';
+import userModel from '~/../../test/src/data/userModel';
 
 jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
 
@@ -68,6 +71,8 @@ describe('adoption-form', () => {
         await user.click(screen.getByRole('button', {name: 'Next'}));
         // Reject submission when no books checked
         await user.click(screen.getByRole('button', {name: 'Submit'}));
+        // Search to expand the subject section containing Biology
+        await user.type(screen.getByRole('searchbox'), 'Biology');
         await user.click(
             (await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]
         );
@@ -80,6 +85,91 @@ describe('adoption-form', () => {
         );
         console.error = jest.fn();
         // Submit and get navigation error
+        await user.click(screen.getByRole('button', {name: 'Submit'}));
+        expect(console.error).toHaveBeenCalledWith(
+            expect.stringContaining(
+                'Not implemented: HTMLFormElement.prototype.submit'
+            ),
+            undefined
+        );
+    });
+});
+describe('adoption-form logged-in flow', () => {
+    const user = userEvent.setup();
+
+    beforeAll(() => {
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            userModel as unknown as UM.UserModelType
+        );
+    });
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+        jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
+    });
+
+    it('renders personalized header and single-page form', async () => {
+        render(
+            <LanguageContextProvider>
+                <SharedDataContextProvider>
+                    <UserContextProvider>
+                        <MemoryRouter
+                            initialEntries={[
+                                '/details/books/college-algebra',
+                                '/adoption'
+                            ]}
+                        >
+                            <MainClassContextProvider>
+                                <AdoptionForm />
+                            </MainClassContextProvider>
+                        </MemoryRouter>
+                    </UserContextProvider>
+                </SharedDataContextProvider>
+            </LanguageContextProvider>
+        );
+
+        // Personalized greeting with user's first name
+        await screen.findByText(/Hi Roy/);
+
+        // No role selector in logged-in flow
+        expect(screen.queryAllByRole('listbox')).toHaveLength(0);
+
+        // Form is immediately visible (no role selection needed)
+        screen.getByRole('form');
+
+        // Year checkboxes are visible
+        screen.getByText(/Which school year/);
+
+        // Hidden contact fields are populated from user model
+        const hiddenFirst = document.querySelector(
+            'input[name="first_name"]'
+        ) as HTMLInputElement;
+        expect(hiddenFirst.value).toBe('Roy');
+
+        const hiddenLast = document.querySelector(
+            'input[name="last_name"]'
+        ) as HTMLInputElement;
+        expect(hiddenLast.value).toBe('Johnson');
+
+        const hiddenEmail = document.querySelector(
+            'input[name="email"]'
+        ) as HTMLInputElement;
+        expect(hiddenEmail.value).toBe('rej2+verify.1@rice.edu');
+
+        // Search to expand the subject section containing Biology
+        await user.type(screen.getByRole('searchbox'), 'Biology');
+        await user.click(
+            (await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0]
+        );
+        await user.type(screen.getByRole('spinbutton'), '12');
+        await user.click(screen.getAllByRole('combobox').pop() as Element);
+        await user.click(
+            screen.getByRole('option', {
+                name: 'As the core textbook for my course'
+            })
+        );
+
+        console.error = jest.fn();
         await user.click(screen.getByRole('button', {name: 'Submit'}));
         expect(console.error).toHaveBeenCalledWith(
             expect.stringContaining(
@@ -103,7 +193,7 @@ describe('how-using', () => {
 
         render(
             <LanguageContextProvider>
-                <HowUsing selectedBooks={selectedBooks} />
+                <HowUsing selectedBooks={selectedBooks} years={['2025']} />
             </LanguageContextProvider>
         );
         const jsonField = document.querySelector(

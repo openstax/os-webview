@@ -27,6 +27,8 @@ export type AccountsUserModel = {
   last_name: string;
   email?: string;
   school_name: string;
+  school_type: string;
+  school_location: string;
   self_reported_role: string;
   self_reported_school: string;
   is_not_gdpr_location: boolean;
@@ -40,6 +42,9 @@ export type AccountsUserModel = {
       is_guessed_preferred: boolean;
   }[];
   using_openstax: boolean;
+  assignable_school_integrated?: boolean;
+  assignable_user?: boolean;
+  external_ids?: string[];
 };
 
 declare global {
