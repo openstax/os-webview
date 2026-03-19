@@ -98,6 +98,10 @@
         &.secondary {
             @extend %secondary;
         }
+
+        &.special {
+            color: os-color(green);
+        }
     }
 
     .info {

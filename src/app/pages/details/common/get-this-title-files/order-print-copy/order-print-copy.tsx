@@ -63,8 +63,8 @@ function Button({
     );
 }
 
-function DesktopBox({index, entry}: {index: number; entry: Content}) {
-    const buttonClass = index === 2 ? 'secondary' : 'primary';
+function DesktopBox({entry}: {entry: Content}) {
+    const buttonClass = entry.trackingLabel === 'Audiobook' ? 'special' : 'primary';
 
     return (
         <div className="box" key={entry.headerText}>
@@ -106,7 +106,7 @@ export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign
     const {formatMessage} = useIntl();
     const [bookstoreLink, audiobookLink] = useBookstoreAndAudiobookLinks(slug);
     const contentArray = React.useMemo(() => {
-        if (!bookstoreLink) {
+        if (!bookstoreLink && !audiobookLink) {
             return null;
         }
         const individual = formatMessage({
@@ -134,8 +134,21 @@ export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign
             defaultMessage: 'Purchase options'
         });
 
-        const content = [
-            {
+        const content = [];
+
+        // Add audiobook option at the end if link is available
+        if (audiobookLink) {
+            content.push({
+                headerText: audiobook,
+                headerIcon: faVolumeUp,
+                buttonText: audiobookButtonText,
+                buttonUrl: audiobookLink,
+                trackingLabel: 'Audiobook'
+            });
+        }
+
+        if (bookstoreLink) {
+            content.push({
                 headerText: individual,
                 headerIcon: faUser,
                 buttonText: button1Text,
@@ -149,17 +162,6 @@ export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign
                 buttonUrl:
                     'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf',
                 trackingLabel: 'Print'
-            }
-        ];
-
-        // Add audiobook option at the end if link is available
-        if (audiobookLink) {
-            content.push({
-                headerText: audiobook,
-                headerIcon: faVolumeUp,
-                buttonText: audiobookButtonText,
-                buttonUrl: audiobookLink,
-                trackingLabel: 'Audiobook'
             });
         }
 
