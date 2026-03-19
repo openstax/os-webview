@@ -95,12 +95,14 @@
             @extend %primary;
         }
 
-        &.secondary {
-            @extend %secondary;
-        }
-
         &.special {
-            color: os-color(green);
+            @extend %primary;
+            background-color: os-color(deep-green);
+
+            &:hover,
+            &:focus {
+                background-color: lighten(os-color(deep-green), 3%);
+            }
         }
     }
 
@@ -119,9 +121,13 @@
     }
 
     .boxes.larger-version {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         padding: $normal-margin;
         width: max-content;
+
+        &.boxes-2 {
+            grid-template-columns: 1fr 1fr;
+        }
 
         &.boxes-3 {
             grid-template-columns: 1fr 1fr 1fr;

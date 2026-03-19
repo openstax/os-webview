@@ -13,7 +13,8 @@ type Content = {
     headerIcon: typeof faUser;
     buttonText: string;
     buttonUrl: string;
-    trackingLabel: string;
+    trackingLabel: 'Audiobook' | 'Print';
+    buttonClass: 'primary' | 'special';
 };
 
 function Header({entry}: {entry: Content}) {
@@ -54,7 +55,7 @@ function Button({
     href: string;
     text: string;
     buttonClass: string;
-    trackingLabel: string;
+    trackingLabel: Content['trackingLabel'];
 }) {
     return (
         <a className={`btn ${buttonClass}`} href={href} data-track={trackingLabel}>
@@ -64,13 +65,11 @@ function Button({
 }
 
 function DesktopBox({entry}: {entry: Content}) {
-    const buttonClass = entry.trackingLabel === 'Audiobook' ? 'special' : 'primary';
-
     return (
         <div className="box" key={entry.headerText}>
             <Header entry={entry} />
             <Button
-                buttonClass={buttonClass}
+                buttonClass={entry.buttonClass}
                 href={entry.buttonUrl}
                 text={entry.buttonText}
                 trackingLabel={entry.trackingLabel}
@@ -82,8 +81,8 @@ function DesktopBox({entry}: {entry: Content}) {
 function DesktopBoxes({contentArray}: {contentArray: Content[]}) {
     return (
         <div className={`larger-version boxes boxes-${contentArray.length}`}>
-            {contentArray.map((entry, index) => (
-                <DesktopBox {...{index, entry}} key={entry.headerText} />
+            {contentArray.map((entry) => (
+                <DesktopBox {...{entry}} key={entry.headerText} />
             ))}
         </div>
     );
@@ -134,16 +133,16 @@ export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign
             defaultMessage: 'Purchase options'
         });
 
-        const content = [];
+        const content: Content[] = [];
 
-        // Add audiobook option at the end if link is available
         if (audiobookLink) {
             content.push({
                 headerText: audiobook,
                 headerIcon: faVolumeUp,
                 buttonText: audiobookButtonText,
                 buttonUrl: audiobookLink,
-                trackingLabel: 'Audiobook'
+                trackingLabel: 'Audiobook',
+                buttonClass: 'special'
             });
         }
 
@@ -153,7 +152,8 @@ export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign
                 headerIcon: faUser,
                 buttonText: button1Text,
                 buttonUrl: linkHelper.setUtmCampaign(bookstoreLink, campaign),
-                trackingLabel: 'Print'
+                trackingLabel: 'Print',
+                buttonClass: 'primary'
             },
             {
                 headerText: bookstore,
@@ -161,7 +161,8 @@ export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign
                 buttonText: button2Text,
                 buttonUrl:
                     'https://he.kendallhunt.com/sites/default/files/uploadedFiles/Kendall_Hunt/OPENSTAX_PRICE_LIST_and_ORDER_FORM.pdf',
-                trackingLabel: 'Print'
+                trackingLabel: 'Print',
+                buttonClass: 'primary'
             });
         }
 
