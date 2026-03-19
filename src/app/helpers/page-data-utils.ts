@@ -59,8 +59,11 @@ export async function getUrlFor(initialSlug: string) {
     }
 
     const qsChar = (/\?/).test(apiUrl) ? '&' : '?';
+    const draftParams = new URLSearchParams(window.location.search).has('preview')
+        ? `&draft=${Date.now()}`
+        : '';
 
-    return `${apiUrl}${qsChar}format=json`;
+    return `${apiUrl}${qsChar}format=json${draftParams}`;
 }
 
 function camelCase(underscored: string) {
