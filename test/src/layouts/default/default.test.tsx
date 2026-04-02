@@ -323,7 +323,7 @@ describe('default layout', () => {
             <DefaultLayout />
             <Link to="/kinetic">Change route</Link>
         </MemoryRouter>);
-        expect(await screen.findAllByText('JIT Load Component')).toHaveLength(2);
+        expect(await screen.findAllByText('JIT Load Component')).toHaveLength(1);
         const toggle = screen.getByRole('button', {
             name: 'Toggle Meta Navigation Menu'
         });
@@ -374,6 +374,7 @@ describe('default layout', () => {
         expect(techMenu.getAttribute('aria-expanded')).toBe('false');
     });
     it('renders login menu', async () => {
+        spyUseUserContext.mockReturnValue(loggedInUser);
         render(<MemoryRouter initialEntries={['/webinars']}>
             <LoginMenu />
         </MemoryRouter>);
