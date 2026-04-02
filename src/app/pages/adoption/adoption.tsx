@@ -24,11 +24,13 @@ import './adoption.scss';
 function BookSelectorPage({
     selectedBooksRef,
     years,
-    preselectedValues
+    preselectedValues,
+    initialCounts
 }: {
     selectedBooksRef: React.MutableRefObject<SalesforceBook[]>;
     years: string[];
     preselectedValues?: string[];
+    initialCounts?: Record<string, number>;
 }) {
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = React.useMemo(
@@ -58,7 +60,7 @@ function BookSelectorPage({
             <input type="hidden" name="subject_interest" value={bookList} />
             <label>
                 <div className="control-group">
-                    <HowUsing selectedBooks={selectedBooks} years={years} />
+                    <HowUsing selectedBooks={selectedBooks} years={years} initialCounts={initialCounts} />
                 </div>
             </label>
         </React.Fragment>
@@ -163,31 +165,6 @@ function useSelectedYears(initialYear?: string) {
 }
 
 
-function PersonalizedHeader() {
-    const {userModel} = useUserContext();
-
-    if (!userModel) {
-        return null;
-    }
-
-    return (
-        <div className="form-header personalized-header">
-            <div className="text-content subhead">
-                <h1>Hi {userModel.first_name}, thanks for using OpenStax!</h1>
-                <p>
-                    This form helps us track our mission impact by
-                    recording faculty usage and the number of students
-                    reached. Our future grant funding depends on it.
-                </p>
-                <p className="note">
-                    This form is for instructors and faculty only and does
-                    not provide access to instructor resources.
-                </p>
-            </div>
-        </div>
-    );
-}
-
 function FacultyForm({
     position,
     onPageChange
@@ -204,6 +181,20 @@ function FacultyForm({
     const adoptions = useAdoptions(uuid);
     const preselectedValues = React.useMemo(
         () => adoptions?.Books.map((b) => b.name),
+        [adoptions]
+    );
+    const initialCounts = React.useMemo(
+        () => {
+            if (!adoptions) {
+                return undefined;
+            }
+            const counts: Record<string, number> = {};
+
+            for (const b of adoptions.Books) {
+                counts[b.name] = b.students;
+            }
+            return counts;
+        },
         [adoptions]
     );
 
@@ -261,6 +252,7 @@ function FacultyForm({
             selectedBooksRef={selectedBooksRef}
             years={selectedYears}
             preselectedValues={preselectedValues}
+            initialCounts={initialCounts}
         />
     );
 
@@ -322,11 +314,7 @@ export default function AdoptionForm() {
 
     return (
         <main className={`adoption-form-v2${isLoggedIn ? ' logged-in' : ''}`}>
-            {isLoggedIn ? (
-                <PersonalizedHeader />
-            ) : (
-                <FormHeader prefix="adoption" />
-            )}
+            <FormHeader prefix="adoption" />
             <img
                 className="strips"
                 src="/dist/images/components/strips.svg"

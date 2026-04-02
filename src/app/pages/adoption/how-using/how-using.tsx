@@ -9,11 +9,13 @@ import './how-using.scss';
 function BookCard({
     book,
     dispatch,
-    udDispatch
+    udDispatch,
+    initialCount
 }: {
     book: SalesforceBook;
     dispatch: React.Dispatch<object>;
     udDispatch: React.Dispatch<object>;
+    initialCount?: number;
 }) {
     const {formatMessage} = useIntl();
     const updateStudentCount = React.useCallback(
@@ -70,7 +72,8 @@ function BookCard({
                             min: '1',
                             max: '999',
                             required: true,
-                            onChange: updateStudentCount
+                            onChange: updateStudentCount,
+                            value: initialCount
                         }}
                     />
                 </div>
@@ -99,12 +102,13 @@ function reducer(state: Record<string, unknown>, action: object) {
     return {...state, ...action};
 }
 
-export default function HowUsing({selectedBooks, years}: {
+export default function HowUsing({selectedBooks, years, initialCounts}: {
     selectedBooks: SalesforceBook[];
     years: string[];
+    initialCounts?: Record<string, number>;
 }) {
     const coreValue = adoptionOptions[0].value;
-    const [bookData, dispatch] = React.useReducer(reducer, {});
+    const [bookData, dispatch] = React.useReducer(reducer, initialCounts ?? {});
     const [useData, udDispatch] = React.useReducer(reducer, {});
     const json = React.useMemo(() => {
         const rewrittenBookData = years.flatMap((year) =>
@@ -135,6 +139,7 @@ export default function HowUsing({selectedBooks, years}: {
                     book={book}
                     dispatch={dispatch}
                     udDispatch={udDispatch}
+                    initialCount={initialCounts?.[book.value]}
                 />
             ))}
             <input type="hidden" name="adoption_json" value={json} />

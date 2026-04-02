@@ -108,7 +108,7 @@ describe('adoption-form logged-in flow', () => {
         jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
     });
 
-    it('renders personalized header and single-page form', async () => {
+    it('renders CMS header and single-page form', async () => {
         render(
             <LanguageContextProvider>
                 <SharedDataContextProvider>
@@ -128,8 +128,8 @@ describe('adoption-form logged-in flow', () => {
             </LanguageContextProvider>
         );
 
-        // Personalized greeting with user's first name
-        await screen.findByText(/Hi Roy/);
+        // CMS-driven header
+        await screen.findByText(/Let us know you're using/);
 
         // No role selector in logged-in flow
         expect(screen.queryAllByRole('listbox')).toHaveLength(0);
