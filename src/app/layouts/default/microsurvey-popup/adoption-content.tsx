@@ -27,14 +27,15 @@ function useDismissalCookie(): [boolean, () => void] {
     const isFaculty = userModel?.accountsModel?.faculty_status === 'confirmed_faculty';
     const isAdopter = userModel?.accountsModel?.using_openstax;
     const {pathname} = useLocation();
+    const isFormPage = pathname === '/renewal-form' || pathname === '/adoption';
     const ready = React.useMemo(
         () => {
-            if (pathname === '/renewal-form') {
+            if (isFormPage) {
                 return false;
             }
             return !clicked && isFaculty && Boolean(isAdopter);
         },
-        [clicked, isFaculty, isAdopter, pathname]
+        [clicked, isFaculty, isAdopter, isFormPage]
     );
     const disable = React.useCallback(
         () => setCookieValue(Date.now().toString()),
@@ -46,14 +47,14 @@ function useDismissalCookie(): [boolean, () => void] {
         () => {
             window.setTimeout(
                 () => {
-                    if (!clicked && pathname === '/renewal-form') {
+                    if (!clicked && isFormPage) {
                         disable();
                     }
                 },
                 10
             );
         },
-        [pathname, disable, clicked]
+        [isFormPage, disable, clicked]
     );
 
     return [ready, disable] as const;
