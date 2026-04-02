@@ -124,7 +124,7 @@ describe('Details page', () => {
 
         screen.getByRole('heading', {name: 'Technology Partners'});
         console.warn = jest.fn();
-        await user.click(screen.getByRole('link', {name: 'MagicBox E-Reader'}));
+        await user.click(await screen.findByRole('link', {name: 'MagicBox E-Reader'}));
         expect(console.warn).toHaveBeenCalled();
         console.warn = saveWarn;
         mockLocation.mockRestore();
