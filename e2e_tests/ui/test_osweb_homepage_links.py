@@ -1,7 +1,7 @@
 import pytest
 
-from e2e_tests.e2e.ui.fixtures.ui import chrome_page_unlogged
-from e2e_tests.e2e.ui.pages.home import HomeRex
+from e2e_tests.ui.fixtures.ui import chrome_page_unlogged
+from e2e_tests.ui.pages.home import HomeRex
 
 
 @pytest.mark.asyncio

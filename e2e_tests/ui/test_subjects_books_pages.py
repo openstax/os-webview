@@ -1,7 +1,7 @@
 import pytest
 import asyncio
 
-from e2e_tests.e2e.ui.pages.home import HomeRex
+from e2e_tests.ui.pages.home import HomeRex
 
 
 @pytest.mark.asyncio
