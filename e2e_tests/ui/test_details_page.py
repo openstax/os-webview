@@ -122,6 +122,9 @@ async def test_audiobook_link(chrome_page_unlogged, base_url, book_slug):
     await chrome_page_unlogged.keyboard.press("Escape")
 
     # THEN: Audiobook link is visible and clickable
-    assert await home.audiobook_link_is_visible()
+    if "staging" not in chrome_page_unlogged.url:
+        pytest.skip("Production books don't have audio link yet...")
+    else:
+        assert await home.audiobook_link_is_visible()
 
-    assert await home.audiobook_link_purchase_options.is_enabled()
+        assert await home.audiobook_link_purchase_options.is_enabled()
