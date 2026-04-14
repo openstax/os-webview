@@ -78,7 +78,7 @@ async def test_toc_slideout(chrome_page_unlogged, base_url, book_slug):
     book_toc_content = await home.book_toc_content.inner_text()
 
     # THEN: Book TOC slideout opens
-    assert "Chapter" and "Index" in book_toc_content
+    assert "Chapter" in book_toc_content and "Index" in book_toc_content
 
 
 @pytest.mark.parametrize("book_slug", ["chemistry"])

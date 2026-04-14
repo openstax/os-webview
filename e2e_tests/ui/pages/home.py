@@ -7,28 +7,23 @@ class HomeRex:
 
     # openstax.org homepage
 
-    @pytest.mark.asyncio
     async def main_menu_and_openstax_logo_is_visible(self):
         return await self.page.locator("div.menus.desktop > nav.nav").is_visible()
 
-    @pytest.mark.asyncio
     async def osweb_homepage_content_sections(self):
         # Higher and K12 Education, and Learning Research sections of the openstax.org homepage
         return await self.page.locator(
             "section.content-block-section", has_text="Higher Education"
         ).is_visible()
 
-    @pytest.mark.asyncio
     async def upper_menu_options(self):
-        return await self.page.locator("div > nav > menu.container > li").count()
+        return await self.page.locator("nav[aria-label='Upper Menu'] li").count()
 
-    @pytest.mark.asyncio
     async def click_interested_link(self):
         interested_locator = self.page.get_by_text("I'm interested!")
         await interested_locator.scroll_into_view_if_needed()
         await interested_locator.click()
 
-    @pytest.mark.asyncio
     async def click_iam_dropdown_in_interested(self):
         # I am a... dropdown in Interested page
         iam_locator = self.page.get_by_role("combobox")
@@ -43,13 +38,11 @@ class HomeRex:
     def iam_form_page(self):
         return self.page.get_by_label("School name")
 
-    @pytest.mark.asyncio
     async def open_technology_menu_item(self):
         tech_locator = self.page.get_by_role("button", name="Technology")
         await tech_locator.scroll_into_view_if_needed()
         await tech_locator.hover()
 
-    @pytest.mark.asyncio
     async def click_openstax_assignable_link(self):
         ostax_locator = self.page.get_by_role("link", name="OpenStax Assignable")
         await ostax_locator.scroll_into_view_if_needed()
@@ -62,15 +55,12 @@ class HomeRex:
 
     # Subjects homepage
 
-    @pytest.mark.asyncio
     async def subjects_page_menu(self):
         return await self.page.get_by_role("button", name="Subjects").is_visible()
 
-    @pytest.mark.asyncio
     async def click_subjects_page_menu(self):
         await self.page.get_by_role("button", name="Subjects").hover()
 
-    @pytest.mark.asyncio
     async def click_subjects_homepage_link(self):
         await self.page.get_by_role("link", name="All").click()
 
@@ -86,7 +76,6 @@ class HomeRex:
     def about_openstax_section(self):
         return self.page.locator("section.about-openstax > div > h2")
 
-    @pytest.mark.asyncio
     async def click_learn_about_openstax_link(self):
         await self.page.locator("a").get_by_text("Learn about OpenStax").click()
 
@@ -94,7 +83,6 @@ class HomeRex:
     def about_page(self):
         return self.page.locator("id=main")
 
-    @pytest.mark.asyncio
     async def click_book_toc_link(self):
         await self.page.locator("div.option.toc-option").click()
 
@@ -102,15 +90,12 @@ class HomeRex:
     def book_toc_content(self):
         return self.page.locator("div.toc-slideout-contents > div > div")
 
-    @pytest.mark.asyncio
     async def resources_tabs_are_visible(self):
         return await self.page.locator("div.tabs-and-extras").is_visible()
 
-    @pytest.mark.asyncio
     async def click_instructor_resources_tab(self):
         await self.page.get_by_text("Instructor resources").click()
 
-    @pytest.mark.asyncio
     async def click_student_resources_tab(self):
         await self.page.get_by_text("Student resources").click()
 
@@ -118,11 +103,9 @@ class HomeRex:
     def subjects_list(self):
         return self.page.locator("#ddId-Subjects > a")
 
-    @pytest.mark.asyncio
     async def subjects_intro(self):
         return await self.page.locator("section.subject-intro").is_visible()
 
-    @pytest.mark.asyncio
     async def subjects_title(self):
         return (
             await self.page.locator("section.subject-intro > div > h1").inner_text()
@@ -130,15 +113,12 @@ class HomeRex:
 
     # Philanthropic support
 
-    @pytest.mark.asyncio
     async def philanthropic_support_section(self):
         return await self.page.locator("section.philanthropic-support").is_visible()
 
-    @pytest.mark.asyncio
     async def click_our_impact_link(self):
         await self.page.locator("a").get_by_text("Learn more about our impact").click()
 
-    @pytest.mark.asyncio
     async def give_today_link_is_visible(self):
         return (
             await self.page.locator("#footer")
@@ -146,7 +126,6 @@ class HomeRex:
             .is_visible()
         )
 
-    @pytest.mark.asyncio
     async def click_give_today_link(self):
         await self.page.locator("#footer").get_by_role(
             "link", name="Give today"
@@ -154,23 +133,18 @@ class HomeRex:
 
     # Subjects page footer section
 
-    @pytest.mark.asyncio
     async def footer_section(self):
         return await self.page.locator("#footer").is_visible()
 
-    @pytest.mark.asyncio
     async def footer_section_help_is_visible(self):
         return await self.page.locator("div.column.col1").is_visible()
 
-    @pytest.mark.asyncio
     async def footer_section_openstax_is_visible(self):
         return await self.page.locator("div.column.col2").is_visible()
 
-    @pytest.mark.asyncio
     async def footer_section_policies_is_visible(self):
         return await self.page.locator("div.column.col3").is_visible()
 
-    @pytest.mark.asyncio
     async def footer_section_bottom_is_visible(self):
         return await self.page.locator("div.bottom").is_visible()
 
@@ -178,7 +152,6 @@ class HomeRex:
     def footer_section_bottom(self):
         return self.page.locator("div.bottom")
 
-    @pytest.mark.asyncio
     async def footer_section_license_link(self):
         return (
             await self.page.locator("div.copyrights")
@@ -188,35 +161,27 @@ class HomeRex:
 
     # Book page navigation
 
-    @pytest.mark.asyncio
     async def subject_listing_book_is_visible(self):
         return await self.page.locator("a").get_by_text("Astronomy").is_visible()
 
-    @pytest.mark.asyncio
     async def click_subject_listing_book(self):
         await self.page.locator("a").get_by_text("Astronomy").click()
 
-    @pytest.mark.asyncio
     async def click_book_selection(self):
         await self.page.locator("div").get_by_text("Astronomy 2e").click()
 
-    @pytest.mark.asyncio
     async def buy_print_copy_button_is_visible(self):
         return await self.page.locator("a").get_by_text("Buy a print copy").is_visible()
 
-    @pytest.mark.asyncio
     async def click_buy_print_copy_button(self):
         await self.page.locator("a").get_by_text("Buy a print copy").click()
 
-    @pytest.mark.asyncio
     async def bookstore_box_is_visible(self):
         return await self.page.get_by_role("heading", name="Bookstore").is_visible()
 
-    @pytest.mark.asyncio
     async def order_options_button_is_visible(self):
         return await self.page.locator("a").get_by_text("Order options").is_visible()
 
-    @pytest.mark.asyncio
     async def order_options_href(self):
         return (
             await self.page.locator("a")
@@ -224,7 +189,6 @@ class HomeRex:
             .get_attribute("href")
         )
 
-    @pytest.mark.asyncio
     async def audiobook_link_is_visible(self):
         return await self.page.get_by_role("heading", name="Audiobook").is_visible()
 
@@ -234,11 +198,9 @@ class HomeRex:
 
     # Higher Education and bookstore page
 
-    @pytest.mark.asyncio
     async def click_higher_education_link(self):
         await self.page.get_by_role("link", name="Explore Higher Ed resources").click()
 
-    @pytest.mark.asyncio
     async def click_campus_affordability_link(self):
         await self.page.get_by_role("link", name="Explore your options!").click()
 
@@ -288,7 +250,6 @@ class HomeRex:
 
     # Clears blockers/overlays
 
-    @pytest.mark.asyncio
     async def clear_all_blockers(self):
         await self.page.evaluate(
             """() => {

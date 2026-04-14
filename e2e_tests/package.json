@@ -6,14 +6,14 @@
   "scripts": {
     "debug": "PWDEBUG=console npx playwright test",
     "lint": "eslint '**/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "npx playwright test tests/rex-test --workers 1"
+    "test": "npx playwright test e2e_tests/ui --workers 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@playwright/test": "1.23",
+    "@playwright/test": "1.55",
     "@types/faker": "5.5.9",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.32.0",

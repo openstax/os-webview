@@ -1,17 +1,18 @@
+import json
+import os
 import pytest
 
 
 @pytest.mark.asyncio
 async def test_login_to_rex(login_to_rex):
+    # GIVEN: login_to_rex has run
 
-    # GIVEN: REX launches
-    # WHEN:  User logs in
+    # THEN: The file should exist
+    assert os.path.exists(login_to_rex)
 
-    # THEN: Storage state with login information for future login reuse is created (login_state.json)
-    origins = login_to_rex["origins"]
+    # THEN: It contains the login data
+    with open(login_to_rex, 'r') as f:
+        state_data = json.load(f)
 
-    # THEN: Asserts that saved session state is valid and not empty
-    assert origins
-    assert all("origin" in entry for entry in origins)
-
-    print(f"Logged in to: {[d['origin'] for d in origins][0]}")
+    assert "origins" in state_data
+    assert len(state_data["origins"]) > 0
