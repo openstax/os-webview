@@ -47,9 +47,8 @@ async def test_subjects_homepage(chrome_page_unlogged, base_url):
 
     assert f"{base_url}/about" == chrome_page_unlogged.url
     assert (
-        "Who we are" in await home.about_page.inner_text()
-        # Different About section in production and staging environs
-        and "What we do" in await home.about_page.inner_text()
-        or "What makes us different" in await home.about_page.inner_text()
-        and "Where we're going" in await home.about_page.inner_text()
+        ("Who we are" in await home.about_page.inner_text()
+         and "What makes us different" in await home.about_page.inner_text())  # in production
+        or ("What we do" in await home.about_page.inner_text()
+            and "Where we're going" in await home.about_page.inner_text())  # in staging
     )

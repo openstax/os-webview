@@ -18,7 +18,6 @@ pytest-base-url==2.1.0
 pytest-cov==6.1.1
 python-dotenv==0.21.1
 pytest-playwright>=0.4.0
-requests==2.33.0
 toml==0.10.2
 typing_extensions==4.12.2
 urllib3==2.6.3
