@@ -28,6 +28,7 @@ async def test_osweb_homepage_k12_link(chrome_page, base_url):
     await home.k12_find_your_subject_dropdown.click()
 
     # THEN: Subject cards are visible and clickable
+    await chrome_page.keyboard.press("Escape")
     await home.click_k12_find_your_subject_book_cards_science_menu()
 
     assert await home.k12_find_your_subject_book_card_astronomy_is_visible()
@@ -47,7 +48,7 @@ async def test_osweb_homepage_kinetic_link(chrome_page, base_url):
     # THEN: Kinetic page opens
     await home.click_osweb_kinetic_link()
 
-    assert await home.kinetic_page_sample_study_link_is_enabled()
+    assert await home.kinetic_page_sample_study_link_is_visible()
 
     assert (
         "Kinetic is a research platform developed by the OpenStax"

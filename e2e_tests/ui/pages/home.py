@@ -1,6 +1,7 @@
 import pytest
 
 import re
+from playwright.async_api import expect
 
 
 class HomeRex:
@@ -252,7 +253,6 @@ class HomeRex:
 
     # K12 and Kinetic pages
 
-    @pytest.mark.asyncio
     async def click_osweb_k12_link(self):
         k12 = self.page.get_by_role("link", name=re.compile(r"Explore K12"))
         await k12.scroll_into_view_if_needed()
@@ -269,7 +269,11 @@ class HomeRex:
     @pytest.mark.asyncio
     async def click_k12_find_your_subject_book_cards_science_menu(self):
         await self.page.mouse.wheel(0, 1500)
-        await self.page.get_by_role("radio", name="Science").click()
+        radiogroup = self.page.locator('[role="radiogroup"]')
+        await radiogroup.wait_for(state="visible")
+        science_radio = self.page.get_by_role("radio", name="Science")
+        await science_radio.scroll_into_view_if_needed()
+        await science_radio.click()
 
     @pytest.mark.asyncio
     async def k12_find_your_subject_book_card_astronomy_is_visible(self):
@@ -281,11 +285,10 @@ class HomeRex:
         await kin_locator.scroll_into_view_if_needed()
         await kin_locator.click()
 
-    @pytest.mark.asyncio
-    async def kinetic_page_sample_study_link_is_enabled(self):
+    async def kinetic_page_sample_study_link_is_visible(self):
         study_locator = self.page.get_by_role("link", name="Try a sample study")
         await study_locator.scroll_into_view_if_needed()
-        return await study_locator.is_enabled()
+        return await study_locator.is_visible()
 
     # Clears blockers/overlays
 
