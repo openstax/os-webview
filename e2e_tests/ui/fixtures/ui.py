@@ -20,14 +20,14 @@ async def login_to_rex(tmp_path_factory, base_url, rex_user, rex_password):
     async with async_playwright() as playwright:
         browser_obj = playwright.chromium
         ch_browser = await browser_obj.launch(
-            headless=True, slow_mo=900, timeout=120000
+            headless=True, slow_mo=1000, timeout=120000
         )
         context = await ch_browser.new_context()
         page = await context.new_page()
 
         await page.goto(base_url)
         await page.keyboard.press("Escape")
-        await page.click("a[href*='accounts/login']")
+        await page.click("li.login-menu a")
         await page.fill("#login_form_email", rex_user)
         await page.fill("#login_form_password", rex_password)
         await page.click("input.primary")
