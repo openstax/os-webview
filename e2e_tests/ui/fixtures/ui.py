@@ -20,7 +20,7 @@ async def login_to_rex(tmp_path_factory, base_url, rex_user, rex_password):
     async with async_playwright() as playwright:
         browser_obj = playwright.chromium
         ch_browser = await browser_obj.launch(
-            headless=True, slow_mo=900, timeout=120000
+            headless=True, slow_mo=1000, timeout=120000
         )
         context = await ch_browser.new_context()
         page = await context.new_page()
