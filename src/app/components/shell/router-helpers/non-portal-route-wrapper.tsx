@@ -13,12 +13,13 @@ import usePortalContext from '~/contexts/portal';
 export function NonPortalRouteWrapper({children}: {children: React.ReactNode}) {
     const {setIsK12Portal, setPortal} = usePortalContext();
 
-    React.useEffect(() => {
-        // These are all non-portal routes, so enable GTM
-        setIsK12Portal(false);
-        // Clear any stale portal prefix from previous navigation
-        setPortal('');
-    }, [setIsK12Portal, setPortal]);
+    // Clear portal state during render (not in useEffect) to prevent race conditions
+    // This follows the same pattern as RouteAsPortalOrNot for non-portal pages
+    // (portal-page-routes.tsx:70-71) which calls setters synchronously during render.
+    // This ensures FlexPage's useLayoutEffect sees the correct portal state and
+    // doesn't rewrite links with a stale portal prefix.
+    setPortal('');
+    setIsK12Portal(false);
 
     return <>{children}</>;
 }
