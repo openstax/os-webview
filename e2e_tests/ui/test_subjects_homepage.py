@@ -46,9 +46,9 @@ async def test_subjects_homepage(chrome_page_unlogged, base_url):
     await home.click_learn_about_openstax_link()
 
     assert f"{base_url}/about" == chrome_page_unlogged.url
+    about_text = await home.about_page.inner_text()
     assert (
-        ("Who we are" in await home.about_page.inner_text()
-         and "What makes us different" in await home.about_page.inner_text())  # in production
-        or ("What we do" in await home.about_page.inner_text()
-            and "Where we're going" in await home.about_page.inner_text())  # in staging
+        ("Who we are" in about_text and "What makes us different" in about_text) # in production
+        or
+        ("What we do" in about_text and "Where we're going" in about_text) # in staging
     )
