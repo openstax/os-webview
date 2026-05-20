@@ -334,4 +334,39 @@ describe('shell', () => {
             expect(spyInitializeGTM).toHaveBeenCalled();
         });
     });
+    it('loads GTM script for no-data pages (e.g., /adoption)', async () => {
+        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+        const setIsK12Portal = jest.fn();
+        const mockSetPortal = jest.fn();
+
+        // Mock portal context with functions that can be tracked
+        jest.spyOn(PC, 'default').mockReturnValue({
+            portalPrefix: '',
+            setPortal: mockSetPortal,
+            rewriteLinks: jest.fn(),
+            isK12Portal: false,
+            setIsK12Portal
+        });
+
+        mockBrowserInitialEntries(['/adoption']);
+
+        render(AppElement);
+
+        // Wait for the adoption page to render
+        await screen.findByRole('combobox');
+        await screen.findByText('Let us know you\'re using OpenStax');
+
+        // NonPortalRouteWrapper should have called setIsK12Portal(false) to enable GTM
+        await waitFor(() => {
+            expect(setIsK12Portal).toHaveBeenCalledWith(false);
+        });
+
+        // And GTM should be initialized
+        await waitFor(() => {
+            expect(spyInitializeGTM).toHaveBeenCalled();
+        });
+
+        // Portal should be cleared for non-portal pages
+        expect(mockSetPortal).toHaveBeenCalledWith('');
+    });
 });
