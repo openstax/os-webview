@@ -60,22 +60,34 @@ export function OtherPageRoutes() {
     const {'*': path} = useParams();
 
     if (['books', 'textbooks'].includes(dir)) {
-        return path === '' ? <Error404 /> : (
-            <Routes>
-                <Route
-                    path="/:title"
-                    element={<RedirectToCanonicalDetailsPage />}
-                />
-            </Routes>
+        return (
+            <NonPortalRouteWrapper>
+                {path === '' ? <Error404 /> : (
+                    <Routes>
+                        <Route
+                            path="/:title"
+                            element={<RedirectToCanonicalDetailsPage />}
+                        />
+                    </Routes>
+                )}
+            </NonPortalRouteWrapper>
         );
     }
 
     if (dir === 'general') {
-        return <Navigate to={`/${path}`} replace />;
+        return (
+            <NonPortalRouteWrapper>
+                <Navigate to={`/${path}`} replace />
+            </NonPortalRouteWrapper>
+        );
     }
 
     if (dir === 'home') {
-        return <Navigate to="/" replace />;
+        return (
+            <NonPortalRouteWrapper>
+                <Navigate to="/" replace />
+            </NonPortalRouteWrapper>
+        );
     }
 
     // Some pages have no page data in the CMS!
