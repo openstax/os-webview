@@ -11,6 +11,7 @@ import {GeneralPageFromSlug} from '~/pages/general/general';
 import {ImportedPage} from './page-loaders';
 import {RouteAsPortalOrNot} from './portal-page-routes';
 import Error404 from '~/pages/404/404';
+import {NonPortalRouteWrapper} from '../router';
 
 type PageData = FlexPageData & {
     meta: {slug: string};
@@ -79,7 +80,11 @@ export function OtherPageRoutes() {
 
     // Some pages have no page data in the CMS!
     if (isNoDataPage(dir)) {
-        return <ImportedPage name={dir} />;
+        return (
+            <NonPortalRouteWrapper>
+                <ImportedPage name={dir} />
+            </NonPortalRouteWrapper>
+        );
     }
 
     return <RouteAsPortalOrNot />;

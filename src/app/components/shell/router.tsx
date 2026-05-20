@@ -74,9 +74,11 @@ export default function Router() {
     );
 }
 
-// Wrapper component that enables GTM for all non-portal top-level routes
-// Portal routes handle their own GTM enablement via RouteAsPortalOrNot
-function NonPortalRouteWrapper({children}: {children: React.ReactNode}) {
+// Wrapper component that enables GTM for non-portal top-level routes
+// (home, footer pages, errata, details)
+// The /:dir/* route is NOT wrapped because it includes portal routes that
+// need conditional GTM handling via RouteAsPortalOrNot
+export function NonPortalRouteWrapper({children}: {children: React.ReactNode}) {
     const {setIsK12Portal} = usePortalContext();
 
     useEffect(() => {
@@ -101,7 +103,7 @@ function MainRoutes() {
                 )}
                 <Route path="/errata/*" element={<NonPortalRouteWrapper><ErrataRoutes /></NonPortalRouteWrapper>} />
                 <Route path="/details/*" element={<NonPortalRouteWrapper><DetailsRoutes /></NonPortalRouteWrapper>} />
-                <Route path="/:dir/*" element={<NonPortalRouteWrapper><OtherPageRoutes /></NonPortalRouteWrapper>} />
+                <Route path="/:dir/*" element={<OtherPageRoutes />} />
             </Routes>
         </Layout>
     );
