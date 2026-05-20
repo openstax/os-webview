@@ -11,7 +11,7 @@ import {GeneralPageFromSlug} from '~/pages/general/general';
 import {ImportedPage} from './page-loaders';
 import {RouteAsPortalOrNot} from './portal-page-routes';
 import Error404 from '~/pages/404/404';
-import {NonPortalRouteWrapper} from '../router';
+import {NonPortalRouteWrapper} from './non-portal-route-wrapper';
 
 type PageData = FlexPageData & {
     meta: {slug: string};
