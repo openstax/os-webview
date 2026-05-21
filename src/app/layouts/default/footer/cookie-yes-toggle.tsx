@@ -1,10 +1,19 @@
 import React from 'react';
-import {isGTMInitialized} from '~/helpers/tag-manager';
 
 export default function CookieYesToggle() {
-    // Only show the cookie toggle if GTM is loaded
-    // (GTM is disabled on K12 portals, so the cookie banner won't be present)
-    if (!isGTMInitialized()) {
+    const [cookieYesLoaded, setCookieYesLoaded] = React.useState(false);
+    const handleCkyLoaded = React.useCallback(() => {
+        if (!cookieYesLoaded && 'getCkyConsent' in window) {
+            setCookieYesLoaded(true);
+        }
+    }, [cookieYesLoaded]);
+
+    React.useEffect(() => {
+        document.addEventListener('cookieyes_banner_load', handleCkyLoaded);
+        return () => document.removeEventListener('cookieyes_banner_load', handleCkyLoaded);
+    }, [handleCkyLoaded]);
+
+    if (!cookieYesLoaded) {
         return null;
     }
 

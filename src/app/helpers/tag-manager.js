@@ -27,14 +27,6 @@ window.oxDLF ||= [];
 let gtmInitialized = false;
 
 /**
- * Check if GTM has been initialized
- * @returns {boolean} true if GTM is initialized, false otherwise
- */
-export function isGTMInitialized() {
-    return gtmInitialized;
-}
-
-/**
  * Initialize Google Tag Manager
  * This should be called conditionally based on portal K12 status
  */
