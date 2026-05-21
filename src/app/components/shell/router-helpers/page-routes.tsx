@@ -11,6 +11,7 @@ import {GeneralPageFromSlug} from '~/pages/general/general';
 import {ImportedPage} from './page-loaders';
 import {RouteAsPortalOrNot} from './portal-page-routes';
 import Error404 from '~/pages/404/404';
+import {NonPortalRouteWrapper} from './non-portal-route-wrapper';
 
 type PageData = FlexPageData & {
     meta: {slug: string};
@@ -59,27 +60,43 @@ export function OtherPageRoutes() {
     const {'*': path} = useParams();
 
     if (['books', 'textbooks'].includes(dir)) {
-        return path === '' ? <Error404 /> : (
-            <Routes>
-                <Route
-                    path="/:title"
-                    element={<RedirectToCanonicalDetailsPage />}
-                />
-            </Routes>
+        return (
+            <NonPortalRouteWrapper>
+                {path === '' ? <Error404 /> : (
+                    <Routes>
+                        <Route
+                            path="/:title"
+                            element={<RedirectToCanonicalDetailsPage />}
+                        />
+                    </Routes>
+                )}
+            </NonPortalRouteWrapper>
         );
     }
 
     if (dir === 'general') {
-        return <Navigate to={`/${path}`} replace />;
+        return (
+            <NonPortalRouteWrapper>
+                <Navigate to={`/${path}`} replace />
+            </NonPortalRouteWrapper>
+        );
     }
 
     if (dir === 'home') {
-        return <Navigate to="/" replace />;
+        return (
+            <NonPortalRouteWrapper>
+                <Navigate to="/" replace />
+            </NonPortalRouteWrapper>
+        );
     }
 
     // Some pages have no page data in the CMS!
     if (isNoDataPage(dir)) {
-        return <ImportedPage name={dir} />;
+        return (
+            <NonPortalRouteWrapper>
+                <ImportedPage name={dir} />
+            </NonPortalRouteWrapper>
+        );
     }
 
     return <RouteAsPortalOrNot />;

@@ -15,6 +15,7 @@ import {
     OtherPageRoutes,
     generateFooterPageRoutes
 } from './router-helpers/page-routes';
+import {NonPortalRouteWrapper} from './router-helpers/non-portal-route-wrapper';
 import './skip-to-content.scss';
 
 function doSkipToContent(event: React.MouseEvent) {
@@ -74,19 +75,6 @@ export default function Router() {
     );
 }
 
-// Wrapper component that enables GTM for all non-portal top-level routes
-// Portal routes handle their own GTM enablement via RouteAsPortalOrNot
-function NonPortalRouteWrapper({children}: {children: React.ReactNode}) {
-    const {setIsK12Portal} = usePortalContext();
-
-    useEffect(() => {
-        // These are all non-portal routes, so enable GTM
-        setIsK12Portal(false);
-    }, [setIsK12Portal]);
-
-    return <>{children}</>;
-}
-
 function MainRoutes() {
     const {Layout} = useLayoutContext();
 
@@ -101,7 +89,7 @@ function MainRoutes() {
                 )}
                 <Route path="/errata/*" element={<NonPortalRouteWrapper><ErrataRoutes /></NonPortalRouteWrapper>} />
                 <Route path="/details/*" element={<NonPortalRouteWrapper><DetailsRoutes /></NonPortalRouteWrapper>} />
-                <Route path="/:dir/*" element={<NonPortalRouteWrapper><OtherPageRoutes /></NonPortalRouteWrapper>} />
+                <Route path="/:dir/*" element={<OtherPageRoutes />} />
             </Routes>
         </Layout>
     );
