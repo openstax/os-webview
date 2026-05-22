@@ -76,6 +76,7 @@ export default function Chat() {
         };
     }, []);
 
+    // eslint-disable-next-line complexity
     React.useEffect(() => {
         if (!scriptLoaded || !window.embeddedservice_bootstrap) {
             return;
@@ -89,7 +90,7 @@ export default function Chat() {
             };
 
             if (userModel.uuid) {
-                hiddenFields.OpenStax_UUID__c = userModel.uuid;
+                hiddenFields.OpenStax_UUID__c = userModel.uuid; // eslint-disable-line camelcase
             }
 
             window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields(hiddenFields);
