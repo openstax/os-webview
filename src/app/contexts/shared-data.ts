@@ -2,7 +2,7 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/helpers/cms-fetch';
 import {usePromise} from '~/helpers/use-data';
 
-type FlagName = 'myox_pardot' | 'my_openstax' | 'new_subjects';
+type FlagName = 'myox_pardot' | 'my_openstax' | 'new_subjects' | 'chat_book_details';
 
 type Flag = {
     name: FlagName;
