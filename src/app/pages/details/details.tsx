@@ -14,6 +14,8 @@ import useDetailsContext, {
     ContextValues
 } from './context';
 import {WindowContextProvider} from '~/contexts/window';
+import useSharedDataContext from '~/contexts/shared-data';
+import Chat from '~/components/chat/chat';
 import './details.scss';
 import './table-of-contents.scss';
 
@@ -76,6 +78,8 @@ function TocSlideoutAndContent({children}: {children: React.ReactNode}) {
 export function BookDetails() {
     const model = useDetailsContext();
     const {setLanguage} = useLanguageContext();
+    const {flags} = useSharedDataContext();
+    const chatEnabled = flags && flags.chat_book_details;
 
     useEffect(() => {
         setPageColor(model.coverColor);
@@ -97,6 +101,7 @@ export function BookDetails() {
                     </WindowContextProvider>
                 </TocSlideoutAndContent>
             </TOCContextProvider>
+            {chatEnabled && <Chat />}
         </main>
     );
 }
