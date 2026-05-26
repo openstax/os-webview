@@ -16,6 +16,8 @@ import {
     generateFooterPageRoutes
 } from './router-helpers/page-routes';
 import {NonPortalRouteWrapper} from './router-helpers/non-portal-route-wrapper';
+import useSharedDataContext from '~/contexts/shared-data';
+import Chat from '~/components/chat/chat';
 import './skip-to-content.scss';
 
 function doSkipToContent(event: React.MouseEvent) {
@@ -77,6 +79,22 @@ export default function Router() {
 
 function MainRoutes() {
     const {Layout} = useLayoutContext();
+    const {pathname} = useLocation();
+    const {flags} = useSharedDataContext();
+
+    // Determine if chat should be shown based on current route and feature flags
+    const showChat = React.useMemo(() => {
+        if (!flags) {
+            return false;
+        }
+
+        // Check if we're on a book details page
+        if (pathname.startsWith('/details/') && flags.chat_book_details) {
+            return true;
+        }
+
+        return false;
+    }, [pathname, flags]);
 
     return (
         <Layout>
@@ -91,6 +109,7 @@ function MainRoutes() {
                 <Route path="/details/*" element={<NonPortalRouteWrapper><DetailsRoutes /></NonPortalRouteWrapper>} />
                 <Route path="/:dir/*" element={<OtherPageRoutes />} />
             </Routes>
+            {showChat && <Chat />}
         </Layout>
     );
 }
