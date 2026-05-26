@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import { LoadedPage } from '~/components/jsx-helpers/loader-page';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import { LayoutContextProvider } from '~/contexts/layout';
 
 describe('loader-page', () => {
     // The rest of the code is exercised in other tests.
@@ -13,7 +14,9 @@ describe('loader-page', () => {
 
         render(
             <MemoryRouter initialEntries={['/testpage']}>
-                <LoadedPage data={data} Child={Child} props={{}} />
+                <LayoutContextProvider>
+                    <LoadedPage data={data} Child={Child} props={{}} />
+                </LayoutContextProvider>
             </MemoryRouter>
         );
 
