@@ -94,8 +94,8 @@ function MainRoutes() {
         // Check if user is logged in
         const isLoggedIn = Boolean(userContext?.userModel?.uuid);
 
-        // If chat_logged_in_only is enabled and user is logged in, show on any page
-        if (flags.chat_logged_in_only && isLoggedIn) {
+        // If chat_logged_in is enabled and user is logged in, show on any page
+        if (flags.chat_logged_in && isLoggedIn) {
             return true;
         }
 
