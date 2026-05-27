@@ -83,13 +83,11 @@ export default function Chat() {
             }
             // Hide the chat widget when component unmounts
             // The Salesforce widget injects elements with these selectors
-            const chatElements = document.querySelectorAll(
-                '.embeddedServiceHelpButton, .dockableContainer, .sidebarBody, .embeddedServiceSidebar'
-            );
+            const chatElement = document.getElementById('embedded-messaging');
 
-            chatElements.forEach((el) => {
-                (el as HTMLElement).style.display = 'none';
-            });
+            if (chatElement) {
+                chatElement.style.display = 'none';
+            }
             // Note: Don't delete window.embeddedservice_bootstrap or __salesforceChatInitialized
             // to maintain conversation state across component remounts
         };
@@ -98,13 +96,11 @@ export default function Chat() {
     // Show chat widget when component mounts (if it was previously hidden)
     React.useEffect(() => {
         if (scriptLoaded && window.__salesforceChatInitialized) {
-            const chatElements = document.querySelectorAll(
-                '.embeddedServiceHelpButton, .dockableContainer, .sidebarBody, .embeddedServiceSidebar'
-            );
+            const chatElement = document.getElementById('embedded-messaging');
 
-            chatElements.forEach((el) => {
-                (el as HTMLElement).style.display = '';
-            });
+            if (chatElement) {
+                chatElement.style.removeProperty('display');
+            }
         }
     }, [scriptLoaded]);
 
