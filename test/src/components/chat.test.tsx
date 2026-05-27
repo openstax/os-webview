@@ -3,8 +3,9 @@ import {render, waitFor} from '@testing-library/preact';
 import Chat from '~/components/chat/chat';
 import * as UserContext from '~/contexts/user';
 
-// Mock the user context
+// Mock the user context and scss
 jest.mock('~/contexts/user');
+jest.mock('~/components/chat/chat.scss', () => ({}));
 
 describe('Chat', () => {
     let mockEmbeddedService: any;
