@@ -14,6 +14,7 @@ describe('Chat', () => {
         // Clean up any existing scripts and global objects
         document.querySelectorAll('script[src*="bootstrap.min.js"]').forEach((el) => el.remove());
         delete (window as any).embeddedservice_bootstrap;
+        delete (window as any).__salesforceChatInitialized;
 
         // Create mock embeddedservice_bootstrap
         mockEmbeddedService = {
@@ -120,7 +121,7 @@ describe('Chat', () => {
         const mockUserContext = {
             userModel: {
                 uuid: 'test-uuid-123',
-                first_name: 'John'
+                first_name: 'John',
                 // Missing last_name, email, school
             }
         };
@@ -203,6 +204,89 @@ describe('Chat', () => {
         rerender(<Chat />);
 
         // Should not initialize again
+        expect(mockEmbeddedService.init).toHaveBeenCalledTimes(1);
+    });
+
+    it('updates pre-chat fields when user logs in after initialization', async () => {
+        // Start with anonymous user
+        (UserContext.default as jest.Mock).mockReturnValue({});
+
+        const {rerender} = render(<Chat />);
+
+        const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
+
+        // Simulate script load
+        (window as any).embeddedservice_bootstrap = mockEmbeddedService;
+        script.onload?.(new Event('load'));
+
+        await waitFor(() => {
+            expect(mockEmbeddedService.init).toHaveBeenCalledTimes(1);
+        });
+
+        // Verify initial fields (anonymous user)
+        expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
+            sProduct: 'Website'
+        });
+
+        // Clear mock calls
+        mockEmbeddedService.prechatAPI.setHiddenPrechatFields.mockClear();
+
+        // Simulate user logging in
+        (UserContext.default as jest.Mock).mockReturnValue({
+            userModel: {
+                uuid: 'test-uuid-456',
+                first_name: 'Jane',
+                last_name: 'Doe',
+                email: 'jane.doe@example.com',
+                accountsModel: {
+                    school_name: 'Example University'
+                }
+            }
+        });
+
+        rerender(<Chat />);
+
+        // Verify fields updated with user information
+        await waitFor(() => {
+            expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
+                sProduct: 'Website',
+                OpenStax_UUID__c: 'test-uuid-456',
+                FirstName: 'Jane',
+                LastName: 'Doe',
+                Email: 'jane.doe@example.com',
+                School: 'Example University'
+            });
+        });
+
+        // Init should still only have been called once
+        expect(mockEmbeddedService.init).toHaveBeenCalledTimes(1);
+    });
+
+    it('preserves initialization state across component remounts', async () => {
+        (UserContext.default as jest.Mock).mockReturnValue({});
+
+        const {unmount} = render(<Chat />);
+
+        const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
+
+        // Simulate script load and initialization
+        (window as any).embeddedservice_bootstrap = mockEmbeddedService;
+        script.onload?.(new Event('load'));
+
+        await waitFor(() => {
+            expect(mockEmbeddedService.init).toHaveBeenCalledTimes(1);
+        });
+
+        // Unmount component
+        unmount();
+
+        // Remount component
+        render(<Chat />);
+
+        // Wait a bit to ensure no re-initialization
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Init should still only have been called once (state persists via window flag)
         expect(mockEmbeddedService.init).toHaveBeenCalledTimes(1);
     });
 });

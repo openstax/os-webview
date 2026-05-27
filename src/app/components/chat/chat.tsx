@@ -18,6 +18,7 @@ declare global {
                 setHiddenPrechatFields: (fields: Record<string, string>) => void;
             };
         };
+        __salesforceChatInitialized?: boolean;
     }
 }
 
@@ -49,7 +50,6 @@ function initEmbeddedMessaging() {
 export default function Chat() {
     const userContext = useUserContext();
     const [scriptLoaded, setScriptLoaded] = React.useState(false);
-    const initializedRef = React.useRef(false);
 
     // Derive stable user primitives
     const userModel = userContext?.userModel;
@@ -81,15 +81,29 @@ export default function Chat() {
             if (document.body.contains(script)) {
                 document.body.removeChild(script);
             }
-            // Note: Don't delete window.embeddedservice_bootstrap to maintain
-            // conversation state across component remounts
+            // Note: Don't delete window.embeddedservice_bootstrap or __salesforceChatInitialized
+            // to maintain conversation state across component remounts
         };
     }, []);
 
-    // Initialize chat once and set user fields
+    // Initialize chat widget once (on first mount or after refresh)
+    React.useEffect(() => {
+        if (!scriptLoaded || !window.embeddedservice_bootstrap) {
+            return;
+        }
+
+        // Only initialize if not already initialized (persists across component remounts)
+        if (!window.__salesforceChatInitialized) {
+            initEmbeddedMessaging();
+            window.__salesforceChatInitialized = true;
+        }
+    }, [scriptLoaded]);
+
+    // Update pre-chat fields whenever user information changes
+    // This allows fields to update when a user logs in after chat is initialized
     // eslint-disable-next-line complexity
     React.useEffect(() => {
-        if (!scriptLoaded || !window.embeddedservice_bootstrap || initializedRef.current) {
+        if (!scriptLoaded || !window.embeddedservice_bootstrap?.prechatAPI) {
             return;
         }
 
@@ -115,12 +129,7 @@ export default function Chat() {
             hiddenFields.School = school;
         }
 
-        if (window.embeddedservice_bootstrap.prechatAPI) {
-            window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields(hiddenFields);
-        }
-
-        initEmbeddedMessaging();
-        initializedRef.current = true;
+        window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields(hiddenFields);
     }, [scriptLoaded, uuid, firstName, lastName, email, school]);
 
     return null;
