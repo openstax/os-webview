@@ -283,10 +283,8 @@ describe('Chat', () => {
         // Remount component
         render(<Chat />);
 
-        // Wait a bit to ensure no re-initialization
-        await new Promise(resolve => setTimeout(resolve, 100));
-
         // Init should still only have been called once (state persists via window flag)
+        // No need to wait - no new script load event is triggered on remount
         expect(mockEmbeddedService.init).toHaveBeenCalledTimes(1);
     });
 });
