@@ -148,6 +148,8 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
     }
 
     .popup-msg-cross-icon {
+        @include focus-indicator();
+
         cursor: pointer;
         margin: -0.5rem -0.5rem 0.5rem;
     }
@@ -183,6 +185,8 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
             justify-content: right;
 
             > button {
+                @include button-reset();
+
                 background-color: unset;
                 color: unset;
                 padding: 0;

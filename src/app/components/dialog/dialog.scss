@@ -51,6 +51,8 @@ dialog,
 
     .put-away {
         @include body-font(3.6rem);
+        @include button-reset();
+
         background-color: transparent;
         border: 0;
         box-shadow: none;

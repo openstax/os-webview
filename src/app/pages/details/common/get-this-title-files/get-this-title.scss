@@ -72,6 +72,10 @@
         }
     }
 
+    .show-toc {
+        @include focus-indicator();
+    }
+
     .options {
         display: flex;
         flex-direction: column;

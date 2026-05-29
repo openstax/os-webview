@@ -51,6 +51,8 @@
         }
 
         .put-away {
+            @include button-reset();
+
             align-items: center;
             align-self: flex-end;
             display: flex;

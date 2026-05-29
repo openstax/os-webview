@@ -36,6 +36,10 @@
         .url {
             padding: 0.5rem 0 0.5rem 1rem;
         }
+
+        button {
+            @include button-reset();
+        }
     }
 
     .boxed.smaller-icon img {
