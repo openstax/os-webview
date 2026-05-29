@@ -280,11 +280,18 @@ describe('Chat', () => {
         // Unmount component
         unmount();
 
-        // Remount component
+        // Verify script was removed from DOM
+        expect(document.querySelectorAll('script[src*="bootstrap.min.js"]').length).toBe(0);
+
+        // Remount component - bootstrap object still exists in window, so no new script is created
         render(<Chat />);
 
-        // Init should still only have been called once (state persists via window flag)
-        // No need to wait - no new script load event is triggered on remount
+        // Because window.embeddedservice_bootstrap still exists, the component short-circuits
+        // and doesn't inject a new script. scriptLoaded is set immediately.
+        // The initialization effect sees __salesforceChatInitialized is already true and doesn't re-init.
         expect(mockEmbeddedService.init).toHaveBeenCalledTimes(1);
+
+        // Verify no new script was added (short-circuit logic worked)
+        expect(document.querySelectorAll('script[src*="bootstrap.min.js"]').length).toBe(0);
     });
 });
