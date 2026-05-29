@@ -84,15 +84,15 @@ function MainRoutes() {
     const {flags} = useSharedDataContext();
     const userContext = useUserContext();
 
+    // Derive stable user login state
+    const isLoggedIn = Boolean(userContext?.userModel?.uuid);
+
     // Determine if chat should be shown based on current route and feature flags
     // eslint-disable-next-line complexity
     const showChat = React.useMemo(() => {
         if (!flags) {
             return false;
         }
-
-        // Check if user is logged in
-        const isLoggedIn = Boolean(userContext?.userModel?.uuid);
 
         // If chat_logged_in is enabled and user is logged in, show on any page
         if (flags.chat_logged_in && isLoggedIn) {
@@ -115,7 +115,7 @@ function MainRoutes() {
         }
 
         return false;
-    }, [pathname, flags, userContext]);
+    }, [pathname, flags, isLoggedIn]);
 
     return (
         <Layout>

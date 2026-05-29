@@ -30,7 +30,7 @@ const SALESFORCE_CONFIG = {
     bootstrapScript: 'https://openstax.my.site.com/ESWWebMessagingDeployme1716235390398/assets/js/bootstrap.min.js'
 };
 
-function initEmbeddedMessaging() {
+function initEmbeddedMessaging(): boolean {
     try {
         if (window.embeddedservice_bootstrap) {
             window.embeddedservice_bootstrap.settings.language = 'en_US';
@@ -40,9 +40,12 @@ function initEmbeddedMessaging() {
                 SALESFORCE_CONFIG.baseUrl,
                 {scrt2URL: SALESFORCE_CONFIG.scrt2URL}
             );
+            return true;
         }
+        return false;
     } catch (err) {
         console.error('Error initializing Salesforce chat:', err);
+        return false;
     }
 }
 
@@ -59,8 +62,14 @@ export default function Chat() {
     const email = userModel?.email;
     const school = userModel?.accountsModel?.school_name;
 
-    // Load Salesforce script once
+    // Load Salesforce script once, or short-circuit if already loaded
     React.useEffect(() => {
+        // Short-circuit if bootstrap is already available from a previous mount
+        if (window.embeddedservice_bootstrap) {
+            setScriptLoaded(true);
+            return () => undefined;
+        }
+
         const script = document.createElement('script');
 
         script.src = SALESFORCE_CONFIG.bootstrapScript;
@@ -112,8 +121,12 @@ export default function Chat() {
 
         // Only initialize if not already initialized (persists across component remounts)
         if (!window.__salesforceChatInitialized) {
-            initEmbeddedMessaging();
-            window.__salesforceChatInitialized = true;
+            const success = initEmbeddedMessaging();
+
+            // Only set the flag if initialization succeeded
+            if (success) {
+                window.__salesforceChatInitialized = true;
+            }
         }
     }, [scriptLoaded]);
 
