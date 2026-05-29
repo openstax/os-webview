@@ -11,10 +11,14 @@
 
         align-items: center;
         background-color: rgba(ui-color(black), 0.4);
+        color: ui-color(white);
         display: flex;
+        font-size: inherit;
+        font-weight: 500;
         height: 7rem;
         justify-content: center;
         min-width: 4rem;
+        padding: 1rem;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
