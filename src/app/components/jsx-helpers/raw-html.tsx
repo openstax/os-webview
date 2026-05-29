@@ -1,5 +1,6 @@
 import React from 'react';
 import usePortalContext from '~/contexts/portal';
+import resolvePageLinks from '~/helpers/resolve-page-links';
 
 // Making scripts work, per https://stackoverflow.com/a/47614491/392102
 function activateScripts(el: HTMLElement) {
@@ -55,7 +56,18 @@ export default function RawHTML({
             activateScripts(ref.current);
         }
     });
-    React.useLayoutEffect(() => rewriteLinks?.(ref.current as HTMLElement), [rewriteLinks]);
+    React.useLayoutEffect(() => {
+        if (!ref.current) {
+            return;
+        }
+
+        rewriteLinks?.(ref.current as HTMLElement);
+
+        // Resolve internal page links
+        resolvePageLinks(ref.current as HTMLElement).catch((err) => {
+            console.error('Failed to resolve page links:', err);
+        });
+    }, [rewriteLinks, html]);
 
     return React.createElement(Tag, {
         ref,
