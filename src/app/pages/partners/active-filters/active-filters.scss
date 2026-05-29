@@ -43,6 +43,8 @@
             }
 
             button {
+                @include button-reset();
+
                 appearance: none;
                 background-color: transparent;
                 color: text-color(normal);

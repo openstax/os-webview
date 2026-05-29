@@ -10336,9 +10336,9 @@ path2d@^0.2.1:
   resolved "https://registry.yarnpkg.com/path2d/-/path2d-0.2.2.tgz#cc85d61ed7827e7863a2ee36713d4b5315a3d85d"
   integrity sha512-+vnG6S4dYcYxZd+CZxzXCNKdELYZSKfohrk98yajCo1PtRoDgCTrrwOvK1GT0UoAdVszagDVllQc0U1vaX4NUQ==
 
-pattern-library@openstax/pattern-library:
-  version "1.4.0"
-  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/f30c0c76c295ac697c153e7df4af02ec90875e15"
+"pattern-library@openstax/pattern-library#semver:^1.5.0":
+  version "1.5.0"
+  resolved "https://codeload.github.com/openstax/pattern-library/tar.gz/c9b7351301225679bade5d2525ac78c7b0ccfb00"
 
 pbf@^4.0.1:
   version "4.0.1"

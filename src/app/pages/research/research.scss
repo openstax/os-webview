@@ -41,11 +41,23 @@
         @extend %content;
     }
 
+    // contact-us renders `<button class="btn btn-orange">`; style it on-brand
+    // via the pattern-library mixins.
+    .btn {
+        @include button();
+    }
+
+    .btn-orange {
+        @include button-type-specific(primary);
+    }
+
     .accordion-group .content-pane {
         background-color: rgba(0,0,0,0);
     }
 
     .link-text {
+        @include focus-indicator();
+
         text-decoration-line: underline;
         color: #026AA1;
         cursor: pointer;
@@ -58,6 +70,12 @@
 
     .pb-2 {
         padding-bottom: 2rem;
+    }
+
+    // `.py-4` is a padding utility, but the research "view all" toggles are
+    // `role="button"` spans/paragraphs carrying it — give those a focus ring.
+    .py-4[role="button"] {
+        @include button-reset();
     }
 
     .py-4 {

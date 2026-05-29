@@ -91,7 +91,7 @@
         "node-localstorage": "^2.2.1",
         "node-sass": "^8.0.0",
         "particles.js": "^2.0.0",
-        "pattern-library": "openstax/pattern-library",
+        "pattern-library": "openstax/pattern-library#semver:^1.5.0",
         "preact": "~10.24",
         "prettier": "^3",
         "react-modal": "^3.16.1",

@@ -29,4 +29,10 @@
     .primary {
         @extend %primary;
     }
+
+    // CTA buttons are large and uppercased.
+    .btn {
+        padding: 1.5rem 2rem;
+        text-transform: uppercase;
+    }
 }

@@ -28,6 +28,8 @@
             }
 
             .put-away {
+                @include button-reset();
+
                 background-color: inherit;
                 color: inherit;
                 margin-left: $normal-margin;

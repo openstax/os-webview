@@ -50,6 +50,8 @@ $extra-dark-mask: rgba(0, 0, 0, 0.4);
         }
 
         .put-away {
+            @include button-reset();
+
             background-color: text-color(link);
             background-blend-mode: multiply;
             background-image: linear-gradient(to bottom, $darkening-mask, $darkening-mask);
