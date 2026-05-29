@@ -38,7 +38,9 @@ describe('RawHTML with page links', () => {
         const html = '<p>Check out <a linktype="page" id="560">this page</a> for more info</p>';
 
         mockCmsFetch.mockResolvedValue({
-            html_url: 'https://openstax.org/resolved-page'
+            meta: {
+                html_url: 'https://openstax.org/resolved-page'
+            }
         });
 
         const {container} = render(<Component html={html} />);
@@ -62,8 +64,8 @@ describe('RawHTML with page links', () => {
         `;
 
         mockCmsFetch
-            .mockResolvedValueOnce({html_url: 'https://openstax.org/page-100'})
-            .mockResolvedValueOnce({html_url: 'https://openstax.org/page-200'});
+            .mockResolvedValueOnce({meta: {html_url: 'https://openstax.org/page-100'}})
+            .mockResolvedValueOnce({meta: {html_url: 'https://openstax.org/page-200'}});
 
         const {container} = render(<Component html={html} />);
 
@@ -104,8 +106,8 @@ describe('RawHTML with page links', () => {
         const html2 = '<p><a linktype="page" id="991">Second page</a></p>';
 
         mockCmsFetch
-            .mockResolvedValueOnce({html_url: 'https://openstax.org/page-990'})
-            .mockResolvedValueOnce({html_url: 'https://openstax.org/page-991'});
+            .mockResolvedValueOnce({meta: {html_url: 'https://openstax.org/page-990'}})
+            .mockResolvedValueOnce({meta: {html_url: 'https://openstax.org/page-991'}});
 
         const {container, rerender} = render(<Component html={html1} />);
 

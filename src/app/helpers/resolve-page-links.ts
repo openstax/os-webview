@@ -5,6 +5,9 @@ const urlCache = new Map<string, string>();
 
 interface PageApiResponse {
     html_url?: string;
+    meta?: {
+        html_url?: string;
+    };
 }
 
 /**
@@ -14,7 +17,7 @@ interface PageApiResponse {
  *
  * @param element - The container element to search for page links
  */
-export default async function resolvePageLinks(element: HTMLElement): Promise<void> {
+export default async function resolvePageLinks(element: HTMLElement | null | undefined): Promise<void> {
     if (!element) {
         return;
     }
@@ -40,10 +43,11 @@ export default async function resolvePageLinks(element: HTMLElement): Promise<vo
 
             if (!resolvedUrl) {
                 // Fetch page metadata from CMS API
-                const response = await cmsFetch(`pages/${pageId}/`) as PageApiResponse;
+                const response = (await cmsFetch(`pages/${pageId}/`)) as PageApiResponse;
+                const resolvedUrlFromApi = response.html_url ?? response.meta?.html_url;
 
-                if (response.html_url) {
-                    resolvedUrl = response.html_url;
+                if (resolvedUrlFromApi) {
+                    resolvedUrl = resolvedUrlFromApi;
                     // Cache the resolved URL
                     urlCache.set(pageId, resolvedUrl);
                 } else {
@@ -52,8 +56,10 @@ export default async function resolvePageLinks(element: HTMLElement): Promise<vo
                 }
             }
 
-            // Set the href attribute to the resolved URL
-            link.setAttribute('href', resolvedUrl);
+            // Set the href attribute to the resolved URL (but don't overwrite an existing href)
+            if (!link.getAttribute('href')) {
+                link.setAttribute('href', resolvedUrl);
+            }
         } catch (err) {
             // Log error but don't break the page
             console.error(`Failed to resolve page link for id ${pageId}:`, err);

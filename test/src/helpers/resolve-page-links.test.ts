@@ -10,13 +10,12 @@ const mockCmsFetch = cmsFetchModule.default as jest.MockedFunction<typeof cmsFet
 describe('resolvePageLinks', () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        // Clear the module cache to reset the URL cache
-        jest.resetModules();
     });
 
     it('returns early if element is null', async () => {
-        await resolvePageLinks(null as unknown as HTMLElement);
+        await resolvePageLinks(null);
         expect(mockCmsFetch).not.toHaveBeenCalled();
+    });
     });
 
     it('does nothing if there are no page links', async () => {
@@ -35,7 +34,9 @@ describe('resolvePageLinks', () => {
         element.innerHTML = '<p>Check out <a linktype="page" id="560">this page</a> for more info</p>';
 
         mockCmsFetch.mockResolvedValue({
-            html_url: 'https://openstax.org/some-page'
+            meta: {
+                html_url: 'https://openstax.org/some-page'
+            }
         });
 
         await resolvePageLinks(element);
@@ -54,8 +55,8 @@ describe('resolvePageLinks', () => {
         `;
 
         mockCmsFetch
-            .mockResolvedValueOnce({html_url: 'https://openstax.org/page-660'})
-            .mockResolvedValueOnce({html_url: 'https://openstax.org/page-661'});
+            .mockResolvedValueOnce({meta: {html_url: 'https://openstax.org/page-660'}})
+            .mockResolvedValueOnce({meta: {html_url: 'https://openstax.org/page-661'}});
 
         await resolvePageLinks(element);
 
@@ -75,7 +76,9 @@ describe('resolvePageLinks', () => {
         `;
 
         mockCmsFetch.mockResolvedValue({
-            html_url: 'https://openstax.org/cached-page'
+            meta: {
+                html_url: 'https://openstax.org/cached-page'
+            }
         });
 
         // First call
@@ -133,8 +136,9 @@ describe('resolvePageLinks', () => {
         const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 
         mockCmsFetch.mockResolvedValue({
-            // Missing html_url
-            id: 888
+            meta: {
+                // Missing html_url
+            }
         });
 
         await resolvePageLinks(element);

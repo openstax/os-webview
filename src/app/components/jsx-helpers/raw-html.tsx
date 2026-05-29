@@ -61,11 +61,10 @@ export default function RawHTML({
             return;
         }
 
-        rewriteLinks?.(ref.current as HTMLElement);
+        rewriteLinks?.(ref.current);
 
         // Resolve internal page links
-        resolvePageLinks(ref.current as HTMLElement).catch((err) => {
-            console.error('Failed to resolve page links:', err);
+        resolvePageLinks(ref.current).catch((err) => {
         });
     }, [rewriteLinks, html]);
 
