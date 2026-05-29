@@ -16,8 +16,6 @@ describe('resolvePageLinks', () => {
         await resolvePageLinks(null);
         expect(mockCmsFetch).not.toHaveBeenCalled();
     });
-    });
-
     it('does nothing if there are no page links', async () => {
         const element = document.createElement('div');
 

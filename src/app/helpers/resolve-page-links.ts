@@ -10,6 +10,46 @@ interface PageApiResponse {
     };
 }
 
+async function getResolvedUrl(pageId: string): Promise<string | undefined> {
+    const cachedUrl = urlCache.get(pageId);
+
+    if (cachedUrl) {
+        return cachedUrl;
+    }
+
+    const response = (await cmsFetch(`pages/${pageId}/`)) as PageApiResponse;
+    const resolvedUrl = response.html_url ?? response.meta?.html_url;
+
+    if (!resolvedUrl) {
+        console.warn(`Page ${pageId} has no html_url in API response`);
+        return undefined;
+    }
+
+    urlCache.set(pageId, resolvedUrl);
+    return resolvedUrl;
+}
+
+async function resolvePageLink(link: HTMLAnchorElement): Promise<void> {
+    const pageId = link.getAttribute('id');
+
+    if (!pageId) {
+        return;
+    }
+
+    try {
+        const resolvedUrl = await getResolvedUrl(pageId);
+
+        if (!resolvedUrl || link.getAttribute('href')) {
+            return;
+        }
+
+        link.setAttribute('href', resolvedUrl);
+    } catch (err) {
+        // Log error but don't break the page
+        console.error(`Failed to resolve page link for id ${pageId}:`, err);
+    }
+}
+
 /**
  * Resolves internal page links that have linktype="page" and id attributes
  * but are missing href attributes. Fetches the page metadata from CMS API
@@ -30,41 +70,7 @@ export default async function resolvePageLinks(element: HTMLElement | null | und
     }
 
     // Process all links in parallel
-    const promises = Array.from(pageLinks).map(async (link) => {
-        const pageId = link.getAttribute('id');
-
-        if (!pageId) {
-            return;
-        }
-
-        try {
-            // Check cache first
-            let resolvedUrl = urlCache.get(pageId);
-
-            if (!resolvedUrl) {
-                // Fetch page metadata from CMS API
-                const response = (await cmsFetch(`pages/${pageId}/`)) as PageApiResponse;
-                const resolvedUrlFromApi = response.html_url ?? response.meta?.html_url;
-
-                if (resolvedUrlFromApi) {
-                    resolvedUrl = resolvedUrlFromApi;
-                    // Cache the resolved URL
-                    urlCache.set(pageId, resolvedUrl);
-                } else {
-                    console.warn(`Page ${pageId} has no html_url in API response`);
-                    return;
-                }
-            }
-
-            // Set the href attribute to the resolved URL (but don't overwrite an existing href)
-            if (!link.getAttribute('href')) {
-                link.setAttribute('href', resolvedUrl);
-            }
-        } catch (err) {
-            // Log error but don't break the page
-            console.error(`Failed to resolve page link for id ${pageId}:`, err);
-        }
-    });
+    const promises = Array.from(pageLinks).map((link) => resolvePageLink(link));
 
     await Promise.all(promises);
 }

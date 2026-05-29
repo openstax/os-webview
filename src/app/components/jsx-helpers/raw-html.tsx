@@ -64,7 +64,7 @@ export default function RawHTML({
         rewriteLinks?.(ref.current);
 
         // Resolve internal page links
-        resolvePageLinks(ref.current).catch((err) => {
+        resolvePageLinks(ref.current).catch(() => {
         });
     }, [rewriteLinks, html]);
 
