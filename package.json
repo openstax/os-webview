@@ -26,7 +26,7 @@
         "@fortawesome/free-solid-svg-icons": "^6.3.0",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@openstax/experiments": "^1.0.2",
-        "@openstax/flex-page-renderer": "https://github.com/openstax/flex-pages.git#renderer-1.1.0",
+        "@openstax/flex-page-renderer": "https://github.com/openstax/flex-pages.git#renderer-1.1.4",
         "@sentry/integrations": "^7.114.0",
         "@sentry/react": "^9.16.1",
         "@types/react-modal": "^3.16.3",
