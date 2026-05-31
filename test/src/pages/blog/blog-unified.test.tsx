@@ -5,6 +5,7 @@ import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
 import {MainBlogPage} from '~/pages/blog/blog-pages';
 import {describe, it} from '@jest/globals';
+import * as pageDataUtils from '~/helpers/page-data-utils';
 
 function renderMainBlog(initialEntry: string) {
     render(
@@ -31,5 +32,17 @@ describe('Unified MainBlogPage', () => {
             expect(screen.getByText('Explore by subject')).toBeInTheDocument()
         );
         expect(screen.getByRole('group', {name: 'Filter by subject'})).toBeInTheDocument();
+    });
+
+    it('shows no-results message AND keeps facet controls visible when search returns empty', async () => {
+        jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
+        renderMainBlog('/blog/?q=zzzznomatch');
+        expect(
+            await screen.findByText(/No matching blog posts found/i)
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole('group', {name: 'Filter by subject'})
+        ).toBeInTheDocument();
+        jest.restoreAllMocks();
     });
 });
