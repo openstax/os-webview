@@ -35,9 +35,10 @@ function CollectionSelect({collections}: {collections: NamedSnippet[]}) {
     const {collection, setParam} = useBlogSearchParams();
 
     return (
-        <label className="facet-select">
+        <label className="facet-select" htmlFor="blog-collection-select">
             <span>Collection</span>
             <select
+                id="blog-collection-select"
                 value={collection ?? ''}
                 onChange={(e) => setParam('collection', e.currentTarget.value)}
             >
