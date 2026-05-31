@@ -22,6 +22,7 @@ describe('Unified MainBlogPage', () => {
         await waitFor(() =>
             expect(screen.getByRole('group', {name: 'Filter by subject'})).toBeInTheDocument()
         );
+        expect(screen.queryByText('Explore by subject')).not.toBeInTheDocument();
     });
 
     it('shows discovery content and facet controls when no query or facets', async () => {

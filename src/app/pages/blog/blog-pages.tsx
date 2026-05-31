@@ -54,21 +54,6 @@ function DiscoveryContent({
     );
 }
 
-export function SearchResultsPage() {
-    const {pageDescription} = useBlogContext();
-
-    useDocumentHead({
-        title: 'OpenStax Blog Search',
-        description: pageDescription
-    });
-
-    return (
-        <React.Fragment>
-            <SearchResults />
-        </React.Fragment>
-    );
-}
-
 // Exported so it can be tested
 
 export function MainBlogPage() {
