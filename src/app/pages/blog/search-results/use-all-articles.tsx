@@ -36,8 +36,13 @@ export default function useAllArticles() {
     const slug = buildSlug({q, subjects, collection, sort});
 
     useEffect(() => {
+        let cancelled = false;
+
         setAllArticles([]);
         fetchFromCMS(slug, true).then((results: PopulatedBlurbData[]) => {
+            if (cancelled) {
+                return;
+            }
             const articles = uniqBy(results, 'id').map((data) => {
                 data.heading = data.title;
                 data.subheading = '';
@@ -46,6 +51,9 @@ export default function useAllArticles() {
 
             setAllArticles(articles);
         });
+        return () => {
+            cancelled = true;
+        };
     }, [slug]);
 
     return allArticles;
