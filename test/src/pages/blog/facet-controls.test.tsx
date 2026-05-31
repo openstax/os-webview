@@ -29,6 +29,19 @@ it('sort toggle updates aria-pressed from relevance to newest', async () => {
     expect(screen.getByRole('button', {name: 'Newest'})).toHaveAttribute('aria-pressed', 'true');
 });
 
+it('clicking Newest then Relevance clears sort param (round-trip)', async () => {
+    render(
+        <MemoryRouter initialEntries={['/blog/?q=x']}>
+            <FacetControls subjects={[{id: 1, name: 'Math'}]} collections={[]} />
+        </MemoryRouter>
+    );
+    await userEvent.click(screen.getByRole('button', {name: 'Newest'}));
+    expect(screen.getByRole('button', {name: 'Newest'})).toHaveAttribute('aria-pressed', 'true');
+    await userEvent.click(screen.getByRole('button', {name: 'Relevance'}));
+    expect(screen.getByRole('button', {name: 'Relevance'})).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', {name: 'Newest'})).toHaveAttribute('aria-pressed', 'false');
+});
+
 it('collection select updates value when an option is chosen', async () => {
     render(
         <MemoryRouter initialEntries={['/blog/?q=x']}>

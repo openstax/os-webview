@@ -59,7 +59,7 @@ function SortToggle() {
             <button
                 type="button"
                 aria-pressed={sort === 'relevance'}
-                onClick={() => setParam('sort', 'relevance')}
+                onClick={() => setParam('sort', undefined)}
             >Relevance</button>
             <button
                 type="button"
