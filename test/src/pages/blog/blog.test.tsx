@@ -46,7 +46,7 @@ describe('blog pages', () => {
         // Should show main blog page, not search results
         expect(document.querySelector('.blog.page')).toBeTruthy();
         await waitFor(() => expect(document.head.querySelector('title')?.textContent).toBe(
-            'OpenStax News'
+            'OpenStax Blog'
         ));
     });
     test('Article page', async () => {
