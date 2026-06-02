@@ -92,6 +92,9 @@ export default function Chat() {
         // Always return cleanup function to hide widget on unmount
         return () => {
             if (script && document.body.contains(script)) {
+                // Clear handlers to prevent setState on unmounted component
+                script.onload = null;
+                script.onerror = null;
                 document.body.removeChild(script);
             }
             // Hide the chat widget when component unmounts
