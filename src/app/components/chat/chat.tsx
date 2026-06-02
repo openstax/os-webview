@@ -54,40 +54,44 @@ export default function Chat() {
     const userContext = useUserContext();
     const [scriptLoaded, setScriptLoaded] = React.useState(false);
 
-    // Derive stable user primitives
+    // Derive stable user primitives from userStatus (which is always available)
+    // with fallback to userModel when available
+    const userStatus = userContext?.userStatus;
     const userModel = userContext?.userModel;
-    const uuid = userModel?.uuid;
-    const firstName = userModel?.first_name;
-    const lastName = userModel?.last_name;
-    const email = userModel?.email;
-    const school = userModel?.accountsModel?.school_name;
+    const uuid = userStatus?.uuid || userModel?.uuid;
+    const firstName = userStatus?.firstName || userModel?.first_name;
+    const lastName = userStatus?.lastName || userModel?.last_name;
+    const email = userStatus?.email || userModel?.email;
+    const school = userStatus?.school || userModel?.accountsModel?.school_name;
 
     // Load Salesforce script once, or short-circuit if already loaded
     React.useEffect(() => {
+        let script: HTMLScriptElement | null = null;
+
         // Short-circuit if bootstrap is already available from a previous mount
         if (window.embeddedservice_bootstrap) {
             setScriptLoaded(true);
-            return () => undefined;
+        } else {
+            script = document.createElement('script');
+
+            script.src = SALESFORCE_CONFIG.bootstrapScript;
+            script.type = 'text/javascript';
+            script.async = true;
+
+            script.onload = () => {
+                setScriptLoaded(true);
+            };
+
+            script.onerror = () => {
+                console.error('Failed to load Salesforce chat script');
+            };
+
+            document.body.appendChild(script);
         }
 
-        const script = document.createElement('script');
-
-        script.src = SALESFORCE_CONFIG.bootstrapScript;
-        script.type = 'text/javascript';
-        script.async = true;
-
-        script.onload = () => {
-            setScriptLoaded(true);
-        };
-
-        script.onerror = () => {
-            console.error('Failed to load Salesforce chat script');
-        };
-
-        document.body.appendChild(script);
-
+        // Always return cleanup function to hide widget on unmount
         return () => {
-            if (document.body.contains(script)) {
+            if (script && document.body.contains(script)) {
                 document.body.removeChild(script);
             }
             // Hide the chat widget when component unmounts

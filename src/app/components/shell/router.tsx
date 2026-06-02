@@ -78,14 +78,15 @@ export default function Router() {
     );
 }
 
+// eslint-disable-next-line complexity
 function MainRoutes() {
     const {Layout} = useLayoutContext();
     const {pathname} = useLocation();
     const {flags} = useSharedDataContext();
     const userContext = useUserContext();
 
-    // Derive stable user login state
-    const isLoggedIn = Boolean(userContext?.userModel?.uuid);
+    // Derive stable user login state from userStatus (always available) with fallback to userModel
+    const isLoggedIn = Boolean(userContext?.userStatus?.uuid || userContext?.userModel?.uuid);
 
     // Determine if chat should be shown based on current route and feature flags
     // eslint-disable-next-line complexity
