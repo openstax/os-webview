@@ -67,7 +67,7 @@ function useContextValue() {
                       myOpenStaxUser,
                       updateMyOpenStaxUser
                   }
-                : {isLoggedIn, userStatus, myOpenStaxUser},
+                : {isLoggedIn, userStatus, myOpenStaxUser, uuid: userStatus?.uuid},
         [model, userStatus, isVerified, isLoggedIn, myOpenStaxUser, updateMyOpenStaxUser]
     );
 
