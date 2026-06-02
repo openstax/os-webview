@@ -31,8 +31,8 @@ function WriteForUs({descriptionHtml, text, link}: {
 
 type SearchState = ReturnType<typeof useBlogSearchParams>;
 
-function hasActiveQuery({q, subjects, collection}: SearchState) {
-    return Boolean(q || subjects.length || collection);
+function hasActiveQuery({q, subjects, collection, sort}: SearchState) {
+    return Boolean(q || subjects.length || collection || sort !== 'relevance');
 }
 
 function DiscoveryContent({
