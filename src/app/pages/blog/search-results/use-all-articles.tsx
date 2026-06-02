@@ -33,12 +33,15 @@ function buildSlug({q, subjects, collection, sort}: {
 export default function useAllArticles() {
     const {q, subjects, collection, sort} = useBlogSearchParams();
     const [allArticles, setAllArticles] = useState<PopulatedBlurbModel[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const slug = buildSlug({q, subjects, collection, sort});
 
     useEffect(() => {
         let cancelled = false;
 
-        setAllArticles([]);
+        // Keep the previous results on screen while refetching so changing a
+        // facet doesn't flash the empty/no-results view (the flicker).
+        setIsLoading(true);
         fetchFromCMS(slug, true).then((results: PopulatedBlurbData[]) => {
             if (cancelled) {
                 return;
@@ -50,11 +53,12 @@ export default function useAllArticles() {
             });
 
             setAllArticles(articles);
+            setIsLoading(false);
         });
         return () => {
             cancelled = true;
         };
     }, [slug]);
 
-    return allArticles;
+    return {articles: allArticles, isLoading};
 }
