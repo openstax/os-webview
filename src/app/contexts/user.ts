@@ -47,6 +47,9 @@ function useContextValue() {
         model?.accountsModel?.faculty_status === 'confirmed_faculty';
     const [fetchTime, updateMyOpenStaxUser] = useRefreshable(() => Date.now());
     const myOpenStaxUser = useMyOpenStaxUser(isVerified, fetchTime);
+    // Derive login state from userStatus (always available) with fallback to model
+    // This is the canonical way to check if a user is logged in
+    const isLoggedIn = Boolean(userStatus?.uuid || model?.uuid);
     const value = React.useMemo(
         () =>
             model.last_name
@@ -59,12 +62,13 @@ function useContextValue() {
                       userModel: model,
                       uuid: model.uuid,
                       isVerified,
+                      isLoggedIn,
                       userStatus,
                       myOpenStaxUser,
                       updateMyOpenStaxUser
                   }
-                : {userStatus, myOpenStaxUser},
-        [model, userStatus, isVerified, myOpenStaxUser, updateMyOpenStaxUser]
+                : {isLoggedIn, userStatus, myOpenStaxUser},
+        [model, userStatus, isVerified, isLoggedIn, myOpenStaxUser, updateMyOpenStaxUser]
     );
 
     React.useEffect(() => {

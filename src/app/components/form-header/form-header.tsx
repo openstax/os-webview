@@ -42,8 +42,7 @@ function FormHeader({
     data: Record<string, string>;
     prefix: string;
 }) {
-    const {userStatus} = useUserContext();
-    const isLoggedIn = Boolean(userStatus?.userInfo?.last_name);
+    const {userStatus, isLoggedIn} = useUserContext();
     const heading = pickField(data, prefix, 'IntroHeading', isLoggedIn);
     const description = pickField(data, prefix, 'IntroDescription', isLoggedIn);
     const replacements = React.useMemo(() => buildReplacements(userStatus), [userStatus]);
