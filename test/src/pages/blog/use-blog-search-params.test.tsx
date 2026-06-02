@@ -4,12 +4,12 @@ import {renderHook, act} from '@testing-library/preact';
 import {MemoryRouter} from 'react-router-dom';
 import useBlogSearchParams from '~/pages/blog/use-blog-search-params';
 
-function wrapperFor(initialUrl: string): ComponentType<{children: React.ReactNode}> {
+function wrapperFor(initialUrl: string): ComponentType<{children: Element}> {
     function Wrapper({children}: {children: React.ReactNode}) {
         return <MemoryRouter initialEntries={[initialUrl]}>{children}</MemoryRouter>;
     }
 
-    return Wrapper;
+    return Wrapper as ComponentType<{children: Element}>;
 }
 
 describe('useBlogSearchParams', () => {

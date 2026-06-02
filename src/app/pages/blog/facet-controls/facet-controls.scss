@@ -19,6 +19,7 @@
     background-color: ui-color(default);
     border: 0.1rem solid ui-color(form-border);
     border-radius: 2rem;
+    color: text-color(normal);
     cursor: pointer;
     padding: 0.4rem 1rem;
 
@@ -43,6 +44,7 @@
         background-color: ui-color(default);
         border: 0.1rem solid ui-color(form-border);
         border-radius: 0.5rem;
+        color: text-color(normal);
         cursor: pointer;
         padding: 0.4rem 1rem;
 
@@ -69,8 +71,10 @@
     gap: 0.5rem;
 
     select {
+        background-color: ui-color(default);
         border: 0.1rem solid ui-color(form-border);
         border-radius: 0.5rem;
+        color: text-color(normal);
         padding: 0.4rem 0.5rem;
     }
 }

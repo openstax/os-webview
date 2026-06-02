@@ -46,6 +46,7 @@ it('includes collection in the slug when present', async () => {
     const url = new URL(slug, 'https://example.com/');
 
     expect(url.searchParams.get('collection')).toBe('OpenStax Updates');
+});
 
 it('omits sort from the slug when sort is relevance (the default)', async () => {
     const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
