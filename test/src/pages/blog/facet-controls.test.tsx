@@ -23,7 +23,7 @@ it('sort is a radiogroup that updates aria-checked from relevance to newest', as
             <FacetControls subjects={subjects} collections={[]} />
         </MemoryRouter>
     );
-    expect(screen.getByRole('radiogroup', {name: 'Sort'})).toBeInTheDocument();
+    expect(screen.getByRole('radiogroup', {name: 'Sort by'})).toBeInTheDocument();
     expect(screen.getByRole('radio', {name: 'Relevance'})).toHaveAttribute('aria-checked', 'true');
     expect(screen.getByRole('radio', {name: 'Newest'})).toHaveAttribute('aria-checked', 'false');
     await userEvent.click(screen.getByRole('radio', {name: 'Newest'}));

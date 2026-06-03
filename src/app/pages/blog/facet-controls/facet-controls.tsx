@@ -36,7 +36,7 @@ function CollectionSelect({collections}: {collections: NamedSnippet[]}) {
 
     return (
         <label className="facet-select" htmlFor="blog-collection-select">
-            <span>Collection</span>
+            <span className="facet-label">Collection</span>
             <select
                 id="blog-collection-select"
                 value={collection ?? ''}
@@ -73,18 +73,21 @@ function SortToggle() {
     };
 
     return (
-        <div className="facet-sort" role="radiogroup" aria-label="Sort">
-            {SORT_OPTIONS.map((o) => (
-                <button
-                    key={o.key}
-                    type="button"
-                    role="radio"
-                    aria-checked={sort === o.key}
-                    tabIndex={sort === o.key ? 0 : -1}
-                    onClick={() => setParam('sort', o.value)}
-                    onKeyDown={onKeyDown}
-                >{o.label}</button>
-            ))}
+        <div className="facet-sort-wrap">
+            <span className="facet-label" id="blog-sort-label">Sort by</span>
+            <div className="facet-sort" role="radiogroup" aria-labelledby="blog-sort-label">
+                {SORT_OPTIONS.map((o) => (
+                    <button
+                        key={o.key}
+                        type="button"
+                        role="radio"
+                        aria-checked={sort === o.key}
+                        tabIndex={sort === o.key ? 0 : -1}
+                        onClick={() => setParam('sort', o.value)}
+                        onKeyDown={onKeyDown}
+                    >{o.label}</button>
+                ))}
+            </div>
         </div>
     );
 }
@@ -96,8 +99,10 @@ export default function FacetControls({subjects, collections}: {
     return (
         <div className="facet-controls" role="group" aria-label="Filter and sort blog posts">
             <SubjectChips subjects={subjects} />
-            <CollectionSelect collections={collections} />
-            <SortToggle />
+            <div className="facet-row">
+                <CollectionSelect collections={collections} />
+                <SortToggle />
+            </div>
         </div>
     );
 }
