@@ -92,9 +92,9 @@ function MainRoutes() {
             return false;
         }
 
-        // If chat_logged_in is enabled and user is logged in, show on any page
-        if (flags.chat_logged_in && isLoggedIn) {
-            return true;
+        // If chat_logged_in_only is enabled, return false unless logged in
+        if (flags.chat_logged_in_only && !isLoggedIn) {
+            return false;
         }
 
         // Check if we're on a book details page

@@ -9,7 +9,7 @@ type FlagName =
     | 'chat_book_details'
     | 'chat_subjects'
     | 'chat_contact'
-    | 'chat_logged_in';
+    | 'chat_logged_in_only';
 
 type Flag = {
     name: FlagName;
