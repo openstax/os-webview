@@ -17,7 +17,7 @@
 
 .facet-chip {
     background-color: ui-color(default);
-    border: 0.1rem solid ui-color(form-border);
+    border: 0.1rem solid ui-color(secondary);
     border-radius: 2rem;
     color: text-color(normal);
     cursor: pointer;
@@ -42,7 +42,7 @@
 .facet-sort {
     button {
         background-color: ui-color(default);
-        border: 0.1rem solid ui-color(form-border);
+        border: 0.1rem solid ui-color(secondary);
         border-radius: 0.5rem;
         color: text-color(normal);
         cursor: pointer;
@@ -52,7 +52,7 @@
             background-color: ui-color(default-hover);
         }
 
-        &[aria-pressed='true'] {
+        &[aria-checked='true'] {
             background-color: text-color(link);
             border-color: text-color(link);
             color: text-color(white);
@@ -72,9 +72,18 @@
 
     select {
         background-color: ui-color(default);
-        border: 0.1rem solid ui-color(form-border);
+        border: 0.1rem solid ui-color(secondary);
         border-radius: 0.5rem;
         color: text-color(normal);
         padding: 0.4rem 0.5rem;
     }
+}
+
+// Guarantee a visible keyboard focus indicator rather than relying on the
+// browser default, which can be faint on the filled (selected) pills.
+.facet-chip:focus-visible,
+.facet-sort button:focus-visible,
+.facet-select select:focus-visible {
+    outline: 0.2rem solid ui-color(focus-outline);
+    outline-offset: 0.1rem;
 }

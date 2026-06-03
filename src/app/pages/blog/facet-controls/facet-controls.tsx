@@ -51,21 +51,40 @@ function CollectionSelect({collections}: {collections: NamedSnippet[]}) {
     );
 }
 
+const SORT_OPTIONS = [
+    {key: 'relevance', label: 'Relevance', value: undefined},
+    {key: 'newest', label: 'Newest', value: 'newest'}
+] as const;
+
 function SortToggle() {
     const {sort, setParam} = useBlogSearchParams();
+    const onKeyDown = (e: React.KeyboardEvent) => {
+        const delta = ({ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1} as
+            Record<string, number>)[e.key];
+
+        if (!delta) {
+            return;
+        }
+        e.preventDefault();
+        const current = SORT_OPTIONS.findIndex((o) => o.key === sort);
+        const next = SORT_OPTIONS[(current + delta + SORT_OPTIONS.length) % SORT_OPTIONS.length];
+
+        setParam('sort', next.value);
+    };
 
     return (
-        <div className="facet-sort" role="group" aria-label="Sort">
-            <button
-                type="button"
-                aria-pressed={sort === 'relevance'}
-                onClick={() => setParam('sort', undefined)}
-            >Relevance</button>
-            <button
-                type="button"
-                aria-pressed={sort === 'newest'}
-                onClick={() => setParam('sort', 'newest')}
-            >Newest</button>
+        <div className="facet-sort" role="radiogroup" aria-label="Sort">
+            {SORT_OPTIONS.map((o) => (
+                <button
+                    key={o.key}
+                    type="button"
+                    role="radio"
+                    aria-checked={sort === o.key}
+                    tabIndex={sort === o.key ? 0 : -1}
+                    onClick={() => setParam('sort', o.value)}
+                    onKeyDown={onKeyDown}
+                >{o.label}</button>
+            ))}
         </div>
     );
 }
@@ -75,7 +94,7 @@ export default function FacetControls({subjects, collections}: {
     collections: NamedSnippet[];
 }) {
     return (
-        <div className="facet-controls">
+        <div className="facet-controls" role="group" aria-label="Filter and sort blog posts">
             <SubjectChips subjects={subjects} />
             <CollectionSelect collections={collections} />
             <SortToggle />
