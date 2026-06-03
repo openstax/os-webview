@@ -75,7 +75,10 @@ function SortToggle() {
     return (
         <div className="facet-sort-wrap">
             <span className="facet-label" id="blog-sort-label">Sort by</span>
-            <div className="facet-sort" role="radiogroup" aria-labelledby="blog-sort-label">
+            {/* `custom` opts out of the site-wide [role=radiogroup] filter-bar
+                styling (see styles/components/filter-buttons.scss), which would
+                otherwise stretch this to full viewport width. */}
+            <div className="facet-sort custom" role="radiogroup" aria-labelledby="blog-sort-label">
                 {SORT_OPTIONS.map((o) => (
                     <button
                         key={o.key}
