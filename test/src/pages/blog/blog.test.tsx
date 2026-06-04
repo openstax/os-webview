@@ -37,15 +37,17 @@ describe('blog pages', () => {
     });
     test('Loader page with UTM parameters shows main page, not search', async () => {
         render(
-            <MemoryRouter initialEntries={['/blog/?utm_source=email&utm_campaign=newsletter']}>
+            <MemoryRouter initialEntries={['/?utm_source=email&utm_campaign=newsletter']}>
                 <BlogLoader />
             </MemoryRouter>
         );
-        // Should show main blog page, not search results
+        // UTM params are not a search query, so the main (discovery) page shows.
+        // Heading comes from the CMS news page (fixture title: "Openstax News").
+        expect(
+            await screen.findByRole('heading', {level: 1, name: 'Openstax News'})
+        ).toBeTruthy();
         expect(document.querySelector('.blog.page')).toBeTruthy();
-        await waitFor(() => expect(document.head.querySelector('title')?.textContent).toBe(
-            'OpenStax Blog'
-        ));
+        expect(screen.queryByText('No matching blog posts found')).toBeNull();
     });
     test('Article page', async () => {
         window.scrollTo = jest.fn();

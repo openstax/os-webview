@@ -29,6 +29,18 @@ function WriteForUs({descriptionHtml, text, link}: {
     );
 }
 
+function buildWriteForUsData({footerText, footerButtonText, footerLink}: {
+    footerText?: string;
+    footerButtonText?: string;
+    footerLink?: string;
+}) {
+    return {
+        descriptionHtml: footerText || 'Interested in sharing your story?',
+        text: footerButtonText || 'Write for us',
+        link: footerLink || '/write-for-us'
+    };
+}
+
 type SearchState = ReturnType<typeof useBlogSearchParams>;
 
 function hasActiveQuery({q, subjects, collection, sort}: SearchState) {
@@ -58,22 +70,21 @@ function DiscoveryContent({
 
 export function MainBlogPage() {
     const {
-        pinnedStory, pageDescription, searchFor,
+        pinnedStory, pageTitle, pageDescription, searchFor,
         subjectSnippet: categories,
         collectionSnippet: collections,
         footerText, footerButtonText, footerLink
     } = useBlogContext();
-    const writeForUsData = {
-        descriptionHtml: footerText || 'Interested in sharing your story?',
-        text: footerButtonText || 'Write for us',
-        link: footerLink || '/write-for-us'
-    };
+    const writeForUsData = buildWriteForUsData({footerText, footerButtonText, footerLink});
+    // Editable in the CMS (the news page title); falls back to a friendlier
+    // default than the bare "OpenStax Blog".
+    const heading = pageTitle || 'Stories from OpenStax';
     const searchState = useBlogSearchParams();
     const isActive = hasActiveQuery(searchState);
     const pinnedSlug = pinnedStory && pinnedStory.meta.slug;
 
     useDocumentHead({
-        title: 'OpenStax Blog',
+        title: heading,
         description: pageDescription
     });
 
@@ -81,7 +92,7 @@ export function MainBlogPage() {
         <WindowContextProvider>
             <div className="boxed">
                 <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
-                    <h1>OpenStax Blog</h1>
+                    <h1>{heading}</h1>
                 </HeadingAndSearchBar>
                 <FacetControls subjects={categories} collections={collections} />
                 {isActive

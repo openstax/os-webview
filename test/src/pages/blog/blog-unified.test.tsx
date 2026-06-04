@@ -26,6 +26,14 @@ describe('Unified MainBlogPage', () => {
         expect(screen.queryByText('Explore by subject')).not.toBeInTheDocument();
     });
 
+    it('uses the CMS news-page title for the heading', async () => {
+        // Fixture (openstax-news-detail) title is "Openstax News".
+        renderMainBlog('/blog/');
+        expect(
+            await screen.findByRole('heading', {level: 1, name: 'Openstax News'})
+        ).toBeInTheDocument();
+    });
+
     it('shows discovery content and facet controls when no query or facets', async () => {
         renderMainBlog('/blog/');
         await waitFor(() =>
