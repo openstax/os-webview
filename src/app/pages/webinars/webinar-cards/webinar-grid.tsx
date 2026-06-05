@@ -2,6 +2,7 @@ import React from 'react';
 import {Webinar} from '../types';
 import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import Byline from '~/components/byline/byline';
+import { AddToCalendarButton } from 'add-to-calendar-button-react';
 import './webinar-grid.scss';
 
 type WebinarGridArgs = {
@@ -79,6 +80,15 @@ function UpcomingWebinar({data}: {data: Webinar}) {
             <LinkWithChevron href={data.registrationUrl}>
                 {data.registrationLinkText}
             </LinkWithChevron>
+            <AddToCalendarButton
+                name={data.title}
+                options={['Apple', 'Google']}
+                location="online"
+                startDate={data.start.toLocaleDateString('en-CA')}
+                endDate={data.end.toLocaleDateString('en-CA')}
+                startTime={data.start.toLocaleTimeString('en-US', {hour12: false})}
+                endTime={data.end.toLocaleTimeString('en-US', {hour12: false})}
+            />
         </div>
     );
 }
