@@ -16,6 +16,7 @@ declare global {
             ) => void;
             prechatAPI?: {
                 setHiddenPrechatFields: (fields: Record<string, string>) => void;
+                setPrechatFormFieldValue: (fieldName: string, value: string, readOnly?: boolean) => void;
             };
         };
         __salesforceChatInitialized?: boolean;
@@ -145,29 +146,33 @@ export default function Chat() {
             return;
         }
 
-        // Set sProduct for all users (logged in or not)
+        const prechatAPI = window.embeddedservice_bootstrap.prechatAPI;
+
+        // Set hidden fields: sProduct and UUID (not editable by user)
         const hiddenFields: Record<string, string> = {
             sProduct: 'Website'
         };
 
-        // Add user information if available
         if (uuid) {
             hiddenFields.OpenStax_UUID__c = uuid; // eslint-disable-line camelcase
         }
-        if (firstName) {
-            hiddenFields.FirstName = firstName;
-        }
-        if (lastName) {
-            hiddenFields.LastName = lastName;
-        }
-        if (email) {
-            hiddenFields.Email = email;
-        }
-        if (school) {
-            hiddenFields.School = school;
-        }
 
-        window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields(hiddenFields);
+        prechatAPI.setHiddenPrechatFields(hiddenFields);
+
+        // Set visible, editable fields: FirstName, LastName, Email, School
+        // These will be pre-filled but users can review and edit them before starting chat
+        if (firstName && prechatAPI.setPrechatFormFieldValue) {
+            prechatAPI.setPrechatFormFieldValue('FirstName', firstName, false);
+        }
+        if (lastName && prechatAPI.setPrechatFormFieldValue) {
+            prechatAPI.setPrechatFormFieldValue('LastName', lastName, false);
+        }
+        if (email && prechatAPI.setPrechatFormFieldValue) {
+            prechatAPI.setPrechatFormFieldValue('Email', email, false);
+        }
+        if (school && prechatAPI.setPrechatFormFieldValue) {
+            prechatAPI.setPrechatFormFieldValue('School', school, false);
+        }
     }, [scriptLoaded, uuid, firstName, lastName, email, school]);
 
     return null;

@@ -23,7 +23,8 @@ describe('Chat', () => {
             },
             init: jest.fn(),
             prechatAPI: {
-                setHiddenPrechatFields: jest.fn()
+                setHiddenPrechatFields: jest.fn(),
+                setPrechatFormFieldValue: jest.fn()
             }
         };
     });
@@ -106,14 +107,17 @@ describe('Chat', () => {
         script.onload?.(new Event('load'));
 
         await waitFor(() => {
+            // Hidden fields: sProduct and UUID only
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
                 sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-123',
-                FirstName: 'John',
-                LastName: 'Doe',
-                Email: 'john.doe@example.com',
-                School: 'Test University'
+                OpenStax_UUID__c: 'test-uuid-123'
             });
+
+            // Visible, editable fields: Name, Email, School
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('FirstName', 'John', false);
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('LastName', 'Doe', false);
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('Email', 'john.doe@example.com', false);
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('School', 'Test University', false);
         });
     });
 
@@ -137,11 +141,15 @@ describe('Chat', () => {
         script.onload?.(new Event('load'));
 
         await waitFor(() => {
+            // Hidden fields: sProduct and UUID
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
                 sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-123',
-                FirstName: 'John'
+                OpenStax_UUID__c: 'test-uuid-123'
             });
+
+            // Only FirstName should be set as visible field (others are missing)
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('FirstName', 'John', false);
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -230,6 +238,7 @@ describe('Chat', () => {
 
         // Clear mock calls
         mockEmbeddedService.prechatAPI.setHiddenPrechatFields.mockClear();
+        mockEmbeddedService.prechatAPI.setPrechatFormFieldValue.mockClear();
 
         // Simulate user logging in
         (UserContext.default as jest.Mock).mockReturnValue({
@@ -248,14 +257,17 @@ describe('Chat', () => {
 
         // Verify fields updated with user information
         await waitFor(() => {
+            // Hidden fields: sProduct and UUID
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
                 sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-456',
-                FirstName: 'Jane',
-                LastName: 'Doe',
-                Email: 'jane.doe@example.com',
-                School: 'Example University'
+                OpenStax_UUID__c: 'test-uuid-456'
             });
+
+            // Visible fields: Name, Email, School
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('FirstName', 'Jane', false);
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('LastName', 'Doe', false);
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('Email', 'jane.doe@example.com', false);
+            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('School', 'Example University', false);
         });
 
         // Init should still only have been called once
