@@ -164,20 +164,26 @@ export default function Chat() {
         }
 
         prechatAPI.setHiddenPrechatFields(hiddenFields);
+        function setVisibleField(name, value) {
+            visibleFields[name] = {
+                value,
+                isEditableByEndUser: true
+            };
+        }
 
         // Set visible, editable fields: FirstName, LastName, Email, School
         // These will be pre-filled but users can review and edit them before starting chat
         if (firstName) {
-            visibleFields.firstName = firstName;
+            setVisibleField('firstName', firstName);
         }
         if (lastName) {
-            visibleFields.lastName = lastName;
+            setVisibleField('lastName', lastName);
         }
         if (email) {
-            visibleFields.email = email;
+            setVisibleField('email', email);
         }
         if (school) {
-            visibleFields.school = school;
+            setVisibleField('school', school);
         }
         console.info('*** Setting visible fields', visibleFields);
         prechatAPI.setVisiblePrechatFields(visibleFields);
