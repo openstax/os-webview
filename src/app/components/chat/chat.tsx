@@ -179,6 +179,7 @@ export default function Chat() {
         if (school) {
             visibleFields.school = school;
         }
+        console.info('*** Setting visible fields', visibleFields);
         prechatAPI.setVisiblePrechatFields(visibleFields);
     }, [scriptLoaded, prechatLoaded, userModel, userStatus]);
 
