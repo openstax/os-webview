@@ -54,6 +54,7 @@ function initEmbeddedMessaging(): boolean {
 export default function Chat() {
     const userContext = useUserContext();
     const [scriptLoaded, setScriptLoaded] = React.useState(false);
+    const [prechatLoaded, setPrechatLoaded] = React.useState(false);
 
     // Derive stable user primitives from userStatus (which is always available)
     // with fallback to userModel when available
@@ -137,7 +138,7 @@ export default function Chat() {
     // This allows fields to update when a user logs in after chat is initialized
     // eslint-disable-next-line complexity
     React.useEffect(() => {
-        if (!scriptLoaded) {
+        if (!scriptLoaded || !prechatLoaded) {
             return;
         }
 
@@ -178,15 +179,15 @@ export default function Chat() {
         if (school && prechatAPI.setPrechatFormFieldValue) {
             prechatAPI.setPrechatFormFieldValue('School', school, false);
         }
-    });
+    }, [scriptLoaded, prechatLoaded, userModel, userStatus]);
 
+    // Polling for prechatAPI to be available
     React.useEffect(() => {
         const i = setInterval(() => {
             const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI;
 
-            console.info('*** prechat?', prechatAPI);
             if (prechatAPI) {
-                console.info('** prechat!');
+                setPrechatLoaded(true);
                 clearInterval(i);
             }
         }, 250);
