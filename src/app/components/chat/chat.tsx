@@ -2,6 +2,11 @@ import React from 'react';
 import useUserContext from '~/contexts/user';
 import './chat.scss';
 
+type VisibleFieldArg = {
+    value: string,
+    isEditableByEndUser: boolean
+}
+
 declare global {
     interface Window {
         embeddedservice_bootstrap?: {
@@ -16,7 +21,7 @@ declare global {
             ) => void;
             prechatAPI?: {
                 setHiddenPrechatFields: (fields: Record<string, string>) => void;
-                setPrechatFormFieldValue: (fieldName: string, value: string, readOnly?: boolean) => void;
+                setVisiblePrechatFields: (fields: Record<string, VisibleFieldArg>) => void;
             };
         };
         __salesforceChatInitialized?: boolean;
@@ -50,10 +55,10 @@ function initEmbeddedMessaging(): boolean {
     }
 }
 
-// eslint-disable-next-line complexity
 export default function Chat() {
     const userContext = useUserContext();
     const [scriptLoaded, setScriptLoaded] = React.useState(false);
+    const [prechatLoaded, setPrechatLoaded] = React.useState(false);
 
     // Derive stable user primitives from userStatus (which is always available)
     // with fallback to userModel when available
@@ -137,7 +142,7 @@ export default function Chat() {
     // This allows fields to update when a user logs in after chat is initialized
     // eslint-disable-next-line complexity
     React.useEffect(() => {
-        if (!scriptLoaded) {
+        if (!scriptLoaded || !prechatLoaded) {
             return;
         }
 
@@ -151,6 +156,7 @@ export default function Chat() {
         const hiddenFields: Record<string, string> = {
             sProduct: 'Website'
         };
+        const visibleFields: Record<string, VisibleFieldArg> = {};
         const uuid = userStatus?.uuid || userModel?.uuid;
         const firstName = userStatus?.firstName || userModel?.first_name;
         const lastName = userStatus?.lastName || userModel?.last_name;
@@ -163,22 +169,45 @@ export default function Chat() {
         }
 
         prechatAPI.setHiddenPrechatFields(hiddenFields);
+        function setVisibleField(name: string, value: string) {
+            visibleFields[name] = {
+                value,
+                isEditableByEndUser: true
+            };
+        }
 
         // Set visible, editable fields: FirstName, LastName, Email, School
         // These will be pre-filled but users can review and edit them before starting chat
-        if (firstName && prechatAPI.setPrechatFormFieldValue) {
-            prechatAPI.setPrechatFormFieldValue('FirstName', firstName, false);
+        if (firstName) {
+            setVisibleField('firstName', firstName);
         }
-        if (lastName && prechatAPI.setPrechatFormFieldValue) {
-            prechatAPI.setPrechatFormFieldValue('LastName', lastName, false);
+        if (lastName) {
+            setVisibleField('lastName', lastName);
         }
-        if (email && prechatAPI.setPrechatFormFieldValue) {
-            prechatAPI.setPrechatFormFieldValue('Email', email, false);
+        if (email) {
+            setVisibleField('email', email);
         }
-        if (school && prechatAPI.setPrechatFormFieldValue) {
-            prechatAPI.setPrechatFormFieldValue('School', school, false);
+        if (school) {
+            setVisibleField('school', school);
         }
-    });
+        console.info('*** Setting visible fields', visibleFields);
+        prechatAPI.setVisiblePrechatFields(visibleFields);
+    }, [scriptLoaded, prechatLoaded, userModel, userStatus]);
+
+    // Polling for prechatAPI to be available
+    React.useEffect(() => {
+        const i = setInterval(() => {
+            const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI;
+
+            if (prechatAPI?.setVisiblePrechatFields) {
+                setPrechatLoaded(true);
+                clearInterval(i);
+                console.info('*** Ready to set values');
+            }
+        }, 250);
+
+        return () => clearInterval(i);
+    }, []);
 
     return null;
 }
