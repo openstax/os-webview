@@ -170,7 +170,7 @@ export default function Chat() {
 
         prechatAPI.setHiddenPrechatFields(hiddenFields);
         function setVisibleField(name: string, value: string) {
-            visibleFields[name] = {
+            visibleFields[`_${name}`] = {
                 value,
                 isEditableByEndUser: true
             };
