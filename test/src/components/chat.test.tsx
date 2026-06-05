@@ -16,6 +16,9 @@ describe('Chat', () => {
         delete (window as any).embeddedservice_bootstrap;
         delete (window as any).__salesforceChatInitialized;
 
+        // Enable fake timers for polling interval
+        jest.useFakeTimers();
+
         // Create mock embeddedservice_bootstrap
         mockEmbeddedService = {
             settings: {
@@ -24,13 +27,14 @@ describe('Chat', () => {
             init: jest.fn(),
             prechatAPI: {
                 setHiddenPrechatFields: jest.fn(),
-                setPrechatFormFieldValue: jest.fn()
+                setVisiblePrechatFields: jest.fn()
             }
         };
     });
 
     afterEach(() => {
         jest.clearAllMocks();
+        jest.useRealTimers();
     });
 
     it('appends Salesforce bootstrap script once', () => {
@@ -76,10 +80,14 @@ describe('Chat', () => {
         (window as any).embeddedservice_bootstrap = mockEmbeddedService;
         script.onload?.(new Event('load'));
 
+        // Advance timers to trigger polling interval and make prechatAPI available
+        jest.advanceTimersByTime(250);
+
         await waitFor(() => {
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
                 sProduct: 'Website'
             });
+            expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({});
         });
     });
 
@@ -106,6 +114,9 @@ describe('Chat', () => {
         (window as any).embeddedservice_bootstrap = mockEmbeddedService;
         script.onload?.(new Event('load'));
 
+        // Advance timers to trigger polling interval and make prechatAPI available
+        jest.advanceTimersByTime(250);
+
         await waitFor(() => {
             // Hidden fields: sProduct and UUID only
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
@@ -114,10 +125,12 @@ describe('Chat', () => {
             });
 
             // Visible, editable fields: Name, Email, School
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('FirstName', 'John', false);
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('LastName', 'Doe', false);
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('Email', 'john.doe@example.com', false);
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('School', 'Test University', false);
+            expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({
+                _firstName: {value: 'John', isEditableByEndUser: true},
+                _lastName: {value: 'Doe', isEditableByEndUser: true},
+                _email: {value: 'john.doe@example.com', isEditableByEndUser: true},
+                School: {value: 'Test University', isEditableByEndUser: false}
+            });
         });
     });
 
@@ -125,7 +138,7 @@ describe('Chat', () => {
         const mockUserContext = {
             userModel: {
                 uuid: 'test-uuid-123',
-                first_name: 'John',
+                first_name: 'John'
                 // Missing last_name, email, school
             }
         };
@@ -140,6 +153,9 @@ describe('Chat', () => {
         (window as any).embeddedservice_bootstrap = mockEmbeddedService;
         script.onload?.(new Event('load'));
 
+        // Advance timers to trigger polling interval and make prechatAPI available
+        jest.advanceTimersByTime(250);
+
         await waitFor(() => {
             // Hidden fields: sProduct and UUID
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
@@ -148,8 +164,9 @@ describe('Chat', () => {
             });
 
             // Only FirstName should be set as visible field (others are missing)
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('FirstName', 'John', false);
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledTimes(1);
+            expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({
+                _firstName: {value: 'John', isEditableByEndUser: true}
+            });
         });
     });
 
@@ -227,6 +244,9 @@ describe('Chat', () => {
         (window as any).embeddedservice_bootstrap = mockEmbeddedService;
         script.onload?.(new Event('load'));
 
+        // Advance timers to trigger polling interval and make prechatAPI available
+        jest.advanceTimersByTime(250);
+
         await waitFor(() => {
             expect(mockEmbeddedService.init).toHaveBeenCalledTimes(1);
         });
@@ -235,10 +255,11 @@ describe('Chat', () => {
         expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
             sProduct: 'Website'
         });
+        expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({});
 
         // Clear mock calls
         mockEmbeddedService.prechatAPI.setHiddenPrechatFields.mockClear();
-        mockEmbeddedService.prechatAPI.setPrechatFormFieldValue.mockClear();
+        mockEmbeddedService.prechatAPI.setVisiblePrechatFields.mockClear();
 
         // Simulate user logging in
         (UserContext.default as jest.Mock).mockReturnValue({
@@ -264,10 +285,12 @@ describe('Chat', () => {
             });
 
             // Visible fields: Name, Email, School
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('FirstName', 'Jane', false);
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('LastName', 'Doe', false);
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('Email', 'jane.doe@example.com', false);
-            expect(mockEmbeddedService.prechatAPI.setPrechatFormFieldValue).toHaveBeenCalledWith('School', 'Example University', false);
+            expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({
+                _firstName: {value: 'Jane', isEditableByEndUser: true},
+                _lastName: {value: 'Doe', isEditableByEndUser: true},
+                _email: {value: 'jane.doe@example.com', isEditableByEndUser: true},
+                School: {value: 'Example University', isEditableByEndUser: false}
+            });
         });
 
         // Init should still only have been called once
