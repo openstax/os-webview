@@ -37,8 +37,13 @@
             padding: 0.5rem 0 0.5rem 1rem;
         }
 
+        // The copy-to-clipboard button is a solid secondary (gray) button with
+        // a white icon, sitting at the end of the URL field.
         button {
             @include button-reset();
+            @include button-type-specific(secondary);
+
+            padding: 1rem;
         }
     }
 
