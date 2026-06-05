@@ -180,5 +180,19 @@ export default function Chat() {
         }
     });
 
+    React.useEffect(() => {
+        const i = setInterval(() => {
+            const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI;
+
+            console.info('*** prechat?', prechatAPI);
+            if (prechatAPI) {
+                console.info('** prechat!');
+                clearInterval(i);
+            }
+        }, 250);
+
+        return () => clearInterval(i);
+    }, []);
+
     return null;
 }
