@@ -50,7 +50,6 @@ function initEmbeddedMessaging(): boolean {
     }
 }
 
-// eslint-disable-next-line complexity
 export default function Chat() {
     const userContext = useUserContext();
     const [scriptLoaded, setScriptLoaded] = React.useState(false);
@@ -167,16 +166,16 @@ export default function Chat() {
 
         // Set visible, editable fields: FirstName, LastName, Email, School
         // These will be pre-filled but users can review and edit them before starting chat
-        if (firstName && prechatAPI.setPrechatFormFieldValue) {
+        if (firstName) {
             prechatAPI.setPrechatFormFieldValue('FirstName', firstName, false);
         }
-        if (lastName && prechatAPI.setPrechatFormFieldValue) {
+        if (lastName) {
             prechatAPI.setPrechatFormFieldValue('LastName', lastName, false);
         }
-        if (email && prechatAPI.setPrechatFormFieldValue) {
+        if (email) {
             prechatAPI.setPrechatFormFieldValue('Email', email, false);
         }
-        if (school && prechatAPI.setPrechatFormFieldValue) {
+        if (school) {
             prechatAPI.setPrechatFormFieldValue('School', school, false);
         }
     }, [scriptLoaded, prechatLoaded, userModel, userStatus]);
@@ -184,11 +183,12 @@ export default function Chat() {
     // Polling for prechatAPI to be available
     React.useEffect(() => {
         const i = setInterval(() => {
-            const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI;
+            const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI?.setPrechatFormFieldValue;
 
             if (prechatAPI) {
                 setPrechatLoaded(true);
                 clearInterval(i);
+                console.info('*** Ready to set values');
             }
         }, 250);
 
