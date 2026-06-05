@@ -183,12 +183,15 @@ export default function Chat() {
     // Polling for prechatAPI to be available
     React.useEffect(() => {
         const i = setInterval(() => {
-            const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI?.setPrechatFormFieldValue;
+            const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI;
 
-            if (prechatAPI) {
+            if (prechatAPI?.setPrechatFormFieldValue) {
                 setPrechatLoaded(true);
                 clearInterval(i);
                 console.info('*** Ready to set values');
+            }
+            if (prechatAPI) {
+                console.dir('**** prechatAPI', prechatAPI);
             }
         }, 250);
 
