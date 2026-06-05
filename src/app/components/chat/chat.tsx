@@ -16,7 +16,7 @@ declare global {
             ) => void;
             prechatAPI?: {
                 setHiddenPrechatFields: (fields: Record<string, string>) => void;
-                setPrechatFormFieldValue: (fieldName: string, value: string, readOnly?: boolean) => void;
+                setVisiblePrechatFields: (fields: Record<string, string>) => void;
             };
         };
         __salesforceChatInitialized?: boolean;
@@ -151,6 +151,7 @@ export default function Chat() {
         const hiddenFields: Record<string, string> = {
             sProduct: 'Website'
         };
+        const visibleFields: Record<string, string> = {};
         const uuid = userStatus?.uuid || userModel?.uuid;
         const firstName = userStatus?.firstName || userModel?.first_name;
         const lastName = userStatus?.lastName || userModel?.last_name;
@@ -167,17 +168,18 @@ export default function Chat() {
         // Set visible, editable fields: FirstName, LastName, Email, School
         // These will be pre-filled but users can review and edit them before starting chat
         if (firstName) {
-            prechatAPI.setPrechatFormFieldValue('FirstName', firstName, false);
+            visibleFields.firstName = firstName;
         }
         if (lastName) {
-            prechatAPI.setPrechatFormFieldValue('LastName', lastName, false);
+            visibleFields.lastName = lastName;
         }
         if (email) {
-            prechatAPI.setPrechatFormFieldValue('Email', email, false);
+            visibleFields.email = email;
         }
         if (school) {
-            prechatAPI.setPrechatFormFieldValue('School', school, false);
+            visibleFields.school = school;
         }
+        prechatAPI.setVisiblePrechatFields(visibleFields);
     }, [scriptLoaded, prechatLoaded, userModel, userStatus]);
 
     // Polling for prechatAPI to be available
@@ -185,13 +187,10 @@ export default function Chat() {
         const i = setInterval(() => {
             const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI;
 
-            if (prechatAPI?.setPrechatFormFieldValue) {
+            if (prechatAPI?.setVisiblePrechatFields) {
                 setPrechatLoaded(true);
                 clearInterval(i);
                 console.info('*** Ready to set values');
-            }
-            if (prechatAPI) {
-                console.dir(prechatAPI);
             }
         }, 250);
 
