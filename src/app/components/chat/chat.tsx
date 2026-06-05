@@ -59,11 +59,6 @@ export default function Chat() {
     // with fallback to userModel when available
     const userStatus = userContext?.userStatus;
     const userModel = userContext?.userModel;
-    const uuid = userStatus?.uuid || userModel?.uuid;
-    const firstName = userStatus?.firstName || userModel?.first_name;
-    const lastName = userStatus?.lastName || userModel?.last_name;
-    const email = userStatus?.email || userModel?.email;
-    const school = userStatus?.school || userModel?.accountsModel?.school_name;
 
     // Load Salesforce script once, or short-circuit if already loaded
     React.useEffect(() => {
@@ -142,16 +137,26 @@ export default function Chat() {
     // This allows fields to update when a user logs in after chat is initialized
     // eslint-disable-next-line complexity
     React.useEffect(() => {
-        if (!scriptLoaded || !window.embeddedservice_bootstrap?.prechatAPI) {
+        if (!scriptLoaded) {
             return;
         }
 
-        const prechatAPI = window.embeddedservice_bootstrap.prechatAPI;
+        const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI;
+
+        if (!prechatAPI) {
+            return;
+        }
 
         // Set hidden fields: sProduct and UUID (not editable by user)
         const hiddenFields: Record<string, string> = {
             sProduct: 'Website'
         };
+        const uuid = userStatus?.uuid || userModel?.uuid;
+        const firstName = userStatus?.firstName || userModel?.first_name;
+        const lastName = userStatus?.lastName || userModel?.last_name;
+        const email = userStatus?.email || userModel?.email;
+        const school = userStatus?.school || userModel?.accountsModel?.school_name;
+
 
         if (uuid) {
             hiddenFields.OpenStax_UUID__c = uuid; // eslint-disable-line camelcase
@@ -173,7 +178,7 @@ export default function Chat() {
         if (school && prechatAPI.setPrechatFormFieldValue) {
             prechatAPI.setPrechatFormFieldValue('School', school, false);
         }
-    }, [scriptLoaded, uuid, firstName, lastName, email, school]);
+    });
 
     return null;
 }
