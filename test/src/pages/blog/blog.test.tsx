@@ -37,7 +37,7 @@ describe('blog pages', () => {
     });
     test('Loader page with UTM parameters shows main page, not search', async () => {
         render(
-            <MemoryRouter initialEntries={['/?utm_source=email&utm_campaign=newsletter']}>
+            <MemoryRouter initialEntries={['/blog/?utm_source=email&utm_campaign=newsletter']}>
                 <BlogLoader />
             </MemoryRouter>
         );
