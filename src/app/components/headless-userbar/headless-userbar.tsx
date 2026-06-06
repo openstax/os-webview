@@ -7,7 +7,9 @@ import React from 'react';
 // checks on the decoupled front-end (per the Wagtail headless docs). The CMS
 // may be on a different origin when API_ORIGIN is set (otherwise this is same-origin).
 const apiOrigin = process.env.API_ORIGIN ?? '';
-const userbarEndpoint = `${apiOrigin}/apps/cms/userbar/`;
+// Under /apps/cms/api/ because that is the only /apps/cms/ path the production
+// nginx routes to the CMS backend; other paths proxy to the front-end itself.
+const userbarEndpoint = `${apiOrigin}/apps/cms/api/userbar/`;
 const userbarScripts = [
     `${apiOrigin}/static/wagtailadmin/js/vendor.js`,
     `${apiOrigin}/static/wagtailadmin/js/userbar.js`

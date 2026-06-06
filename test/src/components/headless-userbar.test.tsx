@@ -30,7 +30,7 @@ describe('HeadlessUserbar', () => {
 
         const fetchUrl = (global.fetch as jest.Mock).mock.calls[0][0];
 
-        expect(fetchUrl).toMatch('/apps/cms/userbar/');
+        expect(fetchUrl).toMatch('/apps/cms/api/userbar/');
 
         const scriptSrcs = Array.from(
             container.querySelectorAll('script')
