@@ -30,7 +30,9 @@ describe('HeadlessUserbar', () => {
 
         const fetchUrl = (global.fetch as jest.Mock).mock.calls[0][0];
 
-        expect(fetchUrl).toMatch('/apps/cms/api/userbar/');
+        // TEMP: riding the salesforce/reviews/* CloudFront behavior until the
+        // dedicated userbar behavior is deployed (see headless-userbar.tsx).
+        expect(fetchUrl).toMatch('/apps/cms/api/salesforce/reviews/userbar/');
 
         const scriptSrcs = Array.from(
             container.querySelectorAll('script')

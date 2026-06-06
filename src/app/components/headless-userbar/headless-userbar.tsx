@@ -9,7 +9,12 @@ import React from 'react';
 const apiOrigin = process.env.API_ORIGIN ?? '';
 // Under /apps/cms/api/ because that is the only /apps/cms/ path the production
 // nginx routes to the CMS backend; other paths proxy to the front-end itself.
-const userbarEndpoint = `${apiOrigin}/apps/cms/api/userbar/`;
+// TEMPORARY: the dedicated /apps/cms/api/userbar/* CloudFront behavior (cookies
+// forwarded, no cache) isn't deployed yet, so /apps/cms/api/userbar/ strips the
+// session cookie and returns blank. Ride the already-deployed, now-unused
+// /apps/cms/api/salesforce/reviews/* behavior (cookies forwarded) to test.
+// Revert to `${apiOrigin}/apps/cms/api/userbar/` once the CloudFront change ships.
+const userbarEndpoint = `${apiOrigin}/apps/cms/api/salesforce/reviews/userbar/`;
 const userbarScripts = [
     `${apiOrigin}/static/wagtailadmin/js/vendor.js`,
     `${apiOrigin}/static/wagtailadmin/js/userbar.js`
