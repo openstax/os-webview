@@ -5,7 +5,7 @@ import React from 'react';
 // the previewed page is what enables live-preview scroll restoration, the
 // accessibility/content checker, content metrics, and wagtail-ai's content
 // checks on the decoupled front-end (per the Wagtail headless docs). The CMS
-// and front-end share an origin, so the fetch is same-origin.
+// may be on a different origin when API_ORIGIN is set (otherwise this is same-origin).
 const apiOrigin = process.env.API_ORIGIN ?? '';
 const userbarEndpoint = `${apiOrigin}/apps/cms/userbar/`;
 const userbarScripts = [
@@ -35,21 +35,20 @@ export default function HeadlessUserbar() {
 
         if (isPreviewing() && container) {
             fetch(userbarEndpoint, {credentials: 'include'})
-                .then((response) => response.text())
+                .then((response) => (response.ok ? response.text() : ''))
                 .then((html) => {
-                    // Guard against double-injection (e.g. effect re-runs) and
-                    // the empty body the endpoint returns for non-admins.
+                    // Guard against double-injection (e.g. effect re-runs), the empty body
+                    // the endpoint returns for non-admins, and unexpected responses.
                     if (
                         cancelled ||
                         !html ||
+                        !html.includes('wagtail-userbar') ||
                         container.querySelector('wagtail-userbar')
                     ) {
                         return;
                     }
                     container.innerHTML = html;
-                    userbarScripts.forEach((src) =>
-                        appendScript(container, src)
-                    );
+                    userbarScripts.forEach((src) => appendScript(container, src));
                 })
                 .catch(() => undefined);
         }
