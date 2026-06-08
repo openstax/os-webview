@@ -4,7 +4,7 @@ import {renderHook, act} from '@testing-library/preact';
 import {MemoryRouter} from 'react-router-dom';
 import useBlogSearchParams from '~/pages/blog/use-blog-search-params';
 
-function wrapperFor(initialUrl: string): ComponentType<{children: React.ReactNode}> {
+function wrapperFor(initialUrl: string) {
     function Wrapper({children}: {children: React.ReactNode}) {
         return <MemoryRouter initialEntries={[initialUrl]}>{children}</MemoryRouter>;
     }
@@ -15,7 +15,7 @@ function wrapperFor(initialUrl: string): ComponentType<{children: React.ReactNod
 describe('useBlogSearchParams', () => {
     it('parses q, subjects, collection, sort from the URL', () => {
         const {result} = renderHook(() => useBlogSearchParams(), {
-            wrapper: wrapperFor('/blog/?q=algebra&subjects=Math,Science&sort=newest')
+            wrapper: wrapperFor('/blog/?q=algebra&subjects=Math,Science&sort=newest') as ComponentType<{children: Element}>
         });
 
         expect(result.current.q).toBe('algebra');
@@ -26,7 +26,7 @@ describe('useBlogSearchParams', () => {
 
     it('setParam updates a single param and preserves the rest', () => {
         const {result} = renderHook(() => useBlogSearchParams(), {
-            wrapper: wrapperFor('/blog/?q=algebra')
+            wrapper: wrapperFor('/blog/?q=algebra') as ComponentType<{children: Element}>
         });
 
         act(() => result.current.setParam('subjects', ['Math']));
