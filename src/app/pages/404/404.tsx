@@ -9,9 +9,11 @@ export default function Page() {
     });
     const {layoutParameters, setLayoutParameters} = useLayoutContext();
 
-    if (layoutParameters.name === null) {
-        setLayoutParameters();
-    }
+    React.useEffect(() => {
+        if (layoutParameters?.name === null) {
+            setLayoutParameters?.();
+        }
+    }, [layoutParameters?.name, setLayoutParameters]);
 
     return (
         <main className="not-found no-style page">
