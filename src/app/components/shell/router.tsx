@@ -16,6 +16,9 @@ import {
     generateFooterPageRoutes
 } from './router-helpers/page-routes';
 import {NonPortalRouteWrapper} from './router-helpers/non-portal-route-wrapper';
+import useSharedDataContext from '~/contexts/shared-data';
+import useUserContext from '~/contexts/user';
+import Chat from '~/components/chat/chat';
 import './skip-to-content.scss';
 
 function doSkipToContent(event: React.MouseEvent) {
@@ -75,8 +78,42 @@ export default function Router() {
     );
 }
 
+// eslint-disable-next-line complexity
 function MainRoutes() {
     const {Layout} = useLayoutContext();
+    const {pathname} = useLocation();
+    const {flags} = useSharedDataContext();
+    const {isLoggedIn} = useUserContext();
+
+    // Determine if chat should be shown based on current route and feature flags
+    // eslint-disable-next-line complexity
+    const showChat = React.useMemo(() => {
+        if (!flags) {
+            return false;
+        }
+
+        // If chat_logged_in_only is enabled, return false unless logged in
+        if (flags.chat_logged_in_only && !isLoggedIn) {
+            return false;
+        }
+
+        // Check if we're on a book details page
+        if (pathname.startsWith('/details/') && flags.chat_book_details) {
+            return true;
+        }
+
+        // Check if we're on a subjects page
+        if (pathname.startsWith('/subjects') && flags.chat_subjects) {
+            return true;
+        }
+
+        // Check if we're on the contact page
+        if (pathname.startsWith('/contact') && flags.chat_contact) {
+            return true;
+        }
+
+        return false;
+    }, [pathname, flags, isLoggedIn]);
 
     return (
         <Layout>
@@ -91,6 +128,7 @@ function MainRoutes() {
                 <Route path="/details/*" element={<NonPortalRouteWrapper><DetailsRoutes /></NonPortalRouteWrapper>} />
                 <Route path="/:dir/*" element={<OtherPageRoutes />} />
             </Routes>
+            {showChat && <Chat />}
         </Layout>
     );
 }

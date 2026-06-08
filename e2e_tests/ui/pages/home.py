@@ -171,7 +171,7 @@ class HomeRex:
         await self.page.locator("a").get_by_text("Astronomy").click()
 
     async def click_book_selection(self):
-        await self.page.locator("div").get_by_text("Astronomy 2e").click()
+        await self.page.get_by_label("Astronomy 2e book").click()
 
     async def buy_print_copy_button_is_visible(self):
         return await self.page.locator("a").get_by_text("Buy a print copy").is_visible()
@@ -209,11 +209,11 @@ class HomeRex:
 
     @property
     def higher_education_bookstore_order_access_code(self):
-        return self.page.get_by_role("link", name="Order access codes")
+        return self.page.get_by_role("link", name="Order Assignable access codes")
 
     @property
     def higher_education_bookstore_view_print_options(self):
-        return self.page.get_by_role("link", name="View print options")
+        return self.page.get_by_role("link", name="Place a bulk print bookstore order")
 
     @property
     def obtain_access_codes_via_vitalsource(self):
@@ -223,17 +223,15 @@ class HomeRex:
 
     @property
     def obtain_access_codes_via_openstax(self):
-        return self.page.get_by_role("heading", name="Order directly through OpenStax")
+        return self.page.get_by_text("Order Assignable access codes directly through OpenStax")
 
     @property
     def know_before_your_order_columns(self):
-        return self.page.locator(
-            "div.content-block-cards.card_style_rounded.has-columns"
-        )
+        return self.page.locator("section.content-block-section").filter(has_text="Code expiration")
 
     @property
     def access_pdf(self):
-        return self.page.get_by_role("link", name="Access PDF")
+        return self.page.get_by_role("link", name="Access the PDF")
 
     @property
     def access_code_order_form(self):
