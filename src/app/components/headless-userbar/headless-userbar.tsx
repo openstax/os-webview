@@ -34,13 +34,26 @@ function appendScript(parent: HTMLElement, src: string) {
 }
 
 export default function HeadlessUserbar() {
+    // Public traffic never previews, so don't mount the loader (or its effect
+    // and DOM node) at all outside preview. Gating here rather than inside the
+    // effect keeps the div off every public page. The hookless wrapper makes
+    // the early return safe: all hooks live in UserbarLoader, which is only
+    // mounted while previewing.
+    if (!isPreviewing()) {
+        return null;
+    }
+
+    return <UserbarLoader />;
+}
+
+function UserbarLoader() {
     const ref = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         const container = ref.current;
         let cancelled = false;
 
-        if (isPreviewing() && container) {
+        if (container) {
             fetch(userbarEndpoint, {credentials: 'include'})
                 .then((response) => (response.ok ? response.text() : ''))
                 .then((html) => {
