@@ -1,5 +1,4 @@
 import React from 'react';
-import useStickyMicrosurveyContent from './sticky-content';
 import useAdoptionMicrosurveyContent from './adoption-content';
 
 type NextItemFunction = () => void;
@@ -25,10 +24,6 @@ function useEnqueueWhenReady(
             setQueue([...queue, Item]);
             setHasQueued(true);
         }
-        // It doens't look like this (double-loading) is possible as it is set up now.
-        // if (!ready && queue.includes(Item)) {
-        //     setQueue(queue.slice(1));
-        // }
     }, [ready, queue, setQueue, Item, hasQueued]);
 }
 
@@ -40,7 +35,6 @@ export default function useMSQueue(): [
     const nextItem = React.useCallback(() => setQueue(queue.slice(1)), [queue]);
     const QueuedItem = queue.length > 0 ? queue[0] : null;
 
-    useEnqueueWhenReady(useStickyMicrosurveyContent, queue, setQueue);
     useEnqueueWhenReady(useAdoptionMicrosurveyContent, queue, setQueue);
 
     return [QueuedItem, nextItem];

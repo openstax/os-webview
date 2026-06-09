@@ -86,6 +86,8 @@
     }
 
     &:not(.with-image) {
+        margin: $normal-margin 0;
+
         .content {
             grid-template-columns: 100%;
             justify-items: center;

@@ -3,19 +3,18 @@ import {render, screen, fireEvent} from '@testing-library/preact';
 import mockLocalStorage from '../../helpers/mock-local-storage';
 import userEvent from '@testing-library/user-event';
 import {
-    useSeenCounter,
     usePutAway,
-    useStickyData,
-    StickyDataWithBanner
+    useBannerData,
+    BannerDataWithEmergency
 } from '~/layouts/default/shared';
 import DefaultLayout from '~/layouts/default/default';
 import StickyNote from '~/layouts/default/header/sticky-note/sticky-note';
-import stickyData from './data/sticky.json';
+import emergencyData from './data/emergency.json';
 import fundraiserData from './data/fundraiser.json';
 import footerData from './data/footer.json';
 import oxmenuData from './data/oxmenu.json';
 import giveTodayData from './data/give-today.json';
-import giveBannerData from './data/givebanner.json';
+import siteBannerData from './data/sitebanner.json';
 import * as CF from '~/helpers/cms-fetch';
 import MemoryRouter from '../../../helpers/future-memory-router';
 import {Link} from 'react-router-dom';
@@ -52,13 +51,11 @@ jest.mock('~/contexts/shared-data', () => ({
 
 const user = userEvent.setup();
 const basicImplementation = (path: string) => {
-    if (path === 'sticky/') {
-        return Promise.resolve({
-            ...stickyData
-        });
+    if (path === 'emergency/') {
+        return Promise.resolve({...emergencyData});
     }
-    if (path === 'snippets/givebanner') {
-        return Promise.resolve(giveBannerData);
+    if (path === 'donations/sitebanner/') {
+        return Promise.resolve(siteBannerData);
     }
     if (path === 'give-today') {
         return Promise.resolve(giveTodayData);
@@ -77,37 +74,6 @@ describe('Layouts Default TypeScript Conversions', () => {
     });
 
     describe('shared.tsx utilities', () => {
-        test('useSeenCounter hook works with TypeScript types', async () => {
-            const TestComponent = () => {
-                const [hasBeenSeenEnough, increment] = useSeenCounter(5);
-
-                return (
-                    <div>
-                        <span data-testid="seen-enough">
-                            {hasBeenSeenEnough.toString()}
-                        </span>
-                        <button onClick={increment}>Increment</button>
-                    </div>
-                );
-            };
-
-            render(<TestComponent />);
-            expect(screen.getByTestId('seen-enough')).toHaveTextContent(
-                'false'
-            );
-            const saveLS = window.localStorage;
-            const saveWarn = console.warn;
-
-            console.warn = jest.fn();
-            Reflect.deleteProperty(window, 'localStorage');
-            await user.click(screen.getByRole('button'));
-            expect(console.warn).toHaveBeenCalledWith(
-                'LocalStorage restricted'
-            );
-            Reflect.defineProperty(window, 'localStorage', {value: saveLS});
-            console.warn = saveWarn;
-        });
-
         test('usePutAway hook returns proper TypeScript types', () => {
             const TestComponent = () => {
                 const [closed, PutAwayComponent] = usePutAway();
@@ -125,65 +91,79 @@ describe('Layouts Default TypeScript Conversions', () => {
             user.click(screen.getByRole('button', {name: 'dismiss'}));
         });
 
-        test('useStickyData hook handles null return type', () => {
+        test('useBannerData hook handles null return type', () => {
             const TestComponent = () => {
-                const data = useStickyData();
+                const data = useBannerData();
 
                 return (
-                    <div data-testid="sticky-data">
+                    <div data-testid="banner-data">
                         {data ? 'has data' : 'no data'}
                     </div>
                 );
             };
 
             render(<TestComponent />);
-            expect(screen.getByTestId('sticky-data')).toHaveTextContent(
+            expect(screen.getByTestId('banner-data')).toHaveTextContent(
                 'no data'
             );
         });
-        test('useStickyData hook handles emergency mode', async () => {
-            mockCmsFetch.mockImplementation((path: string) => {
-                if (path === 'sticky/') {
-                    /* eslint-disable camelcase */
-                    return Promise.resolve({
-                        ...stickyData,
-                        emergency_expires: '2044-05-31T23:00:00Z'
-                    });
-                    /* eslint-enable camelcase */
-                }
-                return basicImplementation(path);
-            });
+        test('useBannerData resolves to banner mode with active banners', async () => {
             const TestComponent = () => {
-                const data = useStickyData();
+                const data = useBannerData();
 
                 return (
-                    <div data-testid="sticky-data">
+                    <div data-testid="banner-data">
                         {data ? data.mode : 'no data'}
                     </div>
                 );
             };
 
             render(<TestComponent />);
-            expect(await screen.findByTestId('sticky-data')).toHaveTextContent(
-                'emergency'
+            expect(await screen.findByTestId('banner-data')).toHaveTextContent(
+                'banner'
             );
-            mockCmsFetch.mockImplementation(basicImplementation);
         });
-        test('useStickyData hook handles microdonation not active', async () => {
+        test('useBannerData resolves to emergency mode when emergency_expires is in the future', async () => {
             mockCmsFetch.mockImplementation((path: string) => {
-                if (path === 'sticky/') {
+                if (path === 'emergency/') {
+                    /* eslint-disable camelcase */
                     return Promise.resolve({
-                        ...stickyData,
-                        expires: '2024-05-31T23:00:00Z'
+                        ...emergencyData,
+                        emergency_expires: '2044-05-31T23:00:00Z',
+                        emergency_content: 'closed today'
                     });
+                    /* eslint-enable camelcase */
                 }
                 return basicImplementation(path);
             });
             const TestComponent = () => {
-                const data = useStickyData();
+                const data = useBannerData();
 
                 return (
-                    <div data-testid="sticky-data">
+                    <div data-testid="banner-data">
+                        {data ? data.mode : 'no data'}
+                    </div>
+                );
+            };
+
+            render(<TestComponent />);
+            expect(await screen.findByTestId('banner-data')).toHaveTextContent(
+                'emergency'
+            );
+            mockCmsFetch.mockImplementation(basicImplementation);
+        });
+        test('useBannerData resolves to null mode with no banners', async () => {
+            mockCmsFetch.mockImplementation((path: string) => {
+                if (path === 'donations/sitebanner/') {
+                    return Promise.resolve([]);
+                }
+                return basicImplementation(path);
+            });
+            const TestComponent = () => {
+                const data = useBannerData();
+
+                return (
+                    <div data-testid="banner-data">
                         {data && data.mode === null
                             ? 'mode is null'
                             : 'no data'}
@@ -192,78 +172,20 @@ describe('Layouts Default TypeScript Conversions', () => {
             };
 
             render(<TestComponent />);
-            expect(await screen.findByTestId('sticky-data')).toHaveTextContent(
+            expect(await screen.findByTestId('banner-data')).toHaveTextContent(
                 'mode is null'
-            );
-            mockCmsFetch.mockImplementation(basicImplementation);
-        });
-        test('useStickyData hook handles show_popup', async () => {
-            mockCmsFetch.mockImplementation((path: string) => {
-                if (path === 'sticky/') {
-                    /* eslint-disable camelcase */
-                    return Promise.resolve({
-                        ...stickyData,
-                        show_popup: true
-                    });
-                    /* eslint-enable camelcase */
-                }
-                return basicImplementation(path);
-            });
-            const TestComponent = () => {
-                const data = useStickyData();
-
-                return (
-                    <div data-testid="sticky-data">
-                        {data && data.mode === 'popup'
-                            ? 'mode is popup'
-                            : 'no data'}
-                    </div>
-                );
-            };
-
-            render(<TestComponent />);
-            expect(await screen.findByTestId('sticky-data')).toHaveTextContent(
-                'mode is popup'
-            );
-            mockCmsFetch.mockImplementation(basicImplementation);
-        });
-        test('useStickyData hook handles null emergency_expires', async () => {
-            mockCmsFetch.mockImplementation((path: string) => {
-                if (path === 'sticky/') {
-                    /* eslint-disable camelcase */
-                    return Promise.resolve({
-                        ...stickyData,
-                        emergency_expires: null
-                    });
-                    /* eslint-enable camelcase */
-                }
-                return basicImplementation(path);
-            });
-            const TestComponent = () => {
-                const data = useStickyData();
-
-                return (
-                    <div data-testid="sticky-data">
-                        {data && data.mode === 'banner'
-                            ? 'mode is banner'
-                            : 'no data'}
-                    </div>
-                );
-            };
-
-            render(<TestComponent />);
-            expect(await screen.findByTestId('sticky-data')).toHaveTextContent(
-                'mode is banner'
             );
             mockCmsFetch.mockImplementation(basicImplementation);
         });
         test('sticky-note (emergency) renders', () => {
             const data = {
                 mode: 'emergency',
-                emergency_content: 'The message' // eslint-disable-line camelcase
-            } as StickyDataWithBanner;
+                emergency_expires: '2044-05-31T23:00:00Z', // eslint-disable-line camelcase
+                emergency_content: 'The message', // eslint-disable-line camelcase
+                bannerConfigs: []
+            } as BannerDataWithEmergency;
 
-            render(<StickyNote stickyData={data} />);
+            render(<StickyNote bannerData={data} />);
             const alert = screen.getByRole('alert');
 
             expect(alert.textContent).toBe('The message');
@@ -299,8 +221,11 @@ describe('default layout', () => {
             .mockImplementation((...args: Parameters<typeof saveFetch>) => {
                 const url = args[0] as string;
 
-                if (url.includes('/sticky/')) {
-                    return fetchResponse(stickyData);
+                if (url.includes('/emergency/')) {
+                    return fetchResponse(emergencyData);
+                }
+                if (url.includes('/donations/sitebanner/')) {
+                    return fetchResponse(siteBannerData);
                 }
                 if (url.endsWith('/fundraiser/?format=json')) {
                     return fetchResponse(fundraiserData);
