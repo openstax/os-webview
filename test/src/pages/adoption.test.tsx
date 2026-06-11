@@ -13,6 +13,12 @@ import HowUsing from '~/pages/adoption/how-using/how-using';
 import {SalesforceBook} from '~/helpers/books';
 import userModel from '~/../../test/src/data/userModel';
 
+jest.mock('~/helpers/use-document-head', () => ({
+    __esModule: true,
+    default: jest.fn(),
+    useCanonicalLink: jest.fn()
+}));
+
 jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
 
 describe('adoption-form', () => {
@@ -181,6 +187,24 @@ describe('adoption-form logged-in flow', () => {
 });
 describe('adoption-form year selection', () => {
     const user = userEvent.setup();
+    const Component = () => (
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <UserContextProvider>
+                    <MemoryRouter
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
+                    >
+                        <MainClassContextProvider>
+                            <AdoptionForm />
+                        </MainClassContextProvider>
+                    </MemoryRouter>
+                </UserContextProvider>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
+    );
 
     beforeAll(() => {
         jest.spyOn(UM, 'useUserModel').mockReturnValue(
@@ -193,37 +217,20 @@ describe('adoption-form year selection', () => {
     });
 
     it('allows toggling year checkboxes on and off', async () => {
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter
-                            initialEntries={[
-                                '/details/books/college-algebra',
-                                '/adoption'
-                            ]}
-                        >
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
+        render(<Component />);
 
         await screen.findByText(/Which school year/);
 
         // Find all year checkboxes
-        const yearCheckboxes = screen.getAllByRole('checkbox').filter(
-            (cb) => {
-                const label = cb.closest('label');
-                return label?.textContent?.match(/\d{4}–\d{4}/);
-            }
-        );
+        const yearCheckboxes = screen.getAllByRole('checkbox').filter((cb) => {
+            const label = cb.closest('label');
+            return label?.textContent?.match(/\d{4}–\d{4}/);
+        });
 
         // One should be checked by default (current academic year)
-        const checkedBoxes = yearCheckboxes.filter((cb) => (cb as HTMLInputElement).checked);
+        const checkedBoxes = yearCheckboxes.filter(
+            (cb) => (cb as HTMLInputElement).checked
+        );
         expect(checkedBoxes.length).toBe(1);
 
         // Toggle the first year checkbox off
@@ -240,33 +247,14 @@ describe('adoption-form year selection', () => {
     });
 
     it('allows selecting multiple years', async () => {
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter
-                            initialEntries={[
-                                '/details/books/college-algebra',
-                                '/adoption'
-                            ]}
-                        >
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
+        render(<Component />);
 
         await screen.findByText(/Which school year/);
 
-        const yearCheckboxes = screen.getAllByRole('checkbox').filter(
-            (cb) => {
-                const label = cb.closest('label');
-                return label?.textContent?.match(/\d{4}–\d{4}/);
-            }
-        );
+        const yearCheckboxes = screen.getAllByRole('checkbox').filter((cb) => {
+            const label = cb.closest('label');
+            return label?.textContent?.match(/\d{4}–\d{4}/);
+        });
 
         // Check all three year checkboxes
         for (const checkbox of yearCheckboxes) {
@@ -276,7 +264,9 @@ describe('adoption-form year selection', () => {
         }
 
         // Verify all are checked
-        const allChecked = yearCheckboxes.every((cb) => (cb as HTMLInputElement).checked);
+        const allChecked = yearCheckboxes.every(
+            (cb) => (cb as HTMLInputElement).checked
+        );
         expect(allChecked).toBe(true);
     });
 });
@@ -289,6 +279,24 @@ describe('adoption-form with renewals data', () => {
             {name: 'Chemistry 2e', students: 30}
         ]
     };
+    const Component = () => (
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <UserContextProvider>
+                    <MemoryRouter
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
+                    >
+                        <MainClassContextProvider>
+                            <AdoptionForm />
+                        </MainClassContextProvider>
+                    </MemoryRouter>
+                </UserContextProvider>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
+    );
 
     beforeAll(() => {
         jest.spyOn(UM, 'useUserModel').mockReturnValue(
@@ -303,26 +311,11 @@ describe('adoption-form with renewals data', () => {
     it('preselects books from adoptions data and populates initial counts', async () => {
         // Mock useAdoptions to return data
         const useAdoptions = require('~/models/renewals').default;
-        jest.spyOn(require('~/models/renewals'), 'default').mockReturnValue(mockAdoptions);
-
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter
-                            initialEntries={[
-                                '/details/books/college-algebra',
-                                '/adoption'
-                            ]}
-                        >
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
+        jest.spyOn(require('~/models/renewals'), 'default').mockReturnValue(
+            mockAdoptions
         );
+
+        render(<Component />);
 
         await screen.findByText(/Let us know you're using/);
 
@@ -330,13 +323,15 @@ describe('adoption-form with renewals data', () => {
         await user.type(screen.getByRole('searchbox'), 'Biology');
 
         // Biology 2e should be pre-checked
-        const biologyCheckbox = (await screen.findAllByRole('checkbox', {name: 'Biology 2e'}))[0];
+        const biologyCheckbox = (
+            await screen.findAllByRole('checkbox', {name: 'Biology 2e'})
+        )[0];
         expect((biologyCheckbox as HTMLInputElement).checked).toBe(true);
 
         // The student count input should have the initial value from adoptions
         const spinbuttons = screen.getAllByRole('spinbutton');
-        const biologyCountInput = spinbuttons.find((input) =>
-            (input as HTMLInputElement).value === '50'
+        const biologyCountInput = spinbuttons.find(
+            (input) => (input as HTMLInputElement).value === '50'
         );
         expect(biologyCountInput).toBeTruthy();
     });
@@ -346,24 +341,7 @@ describe('adoption-form with renewals data', () => {
             Books: []
         });
 
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter
-                            initialEntries={[
-                                '/details/books/college-algebra',
-                                '/adoption'
-                            ]}
-                        >
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
+        render(<Component />);
 
         await screen.findByText(/Let us know you're using/);
 
@@ -374,6 +352,24 @@ describe('adoption-form with renewals data', () => {
 
 describe('adoption-form with URL parameters', () => {
     const user = userEvent.setup();
+    const Component = () => (
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <UserContextProvider>
+                    <MemoryRouter
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
+                    >
+                        <MainClassContextProvider>
+                            <AdoptionForm />
+                        </MainClassContextProvider>
+                    </MemoryRouter>
+                </UserContextProvider>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
+    );
 
     beforeAll(() => {
         jest.spyOn(UM, 'useUserModel').mockReturnValue(
@@ -387,36 +383,18 @@ describe('adoption-form with URL parameters', () => {
 
     it('preselects year from URL query parameter', async () => {
         const now = new Date();
-        const defaultStartYear = now.getFullYear() - (now.getMonth() < 6 ? 2 : 1);
+        const defaultStartYear =
+            now.getFullYear() - (now.getMonth() < 6 ? 2 : 1);
         const testYear = defaultStartYear.toString();
 
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter
-                            initialEntries={[
-                                '/details/books/college-algebra',
-                                `/adoption?year=${testYear}`
-                            ]}
-                        >
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
+        render(<Component />);
 
         await screen.findByText(/Which school year/);
 
-        const yearCheckboxes = screen.getAllByRole('checkbox').filter(
-            (cb) => {
-                const label = cb.closest('label');
-                return label?.textContent?.includes(`${testYear}–`);
-            }
-        );
+        const yearCheckboxes = screen.getAllByRole('checkbox').filter((cb) => {
+            const label = cb.closest('label');
+            return label?.textContent?.includes(`${testYear}–`);
+        });
 
         // The year from URL should be checked
         expect((yearCheckboxes[0] as HTMLInputElement).checked).toBe(true);
@@ -425,6 +403,24 @@ describe('adoption-form with URL parameters', () => {
 
 describe('adoption-form with different roles', () => {
     const user = userEvent.setup();
+    const Component = () => (
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <UserContextProvider>
+                    <MemoryRouter
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
+                    >
+                        <MainClassContextProvider>
+                            <AdoptionForm />
+                        </MainClassContextProvider>
+                    </MemoryRouter>
+                </UserContextProvider>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
+    );
 
     afterEach(() => {
         jest.restoreAllMocks();
@@ -440,24 +436,7 @@ describe('adoption-form with different roles', () => {
             adminUserModel as unknown as UM.UserModelType
         );
 
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter
-                            initialEntries={[
-                                '/details/books/college-algebra',
-                                '/adoption'
-                            ]}
-                        >
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
+        render(<Component />);
 
         await screen.findByText(/Let us know you're using/);
 
@@ -478,24 +457,7 @@ describe('adoption-form with different roles', () => {
             librarianUserModel as unknown as UM.UserModelType
         );
 
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter
-                            initialEntries={[
-                                '/details/books/college-algebra',
-                                '/adoption'
-                            ]}
-                        >
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
+        render(<Component />);
 
         await screen.findByText(/Let us know you're using/);
 
@@ -515,24 +477,7 @@ describe('adoption-form with different roles', () => {
             unknownRoleUserModel as unknown as UM.UserModelType
         );
 
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter
-                            initialEntries={[
-                                '/details/books/college-algebra',
-                                '/adoption'
-                            ]}
-                        >
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
+        render(<Component />);
 
         await screen.findByText(/Let us know you're using/);
 
