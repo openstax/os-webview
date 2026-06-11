@@ -16,7 +16,9 @@ import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 // Mock all the necessary modules
 jest.mock('~/components/shell/announce-page-title', () => ({
-    PageTitleConfirmation: () => <div data-testid="page-title-confirmation">PageTitle</div>
+    PageTitleConfirmation: () => (
+        <div data-testid="page-title-confirmation">PageTitle</div>
+    )
 }));
 
 jest.mock('~/components/chat/chat', () => {
@@ -34,12 +36,15 @@ jest.mock('~/components/shell/router-helpers/page-routes', () => ({
 }));
 
 jest.mock('~/components/shell/router-helpers/non-portal-route-wrapper', () => ({
-    NonPortalRouteWrapper: ({children}: {children: React.ReactNode}) => <div>{children}</div>
+    NonPortalRouteWrapper: ({children}: {children: React.ReactNode}) => (
+        <div>{children}</div>
+    )
 }));
 
 jest.mock('~/helpers/$', () => ({
     default: {
-        focusable: 'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        focusable:
+            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
         scrollTo: jest.fn()
     }
 }));
@@ -63,8 +68,12 @@ describe('Router', () => {
         removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
 
         // Mock dependencies
-        jest.spyOn(UseLinkHandler, 'default').mockReturnValue(mockLinkHandler as any);
-        jest.spyOn(TagManager, 'initializeGTM').mockImplementation(mockInitializeGTM);
+        jest.spyOn(UseLinkHandler, 'default').mockReturnValue(
+            mockLinkHandler as any
+        );
+        jest.spyOn(TagManager, 'initializeGTM').mockImplementation(
+            mockInitializeGTM
+        );
 
         // Mock contexts with default values
         jest.spyOn(PortalContext, 'default').mockReturnValue({
@@ -85,7 +94,10 @@ describe('Router', () => {
         } as any);
 
         // Mock layout context
-        const MockLayout = ({children}: {children: React.ReactNode}) => <div data-testid="layout">{children}</div>;
+        const MockLayout = ({children}: {children: React.ReactNode}) => (
+            <div data-testid="layout">{children}</div>
+        );
+
         jest.spyOn(LayoutContext, 'default').mockReturnValue({
             Layout: MockLayout,
             setLayoutParameters: jest.fn()
@@ -107,7 +119,9 @@ describe('Router', () => {
                 </MemoryRouter>
             );
 
-            expect(screen.getByTestId('page-title-confirmation')).toBeInTheDocument();
+            expect(
+                screen.getByTestId('page-title-confirmation')
+            ).toBeInTheDocument();
         });
 
         it('renders skip to content link', () => {
@@ -118,6 +132,7 @@ describe('Router', () => {
             );
 
             const skipLink = screen.getByText('skip to main content');
+
             expect(skipLink).toBeInTheDocument();
             expect(skipLink.tagName).toBe('A');
             expect(skipLink).toHaveAttribute('href', '#main');
@@ -130,7 +145,10 @@ describe('Router', () => {
                 </MemoryRouter>
             );
 
-            expect(addEventListenerSpy).toHaveBeenCalledWith('click', mockLinkHandler);
+            expect(addEventListenerSpy).toHaveBeenCalledWith(
+                'click',
+                mockLinkHandler
+            );
         });
 
         it('removes link handler on unmount', () => {
@@ -142,11 +160,15 @@ describe('Router', () => {
 
             unmount();
 
-            expect(removeEventListenerSpy).toHaveBeenCalledWith('click', mockLinkHandler);
+            expect(removeEventListenerSpy).toHaveBeenCalledWith(
+                'click',
+                mockLinkHandler
+            );
         });
 
         it('renders without errors when piTracker is available', () => {
             const mockPiTracker = jest.fn();
+
             (window as any).piTracker = mockPiTracker;
 
             expect(() => {
@@ -172,7 +194,9 @@ describe('Router', () => {
             );
 
             // Should not throw error
-            expect(screen.getByTestId('page-title-confirmation')).toBeInTheDocument();
+            expect(
+                screen.getByTestId('page-title-confirmation')
+            ).toBeInTheDocument();
         });
 
         it('initializes GTM when isK12Portal is false', async () => {
@@ -226,7 +250,9 @@ describe('Router', () => {
                 </MemoryRouter>
             );
 
-            expect(screen.queryByTestId('chat-component')).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId('chat-component')
+            ).not.toBeInTheDocument();
         });
 
         it('does not show chat when flags is null', () => {
@@ -240,7 +266,9 @@ describe('Router', () => {
                 </MemoryRouter>
             );
 
-            expect(screen.queryByTestId('chat-component')).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId('chat-component')
+            ).not.toBeInTheDocument();
         });
 
         it('shows chat on book details page when chat_book_details flag is true', () => {
@@ -278,7 +306,9 @@ describe('Router', () => {
                 </MemoryRouter>
             );
 
-            expect(screen.queryByTestId('chat-component')).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId('chat-component')
+            ).not.toBeInTheDocument();
         });
 
         it('shows chat on subjects page when chat_subjects flag is true', () => {
@@ -359,7 +389,9 @@ describe('Router', () => {
                 </MemoryRouter>
             );
 
-            expect(screen.queryByTestId('chat-component')).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId('chat-component')
+            ).not.toBeInTheDocument();
         });
 
         it('shows chat when chat_logged_in_only is true and user is logged in', () => {
@@ -402,7 +434,9 @@ describe('Router', () => {
                 </MemoryRouter>
             );
 
-            expect(screen.queryByTestId('chat-component')).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId('chat-component')
+            ).not.toBeInTheDocument();
         });
 
         it('shows chat when multiple flags match', () => {
@@ -467,7 +501,10 @@ describe('Router', () => {
         });
 
         it('calls generateFooterPageRoutes', () => {
-            const mockGenerateFooterPageRoutes = jest.spyOn(PageRoutes, 'generateFooterPageRoutes');
+            const mockGenerateFooterPageRoutes = jest.spyOn(
+                PageRoutes,
+                'generateFooterPageRoutes'
+            );
 
             render(
                 <MemoryRouter initialEntries={['/']}>
