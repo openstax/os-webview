@@ -131,6 +131,14 @@
             "json",
             "html"
         ],
+        "coverageThreshold": {
+            "global": {
+                "branches": 100,
+                "functions": 100,
+                "lines": 100,
+                "statements": 100
+            }
+        },
         "setupFiles": [
             "<rootDir>/test/setupFile.js"
         ],
