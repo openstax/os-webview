@@ -37,18 +37,18 @@ const SALESFORCE_CONFIG = {
 };
 
 function initEmbeddedMessaging(): boolean {
+    // Value is guaranteed present by the caller
+    const bootstrap = window.embeddedservice_bootstrap as Required<Window>['embeddedservice_bootstrap'];
+
     try {
-        if (window.embeddedservice_bootstrap) {
-            window.embeddedservice_bootstrap.settings.language = 'en_US';
-            window.embeddedservice_bootstrap.init(
-                SALESFORCE_CONFIG.orgId,
-                SALESFORCE_CONFIG.deploymentName,
-                SALESFORCE_CONFIG.baseUrl,
-                {scrt2URL: SALESFORCE_CONFIG.scrt2URL}
-            );
-            return true;
-        }
-        return false;
+        bootstrap.settings.language = 'en_US';
+        bootstrap.init(
+            SALESFORCE_CONFIG.orgId,
+            SALESFORCE_CONFIG.deploymentName,
+            SALESFORCE_CONFIG.baseUrl,
+            {scrt2URL: SALESFORCE_CONFIG.scrt2URL}
+        );
+        return true;
     } catch (err) {
         console.error('Error initializing Salesforce chat:', err);
         return false;
@@ -146,11 +146,9 @@ export default function Chat() {
             return;
         }
 
-        const prechatAPI = window.embeddedservice_bootstrap?.prechatAPI;
-
-        if (!prechatAPI) {
-            return;
-        }
+        // prechatLoaded is only true when prechatAPI exists (see polling effect below),
+        // so we can safely access it without additional null checks
+        const prechatAPI = window.embeddedservice_bootstrap!.prechatAPI;
 
         // Set hidden fields: sProduct and UUID (not editable by user)
         const hiddenFields: Record<string, string> = {
