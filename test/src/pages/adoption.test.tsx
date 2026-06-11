@@ -223,7 +223,7 @@ describe('adoption-form year selection', () => {
         );
 
         // One should be checked by default (current academic year)
-        const checkedBoxes = yearCheckboxes.filter((cb: HTMLInputElement) => cb.checked);
+        const checkedBoxes = yearCheckboxes.filter((cb) => (cb as HTMLInputElement).checked);
         expect(checkedBoxes.length).toBe(1);
 
         // Toggle the first year checkbox off
@@ -276,7 +276,7 @@ describe('adoption-form year selection', () => {
         }
 
         // Verify all are checked
-        const allChecked = yearCheckboxes.every((cb: HTMLInputElement) => cb.checked);
+        const allChecked = yearCheckboxes.every((cb) => (cb as HTMLInputElement).checked);
         expect(allChecked).toBe(true);
     });
 });
@@ -335,8 +335,8 @@ describe('adoption-form with renewals data', () => {
 
         // The student count input should have the initial value from adoptions
         const spinbuttons = screen.getAllByRole('spinbutton');
-        const biologyCountInput = spinbuttons.find((input: HTMLInputElement) =>
-            input.value === '50'
+        const biologyCountInput = spinbuttons.find((input) =>
+            (input as HTMLInputElement).value === '50'
         );
         expect(biologyCountInput).toBeTruthy();
     });

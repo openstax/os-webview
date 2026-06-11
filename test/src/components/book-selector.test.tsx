@@ -8,7 +8,8 @@ import {useAfterSubmit} from '~/components/book-selector/after-form-submit';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {describe, it, expect} from '@jest/globals';
 import {LanguageContextProvider} from '~/contexts/language';
-import * as BooksModel from '~/models/books';
+
+jest.mock('~/models/books');
 
 const props = {
     prompt: 'Which textbook(s) are you currently using?',
@@ -137,7 +138,8 @@ describe('book-selector', () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
 
     beforeAll(() => {
-        jest.spyOn(BooksModel, 'fetchAllBooks').mockResolvedValue(mockBooksWithSpanish);
+        const {fetchAllBooks} = require('~/models/books');
+        fetchAllBooks.mockResolvedValue(mockBooksWithSpanish);
     });
 
     it('preselects a book based on path', async () => {
@@ -400,8 +402,8 @@ describe('book-selector', () => {
 
         // Validation message should be empty/hidden
         await waitFor(() => {
-            const invalidMsg = screen.getByClassName('invalid-message');
-            expect(invalidMsg.textContent).toBe('');
+            const invalidMsg = document.querySelector('.invalid-message');
+            expect(invalidMsg?.textContent).toBe('');
         });
     });
 });
