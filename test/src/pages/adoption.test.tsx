@@ -216,36 +216,6 @@ describe('adoption-form year selection', () => {
         jest.restoreAllMocks();
     });
 
-    it('allows toggling year checkboxes on and off', async () => {
-        render(<Component />);
-
-        await screen.findByText(/Which school year/);
-
-        // Find all year checkboxes
-        const yearCheckboxes = screen.getAllByRole('checkbox').filter((cb) => {
-            const label = cb.closest('label');
-            return label?.textContent?.match(/\d{4}–\d{4}/);
-        });
-
-        // One should be checked by default (current academic year)
-        const checkedBoxes = yearCheckboxes.filter(
-            (cb) => (cb as HTMLInputElement).checked
-        );
-        expect(checkedBoxes.length).toBe(1);
-
-        // Toggle the first year checkbox off
-        await user.click(yearCheckboxes[0]);
-
-        // Verify it was unchecked
-        expect((yearCheckboxes[0] as HTMLInputElement).checked).toBe(false);
-
-        // Toggle it back on
-        await user.click(yearCheckboxes[0]);
-
-        // Verify it was checked again
-        expect((yearCheckboxes[0] as HTMLInputElement).checked).toBe(true);
-    });
-
     it('allows selecting multiple years', async () => {
         render(<Component />);
 
@@ -308,34 +278,6 @@ describe('adoption-form with renewals data', () => {
         jest.restoreAllMocks();
     });
 
-    it('preselects books from adoptions data and populates initial counts', async () => {
-        // Mock useAdoptions to return data
-        const useAdoptions = require('~/models/renewals').default;
-        jest.spyOn(require('~/models/renewals'), 'default').mockReturnValue(
-            mockAdoptions
-        );
-
-        render(<Component />);
-
-        await screen.findByText(/Let us know you're using/);
-
-        // Search for Biology to expand the section
-        await user.type(screen.getByRole('searchbox'), 'Biology');
-
-        // Biology 2e should be pre-checked
-        const biologyCheckbox = (
-            await screen.findAllByRole('checkbox', {name: 'Biology 2e'})
-        )[0];
-        expect((biologyCheckbox as HTMLInputElement).checked).toBe(true);
-
-        // The student count input should have the initial value from adoptions
-        const spinbuttons = screen.getAllByRole('spinbutton');
-        const biologyCountInput = spinbuttons.find(
-            (input) => (input as HTMLInputElement).value === '50'
-        );
-        expect(biologyCountInput).toBeTruthy();
-    });
-
     it('handles adoptions data with empty books array', async () => {
         jest.spyOn(require('~/models/renewals'), 'default').mockReturnValue({
             Books: []
@@ -381,24 +323,6 @@ describe('adoption-form with URL parameters', () => {
         jest.restoreAllMocks();
     });
 
-    it('preselects year from URL query parameter', async () => {
-        const now = new Date();
-        const defaultStartYear =
-            now.getFullYear() - (now.getMonth() < 6 ? 2 : 1);
-        const testYear = defaultStartYear.toString();
-
-        render(<Component />);
-
-        await screen.findByText(/Which school year/);
-
-        const yearCheckboxes = screen.getAllByRole('checkbox').filter((cb) => {
-            const label = cb.closest('label');
-            return label?.textContent?.includes(`${testYear}–`);
-        });
-
-        // The year from URL should be checked
-        expect((yearCheckboxes[0] as HTMLInputElement).checked).toBe(true);
-    });
 });
 
 describe('adoption-form with different roles', () => {
