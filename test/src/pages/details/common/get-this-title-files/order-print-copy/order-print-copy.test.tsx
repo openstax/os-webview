@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
+import '@testing-library/jest-dom';
 import {IntlProvider} from 'react-intl';
 import OrderPrintCopy from '~/pages/details/common/get-this-title-files/order-print-copy/order-print-copy';
 import * as cmsFetch from '~/helpers/cms-fetch';
@@ -51,7 +52,8 @@ describe('OrderPrintCopy', () => {
         await waitFor(() => {
             const boxes = container.querySelectorAll('.box');
 
-            expect(boxes.length).toBe(1);
+            // 1 content item renders in both phone and desktop versions = 2 boxes total
+            expect(boxes.length).toBe(2);
         });
 
         const audiobookLink = screen.getByRole('link', {name: /audiobook/i});
@@ -104,7 +106,8 @@ describe('OrderPrintCopy', () => {
         await waitFor(() => {
             const boxes = container.querySelectorAll('.box');
 
-            expect(boxes.length).toBe(3);
+            // 3 content items render in both phone and desktop versions = 6 boxes total
+            expect(boxes.length).toBe(6);
         });
 
         const audiobookLink = screen.getByRole('link', {name: /audiobook/i});

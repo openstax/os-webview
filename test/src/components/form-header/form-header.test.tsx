@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import '@testing-library/jest-dom';
 import FormHeaderLoader from '~/components/form-header/form-header';
 import ShellContextProvider from '../../../helpers/shell-context';
 import * as userContext from '~/contexts/user';
