@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import '@testing-library/jest-dom';
 import GiveButton from '~/layouts/default/header/menus/give-button/give-button';
 import * as giveToday from '~/models/give-today';
 
@@ -40,12 +41,13 @@ describe('GiveButton', () => {
             give_link: undefined
         });
 
-        render(<GiveButton />);
+        const {container} = render(<GiveButton />);
 
-        const link = screen.getByRole('link', {name: 'Give'});
+        const anchor = container.querySelector('a.give-button');
 
-        expect(link).toBeInTheDocument();
-        expect(link.getAttribute('href')).toBeNull();
+        expect(anchor).toBeInTheDocument();
+        expect(anchor?.textContent).toBe('Give');
+        expect(anchor?.getAttribute('href')).toBeNull();
     });
 
     it('handles missing data gracefully', () => {

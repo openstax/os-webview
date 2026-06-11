@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
+import '@testing-library/jest-dom';
 import CookieYesToggle from '~/layouts/default/footer/cookie-yes-toggle';
 
 describe('CookieYesToggle', () => {
