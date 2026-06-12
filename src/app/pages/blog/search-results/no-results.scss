@@ -3,7 +3,11 @@
 .blog.page .no-results {
     padding-bottom: 6rem;
 
-    h1 {
-       margin-bottom: 1rem;
+    h2 {
+        // Demoted from h1 for correct heading order (the page h1 is "OpenStax
+        // Blog"); keep the original h1 visual size.
+        @include set-font(h1);
+
+        margin-bottom: 1rem;
     }
 }
