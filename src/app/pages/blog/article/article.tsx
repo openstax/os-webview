@@ -71,7 +71,7 @@ function ArticleLoader({slug, onLoad}: ArticleArgs) {
 }
 
 export function Article({data}: {data: ArticleData}) {
-    const body = data.body || [];
+    const body = data.body ?? [];
     const isPdf = body.some((block) => block.type === 'document');
     let ArticleContent = NormalArticle;
 

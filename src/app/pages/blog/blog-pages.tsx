@@ -117,14 +117,14 @@ export function ArticlePage() {
 
     useEffect(
         () => {
-            if (slug && slug !== 'blog') {
+            if (slug) {
                 window.scrollTo(0, 0);
             }
         },
         [slug]
     );
 
-    if (!slug || slug === 'blog') {
+    if (!slug) {
         return <MainBlogPage />;
     }
 
