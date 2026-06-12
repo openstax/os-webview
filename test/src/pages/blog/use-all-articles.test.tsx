@@ -1,5 +1,4 @@
 import React from 'react';
-import {ComponentType} from 'preact';
 import {renderHook, waitFor} from '@testing-library/preact';
 import {MemoryRouter} from 'react-router-dom';
 import * as pageDataUtils from '~/helpers/page-data-utils';
@@ -18,7 +17,7 @@ it('builds the search slug from q, subjects, collection, and sort', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: Wrapper as ComponentType<{children: Element}>});
+    renderHook(() => useAllArticles(), {wrapper: Wrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slug = spy.mock.calls[0][0] as string;
@@ -39,7 +38,7 @@ it('includes collection in the slug when present', async () => {
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: Wrapper as ComponentType<{children: Element}>});
+    renderHook(() => useAllArticles(), {wrapper: Wrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slug = spy.mock.calls[0][0] as string;
@@ -59,7 +58,7 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: WrapperNoSort as ComponentType<{children: Element}>});
+    renderHook(() => useAllArticles(), {wrapper: WrapperNoSort});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slugNoSort = spy.mock.calls[0][0] as string;
@@ -77,7 +76,7 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: WrapperRelevance as ComponentType<{children: Element}>});
+    renderHook(() => useAllArticles(), {wrapper: WrapperRelevance});
 
     await waitFor(() => expect(spy2).toHaveBeenCalled());
     const slugRelevance = spy2.mock.calls[0][0] as string;
