@@ -33,7 +33,9 @@ function isCanonical(slug: string) {
 }
 
 function getCanonicalPath(slug: string) {
-    return `${slug.replace(/.*\/(?!$)/, '/')}${slug.endsWith('/') ? '' : '/'}`;
+    const lastSegment = slug.replace(/\/$/, '').split('/').pop();
+
+    return `/${lastSegment}`;
 }
 
 export function GeneralPageFromSlug({slug}: {slug: string}) {

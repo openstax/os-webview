@@ -40,7 +40,7 @@ async def test_osweb_higher_education_page_bookstore_link(chrome_page, base_url)
 
     # WHEN: Navigate to bookstore page (depends on envs)
     if "staging" in chrome_page.url:
-        await chrome_page.goto(f"{base_url}/bookstore")
+        pytest.skip("Skipping test. Staging is missing /bookstore page")
     else:
         await home.click_higher_education_link()
         await home.click_campus_affordability_link()

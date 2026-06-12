@@ -7,6 +7,7 @@ import {SharedDataContextProvider} from '../../contexts/shared-data';
 import JITLoad from '~/helpers/jit-load';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import {PortalContextProvider} from '~/contexts/portal';
+import HeadlessUserbar from '~/components/headless-userbar/headless-userbar';
 
 import Error404 from '~/pages/404/404';
 
@@ -44,6 +45,7 @@ const importRouter = () => import('./import-router.js');
 function App() {
     return (
         <AppContext>
+            <HeadlessUserbar />
             <BrowserRouter>
                 <Routes>
                     <Route path="/embedded/*" element={<EmbeddedApp />} />
