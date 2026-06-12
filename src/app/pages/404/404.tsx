@@ -1,11 +1,19 @@
 import React from 'react';
 import useDocumentHead from '~/helpers/use-document-head';
+import useLayoutContext from '~/contexts/layout';
 
 export default function Page() {
     useDocumentHead({
         title: '404 Not Found - OpenStax',
         noindex: true
     });
+    const {layoutParameters, setLayoutParameters} = useLayoutContext();
+
+    React.useEffect(() => {
+        if (layoutParameters?.name === null) {
+            setLayoutParameters?.();
+        }
+    }, [layoutParameters?.name, setLayoutParameters]);
 
     return (
         <main className="not-found no-style page">

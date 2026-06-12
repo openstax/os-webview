@@ -169,7 +169,7 @@ const FOOTER_PAGES = [
     'privacy-policy',
     'accessibility-statement',
     'careers'
-].map((s) => `/${s}/`);
+].map((s) => `/${s}`);
 
 export function generateFooterPageRoutes() {
     return FOOTER_PAGES.map((path) => (

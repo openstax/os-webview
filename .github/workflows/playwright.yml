@@ -1,6 +1,8 @@
 name: Playwright
 
-on: [pull_request]
+on:
+  push:
+    branches: [main]
 
 defaults:
   run:

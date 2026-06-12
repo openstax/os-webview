@@ -176,8 +176,7 @@ function FacultyForm({
     const afterSubmit = useAfterSubmit(selectedBooksRef);
     const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const {adoptionUrl} = useSalesforceContext();
-    const {userModel, uuid} = useUserContext();
-    const isLoggedIn = Boolean(userModel?.last_name);
+    const {uuid, isLoggedIn} = useUserContext();
     const adoptions = useAdoptions(uuid);
     const preselectedValues = React.useMemo(
         () => adoptions?.Books.map((b) => b.name),
@@ -297,8 +296,7 @@ export default function AdoptionForm() {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
-    const {userModel} = useUserContext();
-    const isLoggedIn = Boolean(userModel?.last_name);
+    const {userModel, isLoggedIn} = useUserContext();
     const initialRender = useRef(true);
     const onPageChange = React.useCallback((page: number) => {
         setHideRoleSelector(page > 1);
