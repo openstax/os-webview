@@ -116,9 +116,17 @@ export function ArticlePage() {
     const [articleData, setArticleData] = React.useState<ArticleData>();
 
     useEffect(
-        () => window.scrollTo(0, 0),
+        () => {
+            if (slug && slug !== 'blog') {
+                window.scrollTo(0, 0);
+            }
+        },
         [slug]
     );
+
+    if (!slug || slug === 'blog') {
+        return <MainBlogPage />;
+    }
 
     return (
         <WindowContextProvider>
