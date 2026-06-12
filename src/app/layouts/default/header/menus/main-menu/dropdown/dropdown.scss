@@ -38,6 +38,11 @@
 .dropdown {
     position: relative;
 
+    // The dropdown toggle is an `<a role="button">`, so it carries the ring itself.
+    > a[role="button"] {
+        @include focus-indicator();
+    }
+
     // Keeps rightmost menu from hanging off the screen
     &.rightmost .dropdown-container {
         right: -1rem;
