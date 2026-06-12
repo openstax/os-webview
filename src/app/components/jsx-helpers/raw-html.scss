@@ -1,0 +1,41 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+// Styles for CMS-authored markup rendered by the adjacent <RawHTML> component,
+// whose container is tagged `.cms-content`. Buttons authored in CMS rich-text
+// render through it. The base button plus the variant classes editors use
+// (`btn-orange`, `cta`, `btn-cyan`, `btn-gold`, `btn-large`) are built from the
+// pattern-library button mixins and scoped to that container, so they apply
+// only to editor content and never globally.
+.cms-content {
+    button,
+    .btn {
+        @include button();
+    }
+
+    .btn-large {
+        padding: 2.5rem;
+    }
+
+    // Call-to-action buttons generally have this style
+    .cta > .btn {
+        padding: 1.5rem 2rem;
+        text-transform: uppercase;
+    }
+
+    .cta > .btn,
+    .btn-orange {
+        @include button-type-specific(primary);
+    }
+
+    .btn-cyan {
+        background-color: os-color(light-blue);
+        border: 0;
+        color: ui-color(white);
+    }
+
+    .btn-gold {
+        background-color: os-color(gold);
+        border: 0;
+        color: ui-color(white);
+    }
+}

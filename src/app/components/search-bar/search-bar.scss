@@ -41,6 +41,8 @@
         }
 
         .clear-search {
+            @include button-reset();
+
             grid-column: 1;
             grid-row: 1;
             justify-self: end;
@@ -57,7 +59,7 @@
         width: 100%;
 
         &:focus-within {
-            outline: 0.2 solid ui-color(focus-outline);
+            @include focus-style();
         }
 
         .floating-label {
