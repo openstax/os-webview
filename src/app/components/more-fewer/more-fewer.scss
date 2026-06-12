@@ -5,6 +5,8 @@
     grid-row-gap: 2rem;
 
     [role="button"] {
+        @include focus-indicator();
+
         cursor: pointer;
     }
 

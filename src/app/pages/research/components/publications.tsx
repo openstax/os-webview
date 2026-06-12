@@ -45,11 +45,11 @@ export const Publications = ({
                 {publicationList.map((publication, index) => (
                     <PublicationItem key={index} publication={publication} />
                 ))}
-                <span
-                    role="button"
+                <button
+                    type="button"
                     aria-expanded={viewAll}
                     aria-controls="publication-list"
-                    className="py-4"
+                    className="view-all-toggle"
                     onClick={() => {
                         if (viewAll) {
                             scrollToPublications();
@@ -57,7 +57,6 @@ export const Publications = ({
                         setViewAll(!viewAll);
                     }}
                     css={{
-                        cursor: 'pointer',
                         color: colors.linkText,
                         alignSelf: 'center'
                     }}
@@ -67,7 +66,7 @@ export const Publications = ({
                     />
                     &nbsp;
                     {viewAll ? 'View Less' : 'View All Publications'}
-                </span>
+                </button>
             </Box>
         </Section>
     );

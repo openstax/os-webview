@@ -166,11 +166,9 @@ form {
         text-overflow: ellipsis;
         width: 100%;
 
-        // These come from pattern-library, but it has no placeholders or macros for them
         &:focus {
-            border: thin solid os-color(light-blue);
-            box-shadow: 0 0 0.4rem 0 rgba(os-color(light-blue), 0.5);
-            outline: 0;
+            @include focus-style();
+            border-color: ui-color(focus-outline);
         }
     }
 
