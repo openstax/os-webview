@@ -91,6 +91,8 @@ $gradient-sequence: ui-color(white), ui-color(white) 50%, transparent;
             }
 
             .close-toc {
+                @include focus-indicator();
+
                 align-items: center;
                 border-radius: 50%;
                 cursor: pointer;
