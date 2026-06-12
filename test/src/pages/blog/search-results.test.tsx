@@ -22,7 +22,7 @@ function Component({entry = '/blog/?q=education'}: {entry?: string}) {
     );
 }
 
-function tenArticles() {
+function twelveArticles() {
     /* eslint-disable-next-line camelcase */
     return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((id) => ({
         id,
@@ -54,7 +54,7 @@ describe('search-results', () => {
         jest.clearAllMocks();
     });
     it('renders with paginator context when there are articles', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(tenArticles());
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
         const spyArticleSummary = jest.spyOn(AS, 'default');
 
         render(<Component />);
@@ -64,7 +64,7 @@ describe('search-results', () => {
         expect(spyArticleSummary).toHaveBeenCalledTimes(10);
     });
     it('announces the result count to screen readers', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(tenArticles());
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
 
         render(<Component />);
 
@@ -74,7 +74,7 @@ describe('search-results', () => {
         jest.clearAllMocks();
     });
     it('moves focus to the first result on an explicit search', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(tenArticles());
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
 
         render(<Component entry="/blog/?q=education" />);
 
@@ -84,7 +84,7 @@ describe('search-results', () => {
         jest.clearAllMocks();
     });
     it('does not steal focus when results come from facets, not a query', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(tenArticles());
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
 
         render(<Component entry="/blog/?subjects=Math" />);
 
