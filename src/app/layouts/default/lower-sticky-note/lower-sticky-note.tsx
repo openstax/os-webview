@@ -13,12 +13,9 @@ const cookieKey = 'lower-sticky-note-closed';
 function useBannerToShow() {
     const bannerData = useBannerData();
     const filteredBanners = useFilteredBanners(bannerData?.bannerConfigs);
-    const selectedBanner = useSelectedBanner(filteredBanners);
+    const candidates = bannerData?.mode === 'banner' ? filteredBanners : [];
 
-    if (!bannerData || bannerData.mode !== 'banner') {
-        return null;
-    }
-    return selectedBanner;
+    return useSelectedBanner(candidates);
 }
 
 export default function LowerStickyNote() {
