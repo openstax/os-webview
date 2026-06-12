@@ -1,18 +1,27 @@
 import React from 'react';
-import {usePutAway, useStickyData} from '../shared';
+import {
+    usePutAway,
+    useBannerData,
+    useFilteredBanners,
+    useSelectedBanner
+} from '../shared';
 import JITLoad from '~/helpers/jit-load';
 import Cookies from 'js-cookie';
 
 const cookieKey = 'lower-sticky-note-closed';
 
+function useBannerToShow() {
+    const bannerData = useBannerData();
+    const filteredBanners = useFilteredBanners(bannerData?.bannerConfigs);
+    const candidates = bannerData?.mode === 'banner' ? filteredBanners : [];
+
+    return useSelectedBanner(candidates);
+}
+
 export default function LowerStickyNote() {
-    const stickyData = useStickyData();
+    const bannerInfo = useBannerToShow();
     const [closed, PutAway] = usePutAway();
-    const shouldNotDisplay =
-        !stickyData ||
-        closed ||
-        stickyData?.mode !== 'banner' ||
-        Boolean(Cookies.get(cookieKey));
+    const dismissed = closed || Boolean(Cookies.get(cookieKey));
 
     React.useEffect(() => {
         if (closed) {
@@ -20,14 +29,14 @@ export default function LowerStickyNote() {
         }
     }, [closed]);
 
-    if (shouldNotDisplay) {
+    if (!bannerInfo || dismissed) {
         return null;
     }
 
     return (
         <JITLoad
             importFn={() => import('./load-lsn-content.js')}
-            stickyData={stickyData}
+            bannerInfo={bannerInfo}
             PutAway={PutAway as () => JSX.Element}
         />
     );

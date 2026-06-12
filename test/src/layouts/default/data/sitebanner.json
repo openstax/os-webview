@@ -1,0 +1,15 @@
+[
+    {
+        "id": 1,
+        "name": "Default Campaign",
+        "html_message": "Millions of students are counting on OpenStax this fall. <strong>Give monthly</strong> and open up learning they can trust.",
+        "link_text": "Give now!",
+        "link_url": "https://riceconnect.rice.edu/donation/support-openstax-banner",
+        "banner_thumbnail": "https://assets.openstax.org/oscms-prodcms/media/original_images/Blue_White_Cute_Simple_Doodle_iOS_Icon.png",
+        "is_active": true,
+        "start_date": null,
+        "end_date": null,
+        "context_filter": "all",
+        "url_pattern": null
+    }
+]
