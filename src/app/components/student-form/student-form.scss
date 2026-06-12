@@ -6,6 +6,7 @@
 
     .cta .btn {
         @include button();
+        @include button-type-specific(primary);
         margin: 2rem auto;
         text-transform: none;
     }

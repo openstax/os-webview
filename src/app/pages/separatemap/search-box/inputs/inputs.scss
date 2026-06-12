@@ -32,6 +32,8 @@
     }
 
     .search-icon {
+        @include focus-indicator();
+
         align-items: center;
         border-radius: 50%;
         cursor: pointer;
@@ -41,7 +43,6 @@
 
         &:focus {
             height: 3.8rem;
-            outline: none;
             width: 3.8rem;
         }
     }
