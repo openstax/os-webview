@@ -97,6 +97,8 @@
         padding: 5rem $normal-margin 7rem;
 
         button {
+            @include button-reset();
+
             appearance: auto;
             background-color: ui-color(white);
             width: 1rem;

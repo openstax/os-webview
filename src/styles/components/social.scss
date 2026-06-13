@@ -1,5 +1,12 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+// Footer social icons: round, secondary-colored buttons with the standard
+// focus ring from `focus-indicator()`.
 .btn.btn-social {
+    @include focus-indicator();
+
     align-content: center;
+    background-color: ui-color(secondary);
     border: 0;
     border-radius: 50%;
     display: grid;

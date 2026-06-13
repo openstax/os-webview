@@ -34,11 +34,7 @@ $button-size: 1.6rem;
         top: 0;
     }
 
-    &:hover,
-    &:focus,
-    &:active {
-        outline: none;
-    }
+    @include button-reset();
 
     span {
         // create middle line

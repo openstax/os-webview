@@ -103,9 +103,9 @@ export const MembersSection = ({
                             />
                         ))}
                     </MemberGrid>
-                    <p
-                        className="py-4 mobile-only"
-                        role="button"
+                    <button
+                        type="button"
+                        className="mobile-only view-all-toggle"
                         aria-expanded={viewAll}
                         aria-controls="member-grid"
                         onClick={() => {
@@ -115,9 +115,7 @@ export const MembersSection = ({
                             setViewAll(!viewAll);
                         }}
                         css={{
-                            cursor: 'pointer',
-                            color: colors.linkText,
-                            textAlign: 'center'
+                            color: colors.linkText
                         }}
                     >
                         <FontAwesomeIcon
@@ -125,7 +123,7 @@ export const MembersSection = ({
                         ></FontAwesomeIcon>
                         &nbsp;
                         {viewAll ? 'View Less' : 'View All Current Members'}
-                    </p>
+                    </button>
                 </div>
                 {/* @ts-expect-error-next-line label is not a known attribute */}
                 <div label="Collaborating Researchers">

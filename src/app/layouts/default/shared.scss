@@ -3,6 +3,7 @@
 #lower-sticky-note .put-away,
 #microsurvey .put-away {
     @include body-font(1.4rem);
+    @include button-reset();
 
     background-color: rgba(ui-color(black), 0.56);
     border-radius: 0.3rem;
