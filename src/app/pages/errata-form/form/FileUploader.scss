@@ -13,6 +13,8 @@
     }
 
     .clear-file {
+        @include button-reset();
+
         appearance: none;
         background-color: inherit;
         color: inherit;

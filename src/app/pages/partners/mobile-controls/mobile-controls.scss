@@ -35,6 +35,8 @@
         top: 0;
 
         .put-away {
+            @include button-reset();
+
             font-size: 3rem;
             font-weight: normal;
             transform: translateY(-0.5rem);
