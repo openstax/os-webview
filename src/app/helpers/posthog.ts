@@ -32,6 +32,7 @@ export function useExperiment(flagKey: string): FlagValue {
 
     React.useEffect(() => {
         const ph = getPostHog();
+
         if (!ph) {
             return;
         }
@@ -46,8 +47,10 @@ export function useExperiment(flagKey: string): FlagValue {
  *  number of flags (e.g. while filtering a list) without breaking hooks rules. */
 export function useExperimentReader(): (flag: string) => FlagValue {
     const [, forceRender] = React.useReducer((n: number) => n + 1, 0);
+
     React.useEffect(() => {
         const ph = getPostHog();
+
         if (!ph) {
             return;
         }

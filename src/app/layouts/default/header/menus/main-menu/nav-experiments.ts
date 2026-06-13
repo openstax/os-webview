@@ -28,10 +28,12 @@ export function isNodeVisible(
     getVariant: (flag: string) => FlagValue
 ): boolean {
     const flag = node.feature_flag;
+
     if (!flag) {
         return true;
     }
     const variant = getVariant(flag);
+
     if (node.flag_value) {
         return String(variant) === node.flag_value;
     }

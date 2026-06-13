@@ -53,6 +53,7 @@ function DropdownOrMenuItem({
     }
     if ('menu' in item) {
         const label = dropdownLabel(item, getVariant(NAV_PRODUCTS_LABEL_FLAG));
+
         return (
             <Dropdown label={label} navAnalytics={`Main Menu (${item.name})`}>
                 <MenusFromStructure structure={item.menu} getVariant={getVariant} />
