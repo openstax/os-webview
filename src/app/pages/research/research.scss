@@ -41,11 +41,23 @@
         @extend %content;
     }
 
+    // contact-us renders `<button class="btn btn-orange">`; style it on-brand
+    // via the pattern-library mixins.
+    .btn {
+        @include button();
+    }
+
+    .btn-orange {
+        @include button-type-specific(primary);
+    }
+
     .accordion-group .content-pane {
         background-color: rgba(0,0,0,0);
     }
 
     .link-text {
+        @include focus-indicator();
+
         text-decoration-line: underline;
         color: #026AA1;
         cursor: pointer;
@@ -58,6 +70,29 @@
 
     .pb-2 {
         padding-bottom: 2rem;
+    }
+
+    // The "view all" toggles are real <button>s styled to read as inline text
+    // links: button-reset() strips the native chrome and adds the focus ring,
+    // and `font: inherit` keeps them at body size instead of the UA default.
+    .view-all-toggle {
+        @include button-reset();
+
+        font: inherit;
+        // Vertical spacing lives in margin, not padding, so the focus ring hugs
+        // the label instead of wrapping a tall padded box.
+        margin-block: 4rem;
+        padding: 0.5rem;
+    }
+
+    // The members toggle is shown only on mobile (.mobile-only); its parent is a
+    // plain block, so center it there the way the old full-width paragraph was.
+    @include width-up-to($phone-max) {
+        .view-all-toggle.mobile-only {
+            display: block;
+            width: fit-content;
+            margin-inline: auto;
+        }
     }
 
     .py-4 {

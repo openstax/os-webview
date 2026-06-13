@@ -73,6 +73,8 @@
             }
 
             button {
+                @include button-reset();
+
                 background-color: transparent;
                 color: inherit;
                 display: inline;

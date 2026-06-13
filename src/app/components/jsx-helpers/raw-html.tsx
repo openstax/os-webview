@@ -1,5 +1,7 @@
 import React from 'react';
+import cn from 'classnames';
 import usePortalContext from '~/contexts/portal';
+import './raw-html.scss';
 
 // Making scripts work, per https://stackoverflow.com/a/47614491/392102
 function activateScripts(el: HTMLElement) {
@@ -45,6 +47,7 @@ export default function RawHTML({
     Tag = 'div',
     html = '',
     embed = false,
+    className,
     ...otherProps
 }: RawHTMLArgs) {
     const ref = React.useRef<HTMLElement>();
@@ -60,6 +63,9 @@ export default function RawHTML({
     return React.createElement(Tag, {
         ref,
         dangerouslySetInnerHTML: {__html: html},
-        ...otherProps
+        ...otherProps,
+        // Tag all CMS-authored markup with `cms-content` so styles for editor
+        // content (e.g. buttons) can target it specifically.
+        className: cn('cms-content', className)
     });
 }
