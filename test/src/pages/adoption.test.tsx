@@ -13,6 +13,12 @@ import HowUsing from '~/pages/adoption/how-using/how-using';
 import {SalesforceBook} from '~/helpers/books';
 import userModel from '~/../../test/src/data/userModel';
 
+jest.mock('~/helpers/use-document-head', () => ({
+    __esModule: true,
+    default: jest.fn(),
+    useCanonicalLink: jest.fn()
+}));
+
 jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
 
 describe('adoption-form', () => {
@@ -179,6 +185,233 @@ describe('adoption-form logged-in flow', () => {
         );
     });
 });
+describe('adoption-form year selection', () => {
+    const user = userEvent.setup();
+    const Component = () => (
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <UserContextProvider>
+                    <MemoryRouter
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
+                    >
+                        <MainClassContextProvider>
+                            <AdoptionForm />
+                        </MainClassContextProvider>
+                    </MemoryRouter>
+                </UserContextProvider>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
+    );
+
+    beforeAll(() => {
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            userModel as unknown as UM.UserModelType
+        );
+    });
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('allows selecting multiple years', async () => {
+        render(<Component />);
+
+        await screen.findByText(/Which school year/);
+
+        const yearCheckboxes = screen.getAllByRole('checkbox').filter((cb) => {
+            const label = cb.closest('label');
+            return label?.textContent?.match(/\d{4}–\d{4}/);
+        });
+
+        // Check all three year checkboxes
+        for (const checkbox of yearCheckboxes) {
+            if (!(checkbox as HTMLInputElement).checked) {
+                await user.click(checkbox);
+            }
+        }
+
+        // Verify all are checked
+        const allChecked = yearCheckboxes.every(
+            (cb) => (cb as HTMLInputElement).checked
+        );
+        expect(allChecked).toBe(true);
+    });
+});
+
+describe('adoption-form with renewals data', () => {
+    const user = userEvent.setup();
+    const mockAdoptions = {
+        Books: [
+            {name: 'Biology 2e', students: 50},
+            {name: 'Chemistry 2e', students: 30}
+        ]
+    };
+    const Component = () => (
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <UserContextProvider>
+                    <MemoryRouter
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
+                    >
+                        <MainClassContextProvider>
+                            <AdoptionForm />
+                        </MainClassContextProvider>
+                    </MemoryRouter>
+                </UserContextProvider>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
+    );
+
+    beforeAll(() => {
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            userModel as unknown as UM.UserModelType
+        );
+    });
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('handles adoptions data with empty books array', async () => {
+        jest.spyOn(require('~/models/renewals'), 'default').mockReturnValue({
+            Books: []
+        });
+
+        render(<Component />);
+
+        await screen.findByText(/Let us know you're using/);
+
+        // Form should render without errors
+        screen.getByRole('form');
+    });
+});
+
+describe('adoption-form with URL parameters', () => {
+    const user = userEvent.setup();
+    const Component = () => (
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <UserContextProvider>
+                    <MemoryRouter
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
+                    >
+                        <MainClassContextProvider>
+                            <AdoptionForm />
+                        </MainClassContextProvider>
+                    </MemoryRouter>
+                </UserContextProvider>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
+    );
+
+    beforeAll(() => {
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            userModel as unknown as UM.UserModelType
+        );
+    });
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
+});
+
+describe('adoption-form with different roles', () => {
+    const user = userEvent.setup();
+    const Component = () => (
+        <LanguageContextProvider>
+            <SharedDataContextProvider>
+                <UserContextProvider>
+                    <MemoryRouter
+                        initialEntries={[
+                            '/details/books/college-algebra',
+                            '/adoption'
+                        ]}
+                    >
+                        <MainClassContextProvider>
+                            <AdoptionForm />
+                        </MainClassContextProvider>
+                    </MemoryRouter>
+                </UserContextProvider>
+            </SharedDataContextProvider>
+        </LanguageContextProvider>
+    );
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('maps administrator role to Administrator position', async () => {
+        const adminUserModel = {
+            ...userModel,
+            self_reported_role: 'administrator'
+        };
+
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            adminUserModel as unknown as UM.UserModelType
+        );
+
+        render(<Component />);
+
+        await screen.findByText(/Let us know you're using/);
+
+        // Check that position hidden field has the correct value
+        const positionField = document.querySelector(
+            'input[name="position"]'
+        ) as HTMLInputElement;
+        expect(positionField.value).toBe('Administrator');
+    });
+
+    it('maps librarian role to Librarian position', async () => {
+        const librarianUserModel = {
+            ...userModel,
+            self_reported_role: 'librarian'
+        };
+
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            librarianUserModel as unknown as UM.UserModelType
+        );
+
+        render(<Component />);
+
+        await screen.findByText(/Let us know you're using/);
+
+        const positionField = document.querySelector(
+            'input[name="position"]'
+        ) as HTMLInputElement;
+        expect(positionField.value).toBe('Librarian');
+    });
+
+    it('maps unknown role to Other position', async () => {
+        const unknownRoleUserModel = {
+            ...userModel,
+            self_reported_role: 'unknown_role'
+        };
+
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            unknownRoleUserModel as unknown as UM.UserModelType
+        );
+
+        render(<Component />);
+
+        await screen.findByText(/Let us know you're using/);
+
+        const positionField = document.querySelector(
+            'input[name="position"]'
+        ) as HTMLInputElement;
+        expect(positionField.value).toBe('Other');
+    });
+});
+
 describe('how-using', () => {
     it('strips [Spanish] from book title', () => {
         const selectedBooks: SalesforceBook[] = [
