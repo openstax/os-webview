@@ -1,35 +1,47 @@
 [
     {
+        "type": "dropdown",
+        "region": "main",
         "name": "Technology",
         "menu": [
-            {"label": "OpenStax Assignable", "partial_url": "/assignable"},
-            {"label": "OpenStax Kinetic", "partial_url": "/kinetic"},
+            {"type": "link", "region": "main", "label": "OpenStax Assignable", "partial_url": "/assignable"},
+            {"type": "link", "region": "main", "label": "OpenStax Kinetic", "partial_url": "/kinetic"},
             {
+                "type": "link",
+                "region": "main",
                 "label": "OpenStax Technology Partners",
                 "partial_url": "/partners"
             },
             {
+                "type": "link",
+                "region": "main",
                 "label": "SafeInsights",
                 "partial_url": "https://www.safeinsights.org/"
             }
         ]
     },
     {
+        "type": "dropdown",
+        "region": "main",
         "name": "What we do",
         "menu": [
-            {"label": "About us", "partial_url": "/about"},
-            {"label": "Team", "partial_url": "/team"},
-            {"label": "Research", "partial_url": "/research"},
-            {"label": "K12 Books & Resources", "partial_url": "/k12"},
+            {"type": "link", "region": "main", "label": "About us", "partial_url": "/about"},
+            {"type": "link", "region": "main", "label": "Team", "partial_url": "/team"},
+            {"type": "link", "region": "main", "label": "Research", "partial_url": "/research"},
+            {"type": "link", "region": "main", "label": "K12 Books & Resources", "partial_url": "/k12"},
             {
+                "type": "link",
+                "region": "main",
                 "label": "Institutional Partnerships",
                 "partial_url": "/institutional-partnership"
             },
             {
+                "type": "link",
+                "region": "main",
                 "label": "Technology Partnerships",
                 "partial_url": "/openstax-ally-technology-partner-program"
             },
-            {"label": "Webinars", "partial_url": "/webinars"}
+            {"type": "link", "region": "main", "label": "Webinars", "partial_url": "/webinars"}
         ]
     },
     {

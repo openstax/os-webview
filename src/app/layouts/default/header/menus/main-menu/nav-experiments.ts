@@ -1,4 +1,5 @@
 import type {FlagValue} from '~/helpers/posthog';
+import type {Region} from '~/helpers/nav-nodes';
 
 export const NAV_PRODUCTS_LABEL_FLAG = 'nav-products-label';
 export const NAV_K12_ITEM_FLAG = 'nav-k12-item';
@@ -14,6 +15,7 @@ export type FlagAwareNode = {
     key?: string;
     feature_flag?: string;
     flag_value?: string;
+    region?: Region;
 };
 
 /** Generic visibility gate from a node's optional flag metadata.

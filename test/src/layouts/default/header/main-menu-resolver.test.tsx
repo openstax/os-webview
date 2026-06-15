@@ -52,10 +52,14 @@ function Component() {
 
 const cmsMenuWithFlaggedItem = [
     {
+        type: 'dropdown' as const,
+        region: 'main' as const,
         name: 'Products',
         key: 'products-dropdown',
         menu: [
             {
+                type: 'link' as const,
+                region: 'main' as const,
                 label: 'For K12 Teachers',
                 partial_url: '/k12',
                 feature_flag: 'nav-k12-item'

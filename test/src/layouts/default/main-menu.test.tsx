@@ -4,6 +4,8 @@ import ShellContextProvider from '../../../helpers/shell-context';
 import MainMenu from '~/layouts/default/header/menus/main-menu/main-menu';
 import MemoryRouter from '../../../helpers/future-memory-router';
 import * as ULC from '~/contexts/language';
+import * as PDU from '~/helpers/page-data-utils';
+import type {NavNode} from '~/helpers/nav-nodes';
 
 jest.mock('~/models/give-today', () => jest.fn().mockReturnValue({}));
 
@@ -15,7 +17,31 @@ function Component({path = '/'}) {
     </ShellContextProvider>;
 }
 
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 describe('main-menu', () => {
+    it('renders only main-region nodes from oxmenus', () => {
+        jest.spyOn(PDU, 'useDataFromSlug').mockReturnValue([
+            {type: 'dropdown', region: 'main', name: 'About', menu: []},
+            {type: 'link', region: 'utility', label: 'Blog', partial_url: '/blog'},
+            {type: 'link', region: 'footer', label: 'Press', partial_url: '/press'}
+        ] as NavNode[]);
+
+        render(
+            <ShellContextProvider>
+                <MemoryRouter>
+                    <MainMenu />
+                </MemoryRouter>
+            </ShellContextProvider>
+        );
+
+        expect(screen.getByText('About')).toBeTruthy();
+        expect(screen.queryByText('Blog')).toBeNull();
+        expect(screen.queryByText('Press')).toBeNull();
+    });
+
     it('shows subjects menu when there are subjects', async () => {
         render(<Component />);
 
