@@ -7,15 +7,14 @@ import {isNodeVisible, dropdownLabel, NAV_PRODUCTS_LABEL_FLAG}
     from '../main-menu/nav-experiments';
 import Dropdown, {MenuItem} from '../main-menu/dropdown/dropdown';
 import LoginMenu from '../main-menu/login-menu/login-menu';
-import RiceLogo from './rice-logo';
 
 /** component_key -> component. Add new dynamic nodes here.
- *  The Give button is intentionally NOT here: it has its own GiveToday
- *  settings (shared with flex landing pages) and stays managed by its
- *  existing mechanism, kept out of the CMS-driven nav. */
+ *  Deliberately small: only the user menu is CMS-placeable. The Give button
+ *  and Rice logo are NOT here — they're rendered in fixed positions in code
+ *  (Give has GiveToday settings shared with flex landing pages; the logo is
+ *  a layout fixture). Moving either is a code change, not a CMS edit. */
 const DYNAMIC_COMPONENTS: Record<string, React.ComponentType> = {
-    'user-menu': LoginMenu,
-    'rice-logo': RiceLogo
+    'user-menu': LoginMenu
 };
 
 function renderDynamic(node: DynamicNode) {
