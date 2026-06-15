@@ -1,5 +1,6 @@
 import React from 'react';
 import useUserContext from '~/contexts/user';
+import {assertDefined} from '~/helpers/data';
 import './chat.scss';
 
 type VisibleFieldArg = {
@@ -38,7 +39,7 @@ const SALESFORCE_CONFIG = {
 
 function initEmbeddedMessaging(): boolean {
     // Value is guaranteed present by the caller
-    const bootstrap = window.embeddedservice_bootstrap as Required<Window>['embeddedservice_bootstrap'];
+    const bootstrap = assertDefined(window.embeddedservice_bootstrap);
 
     try {
         bootstrap.settings.language = 'en_US';
@@ -148,7 +149,7 @@ export default function Chat() {
 
         // prechatLoaded is only true when prechatAPI exists (see polling effect below),
         // so we can safely access it without additional null checks
-        const prechatAPI = window.embeddedservice_bootstrap!.prechatAPI;
+        const prechatAPI = assertDefined(window.embeddedservice_bootstrap?.prechatAPI);
 
         // Set hidden fields: sProduct and UUID (not editable by user)
         const hiddenFields: Record<string, string> = {

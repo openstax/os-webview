@@ -553,10 +553,11 @@ describe('adoption-form edge cases for 100% coverage', () => {
         const mockDate = new Date('2025-01-15');
         const realDate = Date;
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Date constructor needs rest args for proper mocking
+        // Date constructor needs rest args for proper mocking
         global.Date = class extends Date {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Constructor must accept variable arguments to properly extend Date
-            constructor(...args: any[]) {
+
+            // Constructor must accept variable arguments to properly extend Date
+            constructor(...args: Parameters<DateConstructor>) {
                 if (args.length === 0) {
                     super(mockDate.getTime());
                 } else {
@@ -566,13 +567,14 @@ describe('adoption-form edge cases for 100% coverage', () => {
             static now() {
                 return mockDate.getTime();
             }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Type assertion needed for global Date replacement
-        } as any;
+
+        } as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
         // Re-require the module to pick up the new Date
         jest.resetModules();
-        // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports -- Dynamic require needed to reload module with mocked Date
+        // Dynamic require needed to reload module with mocked Date
         const AdoptionFormWithMockedDate =
+            // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports
             require('~/pages/adoption/adoption').default;
 
         jest.spyOn(UM, 'useUserModel').mockReturnValue(
