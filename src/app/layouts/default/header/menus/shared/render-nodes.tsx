@@ -1,21 +1,39 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import type {FlagValue} from '~/helpers/posthog';
-import type {NavNode} from '~/helpers/nav-nodes';
+import type {NavNode, LinkNode, DynamicNode} from '~/helpers/nav-nodes';
 import linkHelper from '~/helpers/link';
 import {isNodeVisible, dropdownLabel, NAV_PRODUCTS_LABEL_FLAG}
     from '../main-menu/nav-experiments';
 import Dropdown, {MenuItem} from '../main-menu/dropdown/dropdown';
 import LoginMenu from '../main-menu/login-menu/login-menu';
-import GiveButton from '../give-button/give-button';
 import RiceLogo from './rice-logo';
 
-/** component_key -> component. Add new dynamic nodes here. */
+/** component_key -> component. Add new dynamic nodes here.
+ *  The Give button is intentionally NOT here: it has its own GiveToday
+ *  settings (shared with flex landing pages) and stays managed by its
+ *  existing mechanism, kept out of the CMS-driven nav. */
 const DYNAMIC_COMPONENTS: Record<string, React.ComponentType> = {
     'user-menu': LoginMenu,
-    'give-button': GiveButton,
     'rice-logo': RiceLogo
 };
+
+function renderDynamic(node: DynamicNode) {
+    const Component = DYNAMIC_COMPONENTS[node.component];
+
+    return Component ? <Component /> : null;
+}
+
+function renderLink(node: LinkNode, wrapInListItem: boolean) {
+    const href = linkHelper.stripOpenStaxDomain(node.partial_url);
+    const link = linkHelper.isExternal(href) ? (
+        <RawHTML Tag="a" html={node.label} href={href} tabIndex={0} />
+    ) : (
+        <MenuItem label={node.label} url={href} />
+    );
+
+    return wrapInListItem ? <li className="nav-menu-item">{link}</li> : link;
+}
 
 export function NodeRenderer({
     node,
@@ -32,13 +50,7 @@ export function NodeRenderer({
         return null;
     }
     if (node.type === 'dynamic') {
-        const Component = DYNAMIC_COMPONENTS[node.component];
-        const rendered = Component ? <Component /> : null;
-
-        if (wrapInListItem && node.component === 'give-button') {
-            return rendered ? <li className="give-button-item">{rendered}</li> : null;
-        }
-        return rendered;
+        return renderDynamic(node);
     }
     if (node.type === 'dropdown') {
         const label = dropdownLabel(node, getVariant(NAV_PRODUCTS_LABEL_FLAG));
@@ -55,14 +67,8 @@ export function NodeRenderer({
         );
     }
 
-    const href = linkHelper.stripOpenStaxDomain(node.partial_url);
-    const link = linkHelper.isExternal(href) ? (
-        <RawHTML Tag="a" html={node.label} href={href} tabIndex={0} />
-    ) : (
-        <MenuItem label={node.label} url={href} />
-    );
-
-    return wrapInListItem ? <li className="nav-menu-item">{link}</li> : link;
+    return renderLink(node, wrapInListItem);
+}
 
 export function RenderNodes({
     nodes,

@@ -9,10 +9,12 @@ import RiceLogo from '../shared/rice-logo';
 import './upper-menu.scss';
 
 const importGiveButton = () => import('../give-button/give-button');
+const GIVE_LINK = 'https://riceconnect.rice.edu/donation/support-openstax-header';
 
-// The Give button is rendered automatically below when GiveToday is active.
-// Do NOT add a separate "Give" link in the CMS utility region — to place Give
-// explicitly, use a `give-button` dynamic component node instead.
+// Give is intentionally kept OUT of the CMS-driven nav — its GiveToday
+// settings are shared with flex landing pages. It keeps its existing
+// behavior here: the Give button when GiveToday is active, otherwise a
+// plain Give link. Don't add a "Give" item to the CMS utility region.
 export default function UpperMenu() {
     const {showButton}: {showButton?: boolean} = useGiveToday();
     const getVariant = useExperimentReader();
@@ -22,6 +24,11 @@ export default function UpperMenu() {
     return (
         <ul className="container no-bullets" data-analytics-nav="Upper Menu">
             <RenderNodes nodes={utilityNodes} getVariant={getVariant} navContext="Upper Menu" />
+            {showButton ? null : (
+                <li className="nav-menu">
+                    <a target="_blank" rel="noreferrer" href={GIVE_LINK}>Give</a>
+                </li>
+            )}
             <RiceLogo />
             {showButton ? <JITLoad importFn={importGiveButton} /> : null}
         </ul>

@@ -78,7 +78,6 @@ export default function Router() {
     );
 }
 
-// eslint-disable-next-line complexity
 function MainRoutes() {
     const {Layout} = useLayoutContext();
     const {pathname} = useLocation();

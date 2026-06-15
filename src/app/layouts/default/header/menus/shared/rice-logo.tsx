@@ -10,6 +10,7 @@ export default function RiceLogo() {
     return (
         <li className="logo rice-logo logo-wrapper">
             <a href="https://www.rice.edu">
+                <img src={riceLogo} alt="Rice University logo" height="30" width="79" />
             </a>
         </li>
     );
