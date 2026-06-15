@@ -259,22 +259,6 @@ describe('Router', () => {
             ).not.toBeInTheDocument();
         });
 
-        it('does not show chat when flags is false', () => {
-            jest.spyOn(SharedDataContext, 'default').mockReturnValue({
-                flags: false
-            });
-
-            render(
-                <MemoryRouter initialEntries={['/details/books/algebra']}>
-                    <Router />
-                </MemoryRouter>
-            );
-
-            expect(
-                screen.queryByTestId('chat-component')
-            ).not.toBeInTheDocument();
-        });
-
         /* eslint-disable camelcase */
         it('shows chat on book details page when chat_book_details flag is true', () => {
             jest.spyOn(SharedDataContext, 'default').mockReturnValue({

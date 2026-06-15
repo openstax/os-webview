@@ -278,6 +278,11 @@ describe('adoption-form with renewals data', () => {
     });
 
     it('handles adoptions data with empty books array', async () => {
+        // Mock useAdoptions to return empty Books array
+        jest.spyOn(Renewals, 'default').mockReturnValue({
+            Books: []
+        });
+
         render(<Component />);
 
         await screen.findByText(/Let us know you're using/);
