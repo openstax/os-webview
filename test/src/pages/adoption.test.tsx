@@ -461,34 +461,6 @@ describe('how-using', () => {
 
 describe('adoption-form edge cases for 100% coverage', () => {
     // Review #17: Test coverage for missing branches
-
-    it('handles empty role string fallback (line 80)', () => {
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter initialEntries={['/adoption']}>
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
-
-        // The positionFromRole function with empty string should return 'Other'
-        // When rendered with default UserContextProvider, a role is set from the user context
-        // Testing that the form renders and has a position field covers line 80
-        const hiddenRole = document.querySelector(
-            'input[name="position"]'
-        ) as HTMLInputElement;
-
-        // The field exists and has a value (from UserContext, not undefined)
-        expect(hiddenRole).toBeTruthy();
-        expect(hiddenRole?.value).toBeTruthy();
-    });
-
     it('handles undefined value in HiddenField (line 84)', async () => {
         // The HiddenField component converts undefined values to empty strings (line 84)
         // When rendered with UserContextProvider, salesforce_contact_id comes from the user model
@@ -518,34 +490,6 @@ describe('adoption-form edge cases for 100% coverage', () => {
         // Field exists and has a value (the ?? '' at line 84 ensures it's never undefined)
         expect(salesforceField).toBeTruthy();
         expect(salesforceField?.value).toBeDefined();
-    });
-
-    it('handles undefined userModel in HiddenContactInfo (line 103)', () => {
-        // The HiddenContactInfo component handles undefined userModel with conditional check (line 103)
-        // When rendered with UserContextProvider, userModel is always defined
-        // This test verifies the form renders with contact info fields
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter initialEntries={['/adoption']}>
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
-
-        // With UserContextProvider, userModel is defined, so contact fields are rendered
-        // Line 103's ternary ensures fields array is empty when userModel is undefined
-        const firstNameField = document.querySelector(
-            'input[name="first_name"]'
-        ) as HTMLInputElement;
-
-        // Field exists because userModel is defined in this test setup
-        expect(firstNameField).toBeTruthy();
     });
 
     it('calculates defaultStartYear correctly when month < 6 (line 115)', () => {

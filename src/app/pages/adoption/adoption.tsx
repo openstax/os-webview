@@ -19,6 +19,7 @@ import useUserContext from '~/contexts/user';
 import type {UserModelType} from '~/models/usermodel';
 import useAdoptions from '~/models/renewals';
 import {useIntl} from 'react-intl';
+import {assertDefined} from '~/helpers/data';
 import './adoption.scss';
 
 function BookSelectorPage({
@@ -76,8 +77,8 @@ const roleToPosition: Record<string, string> = {
     homeschool: 'Home School Teacher'
 };
 
-function positionFromRole(role?: string) {
-    return roleToPosition[role ?? ''] ?? 'Other';
+function positionFromRole(role: string) {
+    return roleToPosition[role] ?? 'Other';
 }
 
 function HiddenField({name, value}: {name: string; value?: string}) {
@@ -99,8 +100,8 @@ function hiddenContactFields(userModel: UserModelType) {
 }
 
 function HiddenContactInfo() {
-    const {userModel} = useUserContext();
-    const fields = userModel ? hiddenContactFields(userModel) : [];
+    const userModel = assertDefined(useUserContext().userModel);
+    const fields = hiddenContactFields(userModel);
 
     return (
         <React.Fragment>
@@ -323,7 +324,7 @@ export default function AdoptionForm() {
             <div className="text-content" ref={ref}>
                 {isLoggedIn ? (
                     <FacultyForm
-                        position={positionFromRole(userModel?.self_reported_role)}
+                        position={positionFromRole(assertDefined(userModel?.self_reported_role))}
                         onPageChange={onPageChange}
                     />
                 ) : (
