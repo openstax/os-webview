@@ -1,25 +1,51 @@
 import {useState, useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
 import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
 import {
     blurbModel,
     PopulatedBlurbModel,
     BlurbData
 } from '../article-summary/article-summary';
+import useBlogSearchParams from '../use-blog-search-params';
 import uniqBy from 'lodash/uniqBy';
 
 type PopulatedBlurbData = Exclude<Parameters<typeof blurbModel>[0], null>;
 
+function buildSlug({q, subjects, collection, sort}: {
+    q?: string; subjects: string[]; collection?: string; sort: string;
+}) {
+    const p = new window.URLSearchParams();
+
+    if (q) {
+        p.set('q', q);
+    }
+    if (subjects.length) {
+        p.set('subjects', subjects.join(','));
+    }
+    if (collection) {
+        p.set('collection', collection);
+    }
+    if (sort === 'newest') {
+        p.set('sort', 'newest');
+    }
+    return `search/?${p.toString()}`;
+}
+
 export default function useAllArticles() {
-    const {search} = useLocation();
-    const searchParam = new window.URLSearchParams(search).get('q');
+    const {q, subjects, collection, sort} = useBlogSearchParams();
     const [allArticles, setAllArticles] = useState<PopulatedBlurbModel[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const slug = buildSlug({q, subjects, collection, sort});
 
     useEffect(() => {
-        const slug = `search/?q=${searchParam}`;
+        let cancelled = false;
 
-        setAllArticles([]);
+        // Keep the previous results on screen while refetching so changing a
+        // facet doesn't flash the empty/no-results view (the flicker).
+        setIsLoading(true);
         fetchFromCMS(slug, true).then((results: PopulatedBlurbData[]) => {
+            if (cancelled) {
+                return;
+            }
             const articles = uniqBy(results, 'id').map((data) => {
                 data.heading = data.title;
                 data.subheading = '';
@@ -27,8 +53,12 @@ export default function useAllArticles() {
             });
 
             setAllArticles(articles);
+            setIsLoading(false);
         });
-    }, [searchParam]);
+        return () => {
+            cancelled = true;
+        };
+    }, [slug]);
 
-    return allArticles;
+    return {articles: allArticles, isLoading};
 }

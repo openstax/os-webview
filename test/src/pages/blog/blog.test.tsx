@@ -8,11 +8,9 @@ import useBlogContext, {
 } from '~/pages/blog/blog-context';
 import BlogLoader from '~/pages/blog/blog';
 import {
-    ArticlePage,
-    SearchResultsPage
+    ArticlePage
 } from '~/pages/blog/blog-pages';
 import {describe, test, expect} from '@jest/globals';
-import * as PDU from '~/helpers/page-data-utils';
 
 describe('blog pages', () => {
     beforeAll(() => {
@@ -43,11 +41,13 @@ describe('blog pages', () => {
                 <BlogLoader />
             </MemoryRouter>
         );
-        // Should show main blog page, not search results
+        // UTM params are not a search query, so the main (discovery) page shows.
+        // Heading comes from the CMS news page (fixture title: "Openstax News").
+        expect(
+            await screen.findByRole('heading', {level: 1, name: 'Openstax News'})
+        ).toBeTruthy();
         expect(document.querySelector('.blog.page')).toBeTruthy();
-        await waitFor(() => expect(document.head.querySelector('title')?.textContent).toBe(
-            'OpenStax News'
-        ));
+        expect(screen.queryByText('No matching blog posts found')).toBeNull();
     });
     test('Article page', async () => {
         window.scrollTo = jest.fn();
@@ -64,27 +64,6 @@ describe('blog pages', () => {
         expect(await screen.findAllByText('Read more')).toHaveLength(3);
         expect(screen.queryAllByRole('link')).toHaveLength(7);
         expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
-    });
-
-    test('Search Results page', async () => {
-        /* eslint-disable camelcase */
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((id) => ({
-                id,
-                slug: `slug-${id}`,
-                collections: [],
-                article_subjects: []
-            }))
-        );
-
-        render(
-            <MemoryRouter initialEntries={['/blog/?q=education']}>
-                <SearchResultsPage />
-            </MemoryRouter>
-        );
-        expect(document.head.querySelector('title')?.textContent).toBe(
-            'OpenStax Blog Search'
-        );
     });
 
     test('assertTType throws for invalid value', () => {

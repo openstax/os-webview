@@ -144,6 +144,7 @@ function useTopicStories() {
 
 // eslint-disable-next-line complexity
 function useContextValue({
+    title,
     footerText,
     footerButtonText,
     footerLink,
@@ -189,6 +190,7 @@ function useContextValue({
         topicStories,
         topicFeatured,
         topicPopular,
+        pageTitle: title,
         pageDescription: meta?.searchDescription,
         footerText,
         footerButtonText,
