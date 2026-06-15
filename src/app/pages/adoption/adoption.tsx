@@ -113,7 +113,7 @@ function HiddenContactInfo() {
 }
 
 const now = new Date();
-const defaultStartYear = now.getFullYear() - (now.getMonth() < 6 ? 2 : 1);
+const defaultStartYear = now.getFullYear() - 2 + Math.trunc(now.getMonth() / 6);
 const academicYears = [0, 1, 2].map((n) => defaultStartYear + n);
 
 function YearCheckboxes({
