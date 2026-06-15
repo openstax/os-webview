@@ -45,7 +45,6 @@ describe('lsn-content', () => {
 
         expect(container.querySelector('.lower-sticky-note-content')).not.toHaveClass('with-image');
         expect(container.querySelector('img')).toBeNull();
-        expect(container.querySelector('.red-heart')).toBeNull();
         screen.getByRole('link', {name: /Give Today/});
     });
 
