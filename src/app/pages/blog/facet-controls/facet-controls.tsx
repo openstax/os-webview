@@ -58,7 +58,7 @@ const SORT_OPTIONS = [
 
 function SortToggle() {
     const {sort, setParam} = useBlogSearchParams();
-    const onKeyDown = (e: React.KeyboardEvent) => {
+    const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
         const delta = ({ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1} as
             Record<string, number>)[e.key];
 
@@ -67,9 +67,16 @@ function SortToggle() {
         }
         e.preventDefault();
         const current = SORT_OPTIONS.findIndex((o) => o.key === sort);
-        const next = SORT_OPTIONS[(current + delta + SORT_OPTIONS.length) % SORT_OPTIONS.length];
+        const nextIndex = (current + delta + SORT_OPTIONS.length) % SORT_OPTIONS.length;
+        const next = SORT_OPTIONS[nextIndex];
 
         setParam('sort', next.value);
+
+        const group = e.currentTarget.parentElement;
+        const buttons = Array.from(
+            group?.querySelectorAll<HTMLButtonElement>('button[role="radio"]') ?? []
+        );
+        buttons[nextIndex]?.focus();
     };
 
     return (

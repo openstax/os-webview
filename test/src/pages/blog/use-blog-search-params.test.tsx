@@ -15,8 +15,7 @@ function wrapperFor(initialUrl: string) {
 describe('useBlogSearchParams', () => {
     it('parses q, subjects, collection, sort from the URL', () => {
         const {result} = renderHook(() => useBlogSearchParams(), {
-            wrapper: wrapperFor('/blog/?q=algebra&subjects=Math,Science&sort=newest') as ComponentType<{children: Element}>
-        });
+            wrapper: wrapperFor('/blog/?q=algebra&subjects=Math,Science&sort=newest') as ComponentType<{children: React.ReactNode}>
 
         expect(result.current.q).toBe('algebra');
         expect(result.current.subjects).toEqual(['Math', 'Science']);
@@ -26,8 +25,7 @@ describe('useBlogSearchParams', () => {
 
     it('setParam updates a single param and preserves the rest', () => {
         const {result} = renderHook(() => useBlogSearchParams(), {
-            wrapper: wrapperFor('/blog/?q=algebra') as ComponentType<{children: Element}>
-        });
+            wrapper: wrapperFor('/blog/?q=algebra') as ComponentType<{children: React.ReactNode}>
 
         act(() => result.current.setParam('subjects', ['Math']));
         expect(result.current.q).toBe('algebra');

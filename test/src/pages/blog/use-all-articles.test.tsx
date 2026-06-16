@@ -6,9 +6,7 @@ import * as pageDataUtils from '~/helpers/page-data-utils';
 import useAllArticles from '~/pages/blog/search-results/use-all-articles';
 
 afterEach(() => jest.restoreAllMocks());
-type HookWrapperProps = {children: React.ReactNode};
-type RenderHookWrapper = ComponentType<{children: Element}>;
-
+type RenderHookWrapper = ComponentType<{children: React.ReactNode}>;
 it('builds the search slug from q, subjects, collection, and sort', async () => {
     const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
 
