@@ -44,11 +44,9 @@ async def test_osweb_homepage_try_assignable_link(chrome_page_unlogged, base_url
 
     await chrome_page_unlogged.keyboard.press("Escape")
 
-    # THEN: OpenStax Assignable page opens
-    await home.open_technology_menu_item()
-    await home.click_openstax_assignable_link()
-
-    assert "assignable" in chrome_page_unlogged.url
+    # THEN: OpenStax Assignable page opens. Important! Technology menu item in CMS
+    # can be changed without prior deployment
+    await home.click_openstax_assignable_link_in_technology_menu()
 
     if "staging" not in chrome_page_unlogged.url:
         # THEN: Number of books available in assignables is 31 (as of Feb. 2026)
