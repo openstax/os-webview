@@ -11,6 +11,7 @@ describe('paginated webinar grid', () => {
         render(<PaginatedWebinarGrid webinars={webinars} />);
 
         expect(screen.queryAllByRole('link')).toHaveLength(11);
+        // upcomingWebinar has no buttons even though real ones do
         expect(screen.queryAllByRole('button')).toHaveLength(2);
     });
     it('has no paginator on short pages', () => {
