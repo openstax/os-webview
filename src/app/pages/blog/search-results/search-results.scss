@@ -12,6 +12,7 @@ $image-height: 15rem;
         display: grid;
         grid-template-columns: 100%;
         justify-items: center;
+        transition: opacity 0.2s ease;
 
         @include width-up-to($phone-max) {
             grid-row-gap: $normal-margin;
@@ -88,5 +89,15 @@ $image-height: 15rem;
         @include wider-than($phone-max) {
             margin: 12rem 0;
         }
+    }
+
+    // While a new search/facet result is loading, keep the previous results in
+    // place and only gently dim them. The delay means quick fetches swap with
+    // no visible change at all; slower ones get a soft "updating" cue instead
+    // of the whole list repainting at once.
+    &[aria-busy='true'] .cards {
+        opacity: 0.45;
+        pointer-events: none;
+        transition-delay: 0.15s;
     }
 }

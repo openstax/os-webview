@@ -7,7 +7,7 @@ import './no-results.scss';
 export default function NoResults() {
     return (
         <div className='boxed left no-results'>
-            <h1>No matching blog posts found</h1>
+            <h2>No matching blog posts found</h2>
             <div>Our featured and recent blog posts are below.</div>
             <PinnedArticle />
             <Section className="more-stories" name="Latest blog posts">

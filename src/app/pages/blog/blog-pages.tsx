@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import useBlogContext from './blog-context';
-import { useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
@@ -8,8 +8,10 @@ import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject
 import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
 import PinnedArticle from './pinned-article/pinned-article';
 import MoreStories from './more-stories/more-stories';
-import SearchBar, {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
+import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import SearchResults from './search-results/search-results';
+import FacetControls from './facet-controls/facet-controls';
+import useBlogSearchParams from './use-blog-search-params';
 import {ArticleData, ArticleFromSlug} from './article/article';
 import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
 import './blog.scss';
@@ -27,20 +29,39 @@ function WriteForUs({descriptionHtml, text, link}: {
     );
 }
 
-export function SearchResultsPage() {
-    const {pageDescription, searchFor} = useBlogContext();
+function buildWriteForUsData({footerText, footerButtonText, footerLink}: {
+    footerText?: string;
+    footerButtonText?: string;
+    footerLink?: string;
+}) {
+    return {
+        descriptionHtml: footerText || 'Interested in sharing your story?',
+        text: footerButtonText || 'Write for us',
+        link: footerLink || '/write-for-us'
+    };
+}
 
-    useDocumentHead({
-        title: 'OpenStax Blog Search',
-        description: pageDescription
-    });
+type SearchState = ReturnType<typeof useBlogSearchParams>;
 
+function hasActiveQuery({q, subjects, collection, sort}: SearchState) {
+    return Boolean(q || subjects.length || collection || sort !== 'relevance');
+}
+
+function DiscoveryContent({
+    categories,
+    collections,
+    pinnedSlug
+}: {
+    categories: ReturnType<typeof useBlogContext>['subjectSnippet'];
+    collections: ReturnType<typeof useBlogContext>['collectionSnippet'];
+    pinnedSlug?: string;
+}) {
     return (
         <React.Fragment>
-            <div className="boxed left">
-                <SearchBar searchFor={searchFor} amongWhat='blog posts' />
-            </div>
-            <SearchResults />
+            <ExploreBySubject categories={categories} analyticsNav='Blog Subjects' />
+            <ExploreByCollection collections={collections} analyticsNav='Blog Collections' />
+            <PinnedArticle />
+            <MoreStories exceptSlug={pinnedSlug || ''} />
         </React.Fragment>
     );
 }
@@ -49,19 +70,21 @@ export function SearchResultsPage() {
 
 export function MainBlogPage() {
     const {
-        pinnedStory, pageDescription, searchFor,
+        pinnedStory, pageTitle, pageDescription, searchFor,
         subjectSnippet: categories,
         collectionSnippet: collections,
         footerText, footerButtonText, footerLink
     } = useBlogContext();
-    const writeForUsData = {
-        descriptionHtml: footerText || 'Interested in sharing your story?',
-        text: footerButtonText || 'Write for us',
-        link: footerLink || '/write-for-us'
-    };
+    const writeForUsData = buildWriteForUsData({footerText, footerButtonText, footerLink});
+    // Editable in the CMS (the news page title); falls back to a friendlier
+    // default than the bare "OpenStax Blog".
+    const heading = pageTitle || 'Stories from OpenStax';
+    const searchState = useBlogSearchParams();
+    const isActive = hasActiveQuery(searchState);
+    const pinnedSlug = pinnedStory && pinnedStory.meta.slug;
 
     useDocumentHead({
-        title: 'OpenStax News',
+        title: heading,
         description: pageDescription
     });
 
@@ -69,12 +92,17 @@ export function MainBlogPage() {
         <WindowContextProvider>
             <div className="boxed">
                 <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
-                    <h1>OpenStax Blog</h1>
+                    <h1>{heading}</h1>
                 </HeadingAndSearchBar>
-                <ExploreBySubject categories={categories} analyticsNav='Blog Subjects' />
-                <ExploreByCollection collections={collections} analyticsNav='Blog Collections' />
-                <PinnedArticle />
-                <MoreStories exceptSlug={pinnedStory && pinnedStory.meta.slug} />
+                <FacetControls subjects={categories} collections={collections} />
+                {isActive
+                    ? <SearchResults />
+                    : <DiscoveryContent
+                        categories={categories}
+                        collections={collections}
+                        pinnedSlug={pinnedSlug}
+                    />
+                }
             </div>
             <div className="write-for-us">
                 <WriteForUs {...writeForUsData} />
@@ -88,9 +116,17 @@ export function ArticlePage() {
     const [articleData, setArticleData] = React.useState<ArticleData>();
 
     useEffect(
-        () => window.scrollTo(0, 0),
+        () => {
+            if (slug) {
+                window.scrollTo(0, 0);
+            }
+        },
         [slug]
     );
+
+    if (!slug) {
+        return <MainBlogPage />;
+    }
 
     return (
         <WindowContextProvider>

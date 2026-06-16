@@ -45,11 +45,13 @@ describe('blog/article', () => {
 
         expect(onload).not.toHaveBeenCalled();
     });
-    it('handles data load error', () => {
+    it('handles data load error with a friendly not-found message', () => {
         mockUsePageData.mockReturnValue({error: {message: 'whoops'}});
         render(<ArticleFromSlug slug="whatever" onLoad={onload} />);
 
-        screen.getByText('whoops', {exact: false});
+        screen.getByRole('heading', {name: 'This post is no longer available'});
+        // The raw error/slug is no longer leaked to the reader.
+        expect(screen.queryByText('whoops', {exact: false})).toBeNull();
     });
     it('handls PDF article', () => {
         mockUsePageData.mockReturnValue({...pageData, body: pdfBody});
