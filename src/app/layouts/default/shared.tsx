@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import {useLocation} from 'react-router-dom';
+import {enroll} from '@openstax/experiments';
 import cmsFetch from '~/helpers/cms-fetch';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 import PutAway from '~/components/put-away/put-away';
@@ -6,48 +8,27 @@ import './shared.scss';
 
 export type BannerInfo = {
     id: number;
-    heading: string;
-    body: string;
-    link_text: string;
-    link_url: string;
+    name: string;
+    html_message: string;
+    link_text: string | null;
+    link_url: string | null;
+    banner_thumbnail?: string;
+    is_active: boolean;
+    start_date: string | null;
+    end_date: string | null;
+    context_filter: string;
+    url_pattern: string | null;
 };
 
-type StickyDataRaw = {
-    start: string;
-    expires: string;
+type EmergencyDataRaw = {
     emergency_expires: string | null;
     emergency_content: string;
-    show_popup: boolean;
 };
 
-export type StickyDataWithBanner = StickyDataRaw & {
-    bannerInfo: BannerInfo;
-    mode: 'emergency' | 'popup' | 'banner' | null;
+export type BannerDataWithEmergency = EmergencyDataRaw & {
+    bannerConfigs: BannerInfo[];
+    mode: 'emergency' | 'banner' | null;
 };
-
-export function useSeenCounter(seenEnough: number): [boolean, () => void] {
-    const [counter, increment] = React.useReducer(
-        (s: number) => s + 1,
-        Number(window.localStorage?.visitedGive) || 0
-    );
-    const hasBeenSeenEnough = React.useMemo(
-        () => counter > seenEnough,
-        [counter, seenEnough]
-    );
-
-    useEffect(
-        () => {
-            try {
-                window.localStorage.visitedGive = String(counter);
-            } catch {
-                console.warn('LocalStorage restricted');
-            }
-        },
-        [counter]
-    );
-
-    return [hasBeenSeenEnough, increment];
-}
 
 export {PutAway};
 
@@ -58,63 +39,101 @@ export function usePutAway(): [boolean, () => JSX.Element] {
 }
 
 // eslint-disable-next-line complexity
-function getMode(stickyData: StickyDataRaw | null): 'emergency' | 'popup' | 'banner' | null {
-    if (!stickyData) {
+function getMode(
+    bannerData: (EmergencyDataRaw & {bannerConfigs: BannerInfo[]}) | null
+): 'emergency' | 'banner' | null {
+    if (!bannerData) {
         return null;
     }
 
-    const expireDate = new Date(stickyData.emergency_expires ?? 0);
-    const useEmergency = stickyData.emergency_expires && Date.now() < expireDate.getTime();
+    const expireDate = new Date(bannerData.emergency_expires ?? 0);
+    const useEmergency =
+        bannerData.emergency_expires && Date.now() < expireDate.getTime();
 
     if (useEmergency) {
         return 'emergency';
     }
 
-    const startDate = new Date(stickyData.start);
-    const endDate = new Date(stickyData.expires);
-    const microdonationActive = startDate.getTime() < Date.now() && endDate.getTime() > Date.now();
-
-    if (!microdonationActive) {
-        return null;
+    if (bannerData.bannerConfigs?.length > 0) {
+        return 'banner';
     }
 
-    return (stickyData.show_popup ? 'popup' : 'banner');
+    return null;
 }
 
-function useCampaign(stickyData: StickyDataRaw | null) {
-    const {start} = (stickyData || {});
-    const mode = getMode(stickyData);
-
-    useEffect(() => {
-        if (mode && window.localStorage) {
-            const campaignId = `${mode}-${start}`;
-            const savedId = window.localStorage.campaignId;
-
-            if (savedId !== campaignId) {
-                window.localStorage.campaignId = campaignId;
-                window.localStorage.visitedGive = '0';
-            }
-        }
-    }, [start, mode]);
-}
-
-export function useStickyData(): StickyDataWithBanner | null {
-    const stickyDataPromise = React.useMemo(
-        () => Promise.all([cmsFetch('sticky/'), cmsFetch('snippets/givebanner')])
-        .then(([sd, bd]: [StickyDataRaw, BannerInfo[]]) => ({
-            ...sd,
-            bannerInfo: bd[0]
+export function useBannerData(): BannerDataWithEmergency | null {
+    const bannerDataPromise = React.useMemo(
+        () => Promise.all([
+            cmsFetch('emergency/'),
+            cmsFetch('donations/sitebanner/')
+        ])
+        .then(([ed, bannerConfigs]: [EmergencyDataRaw, BannerInfo[]]) => ({
+            ...ed,
+            bannerConfigs
         })),
         []
     );
-    const stickyData = useDataFromPromise(stickyDataPromise) ?? null;
-
-    useCampaign(stickyData);
-
-    const mode = getMode(stickyData);
+    const bannerData = useDataFromPromise(bannerDataPromise) ?? null;
+    const mode = getMode(bannerData);
 
     return React.useMemo(
-        () => stickyData ? ({mode, ...stickyData}) : null,
-        [mode, stickyData]
+        () => bannerData ? ({mode, ...bannerData}) : null,
+        [mode, bannerData]
     );
+}
+
+/* eslint-disable camelcase */
+const contextMatchers: Record<string, (pathname: string) => boolean> = {
+    all: () => true,
+    subjects: (p) => p.startsWith('/subjects'),
+    book_details: (p) => p.startsWith('/details/books/'),
+    blog: (p) => p.startsWith('/blog')
+};
+/* eslint-enable camelcase */
+
+function bannerMatchesPath(banner: BannerInfo, pathname: string): boolean {
+    if (banner.context_filter === 'url_pattern') {
+        const pattern = banner.url_pattern;
+
+        return Boolean(pattern) && (pathname === pattern || pathname.startsWith(pattern as string));
+    }
+    return contextMatchers[banner.context_filter]?.(pathname) ?? false;
+}
+
+export function useFilteredBanners(
+    bannerConfigs: BannerInfo[] | null | undefined
+): BannerInfo[] {
+    const {pathname} = useLocation();
+
+    return React.useMemo(() => {
+        if (!bannerConfigs?.length) {
+            return [];
+        }
+
+        return bannerConfigs.filter((banner) => bannerMatchesPath(banner, pathname));
+    }, [bannerConfigs, pathname]);
+}
+
+export function useSelectedBanner(
+    filteredBanners: BannerInfo[]
+): BannerInfo | null {
+    return React.useMemo(() => {
+        if (!filteredBanners.length) {
+            return null;
+        }
+
+        if (filteredBanners.length === 1) {
+            return filteredBanners[0];
+        }
+
+        const variants = filteredBanners.map((banner) => ({
+            name: banner.name,
+            banner
+        }));
+
+        return enroll({
+            name: 'Site Banner Campaign',
+            variants
+        }).banner;
+    }, [filteredBanners]);
 }

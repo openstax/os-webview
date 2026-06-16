@@ -2,9 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import useMSQueue from '~/layouts/default/microsurvey-popup/queue';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
-import * as S from '~/layouts/default/shared';
 import * as AC from '~/layouts/default/microsurvey-popup/adoption-content';
-import stickyData from '~/../../test/src/data/sticky-data';
 
 let itemsHandled = 0;
 
@@ -30,11 +28,9 @@ function MockAdoptionContent() {
 }
 
 describe('microsurvey queue', () => {
-    stickyData.mode = 'popup';
-    jest.spyOn(S, 'useStickyData').mockReturnValue(stickyData);
     jest.spyOn(AC, 'default').mockReturnValue([true, MockAdoptionContent]);
 
-    it('enqueues sticky and adoption content', async () => {
+    it('enqueues adoption content', async () => {
         render(<MemoryRouter initialEntries={['/']}>
             <Component />
         </MemoryRouter>);
