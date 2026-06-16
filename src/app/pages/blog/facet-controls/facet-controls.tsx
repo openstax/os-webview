@@ -76,6 +76,7 @@ function SortToggle() {
         const buttons = Array.from(
             group?.querySelectorAll<HTMLButtonElement>('button[role="radio"]') ?? []
         );
+
         buttons[nextIndex]?.focus();
     };
 

@@ -5,12 +5,13 @@ import {MemoryRouter} from 'react-router-dom';
 import * as pageDataUtils from '~/helpers/page-data-utils';
 import useAllArticles from '~/pages/blog/search-results/use-all-articles';
 
+type RenderHookWrapper = ComponentType<{children: Element}>;
+
 afterEach(() => jest.restoreAllMocks());
-type RenderHookWrapper = ComponentType<{children: React.ReactNode}>;
 it('builds the search slug from q, subjects, collection, and sort', async () => {
     const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
 
-    function Wrapper({children}: HookWrapperProps) {
+    function Wrapper({children}: {children: React.ReactNode}) {
         return (
             <MemoryRouter initialEntries={['/blog/?q=algebra&subjects=Math&sort=newest']}>
                 {children}
@@ -18,7 +19,7 @@ it('builds the search slug from q, subjects, collection, and sort', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: Wrapper as RenderHookWrapper});
+    renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slug = spy.mock.calls[0][0] as string;
@@ -31,7 +32,7 @@ it('builds the search slug from q, subjects, collection, and sort', async () => 
 it('includes collection in the slug when present', async () => {
     const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
 
-    function Wrapper({children}: HookWrapperProps) {
+    function Wrapper({children}: {children: React.ReactNode}) {
         return (
             <MemoryRouter initialEntries={['/blog/?q=algebra&collection=OpenStax%20Updates']}>
                 {children}
@@ -39,7 +40,7 @@ it('includes collection in the slug when present', async () => {
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: Wrapper as RenderHookWrapper});
+    renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slug = spy.mock.calls[0][0] as string;
@@ -51,7 +52,7 @@ it('includes collection in the slug when present', async () => {
 it('omits sort from the slug when sort is relevance (the default)', async () => {
     const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
 
-    function WrapperNoSort({children}: HookWrapperProps) {
+    function WrapperNoSort({children}: {children: React.ReactNode}) {
         return (
             <MemoryRouter initialEntries={['/blog/?q=algebra']}>
                 {children}
@@ -59,7 +60,7 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: WrapperNoSort as RenderHookWrapper});
+    renderHook(() => useAllArticles(), {wrapper: WrapperNoSort as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slugNoSort = spy.mock.calls[0][0] as string;
@@ -69,7 +70,7 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
     jest.restoreAllMocks();
     const spy2 = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
 
-    function WrapperRelevance({children}: HookWrapperProps) {
+    function WrapperRelevance({children}: {children: React.ReactNode}) {
         return (
             <MemoryRouter initialEntries={['/blog/?q=algebra&sort=relevance']}>
                 {children}
@@ -77,7 +78,7 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: WrapperRelevance as RenderHookWrapper});
+    renderHook(() => useAllArticles(), {wrapper: WrapperRelevance as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy2).toHaveBeenCalled());
     const slugRelevance = spy2.mock.calls[0][0] as string;
