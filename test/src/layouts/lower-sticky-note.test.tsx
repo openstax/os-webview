@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import '@testing-library/jest-dom';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import * as S from '~/layouts/default/shared';
 import LowerStickyNote from '~/layouts/default/lower-sticky-note/lower-sticky-note';
@@ -56,7 +57,7 @@ describe('lower-sticky-note', () => {
         jest.spyOn(S, 'useBannerData').mockReturnValue({
             ...bannerData,
             bannerConfigs: [
-                {...bannerData.bannerConfigs[0], context_filter: 'blog'}
+                {...bannerData.bannerConfigs[0], 'context_filter': 'blog'}
             ]
         });
         render(<MemoryRouter initialEntries={['/']}><LowerStickyNote /></MemoryRouter>);
@@ -64,7 +65,7 @@ describe('lower-sticky-note', () => {
     });
 
     it('does not enroll in the experiment when mode is emergency', () => {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports
         const {enroll} = require('@openstax/experiments');
 
         (enroll as jest.Mock).mockClear();
