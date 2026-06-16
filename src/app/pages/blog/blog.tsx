@@ -14,7 +14,6 @@ export default function LoadBlog() {
             <BlogContextProvider>
                 <Routes>
                     <Route path="" element={<MainBlogPage />} />
-                    <Route path="blog" element={<MainBlogPage />} />
                     <Route path="latest" element={<LatestBlogPosts />} />
                     <Route
                         path="explore/:exploreType/:topic"

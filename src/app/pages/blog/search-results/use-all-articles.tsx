@@ -54,6 +54,15 @@ export default function useAllArticles() {
 
             setAllArticles(articles);
             setIsLoading(false);
+        }).catch(() => {
+            // A failed search shouldn't leave the page stuck in its loading
+            // state (aria-busy + "Searching" forever); fall through to the
+            // no-results view instead.
+            if (cancelled) {
+                return;
+            }
+            setAllArticles([]);
+            setIsLoading(false);
         });
         return () => {
             cancelled = true;

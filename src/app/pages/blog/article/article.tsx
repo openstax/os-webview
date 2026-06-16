@@ -57,17 +57,23 @@ function ArticleLoader({slug, onLoad}: ArticleArgs) {
     }
 
     if (data.error) {
-        return (
-            <div className="text-content">
-                <h1>[Article not found]</h1>
-                <pre>
-                    {data.error.message} {slug}
-                </pre>
-            </div>
-        );
+        return <ArticleNotFound />;
     }
 
     return <Article data={data} />;
+}
+
+function ArticleNotFound() {
+    return (
+        <div className="text-content article-not-found">
+            <h1>This post is no longer available</h1>
+            <p>
+                The story you&rsquo;re looking for may have been moved or taken
+                down. Browse our latest blog posts below, or head back to the{' '}
+                <a href="/blog">OpenStax blog</a>.
+            </p>
+        </div>
+    );
 }
 
 export function Article({data}: {data: ArticleData}) {

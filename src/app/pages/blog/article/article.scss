@@ -176,6 +176,13 @@
         }
     }
 
+    .article-not-found {
+        p {
+            margin-top: 1rem;
+            max-width: 50rem;
+        }
+    }
+
     .body {
         // stylelint-disable-next-line no-descending-specificity
         img {
