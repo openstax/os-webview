@@ -14,6 +14,7 @@ import FacetControls from './facet-controls/facet-controls';
 import useBlogSearchParams from './use-blog-search-params';
 import {ArticleData, ArticleFromSlug} from './article/article';
 import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
+import {assertDefined} from '~/helpers/data';
 import './blog.scss';
 
 function WriteForUs({descriptionHtml, text, link}: {
@@ -112,21 +113,17 @@ export function MainBlogPage() {
 }
 
 export function ArticlePage() {
-    const {slug} = useParams();
+    // slug is always defined because ArticlePage is only rendered via the route path=":slug"
+    // where :slug is a required route parameter
+    const slug = assertDefined(useParams().slug);
     const [articleData, setArticleData] = React.useState<ArticleData>();
 
     useEffect(
         () => {
-            if (slug) {
-                window.scrollTo(0, 0);
-            }
+            window.scrollTo(0, 0);
         },
         [slug]
     );
-
-    if (!slug) {
-        return <MainBlogPage />;
-    }
 
     return (
         <WindowContextProvider>
