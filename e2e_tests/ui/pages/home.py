@@ -53,7 +53,7 @@ class HomeRex:
             await tech_menu.hover(timeout=5000)
 
             await assignable_link.click(timeout=5000)
-            await self.page.wait_for_url("**/assignable*", timeout=5000)
+            await self.page.wait_for_url("**/assignable**", timeout=5000)
 
         except TimeoutError:
             pytest.skip(
