@@ -1,5 +1,6 @@
 import React from 'react';
 import useBlogSearchParams from '../use-blog-search-params';
+import {assertDefined} from '~/helpers/data';
 import './facet-controls.scss';
 
 type NamedSnippet = {id?: number; name: string};
@@ -74,7 +75,7 @@ function SortToggle() {
 
         const group = e.currentTarget.parentElement;
         const buttons = Array.from(
-            group?.querySelectorAll<HTMLButtonElement>('button[role="radio"]') ?? []
+            assertDefined(group?.querySelectorAll<HTMLButtonElement>('button[role="radio"]'))
         );
 
         buttons[nextIndex]?.focus();
