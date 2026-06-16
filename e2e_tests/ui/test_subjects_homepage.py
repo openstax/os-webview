@@ -50,7 +50,8 @@ async def test_subjects_homepage(chrome_page_unlogged, base_url):
 
     # This is in CMS and can change without deployment (refer to our discussion with Michael)
     try:
-        assert "Who we are" in about_text and "What makes us different" in about_text
+        assert "Who we are" in about_text
+        assert "What makes us different" in about_text
     except AssertionError:
         pytest.skip(
             "Expected 'Who we are' or 'What makes us different' text not found. "
