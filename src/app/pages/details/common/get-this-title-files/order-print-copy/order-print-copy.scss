@@ -3,7 +3,7 @@
 .order-print-copy {
     @include set-font(helper-label);
 
-    background-color: ui-color(page-bg);
+    background-color: transparent;
     max-width: 26rem;
 
     .blurb {
@@ -86,9 +86,10 @@
         }
     }
 
-    .btn {
+    .btn.btn {
         @extend %button;
 
+        height: 4rem;
         padding: 1rem;
 
         &.primary {
