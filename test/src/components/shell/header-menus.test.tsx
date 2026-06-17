@@ -58,7 +58,7 @@ describe('shell/header/menus', () => {
         await user.keyboard('{Escape}');
         expect(button.parentElement?.classList.contains('active')).toBe(false);
     });
-    it('shows Give menu item when the give button is off', () => {
+    it('renders no Give item when the give button is gated off', () => {
         mockUseDataFromPromise.mockReturnValueOnce({
             ...giveTodayData
         });
@@ -71,7 +71,7 @@ describe('shell/header/menus', () => {
         );
         const listitems = screen.queryAllByRole('listitem');
 
-        // No Give button (dates expired), so no Give menu items anywhere
+        // No Give button (dates expired), so no Give item renders when gated off
         expect(listitems.filter(isGiveListItem).length).toBe(0);
         // Utility bar is gone
         expect(screen.queryByText('Help')).toBeNull();
