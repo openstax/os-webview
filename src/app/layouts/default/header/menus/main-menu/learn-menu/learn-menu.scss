@@ -1,0 +1,55 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+.learn-dropdown .mega-menu {
+    min-width: 48rem;
+
+    .learn-library-link {
+        @include set-font(h4);
+
+        align-items: center;
+        color: os-color(blue);
+        display: flex;
+        font-weight: bold;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+
+        .arrow {
+            margin-left: 2rem;
+        }
+    }
+
+    .learn-subject-grid {
+        border-left: 0.2rem solid ui-color(form-border);
+        column-gap: 3rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0.5rem 0 0.5rem 1.5rem;
+        row-gap: 1.2rem;
+
+        a {
+            color: os-color(gray);
+            display: block;
+
+            &:focus,
+            &:hover {
+                color: text-color(link-hover);
+            }
+        }
+    }
+
+    hr {
+        border: 0;
+        border-top: thin solid ui-color(form-border);
+        margin: 1.5rem 0;
+    }
+
+    .learn-extra-links {
+        display: grid;
+        row-gap: 1.5rem;
+
+        a {
+            color: text-color(normal);
+            font-weight: bold;
+        }
+    }
+}
