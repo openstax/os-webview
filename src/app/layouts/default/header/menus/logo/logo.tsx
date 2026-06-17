@@ -1,7 +1,13 @@
 import React from 'react';
+import useOptimizedImage from '~/helpers/use-optimized-image';
 import './logo.scss';
 
+const riceLogoSrc =
+    'https://assets.openstax.org/oscms-prodcms/media/images/rice-logo-blue.original.webp';
+
 export default function Logo() {
+    const riceLogo = useOptimizedImage(riceLogoSrc, 80);
+
     return (
         <span className="logo-wrapper">
             <span className="logo">
@@ -13,8 +19,12 @@ export default function Logo() {
                     <img className="logo-white" src="/dist/images/logo-white.svg" alt="OpenStax logo" />
                 </a>
             </span>
-
-            <span className="logo-quote">Access. The future of education.</span>
+            <span className="logo-divider" aria-hidden="true" />
+            <span className="rice-logo">
+                <a href="http://www.rice.edu">
+                    <img src={riceLogo} alt="Rice University logo" height="30" width="79" />
+                </a>
+            </span>
         </span>
     );
 }

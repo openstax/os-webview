@@ -1,7 +1,6 @@
 import React from 'react';
 import {DropdownContextProvider} from './dropdown-context';
 import MenuExpander from './menu-expander/menu-expander';
-import UpperMenu from './upper-menu/upper-menu';
 import Logo from './logo/logo';
 import MainMenu, {MainMenuItems} from './main-menu/main-menu';
 import {useToggle} from '~/helpers/data';
@@ -45,9 +44,6 @@ export default function Menus() {
         <React.Fragment>
             <DropdownContextProvider>
                 <div className='menus desktop'>
-                    <nav className='meta-nav' aria-label='Upper Menu'>
-                        <UpperMenu />
-                    </nav>
                     <nav className='nav' aria-label='Main'>
                         <div className='container'>
                             <Logo />
@@ -74,7 +70,6 @@ export default function Menus() {
                             <div className='menu-title'>Menu</div>
                             <ul className='no-bullets' onKeyDown={treatSpaceOrEnterAsClick}>
                                 <MainMenuItems />
-                                <UpperMenu />
                             </ul>
                         </div>
                     </div>

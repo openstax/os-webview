@@ -17,12 +17,13 @@
     @include wider-than($tablet-max) {
         display: grid;
         grid-column-gap: 1rem;
-        grid-template-columns: min-content auto;
+        grid-template-columns: repeat(3, min-content);
+        align-items: center;
         height: 100%;
         left: auto;
         position: static;
         top: auto;
-        width: 50rem;
+        width: auto;
     }
 
     .logo {
@@ -67,22 +68,26 @@
         }
     }
 
-    .logo-quote {
-        color: os-color(gray);
-        display: inline-block;
-        height: 0;
-        transform: scale3d(0, 0, 0);
-        width: 0;
+    .logo-divider {
+        background-color: ui-color(form-border);
+        height: 2.8rem;
+        width: 0.1rem;
 
-        @media (min-width: 1000px) {
-            height: auto;
-            transform: scale3d(1, 1, 1);
-            width: auto;
+        @include width-up-to($tablet-max) {
+            display: none;
         }
+    }
 
-        @at-root .transparent#{&} {
-            color: text-color(white);
+    .rice-logo {
+        display: none;
+
+        @include wider-than($tablet-max) {
+            display: inline-flex;
+            align-items: center;
+
+            img {
+                height: 2.4rem;
+            }
         }
-
     }
 }

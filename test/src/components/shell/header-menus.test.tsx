@@ -3,6 +3,7 @@ import {describe, it, expect} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
 import Menus from '~/layouts/default/header/menus/menus';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 import userEvent from '@testing-library/user-event';
 import * as PDU from '~/helpers/page-data-utils';
 import * as CF from '~/helpers/cms-fetch';
@@ -22,7 +23,7 @@ const futureDate = new Date(Date.now() + 500000).toISOString();
 
 const isGiveListItem = (item: HTMLElement) => item.textContent?.trim() === 'Give';
 
-jest.spyOn(CF, 'default').mockReturnValue(Promise.resolve({}));
+jest.spyOn(CF, 'default').mockReturnValue(Promise.resolve([]));
 
 describe('shell/header/menus', () => {
     const user = userEvent.setup();
@@ -34,17 +35,22 @@ describe('shell/header/menus', () => {
             menu_expires: futureDate
         });
         render(
-            <MemoryRouter initialEntries={['/']}>
-                <Menus />
-            </MemoryRouter>
+            <ShellContextProvider>
+                <MemoryRouter initialEntries={['/']}>
+                    <Menus />
+                </MemoryRouter>
+            </ShellContextProvider>
         );
         const listitems = screen.queryAllByRole('listitem');
 
         // The desktop Give menu item is off; Give button shows instead
         expect(listitems.filter(isGiveListItem).length).toBe(1);
-        const button = screen.getByRole('button');
+        const button = screen.getByRole('button', {name: /Toggle/});
 
         expect(screen.getAllByRole('link', {name: 'Log in'})).toHaveLength(2);
+        // Utility bar is gone
+        expect(screen.queryByText('Order Print')).toBeNull();
+        expect(screen.queryByText('Our Impact')).toBeNull();
         await user.click(button);
         button.focus();
         expect(document.activeElement).toBe(button);
@@ -52,18 +58,22 @@ describe('shell/header/menus', () => {
         await user.keyboard('{Escape}');
         expect(button.parentElement?.classList.contains('active')).toBe(false);
     });
-    it('handles upper menus without Give', () => {
+    it('shows Give menu item when the give button is off', () => {
         mockUseDataFromPromise.mockReturnValueOnce({
             ...giveTodayData
         });
         render(
-            <MemoryRouter initialEntries={['/']}>
-                <Menus />
-            </MemoryRouter>
+            <ShellContextProvider>
+                <MemoryRouter initialEntries={['/']}>
+                    <Menus />
+                </MemoryRouter>
+            </ShellContextProvider>
         );
         const listitems = screen.queryAllByRole('listitem');
 
-        // No Give button, so Give menu item in both desktop and mobile
-        expect(listitems.filter(isGiveListItem).length).toBe(2);
+        // No Give button (dates expired), so no Give menu items anywhere
+        expect(listitems.filter(isGiveListItem).length).toBe(0);
+        // Utility bar is gone
+        expect(screen.queryByText('Help')).toBeNull();
     });
 });
