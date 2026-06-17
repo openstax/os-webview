@@ -35,6 +35,11 @@ jest.mock('~/contexts/portal', () => ({
     __esModule: true,
     default: () => ({portalPrefix: ''})
 }));
+jest.mock('~/contexts/language', () => ({
+    __esModule: true,
+    default: () => ({language: 'en', setLanguage: jest.fn()}),
+    LanguageContextProvider: ({children}: {children: React.ReactNode}) => children
+}));
 jest.mock('~/contexts/window', () => ({
     __esModule: true,
     default: () => ({innerWidth: 1024})
@@ -295,7 +300,7 @@ describe('default layout', () => {
         fireEvent.keyDown(techMenu, {key: 'ArrowRight'});
         expect(document.activeElement?.textContent).toBe('What we do arrow');
         fireEvent.keyDown(techMenu, {key: 'ArrowLeft'});
-        expect(document.activeElement?.textContent).toBe('What we do arrow');
+        expect(document.activeElement?.textContent).toBe('Learn arrow');
         expect(techMenu.getAttribute('aria-expanded')).toBe('false');
     });
     it('renders login menu', async () => {

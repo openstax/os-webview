@@ -35,6 +35,7 @@ describe('learn-menu', () => {
         // Dynamic subjects present, but not the View All / K12 entries
         await screen.findByRole('link', {name: 'Math'});
         expect(screen.queryByRole('link', {name: 'View All'})).toBeNull();
+        expect(screen.queryByRole('link', {name: 'K12'})).toBeNull();
 
         // Hardcoded extra links
         const print = screen.getByRole('link', {name: 'Order a print copy'});

@@ -7,6 +7,10 @@ import './learn-menu.scss';
 function SubjectGrid() {
     const categories = useSubjectCategoryContext();
 
+    if (!categories.length) {
+        return null;
+    }
+
     return (
         <ul className="learn-subject-grid no-bullets">
             {categories
