@@ -86,10 +86,12 @@
         }
     }
 
-    .btn.btn {
+    .btn {
         @extend %button;
 
-        height: 4rem;
+        &.btn { // increase specificity
+            height: 4rem;
+        }
         padding: 1rem;
 
         &.primary {
