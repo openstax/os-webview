@@ -31,8 +31,14 @@ function ExtraLinks() {
         <ul className="learn-extra-links no-bullets">
             <li><a href="/assignable" data-analytics-link>Assignable</a></li>
             <li><a href="/print/" data-analytics-link>Order a print copy</a></li>
-            <li>OpenStax in <LanguageLink locale="es" /></li>
-            <li>OpenStax in <LanguageLink locale="pl" /></li>
+            <li className="learn-language">
+                <span className="flag" aria-hidden="true">🇪🇸</span>
+                <LanguageLink locale="es" />
+            </li>
+            <li className="learn-language">
+                <span className="flag" aria-hidden="true">🇵🇱</span>
+                <LanguageLink locale="pl" />
+            </li>
         </ul>
     );
 }

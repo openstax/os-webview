@@ -2,6 +2,7 @@
 
 .learn-dropdown .mega-menu {
     min-width: 48rem;
+    text-align: left;
 
     .learn-library-link {
         @include set-font(h4);
@@ -10,11 +11,11 @@
         color: os-color(blue);
         display: flex;
         font-weight: bold;
-        justify-content: space-between;
+        justify-content: flex-start;
         margin-bottom: 1.5rem;
 
         .arrow {
-            margin-left: 2rem;
+            margin-left: 1rem;
         }
     }
 
@@ -45,11 +46,24 @@
 
     .learn-extra-links {
         display: grid;
+        justify-items: start;
         row-gap: 1.5rem;
+        text-align: left;
 
         a {
             color: text-color(normal);
             font-weight: bold;
+        }
+
+        .learn-language {
+            align-items: center;
+            display: flex;
+            gap: 0.8rem;
+
+            .flag {
+                font-size: 1.6rem;
+                line-height: 1;
+            }
         }
     }
 }
