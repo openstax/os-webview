@@ -43,7 +43,7 @@ describe('shell/header/menus', () => {
         );
         const listitems = screen.queryAllByRole('listitem');
 
-        // The desktop Give menu item is off; Give button shows instead
+        // Give button renders (dates active) => 1 Give list item in the desktop main menu
         expect(listitems.filter(isGiveListItem).length).toBe(1);
         const button = screen.getByRole('button', {name: /Toggle/});
 
