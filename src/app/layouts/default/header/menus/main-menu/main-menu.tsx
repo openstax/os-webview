@@ -1,17 +1,10 @@
 import React from 'react';
-import useSubjectCategoryContext from '~/contexts/subject-category';
-import useLanguageContext from '~/contexts/language';
-import {
-    LanguageSelectorWrapper,
-    LanguageLink
-} from '~/components/language-selector/language-selector';
-import {FormattedMessage} from 'react-intl';
-import {useLocation} from 'react-router-dom';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
+import LearnMenu from './learn-menu/learn-menu';
 import './main-menu.scss';
 
 type MenuItemData =
@@ -66,60 +59,6 @@ function MenusFromCMS() {
     return <MenusFromStructure structure={structure} />;
 }
 
-function K12MenuItem() {
-    return <MenuItem label="&#127822; For K12 Teachers" url="/k12" />;
-}
-
-function SubjectsMenu() {
-    const categories = useSubjectCategoryContext();
-    const {language} = useLanguageContext();
-    // This will have to be revisited if/when we implement more languages
-    const otherLocale = ['en', 'es'].filter((la) => la !== language)[0];
-    const {pathname} = useLocation();
-
-    if (!categories.length) {
-        return <li>Loading...</li>;
-    }
-
-    return (
-        <Dropdown
-            className="subjects-dropdown"
-            label="Subjects"
-            navAnalytics="Main Menu (Subjects)"
-        >
-            {categories
-                .filter(
-                    (obj: {html: string; value: string}) => obj.html !== 'K12'
-                )
-                .map((obj: {html: string; value: string}) => (
-                    <MenuItem
-                        key={obj.value}
-                        label={obj.html}
-                        url={`/subjects/${obj.value}`}
-                    />
-                ))}
-            {pathname.startsWith('/details/books') ? null : (
-                <React.Fragment>
-                    <LanguageSelectorWrapper>
-                        <FormattedMessage id="view" defaultMessage="View" />{' '}
-                        <LanguageLink locale={otherLocale} />
-                    </LanguageSelectorWrapper>
-                    <LanguageSelectorWrapper>
-                        <FormattedMessage id="view" defaultMessage="View" />{' '}
-                        <LanguageLink locale="pl" />
-                    </LanguageSelectorWrapper>
-                </React.Fragment>
-            )}
-            {language === 'en' ? (
-                <React.Fragment>
-                    <hr />
-                    <K12MenuItem />
-                </React.Fragment>
-            ) : null}
-        </Dropdown>
-    );
-}
-
 // eslint-disable-next-line complexity
 function navigateWithArrows(event: React.KeyboardEvent<HTMLUListElement>) {
     switch (event.key) {
@@ -148,8 +87,9 @@ function navigateWithArrows(event: React.KeyboardEvent<HTMLUListElement>) {
 export function MainMenuItems() {
     return (
         <React.Fragment>
-            <SubjectsMenu />
+            <LearnMenu />
             <MenusFromCMS />
+            <li className="nav-divider" aria-hidden="true" />
             <li className="give-button-item">
                 <GiveButton />
             </li>

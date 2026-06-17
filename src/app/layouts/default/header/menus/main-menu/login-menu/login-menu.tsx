@@ -9,7 +9,7 @@ function LoginLink() {
     useLocation();
 
     return (
-        <li className="login-menu nav-menu-item rightmost">
+        <li className="login-menu nav-menu-item rightmost login-link">
             <a
                 href={linkHelper.loginLink()}
                 className="pardotTrackClick"

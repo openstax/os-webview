@@ -67,8 +67,9 @@
             padding: 0 0.25rem;
 
             > a {
-                color: os-color(gray);
+                color: text-color(normal);
                 display: inline-block;
+                font-weight: bold;
                 padding: 1.2rem 0;
 
                 @at-root .transparent#{&} {
@@ -127,5 +128,22 @@
                 fill: text-color(white);
             }
         }
+    }
+
+    .nav-divider {
+        align-self: center;
+        background-color: ui-color(form-border);
+        height: 2.4rem;
+        margin: 0 1rem;
+        width: 0.1rem;
+
+        @include width-up-to($tablet-max) {
+            display: none;
+        }
+    }
+
+    .login-link a {
+        color: text-color(link);
+        font-weight: bold;
     }
 }
