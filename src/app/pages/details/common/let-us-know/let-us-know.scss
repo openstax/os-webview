@@ -7,16 +7,19 @@ $icon-size: 5.5rem;
     display: grid;
     grid-gap: 2rem;
     margin-bottom: 4rem;
-    width: max-content;
+    width: 100%;
+    max-width: 26rem;
 
     .button-with-icon {
+        @include button();
         align-items: center;
-        background-color: ui-color(page-bg);
+        background-color: transparent;
         border-radius: 0.5rem;
         color: inherit;
         display: grid;
         grid-gap: $normal-margin;
         grid-template-columns: $icon-size auto;
+        height: auto;
         padding: 1rem;
         text-decoration: none;
     }
@@ -41,5 +44,6 @@ $icon-size: 5.5rem;
         @include set-font(body-large);
 
         line-height: normal;
+        text-align: start;
     }
 }
