@@ -35,6 +35,14 @@
     }
 }
 
+.dropdown-menu.mega-menu {
+    padding: 0;
+
+    .mega-content {
+        padding: 2rem;
+    }
+}
+
 .dropdown {
     position: relative;
 

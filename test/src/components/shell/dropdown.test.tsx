@@ -2,6 +2,7 @@ import React from 'react';
 import {describe, it, expect} from '@jest/globals';
 import {render, screen, fireEvent} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
+import {MemoryRouter} from 'react-router-dom';
 import MR from '~/../../test/helpers/future-memory-router';
 import { DropdownContextProvider } from '~/layouts/default/header/menus/dropdown-context';
 import Dropdown, {MenuItem} from '~/layouts/default/header/menus/main-menu/dropdown/dropdown';
@@ -117,5 +118,27 @@ describe('main-menu dropdowns', () => {
 
         // The first menu should be closed
         expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
+    });
+    it('renders children raw in mega mode', async () => {
+        const user = userEvent.setup();
+
+        render(
+            <DropdownContextProvider>
+                <MemoryRouter initialEntries={['/']}>
+                    <ul>
+                        <Dropdown label="Learn" mega>
+                            <div data-testid="mega-body">hello</div>
+                        </Dropdown>
+                    </ul>
+                </MemoryRouter>
+            </DropdownContextProvider>
+        );
+        await user.click(screen.getByRole('button', {name: /Learn/}));
+
+        const menu = screen.getByRole('list', {name: 'Learn menu'});
+
+        expect(menu.classList.contains('mega-menu')).toBe(true);
+        // The body lives inside a single .mega-content li, not wrapped per-child
+        expect(menu.querySelector('.mega-content [data-testid="mega-body"]')).not.toBeNull();
     });
 });

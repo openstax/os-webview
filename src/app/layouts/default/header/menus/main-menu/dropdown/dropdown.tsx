@@ -61,7 +61,8 @@ export default function Dropdown({
     label,
     children,
     excludeWrapper = false,
-    navAnalytics
+    navAnalytics,
+    mega = false
 }: {
     Tag?: React.ElementType;
     className?: string;
@@ -69,6 +70,7 @@ export default function Dropdown({
     children?: React.ReactNode;
     excludeWrapper?: boolean;
     navAnalytics?: string;
+    mega?: boolean;
 }) {
     const topRef = useRef<HTMLAnchorElement>(null);
     const dropdownRef = useRef<HTMLUListElement>(null);
@@ -114,6 +116,7 @@ export default function Dropdown({
                     dropdownRef={dropdownRef}
                     navAnalytics={navAnalytics}
                     label={label}
+                    mega={mega}
                 >
                     {children}
                 </DropdownContents>
@@ -214,26 +217,30 @@ function DropdownContents({
     label,
     dropdownRef,
     navAnalytics,
+    mega = false,
     children
 }: {
     id: string;
     label: string;
     dropdownRef: React.RefObject<HTMLUListElement>;
     navAnalytics?: string;
+    mega?: boolean;
     children?: React.ReactNode;
 }) {
     return (
         <div className="dropdown-container">
             <ul
-                className="dropdown-menu"
+                className={cn('dropdown-menu', {'mega-menu': mega})}
                 id={id}
                 aria-label={`${label} menu`}
                 ref={dropdownRef}
                 data-analytics-nav={navAnalytics || undefined}
             >
-                {React.Children.map(children, (c) => (
-                    <li>{c}</li>
-                ))}
+                {mega ? (
+                    <li className="mega-content">{children}</li>
+                ) : (
+                    React.Children.map(children, (c) => <li>{c}</li>)
+                )}
             </ul>
         </div>
     );
