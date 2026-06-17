@@ -2,7 +2,6 @@ import React from 'react';
 import {describe, it, expect} from '@jest/globals';
 import {render, screen, fireEvent} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
-import {MemoryRouter} from 'react-router-dom';
 import MR from '~/../../test/helpers/future-memory-router';
 import { DropdownContextProvider } from '~/layouts/default/header/menus/dropdown-context';
 import Dropdown, {MenuItem} from '~/layouts/default/header/menus/main-menu/dropdown/dropdown';
@@ -120,17 +119,15 @@ describe('main-menu dropdowns', () => {
         expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
     });
     it('renders children raw in mega mode', async () => {
-        const user = userEvent.setup();
-
         render(
             <DropdownContextProvider>
-                <MemoryRouter initialEntries={['/']}>
+                <MR initialEntries={['/']}>
                     <ul>
                         <Dropdown label="Learn" mega>
                             <div data-testid="mega-body">hello</div>
                         </Dropdown>
                     </ul>
-                </MemoryRouter>
+                </MR>
             </DropdownContextProvider>
         );
         await user.click(screen.getByRole('button', {name: /Learn/}));
