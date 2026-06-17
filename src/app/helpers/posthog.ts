@@ -31,12 +31,37 @@ export function useExperiment(flagKey: string): FlagValue {
     );
 
     React.useEffect(() => {
-        const ph = getPostHog();
+        let cancelled = false;
+        let interval: number | undefined;
 
-        if (!ph) {
-            return;
+        const subscribe = () => {
+            const ph = getPostHog();
+
+            if (!ph) {
+                return false;
+            }
+            ph.onFeatureFlags(() => {
+                if (!cancelled) {
+                    setVariant(ph.getFeatureFlag(flagKey));
+                }
+            });
+            return true;
+        };
+
+        if (!subscribe()) {
+            interval = window.setInterval(() => {
+                if (subscribe() && interval !== undefined) {
+                    window.clearInterval(interval);
+                }
+            }, 250);
         }
-        ph.onFeatureFlags(() => setVariant(ph.getFeatureFlag(flagKey)));
+
+        return () => {
+            cancelled = true;
+            if (interval !== undefined) {
+                window.clearInterval(interval);
+            }
+        };
     }, [flagKey]);
 
     return variant;
@@ -49,12 +74,31 @@ export function useExperimentReader(): (flag: string) => FlagValue {
     const [, forceRender] = React.useReducer((n: number) => n + 1, 0);
 
     React.useEffect(() => {
-        const ph = getPostHog();
+        let interval: number | undefined;
 
-        if (!ph) {
-            return;
+        const subscribe = () => {
+            const ph = getPostHog();
+
+            if (!ph) {
+                return false;
+            }
+            ph.onFeatureFlags(() => forceRender());
+            return true;
+        };
+
+        if (!subscribe()) {
+            interval = window.setInterval(() => {
+                if (subscribe() && interval !== undefined) {
+                    window.clearInterval(interval);
+                }
+            }, 250);
         }
-        ph.onFeatureFlags(() => forceRender());
+
+        return () => {
+            if (interval !== undefined) {
+                window.clearInterval(interval);
+            }
+        };
     }, []);
     return getExperimentVariant;
 }

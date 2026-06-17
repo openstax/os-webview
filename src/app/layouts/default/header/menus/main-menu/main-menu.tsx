@@ -75,7 +75,14 @@ function MenusFromStructure({
         <React.Fragment>
             {structure.map((item, index) => (
                 <DropdownOrMenuItem
-                    key={'label' in item ? item.label : index}
+                    key={
+                        ('key' in item && typeof item.key === 'string' && item.key) ||
+                        ('partial_url' in item &&
+                            typeof item.partial_url === 'string' &&
+                            item.partial_url) ||
+                        ('name' in item && typeof item.name === 'string' && item.name) ||
+                        index
+                    }
                     item={item}
                     getVariant={getVariant}
                 />

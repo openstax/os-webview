@@ -48,7 +48,7 @@ describe('posthog helper', () => {
         expect(ph.capture).toHaveBeenCalledWith('thing_clicked', {a: 1});
     });
 
-    it('useExperiment returns control then updates when flags resolve', async () => {
+    it('useExperiment returns undefined then updates when flags resolve', async () => {
         const ph = installPostHog({
             getFeatureFlag: jest
                 .fn()
