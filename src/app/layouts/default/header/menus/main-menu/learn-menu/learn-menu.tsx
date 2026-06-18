@@ -1,11 +1,13 @@
 import React from 'react';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import {LanguageLink} from '~/components/language-selector/language-selector';
+import usePortalContext from '~/contexts/portal';
 import Dropdown from '../dropdown/dropdown';
 import './learn-menu.scss';
 
 function SubjectGrid() {
     const categories = useSubjectCategoryContext();
+    const {portalPrefix} = usePortalContext();
 
     if (!categories.length) {
         return null;
@@ -17,7 +19,7 @@ function SubjectGrid() {
                 .filter((c) => c.html !== 'K12' && c.value !== 'view-all')
                 .map((c) => (
                     <li key={c.value}>
-                        <a href={`/subjects/${c.value}`} data-analytics-link>
+                        <a href={`${portalPrefix}/subjects/${c.value}`} data-analytics-link>
                             {c.html}
                         </a>
                     </li>
@@ -27,23 +29,27 @@ function SubjectGrid() {
 }
 
 function ExtraLinks() {
+    const {portalPrefix} = usePortalContext();
+
     return (
         <ul className="learn-extra-links no-bullets">
-            <li><a href="/assignable" data-analytics-link>Assignable</a></li>
-            <li><a href="/print/" data-analytics-link>Order a print copy</a></li>
+            <li><a href={`${portalPrefix}/assignable`} data-analytics-link>Assignable</a></li>
+            <li><a href={`${portalPrefix}/print/`} data-analytics-link>Order a print copy</a></li>
             <li className="learn-language">
                 <span className="flag" aria-hidden="true">🇪🇸</span>
-                <LanguageLink locale="es" />
+                <LanguageLink locale="es" labelPrefix="OpenStax in " />
             </li>
             <li className="learn-language">
                 <span className="flag" aria-hidden="true">🇵🇱</span>
-                <LanguageLink locale="pl" />
+                <LanguageLink locale="pl" labelPrefix="OpenStax in " />
             </li>
         </ul>
     );
 }
 
 export default function LearnMenu() {
+    const {portalPrefix} = usePortalContext();
+
     return (
         <Dropdown
             className="learn-dropdown"
@@ -51,7 +57,7 @@ export default function LearnMenu() {
             navAnalytics="Main Menu (Learn)"
             mega
         >
-            <a className="learn-library-link" href="/subjects" data-analytics-link>
+            <a className="learn-library-link" href={`${portalPrefix}/subjects`} data-analytics-link>
                 Visit the library
                 <span aria-hidden="true" className="arrow">&#8594;</span>
             </a>

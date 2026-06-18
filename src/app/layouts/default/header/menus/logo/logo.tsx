@@ -21,7 +21,7 @@ export default function Logo() {
             </span>
             <span className="logo-divider" aria-hidden="true" />
             <span className="rice-logo">
-                <a href="http://www.rice.edu">
+                <a href="https://www.rice.edu">
                     <img src={riceLogo} alt="Rice University logo" height="30" width="79" />
                 </a>
             </span>

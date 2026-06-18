@@ -14,7 +14,11 @@ type PLocaleEntry = {
 
 export type LocaleEntry = Required<PLocaleEntry>
 
-export function LanguageLink({locale, slug}: PLocaleEntry) {
+type LanguageLinkProps = PLocaleEntry & {
+    labelPrefix?: React.ReactNode;
+};
+
+export function LanguageLink({locale, slug, labelPrefix}: LanguageLinkProps) {
     const {setLanguage} = useLanguageContext();
     const onClick = React.useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -23,7 +27,7 @@ export function LanguageLink({locale, slug}: PLocaleEntry) {
     const href = slug ? `/subjects/${slug}/` : locale;
     const props = locale === 'pl' ? {href: polishSite, target: '_blank'} : {href, onClick};
 
-    return (<a {...props}><LanguageText locale={locale} /></a>);
+    return (<a {...props}>{labelPrefix}<LanguageText locale={locale} /></a>);
 }
 
 export function LanguageText({locale}: {locale: string}) {
