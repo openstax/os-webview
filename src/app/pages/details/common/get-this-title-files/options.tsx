@@ -15,9 +15,7 @@ import {useIntl, FormattedMessage} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useTOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
-import RecommendedCallout from './recommended-callout/recommended-callout';
 import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
-import useCalloutCounter from './recommended-callout/use-callout-counter';
 import trackLink from '../track-link';
 import {useRexPortalLinkOrNot} from '~/helpers/rex-portal';
 import type {Model} from '../get-this-title';
@@ -107,8 +105,6 @@ export function TocOption({model}: {model: Model}) {
 }
 
 export function WebviewOption({model}: {model: Model}) {
-    const [showCallout, hideForever] = useCalloutCounter(model.slug);
-
     const intl = useIntl();
     const texts = {
         link: intl.formatMessage({id: 'getit.webview.link'})
@@ -146,15 +142,6 @@ export function WebviewOption({model}: {model: Model}) {
                     onDownload={trackDownload}
                     id={model.id.toString()}
                 />
-                {showCallout && (
-                    <div className="callout recommended-callout">
-                        <RecommendedCallout
-                            title={model.rexCalloutTitle}
-                            blurb={model.rexCalloutBlurb}
-                            onPutAway={hideForever}
-                        />
-                    </div>
-                )}
             </div>
         </Option>
     );
