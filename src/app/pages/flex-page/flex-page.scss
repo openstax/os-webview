@@ -1,4 +1,27 @@
+@import 'pattern-library/core/pattern-library/headers';
 
 .page.flex-page {
   overflow: visible;
+}
+
+// CORE-2302 rich-text editor features. These are openstax-cms / Draftail
+// classes, so they're styled here rather than in the flex-page renderer.
+.flex-page.page div.content-block-rich-text {
+  // Small label above a heading.
+  .eyebrow {
+    @include set-font(body-regular);
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: os-color(gray);
+  }
+
+  // Brand text colors, applied to any run of text.
+  .text-blue { color: os-color(blue); }
+  .text-green { color: os-color(green); }
+  .text-orange { color: os-color(orange); }
+  .text-gray { color: os-color(gray); }
+  .text-white { color: text-color(white); }
 }
