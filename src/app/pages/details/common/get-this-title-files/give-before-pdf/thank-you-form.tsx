@@ -47,6 +47,16 @@ function FormWithAfterSubmit({
     );
 }
 
+function useUserFields() {
+    const {userModel} = useUserContext();
+    return {
+        first: userModel?.first_name,
+        last: userModel?.last_name,
+        school: userModel?.self_reported_school,
+        accountUuid: userModel?.uuid
+    };
+}
+
 export default function ThankYou({
     link,
     close,
@@ -62,11 +72,7 @@ export default function ThankYou({
     track?: string;
     id?: string;
 }) {
-    const {userModel} = useUserContext();
-    const first = userModel?.first_name;
-    const last = userModel?.last_name;
-    const school = userModel?.self_reported_school;
-    const accountUuid = userModel?.uuid;
+    const {first, last, school, accountUuid} = useUserFields();
     const afterSubmit = React.useCallback(() => {
         window.open(link);
         close();
