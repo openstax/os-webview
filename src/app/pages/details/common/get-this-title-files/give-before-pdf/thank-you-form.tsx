@@ -66,6 +66,7 @@ export default function ThankYou({
     const first = userModel?.first_name;
     const last = userModel?.last_name;
     const school = userModel?.self_reported_school;
+    const accountUuid = userModel?.uuid;
     const afterSubmit = React.useCallback(() => {
         window.open(link);
         close();
@@ -85,6 +86,9 @@ export default function ThankYou({
             afterSubmit={afterSubmit}
         >
             <input type="hidden" name="source" value={source} />
+            {accountUuid && (
+                <input type="hidden" name="account_uuid" value={accountUuid} />
+            )}
             <h1>Send us a thank you note</h1>
             <div className="instructions">
                 <span className="asterisk" />
