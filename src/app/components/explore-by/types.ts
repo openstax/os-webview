@@ -13,5 +13,5 @@ export type Collection = {
 export type ExploreItem = Category | Collection;
 
 export function isCategory(item: ExploreItem): item is Category {
-    return 'subjectIcon' in item;
+    return typeof item.id === 'number';
 }
