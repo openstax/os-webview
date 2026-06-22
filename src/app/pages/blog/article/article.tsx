@@ -57,39 +57,44 @@ function ArticleLoader({slug, onLoad}: ArticleArgs) {
     }
 
     if (data.error) {
-        return (
-            <div className="text-content">
-                <h1>[Article not found]</h1>
-                <pre>
-                    {data.error.message} {slug}
-                </pre>
-            </div>
-        );
+        return <ArticleNotFound />;
     }
 
     return <Article data={data} />;
 }
 
+function ArticleNotFound() {
+    return (
+        <div className="text-content article-not-found">
+            <h1>This post is no longer available</h1>
+            <p>
+                The story you&rsquo;re looking for may have been moved or taken
+                down. Browse our latest blog posts below, or head back to the{' '}
+                <a href="/blog">OpenStax blog</a>.
+            </p>
+        </div>
+    );
+}
+
 export function Article({data}: {data: ArticleData}) {
-    const ArticleContent = React.useMemo(() => {
-        const isPdf = data.body.some((block) => block.type === 'document');
+    const body = data.body ?? [];
+    const isPdf = body.some((block) => block.type === 'document');
+    let ArticleContent = NormalArticle;
 
-        if (isPdf) {
-            return PdfArticle;
-        } else if (data.featuredVideo?.length) {
-            return VideoArticle;
-        }
-        return NormalArticle;
-    }, [data]);
+    if (isPdf) {
+        ArticleContent = PdfArticle;
+    } else if (data.featuredVideo?.length) {
+        ArticleContent = VideoArticle;
+    }
 
-    return <ArticleContent data={data} />;
+    return <ArticleContent data={{...data, body}} />;
 }
 
 function NormalArticle({data}: {data: ArticleData}) {
     const [readTime, setReadTime] = useState<number>();
     const ref = useRef<HTMLDivElement>(null);
     const [progress, bodyRef] = useScrollProgress(ref);
-    const {articleImage: image, featuredImageAltText: imageAlt, tags} = data;
+    const {articleImage: image, featuredImageAltText: imageAlt, tags = []} = data;
 
     return (
         <div className="content">
@@ -134,7 +139,7 @@ function VideoArticle({data}: {data: ArticleData}) {
     const {
         featuredVideo: [{value: videoEmbed}],
         body,
-        tags
+        tags = []
     } = data;
 
     return (

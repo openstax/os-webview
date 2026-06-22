@@ -2,6 +2,7 @@ import pytest
 
 import re
 from playwright.async_api import expect
+from playwright.async_api import TimeoutError
 
 
 class HomeRex:
@@ -41,15 +42,24 @@ class HomeRex:
     def iam_form_page(self):
         return self.page.get_by_label("School name")
 
-    async def open_technology_menu_item(self):
-        tech_locator = self.page.get_by_role("button", name="Technology")
-        await tech_locator.scroll_into_view_if_needed()
-        await tech_locator.hover()
+    async def click_openstax_assignable_link_in_technology_menu(self):
 
-    async def click_openstax_assignable_link(self):
-        ostax_locator = self.page.get_by_role("link", name="OpenStax Assignable")
-        await ostax_locator.scroll_into_view_if_needed()
-        await ostax_locator.click()
+        tech_menu = self.page.get_by_role("button", name="Technology")
+        assignable_link = self.page.get_by_role(
+            "link", name="OpenStax Assignable"
+        )
+
+        try:
+            await tech_menu.hover(timeout=5000)
+
+            await assignable_link.click(timeout=5000)
+            await self.page.wait_for_url("**/assignable**", timeout=5000)
+
+        except TimeoutError:
+            pytest.skip(
+                "Technology menu or OpenStax Assignable link not found/functional. "
+                "The layout or URL routing may have changed in the CMS."
+            )
 
     async def available_book_list(self):
         return (

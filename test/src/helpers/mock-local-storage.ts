@@ -4,9 +4,7 @@ const mockLocalStorage = {
     removeItem: jest.fn(),
     clear: jest.fn(),
     key: jest.fn(),
-    length: 0,
-    visitedGive: '0',
-    campaignId: ''
+    length: 0
 };
 
 Reflect.defineProperty(window, 'localStorage', {

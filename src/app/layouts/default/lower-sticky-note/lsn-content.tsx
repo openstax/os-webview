@@ -2,16 +2,9 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
-import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import cn from 'classnames';
+import type {BannerInfo} from '../shared';
 import './lower-sticky-note.scss';
-
-type BannerInfo = {
-    html_message?: string;
-    link_url: string;
-    link_text: string;
-    banner_thumbnail?: string;
-}
 
 function NoteContainer({withImage, children}: React.PropsWithChildren<{
     withImage: boolean;
@@ -25,16 +18,25 @@ function NoteContainer({withImage, children}: React.PropsWithChildren<{
     );
 }
 
+function CtaLink({bannerInfo}: {bannerInfo: BannerInfo}) {
+    if (!bannerInfo.link_url || !bannerInfo.link_text) {
+        return null;
+    }
+    return (
+        <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
+            {bannerInfo.link_text}
+            <FontAwesomeIcon icon={faChevronRight} aria-hidden="true" />
+        </a>
+    );
+}
+
 function NoteWithImage({bannerInfo}: {bannerInfo: BannerInfo}) {
     return (
         <NoteContainer withImage={true}>
             <img src={bannerInfo.banner_thumbnail} height="70" width="70" alt="" />
             <div className="text-side">
                 <RawHTML className="blurb" html={bannerInfo.html_message} />
-                <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
-                    {bannerInfo.link_text}
-                    <FontAwesomeIcon icon={faChevronRight} aria-hidden="true" />
-                </a>
+                <CtaLink bannerInfo={bannerInfo} />
             </div>
         </NoteContainer>
     );
@@ -44,30 +46,29 @@ function NoteWithoutImage({bannerInfo}: {bannerInfo: BannerInfo}) {
     return (
         <NoteContainer withImage={false}>
             <RawHTML className="blurb" html={bannerInfo.html_message} />
-            <a className="cta" href={bannerInfo.link_url} data-nudge-action="interacted">
-                <FontAwesomeIcon icon={faHeart} className="red-heart" aria-hidden="true" />
-                {bannerInfo.link_text}
-                <FontAwesomeIcon icon={faChevronRight} aria-hidden="true" />
-            </a>
+            <CtaLink bannerInfo={bannerInfo} />
         </NoteContainer>
     );
 }
 
-export default function LowerStickyNote({stickyData, PutAway}: {
-    stickyData: {bannerInfo: BannerInfo};
+export default function LowerStickyNote({bannerInfo, PutAway}: {
+    bannerInfo: BannerInfo;
     PutAway: () => React.JSX.Element;
 }) {
+    const hasImage = Boolean(bannerInfo.banner_thumbnail);
+
     return (
         <div
             className={
                 cn(
                     'lower-sticky-note-content',
-                    {'with-image': stickyData.bannerInfo.banner_thumbnail}
+                    {'with-image': hasImage}
                 )
             }
             data-analytics-view
             data-analytics-nudge="donate"
             data-nudge-placement="banner"
+            data-banner-variant={bannerInfo.name}
             role="complementary"
             aria-label="Donation campaign announcement"
             aria-live="polite"
@@ -75,9 +76,9 @@ export default function LowerStickyNote({stickyData, PutAway}: {
         >
             <PutAway />
             {
-                stickyData.bannerInfo.banner_thumbnail ?
-                    <NoteWithImage bannerInfo={stickyData.bannerInfo} /> :
-                    <NoteWithoutImage bannerInfo={stickyData.bannerInfo} />
+                hasImage ?
+                    <NoteWithImage bannerInfo={bannerInfo} /> :
+                    <NoteWithoutImage bannerInfo={bannerInfo} />
             }
         </div>
     );

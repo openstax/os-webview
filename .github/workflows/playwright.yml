@@ -1,8 +1,20 @@
 name: Playwright
 
 on:
-  push:
-    branches: [main]
+  pull_request:
+    paths:
+      - 'e2e_tests/**'
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Base URL to test against'
+        required: false
+        default: 'https://staging.openstax.org'
+        type: choice
+        options:
+          - 'https://staging.openstax.org'
+          - 'https://openstax.org'
+          - 'https://dev.openstax.org'
 
 defaults:
   run:

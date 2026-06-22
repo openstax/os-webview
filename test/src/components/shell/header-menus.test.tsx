@@ -18,7 +18,9 @@ const giveTodayData = {
     menu_start: '2023-12-14T06:00:00Z',
     menu_expires: '2024-04-01T23:00:00Z'
 };
-const futureDate = new Date(Date.now() + 500000).toLocaleString();
+const futureDate = new Date(Date.now() + 500000).toISOString();
+
+const isGiveListItem = (item: HTMLElement) => item.textContent?.trim() === 'Give';
 
 jest.spyOn(CF, 'default').mockReturnValue(Promise.resolve({}));
 
@@ -39,7 +41,7 @@ describe('shell/header/menus', () => {
         const listitems = screen.queryAllByRole('listitem');
 
         // The desktop Give menu item is off; Give button shows instead
-        expect(listitems.filter((i) => i.textContent === 'Give').length).toBe(1);
+        expect(listitems.filter(isGiveListItem).length).toBe(1);
         const button = screen.getByRole('button');
 
         expect(screen.getAllByRole('link', {name: 'Log in'})).toHaveLength(2);
@@ -62,6 +64,6 @@ describe('shell/header/menus', () => {
         const listitems = screen.queryAllByRole('listitem');
 
         // No Give button, so Give menu item in both desktop and mobile
-        expect(listitems.filter((i) => i.textContent === 'Give').length).toBe(2);
+        expect(listitems.filter(isGiveListItem).length).toBe(2);
     });
 });

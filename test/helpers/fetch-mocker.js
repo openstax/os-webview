@@ -80,7 +80,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isFlags = args[0].includes('/flags');
     const isFooter = (/api\/footer/).test(args[0]);
     const isFormHeading = (/form-headings/).test(args[0]);
-    const isGiveBanner = args[0].endsWith('snippets/givebanner/');
+    const isSiteBanner = args[0].endsWith('donations/sitebanner/');
     const isGlobalReach = args[0].includes('/global-reach/');
     const isImpact = args[0].includes('/pages/impact');
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
@@ -155,8 +155,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = footerData;
             } else if (isFormHeading) {
                 payload = formHeadings;
-            } else if (isGiveBanner) {
-                payload = {};
+            } else if (isSiteBanner) {
+                payload = [];
             } else if (isGlobalReach) {
                 payload = globalReachData;
             } else if (isHomepage) {
