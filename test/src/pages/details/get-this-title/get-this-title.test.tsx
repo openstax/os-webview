@@ -75,11 +75,7 @@ describe('get-this-title', () => {
     it('opens give dialog for Webview', async () => {
         render(<GTTinContext />);
         const wvLink = await screen.findByText('View online');
-        const closeRecommendedCallout = screen.getByRole('button', {
-            name: 'close-popup'
-        });
 
-        await user.click(closeRecommendedCallout);
         await user.click(wvLink);
 
         expect(screen.getAllByRole('dialog')).toHaveLength(2);
