@@ -49,6 +49,7 @@ function FormWithAfterSubmit({
 
 function useUserFields() {
     const {userModel} = useUserContext();
+
     return {
         first: userModel?.first_name,
         last: userModel?.last_name,
