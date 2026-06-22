@@ -21,7 +21,7 @@
                 position: relative;
                 top: 0;
                 left: 50%;
-                margin-bottom: -3rem;
+                margin-bottom: -2rem;
                 transform: translate(-50%, -50%);
                 width: min-content;
 
@@ -36,6 +36,8 @@
 
             a {
                 color: inherit;
+                display: block;
+                height: 100%;
                 text-decoration: none;
                 padding-bottom: 1rem;
             }

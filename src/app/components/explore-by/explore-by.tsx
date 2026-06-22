@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {ExploreItem, isCategory, isCollection} from './types';
+import {ExploreItem, isCategory} from './types';
 import './explore-by.scss';
 
 export default function ExploreBy({
@@ -22,6 +22,7 @@ export default function ExploreBy({
             <div className="item-links" data-analytics-nav={analyticsNav}>
                 {items.map((item) => {
                     const key = isCategory(item) ? String(item.id) : item.id;
+
                     return (
                         <ItemLink
                             key={key}

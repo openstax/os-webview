@@ -15,7 +15,3 @@ export type ExploreItem = Category | Collection;
 export function isCategory(item: ExploreItem): item is Category {
     return 'subjectIcon' in item;
 }
-
-export function isCollection(item: ExploreItem): item is Collection {
-    return 'collectionImage' in item;
-}

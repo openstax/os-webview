@@ -16,20 +16,30 @@ import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
 import {assertDefined} from '~/helpers/data';
 import './blog.scss';
 
-function WriteForUs({descriptionHtml, text, link}: {
+function WriteForUs({
+    descriptionHtml,
+    text,
+    link
+}: {
     descriptionHtml: string;
     text: string;
     link: string;
 }) {
     return (
-        <section className='boxed'>
-            <RawHTML Tag='h2' className="description" html={descriptionHtml} />
-            <a href={link} className="btn primary">{text}</a>
+        <section className="boxed">
+            <RawHTML Tag="h2" className="description" html={descriptionHtml} />
+            <a href={link} className="btn primary">
+                {text}
+            </a>
         </section>
     );
 }
 
-function buildWriteForUsData({footerText, footerButtonText, footerLink}: {
+function buildWriteForUsData({
+    footerText,
+    footerButtonText,
+    footerLink
+}: {
     footerText?: string;
     footerButtonText?: string;
     footerLink?: string;
@@ -58,8 +68,18 @@ function DiscoveryContent({
 }) {
     return (
         <React.Fragment>
-            <ExploreBy items={categories} title='Explore by subject' analyticsNav='Blog Subjects' basePath='subjects' />
-            <ExploreBy items={collections} title='Explore collections' analyticsNav='Blog Collections' basePath='collections' />
+            <ExploreBy
+                items={categories}
+                title="Explore by subject"
+                analyticsNav="Blog Subjects"
+                basePath="subjects"
+            />
+            <ExploreBy
+                items={collections}
+                title="Explore collections"
+                analyticsNav="Blog Collections"
+                basePath="collections"
+            />
             <PinnedArticle />
             <MoreStories exceptSlug={pinnedSlug || ''} />
         </React.Fragment>
@@ -70,12 +90,21 @@ function DiscoveryContent({
 
 export function MainBlogPage() {
     const {
-        pinnedStory, pageTitle, pageDescription, searchFor,
+        pinnedStory,
+        pageTitle,
+        pageDescription,
+        searchFor,
         subjectSnippet: categories,
         collectionSnippet: collections,
-        footerText, footerButtonText, footerLink
+        footerText,
+        footerButtonText,
+        footerLink
     } = useBlogContext();
-    const writeForUsData = buildWriteForUsData({footerText, footerButtonText, footerLink});
+    const writeForUsData = buildWriteForUsData({
+        footerText,
+        footerButtonText,
+        footerLink
+    });
     // Editable in the CMS (the news page title); falls back to a friendlier
     // default than the bare "OpenStax Blog".
     const heading = pageTitle || 'Stories from OpenStax';
@@ -91,18 +120,25 @@ export function MainBlogPage() {
     return (
         <WindowContextProvider>
             <div className="boxed">
-                <HeadingAndSearchBar searchFor={searchFor} amongWhat='blog posts'>
+                <HeadingAndSearchBar
+                    searchFor={searchFor}
+                    amongWhat="blog posts"
+                >
                     <h1>{heading}</h1>
                 </HeadingAndSearchBar>
-                <FacetControls subjects={categories} collections={collections} />
-                {isActive
-                    ? <SearchResults />
-                    : <DiscoveryContent
+                <FacetControls
+                    subjects={categories}
+                    collections={collections}
+                />
+                {isActive ? (
+                    <SearchResults />
+                ) : (
+                    <DiscoveryContent
                         categories={categories}
                         collections={collections}
                         pinnedSlug={pinnedSlug}
                     />
-                }
+                )}
             </div>
             <div className="write-for-us">
                 <WriteForUs {...writeForUsData} />
