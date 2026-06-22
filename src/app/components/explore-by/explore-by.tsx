@@ -17,7 +17,7 @@ export default function ExploreBy({
     const {pathname} = useLocation();
 
     return (
-        <section id="explore-by">
+        <section className="explore-by">
             <h2>{title}</h2>
             <div className="item-links" data-analytics-nav={analyticsNav}>
                 {items.map((item) => {
