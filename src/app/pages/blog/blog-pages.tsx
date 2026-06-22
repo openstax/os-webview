@@ -4,8 +4,7 @@ import {useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import ExploreBySubject from '~/components/explore-by-subject/explore-by-subject';
-import ExploreByCollection from '~/components/explore-by-collection/explore-by-collection';
+import ExploreBy from '~/components/explore-by/explore-by';
 import PinnedArticle from './pinned-article/pinned-article';
 import MoreStories from './more-stories/more-stories';
 import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
@@ -59,8 +58,8 @@ function DiscoveryContent({
 }) {
     return (
         <React.Fragment>
-            <ExploreBySubject categories={categories} analyticsNav='Blog Subjects' />
-            <ExploreByCollection collections={collections} analyticsNav='Blog Collections' />
+            <ExploreBy items={categories} title='Explore by subject' analyticsNav='Blog Subjects' basePath='subjects' />
+            <ExploreBy items={collections} title='Explore collections' analyticsNav='Blog Collections' basePath='collections' />
             <PinnedArticle />
             <MoreStories exceptSlug={pinnedSlug || ''} />
         </React.Fragment>

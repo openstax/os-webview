@@ -1,7 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-#explore-by-subject {
-    .subject-links {
+#explore-by {
+    .item-links {
         display: grid;
         gap: 2rem;
         grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
@@ -40,7 +40,7 @@
                 padding-bottom: 1rem;
             }
 
-            .subject-name {
+            .item-name {
                 @include set-font(body-large);
 
                 align-items: center;
