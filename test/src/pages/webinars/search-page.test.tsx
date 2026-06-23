@@ -51,4 +51,32 @@ describe('webinar search page', () => {
 
         expect(screen.queryByText('No matching webinars found')).toBeNull();
     });
+    it('requests webinars without sort param when sort=relevance (default)', () => {
+        mockUseFetchedData.mockReturnValue([]);
+        render(
+            <MemoryRouter initialEntries={['/webinars/search?q=test']}>
+                <SearchPage />
+            </MemoryRouter>
+        );
+
+        expect(mockUseFetchedData).toHaveBeenCalledWith(
+            expect.objectContaining({
+                slug: 'webinars/search?q=test'
+            })
+        );
+    });
+    it('requests webinars with sort=newest param when specified in URL', () => {
+        mockUseFetchedData.mockReturnValue([]);
+        render(
+            <MemoryRouter initialEntries={['/webinars/search?q=test&sort=newest']}>
+                <SearchPage />
+            </MemoryRouter>
+        );
+
+        expect(mockUseFetchedData).toHaveBeenCalledWith(
+            expect.objectContaining({
+                slug: 'webinars/search?q=test&sort=newest'
+            })
+        );
+    });
 });
