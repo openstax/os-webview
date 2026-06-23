@@ -7,7 +7,7 @@ import ExploreBy from '~/components/explore-by/explore-by';
 import PastWebinars from './past-webinars';
 
 export default function MainPage() {
-    const {subjects, searchFor, pageData, collections} = useWebinarContext();
+    const {subjects, searchFor, pageData} = useWebinarContext();
 
     useDocumentHead({
         title: pageData.title
@@ -24,12 +24,6 @@ export default function MainPage() {
                 title="Explore by subject"
                 analyticsNav="Webinar Subjects"
                 basePath="subjects"
-            />
-            <ExploreBy
-                items={collections}
-                title="Explore collections"
-                analyticsNav="Webinar Collections"
-                basePath="collections"
             />
             <PastWebinars />
         </div>
