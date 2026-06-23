@@ -4,6 +4,10 @@
     min-width: 48rem;
     text-align: left;
 
+    @include width-up-to($tablet-max) {
+        min-width: 0;
+        width: 100%;
+    }
     .learn-library-link {
         @include set-font(h4);
 
