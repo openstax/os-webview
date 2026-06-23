@@ -166,7 +166,7 @@ describe('book-selector', () => {
         screen.findByText('bake at 350');
     });
 
-    it('handles Spanish subjects without English partners (line 45)', async () => {
+    it('handles Spanish subjects without English partners', async () => {
         render(<Component />);
         // Wait for component to load
         await screen.findByRole('searchbox');
@@ -183,7 +183,7 @@ describe('book-selector', () => {
         ).toBeTruthy();
     });
 
-    it('toggles subject section open and closed (line 113)', async () => {
+    it('toggles subject section open and closed', async () => {
         render(<Component />);
         await screen.findByRole('searchbox');
 
@@ -193,10 +193,7 @@ describe('book-selector', () => {
         // Initially, the section should be collapsed (no checkboxes visible)
         expect(screen.queryByRole('checkbox')).toBeFalsy();
 
-        // Click to expand (line 113 onClick handler)
         await user.click(mathButton);
-
-        // Now checkboxes should be visible
         await waitFor(() => {
             expect(screen.queryAllByRole('checkbox')).toBeTruthy();
         });
@@ -206,10 +203,7 @@ describe('book-selector', () => {
             mathButton.closest('button')?.getAttribute('aria-expanded')
         ).toBe('true');
 
-        // Click again to collapse
         await user.click(mathButton);
-
-        // Section should collapse again
         await waitFor(() => {
             expect(
                 mathButton.closest('button')?.getAttribute('aria-expanded')
@@ -217,7 +211,7 @@ describe('book-selector', () => {
         });
     });
 
-    it('removes selected book via tag button (line 160)', async () => {
+    it('removes selected book via tag button', async () => {
         render(<Component />);
         await screen.findByRole('searchbox');
 
@@ -229,8 +223,6 @@ describe('book-selector', () => {
         const [checkbox] = await screen.findAllByRole('checkbox');
 
         await user.click(checkbox);
-
-        // Wait for the tag to appear
         const removeButton = await screen.findByRole('button', {
             name: /Remove/i
         });
@@ -238,19 +230,15 @@ describe('book-selector', () => {
         // Verify tag is present
         expect(removeButton).toBeTruthy();
 
-        // Click the remove button (line 160 onClick handler)
         await user.click(removeButton);
-
-        // Tag should be removed
         await waitFor(() => {
             expect(screen.queryByRole('button', {name: /Remove/i})).toBeFalsy();
         });
 
-        // Checkbox should be unchecked
         expect(checkbox.getAttribute('aria-checked')).toBe('false');
     });
 
-    it('shows correct hint text when limit is reached (line 184)', async () => {
+    it('shows correct hint text when limit is reached', async () => {
         // Explicitly pass limit: 2 to ensure it's set
         render(<Component limit={2} />);
         await screen.findByRole('searchbox');
@@ -263,45 +251,33 @@ describe('book-selector', () => {
         // Get all checkboxes and click two of them
         const checkboxes = await screen.findAllByRole('checkbox');
 
-        // Click first checkbox
         await user.click(checkboxes[0]);
-
-        // Click second checkbox to reach limit of 2
         await user.click(checkboxes[1]);
 
-        // Wait for the limit message to appear (line 184)
-        // The text should change from "Select all that apply" to "Maximum 2 selected"
-        screen.findByText('Maximum 2 selected');
+        await screen.findByText('Maximum 2 selected');
     });
 
-    it('filters books by search with empty search returning all books (line 280)', async () => {
+    it('filters books by search with empty search returning all books', async () => {
         render(<Component />);
         const searchBox = await screen.findByRole('searchbox');
 
-        // Initially, with empty search (line 280 condition), all books should be available
+        // Initially, with empty search, all books should be available
         // Expand Math section
         const mathButton = await screen.findByText('Math / Matemáticas');
 
         await user.click(mathButton);
-
-        // Should see Calculus book
         await screen.findByText('Calculus');
 
-        // Now search for "Biology" to filter
         await user.type(searchBox, 'Biology');
-
-        // Math section should not show results, so Calculus shouldn't be visible
         await waitFor(() => {
             expect(screen.queryByText('Calculus')).toBeFalsy();
         });
-
-        // Biology should be visible when we expand Science
         const scienceButton = await screen.findByText('Science / Ciencia');
 
         expect(scienceButton).toBeTruthy();
     });
 
-    it('handles removing a selected book when in the selectedBooks array (line 361)', async () => {
+    it('handles removing a selected book when in the selectedBooks array', async () => {
         // Use Component wrapper which properly calls useSelectedBooks() inside BookSelectorPage
         render(<Component />);
         await screen.findByRole('searchbox');
@@ -317,8 +293,6 @@ describe('book-selector', () => {
         });
 
         await user.click(checkbox);
-
-        // Wait for the checkbox to be checked
         await waitFor(() => {
             expect(checkbox.getAttribute('aria-checked')).toBe('true');
         });
@@ -329,11 +303,7 @@ describe('book-selector', () => {
 
             expect(tags.length).toBeGreaterThan(0);
         });
-
-        // Click again to deselect (this exercises line 361 - the filter path)
         await user.click(checkbox);
-
-        // Wait for checkbox to be unchecked
         await waitFor(() => {
             expect(checkbox.getAttribute('aria-checked')).toBe('false');
         });
@@ -370,7 +340,7 @@ describe('book-selector', () => {
         // Spanish "Ciencias Sociales" appears unpaired because there's no English book
         // with "Social Sciences" subject in the mock data. The Historia book has
         // "Ciencias Sociales" but no corresponding English Social Sciences book exists,
-        // so it appears standalone per the groupSubjects logic (line 45 in book-selector.tsx)
+        // so it appears standalone per the groupSubjects logic
         const unpairedSocial = await screen.findByText('Ciencias Sociales');
 
         expect(unpairedSocial).toBeTruthy();

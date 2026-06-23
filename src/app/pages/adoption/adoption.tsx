@@ -324,7 +324,7 @@ export default function AdoptionForm() {
             <div className="text-content" ref={ref}>
                 {isLoggedIn ? (
                     <FacultyForm
-                        position={positionFromRole(assertDefined(userModel?.self_reported_role))}
+                        position={positionFromRole(assertDefined(userModel).self_reported_role)}
                         onPageChange={onPageChange}
                     />
                 ) : (
