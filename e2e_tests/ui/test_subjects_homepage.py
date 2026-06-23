@@ -47,8 +47,13 @@ async def test_subjects_homepage(chrome_page_unlogged, base_url):
 
     assert f"{base_url}/about" == chrome_page_unlogged.url
     about_text = await home.about_page.inner_text()
-    assert (
-        ("Who we are" in about_text and "What makes us different" in about_text)  # in production
-        or
-        ("What we do" in about_text and "Where we're going" in about_text)  # in staging
-    )
+
+    # This is in CMS and can change without deployment (refer to our discussion with Michael)
+    try:
+        assert "Who we are" in about_text
+        assert "What makes us different" in about_text
+    except AssertionError:
+        pytest.skip(
+            "Expected 'Who we are' or 'What makes us different' text not found. "
+            "The About page content may have changed in the CMS."
+        )

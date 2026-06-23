@@ -4,6 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import {Authors, PublicationInfo, ErrataSection} from '../../common/common';
 import GetThisTitle from '../../common/get-this-title';
 import LetUsKnow from '../../common/let-us-know/let-us-know';
+import OrderPrintCopy from '../../common/get-this-title-files/order-print-copy/order-print-copy';
 import SavingsBlurb from '../../common/savings-blurb';
 import Promo from '../promo';
 import type {ContextValues} from '../../context';
@@ -24,6 +25,7 @@ function PolishTab({model}: {model: ContextValues}) {
                 </div>
                 <div className="let-us-know-region">
                     <LetUsKnow title={model.title} />
+                    <OrderPrintCopy slug={model.slug} campaign="book-details" />
                 </div>
             </div>
             <div className="main">
@@ -54,6 +56,7 @@ function EnglishTab({model}: {model: ContextValues}) {
                 </div>
                 <div className="let-us-know-region">
                     <LetUsKnow title={model.salesforceAbbreviation} />
+                    <OrderPrintCopy slug={model.slug} campaign="book-details" />
                 </div>
             </div>
             <div className="main">

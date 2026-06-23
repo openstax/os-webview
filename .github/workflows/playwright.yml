@@ -16,6 +16,10 @@ on:
           - 'https://openstax.org'
           - 'https://dev.openstax.org'
 
+defaults:
+  run:
+    working-directory: e2e_tests
+
 jobs:
   playwright-python:
     timeout-minutes: 60
