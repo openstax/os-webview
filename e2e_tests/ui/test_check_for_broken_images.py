@@ -13,37 +13,48 @@ async def test_check_for_broken_images(chrome_page_unlogged, base_url):
 
     # WHEN: The pages are fully loaded
     for osweb_page in osweb_pages:
-        resp = await chrome_page_unlogged.goto(f"{base_url}/{osweb_page}", wait_until="domcontentloaded")
-        await chrome_page_unlogged.wait_for_timeout(2000)
+        url = f"{base_url}/{osweb_page}"
+        resp = await chrome_page_unlogged.goto(url, wait_until="load")
+
+        # For cases like network error or crash
+        if resp is None:
+            pytest.fail(f"Navigation failed (no response) for {url}")
 
         if resp.status >= 400:
             print(f"Skipping {chrome_page_unlogged.url} — status {resp.status}")
             continue
 
-        print(chrome_page_unlogged.url)
+        print(f"Checking {chrome_page_unlogged.url}")
+
+        # To allow lazy images to load
+        await chrome_page_unlogged.wait_for_timeout(2000)
 
         # THEN: Every img element loads successfully
-        images = chrome_page_unlogged.locator("img")
-        count = await images.count()
-        broken = []
-
-        for i in range(count):
-
-            img = images.nth(i)
-            src = await img.get_attribute("src") or ""
-
-            if not src or src.startswith("data:"):
-                continue
-
-            natural_width = await img.evaluate("el => el.naturalWidth")
-            is_complete = await img.evaluate("el => el.complete")
-
-            if is_complete and natural_width == 0:
-                broken.append(src)
+        broken = await chrome_page_unlogged.evaluate(
+            """() => {
+                const pageUrl = window.location.href;
+                return Array.from(document.images)
+                    .map(img => ({
+                        src: img.currentSrc || img.src,
+                        complete: img.complete,
+                        naturalWidth: img.naturalWidth,
+                    }))
+                    .filter(i =>
+                        i.src &&
+                        !i.src.startsWith('data:') &&
+                        // filters out images whose src resolves to the page URL itself
+                        i.src !== pageUrl &&
+                        i.complete &&
+                        i.naturalWidth === 0
+                    )
+                    .map(i => i.src);
+            }"""
+        )
 
         if broken:
             all_broken[chrome_page_unlogged.url] = broken
 
-    assert all_broken == {}, f"Broken images found:\n" + "\n".join(
-        f"  {url}: {srcs}" for url, srcs in all_broken.items()
+    assert all_broken == {}, (
+        "Broken images found:\n"
+        + "\n".join(f"  {url}: {srcs}" for url, srcs in all_broken.items())
     )
