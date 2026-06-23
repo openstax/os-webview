@@ -47,6 +47,17 @@ function FormWithAfterSubmit({
     );
 }
 
+function useUserFields() {
+    const {userModel} = useUserContext();
+
+    return {
+        first: userModel?.first_name,
+        last: userModel?.last_name,
+        school: userModel?.self_reported_school,
+        accountUuid: userModel?.uuid
+    };
+}
+
 export default function ThankYou({
     link,
     close,
@@ -62,10 +73,7 @@ export default function ThankYou({
     track?: string;
     id?: string;
 }) {
-    const {userModel} = useUserContext();
-    const first = userModel?.first_name;
-    const last = userModel?.last_name;
-    const school = userModel?.self_reported_school;
+    const {first, last, school, accountUuid} = useUserFields();
     const afterSubmit = React.useCallback(() => {
         window.open(link);
         close();
@@ -85,6 +93,9 @@ export default function ThankYou({
             afterSubmit={afterSubmit}
         >
             <input type="hidden" name="source" value={source} />
+            {accountUuid && (
+                <input type="hidden" name="account_uuid" value={accountUuid} />
+            )}
             <h1>Send us a thank you note</h1>
             <div className="instructions">
                 <span className="asterisk" />
