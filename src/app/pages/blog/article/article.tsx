@@ -77,7 +77,7 @@ function ArticleNotFound() {
 }
 
 export function Article({data}: {data: ArticleData}) {
-    const body = data.body ?? [];
+    const body = data.body;
     const isPdf = body.some((block) => block.type === 'document');
     let ArticleContent = NormalArticle;
 
@@ -94,7 +94,7 @@ function NormalArticle({data}: {data: ArticleData}) {
     const [readTime, setReadTime] = useState<number>();
     const ref = useRef<HTMLDivElement>(null);
     const [progress, bodyRef] = useScrollProgress(ref);
-    const {articleImage: image, featuredImageAltText: imageAlt, tags = []} = data;
+    const {articleImage: image, featuredImageAltText: imageAlt, tags} = data;
 
     return (
         <div className="content">
@@ -139,7 +139,7 @@ function VideoArticle({data}: {data: ArticleData}) {
     const {
         featuredVideo: [{value: videoEmbed}],
         body,
-        tags = []
+        tags
     } = data;
 
     return (

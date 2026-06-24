@@ -7,6 +7,7 @@ import {SpecificSubjectContextProvider} from '~/pages/subjects/new/specific/cont
 import businessBooksData from '~/../../test/src/data/business-books';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {NavigatorContextProvider} from '~/pages/subjects/new/specific/navigator-context';
+import * as DH from '~/helpers/use-document-head';
 
 const mockUsePageData = jest.fn();
 
@@ -14,6 +15,7 @@ jest.mock('~/helpers/use-page-data', () => ({
     __esModule: true,
     default: () => mockUsePageData()
 }));
+jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue();
 
 mockUsePageData.mockReturnValue(businessBooksData);
 const subject = {
