@@ -81,8 +81,8 @@ function positionFromRole(role: string) {
     return roleToPosition[role] ?? 'Other';
 }
 
-function HiddenField({name, value}: {name: string; value?: string}) {
-    return <input type="hidden" name={name} value={value ?? ''} />;
+function HiddenField({name, value}: {name: string; value: string}) {
+    return <input type="hidden" name={name} value={value} />;
 }
 
 function hiddenContactFields(userModel: UserModelType) {
@@ -91,12 +91,12 @@ function hiddenContactFields(userModel: UserModelType) {
     return [
         ['first_name', userModel.first_name],
         ['last_name', userModel.last_name],
-        ['email', userModel.email],
+        ['email', userModel.email ?? ''],
         ['school', a?.school_name],
         ['school_type', a?.school_type],
         ['school_location', a?.school_location],
         ['salesforce_contact_id', userModel.salesforce_contact_id]
-    ] as [string, string | undefined][];
+    ] as [string, string][];
 }
 
 function HiddenContactInfo() {
