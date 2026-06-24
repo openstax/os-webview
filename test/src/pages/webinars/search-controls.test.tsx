@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '../../../helpers/future-memory-router';
 import SearchControls from '~/pages/webinars/search-controls/search-controls';
 
 it('sort is a radiogroup that updates aria-checked from relevance to newest', async () => {
@@ -45,7 +45,7 @@ it('clicking Newest then Relevance clears sort param (round-trip)', async () => 
 });
 
 it('setSort callback properly updates URL params when toggling sort', async () => {
-    const {container} = render(
+    render(
         <MemoryRouter initialEntries={['/webinars/search?q=test']}>
             <SearchControls />
         </MemoryRouter>

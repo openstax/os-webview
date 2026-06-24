@@ -11,7 +11,7 @@ type SortValue = 'relevance' | 'newest';
 
 interface SortToggleProps {
     sort: SortValue;
-    setSort: (value: string | undefined) => void;
+    setSort: (value: 'newest' | undefined) => void;
     labelId: string;
     className?: string;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentType} from 'preact';
 import {renderHook, act} from '@testing-library/preact';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '../../../helpers/future-memory-router';
 import useWebinarSearchParams from '~/pages/webinars/use-webinar-search-params';
 
 type RenderHookWrapper = ComponentType<{children: Element}>;
