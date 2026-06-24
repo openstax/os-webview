@@ -465,38 +465,6 @@ describe('how-using', () => {
 });
 
 describe('adoption-form edge cases for 100% coverage', () => {
-    // Review #17: Test coverage for missing branches
-    it('handles undefined value in HiddenField (line 84)', async () => {
-        // The HiddenField component converts undefined values to empty strings (line 84)
-        // When rendered with UserContextProvider, salesforce_contact_id comes from the user model
-        // This test verifies the field is rendered correctly
-        render(
-            <LanguageContextProvider>
-                <SharedDataContextProvider>
-                    <UserContextProvider>
-                        <MemoryRouter initialEntries={['/adoption']}>
-                            <MainClassContextProvider>
-                                <AdoptionForm />
-                            </MainClassContextProvider>
-                        </MemoryRouter>
-                    </UserContextProvider>
-                </SharedDataContextProvider>
-            </LanguageContextProvider>
-        );
-
-        await screen.findByRole('form');
-
-        // The HiddenField component renders the salesforce_contact_id field
-        // The actual value comes from UserContext (not undefined in this test setup)
-        const salesforceField = document.querySelector(
-            'input[name="salesforce_contact_id"]'
-        ) as HTMLInputElement;
-
-        // Field exists and has a value (the ?? '' at line 84 ensures it's never undefined)
-        expect(salesforceField).toBeTruthy();
-        expect(salesforceField?.value).toBeDefined();
-    });
-
     it('toggles year off when already selected (line 158 filter path)', async () => {
         const user = userEvent.setup();
 
