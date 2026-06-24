@@ -1,4 +1,5 @@
 import React from 'react';
+import {assertNotNull} from '~/helpers/data';
 import './sort-toggle.scss';
 
 const SORT_OPTIONS = [
@@ -30,9 +31,9 @@ export default function SortToggle({sort, setSort, labelId, className = ''}: Sor
 
         setSort(next.value);
 
-        const group = e.currentTarget.parentElement;
+        const group = assertNotNull(e.currentTarget.parentElement);
         const buttons = Array.from(
-            group?.querySelectorAll<HTMLButtonElement>('button[role="radio"]') ?? []
+            group.querySelectorAll<HTMLButtonElement>('button[role="radio"]')
         );
 
         buttons[nextIndex]?.focus();
