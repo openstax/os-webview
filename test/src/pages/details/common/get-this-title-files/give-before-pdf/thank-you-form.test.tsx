@@ -39,7 +39,7 @@ describe('ThankYou', () => {
                 self_reported_school: 'Test University',
                 uuid: undefined // No UUID
             }
-        } as ReturnType<typeof UserContext.default>);
+        } as unknown as ReturnType<typeof UserContext.default>);
 
         const {container} = render(
             <Wrapper>
@@ -52,6 +52,7 @@ describe('ThankYou', () => {
 
         // Verify the account_uuid hidden input is NOT present
         const accountUuidInput = container.querySelector('input[name="account_uuid"]');
+
         expect(accountUuidInput).toBeNull();
     });
 
