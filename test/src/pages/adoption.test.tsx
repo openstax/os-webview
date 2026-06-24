@@ -372,9 +372,10 @@ describe('adoption-form with different roles', () => {
     });
 
     /* eslint-disable camelcase */
-    it('maps administrator role to Administrator position', async () => {
+    it('maps administrator role to Administrator position (and handles undefined email)', async () => {
         const adminUserModel = {
             ...userModel,
+            email: undefined,
             self_reported_role: 'administrator'
         };
 
