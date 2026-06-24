@@ -72,7 +72,43 @@
     }
 }
 
+// In the mobile drawer the mega-menu re-flows into a single stacked list so it
+// matches the other menus. The drawer already supplies padding and a tall
+// (4.4rem) line-height, so we strip the desktop grid, border, and row-gaps
+// rather than letting them stack into oversized gaps.
 .menus.mobile .learn-dropdown .mega-menu {
     min-width: 0;
     width: 100%;
+
+    .mega-content {
+        padding: 0;
+    }
+
+    .learn-library-link {
+        margin-bottom: 0;
+    }
+
+    // Match the 1.4rem sub-item size the other menus use for their children
+    // (the grid/extra-links are nested <ul>s, so they otherwise pick up the
+    // 1.8rem top-level item size instead).
+    .learn-subject-grid,
+    .learn-extra-links {
+        font-size: 1.4rem;
+    }
+
+    .learn-subject-grid {
+        border-left: 0;
+        column-gap: 0;
+        grid-template-columns: 1fr;
+        padding: 0;
+        row-gap: 0;
+    }
+
+    hr {
+        margin: 0.8rem 0;
+    }
+
+    .learn-extra-links {
+        row-gap: 0;
+    }
 }

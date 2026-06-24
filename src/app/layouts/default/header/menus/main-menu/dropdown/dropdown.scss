@@ -43,6 +43,18 @@
     }
 }
 
+// Give the standard (non-mega) dropdowns the same breathing room as the
+// Learn mega-menu on desktop. The mobile drawer keeps its own rhythm.
+.dropdown-menu:not(.mega-menu) {
+    @include wider-than($tablet-max) {
+        padding: 1.5rem 2rem;
+
+        > li + li {
+            margin-top: 1rem;
+        }
+    }
+}
+
 .dropdown {
     position: relative;
 
