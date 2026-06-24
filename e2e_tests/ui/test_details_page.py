@@ -47,7 +47,7 @@ async def test_order_options_link(chrome_page_unlogged, base_url, book_slug):
     # WHEN: The Home page is fully loaded
     details_books_url = f"{base_url}/details/books/{book_slug}"
 
-    await chrome_page_unlogged.goto(details_books_url)
+    await chrome_page_unlogged.goto(details_books_url, wait_until="domcontentloaded")
     home = HomeRex(chrome_page_unlogged)
 
     await chrome_page_unlogged.keyboard.press("Escape")
