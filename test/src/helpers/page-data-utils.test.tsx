@@ -43,6 +43,20 @@ describe('page-data-utils', () => {
                 'books/originalslug/?format=json'
             );
         });
+        it('uses & when URL already has query params', async () => {
+            const url = await getUrlFor('whatever?existing=param');
+
+            expect(url).toContain('existing=param');
+            expect(url).toContain('&format=json');
+            expect(url).not.toContain('?format=json');
+        });
+        it('adds draft param when preview query param is present', async () => {
+            window.history.replaceState({}, '', '/test?preview=1');
+            const url = await getUrlFor('whatever');
+
+            expect(url).toContain('draft=');
+            window.history.replaceState({}, '', '/');
+        });
     });
     describe('useTextFromSlug', () => {
         function Component() {

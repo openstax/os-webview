@@ -54,4 +54,101 @@ describe('HeadlessUserbar', () => {
         expect(global.fetch as jest.Mock).not.toHaveBeenCalled();
         expect(container.querySelector('wagtail-userbar')).toBeNull();
     });
+
+    it('does not inject when response is empty', async () => {
+        setLocation('/some-page/?preview=auto');
+        (global.fetch as jest.Mock).mockImplementation(() =>
+            Promise.resolve({
+                ok: true,
+                text: () => Promise.resolve('')
+            })
+        );
+
+        const {container} = render(<HeadlessUserbar />);
+
+        await waitFor(() =>
+            expect(global.fetch as jest.Mock).toHaveBeenCalled()
+        );
+
+        expect(container.querySelector('wagtail-userbar')).toBeNull();
+        expect(container.querySelector('script')).toBeNull();
+    });
+
+    it('does not inject when response does not contain wagtail-userbar', async () => {
+        setLocation('/some-page/?preview=auto');
+        (global.fetch as jest.Mock).mockImplementation(() =>
+            Promise.resolve({
+                ok: true,
+                text: () => Promise.resolve('<div>Some other content</div>')
+            })
+        );
+
+        const {container} = render(<HeadlessUserbar />);
+
+        await waitFor(() =>
+            expect(global.fetch as jest.Mock).toHaveBeenCalled()
+        );
+
+        expect(container.querySelector('wagtail-userbar')).toBeNull();
+    });
+
+    it('does not inject when wagtail-userbar already exists', async () => {
+        setLocation('/some-page/?preview=auto');
+        let callCount = 0;
+        (global.fetch as jest.Mock).mockImplementation(() => {
+            callCount++;
+            return Promise.resolve({
+                ok: true,
+                text: () =>
+                    Promise.resolve('<wagtail-userbar></wagtail-userbar>')
+            });
+        });
+
+        const {container, rerender} = render(<HeadlessUserbar />);
+
+        await waitFor(() =>
+            expect(container.querySelector('wagtail-userbar')).not.toBeNull()
+        );
+
+        const scriptCount = container.querySelectorAll('script').length;
+
+        rerender(<HeadlessUserbar />);
+
+        await waitFor(() => expect(callCount).toBeGreaterThanOrEqual(1));
+
+        expect(container.querySelectorAll('script').length).toBe(scriptCount);
+    });
+
+    it('handles fetch errors gracefully', async () => {
+        setLocation('/some-page/?preview=auto');
+        (global.fetch as jest.Mock).mockImplementation(() =>
+            Promise.reject(new Error('Network error'))
+        );
+
+        const {container} = render(<HeadlessUserbar />);
+
+        await waitFor(() =>
+            expect(global.fetch as jest.Mock).toHaveBeenCalled()
+        );
+
+        expect(container.querySelector('wagtail-userbar')).toBeNull();
+    });
+
+    it('handles non-ok response', async () => {
+        setLocation('/some-page/?preview=auto');
+        (global.fetch as jest.Mock).mockImplementation(() =>
+            Promise.resolve({
+                ok: false,
+                text: () => Promise.resolve('<wagtail-userbar></wagtail-userbar>')
+            })
+        );
+
+        const {container} = render(<HeadlessUserbar />);
+
+        await waitFor(() =>
+            expect(global.fetch as jest.Mock).toHaveBeenCalled()
+        );
+
+        expect(container.querySelector('wagtail-userbar')).toBeNull();
+    });
 });

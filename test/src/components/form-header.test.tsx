@@ -95,4 +95,18 @@ describe('FormHeader', () => {
         render(<Component />);
         expect(screen.getByText('Hello there')).toBeTruthy();
     });
+
+    it('falls back to empty string when all fields are missing (line 23)', () => {
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            userModel as unknown as UM.UserModelType
+        );
+        // Don't provide any heading fields to test the empty string fallback
+        (usePageData as jest.Mock).mockReturnValue({});
+        render(<Component />);
+        // When no fields are provided, the component should render with empty heading
+        // This tests line 23: return override || data[`${prefix}${suffix}`] || '';
+        const heading = document.querySelector('h1');
+
+        expect(heading?.textContent).toBe('');
+    });
 });

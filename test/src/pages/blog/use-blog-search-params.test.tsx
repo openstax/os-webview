@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentType} from 'preact';
 import {renderHook, act} from '@testing-library/preact';
-import {MemoryRouter} from 'react-router-dom';
+import MemoryRouter from '../../../helpers/future-memory-router';
 import useBlogSearchParams from '~/pages/blog/use-blog-search-params';
 
 type RenderHookWrapper = ComponentType<{children: Element}>;
@@ -16,7 +16,7 @@ function wrapperFor(initialUrl: string) {
 
 describe('useBlogSearchParams', () => {
     it('parses q, subjects, collection, sort from the URL', () => {
-        const wrapper = wrapperFor('/blog/?q=algebra&subjects=Math,Science&sort=newest') as unknown as RenderHookWrapper;
+        const wrapper = wrapperFor('/blog/?q=algebra&subjects=Math,Science&sort=newest') as RenderHookWrapper;
         const {result} = renderHook(() => useBlogSearchParams(), {
             wrapper
         });
