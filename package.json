@@ -26,7 +26,8 @@
         "@fortawesome/free-solid-svg-icons": "^6.3.0",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@openstax/experiments": "^1.0.2",
-        "@openstax/flex-page-renderer": "https://github.com/openstax/flex-pages.git#renderer-1.1.17",
+        "@openstax/flex-page-os-blocks": "https://github.com/openstax/flex-pages.git#os-blocks-1.0.1-rc.1",
+        "@openstax/flex-page-renderer": "https://github.com/openstax/flex-pages.git#renderer-1.1.18-rc.1",
         "@sentry/integrations": "^7.114.0",
         "@sentry/react": "^9.16.1",
         "@types/react-modal": "^3.16.3",
@@ -111,6 +112,7 @@
     "jest": {
         "moduleNameMapper": {
             "\\.s?css$": "<rootDir>/__mocks__/styleMock.js",
+            "^@openstax/flex-page-os-blocks/(.*)$": "<rootDir>/node_modules/@openstax/flex-page-os-blocks/dist/cjs/$1",
             "^@openstax/flex-page-renderer/(.*)$": "<rootDir>/node_modules/@openstax/flex-page-renderer/dist/cjs/$1",
             "^~/(.*)": "<rootDir>/src/app/$1",
             "settings": "<rootDir>/src/test-settings.js",

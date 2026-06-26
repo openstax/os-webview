@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import * as blocks from '@openstax/flex-page-renderer/blocks/index';
+import * as content_card from '@openstax/flex-page-os-blocks/blocks/ContentCardBlock';
 import {FAQBlock} from './blocks/FAQBlock';
 import {BookListBlock} from './blocks/BookListBlock';
 
@@ -8,6 +9,7 @@ import {BookListBlock} from './blocks/BookListBlock';
 // older "component function + static .blockConfig" shape, so wrap them here.
 export const blockMap = {
     ...blocks,
+    content_card,
     faq: {Component: FAQBlock, config: FAQBlock.blockConfig},
     book_list: {Component: BookListBlock, config: BookListBlock.blockConfig}
 } as const;
