@@ -29,6 +29,10 @@ jest.mock('~/helpers/use-data', () => jest.fn());
 const mockUseFetchedData = jest.spyOn(UFD, 'default');
 
 describe('webinar search page', () => {
+    beforeEach(() => {
+        mockUseFetchedData.mockClear();
+    });
+
     it('short circuits while waiting for webinars to return', () => {
         mockUseFetchedData.mockReturnValue(undefined);
         render(<Component term='waiting' />);
@@ -50,5 +54,35 @@ describe('webinar search page', () => {
         render(<Component term='something' />);
 
         expect(screen.queryByText('No matching webinars found')).toBeNull();
+    });
+    it('requests webinars without sort param when sort=relevance (default)', () => {
+        mockUseFetchedData.mockReturnValue([]);
+        render(
+            <MemoryRouter initialEntries={['/webinars/search?q=test']}>
+                <SearchPage />
+            </MemoryRouter>
+        );
+
+        expect(mockUseFetchedData).toHaveBeenCalledWith(
+            expect.objectContaining({
+                slug: 'webinars/search?q=test'
+            }),
+            undefined
+        );
+    });
+    it('requests webinars with sort=newest param when specified in URL', () => {
+        mockUseFetchedData.mockReturnValue([]);
+        render(
+            <MemoryRouter initialEntries={['/webinars/search?q=test&sort=newest']}>
+                <SearchPage />
+            </MemoryRouter>
+        );
+
+        expect(mockUseFetchedData).toHaveBeenCalledWith(
+            expect.objectContaining({
+                slug: 'webinars/search?q=test&sort=newest'
+            }),
+            undefined
+        );
     });
 });

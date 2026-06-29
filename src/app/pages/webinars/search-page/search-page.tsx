@@ -11,6 +11,8 @@ import SimplePaginator, {
 } from '~/components/paginator/simple-paginator';
 import WebinarGrid from '../webinar-cards/webinar-grid';
 import NoResults from './no-results';
+import SearchControls from '../search-controls/search-controls';
+import useWebinarSearchParams from '../use-webinar-search-params';
 
 const perPage = 9;
 
@@ -21,6 +23,7 @@ export default function SearchPage() {
         <div className='search-page boxed left'>
             <Breadcrumb name='Webinars page' />
             <SearchBar searchFor={searchFor} amongWhat='webinars' />
+            <SearchControls />
             <SearchResults />
         </div>
     );
@@ -60,10 +63,17 @@ function SearchResults() {
 
 function useSearchResults() {
     const term = useCurrentSearchParameter();
+    const {sort} = useWebinarSearchParams();
+    const params = new URLSearchParams();
+
+    params.set('q', term);
+    if (sort === 'newest') {
+        params.set('sort', 'newest');
+    }
 
     return useFetchedData<Webinar[] | undefined>(
         {
-            slug: `webinars/search?q=${encodeURIComponent(term)}`,
+            slug: `webinars/search?${params.toString()}`,
             resolveTo: 'json',
             camelCase: true,
             postProcess(wRaw) {
