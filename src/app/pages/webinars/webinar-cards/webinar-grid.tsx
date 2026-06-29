@@ -30,14 +30,14 @@ function PastWebinar({data}: {data: Webinar}) {
     const linkText = !isZoom ? 'Watch now!' : data.registrationLinkText;
 
     return (
-        <div className="card past">
+        <a href={data.registrationUrl} className="card past">
             <h3>{data.title}</h3>
             <Byline author={data.speakers} date={data.start.toDateString()} />
             <div>{data.description}</div>
-            <LinkWithChevron href={data.registrationUrl}>
+            <div className="register-button">
                 {linkText}
-            </LinkWithChevron>
-        </div>
+            </div>
+        </a>
     );
 }
 
@@ -77,9 +77,9 @@ function UpcomingWebinar({data}: {data: Webinar}) {
                     {data.speakers}
                 </div>
             </div>
-            <LinkWithChevron href={data.registrationUrl}>
+            <a className="register-button" href={data.registrationUrl}>
                 {data.registrationLinkText}
-            </LinkWithChevron>
+            </a>
             <AddToCalendarButton
                 name={data.title}
                 options={['Apple', 'Google']}
