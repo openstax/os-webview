@@ -7,7 +7,7 @@ const SORT_OPTIONS = [
     {key: 'newest', label: 'Newest', value: 'newest'}
 ] as const;
 
-type SortValue = 'relevance' | 'newest';
+export type SortValue = typeof SORT_OPTIONS[number]['key'];
 
 interface SortToggleProps {
     sort: SortValue;

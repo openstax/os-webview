@@ -1,9 +1,10 @@
 import {useCallback, useMemo} from 'react';
 import {useSearchParams} from 'react-router-dom';
+import type {SortValue} from '~/components/sort-toggle/sort-toggle';
 
 export type WebinarSearchState = {
     q?: string;
-    sort: 'relevance' | 'newest';
+    sort: SortValue;
 };
 
 type ParamValue = string | undefined;
