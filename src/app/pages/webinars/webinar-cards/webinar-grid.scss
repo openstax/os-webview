@@ -31,6 +31,21 @@
         &.past {
             gap: $normal-margin;
             grid-template-rows: auto auto 1fr auto;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .register-button {
+            @include button();
+            @extend %primary;
+
+            &.register-button {
+                background-color: os-color(deep-green);
+                &:hover,
+                &:focus {
+                    background-color: darken(os-color(deep-green), 2%);
+                }
+            }
         }
 
         &.upcoming {
