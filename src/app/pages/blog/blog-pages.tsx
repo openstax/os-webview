@@ -59,11 +59,9 @@ function hasActiveQuery({q, subjects, collection, sort}: SearchState) {
 
 function DiscoveryContent({
     categories,
-    collections,
     pinnedSlug
 }: {
     categories: ReturnType<typeof useBlogContext>['subjectSnippet'];
-    collections: ReturnType<typeof useBlogContext>['collectionSnippet'];
     pinnedSlug?: string;
 }) {
     return (
@@ -72,13 +70,6 @@ function DiscoveryContent({
                 items={categories}
                 title="Explore by subject"
                 analyticsNav="Blog Subjects"
-                basePath="subjects"
-            />
-            <ExploreBy
-                items={collections}
-                title="Explore collections"
-                analyticsNav="Blog Collections"
-                basePath="collections"
             />
             <PinnedArticle />
             <MoreStories exceptSlug={pinnedSlug || ''} />
@@ -135,7 +126,6 @@ export function MainBlogPage() {
                 ) : (
                     <DiscoveryContent
                         categories={categories}
-                        collections={collections}
                         pinnedSlug={pinnedSlug}
                     />
                 )}
