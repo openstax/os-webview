@@ -182,7 +182,7 @@ describe('Details page', () => {
         spyWindowContext.mockReturnValue({innerWidth: 480} as any); // eslint-disable-line
         render(<Component />);
         await finishedRendering();
-        expect(lengthOfView('phone')).toBe(290);
+        expect(lengthOfView('phone')).toBe(272);
         expect(lengthOfView('bigger')).toBeUndefined();
 
         jest.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({

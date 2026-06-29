@@ -442,9 +442,10 @@ export default {
     licenseName: 'Creative Commons Attribution License',
     licenseVersion: '4.0',
     licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    pdfUrl:
+        'https://assets.openstax.org/oscms-dev/media/documents/CollegeAlgebra-OP_s3hAxEt.pdf',
     highResolutionPdfUrl:
         'https://assets.openstax.org/oscms-dev/media/documents/CollegeAlgebra-OP_s3hAxEt.pdf',
-    lowResolutionPdfUrl: null,
     freeStuffInstructor: {
         content: {
             id: 1,
@@ -500,11 +501,6 @@ export default {
     bookshareLink: '',
     amazonComingSoon: false,
     amazonLink: 'https://www.amazon.com/dp/1938168380',
-    amazonIframe: null,
-    kindleLink:
-        'https://www.amazon.com/College-Algebra-Jay-Abramson-ebook/dp/B075FDZVBF/ref=sr_1_17_twi_kin_1?s=books&ie=UTF8&qid=1508962837&sr=1-17&keywords=OpenStax',
-    cheggLink: null,
-    cheggLinkText: null,
     bookstoreComingSoon: false,
     bookstoreContent: [
         {
