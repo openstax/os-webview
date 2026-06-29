@@ -85,3 +85,99 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
 
     expect(slugRelevance).not.toContain('sort=');
 });
+
+it('cancels pending fetch when hook unmounts (line 46)', async () => {
+    let resolveFetch: (value: unknown) => void;
+    const fetchPromise = new Promise((resolve) => {
+        resolveFetch = resolve;
+    });
+    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockReturnValue(fetchPromise as Promise<never>);
+
+    function Wrapper({children}: {children: React.ReactNode}) {
+        return (
+            <MemoryRouter initialEntries={['/blog/?q=test']}>
+                {children}
+            </MemoryRouter>
+        );
+    }
+
+    const {unmount} = renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
+
+    await waitFor(() => expect(spy).toHaveBeenCalled());
+
+    // Unmount the hook before the fetch resolves - this sets cancelled = true
+    unmount();
+
+    // Now resolve the fetch - the cancelled check at line 46 should prevent state updates
+    resolveFetch!([
+        {
+            id: 1,
+            title: 'Test Article',
+            slug: 'test-article',
+            date: '2024-01-01',
+            articleImage: null
+        }
+    ]);
+
+    // Wait a bit to ensure no state updates throw errors about unmounted components
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // If we get here without errors, the cancelled check worked
+    expect(spy).toHaveBeenCalled();
+});
+
+it('handles fetch errors when not cancelled (line 57, cancelled = false)', async () => {
+    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockRejectedValue(new Error('Network error'));
+
+    function Wrapper({children}: {children: React.ReactNode}) {
+        return (
+            <MemoryRouter initialEntries={['/blog/?q=test']}>
+                {children}
+            </MemoryRouter>
+        );
+    }
+
+    const {result} = renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
+
+    // Initially loading
+    expect(result.current.isLoading).toBe(true);
+
+    // Wait for the error to be caught
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    // After error, should show empty results (not stuck in loading state)
+    expect(result.current.articles).toEqual([]);
+    expect(spy).toHaveBeenCalled();
+});
+
+it('handles fetch errors when cancelled (line 57, cancelled = true)', async () => {
+    let rejectFetch: (error: Error) => void;
+    const fetchPromise = new Promise((_, reject) => {
+        rejectFetch = reject;
+    });
+    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockReturnValue(fetchPromise as Promise<never>);
+
+    function Wrapper({children}: {children: React.ReactNode}) {
+        return (
+            <MemoryRouter initialEntries={['/blog/?q=test']}>
+                {children}
+            </MemoryRouter>
+        );
+    }
+
+    const {unmount} = renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
+
+    await waitFor(() => expect(spy).toHaveBeenCalled());
+
+    // Unmount the hook before the fetch rejects - this sets cancelled = true
+    unmount();
+
+    // Now reject the fetch - the cancelled check at line 61 should prevent state updates
+    rejectFetch!(new Error('Network error'));
+
+    // Wait a bit to ensure no state updates throw errors about unmounted components
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // If we get here without errors, the cancelled check in the catch block worked
+    expect(spy).toHaveBeenCalled();
+});

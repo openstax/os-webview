@@ -19,6 +19,7 @@ import useUserContext from '~/contexts/user';
 import type {UserModelType} from '~/models/usermodel';
 import useAdoptions from '~/models/renewals';
 import {useIntl} from 'react-intl';
+import {assertDefined} from '~/helpers/data';
 import './adoption.scss';
 
 function BookSelectorPage({
@@ -76,12 +77,12 @@ const roleToPosition: Record<string, string> = {
     homeschool: 'Home School Teacher'
 };
 
-function positionFromRole(role?: string) {
-    return roleToPosition[role ?? ''] ?? 'Other';
+function positionFromRole(role: string) {
+    return roleToPosition[role] ?? 'Other';
 }
 
-function HiddenField({name, value}: {name: string; value?: string}) {
-    return <input type="hidden" name={name} value={value ?? ''} />;
+function HiddenField({name, value}: {name: string; value: string}) {
+    return <input type="hidden" name={name} value={value} />;
 }
 
 function hiddenContactFields(userModel: UserModelType) {
@@ -90,17 +91,18 @@ function hiddenContactFields(userModel: UserModelType) {
     return [
         ['first_name', userModel.first_name],
         ['last_name', userModel.last_name],
-        ['email', userModel.email],
+        ['email', userModel.email ?? ''],
         ['school', a?.school_name],
         ['school_type', a?.school_type],
         ['school_location', a?.school_location],
         ['salesforce_contact_id', userModel.salesforce_contact_id]
-    ] as [string, string | undefined][];
+    ] as [string, string][];
 }
 
 function HiddenContactInfo() {
     const {userModel} = useUserContext();
-    const fields = userModel ? hiddenContactFields(userModel) : [];
+
+    const fields = hiddenContactFields(assertDefined(userModel));
 
     return (
         <React.Fragment>
@@ -112,7 +114,7 @@ function HiddenContactInfo() {
 }
 
 const now = new Date();
-const defaultStartYear = now.getFullYear() - (now.getMonth() < 6 ? 2 : 1);
+const defaultStartYear = now.getFullYear() - 2 + Math.trunc(now.getMonth() / 6);
 const academicYears = [0, 1, 2].map((n) => defaultStartYear + n);
 
 function YearCheckboxes({
@@ -296,7 +298,7 @@ export default function AdoptionForm() {
     const [selectedRole, setSelectedRole] = useState('');
     const [hideRoleSelector, setHideRoleSelector] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
-    const {userModel, isLoggedIn} = useUserContext();
+    const {isLoggedIn} = useUserContext();
     const initialRender = useRef(true);
     const onPageChange = React.useCallback((page: number) => {
         setHideRoleSelector(page > 1);
@@ -321,25 +323,53 @@ export default function AdoptionForm() {
                 role="presentation"
             />
             <div className="text-content" ref={ref}>
-                {isLoggedIn ? (
-                    <FacultyForm
-                        position={positionFromRole(userModel?.self_reported_role)}
-                        onPageChange={onPageChange}
-                    />
-                ) : (
-                    <RoleSelector
-                        value={selectedRole}
-                        setValue={setSelectedRole}
-                        hidden={hideRoleSelector}
-                    >
-                        <StudentForm />
-                        <FacultyForm
-                            position={selectedRole}
-                            onPageChange={onPageChange}
-                        />
-                    </RoleSelector>
-                )}
+                <AdoptionFormContent
+                    selectedRole={selectedRole}
+                    setSelectedRole={setSelectedRole}
+                    hideRoleSelector={hideRoleSelector}
+                    onPageChange={onPageChange}
+                />
             </div>
         </main>
+    );
+}
+
+// Separate component to avoid nested ternary expressions in JSX
+function AdoptionFormContent({
+    selectedRole,
+    setSelectedRole,
+    hideRoleSelector,
+    onPageChange
+}: {
+    selectedRole: string;
+    setSelectedRole: (role: string) => void;
+    hideRoleSelector: boolean;
+    onPageChange: (page: number) => void;
+}) {
+    const {userModel} = useUserContext();
+
+    // Logged in with full user model loaded
+    if (userModel) {
+        return (
+            <FacultyForm
+                position={positionFromRole(userModel.self_reported_role)}
+                onPageChange={onPageChange}
+            />
+        );
+    }
+
+    // Not logged in - show role selector
+    return (
+        <RoleSelector
+            value={selectedRole}
+            setValue={setSelectedRole}
+            hidden={hideRoleSelector}
+        >
+            <StudentForm />
+            <FacultyForm
+                position={selectedRole}
+                onPageChange={onPageChange}
+            />
+        </RoleSelector>
     );
 }

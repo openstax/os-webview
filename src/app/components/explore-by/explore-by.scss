@@ -1,16 +1,16 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-#explore-by-subject {
-    .subject-links {
+.explore-by {
+    .item-links {
         display: grid;
         gap: 2rem;
-        grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
         width: 100%;
 
         .card {
             @extend %card;
 
-            padding: 0 0 1rem;
+            padding: 0;
             margin-top: 2rem;
             position: relative;
             text-align: center;
@@ -21,7 +21,7 @@
                 position: relative;
                 top: 0;
                 left: 50%;
-                margin-bottom: -3rem;
+                margin-bottom: -2rem;
                 transform: translate(-50%, -50%);
                 width: min-content;
 
@@ -36,10 +36,13 @@
 
             a {
                 color: inherit;
+                display: block;
+                height: 100%;
                 text-decoration: none;
+                padding-bottom: 1rem;
             }
 
-            .subject-name {
+            .item-name {
                 @include set-font(body-large);
 
                 align-items: center;

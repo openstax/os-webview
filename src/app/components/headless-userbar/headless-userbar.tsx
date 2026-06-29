@@ -1,4 +1,5 @@
 import React from 'react';
+import {assertNotNull} from '~/helpers/data';
 
 // While previewing a draft, Wagtail redirects the editor here with a `?preview`
 // query parameter (see the CMS `serve_preview`). Loading Wagtail's userbar on
@@ -50,28 +51,26 @@ function UserbarLoader() {
     const ref = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
-        const container = ref.current;
+        const container = assertNotNull(ref.current);
         let cancelled = false;
 
-        if (container) {
-            fetch(userbarEndpoint, {credentials: 'include'})
-                .then((response) => (response.ok ? response.text() : ''))
-                .then((html) => {
-                    // Guard against double-injection (e.g. effect re-runs), the empty body
-                    // the endpoint returns for non-admins, and unexpected responses.
-                    if (
-                        cancelled ||
-                        !html ||
-                        !html.includes('wagtail-userbar') ||
-                        container.querySelector('wagtail-userbar')
-                    ) {
-                        return;
-                    }
-                    container.innerHTML = html;
-                    userbarScripts.forEach((src) => appendScript(container, src));
-                })
-                .catch(() => undefined);
-        }
+        fetch(userbarEndpoint, {credentials: 'include'})
+            .then((response) => (response.ok ? response.text() : ''))
+            .then((html) => {
+                // Guard against double-injection (e.g. effect re-runs), the empty body
+                // the endpoint returns for non-admins, and unexpected responses.
+                if (
+                    cancelled ||
+                    !html ||
+                    !html.includes('wagtail-userbar') ||
+                    container.querySelector('wagtail-userbar')
+                ) {
+                    return;
+                }
+                container.innerHTML = html;
+                userbarScripts.forEach((src) => appendScript(container, src));
+            })
+            .catch(() => undefined);
 
         return () => {
             cancelled = true;

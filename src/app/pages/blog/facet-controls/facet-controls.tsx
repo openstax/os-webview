@@ -1,5 +1,6 @@
 import React from 'react';
 import useBlogSearchParams from '../use-blog-search-params';
+import SortToggle from '~/components/sort-toggle/sort-toggle';
 import './facet-controls.scss';
 
 type NamedSnippet = {id?: number; name: string};
@@ -51,68 +52,23 @@ function CollectionSelect({collections}: {collections: NamedSnippet[]}) {
     );
 }
 
-const SORT_OPTIONS = [
-    {key: 'relevance', label: 'Relevance', value: undefined},
-    {key: 'newest', label: 'Newest', value: 'newest'}
-] as const;
-
-function SortToggle() {
-    const {sort, setParam} = useBlogSearchParams();
-    const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-        const delta = ({ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1} as
-            Record<string, number>)[e.key];
-
-        if (!delta) {
-            return;
-        }
-        e.preventDefault();
-        const current = SORT_OPTIONS.findIndex((o) => o.key === sort);
-        const nextIndex = (current + delta + SORT_OPTIONS.length) % SORT_OPTIONS.length;
-        const next = SORT_OPTIONS[nextIndex];
-
-        setParam('sort', next.value);
-
-        const group = e.currentTarget.parentElement;
-        const buttons = Array.from(
-            group?.querySelectorAll<HTMLButtonElement>('button[role="radio"]') ?? []
-        );
-
-        buttons[nextIndex]?.focus();
-    };
-
-    return (
-        <div className="facet-sort-wrap">
-            <span className="facet-label" id="blog-sort-label">Sort by</span>
-            {/* `custom` opts out of the site-wide [role=radiogroup] filter-bar
-                styling (see styles/components/filter-buttons.scss), which would
-                otherwise stretch this to full viewport width. */}
-            <div className="facet-sort custom" role="radiogroup" aria-labelledby="blog-sort-label">
-                {SORT_OPTIONS.map((o) => (
-                    <button
-                        key={o.key}
-                        type="button"
-                        role="radio"
-                        aria-checked={sort === o.key}
-                        tabIndex={sort === o.key ? 0 : -1}
-                        onClick={() => setParam('sort', o.value)}
-                        onKeyDown={onKeyDown}
-                    >{o.label}</button>
-                ))}
-            </div>
-        </div>
-    );
-}
-
 export default function FacetControls({subjects, collections}: {
     subjects: NamedSnippet[];
     collections: NamedSnippet[];
 }) {
+    const {sort, setParam} = useBlogSearchParams();
+
     return (
         <div className="facet-controls" role="group" aria-label="Filter and sort blog posts">
             <SubjectChips subjects={subjects} />
             <div className="facet-row">
                 <CollectionSelect collections={collections} />
-                <SortToggle />
+                <SortToggle
+                    sort={sort}
+                    setSort={(value?: string) => setParam('sort', value)}
+                    labelId="blog-sort-label"
+                    className="facet-sort-position"
+                />
             </div>
         </div>
     );

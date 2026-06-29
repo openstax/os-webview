@@ -73,6 +73,24 @@ describe('search-results', () => {
         );
         jest.clearAllMocks();
     });
+
+    it('announces singular result count when only one result (line 46)', async () => {
+        const oneArticle = [{
+            id: 1,
+            slug: 'single-article',
+            collections: [],
+            article_subjects: [] // eslint-disable-line camelcase
+        }];
+
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(oneArticle);
+
+        render(<Component />);
+
+        await waitFor(() =>
+            expect(screen.getByRole('status')).toHaveTextContent('1 blog post found')
+        );
+        jest.clearAllMocks();
+    });
     it('moves focus to the first result on an explicit search', async () => {
         jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
 
