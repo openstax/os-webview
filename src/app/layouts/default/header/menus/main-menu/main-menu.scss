@@ -52,6 +52,12 @@
             @include width-up-to($tablet-max) {
                 display: none;
             }
+
+            &.streamlined {
+                @include width-up-to($tablet-max) {
+                    display: block;
+                }
+            }
         }
     }
 
