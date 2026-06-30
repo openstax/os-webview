@@ -23,7 +23,6 @@ export default function MainPage() {
                 items={subjects}
                 title="Explore by subject"
                 analyticsNav="Webinar Subjects"
-                basePath="subjects"
             />
             <PastWebinars />
         </div>
