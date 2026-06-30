@@ -7,11 +7,10 @@ import {faLaptop} from '@fortawesome/free-solid-svg-icons/faLaptop';
 import {faListOl} from '@fortawesome/free-solid-svg-icons/faListOl';
 import {faCloudDownloadAlt} from '@fortawesome/free-solid-svg-icons/faCloudDownloadAlt';
 import {faVolumeUp} from '@fortawesome/free-solid-svg-icons/faVolumeUp';
-import {faAmazon} from '@fortawesome/free-brands-svg-icons/faAmazon';
 import $ from '~/helpers/$';
 import {type UtmCampaign} from '~/helpers/link';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
-import {useIntl, FormattedMessage} from 'react-intl';
+import {useIntl} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useTOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
@@ -157,7 +156,7 @@ export function PdfOption({model}: {model: Model}) {
         ? ' przykład'
         : intl.formatMessage({id: 'getit.pdf.sample'});
     const text = pdfText + (model.comingSoon ? sampleText : '');
-    const pdfLink = model.highResolutionPdfUrl; // low res option is obsolete now
+    const pdfLink = model.pdfUrl; // low/high-res split is obsolete; CMS serves a single PDF
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
     const trackDownload = React.useCallback(
         (event: TrackedMouseEvent) => {
@@ -214,44 +213,6 @@ export function BookshareOption({model}: {model: Model}) {
             text="Bookshare"
             data-track="Bookshare"
         />
-    );
-}
-
-export function KindleOption({model}: {model: Model}) {
-    const intl = useIntl();
-    const header = intl.formatMessage({id: 'getit.kindle.header'});
-    const defaultDisclaimer =
-        'As an Amazon Associate we earn from qualifying purchases';
-
-    return (
-        <SimpleLinkOption
-            link={model.kindleLink}
-            icon={faAmazon}
-            text={header}
-            data-track="Kindle"
-        >
-            <div className="disclaimer">
-                <FormattedMessage
-                    id="getit.kindle.disclaimer"
-                    defaultMessage={defaultDisclaimer}
-                />
-            </div>
-        </SimpleLinkOption>
-    );
-}
-
-export function CheggOption({model}: {model: Model}) {
-    return (
-        <Option condition={model.cheggLink ?? false}>
-            <a href={model.cheggLink as string} data-track="Chegg Reader">
-                <img
-                    className="logo-img"
-                    src="/dist/images/icons/Chegglogo.svg"
-                    alt=""
-                />
-                <span className="text">{model.cheggLinkText}</span>
-            </a>
-        </Option>
     );
 }
 
