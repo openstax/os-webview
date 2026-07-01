@@ -8,6 +8,8 @@ type VisibleFieldArg = {
     isEditableByEndUser: boolean
 }
 
+const IDLE_CALLBACK_FALLBACK_DELAY = 200;
+
 declare global {
     interface Window {
         embeddedservice_bootstrap?: {
@@ -36,6 +38,29 @@ const SALESFORCE_CONFIG = {
     scrt2URL: 'https://openstax.my.salesforce-scrt.com',
     bootstrapScript: 'https://openstax.my.site.com/ESWWebMessagingDeployme1716235390398/assets/js/bootstrap.min.js'
 };
+
+function requestIdle(callback: () => void): () => void {
+    if (typeof window.requestIdleCallback === 'function') {
+        const id = window.requestIdleCallback(callback);
+
+        return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(callback, IDLE_CALLBACK_FALLBACK_DELAY);
+
+    return () => window.clearTimeout(id);
+}
+
+function preconnect(href: string) {
+    if (document.querySelector(`link[rel="preconnect"][href="${href}"]`)) {
+        return;
+    }
+    const link = document.createElement('link');
+
+    link.rel = 'preconnect';
+    link.href = href;
+    link.crossOrigin = 'anonymous';
+    document.head.appendChild(link);
+}
 
 function initEmbeddedMessaging(): boolean {
     // Value is guaranteed present by the caller
@@ -73,7 +98,17 @@ export default function Chat() {
         // Short-circuit if bootstrap is already available from a previous mount
         if (window.embeddedservice_bootstrap) {
             setScriptLoaded(true);
-        } else {
+
+            return undefined;
+        }
+
+        // Warm the connection now so it's ready by the time the idle-deferred script loads
+        preconnect(SALESFORCE_CONFIG.baseUrl);
+        preconnect(SALESFORCE_CONFIG.scrt2URL);
+
+        // Defer the heavy Salesforce bundle until the browser is idle so it doesn't
+        // compete with the page's own rendering and data fetching
+        const cancelIdle = requestIdle(() => {
             script = document.createElement('script');
 
             script.src = SALESFORCE_CONFIG.bootstrapScript;
@@ -89,10 +124,11 @@ export default function Chat() {
             };
 
             document.body.appendChild(script);
-        }
+        });
 
         // Always return cleanup function to hide widget on unmount
         return () => {
+            cancelIdle();
             if (script && document.body.contains(script)) {
                 // Clear handlers to prevent setState on unmounted component
                 script.onload = null;
