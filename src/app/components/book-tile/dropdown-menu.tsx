@@ -21,8 +21,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
     const buttonId = `${slug}-ddb`;
     const menuId = `${slug}-ddm`;
     const webviewLink = useRexPortalLinkOrNot(bookInfo.webviewRexLink ?? '');
-    const pdfLink =
-        bookInfo.highResolutionPdfUrl || bookInfo.lowResolutionPdfUrl;
+    const pdfLink = bookInfo.pdfUrl ?? bookInfo.highResolutionPdfUrl;
     const warning = useWarning(bookInfo.id);
 
     return (
