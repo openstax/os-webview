@@ -46,31 +46,20 @@ describe('get-this-title', () => {
     const originalError = console.error;
 
     it('renders with unexpanded options', async () => {
-        render(<GTTinContext />);
+        const bookshareModel = {...baseModel, bookshareLink: 'the-bookshare-version'};
+
+        render(<GTTinContext model={bookshareModel} />);
         const expander = await screen.findByText('+ 1 more option...');
 
         await user.click(expander);
         await screen.findByText('See 1 fewer option');
-        // Exercise link tracking
-
-        console.error = jest.fn();
-        await user.click(screen.getByText('Download for Kindle'));
-        expect(console.error).toHaveBeenCalledWith(
-            expect.stringContaining('Not implemented: navigation'),
-            undefined
-        );
-        console.error = originalError;
+        screen.getByRole('link', {name: 'Bookshare'});
     });
     it('shows no expander if not needed', async () => {
-        const noKindleModel = {...baseModel, kindleLink: ''};
+        render(<GTTinContext />);
+        await screen.findByText('Download a PDF');
 
-        render(<GTTinContext model={noKindleModel} />);
-        const links = await screen.findAllByRole('link');
-
-        expect(links).toHaveLength(2);
-        expect(
-            links.find((el) => el.textContent?.includes('more option'))
-        ).toBeUndefined();
+        expect(screen.queryByText(/more option/)).toBeNull();
     });
     it('opens give dialog for Webview', async () => {
         render(<GTTinContext />);
@@ -92,20 +81,6 @@ describe('get-this-title', () => {
         console.error = originalError;
         expect(mockTrackLink).toHaveBeenCalled();
         mockTrackLink.mockReset();
-    });
-    it('renders pluralized expander', async () => {
-        const extraLinksModel = {
-            ...baseModel,
-            assignableLink: 'the-assignable-version',
-            bookshareLink: 'the-bookshare-version'
-        };
-
-        render(<GTTinContext model={extraLinksModel} />);
-        const expander = await screen.findByText('+ 2 more options...');
-
-        await user.click(expander);
-        screen.getByRole('link', {name: 'Bookshare'});
-        screen.getByRole('link', {name: 'Download for Kindle'});
     });
     it('opens give dialog for PDF', async () => {
         render(<GTTinContext />);
@@ -180,7 +155,7 @@ describe('get-this-title', () => {
     it('shows no PDF link when there is none', async () => {
         const noPdfModel = {
             ...baseModel,
-            highResolutionPdfUrl: null
+            pdfUrl: null
         };
 
         render(<GTTinContext model={noPdfModel} />);
