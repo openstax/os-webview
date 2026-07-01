@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, waitFor} from '@testing-library/preact';
+import {act, render, waitFor} from '@testing-library/preact';
 import Chat from '~/components/chat/chat';
 import * as UserContext from '~/contexts/user';
 
@@ -7,12 +7,21 @@ import * as UserContext from '~/contexts/user';
 jest.mock('~/contexts/user');
 jest.mock('~/components/chat/chat.scss', () => ({}));
 
+// The bootstrap script load is deferred until idle (jsdom has no requestIdleCallback,
+// so it falls back to a 200ms timeout) - advance past that before asserting on the script
+function flushIdleCallback() {
+    act(() => {
+        jest.advanceTimersByTime(200);
+    });
+}
+
 describe('Chat', () => {
     let mockEmbeddedService: any;
 
     beforeEach(() => {
         // Clean up any existing scripts and global objects
         document.querySelectorAll('script[src*="bootstrap.min.js"]').forEach((el) => el.remove());
+        document.querySelectorAll('link[rel="preconnect"]').forEach((el) => el.remove());
         delete (window as any).embeddedservice_bootstrap;
         delete (window as any).__salesforceChatInitialized;
 
@@ -41,6 +50,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         render(<Chat />);
+        flushIdleCallback();
 
         const scripts = document.querySelectorAll('script[src*="bootstrap.min.js"]');
         expect(scripts.length).toBe(1);
@@ -48,10 +58,47 @@ describe('Chat', () => {
         expect(scripts[0].getAttribute('type')).toBe('text/javascript');
     });
 
+    it('uses requestIdleCallback when available and cancels on unmount', () => {
+        (UserContext.default as jest.Mock).mockReturnValue({});
+        const requestIdleCallback = jest.fn((cb: any) => {
+            cb();
+            return 123;
+        });
+        const cancelIdleCallback = jest.fn();
+
+        (window as any).requestIdleCallback = requestIdleCallback;
+        (window as any).cancelIdleCallback = cancelIdleCallback;
+
+        const {unmount} = render(<Chat />);
+
+        expect(requestIdleCallback).toHaveBeenCalledTimes(1);
+        expect(document.querySelectorAll('script[src*="bootstrap.min.js"]').length).toBe(1);
+
+        unmount();
+        expect(cancelIdleCallback).toHaveBeenCalledWith(123);
+
+        delete (window as any).requestIdleCallback;
+        delete (window as any).cancelIdleCallback;
+    });
+
+    it('does not duplicate preconnect links when they already exist', () => {
+        (UserContext.default as jest.Mock).mockReturnValue({});
+        const baseUrl = 'https://openstax.my.site.com/ESWWebMessagingDeployme1716235390398';
+        const baseUrlLink = document.createElement('link');
+
+        baseUrlLink.rel = 'preconnect';
+        baseUrlLink.setAttribute('href', baseUrl);
+        document.head.appendChild(baseUrlLink);
+        render(<Chat />);
+
+        expect(document.querySelectorAll(`link[rel="preconnect"][href="${baseUrl}"]`).length).toBe(1);
+    });
+
     it('initializes embeddedservice_bootstrap when script loads', async () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         render(<Chat />);
+        flushIdleCallback();
 
         const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
 
@@ -73,6 +120,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         render(<Chat />);
+        flushIdleCallback();
 
         const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
 
@@ -107,6 +155,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue(mockUserContext);
 
         render(<Chat />);
+        flushIdleCallback();
 
         const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
 
@@ -146,6 +195,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue(mockUserContext);
 
         render(<Chat />);
+        flushIdleCallback();
 
         const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
 
@@ -174,6 +224,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         const {unmount} = render(<Chat />);
+        flushIdleCallback();
 
         expect(document.querySelectorAll('script[src*="bootstrap.min.js"]').length).toBe(1);
 
@@ -187,6 +238,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         render(<Chat />);
+        flushIdleCallback();
 
         const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
         script.onerror?.(new Event('error'));
@@ -207,6 +259,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue(mockUserContext);
 
         const {rerender} = render(<Chat />);
+        flushIdleCallback();
 
         const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
 
@@ -237,6 +290,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         const {rerender} = render(<Chat />);
+        flushIdleCallback();
 
         const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
 
@@ -301,6 +355,7 @@ describe('Chat', () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         const {unmount} = render(<Chat />);
+        flushIdleCallback();
 
         const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
 
