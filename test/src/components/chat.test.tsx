@@ -58,6 +58,42 @@ describe('Chat', () => {
         expect(scripts[0].getAttribute('type')).toBe('text/javascript');
     });
 
+    it('uses requestIdleCallback when available and cancels on unmount', () => {
+        (UserContext.default as jest.Mock).mockReturnValue({});
+        const requestIdleCallback = jest.fn((cb: any) => {
+            cb();
+            return 123;
+        });
+        const cancelIdleCallback = jest.fn();
+
+        (window as any).requestIdleCallback = requestIdleCallback;
+        (window as any).cancelIdleCallback = cancelIdleCallback;
+
+        const {unmount} = render(<Chat />);
+
+        expect(requestIdleCallback).toHaveBeenCalledTimes(1);
+        expect(document.querySelectorAll('script[src*="bootstrap.min.js"]').length).toBe(1);
+
+        unmount();
+        expect(cancelIdleCallback).toHaveBeenCalledWith(123);
+
+        delete (window as any).requestIdleCallback;
+        delete (window as any).cancelIdleCallback;
+    });
+
+    it('does not duplicate preconnect links when they already exist', () => {
+        (UserContext.default as jest.Mock).mockReturnValue({});
+        const baseUrl = 'https://openstax.my.site.com/ESWWebMessagingDeployme1716235390398';
+        const baseUrlLink = document.createElement('link');
+
+        baseUrlLink.rel = 'preconnect';
+        baseUrlLink.setAttribute('href', baseUrl);
+        document.head.appendChild(baseUrlLink);
+        render(<Chat />);
+
+        expect(document.querySelectorAll(`link[rel="preconnect"][href="${baseUrl}"]`).length).toBe(1);
+    });
+
     it('initializes embeddedservice_bootstrap when script loads', async () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
