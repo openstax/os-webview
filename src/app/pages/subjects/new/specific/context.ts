@@ -15,8 +15,8 @@ export type Book = {
     title: string;
     webviewRexLink: string | null;
     webviewLink: string;
-    highResolutionPdfUrl: string;
-    lowResolutionPdfUrl: string;
+    pdfUrl: string;
+    highResolutionPdfUrl: string; // deprecated alias of pdfUrl
     coverUrl: string;
     bookstoreComingSoon: boolean;
     description: string;

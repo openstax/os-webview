@@ -1,18 +1,18 @@
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {ExploreItem, isCategory} from './types';
+import {Category} from './types';
 import './explore-by.scss';
 
+/* Formerly, it would explore by either (subject) Category or Collection,
+ * but now it's subject-only */
 export default function ExploreBy({
     items,
     title,
-    analyticsNav,
-    basePath
+    analyticsNav
 }: {
-    items: ExploreItem[];
+    items: Category[];
     title: string;
     analyticsNav: string;
-    basePath: 'subjects' | 'collections';
 }) {
     const {pathname} = useLocation();
 
@@ -21,14 +21,13 @@ export default function ExploreBy({
             <h2>{title}</h2>
             <div className="item-links" data-analytics-nav={analyticsNav}>
                 {items.map((item) => {
-                    const key = isCategory(item) ? String(item.id) : item.id;
+                    const key = String(item.id);
 
                     return (
                         <ItemLink
                             key={key}
                             item={item}
                             from={pathname}
-                            basePath={basePath}
                         />
                     );
                 })}
@@ -39,20 +38,18 @@ export default function ExploreBy({
 
 function ItemLink({
     item,
-    from,
-    basePath
+    from
 }: {
-    item: ExploreItem;
+    item: Category;
     from: string;
-    basePath: 'subjects' | 'collections';
 }) {
     const name = item.name;
-    const icon = isCategory(item) ? item.subjectIcon : item.collectionImage;
+    const icon = item.subjectIcon;
 
     return (
         <div className="card">
             <Link
-                to={`./explore/${basePath}/${encodeURIComponent(name)}`}
+                to={`./explore/subjects/${encodeURIComponent(name)}`}
                 state={{from}}
             >
                 <div className="icon-holder">

@@ -57,7 +57,6 @@ export type ContextValues = GetThisTitleModel & {
     communityResourceBlurb: string;
     communityResourceFeatureLinkUrl?: string;
     communityResourceFeatureText?: string;
-    amazonIframe: string | null;
     webinarContent?: WebinarContent;
     freeStuffStudent: StuffContent;
     freeStuffInstructor: StuffContent;
