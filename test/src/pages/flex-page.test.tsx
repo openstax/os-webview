@@ -154,6 +154,22 @@ describe('flex-page', () => {
         render(<Component />);
         expect(screen.getAllByText('book title')).toHaveLength(1);
     });
+    it('renders tableBlock and sorts when a column header is clicked', async () => {
+        body = [tableBlock()];
+        render(<Component />);
+        expect(screen.getByText('Book')).toBeTruthy();
+        expect(screen.getByText('Adoptions')).toBeTruthy();
+        expect(screen.getByText('Biology')).toBeTruthy();
+        expect(screen.getByText('Physics')).toBeTruthy();
+        // The sortable config renders a per-column sort button; clicking it
+        // marks that column ascending via aria-sort.
+        const user = userEvent.setup();
+
+        await user.click(screen.getByRole('button', {name: /Book/i}));
+        expect(
+            screen.getByRole('columnheader', {name: /Book/i}).getAttribute('aria-sort')
+        ).toBe('ascending');
+    });
 });
 
 function imageBlock(name: string) {
@@ -367,6 +383,25 @@ function sectionBlock(): BodyBlock {
                     value: 'anchor-target'
                 }
             ]
+        }
+    } as BodyBlock;
+}
+
+function tableBlock(): BodyBlock {
+    return {
+        id: 'table-id',
+        type: 'table',
+        value: {
+            caption: 'Course catalog',
+            columns: [
+                {header: 'Book', type: 'text'},
+                {header: 'Adoptions', type: 'number'}
+            ],
+            rows: [
+                {cells: [{content: 'Physics'}, {content: '120'}]},
+                {cells: [{content: 'Biology'}, {content: '340'}]}
+            ],
+            config: [{type: 'sortable', value: 'on'}]
         }
     } as BodyBlock;
 }
