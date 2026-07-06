@@ -1,12 +1,15 @@
 import React from 'react';
-import {describe, expect, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
+import {LanguageContextProvider} from '~/contexts/language';
 import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import BookTile from '~/components/book-tile/book-tile';
+import BookTileDisplay from '~/components/book-tile/book-tile-display';
 import userEvent from '@testing-library/user-event';
 import * as CF from '~/helpers/cms-fetch';
+import usePortalContext, {PortalContextProvider} from '~/contexts/portal';
+import '@testing-library/jest-dom';
 
 const bookData: BookInfo = {
     id: 46,
@@ -161,5 +164,91 @@ describe('book-tile', () => {
 
         expect(menuItems.includes('View online')).toBe(false);
         expect(menuItems.includes('Order a print copy')).toBe(true);
+    });
+});
+
+describe('book-tile-display portal link rewriting', () => {
+    it('does not rewrite links when portalPrefix matches pathname', () => {
+        const ComponentWithMatchingPath = () => {
+            const {setPortal} = usePortalContext();
+
+            // Set portal to match the pathname
+            setPortal('k12');
+
+            return (
+                <LanguageContextProvider>
+                    <MemoryRouter initialEntries={['/k12']}>
+                        <BookTileDisplay book={bookData} />
+                    </MemoryRouter>
+                </LanguageContextProvider>
+            );
+        };
+
+        render(
+            <PortalContextProvider>
+                <ComponentWithMatchingPath />
+            </PortalContextProvider>
+        );
+
+        // The link should remain as-is (not double-prefixed)
+        const link = screen.getByRole('link', {name: /Sample Title book/i});
+
+        expect(link).toHaveAttribute('href', '/details/sample');
+    });
+
+    it('rewrites links when portalPrefix differs from pathname', () => {
+        const ComponentWithDifferentPath = () => {
+            const {setPortal} = usePortalContext();
+
+            // Set portal but use a different pathname (simulating a sub-page)
+            setPortal('k12');
+
+            return (
+                <LanguageContextProvider>
+                    <MemoryRouter initialEntries={['/k12/subjects/math']}>
+                        <BookTileDisplay book={bookData} />
+                    </MemoryRouter>
+                </LanguageContextProvider>
+            );
+        };
+
+        render(
+            <PortalContextProvider>
+                <ComponentWithDifferentPath />
+            </PortalContextProvider>
+        );
+
+        // The link should be prefixed with the portal
+        const link = screen.getByRole('link', {name: /Sample Title book/i});
+
+        expect(link).toHaveAttribute('href', '/k12/details/sample');
+    });
+
+    it('handles trailing slashes in pathname comparison', () => {
+        const ComponentWithTrailingSlash = () => {
+            const {setPortal} = usePortalContext();
+
+            // Set portal and use pathname with trailing slash
+            setPortal('k12');
+
+            return (
+                <MemoryRouter initialEntries={['/k12/']}>
+                    <BookTileDisplay book={bookData} />
+                </MemoryRouter>
+            );
+        };
+
+        render(
+            <LanguageContextProvider>
+                <PortalContextProvider>
+                    <ComponentWithTrailingSlash />
+                </PortalContextProvider>
+            </LanguageContextProvider>
+        );
+
+        // The link should remain as-is (pathname normalized, so /k12/ matches /k12)
+        const link = screen.getByRole('link', {name: /Sample Title book/i});
+
+        expect(link).toHaveAttribute('href', '/details/sample');
     });
 });
