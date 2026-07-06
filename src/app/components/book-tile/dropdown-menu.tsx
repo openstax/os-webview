@@ -14,6 +14,7 @@ import {faCaretUp} from '@fortawesome/free-solid-svg-icons/faCaretUp';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons/faCaretDown';
 import type {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import { useRexPortalLinkOrNot } from '~/helpers/rex-portal';
+import usePortalContext from '~/contexts/portal';
 
 export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
     const ref = React.useRef<HTMLDivElement>(null);
@@ -23,6 +24,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
     const webviewLink = useRexPortalLinkOrNot(bookInfo.webviewRexLink ?? '');
     const pdfLink = bookInfo.pdfUrl ?? bookInfo.highResolutionPdfUrl;
     const warning = useWarning(bookInfo.id);
+    const {portalPrefix} = usePortalContext();
 
     return (
         <div
@@ -56,11 +58,11 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
                 <hr />
                 <MenuItem
                     defaultMessage="Instructor resources"
-                    url={`/details/${slug}?Instructor resources`}
+                    url={`${portalPrefix}/details/${slug}?Instructor resources`}
                 />
                 <MenuItem
                     defaultMessage="Student resources"
-                    url={`/details/${slug}?Student resources`}
+                    url={`${portalPrefix}/details/${slug}?Student resources`}
                 />
             </div>
         </div>
