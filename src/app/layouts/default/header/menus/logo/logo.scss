@@ -68,6 +68,31 @@
     }
 
     &.streamlined {
+        .logo {
+            height: 2.4rem;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        @include width-up-to($tablet-max) {
+            column-gap: 1rem;
+
+            .logo-divider {
+                display: block;
+            }
+
+            .rice-logo {
+                align-items: center;
+                display: inline-flex;
+
+                img {
+                    height: 2.4rem;
+                }
+            }
+        }
+
         @include wider-than($tablet-max) {
             align-items: center;
             grid-template-columns: repeat(3, min-content);
