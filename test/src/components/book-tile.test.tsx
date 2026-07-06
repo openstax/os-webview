@@ -1,6 +1,7 @@
 import React from 'react';
 import {describe, expect, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
+import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import BookTile from '~/components/book-tile/book-tile';
@@ -22,9 +23,11 @@ const bookData: BookInfo = {
 
 function Component({book}: {book: [BookInfo]}) {
     return (
-        <ShellContextProvider>
-            <BookTile book={book} />
-        </ShellContextProvider>
+        <MemoryRouter>
+            <ShellContextProvider>
+                <BookTile book={book} />
+            </ShellContextProvider>
+        </MemoryRouter>
     );
 }
 jest.mock('~/helpers/page-data-utils', () => ({
