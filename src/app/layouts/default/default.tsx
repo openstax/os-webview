@@ -8,17 +8,20 @@ import useMainClassContext, {
     MainClassContextProvider
 } from '~/contexts/main-class';
 import useLanguageContext from '~/contexts/language';
+import {useStreamlinedNav} from '~/contexts/shared-data';
 import ReactModal from 'react-modal';
 import TakeoverDialog from './takeover-dialog/takeover-dialog';
 import cn from 'classnames';
 import './default.scss';
 
 export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
+    const streamlined = useStreamlinedNav();
+
     // BrowserRouter has to include everything that uses useLocation
     return (
         <React.Fragment>
             <Microsurvey />
-            <header id="header">
+            <header id="header" className={cn({streamlined})}>
                 <Header />
             </header>
             <div id="lower-sticky-note">
