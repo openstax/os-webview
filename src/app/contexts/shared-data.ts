@@ -42,7 +42,7 @@ const {useContext, ContextProvider} = buildContext({useContextValue});
 function useStreamlinedNav() {
     const {flags} = useContext();
 
-    return Boolean(flags && flags.streamlined_nav);
+    return Boolean(flags?.streamlined_nav);
 }
 
 export {
