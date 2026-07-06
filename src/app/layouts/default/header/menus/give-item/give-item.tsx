@@ -11,7 +11,13 @@ export default function GiveItem() {
     return showButton ? (
         <GiveButton />
     ) : (
-        <a target="_blank" rel="noopener noreferrer" href={GIVE_HEADER_URL} data-analytics-link>
+        <a
+            className="give-button medium"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={GIVE_HEADER_URL}
+            data-analytics-link
+        >
             Give
         </a>
     );
