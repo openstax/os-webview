@@ -2,8 +2,7 @@ import React, {ReactElement} from 'react';
 import {useNavigate} from 'react-router-dom';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useData from '~/helpers/use-data';
-import {Collection} from '~/components/explore-by-collection/types';
-import {Category} from '~/components/explore-by-subject/types';
+import {Collection, Category} from '~/components/explore-by/types';
 import {PageData, Webinar} from './types';
 
 function useEnglishSubjects() {

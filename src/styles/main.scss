@@ -186,6 +186,14 @@ sup {
         top: -5rem;
     }
 
+    // Streamlined nav drops the 5rem utility bar, so there is no bar to tuck
+    // out of view on scroll. Pin the main nav flush to the top instead.
+    &.streamlined {
+        @include wider-than($tablet-max) {
+            top: 0;
+        }
+    }
+
     @media print {
         display: none;
     }
