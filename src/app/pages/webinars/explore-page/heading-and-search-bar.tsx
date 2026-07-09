@@ -1,7 +1,7 @@
 import React from 'react';
 import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
 import useWebinarContext from '../webinar-context';
-import {Category} from '~/components/explore-by-subject/types';
+import {Category} from '~/components/explore-by/types';
 
 export default function WebinarHSB({topic}: {topic: string}) {
     const {searchFor, subjects} = useWebinarContext();
