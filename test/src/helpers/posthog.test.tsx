@@ -66,10 +66,18 @@ describe('posthog helper', () => {
         expect(ph.identify).toHaveBeenCalledWith('uuid-1', {isInstructor: true});
     });
 
+    it('resetUser no-ops without posthog', () => {
+        expect(() => resetUser()).not.toThrow();
+    });
+
     it('resetUser forwards to posthog', () => {
         const ph = installPostHog();
         resetUser();
         expect(ph.reset).toHaveBeenCalled();
+    });
+
+    it('registerProperties no-ops without posthog', () => {
+        expect(() => registerProperties({streamlined_nav: true})).not.toThrow();
     });
 
     it('registerProperties forwards to posthog', () => {
