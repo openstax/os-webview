@@ -39,7 +39,10 @@
             @include button();
             @extend %primary;
 
-            background-color: os-color(deep-green);
+            // Override color from %primary
+            &.register-button {
+                background-color: os-color(deep-green);
+            }
 
             &:hover,
             &:focus {
@@ -47,8 +50,11 @@
             }
         }
 
-        &.past:focus-visible .register-button {
-            background-color: darken(os-color(deep-green), 2%);
+        &.past:focus-visible,
+        &.past:hover {
+            .register-button {
+                background-color: darken(os-color(deep-green), 2%);
+            }
         }
 
         &.upcoming {
