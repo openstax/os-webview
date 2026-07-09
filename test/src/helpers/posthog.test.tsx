@@ -127,4 +127,19 @@ describe('useExperimentReader', () => {
 
         jest.useRealTimers();
     });
+
+    it('keeps polling when PostHog is still unavailable', () => {
+        jest.useFakeTimers();
+
+        function Probe() {
+            useExperimentReader();
+            return null;
+        }
+        render(<Probe />);
+
+        act(() => jest.advanceTimersByTime(500));
+        expect((window as unknown as {posthog?: unknown}).posthog).toBeUndefined();
+
+        jest.useRealTimers();
+    });
 });

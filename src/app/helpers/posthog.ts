@@ -64,16 +64,14 @@ export function useExperimentReader(): (flag: string) => FlagValue {
 
         if (!subscribe()) {
             interval = window.setInterval(() => {
-                if (subscribe() && interval !== undefined) {
+                if (subscribe()) {
                     window.clearInterval(interval);
                 }
             }, 250);
         }
 
         return () => {
-            if (interval !== undefined) {
-                window.clearInterval(interval);
-            }
+            window.clearInterval(interval);
         };
     }, []);
     return getExperimentVariant;
