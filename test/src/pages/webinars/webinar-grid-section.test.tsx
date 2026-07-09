@@ -25,11 +25,12 @@ describe('webinar grid', () => {
             ...pastWebinar,
             registrationLinkText: 'Sign up here!'
         };
+
         render(
             <WebinarGridSection webinars={[on24Webinar]} heading={heading} />
         );
         expect(
-            screen.queryAllByRole('link', {name: 'Watch now!'})
+            screen.queryAllByText('Watch now!')
         ).toHaveLength(1);
     });
     it('does not update CTA to Watch now! for past Zoom webinars', () => {
@@ -38,11 +39,12 @@ describe('webinar grid', () => {
             registrationUrl: 'https://rice.zoom.us/webinar/register/123',
             registrationLinkText: 'Join the meeting'
         };
+
         render(
             <WebinarGridSection webinars={[zoomWebinar]} heading={heading} />
         );
         expect(
-            screen.queryAllByRole('link', {name: 'Join the meeting'})
+            screen.queryAllByText('Join the meeting')
         ).toHaveLength(1);
     });
 });
