@@ -1,6 +1,5 @@
 import React from 'react';
 import {Webinar} from '../types';
-import LinkWithChevron from '~/components/link-with-chevron/link-with-chevron';
 import Byline from '~/components/byline/byline';
 import {AddToCalendarButton} from 'add-to-calendar-button-react';
 import './webinar-grid.scss';

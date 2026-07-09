@@ -39,13 +39,16 @@
             @include button();
             @extend %primary;
 
-            &.register-button {
-                background-color: os-color(deep-green);
-                &:hover,
-                &:focus {
-                    background-color: darken(os-color(deep-green), 2%);
-                }
+            background-color: os-color(deep-green);
+
+            &:hover,
+            &:focus {
+                background-color: darken(os-color(deep-green), 2%);
             }
+        }
+
+        &.past:focus-visible .register-button {
+            background-color: darken(os-color(deep-green), 2%);
         }
 
         &.upcoming {
