@@ -16,3 +16,9 @@
         color: text-color(normal);
     }
 }
+
+// Streamlined nav shows the gold button as a standard contained button,
+// so restore the pattern-library radius our base rule zeroes out.
+.give-button-item.streamlined .give-button {
+    border-radius: 0.5rem;
+}

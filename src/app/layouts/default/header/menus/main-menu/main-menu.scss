@@ -52,6 +52,16 @@
             @include width-up-to($tablet-max) {
                 display: none;
             }
+
+            &.streamlined {
+                @include width-up-to($tablet-max) {
+                    display: block;
+                }
+
+                @at-root .menus.mobile .give-button-item.streamlined {
+                    display: block;
+                }
+            }
         }
     }
 

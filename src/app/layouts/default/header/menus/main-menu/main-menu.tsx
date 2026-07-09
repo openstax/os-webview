@@ -1,6 +1,8 @@
 import React from 'react';
+import cn from 'classnames';
 import useSubjectCategoryContext from '~/contexts/subject-category';
 import useLanguageContext from '~/contexts/language';
+import {useStreamlinedNav} from '~/contexts/shared-data';
 import {
     LanguageSelectorWrapper,
     LanguageLink
@@ -18,6 +20,7 @@ import {
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveButton from '../give-button/give-button';
+import GiveItem from '../give-item/give-item';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
@@ -183,12 +186,14 @@ function navigateWithArrows(event: React.KeyboardEvent<HTMLUListElement>) {
 }
 
 export function MainMenuItems() {
+    const streamlined = useStreamlinedNav();
+
     return (
         <React.Fragment>
             <SubjectsMenu />
             <MenusFromCMS />
-            <li className="give-button-item">
-                <GiveButton />
+            <li className={cn('give-button-item', {streamlined})}>
+                {streamlined ? <GiveItem /> : <GiveButton />}
             </li>
             <LoginMenu />
         </React.Fragment>
