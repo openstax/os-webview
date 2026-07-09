@@ -4,6 +4,7 @@ import CommonElements from './common-elements';
 import type {DonationPopupData} from './use-donation-popup-data';
 import {enroll} from '@openstax/experiments';
 import useGiveLinks from './use-give-links';
+import {captureEvent} from '~/helpers/posthog';
 import './give-before-pdf.scss';
 
 export default function GiveBeforePdf({
@@ -95,12 +96,13 @@ function GiveBeforePdfAfterConditionals({
 
     const closeAfterDelay = React.useCallback(
         (event: React.MouseEvent) => {
+            captureEvent('pdf_downloaded', {bookFormat: track});
             if (onDownload) {
                 onDownload(event);
             }
             window.setTimeout(close, 200);
         },
-        [close, onDownload]
+        [close, onDownload, track]
     );
 
     return (

@@ -3,7 +3,9 @@ import {render, screen, act} from '@testing-library/preact';
 import {
     getExperimentVariant,
     captureEvent,
-    useExperiment,
+    identifyUser,
+    resetUser,
+    registerProperties,
     useExperimentReader
 } from '~/helpers/posthog';
 
@@ -11,6 +13,9 @@ type FakePostHog = {
     getFeatureFlag: jest.Mock;
     onFeatureFlags: jest.Mock;
     capture: jest.Mock;
+    identify: jest.Mock;
+    reset: jest.Mock;
+    register: jest.Mock;
 };
 
 function installPostHog(overrides: Partial<FakePostHog> = {}) {
@@ -18,6 +23,9 @@ function installPostHog(overrides: Partial<FakePostHog> = {}) {
         getFeatureFlag: jest.fn(),
         onFeatureFlags: jest.fn(),
         capture: jest.fn(),
+        identify: jest.fn(),
+        reset: jest.fn(),
+        register: jest.fn(),
         ...overrides
     };
     (window as unknown as {posthog?: FakePostHog}).posthog = ph;
@@ -48,25 +56,26 @@ describe('posthog helper', () => {
         expect(ph.capture).toHaveBeenCalledWith('thing_clicked', {a: 1});
     });
 
-    it('useExperiment returns undefined then updates when flags resolve', async () => {
-        const ph = installPostHog({
-            getFeatureFlag: jest
-                .fn()
-                .mockReturnValueOnce(undefined)
-                .mockReturnValue('tools')
-        });
+    it('identifyUser no-ops without posthog', () => {
+        expect(() => identifyUser('uuid-1')).not.toThrow();
+    });
 
-        function Probe() {
-            const variant = useExperiment('nav-products-label');
-            return <span>{String(variant)}</span>;
-        }
+    it('identifyUser forwards to posthog', () => {
+        const ph = installPostHog();
+        identifyUser('uuid-1', {isInstructor: true});
+        expect(ph.identify).toHaveBeenCalledWith('uuid-1', {isInstructor: true});
+    });
 
-        render(<Probe />);
-        screen.getByText('undefined');
+    it('resetUser forwards to posthog', () => {
+        const ph = installPostHog();
+        resetUser();
+        expect(ph.reset).toHaveBeenCalled();
+    });
 
-        const cb = ph.onFeatureFlags.mock.calls[0][0] as () => void;
-        act(() => cb());
-        await screen.findByText('tools');
+    it('registerProperties forwards to posthog', () => {
+        const ph = installPostHog();
+        registerProperties({streamlined_nav: true});
+        expect(ph.register).toHaveBeenCalledWith({streamlined_nav: true});
     });
 });
 
@@ -89,5 +98,25 @@ describe('useExperimentReader', () => {
         act(() => cb());
         await findByText('on');
         delete (window as unknown as {posthog?: unknown}).posthog;
+    });
+
+    it('polls until PostHog loads (pre-consent), then subscribes and stops polling', () => {
+        jest.useFakeTimers();
+
+        function Probe() {
+            useExperimentReader();
+            return null;
+        }
+        render(<Probe />);
+
+        const ph = installPostHog();
+
+        act(() => jest.advanceTimersByTime(250));
+        expect(ph.onFeatureFlags).toHaveBeenCalledTimes(1);
+
+        act(() => jest.advanceTimersByTime(1000));
+        expect(ph.onFeatureFlags).toHaveBeenCalledTimes(1);
+
+        jest.useRealTimers();
     });
 });

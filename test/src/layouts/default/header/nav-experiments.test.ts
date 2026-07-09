@@ -9,8 +9,8 @@ describe('isNodeVisible', () => {
         expect(isNodeVisible({}, () => undefined)).toBe(true);
     });
     it('is visible iff the flag is truthy when flag_value is blank', () => {
-        expect(isNodeVisible({feature_flag: 'nav-k12-item'}, () => true)).toBe(true);
-        expect(isNodeVisible({feature_flag: 'nav-k12-item'}, () => undefined)).toBe(false);
+        expect(isNodeVisible({feature_flag: 'nav-example-item'}, () => true)).toBe(true);
+        expect(isNodeVisible({feature_flag: 'nav-example-item'}, () => undefined)).toBe(false);
     });
     it('matches flag_value as a string', () => {
         expect(isNodeVisible({feature_flag: 'f', flag_value: 'control'}, () => 'control')).toBe(true);
@@ -28,5 +28,8 @@ describe('dropdownLabel', () => {
     });
     it('swaps to Tools for the target key in the tools variant', () => {
         expect(dropdownLabel({key: PRODUCTS_DROPDOWN_KEY, name: 'Products'}, 'tools')).toBe('Tools');
+    });
+    it('falls back to an empty string when name is missing', () => {
+        expect(dropdownLabel({key: 'subjects'}, undefined)).toBe('');
     });
 });

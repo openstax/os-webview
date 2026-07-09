@@ -20,6 +20,7 @@ type FakePostHog = {
     getFeatureFlag: jest.Mock;
     onFeatureFlags: jest.Mock;
     capture: jest.Mock;
+    register: jest.Mock;
 };
 
 function installPostHog(overrides: Partial<FakePostHog> = {}) {
@@ -27,6 +28,7 @@ function installPostHog(overrides: Partial<FakePostHog> = {}) {
         getFeatureFlag: jest.fn().mockReturnValue(undefined),
         onFeatureFlags: jest.fn(),
         capture: jest.fn(),
+        register: jest.fn(),
         ...overrides
     };
     (window as unknown as {posthog?: FakePostHog}).posthog = ph;
@@ -56,9 +58,9 @@ const cmsMenuWithFlaggedItem = [
         key: 'products-dropdown',
         menu: [
             {
-                label: 'For K12 Teachers',
-                partial_url: '/k12',
-                feature_flag: 'nav-k12-item'
+                label: 'Example Item',
+                partial_url: '/example',
+                feature_flag: 'nav-example-item'
             }
         ]
     }
@@ -77,7 +79,7 @@ describe('MainMenuItems — generic flag resolver', () => {
         await screen.findByText('Subjects');
 
         // The flag-gated item in the Products dropdown should be hidden
-        expect(screen.queryByRole('link', {name: 'For K12 Teachers'})).toBeNull();
+        expect(screen.queryByRole('link', {name: 'Example Item'})).toBeNull();
     });
 
     it('shows a flag-gated CMS menu item when flag becomes truthy', async () => {
@@ -87,7 +89,7 @@ describe('MainMenuItems — generic flag resolver', () => {
                 if (!flagsLoaded) {
                     return undefined;
                 }
-                if (flag === 'nav-k12-item') {
+                if (flag === 'nav-example-item') {
                     return true;
                 }
                 return undefined;
@@ -99,7 +101,7 @@ describe('MainMenuItems — generic flag resolver', () => {
         await screen.findByText('Subjects');
 
         // Before flags load, the item is hidden
-        expect(screen.queryByRole('link', {name: 'For K12 Teachers'})).toBeNull();
+        expect(screen.queryByRole('link', {name: 'Example Item'})).toBeNull();
 
         // Simulate PostHog flags resolving — triggers forceRender in useExperimentReader
         flagsLoaded = true;
@@ -108,40 +110,6 @@ describe('MainMenuItems — generic flag resolver', () => {
         );
         act(() => allCbs.forEach((cb: () => void) => cb()));
 
-        await screen.findByRole('link', {name: 'For K12 Teachers'});
-    });
-
-    it('hides SubjectsMenu hardcoded K12 item when nav-k12-item flag is truthy', async () => {
-        let flagsLoaded = false;
-        const ph = installPostHog({
-            getFeatureFlag: jest.fn((flag: string) => {
-                if (!flagsLoaded) {
-                    return undefined;
-                }
-                if (flag === 'nav-k12-item') {
-                    return true;
-                }
-                return undefined;
-            })
-        });
-        (useDataFromSlug as jest.Mock).mockReturnValue([]);
-
-        render(<Component />);
-
-        // SubjectsMenu uses cmsFetch (not useDataFromSlug), so subjects still load
-        await screen.findByText('Math');
-
-        // K12 in-subjects link is present before flags load
-        expect(screen.getByRole('link', {name: '🍎 For K12 Teachers'})).toBeDefined();
-
-        // Simulate flags loading — triggers re-render in SubjectsMenu via useExperiment
-        flagsLoaded = true;
-        const allCbs = ph.onFeatureFlags.mock.calls.map(
-            (call: [() => void]) => call[0]
-        );
-        act(() => allCbs.forEach((cb: () => void) => cb()));
-
-        // The hardcoded in-Subjects K12 link should now be hidden
-        expect(screen.queryByRole('link', {name: '🍎 For K12 Teachers'})).toBeNull();
+        await screen.findByRole('link', {name: 'Example Item'});
     });
 });

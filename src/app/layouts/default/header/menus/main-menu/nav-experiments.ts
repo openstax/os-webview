@@ -1,7 +1,6 @@
 import type {FlagValue} from '~/helpers/posthog';
 
 export const NAV_PRODUCTS_LABEL_FLAG = 'nav-products-label';
-export const NAV_K12_ITEM_FLAG = 'nav-k12-item';
 
 /** Stable CMS `key` of the dropdown under the Products/Tools A/B.
  *  CONFIRM this matches the `key` set on that dropdown in Wagtail. */

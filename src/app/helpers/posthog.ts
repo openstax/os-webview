@@ -6,6 +6,9 @@ type PostHogClient = {
     getFeatureFlag: (key: string) => FlagValue;
     onFeatureFlags: (cb: () => void) => void;
     capture: (event: string, properties?: Record<string, unknown>) => void;
+    identify: (uuid: string, properties?: Record<string, unknown>) => void;
+    reset: () => void;
+    register: (properties: Record<string, unknown>) => void;
 };
 
 /** PostHog is loaded by GTM; it may not be present yet (pre-consent). */
@@ -24,47 +27,20 @@ export function captureEvent(event: string, properties?: Record<string, unknown>
     getPostHog()?.capture(event, properties);
 }
 
-/** Hook form: returns the variant, re-rendering once PostHog's flags resolve. */
-export function useExperiment(flagKey: string): FlagValue {
-    const [variant, setVariant] = React.useState<FlagValue>(() =>
-        getExperimentVariant(flagKey)
-    );
+/** Identify the logged-in user so events/session replay attach to their uuid. */
+export function identifyUser(uuid: string, properties?: Record<string, unknown>) {
+    getPostHog()?.identify(uuid, properties);
+}
 
-    React.useEffect(() => {
-        let cancelled = false;
-        let interval: number | undefined;
+/** Clear identity on logout. */
+export function resetUser() {
+    getPostHog()?.reset();
+}
 
-        const subscribe = () => {
-            const ph = getPostHog();
-
-            if (!ph) {
-                return false;
-            }
-            ph.onFeatureFlags(() => {
-                if (!cancelled) {
-                    setVariant(ph.getFeatureFlag(flagKey));
-                }
-            });
-            return true;
-        };
-
-        if (!subscribe()) {
-            interval = window.setInterval(() => {
-                if (subscribe() && interval !== undefined) {
-                    window.clearInterval(interval);
-                }
-            }, 250);
-        }
-
-        return () => {
-            cancelled = true;
-            if (interval !== undefined) {
-                window.clearInterval(interval);
-            }
-        };
-    }, [flagKey]);
-
-    return variant;
+/** Attach a property (e.g. a CMS flag cohort) to every event captured from
+ *  here on, so any funnel/insight can be sliced by it without new events. */
+export function registerProperties(properties: Record<string, unknown>) {
+    getPostHog()?.register(properties);
 }
 
 /** Subscribe to PostHog flag resolution and return a synchronous variant

@@ -10,10 +10,9 @@ import {
 import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
-import {useExperimentReader, useExperiment, type FlagValue} from '~/helpers/posthog';
+import {useExperimentReader, type FlagValue} from '~/helpers/posthog';
 import {
     NAV_PRODUCTS_LABEL_FLAG,
-    NAV_K12_ITEM_FLAG,
     isNodeVisible,
     dropdownLabel
 } from './nav-experiments';
@@ -67,6 +66,19 @@ function DropdownOrMenuItem({
     return <MenuItem label={item.label} url={item.partial_url} />;
 }
 
+function stringProp(item: MenuItemData, prop: 'key' | 'partial_url' | 'name'): string | undefined {
+    const value = (item as Record<string, unknown>)[prop];
+
+    return typeof value === 'string' ? value : undefined;
+}
+
+function keyFor(item: MenuItemData, index: number): string | number {
+    return stringProp(item, 'key') ||
+        stringProp(item, 'partial_url') ||
+        stringProp(item, 'name') ||
+        index;
+}
+
 function MenusFromStructure({
     structure,
     getVariant
@@ -78,14 +90,7 @@ function MenusFromStructure({
         <React.Fragment>
             {structure.map((item, index) => (
                 <DropdownOrMenuItem
-                    key={
-                        ('key' in item && typeof item.key === 'string' && item.key) ||
-                        ('partial_url' in item &&
-                            typeof item.partial_url === 'string' &&
-                            item.partial_url) ||
-                        ('name' in item && typeof item.name === 'string' && item.name) ||
-                        index
-                    }
+                    key={keyFor(item, index)}
                     item={item}
                     getVariant={getVariant}
                 />
@@ -112,7 +117,6 @@ function K12MenuItem() {
 function SubjectsMenu() {
     const categories = useSubjectCategoryContext();
     const {language} = useLanguageContext();
-    const k12TopLevel = Boolean(useExperiment(NAV_K12_ITEM_FLAG));
     // This will have to be revisited if/when we implement more languages
     const otherLocale = ['en', 'es'].filter((la) => la !== language)[0];
     const {pathname} = useLocation();
@@ -150,7 +154,7 @@ function SubjectsMenu() {
                     </LanguageSelectorWrapper>
                 </React.Fragment>
             )}
-            {language === 'en' && !k12TopLevel ? (
+            {language === 'en' ? (
                 <React.Fragment>
                     <hr />
                     <K12MenuItem />
