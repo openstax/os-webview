@@ -53,7 +53,7 @@ function useLabelsFromModel(model: ContextValues, polish: boolean) {
     return tabLabels;
 }
 
-function useSelectedLabelTiedToSearchString(labels: string[]) {
+export function useSelectedLabelTiedToSearchString(labels: string[]) {
     const navigate = useNavigate();
     const selectedTab = findSelectedTab(labels);
     const updateSelectedLabel = React.useCallback(
