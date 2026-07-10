@@ -15,7 +15,7 @@ interface FAQImageValue {
 
 interface FAQContentItem {
     id: string;
-    type: 'table' | 'image' | 'text';
+    type: string;
     value: unknown;
 }
 
@@ -29,7 +29,7 @@ export interface FAQBlockConfig {
             slug: string;
             answer: string;
             document: unknown;
-            content: FAQContentItem[];
+            content?: FAQContentItem[];
         }
     }>;
 }
