@@ -60,7 +60,24 @@ function useSelectedLabelTiedToSearchString(labels: string[]) {
         (newValue: string) => {
             const newSearchString = replaceSearchTerm(labels, newValue);
 
-            navigate(newSearchString, {replace: true});
+            // Skip redundant replaces so we hit the History API less often.
+            if (newSearchString === window.location.search) {
+                return;
+            }
+
+            try {
+                navigate(newSearchString, {replace: true});
+            } catch (e) {
+                // Firefox rate-limits history.replaceState and throws a
+                // SecurityError when the throttle trips (e.g. when Google Tag
+                // Manager is also churning the History API). The tab still
+                // selects, so swallow this known browser-specific exception
+                // instead of letting it surface as an unhandled error.
+                if (e instanceof DOMException && e.name === 'SecurityError') {
+                    return;
+                }
+                throw e;
+            }
         },
         [labels, navigate]
     );

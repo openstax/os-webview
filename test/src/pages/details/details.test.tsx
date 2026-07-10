@@ -10,6 +10,28 @@ import $ from '~/helpers/$';
 import * as WC from '~/contexts/window';
 import * as RBU from '~/pages/details/common/resource-box/resource-box-utils';
 
+// Lets a single test force the tab-selection navigate() to throw the way
+// Firefox does when it rate-limits history.replaceState.
+let mockNavigateError: Error | null = null;
+
+jest.mock('react-router-dom', () => {
+    const actual = jest.requireActual('react-router-dom');
+
+    return {
+        ...actual,
+        useNavigate: () => {
+            const realNavigate = actual.useNavigate();
+
+            return (...args: unknown[]) => {
+                if (mockNavigateError) {
+                    throw mockNavigateError;
+                }
+                return realNavigate(...args);
+            };
+        }
+    };
+});
+
 // Tamp down meaningless errors
 jest.mock('~/models/rex-release', () =>
     jest.fn().mockReturnValue(
@@ -104,6 +126,19 @@ describe('Details page', () => {
         expect(tabs[2].getAttribute('aria-selected')).toBe('true');
         await user.click(tabs[1]);
         mockLocation.mockRestore();
+    });
+    it('swallows Firefox history throttle SecurityError on tab click', async () => {
+        // Firefox rate-limits history.replaceState and throws a SecurityError
+        // when the throttle trips (e.g. alongside Google Tag Manager). The
+        // tab-selection navigation should not let that surface as an
+        // unhandled error.
+        mockNavigateError = new DOMException('The operation is insecure.', 'SecurityError');
+
+        render(<Component path='/details/books/biology-2e' />);
+        const tabs = await screen.findAllByRole('tab');
+
+        await expect(user.click(tabs[2])).resolves.not.toThrow();
+        mockNavigateError = null;
     });
     it('renders with Instructor tab selected', async () => {
         jest.spyOn(RBU, 'useResources').mockReturnValue({
