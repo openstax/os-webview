@@ -127,6 +127,8 @@ describe('get-this-title', () => {
         expect(toggleLink.getAttribute('aria-pressed')).toBe('false');
         await user.click(toggleLink);
         expect(toggleLink.getAttribute('aria-pressed')).toBe('true');
+        await user.click(toggleLink);
+        expect(toggleLink.getAttribute('aria-pressed')).toBe('false');
         mockIsPolish.mockReset();
     });
     it('excludes TOC option for retired books', async () => {

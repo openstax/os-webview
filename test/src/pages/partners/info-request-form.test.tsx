@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
 import * as PC from '~/pages/partners/partner-details/partner-context';
 import * as SFBC from '~/components/multiselect/book-tags/sf-book-context';
+import * as FT from '~/components/form-target/form-target';
 import sfBooks from '~/../../test/src/data/sf-all-books';
 import InfoRequestForm from '~/pages/partners/partner-details/info-request-form/info-request-form';
 import {SearchContextProvider} from '~/pages/partners/search-context';
@@ -69,6 +70,29 @@ describe('partners/info-rquest-form', () => {
         mockPC.mockReturnValue(mockPC2);
         renderForm();
         screen.getByText('is an abnormal', {exact: false});
+    });
+    it('calls captureEvent and toggleForm after form submission', async () => {
+        const toggleForm = jest.fn();
+
+        mockPC.mockReturnValue({...mockPC1, toggleForm});
+        let capturedAfterSubmit: (() => void) | undefined;
+        const ftSpy = jest.spyOn(FT, 'default').mockImplementation(
+            (cb?: () => void) => {
+                capturedAfterSubmit = cb;
+                return {
+                    onSubmit: jest.fn(),
+                    submitting: false,
+                    FormTarget: jest.fn().mockReturnValue(null)
+                } as unknown as ReturnType<typeof FT.default>;
+            }
+        );
+
+        renderForm();
+        await screen.findByText(/Next/);
+        capturedAfterSubmit?.();
+
+        expect(toggleForm).toHaveBeenCalled();
+        ftSpy.mockRestore();
     });
 });
 
