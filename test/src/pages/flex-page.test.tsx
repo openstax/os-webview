@@ -117,6 +117,48 @@ describe('flex-page', () => {
         expect(screen.getAllByRole('heading')).toHaveLength(1);
         expect(screen.getAllByRole('button')).toHaveLength(1);
     });
+    it('renders faqBlock with table content', () => {
+        body = [faqBlock([
+            {
+                id: 'table-1',
+                type: 'table',
+                value: {
+                    caption: 'Formats',
+                    columns: [{header: 'Format', type: 'text'}],
+                    rows: [{cells: [{content: '<p>PDF</p>', cta: []}]}],
+                    config: []
+                }
+            }
+        ])];
+        render(<Component />);
+        expect(document.querySelector('table')).not.toBe(null);
+        expect(screen.getAllByText('Format')).toHaveLength(1);
+    });
+    it('renders faqBlock with image, text, and unrecognized content', () => {
+        body = [faqBlock([
+            {
+                id: 'image-1',
+                type: 'image',
+                value: {
+                    image: {file: '/foo/faq-image.jpg', width: 100, height: 50},
+                    alt_text: 'an faq image'
+                }
+            },
+            {
+                id: 'text-1',
+                type: 'text',
+                value: '<p>Some faq rich text</p>'
+            },
+            {
+                id: 'unknown-1',
+                type: 'unrecognized',
+                value: null
+            }
+        ])];
+        render(<Component />);
+        expect(screen.getByAltText('an faq image')).not.toBe(null);
+        expect(screen.getAllByText('Some faq rich text')).toHaveLength(1);
+    });
     it('renders htmlBlock', () => {
         body = [htmlBlock()];
         render(<Component />);
@@ -280,7 +322,7 @@ function dividerBlock(aligned: boolean): BodyBlock {
     } as BodyBlock;
 }
 
-function faqBlock(): BodyBlock {
+function faqBlock(content: Array<Record<string, unknown>> = []): BodyBlock {
     return {
         id: 'faq-id',
         type: 'faq',
@@ -291,7 +333,8 @@ function faqBlock(): BodyBlock {
                     question: 'what?',
                     slug: 'q1',
                     answer: 'hush',
-                    document: ''
+                    document: '',
+                    content
                 }
             }
         ]

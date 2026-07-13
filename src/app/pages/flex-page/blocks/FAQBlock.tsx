@@ -2,7 +2,28 @@ import React from 'react';
 import {htmlToText} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
+import * as blocks from '@openstax/flex-page-renderer/blocks/index';
+import {Image} from '@openstax/flex-page-renderer/components/Image';
+import type {TableBlockConfig} from '@openstax/flex-page-renderer/blocks/TableBlock.config';
+import type {RichTextBlockConfig} from '@openstax/flex-page-renderer/blocks/RichTextBlock.component';
 import './FAQBlock.scss';
+
+interface FAQImageValue {
+    image: {file: string; width: number; height: number};
+    alt_text: string;
+}
+
+type FAQImageBlockConfig = {
+    id: string;
+    type: 'image';
+    value: FAQImageValue;
+}
+
+type FAQContentItem =
+    | TableBlockConfig
+    | RichTextBlockConfig
+    | FAQImageBlockConfig
+    | {id: string; type: Exclude<string, 'table' | 'text' | 'image'>; value: unknown}
 
 export interface FAQBlockConfig {
     id: string;
@@ -14,15 +35,35 @@ export interface FAQBlockConfig {
             slug: string;
             answer: string;
             document: unknown;
+            content?: FAQContentItem[];
         }
     }>;
+}
+
+function FAQContent({item}: {item: FAQContentItem}): React.ReactElement | null {
+    switch (item.type) {
+        case 'table':
+            return <blocks.table.Component data={item as TableBlockConfig} />;
+        case 'text':
+            return <blocks.text.Component data={item as RichTextBlockConfig} />;
+        case 'image': {
+            const {image, alt_text: altText} = item.value as FAQImageValue;
+
+            return <Image image={image} alt={altText} />;
+        }
+        default:
+            return null;
+    }
 }
 
 export function FAQBlock({data}: {data: FAQBlockConfig}): React.ReactElement {
     const accordionItems = React.useMemo(() =>
         data.value.map((d) => ({
             title: htmlToText(d.value.question),
-            contentComponent: <RawHTML html={d.value.answer} />
+            contentComponent: <>
+                <RawHTML html={d.value.answer} />
+                {(d.value.content ?? []).map((item) => <FAQContent key={item.id} item={item} />)}
+            </>
         }))
     , [data]);
 
