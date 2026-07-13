@@ -19,7 +19,11 @@ type FAQImageBlockConfig = {
     value: FAQImageValue;
 }
 
-type FAQContentItem = TableBlockConfig | RichTextBlockConfig | FAQImageBlockConfig
+type FAQContentItem =
+    | TableBlockConfig
+    | RichTextBlockConfig
+    | FAQImageBlockConfig
+    | {id: string; type: Exclude<string, 'table' | 'text' | 'image'>; value: unknown}
 
 export interface FAQBlockConfig {
     id: string;
