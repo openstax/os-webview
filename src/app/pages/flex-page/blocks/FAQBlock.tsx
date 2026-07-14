@@ -4,8 +4,6 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import * as blocks from '@openstax/flex-page-renderer/blocks/index';
 import {Image} from '@openstax/flex-page-renderer/components/Image';
-import type {TableBlockConfig} from '@openstax/flex-page-renderer/blocks/TableBlock.config';
-import type {RichTextBlockConfig} from '@openstax/flex-page-renderer/blocks/RichTextBlock.component';
 import './FAQBlock.scss';
 
 interface FAQImageValue {
@@ -17,14 +15,13 @@ type FAQImageBlockConfig = {
     id: string;
     type: 'image';
     value: FAQImageValue;
-}
+};
 
 type FAQContentItem =
-    | TableBlockConfig
-    | RichTextBlockConfig
+    | {id: string; type: 'table'; value: unknown}
+    | {id: string; type: 'text'; value: unknown}
     | FAQImageBlockConfig
-    | {id: string; type: Exclude<string, 'table' | 'text' | 'image'>; value: unknown}
-
+    | {id: string; type: string; value: unknown};
 export interface FAQBlockConfig {
     id: string;
     type: 'faq';
@@ -43,11 +40,11 @@ export interface FAQBlockConfig {
 function FAQContent({item}: {item: FAQContentItem}): React.ReactElement | null {
     switch (item.type) {
         case 'table':
-            return <blocks.table.Component data={item as TableBlockConfig} />;
+            return <blocks.table.Component data={item as any} />;
         case 'text':
-            return <blocks.text.Component data={item as RichTextBlockConfig} />;
+            return <blocks.text.Component data={item as any} />;
         case 'image': {
-            const {image, alt_text: altText} = item.value as FAQImageValue;
+            const {image, alt_text: altText} = (item as FAQImageBlockConfig).value;
 
             return <Image image={image} alt={altText} />;
         }
