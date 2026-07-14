@@ -17,9 +17,12 @@ type FAQImageBlockConfig = {
     value: FAQImageValue;
 };
 
+type TableBlockConfig = Parameters<typeof blocks.table.Component>[0]['data'];
+type RichTextBlockConfig = Parameters<typeof blocks.text.Component>[0]['data'];
+
 type FAQContentItem =
-    | {id: string; type: 'table'; value: unknown}
-    | {id: string; type: 'text'; value: unknown}
+    | TableBlockConfig
+    | RichTextBlockConfig
     | FAQImageBlockConfig
     | {id: string; type: string; value: unknown};
 export interface FAQBlockConfig {
@@ -40,9 +43,9 @@ export interface FAQBlockConfig {
 function FAQContent({item}: {item: FAQContentItem}): React.ReactElement | null {
     switch (item.type) {
         case 'table':
-            return <blocks.table.Component data={item as any} />;
+            return <blocks.table.Component data={item as TableBlockConfig} />;
         case 'text':
-            return <blocks.text.Component data={item as any} />;
+            return <blocks.text.Component data={item as RichTextBlockConfig} />;
         case 'image': {
             const {image, alt_text: altText} = (item as FAQImageBlockConfig).value;
 
