@@ -24,7 +24,7 @@ type FAQContentItem =
     | TableBlockConfig
     | RichTextBlockConfig
     | FAQImageBlockConfig
-    | {id: string; type: string; value: unknown};
+    | {id: string; type: Exclude<string, 'table' | 'text' | 'image'>; value: unknown};
 export interface FAQBlockConfig {
     id: string;
     type: 'faq';
