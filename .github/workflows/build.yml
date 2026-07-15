@@ -17,12 +17,12 @@ jobs:
           cache: yarn
       -
         name: "Auth to GitHub Packages"
-        run: echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}' >> ~/.npmrc
       -
         name: "Setup environment"
         run: ./script/setup
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       -
         name: "Lint osweb"
         run: yarn lint
