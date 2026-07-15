@@ -5,6 +5,8 @@ jobs:
     permissions:
       contents: read
       packages: read
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       -
         name: "Checkout release tag"
@@ -21,8 +23,6 @@ jobs:
       -
         name: "Setup environment"
         run: ./script/setup
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       -
         name: "Lint osweb"
         run: yarn lint
