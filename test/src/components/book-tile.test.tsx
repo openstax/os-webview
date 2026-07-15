@@ -13,8 +13,8 @@ const bookData: BookInfo = {
     title: 'Sample Title',
     webviewRexLink: 'link-to-rex',
     webviewLink: 'osweb-link',
+    pdfUrl: 'hi-res.pdf',
     highResolutionPdfUrl: 'hi-res.pdf',
-    lowResolutionPdfUrl: '',
     coverUrl: 'cover.jpg',
     bookstoreComingSoon: false,
     description: ''
@@ -97,30 +97,11 @@ describe('book-tile', () => {
         );
         console.error = originalError;
     });
-    it('falls back on lowResolutionPdfUrl (may be obsolete)', async () => {
-        const lowResPdfData = {
-            ...bookData,
-            highResolutionPdfUrl: '',
-            lowResolutionPdfUrl: 'low-res.pdf'
-        };
-
-        render(<Component book={[lowResPdfData]} />);
-
-        const pdfLink = screen.getByRole('menuitem', {
-            name: 'Download a PDF'
-        });
-
-        console.error = jest.fn();
-        expect(screen.queryAllByRole('dialog')).toHaveLength(0);
-        await user.click(pdfLink);
-        expect(screen.getAllByRole('dialog')).toHaveLength(2);
-        console.error = originalError;
-    });
     it('hides PDF option if no PDF link', async () => {
         const noPdfData = {
             ...bookData,
-            highResolutionPdfUrl: '',
-            lowResolutionPdfUrl: ''
+            pdfUrl: '',
+            highResolutionPdfUrl: ''
         };
 
         render(<Component book={[noPdfData]} />);

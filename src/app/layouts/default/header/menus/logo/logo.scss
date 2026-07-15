@@ -67,6 +67,63 @@
         }
     }
 
+    &.streamlined {
+        .logo {
+            height: 2.4rem;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        @include width-up-to($tablet-max) {
+            column-gap: 1rem;
+
+            .logo-divider {
+                display: block;
+            }
+
+            .rice-logo {
+                align-items: center;
+                display: inline-flex;
+
+                img {
+                    height: 2.4rem;
+                }
+            }
+        }
+
+        @include wider-than($tablet-max) {
+            align-items: center;
+            grid-template-columns: repeat(3, min-content);
+            width: auto;
+        }
+    }
+
+    .logo-divider {
+        background-color: ui-color(form-border);
+        display: block;
+        height: 2.8rem;
+        width: 0.1rem;
+
+        @include width-up-to($tablet-max) {
+            display: none;
+        }
+    }
+
+    .rice-logo {
+        display: none;
+
+        @include wider-than($tablet-max) {
+            align-items: center;
+            display: inline-flex;
+
+            img {
+                height: 2.4rem;
+            }
+        }
+    }
+
     .logo-quote {
         color: os-color(gray);
         display: inline-block;

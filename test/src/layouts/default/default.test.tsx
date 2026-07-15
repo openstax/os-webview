@@ -44,10 +44,16 @@ const mockUseSharedDataContext = jest
     .fn()
     .mockReturnValue({});
 
-jest.mock('~/contexts/shared-data', () => ({
-    __esModule: true,
-    default: () => mockUseSharedDataContext()
-}));
+jest.mock('~/contexts/shared-data', () => {
+    const actual = jest.requireActual('~/contexts/shared-data');
+
+    return {
+        __esModule: true,
+        ...actual,
+        default: jest.fn(() => mockUseSharedDataContext()),
+        useStreamlinedNav: jest.fn().mockReturnValue(false)
+    };
+});
 
 const user = userEvent.setup();
 const basicImplementation = (path: string) => {

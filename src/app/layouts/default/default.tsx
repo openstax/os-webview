@@ -8,17 +8,28 @@ import useMainClassContext, {
     MainClassContextProvider
 } from '~/contexts/main-class';
 import useLanguageContext from '~/contexts/language';
+import {useStreamlinedNav} from '~/contexts/shared-data';
 import ReactModal from 'react-modal';
 import TakeoverDialog from './takeover-dialog/takeover-dialog';
 import cn from 'classnames';
 import './default.scss';
 
 export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
+    const streamlined = useStreamlinedNav();
+    const headerRef = React.useRef<HTMLElement>(null);
+
+    // Toggle imperatively rather than via `className` so we don't take over the
+    // element's class list from `over-mobile-dialog`, which the takeover dialog
+    // adds/removes on #header directly (see takeover-dialog/content-mobile).
+    React.useEffect(() => {
+        headerRef.current?.classList.toggle('streamlined', streamlined);
+    }, [streamlined]);
+
     // BrowserRouter has to include everything that uses useLocation
     return (
         <React.Fragment>
             <Microsurvey />
-            <header id="header">
+            <header id="header" ref={headerRef}>
                 <Header />
             </header>
             <div id="lower-sticky-note">
