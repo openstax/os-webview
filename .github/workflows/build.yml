@@ -2,6 +2,9 @@
 jobs:
   osweb:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
     steps:
       -
         name: "Checkout release tag"
@@ -12,6 +15,11 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: yarn
+      -
+        name: "Auth to GitHub Packages"
+        run: echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       -
         name: "Setup environment"
         run: ./script/setup
