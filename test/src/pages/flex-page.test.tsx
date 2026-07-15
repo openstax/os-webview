@@ -154,6 +154,13 @@ describe('flex-page', () => {
         render(<Component />);
         expect(screen.getAllByText('book title')).toHaveLength(1);
     });
+    it('renders bigNumberBlock', () => {
+        body = [bigNumberBlock(), bigNumberBlock('1M+', 'learners', 'blue')];
+        render(<Component />);
+        expect(screen.getAllByText('42')).toHaveLength(1);
+        expect(screen.getAllByText('1M+')).toHaveLength(1);
+        expect(screen.getAllByText('learners')).toHaveLength(1);
+    });
 });
 
 function imageBlock(name: string) {
@@ -393,5 +400,13 @@ function bookListBlock(): BodyBlock {
                 }
             ]
         }
+    } as BodyBlock;
+}
+
+function bigNumberBlock(number = '42', caption?: string, color?: string): BodyBlock {
+    return {
+        id: 'big-number-id',
+        type: 'big_number',
+        value: {number, caption, color}
     } as BodyBlock;
 }
