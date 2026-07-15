@@ -117,6 +117,11 @@ describe('flex-page', () => {
         expect(screen.getAllByRole('heading')).toHaveLength(1);
         expect(screen.getAllByRole('button')).toHaveLength(1);
     });
+    it('renders faqBlock with nested content blocks', () => {
+        body = [faqBlock(true)];
+        render(<Component />);
+        expect(screen.getAllByText('Some text with')).toHaveLength(1);
+    });
     it('renders htmlBlock', () => {
         body = [htmlBlock()];
         render(<Component />);
@@ -271,7 +276,7 @@ function dividerBlock(aligned: boolean): BodyBlock {
     } as BodyBlock;
 }
 
-function faqBlock(): BodyBlock {
+function faqBlock(withContent?: boolean): BodyBlock {
     return {
         id: 'faq-id',
         type: 'faq',
@@ -282,7 +287,8 @@ function faqBlock(): BodyBlock {
                     question: 'what?',
                     slug: 'q1',
                     answer: 'hush',
-                    document: ''
+                    document: '',
+                    content: withContent ? [rtBlock()] : undefined
                 }
             }
         ]
