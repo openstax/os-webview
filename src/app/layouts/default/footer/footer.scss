@@ -102,7 +102,8 @@ $lower-footer: #3b3b3b;
             }
 
             button {
-                background-color: transparent;
+                @include button-reset();
+
                 color: inherit;
                 display: inline;
                 font-size: inherit;
