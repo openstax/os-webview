@@ -2,9 +2,9 @@ import React from 'react';
 import {htmlToText} from '~/helpers/data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
-import {ContentBlockRoot, BlockData} from '@openstax/flex-page-renderer/ContentBlockRoot';
+import {ContentBlockRoot, type BlockData} from '@openstax/flex-page-renderer/ContentBlockRoot';
 import * as blocks from '@openstax/flex-page-renderer/blocks/index';
-import {Image, ImageFields} from '@openstax/flex-page-renderer/components/Image';
+import {Image, type ImageFields} from '@openstax/flex-page-renderer/components/Image';
 import './FAQBlock.scss';
 
 // The CMS's faq.content field is a closed StreamBlock: table, image, or text.
