@@ -4,7 +4,16 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import {ContentBlockRoot, BlockData} from '@openstax/flex-page-renderer/ContentBlockRoot';
 import * as blocks from '@openstax/flex-page-renderer/blocks/index';
+import {Image, ImageFields} from '@openstax/flex-page-renderer/components/Image';
 import './FAQBlock.scss';
+
+// The CMS's faq.content field is a closed StreamBlock: table, image, or text.
+// table/text are registered renderer blocks (delegate to ContentBlockRoot);
+// image isn't a block type in the renderer's registry, so it needs its own case.
+type FAQImageItem = {id: string; type: 'image'; value: {image: ImageFields; alt_text: string}};
+type FAQContentItem = FAQImageItem | BlockData<typeof blocks>[number];
+
+const isFAQImage = (item: FAQContentItem): item is FAQImageItem => item.type === 'image';
 
 export interface FAQBlockConfig {
     id: string;
@@ -16,7 +25,7 @@ export interface FAQBlockConfig {
             slug: string;
             answer: string;
             document: unknown;
-            content?: BlockData<typeof blocks>;
+            content?: FAQContentItem[];
         }
     }>;
 }
@@ -27,9 +36,9 @@ export function FAQBlock({data}: {data: FAQBlockConfig}): React.ReactElement {
             title: htmlToText(d.value.question),
             contentComponent: <>
                 <RawHTML html={d.value.answer} />
-                {d.value.content?.length
-                    ? <ContentBlockRoot data={d.value.content} blocks={blocks} />
-                    : null}
+                {(d.value.content ?? []).map((item) => isFAQImage(item)
+                    ? <Image key={item.id} image={item.value.image} alt={item.value.alt_text} />
+                    : <ContentBlockRoot key={item.id} data={[item]} blocks={blocks} />)}
             </>
         }))
     , [data]);
