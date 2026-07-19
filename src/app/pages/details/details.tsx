@@ -30,16 +30,16 @@ function setJsonLd(data: ContextValues) {
     }));
     const polish = $.isPolish(data.title);
     const ldData = {
-        '@content': 'https://schema.org',
+        '@context': 'https://schema.org',
         '@type': 'WebPage',
         datePublished: data.created,
         dateModified: data.updated,
         mainEntity: {
-            type: 'Book',
+            '@type': 'Book',
             name: data.title,
             author: authorData,
             publisher: {
-                type: 'Organization',
+                '@type': 'Organization',
                 name: 'OpenStax'
             },
             image: data.coverUrl,
