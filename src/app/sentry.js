@@ -16,6 +16,7 @@ const ignoreErrors = [
     'TypeError: Cannot read property \'default\' of undefined',
     'TypeError: can\'t access dead object',
     'TypeError: null is not an object (evaluating \'this.parentNode.style\')',
+    'TypeError: Cannot read properties of null (reading \'style\')',
     'UnhandledRejection: Non-Error promise rejection captured with value: Failed to load Google Analytics',
     'UnhandledRejection: Non-Error promise rejection captured with value: undefined',
     'TypeError: Cannot read properties of null (reading \'render\')',
