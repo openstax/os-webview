@@ -117,6 +117,23 @@ describe('flex-page', () => {
         expect(screen.getAllByRole('heading')).toHaveLength(1);
         expect(screen.getAllByRole('button')).toHaveLength(1);
     });
+    it('renders faqBlock with nested content blocks', () => {
+        body = [faqBlock([rtBlock()])];
+        render(<Component />);
+        expect(screen.getAllByText('Some text with')).toHaveLength(1);
+    });
+    it('renders faqBlock with nested image content', () => {
+        body = [faqBlock([{
+            id: 'faq-image-id',
+            type: 'image',
+            value: {
+                image: {file: '/foo/faq-image.jpg', width: 100, height: 50},
+                alt_text: 'faq image alt'
+            }
+        }])];
+        render(<Component />);
+        expect(screen.getByAltText('faq image alt')).not.toBe(null);
+    });
     it('renders htmlBlock', () => {
         body = [htmlBlock()];
         render(<Component />);
@@ -271,7 +288,7 @@ function dividerBlock(aligned: boolean): BodyBlock {
     } as BodyBlock;
 }
 
-function faqBlock(): BodyBlock {
+function faqBlock(content: Array<Record<string, unknown>> = []): BodyBlock {
     return {
         id: 'faq-id',
         type: 'faq',
@@ -282,7 +299,8 @@ function faqBlock(): BodyBlock {
                     question: 'what?',
                     slug: 'q1',
                     answer: 'hush',
-                    document: ''
+                    document: '',
+                    content
                 }
             }
         ]
