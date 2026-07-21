@@ -93,12 +93,13 @@ describe('useFilteredBanners', () => {
         expect(filterNamesAt('/', banners)).toBe('');
     });
 
-    it('"url_pattern" uses regex for full-path matching; ignores null pattern', () => {
+    it('"url_pattern" uses regex for full-path matching; ignores null and invalid patterns', () => {
         /* eslint-disable camelcase */
         const banners = [
             makeBanner({name: 'Exact', context_filter: 'url_pattern', url_pattern: '/foo'}),
             makeBanner({name: 'Wildcard', context_filter: 'url_pattern', url_pattern: '/foo.*'}),
-            makeBanner({name: 'Empty', context_filter: 'url_pattern', url_pattern: null})
+            makeBanner({name: 'Empty', context_filter: 'url_pattern', url_pattern: null}),
+            makeBanner({name: 'Invalid', context_filter: 'url_pattern', url_pattern: '[foo'})
         ];
         /* eslint-enable camelcase */
 
