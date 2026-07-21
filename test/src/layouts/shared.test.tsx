@@ -77,6 +77,14 @@ describe('useFilteredBanners', () => {
         expect(filterNamesAt('/subjects/math', banners)).toBe('');
     });
 
+    it('"homepage" only matches /', () => {
+        // eslint-disable-next-line camelcase
+        const banners = [makeBanner({name: 'HP', context_filter: 'homepage'})];
+
+        expect(filterNamesAt('/', banners)).toBe('HP');
+        expect(filterNamesAt('/subjects', banners)).toBe('');
+    });
+
     it('"blog" only matches /blog routes', () => {
         // eslint-disable-next-line camelcase
         const banners = [makeBanner({name: 'BL', context_filter: 'blog'})];
@@ -85,16 +93,17 @@ describe('useFilteredBanners', () => {
         expect(filterNamesAt('/', banners)).toBe('');
     });
 
-    it('"url_pattern" matches exact and prefix; ignores null pattern', () => {
+    it('"url_pattern" uses regex for full-path matching; ignores null pattern', () => {
         /* eslint-disable camelcase */
         const banners = [
             makeBanner({name: 'Exact', context_filter: 'url_pattern', url_pattern: '/foo'}),
+            makeBanner({name: 'Wildcard', context_filter: 'url_pattern', url_pattern: '/foo.*'}),
             makeBanner({name: 'Empty', context_filter: 'url_pattern', url_pattern: null})
         ];
         /* eslint-enable camelcase */
 
-        expect(filterNamesAt('/foo', banners)).toBe('Exact');
-        expect(filterNamesAt('/foo/bar', banners)).toBe('Exact');
+        expect(filterNamesAt('/foo', banners)).toBe('Exact,Wildcard');
+        expect(filterNamesAt('/foo/bar', banners)).toBe('Wildcard');
         expect(filterNamesAt('/other', banners)).toBe('');
     });
 
