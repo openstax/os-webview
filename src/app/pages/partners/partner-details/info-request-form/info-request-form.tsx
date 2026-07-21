@@ -1,5 +1,6 @@
 import React from 'react';
 import usePartnerContext from '../partner-context';
+import {captureEvent} from '~/helpers/posthog';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
@@ -217,8 +218,12 @@ function Page2() {
 }
 
 export default function InfoRequestForm() {
-    const {toggleForm} = usePartnerContext();
-    const {onSubmit, submitting, FormTarget} = useFormTarget(toggleForm);
+    const {toggleForm, partnerName} = usePartnerContext() as {toggleForm: () => void; partnerName: string};
+    const afterSubmit = React.useCallback(() => {
+        captureEvent('partner_info_requested', {partnerName});
+        toggleForm();
+    }, [toggleForm, partnerName]);
+    const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const {techScoutUrl} = useSalesforceContextValue();
     const doSubmit = useDoSubmit(onSubmit);
 

@@ -6,6 +6,7 @@ import {salesforceTitles, SalesforceBook} from '~/helpers/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useIntl} from 'react-intl';
 import {useFirstSearchArgument} from './after-form-submit';
+import {captureEvent} from '~/helpers/posthog';
 import './book-selector.scss';
 
 const spanishPairings: Record<string, string> = {
@@ -252,6 +253,15 @@ function BookSelector({
 }: {
     data: {books: Books};
 } & PropsFromOutside) {
+    const trackedToggleBook = useCallback(
+        (book: SalesforceBook) => {
+            const action = selectedBooks.includes(book) ? 'deselected' : 'selected';
+
+            captureEvent('book_selected', {bookTitle: book.text, action});
+            toggleBook(book);
+        },
+        [selectedBooks, toggleBook]
+    );
     const books = React.useMemo(
         () => salesforceTitles(data.books).filter(includeFilter),
         [data.books, includeFilter]
@@ -323,7 +333,7 @@ function BookSelector({
                             <SelectedTag
                                 key={book.value}
                                 book={book}
-                                onRemove={toggleBook}
+                                onRemove={trackedToggleBook}
                             />
                         ))}
                     </div>
@@ -340,7 +350,7 @@ function BookSelector({
                         getBooks={booksBySubject}
                         name={name}
                         selectedBooks={selectedBooks}
-                        toggleBook={toggleBook}
+                        toggleBook={trackedToggleBook}
                         limitReached={limitReached}
                         forceOpen={searchLower.length > 0}
                     />

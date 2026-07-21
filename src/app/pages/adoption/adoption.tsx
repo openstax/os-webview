@@ -2,6 +2,7 @@ import React, {useState, useRef, useCallback} from 'react';
 import {useLocation} from 'react-router-dom';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import FormHeader from '~/components/form-header/form-header';
+import {captureEvent} from '~/helpers/posthog';
 import RoleSelector from '~/components/role-selector/role-selector';
 import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
@@ -215,10 +216,11 @@ function FacultyForm({
 
     const doSubmit = useCallback(
         (form: HTMLFormElement) => {
+            captureEvent('adoption_form_submitted', {bookCount: selectedBooksRef.current.length});
             form.submit();
             onSubmit();
         },
-        [onSubmit]
+        [onSubmit, selectedBooksRef]
     );
 
     const hiddenFields = (

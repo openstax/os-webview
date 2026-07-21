@@ -13,6 +13,7 @@ import useGiveDialog, { VariantValue } from '../get-this-title-files/give-before
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 import {ResourceModel} from './resource-boxes';
+import {captureEvent} from '~/helpers/posthog';
 
 // ResourceModel & LinkIsSet changes link from optional to required.
 type LinkIsSet = {
@@ -112,6 +113,10 @@ function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
     const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
+        captureEvent('resource_accessed', {
+            resourceName: model.heading,
+            resourceCategory: model.resourceCategory
+        });
         if (isDownload && enabled) {
             event.preventDefault();
             open();

@@ -3,6 +3,7 @@ import useUserContext from '~/contexts/user';
 import trackLink from '../../track-link';
 import './thank-you-form.scss';
 import SchoolSelector from '~/components/school-selector/school-selector';
+import {captureEvent} from '~/helpers/posthog';
 
 function FormWithAfterSubmit({
     afterSubmit,
@@ -75,6 +76,7 @@ export default function ThankYou({
 }) {
     const {first, last, school, accountUuid} = useUserFields();
     const afterSubmit = React.useCallback(() => {
+        captureEvent('thank_you_note_submitted');
         window.open(link);
         close();
     }, [link, close]);

@@ -2,6 +2,7 @@ import React from 'react';
 import fetchBooks from '~/models/books';
 import {filterLiveBooks, SalesforceBook} from '~/helpers/books';
 import {useNavigate, NavigateFunction, useLocation} from 'react-router-dom';
+import {captureEvent} from '~/helpers/posthog';
 
 function afterFormSubmit(
     navigate: NavigateFunction,
@@ -17,6 +18,7 @@ function afterFormSubmit(
         /* Send to Tech Scout with books pre-selected -- Language removed */
         const scoutBooks = selectedBooks.map((sfBook) => sfBook.value.replace(/ *\[.*/, ''));
 
+        captureEvent('interest_form_submitted', {bookCount: selectedBooks.length});
         navigate('/partners', {
             state: {
                 confirmation: true,
