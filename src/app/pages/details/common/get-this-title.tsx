@@ -1,5 +1,7 @@
 import React from 'react';
 import {useToggle} from '~/helpers/data';
+import {FormattedMessage} from 'react-intl';
+import useWindowContext from '~/contexts/window';
 import {
     TocOption,
     WebviewOption,
@@ -67,10 +69,17 @@ export default function GetThisTitle({model}: {model: Model}) {
                     />
                 </div>
             </div>
-            <div className="mobile-only">
-                <h2>Purchase options</h2>
-                <OrderPrintCopy slug={model.slug} campaign="book-details" />
-            </div>
+            {useWindowContext().innerWidth <= 600 && (
+                <div className="mobile-only">
+                    <h2>
+                        <FormattedMessage
+                            id="printcopy.audiobook-button"
+                            defaultMessage="Purchase options"
+                        />
+                    </h2>
+                    <OrderPrintCopy slug={model.slug} campaign="book-details" />
+                </div>
+            )}
         </div>
     );
 }

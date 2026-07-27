@@ -17,9 +17,4 @@
             }
         }
     }
-    @include wider-than($phone-max) {
-        .mobile-only {
-            display: none;
-        }
-    }
 }
