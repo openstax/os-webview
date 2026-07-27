@@ -7,6 +7,7 @@ import {
     BookshareOption,
     OptionExpander
 } from './get-this-title-files/options';
+import OrderPrintCopy from './get-this-title-files/order-print-copy/order-print-copy';
 import './get-this-title-files/get-this-title.scss';
 import trackLink from './track-link';
 
@@ -65,6 +66,10 @@ export default function GetThisTitle({model}: {model: Model}) {
                         toggle={toggleExpanded}
                     />
                 </div>
+            </div>
+            <div className="mobile-only">
+                <h2>Purchase options</h2>
+                <OrderPrintCopy slug={model.slug} campaign="book-details" />
             </div>
         </div>
     );
