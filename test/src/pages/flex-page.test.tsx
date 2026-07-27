@@ -181,7 +181,7 @@ describe('flex-page', () => {
     it('renders cardsBlock with per-card accent and divider colors', () => {
         body = [cardsBlock(false, {accentColor: '#ff0000', dividerColor: '#00ff00'})];
         render(<Component />);
-        const card = screen.getByText('first card').closest('.content-block-card');
+        const card = screen.getByText('first card').closest<HTMLElement>('.content-block-card');
 
         expect(card).not.toBe(null);
         expect(card!.style.getPropertyValue('--card-accent')).toBe('#ff0000');
