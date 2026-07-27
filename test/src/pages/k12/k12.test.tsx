@@ -10,6 +10,7 @@ import Subject from '~/pages/k12/subject/subject';
 import subjectPageData from '../../data/k12-subject';
 import { transformData, camelCaseKeys } from '~/helpers/page-data-utils';
 import * as DH from '~/helpers/use-document-head';
+import * as PC from '~/contexts/portal';
 
 jest.setTimeout(8000);
 jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData').mockReturnValue();
@@ -29,6 +30,15 @@ jest.mock('~/pages/k12/import-subject', () => ({
     __esModule: true,
     default: () => mockImportSubject()
 }));
+const portalSpy = jest.spyOn(PC, 'default').mockReturnValue({
+    portalPrefix: '',
+    setPortal: jest.fn(),
+    rewriteLinks: jest.fn(),
+    isK12Portal: false,
+    setIsK12Portal: jest.fn()
+});
+
+afterAll(() => portalSpy.mockRestore());
 
 describe('k12 page', () => {
     const user = userEvent.setup();
