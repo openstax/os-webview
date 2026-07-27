@@ -178,6 +178,16 @@ describe('flex-page', () => {
         expect(screen.getAllByText('1M+')).toHaveLength(1);
         expect(screen.getAllByText('learners')).toHaveLength(1);
     });
+    it('renders cardsBlock with per-card accent and divider colors', () => {
+        body = [cardsBlock(false, {accentColor: '#ff0000', dividerColor: '#00ff00'})];
+        render(<Component />);
+        expect(
+            document.querySelector('[style*="--card-accent: #ff0000"]')
+        ).not.toBe(null);
+        expect(
+            document.querySelector('[style*="--card-divider: #00ff00"]')
+        ).not.toBe(null);
+    });
 });
 
 function imageBlock(name: string) {
@@ -235,7 +245,7 @@ function ctaBlock(): BodyBlock {
     } as BodyBlock;
 }
 
-function cardsBlock(withStyle?: boolean): BodyBlock {
+function cardsBlock(withStyle?: boolean, cardColors?: {accentColor: string; dividerColor: string}): BodyBlock {
     return {
         id: 'cards-id',
         type: 'cards_block',
@@ -243,6 +253,7 @@ function cardsBlock(withStyle?: boolean): BodyBlock {
             cards: [
                 {
                     text: 'first card',
+                    ...cardColors,
                     ctaBlock: withStyle ? [{
                         config: [
                             {
