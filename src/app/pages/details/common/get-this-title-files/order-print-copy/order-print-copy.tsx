@@ -101,7 +101,9 @@ function useBookstoreAndAudiobookLinks(slug: string) {
     return urls;
 }
 
-export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign: UtmCampaign}) {
+export default function OrderPrintCopy({slug, campaign, children}: {
+    slug: string; campaign: UtmCampaign, children?: React.JSX.Element
+}) {
     const {formatMessage} = useIntl();
     const [bookstoreLink, audiobookLink] = useBookstoreAndAudiobookLinks(slug);
     const contentArray = React.useMemo(() => {
@@ -179,6 +181,7 @@ export default function OrderPrintCopy({slug, campaign}: {slug: string; campaign
           aria-label="Order print copy Navigation"
           data-analytics-nav="Order print copy"
         >
+            {children}
             <PhoneBoxes {...{contentArray}} />
             <DesktopBoxes {...{contentArray}} />
         </nav>
