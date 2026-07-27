@@ -71,13 +71,14 @@ export default function GetThisTitle({model}: {model: Model}) {
             </div>
             {useWindowContext().innerWidth <= 600 && (
                 <div className="mobile-only">
-                    <h2>
-                        <FormattedMessage
-                            id="printcopy.audiobook-button"
-                            defaultMessage="Purchase options"
-                        />
-                    </h2>
-                    <OrderPrintCopy slug={model.slug} campaign="book-details" />
+                    <OrderPrintCopy slug={model.slug} campaign="book-details">
+                        <h2>
+                            <FormattedMessage
+                                id="printcopy.audiobook-button"
+                                defaultMessage="Purchase options"
+                            />
+                        </h2>
+                    </OrderPrintCopy>
                 </div>
             )}
         </div>
