@@ -16,6 +16,7 @@ import * as LSN from '~/layouts/default/lower-sticky-note/lower-sticky-note';
 import * as DH from '~/helpers/use-document-head';
 import * as UC from '~/contexts/user';
 import * as TM from '~/helpers/tag-manager';
+import * as PH from '~/helpers/posthog';
 import {camelCaseKeys, transformData} from '~/helpers/page-data-utils';
 import landingPage from '../data/landing-page';
 import contactPage from '../data/contact-page';
@@ -368,5 +369,49 @@ describe('shell', () => {
 
         // Portal should be cleared for non-portal pages
         expect(mockSetPortal).toHaveBeenCalledWith('');
+    });
+
+    it('identifies the user in PostHog once uuid resolves', async () => {
+        mockBrowserInitialEntries(['/']);
+        jest.spyOn(UC, 'default').mockReturnValue({
+            uuid: 'user-1',
+            userStatus: {isInstructor: true, isStudent: false, school: 'Rice University'}
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+        const spyIdentify = jest.spyOn(PH, 'identifyUser').mockImplementation(() => undefined);
+
+        render(AppElement);
+
+        await waitFor(() => expect(spyIdentify).toHaveBeenCalledWith(
+            'user-1',
+            {isInstructor: true, isStudent: false, school: 'Rice University'}
+        ));
+
+        spyIdentify.mockRestore();
+        jest.spyOn(UC, 'default').mockReturnValue({} as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+    });
+
+    it('resets PostHog identity on logout', async () => {
+        mockBrowserInitialEntries(['/']);
+        jest.spyOn(UC, 'default').mockReturnValue({
+            uuid: 'user-1',
+            userStatus: {isInstructor: true}
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+        const spyReset = jest.spyOn(PH, 'resetUser').mockImplementation(() => undefined);
+
+        const {rerender} = render(AppElement);
+        await screen.findByRole('link', {name: 'skip to main content'});
+
+        jest.spyOn(UC, 'default').mockReturnValue({
+            uuid: undefined,
+            userStatus: undefined
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+        // A fresh element (not the same reference as AppElement) forces preact
+        // to actually re-render the tree instead of bailing out on identity.
+        rerender(React.createElement(AppElement.type));
+
+        await waitFor(() => expect(spyReset).toHaveBeenCalled());
+
+        spyReset.mockRestore();
+        jest.spyOn(UC, 'default').mockReturnValue({} as any); // eslint-disable-line @typescript-eslint/no-explicit-any
     });
 });

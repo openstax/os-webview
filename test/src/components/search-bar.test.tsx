@@ -42,4 +42,11 @@ describe('search-bar', () => {
         fireEvent.click(clear as HTMLButtonElement);
         expect(input.value).toBe('');
     });
+    it('handles search button click', () => {
+        const searchButton = screen.getAllByRole('button').find((el) => el.getAttribute('aria-label') === 'search');
+
+        fireEvent.input(input, {target: {value: 'biology'}});
+        fireEvent.click(searchButton as HTMLButtonElement);
+        expect(searchFor).toHaveBeenCalled();
+    });
 });

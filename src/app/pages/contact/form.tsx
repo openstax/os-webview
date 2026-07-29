@@ -4,6 +4,7 @@ import DropdownSelect from '~/components/select/drop-down/drop-down';
 import {useNavigate, useLocation} from 'react-router-dom';
 import { FileButton } from '../errata-form/form/FileUploader';
 import useUserContext from '~/contexts/user';
+import {captureEvent} from '~/helpers/posthog';
 import './form.scss';
 
 type SetSubmitted = React.Dispatch<React.SetStateAction<boolean>>;
@@ -77,19 +78,20 @@ function useIsEmbedded() {
     return pathname.includes('embedded');
 }
 
-function useAfterSubmit(setSubmitted?: SetSubmitted) {
+function useAfterSubmit(setSubmitted?: SetSubmitted, subject?: string) {
     const navigate = useNavigate();
     const isEmbedded = useIsEmbedded();
 
     return React.useCallback(
         () => {
+            captureEvent('contact_form_submitted', {subject});
             if (isEmbedded) {
                 (setSubmitted as SetSubmitted)(true); // the embedded form passes it
             } else {
                 navigate('/confirmation/contact');
             }
         },
-        [navigate, isEmbedded, setSubmitted]
+        [navigate, isEmbedded, setSubmitted, subject]
     );
 }
 
@@ -140,7 +142,7 @@ export default function ContactForm({setSubmitted}: {setSubmitted?: SetSubmitted
         () => setShowInvalidMessages(true),
         [setShowInvalidMessages]
     );
-    const afterSubmit = useAfterSubmit(setSubmitted);
+    const afterSubmit = useAfterSubmit(setSubmitted, subject);
     const searchParams = new window.URLSearchParams(window.location.search);
     const bodyParams = searchParams.getAll('body').join('\n');
     const {userStatus} = useUserContext();
