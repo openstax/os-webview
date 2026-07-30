@@ -68,8 +68,11 @@
     }
 
     &.streamlined {
+        // Stacked OpenStax + Rice logos need more height than the old
+        // horizontal wordmark for the stacked text to stay legible.
+        // ponytail: nav-bar height knob — bump both together to stay matched.
         .logo {
-            height: 2.4rem;
+            height: 6.4rem;
         }
 
         img {
@@ -88,7 +91,7 @@
                 display: inline-flex;
 
                 img {
-                    height: 2.4rem;
+                    height: 6.4rem;
                 }
             }
         }
@@ -103,7 +106,7 @@
     .logo-divider {
         background-color: ui-color(form-border);
         display: block;
-        height: 2.8rem;
+        height: 4.8rem;
         width: 0.1rem;
 
         @include width-up-to($tablet-max) {
@@ -119,7 +122,7 @@
             display: inline-flex;
 
             img {
-                height: 2.4rem;
+                height: 6.4rem;
             }
         }
     }

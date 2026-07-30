@@ -123,7 +123,8 @@
             width: 100%;
 
             @include wider-than($tablet-max) {
-                height: 6rem;
+                // Fits the stacked logo (6.4rem) + logo-wrapper padding (2×1.2rem).
+                height: 8.8rem;
                 transform: translate3d(0, 0, 0);
             }
 
