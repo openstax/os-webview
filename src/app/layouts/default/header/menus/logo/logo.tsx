@@ -9,7 +9,7 @@ export default function Logo() {
                     <img
                         src="/dist/images/topnav-openstax.svg"
                         alt="OpenStax logo"
-                        width="199"
+                        width="147"
                         height="111"
                     />
                 </a>
@@ -20,7 +20,7 @@ export default function Logo() {
                     <img
                         src="/dist/images/topnav-rice.svg"
                         alt="Rice University logo"
-                        width="227"
+                        width="194"
                         height="111"
                     />
                 </a>
