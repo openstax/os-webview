@@ -14,20 +14,11 @@ import cn from 'classnames';
 import './default.scss';
 
 export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
-    const headerRef = React.useRef<HTMLElement>(null);
-
-    // Add imperatively rather than via `className` so we don't take over the
-    // element's class list from `over-mobile-dialog`, which the takeover dialog
-    // adds/removes on #header directly (see takeover-dialog/content-mobile).
-    React.useEffect(() => {
-        headerRef.current?.classList.add('streamlined');
-    }, []);
-
     // BrowserRouter has to include everything that uses useLocation
     return (
         <React.Fragment>
             <Microsurvey />
-            <header id="header" ref={headerRef}>
+            <header id="header">
                 <Header />
             </header>
             <div id="lower-sticky-note">
