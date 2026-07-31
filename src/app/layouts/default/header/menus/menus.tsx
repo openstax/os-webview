@@ -1,18 +1,15 @@
 import React from 'react';
 import {DropdownContextProvider} from './dropdown-context';
 import MenuExpander from './menu-expander/menu-expander';
-import UpperMenu from './upper-menu/upper-menu';
 import Logo from './logo/logo';
 import MainMenu, {MainMenuItems} from './main-menu/main-menu';
 import {useToggle} from '~/helpers/data';
-import {useStreamlinedNav} from '~/contexts/shared-data';
 import cn from 'classnames';
 import trapTab from '~/helpers/trap-tab';
 import './menus.scss';
 import { treatSpaceOrEnterAsClick } from '~/helpers/events';
 
 export default function Menus() {
-    const streamlined = useStreamlinedNav();
     const ref = React.useRef<HTMLDivElement>(null);
     const [active, toggleActive] = useToggle();
     const clickOverlay = React.useCallback(
@@ -47,11 +44,6 @@ export default function Menus() {
         <React.Fragment>
             <DropdownContextProvider>
                 <div className='menus desktop'>
-                    {!streamlined && (
-                        <nav className='meta-nav' aria-label='Upper Menu'>
-                            <UpperMenu />
-                        </nav>
-                    )}
                     <nav className='nav' aria-label='Main'>
                         <div className='container'>
                             <Logo />
@@ -78,7 +70,6 @@ export default function Menus() {
                             <div className='menu-title'>Menu</div>
                             <ul className='no-bullets' onKeyDown={treatSpaceOrEnterAsClick}>
                                 <MainMenuItems />
-                                {!streamlined && <UpperMenu />}
                             </ul>
                         </div>
                     </div>

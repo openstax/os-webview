@@ -9,8 +9,7 @@ type FlagName =
     | 'chat_book_details'
     | 'chat_subjects'
     | 'chat_contact'
-    | 'chat_logged_in_only'
-    | 'streamlined_nav';
+    | 'chat_logged_in_only';
 
 type Flag = {
     name: FlagName;
@@ -39,14 +38,7 @@ function useContextValue() {
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
 
-function useStreamlinedNav() {
-    const {flags} = useContext();
-
-    return Boolean(flags && flags.streamlined_nav);
-}
-
 export {
     useContext as default,
-    ContextProvider as SharedDataContextProvider,
-    useStreamlinedNav
+    ContextProvider as SharedDataContextProvider
 };
