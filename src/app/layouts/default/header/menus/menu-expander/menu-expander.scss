@@ -1,6 +1,7 @@
 @import 'pattern-library/core/pattern-library/headers';
 
-$button-size: 1.6rem;
+$button-size: 2.4rem;
+$bar-thickness: 0.3rem;
 
 .menus .expand {
     appearance: none;
@@ -40,7 +41,7 @@ $button-size: 1.6rem;
         // create middle line
         background: os-color(gray);
         display: inline-block;
-        height: 0.2rem;
+        height: $bar-thickness;
         position: relative;
         transition: background 0.3s 0.2s ease;
         width: $button-size;
@@ -51,7 +52,7 @@ $button-size: 1.6rem;
             background: os-color(gray);
             content: '';
             display: inline-block;
-            height: 0.2rem;
+            height: $bar-thickness;
             left: 0;
             position: absolute;
             // set transform origin back to center

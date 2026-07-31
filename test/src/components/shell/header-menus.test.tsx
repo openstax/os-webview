@@ -29,7 +29,7 @@ describe('shell/header/menus', () => {
 
     // eslint-disable-next-line complexity
     it('renders', async () => {
-        mockUseDataFromPromise.mockReturnValueOnce({
+        mockUseDataFromPromise.mockReturnValue({
             ...giveTodayData,
             menu_expires: futureDate
         });
@@ -40,8 +40,8 @@ describe('shell/header/menus', () => {
         );
         const listitems = screen.queryAllByRole('listitem');
 
-        // The desktop Give menu item is off; Give button shows instead
-        expect(listitems.filter(isGiveListItem).length).toBe(1);
+        // Give renders in both the desktop and mobile main menu
+        expect(listitems.filter(isGiveListItem).length).toBe(2);
         const button = screen.getByRole('button');
 
         expect(screen.getAllByRole('link', {name: 'Log in'})).toHaveLength(2);
@@ -51,19 +51,5 @@ describe('shell/header/menus', () => {
         expect(button.parentElement?.classList.contains('active')).toBe(true);
         await user.keyboard('{Escape}');
         expect(button.parentElement?.classList.contains('active')).toBe(false);
-    });
-    it('handles upper menus without Give', () => {
-        mockUseDataFromPromise.mockReturnValueOnce({
-            ...giveTodayData
-        });
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Menus />
-            </MemoryRouter>
-        );
-        const listitems = screen.queryAllByRole('listitem');
-
-        // No Give button, so Give menu item in both desktop and mobile
-        expect(listitems.filter(isGiveListItem).length).toBe(2);
     });
 });
