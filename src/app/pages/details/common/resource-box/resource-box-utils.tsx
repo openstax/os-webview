@@ -29,7 +29,6 @@ export type ResourceData = {
         heading: string;
         resourceCategory: string;
         resourceUnlocked: boolean;
-        creatorFestResource?: boolean;
         description: string;
         comingSoonText?: string;
     };
@@ -146,7 +145,6 @@ export function resourceBoxModel(
     return Object.assign(
         {
             ...resourceData.resource,
-            creatorFest: Boolean(resourceData.resource?.creatorFestResource),
             comingSoon: Boolean(resourceData.comingSoonText),
             comingSoonText: resourceData.comingSoonText,
             k12: resourceData.k12,
