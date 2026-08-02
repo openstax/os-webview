@@ -181,12 +181,11 @@ describe('flex-page', () => {
     it('renders cardsBlock with per-card accent and divider colors', () => {
         body = [cardsBlock(false, {accentColor: '#ff0000', dividerColor: '#00ff00'})];
         render(<Component />);
-        expect(
-            document.querySelector('[style*="--card-accent: #ff0000"]')
-        ).not.toBe(null);
-        expect(
-            document.querySelector('[style*="--card-divider: #00ff00"]')
-        ).not.toBe(null);
+        const card = screen.getByText('first card').closest<HTMLElement>('.content-block-card');
+
+        expect(card).not.toBe(null);
+        expect(card!.style.getPropertyValue('--card-accent')).toBe('#ff0000');
+        expect(card!.style.getPropertyValue('--card-divider')).toBe('#00ff00');
     });
 });
 
@@ -246,6 +245,11 @@ function ctaBlock(): BodyBlock {
 }
 
 function cardsBlock(withStyle?: boolean, cardColors?: {accentColor: string; dividerColor: string}): BodyBlock {
+    const cardConfig = cardColors ? [
+        {type: 'accent_color', value: cardColors.accentColor},
+        {type: 'divider_color', value: cardColors.dividerColor}
+    ] : [];
+
     return {
         id: 'cards-id',
         type: 'cards_block',
@@ -253,7 +257,7 @@ function cardsBlock(withStyle?: boolean, cardColors?: {accentColor: string; divi
             cards: [
                 {
                     text: 'first card',
-                    ...cardColors,
+                    config: cardConfig,
                     ctaBlock: withStyle ? [{
                         config: [
                             {

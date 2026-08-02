@@ -2894,10 +2894,9 @@
     "@openstax/ts-utils" "^1.2.3"
     js-cookie "^3.0.5"
 
-"@openstax/flex-page-renderer@^1.1.19":
-  version "1.1.19"
-  resolved "https://npm.pkg.github.com/download/@openstax/flex-page-renderer/1.1.19/fab2ec9bb8d14379fdec044a7fd81b19211e3f0a#fab2ec9bb8d14379fdec044a7fd81b19211e3f0a"
-  integrity sha512-HR+0g6iahrB1KqK15zjzJ/CD+hf9FYNCdKGZ8TCrsXYnj0sXN/U1VAHYTM1KCpjPlp9103eD1DAftEpJVzJB0w==
+"@openstax/flex-page-renderer@https://github.com/openstax/flex-pages.git#renderer-1.1.22-rc.4":
+  version "1.1.22-rc.4"
+  resolved "https://github.com/openstax/flex-pages.git#90e71b7d12461b19d6502e426fc98b3979de9ff3"
   dependencies:
     classnames "^2.5.1"
     color "^5.0.0"
