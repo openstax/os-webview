@@ -157,7 +157,6 @@ export default {
                 '<p data-block-key="wws7t">Download our helpful guide to all things OpenStax.<br/></p>',
             resourceUnlocked: true,
             resourceIcon: null,
-            creatorFestResource: false,
             linkExternal: '',
             linkPage: null,
             linkDocumentUrl:
@@ -184,7 +183,6 @@ export default {
             resourceUnlocked: false,
             resourceIcon:
                 'https://assets.openstax.org/oscms-dev/media/original_images/icons8-image-64.png',
-            creatorFestResource: false,
             linkExternal: '',
             linkPage: null,
             linkDocumentUrl:
@@ -211,7 +209,6 @@ export default {
             resourceUnlocked: false,
             resourceIcon:
                 'https://assets.openstax.org/oscms-dev/media/original_images/icons8-image-64.png',
-            creatorFestResource: false,
             linkExternal: '',
             linkPage: null,
             linkDocumentUrl:
@@ -238,7 +235,6 @@ export default {
             resourceUnlocked: true,
             resourceIcon:
                 'https://assets.openstax.org/oscms-dev/media/original_images/icons8-image-64.png',
-            creatorFestResource: false,
             linkExternal: '',
             linkPage: null,
             linkDocumentUrl:
@@ -265,7 +261,6 @@ export default {
             resourceUnlocked: false,
             resourceIcon:
                 'https://assets.openstax.org/oscms-dev/media/original_images/icons8-image-64.png',
-            creatorFestResource: false,
             linkExternal:
                 'https://lor.instructure.com/resources/6b3fb5b81cc34fdb9032795fc506d8cb',
             linkPage: null,
@@ -289,7 +284,6 @@ export default {
                 '<p data-block-key="nqamb">Throughout the year, subject matter experts comb through all queries from our readers. These release notes cover the errata updates in our most recent summer PDF release.</p>',
             resourceUnlocked: true,
             resourceIcon: null,
-            creatorFestResource: false,
             linkExternal: '',
             linkPage: null,
             linkDocumentUrl:
@@ -316,7 +310,6 @@ export default {
                 '<p data-block-key="279kr">These guidelines support OpenStax efforts to ensure diverse representation in the development and improvement of our materials. These guidelines can be used to develop and improve all open educational resources.</p>',
             resourceUnlocked: true,
             resourceIcon: null,
-            creatorFestResource: false,
             linkExternal: '',
             linkPage: null,
             linkDocumentUrl:
@@ -343,7 +336,6 @@ export default {
                 '<p data-block-key="wb6cw">San Jacinto College created a course cartridge for this title to integrate your OpenStax books into the Blackboard learning management system. Download this file and work with your campus Blackboard administrator to add to your course.</p>',
             resourceUnlocked: false,
             resourceIcon: null,
-            creatorFestResource: false,
             linkExternal: '',
             linkPage: null,
             linkDocumentUrl:
