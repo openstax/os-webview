@@ -22,12 +22,23 @@ declare global {
                 baseUrl: string,
                 options: {scrt2URL: string}
             ) => void;
+            utilAPI?: {
+                showChatButton: () => void;
+                hideChatButton: () => void;
+            };
             prechatAPI?: {
                 setHiddenPrechatFields: (fields: Record<string, string>) => void;
                 setVisiblePrechatFields: (fields: Record<string, VisibleFieldArg>) => void;
             };
         };
+        // Set once init() succeeds; gates prechat + visibility handling.
         __salesforceChatInitialized?: boolean;
+        // Set as soon as init() is attempted (success or failure) so a failed
+        // init is never retried on a later mount. Re-running init() against a
+        // half-initialized SDK stacks another businessHoursTimerCallback timer
+        // on top of the broken one, and those orphaned timers are what throw
+        // `Cannot read properties of undefined (reading 'hideChatButton')`.
+        __salesforceChatInitAttempted?: boolean;
     }
 }
 
@@ -66,6 +77,12 @@ function initEmbeddedMessaging(): boolean {
     // Value is guaranteed present by the caller
     const bootstrap = assertDefined(window.embeddedservice_bootstrap);
 
+    // Record the attempt before calling init(). init() wires up the SDK's
+    // internal business-hours timer early and may throw before the widget is
+    // fully built; marking the attempt up-front guarantees we never re-init
+    // over that partial state (which would orphan another timer).
+    window.__salesforceChatInitAttempted = true;
+
     try {
         bootstrap.settings.language = 'en_US';
         bootstrap.init(
@@ -78,6 +95,28 @@ function initEmbeddedMessaging(): boolean {
     } catch (err) {
         console.error('Error initializing Salesforce chat:', err);
         return false;
+    }
+}
+
+// Toggle the widget through Salesforce's own show/hide API so the SDK keeps a
+// consistent view of the button across SPA navigation. Every access is guarded:
+// the API only exists after the vendor bundle boots, calling it before the
+// button is created (or while a chat window is open) can throw, and we must
+// never let our own code raise the unhandled error we're trying to prevent.
+function setChatButtonVisible(visible: boolean): void {
+    const utilAPI = window.embeddedservice_bootstrap?.utilAPI;
+
+    if (!utilAPI) {
+        return;
+    }
+    try {
+        if (visible) {
+            utilAPI.showChatButton();
+        } else {
+            utilAPI.hideChatButton();
+        }
+    } catch (err) {
+        console.error('Error toggling Salesforce chat button:', err);
     }
 }
 
@@ -135,21 +174,26 @@ export default function Chat() {
                 script.onerror = null;
                 document.body.removeChild(script);
             }
-            // Hide the chat widget when component unmounts
-            // The Salesforce widget injects elements with these selectors
+            // Hide the chat button on unmount. Prefer the vendor's own API so
+            // the SDK's business-hours timer keeps operating on a live widget;
+            // fall back to hiding the injected container when the API isn't
+            // ready yet.
+            setChatButtonVisible(false);
             const chatElement = document.getElementById('embedded-messaging');
 
             if (chatElement) {
                 chatElement.style.display = 'none';
             }
-            // Note: Don't delete window.embeddedservice_bootstrap or __salesforceChatInitialized
-            // to maintain conversation state across component remounts
+            // Note: Don't delete window.embeddedservice_bootstrap or the init
+            // flags. The SDK is a page-lifetime singleton with no teardown API;
+            // re-initializing it is what orphans the timer that throws.
         };
     }, []);
 
     // Show chat widget when component mounts (if it was previously hidden)
     React.useEffect(() => {
         if (scriptLoaded && window.__salesforceChatInitialized) {
+            setChatButtonVisible(true);
             const chatElement = document.getElementById('embedded-messaging');
 
             if (chatElement) {
@@ -164,11 +208,13 @@ export default function Chat() {
             return;
         }
 
-        // Only initialize if not already initialized (persists across component remounts)
-        if (!window.__salesforceChatInitialized) {
+        // Initialize at most once per page load. Guard on "attempted" (not
+        // "succeeded") so a failed init is never retried on a later mount —
+        // retrying stacks another orphaned business-hours timer that throws.
+        if (!window.__salesforceChatInitAttempted) {
             const success = initEmbeddedMessaging();
 
-            // Only set the flag if initialization succeeded
+            // Only set the success flag when init actually completed
             if (success) {
                 window.__salesforceChatInitialized = true;
             }
