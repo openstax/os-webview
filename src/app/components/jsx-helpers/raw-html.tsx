@@ -57,7 +57,10 @@ export default function RawHTML({
         if (embed && ref.current) {
             activateScripts(ref.current);
         }
-    });
+        // Only when the markup itself changes; React leaves the DOM (and the
+        // already-activated scripts) alone on re-renders with the same html,
+        // so re-running would execute embedded scripts a second time.
+    }, [embed, html]);
     React.useLayoutEffect(() => rewriteLinks?.(ref.current as HTMLElement), [rewriteLinks]);
 
     return React.createElement(Tag, {
