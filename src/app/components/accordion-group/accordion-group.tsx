@@ -73,8 +73,11 @@ function TitleBar({
     );
 }
 
-function toUuid(name: string) {
-    return name.replace(/\W+/g, '_');
+// A blank title cleans to '', which react-accessible-accordion rejects at
+// runtime ("uuid must be a valid HTML5 id"), so fall back to the item's
+// position. Mirrors the flex renderer's AccordionBlock `toAnchorId`.
+function toUuid(name: string, index: number) {
+    return name.replace(/\W+/g, '_') || `item-${index}`;
 }
 
 function Item({
@@ -82,12 +85,14 @@ function Item({
     titleTag,
     checkChevronDirection,
     contentComponent,
-    analytics
+    analytics,
+    index
 }: Omit<Parameters<typeof TitleBar>[0], 'chevronDirection'> & {
     contentComponent: React.ReactNode;
     checkChevronDirection: (u: string) => ChevronDirection;
+    index: number;
 }) {
-    const uuid = toUuid(title);
+    const uuid = toUuid(title, index);
     const chevronDirection = checkChevronDirection(uuid);
 
     return (
@@ -130,7 +135,7 @@ export default function AccordionGroup({
     'data-analytics-nav'?: string;
 }) {
     const root = React.useRef<HTMLDivElement>(null);
-    const preExpandedUuids = preExpanded.map(toUuid);
+    const preExpandedUuids = preExpanded.map((name, i) => toUuid(name, i));
     const [chevronDirection, onChange] = useChevronDirection(
         forwardOnChange,
         preExpandedUuids
@@ -163,11 +168,12 @@ export default function AccordionGroup({
                 data-analytics-nav={analyticsNav}
             >
                 {items.filter((i) => 'title' in i).map(
-                    (item) => (
+                    (item, index) => (
                         <Item
                             analytics={!!analyticsNav}
-                            key={item.title}
+                            key={item.title || index}
                             {...item}
+                            index={index}
                             checkChevronDirection={chevronDirection}
                         />
                     )
