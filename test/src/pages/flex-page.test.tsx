@@ -1,6 +1,6 @@
 import React from 'react';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
-import {render, screen} from '@testing-library/preact';
+import {render, screen, waitFor} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
@@ -138,6 +138,18 @@ describe('flex-page', () => {
         body = [htmlBlock()];
         render(<Component />);
         expect(screen.getAllByText('Some html')).toHaveLength(1);
+    });
+    it('runs scripts in htmlBlock', async () => {
+        const w = window as unknown as {flexScriptRan?: boolean};
+        w.flexScriptRan = false;
+
+        try {
+            body = [htmlBlock('<script>window.flexScriptRan = true;</script>')];
+            render(<Component />);
+            await waitFor(() => expect(w.flexScriptRan).toBe(true));
+        } finally {
+            w.flexScriptRan = undefined;
+        }
     });
     it('renders linksBlock and sectionBlock', async () => {
         jest.spyOn(window, 'scrollBy').mockImplementation(() => null);
@@ -322,11 +334,11 @@ function faqBlock(content: Array<Record<string, unknown>> = []): BodyBlock {
     } as BodyBlock;
 }
 
-function htmlBlock(): BodyBlock {
+function htmlBlock(value = '<p>Some html</p>'): BodyBlock {
     return {
         id: 'html-id',
         type: 'html',
-        value: '<p>Some html</p>'
+        value
     } as BodyBlock;
 }
 
