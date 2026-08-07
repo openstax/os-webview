@@ -75,9 +75,10 @@ function TitleBar({
 
 // A blank title cleans to '', which react-accessible-accordion rejects at
 // runtime ("uuid must be a valid HTML5 id"), so fall back to the item's
-// position. Mirrors the flex renderer's AccordionBlock `toAnchorId`.
+// position. Keep the fallback format consistent with the cleaning regex so
+// values returned from onChange can be passed back via preExpanded.
 function toUuid(name: string, index: number) {
-    return name.replace(/\W+/g, '_') || `item-${index}`;
+    return name.replace(/\W+/g, '_') || `item_${index}`;
 }
 
 function Item({
