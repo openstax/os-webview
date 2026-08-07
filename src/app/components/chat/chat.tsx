@@ -130,6 +130,24 @@ export default function Chat() {
     const userStatus = userContext?.userStatus;
     const userModel = userContext?.userModel;
 
+    // Hide the chat button on every unmount, regardless of how the script loaded.
+    // This effect runs on unmount unconditionally so later navigations (where the
+    // script-loading effect short-circuits) still hide the button correctly.
+    React.useEffect(() => () => {
+        // Prefer the vendor's own API so the SDK's business-hours timer keeps
+        // operating on a live widget; fall back to hiding the injected container
+        // when the API isn't ready yet.
+        setChatButtonVisible(false);
+        const chatElement = document.getElementById('embedded-messaging');
+
+        if (chatElement) {
+            chatElement.style.display = 'none';
+        }
+        // Note: Don't delete window.embeddedservice_bootstrap or the init
+        // flags. The SDK is a page-lifetime singleton with no teardown API;
+        // re-initializing it is what orphans the timer that throws.
+    }, []);
+
     // Load Salesforce script once, or short-circuit if already loaded
     React.useEffect(() => {
         let script: HTMLScriptElement | null = null;
@@ -165,7 +183,6 @@ export default function Chat() {
             document.body.appendChild(script);
         });
 
-        // Always return cleanup function to hide widget on unmount
         return () => {
             cancelIdle();
             if (script && document.body.contains(script)) {
@@ -174,19 +191,6 @@ export default function Chat() {
                 script.onerror = null;
                 document.body.removeChild(script);
             }
-            // Hide the chat button on unmount. Prefer the vendor's own API so
-            // the SDK's business-hours timer keeps operating on a live widget;
-            // fall back to hiding the injected container when the API isn't
-            // ready yet.
-            setChatButtonVisible(false);
-            const chatElement = document.getElementById('embedded-messaging');
-
-            if (chatElement) {
-                chatElement.style.display = 'none';
-            }
-            // Note: Don't delete window.embeddedservice_bootstrap or the init
-            // flags. The SDK is a page-lifetime singleton with no teardown API;
-            // re-initializing it is what orphans the timer that throws.
         };
     }, []);
 
