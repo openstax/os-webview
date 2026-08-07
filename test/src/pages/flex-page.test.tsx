@@ -141,10 +141,15 @@ describe('flex-page', () => {
     });
     it('runs scripts in htmlBlock', async () => {
         const w = window as unknown as {flexScriptRan?: boolean};
+        w.flexScriptRan = false;
 
-        body = [htmlBlock('<script>window.flexScriptRan = true;</script>')];
-        render(<Component />);
-        await waitFor(() => expect(w.flexScriptRan).toBe(true));
+        try {
+            body = [htmlBlock('<script>window.flexScriptRan = true;</script>')];
+            render(<Component />);
+            await waitFor(() => expect(w.flexScriptRan).toBe(true));
+        } finally {
+            w.flexScriptRan = undefined;
+        }
     });
     it('renders linksBlock and sectionBlock', async () => {
         jest.spyOn(window, 'scrollBy').mockImplementation(() => null);
