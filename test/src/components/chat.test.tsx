@@ -646,10 +646,14 @@ describe('Chat', () => {
         expect(utilMockService.utilAPI.hideChatButton).toHaveBeenCalledTimes(1);
 
         // Returning to a chat page shows it again through the same API
-        render(<Chat />);
+        const {unmount: unmount2} = render(<Chat />);
         await waitFor(() => {
             expect(utilMockService.utilAPI.showChatButton).toHaveBeenCalledTimes(1);
         });
+
+        // Leaving again should also hide the button
+        unmount2();
+        expect(utilMockService.utilAPI.hideChatButton).toHaveBeenCalledTimes(2);
     });
 
     it('logs but does not throw when toggling the chat button fails', () => {
