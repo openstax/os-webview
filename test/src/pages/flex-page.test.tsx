@@ -117,6 +117,23 @@ describe('flex-page', () => {
         expect(screen.getAllByRole('heading')).toHaveLength(1);
         expect(screen.getAllByRole('button')).toHaveLength(1);
     });
+    it('renders faqBlock with nested content blocks', () => {
+        body = [faqBlock([rtBlock()])];
+        render(<Component />);
+        expect(screen.getAllByText('Some text with')).toHaveLength(1);
+    });
+    it('renders faqBlock with nested image content', () => {
+        body = [faqBlock([{
+            id: 'faq-image-id',
+            type: 'image',
+            value: {
+                image: {file: '/foo/faq-image.jpg', width: 100, height: 50},
+                alt_text: 'faq image alt'
+            }
+        }])];
+        render(<Component />);
+        expect(screen.getByAltText('faq image alt')).not.toBe(null);
+    });
     it('renders htmlBlock', () => {
         body = [htmlBlock()];
         render(<Component />);
@@ -153,6 +170,23 @@ describe('flex-page', () => {
         body = [bookListBlock()];
         render(<Component />);
         expect(screen.getAllByText('book title')).toHaveLength(1);
+    });
+    it('renders bigNumberBlock', () => {
+        body = [bigNumberBlock(), bigNumberBlock('1M+', 'learners', 'blue')];
+        render(<Component />);
+        expect(screen.getAllByText('42')).toHaveLength(1);
+        expect(screen.getAllByText('1M+')).toHaveLength(1);
+        expect(screen.getAllByText('learners')).toHaveLength(1);
+    });
+    it('renders cardsBlock with per-card accent and divider colors', () => {
+        body = [cardsBlock(false, {accentColor: '#ff0000', dividerColor: '#00ff00'})];
+        render(<Component />);
+        expect(
+            document.querySelector('[style*="--card-accent: #ff0000"]')
+        ).not.toBe(null);
+        expect(
+            document.querySelector('[style*="--card-divider: #00ff00"]')
+        ).not.toBe(null);
     });
 });
 
@@ -211,7 +245,7 @@ function ctaBlock(): BodyBlock {
     } as BodyBlock;
 }
 
-function cardsBlock(withStyle?: boolean): BodyBlock {
+function cardsBlock(withStyle?: boolean, cardColors?: {accentColor: string; dividerColor: string}): BodyBlock {
     return {
         id: 'cards-id',
         type: 'cards_block',
@@ -219,6 +253,7 @@ function cardsBlock(withStyle?: boolean): BodyBlock {
             cards: [
                 {
                     text: 'first card',
+                    ...cardColors,
                     ctaBlock: withStyle ? [{
                         config: [
                             {
@@ -264,7 +299,7 @@ function dividerBlock(aligned: boolean): BodyBlock {
     } as BodyBlock;
 }
 
-function faqBlock(): BodyBlock {
+function faqBlock(content: Array<Record<string, unknown>> = []): BodyBlock {
     return {
         id: 'faq-id',
         type: 'faq',
@@ -275,7 +310,8 @@ function faqBlock(): BodyBlock {
                     question: 'what?',
                     slug: 'q1',
                     answer: 'hush',
-                    document: ''
+                    document: '',
+                    content
                 }
             }
         ]
@@ -393,5 +429,13 @@ function bookListBlock(): BodyBlock {
                 }
             ]
         }
+    } as BodyBlock;
+}
+
+function bigNumberBlock(number = '42', caption?: string, color?: string): BodyBlock {
+    return {
+        id: 'big-number-id',
+        type: 'big_number',
+        value: {number, caption, color}
     } as BodyBlock;
 }

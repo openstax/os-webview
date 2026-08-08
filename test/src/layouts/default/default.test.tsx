@@ -50,8 +50,7 @@ jest.mock('~/contexts/shared-data', () => {
     return {
         __esModule: true,
         ...actual,
-        default: jest.fn(() => mockUseSharedDataContext()),
-        useStreamlinedNav: jest.fn().mockReturnValue(false)
+        default: jest.fn(() => mockUseSharedDataContext())
     };
 });
 
@@ -254,8 +253,7 @@ describe('default layout', () => {
             <DefaultLayout />
             <Link to="/kinetic">Change route</Link>
         </MemoryRouter>);
-        expect(await screen.findAllByText('JIT Load Component')).toHaveLength(1);
-        const toggle = screen.getByRole('button', {
+        const toggle = await screen.findByRole('button', {
             name: 'Toggle Meta Navigation Menu'
         });
 

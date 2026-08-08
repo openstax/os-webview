@@ -27,6 +27,37 @@ window.oxDLF ||= [];
 let gtmInitialized = false;
 
 /**
+ * Define a no-op `fbq`/`_fbq` stub on `window` before GTM loads.
+ *
+ * A Facebook Pixel tag inside our GTM container calls `fbq(...)`, but with
+ * Consent Mode gating (ad_storage/ad_personalization = denied) the Facebook
+ * base pixel that normally defines `fbq` can be deferred or blocked. When the
+ * event tag fires first it throws `ReferenceError: fbq is not defined` from
+ * within gtm.js. This stub matches Facebook's standard base-pixel bootstrap so
+ * an early tag queues its calls instead of throwing; once the real pixel loads
+ * it drains the queue via `callMethod`.
+ */
+function stubFacebookPixel(w) {
+    if (w.fbq) {
+        return;
+    }
+    const n = function (...fbqArgs) {
+        if (n.callMethod) {
+            n.callMethod(...fbqArgs);
+        } else {
+            n.queue.push(fbqArgs);
+        }
+    };
+
+    w.fbq = n;
+    w._fbq ||= n;
+    n.push = n;
+    n.loaded = true;
+    n.version = '2.0';
+    n.queue = [];
+}
+
+/**
  * Initialize Google Tag Manager
  * This should be called conditionally based on portal K12 status
  */
@@ -35,6 +66,9 @@ export function initializeGTM() {
         return;
     }
     gtmInitialized = true;
+
+    // Ensure `fbq` exists before GTM's Facebook Pixel tag can fire
+    stubFacebookPixel(window);
 
     // eslint-disable-next-line max-params
     (function (w, d, s, l, i) {

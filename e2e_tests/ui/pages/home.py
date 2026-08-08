@@ -215,7 +215,7 @@ class HomeRex:
         await self.page.get_by_role("link", name="Explore Higher Ed resources").click()
 
     async def click_campus_affordability_link(self):
-        await self.page.get_by_role("link", name="Explore your options!").click()
+        await self.page.get_by_role("link", name=re.compile(r"Explore your options", re.IGNORECASE)).click()
 
     @property
     def higher_education_bookstore_order_access_code(self):
@@ -249,7 +249,7 @@ class HomeRex:
 
     @property
     def try_assignable_today_link(self):
-        return self.page.get_by_role("link", name="Try Assignable today!")
+        return self.page.get_by_role("link", name=re.compile(r"Try Assignable", re.IGNORECASE))
 
     @property
     def free_digital_library_subjects(self):

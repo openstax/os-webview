@@ -85,6 +85,7 @@ export function useBannerData(): BannerDataWithEmergency | null {
 /* eslint-disable camelcase */
 const contextMatchers: Record<string, (pathname: string) => boolean> = {
     all: () => true,
+    homepage: (p) => p === '/',
     subjects: (p) => p.startsWith('/subjects'),
     book_details: (p) => p.startsWith('/details/books/'),
     blog: (p) => p.startsWith('/blog')
@@ -95,7 +96,14 @@ function bannerMatchesPath(banner: BannerInfo, pathname: string): boolean {
     if (banner.context_filter === 'url_pattern') {
         const pattern = banner.url_pattern;
 
-        return Boolean(pattern) && (pathname === pattern || pathname.startsWith(pattern as string));
+        if (!pattern) {
+            return false;
+        }
+        try {
+            return new RegExp(`^${pattern}$`).test(pathname);
+        } catch {
+            return false;
+        }
     }
     return contextMatchers[banner.context_filter]?.(pathname) ?? false;
 }

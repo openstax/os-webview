@@ -20,8 +20,10 @@
 
   // Brand text colors, applied to any run of text.
   .text-blue { color: os-color(blue); }
-  .text-green { color: os-color(green); }
-  .text-orange { color: os-color(orange); }
+  // Deep-green and CTA-primary read better as body text than the raw
+  // green/orange swatches, which are tuned for illustration, not text.
+  .text-green { color: os-color(deep-green); }
+  .text-orange { color: ui-color(primary); }
   .text-gray { color: os-color(gray); }
   .text-white { color: text-color(white); }
 }

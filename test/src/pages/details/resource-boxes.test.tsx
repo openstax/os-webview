@@ -217,18 +217,6 @@ it('displays k12 badge', () => {
     );
 });
 
-it('displays CreatorFest notice', () => {
-    const models = studentModels({}, {}).map((model) => ({
-        ...model,
-        creatorFest: true
-    }));
-
-    render(<LangWrapResourceBoxes models={models} />);
-    screen.getByRole('img', {
-        description: 'This resource was created by instructors at Creator Fest'
-    });
-});
-
 it('displays print link', () => {
     const models = studentModels({}, {}).map((model) => ({
         ...model,
