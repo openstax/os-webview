@@ -11,19 +11,13 @@ const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours
 const LS_KEY = 'giveDialogLastDisplay';
 
 function shownRecently() {
-    try {
-        const lastShown = Number(
-            JSON.parse(window.localStorage?.getItem(LS_KEY) || '0')
-        );
+    const lastShown = Number(window.localStorage.getItem(LS_KEY));
 
-        return Date.now() - lastShown < RECENT_DELTA_MS;
-    } catch {
-        return false;
-    }
+    return Date.now() - lastShown < RECENT_DELTA_MS;
 }
 
 function markShown() {
-    window.localStorage?.setItem(LS_KEY, JSON.stringify(Date.now()));
+    window.localStorage.setItem(LS_KEY, String(Date.now()));
     window.dataLayer ||= [];
     window.dataLayer.push({event: 'giveDialogImpression'});
 }

@@ -45,8 +45,12 @@ const user = userEvent.setup();
 describe('get-this-title', () => {
     const originalError = console.error;
 
-    // Reset the give-dialog frequency cap so each click test starts uncapped.
-    beforeEach(() => window.localStorage.clear());
+    // Reset the give-dialog frequency cap and mobile mock so each click test
+    // starts uncapped on a desktop display.
+    beforeEach(() => {
+        window.localStorage.removeItem('giveDialogLastDisplay');
+        mockIsMobileDisplay.mockReturnValue(false);
+    });
 
     it('renders with unexpanded options', async () => {
         const bookshareModel = {...baseModel, bookshareLink: 'the-bookshare-version'};

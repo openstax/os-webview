@@ -28,6 +28,9 @@ describe('left-content', () => {
     // Setup option prevents await click from hanging when using faketimers
     const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
 
+    // Reset the give-dialog frequency cap so each click test starts uncapped.
+    beforeEach(() => window.localStorage.removeItem('giveDialogLastDisplay'));
+
     function Component({
         model,
         search = 'Instructor'

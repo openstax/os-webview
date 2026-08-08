@@ -22,6 +22,9 @@ jest.mock('~/models/book-titles', () => ({
 }));
 
 describe('k12 subject resources', () => {
+    // Reset the give-dialog frequency cap so each click test starts uncapped.
+    beforeEach(() => window.localStorage.removeItem('giveDialogLastDisplay'));
+
     it('renders unlocked resources', async () => {
         userContext.mockReturnValue({
             isVerified: true,
