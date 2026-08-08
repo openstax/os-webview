@@ -8,3 +8,4 @@ coverage/
 yarn-error.log
 .idea
 Brewfile.lock.json
+.env
