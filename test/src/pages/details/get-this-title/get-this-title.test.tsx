@@ -45,6 +45,9 @@ const user = userEvent.setup();
 describe('get-this-title', () => {
     const originalError = console.error;
 
+    // Reset the give-dialog frequency cap so each click test starts uncapped.
+    beforeEach(() => window.localStorage.clear());
+
     it('renders with unexpanded options', async () => {
         const bookshareModel = {...baseModel, bookshareLink: 'the-bookshare-version'};
 
@@ -115,6 +118,29 @@ describe('get-this-title', () => {
             undefined
         );
         console.error = originalError;
+    });
+    it('does not reopen the dialog when shown recently', async () => {
+        window.localStorage.setItem(
+            'giveDialogLastDisplay',
+            JSON.stringify(Date.now())
+        );
+        render(<GTTinContext />);
+        const pdfLink = await screen.findByText('Download a PDF');
+
+        console.error = jest.fn();
+        await user.click(pdfLink);
+        expect(screen.queryByRole('link', {name: 'Go to your file'})).toBeNull();
+        console.error = originalError;
+    });
+    it('records an impression when the dialog opens', async () => {
+        (window as unknown as Window & {dataLayer: object[]}).dataLayer = [];
+        render(<GTTinContext />);
+        const pdfLink = await screen.findByText('Download a PDF');
+
+        await user.click(pdfLink);
+        expect(window.dataLayer).toContainEqual({
+            event: 'giveDialogImpression'
+        });
     });
     it('expands TOC option (Polish)', async () => {
         const mockIsPolish = jest.spyOn($, 'isPolish').mockReturnValue(true);

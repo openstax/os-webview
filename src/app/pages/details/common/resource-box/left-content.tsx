@@ -112,9 +112,8 @@ function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
     const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
-        if (isDownload && enabled) {
+        if (isDownload && enabled && open()) {
             event.preventDefault();
-            open();
         }
     }
 

@@ -6,6 +6,28 @@ import ContentWarning, {checkWarningCookie} from './content-warning';
 import useDonationPopupData from './use-donation-popup-data';
 import {isMobileDisplay} from '~/helpers/device';
 
+// Frequency cap shared across every mount point, matching takeover-dialog.
+const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours
+const LS_KEY = 'giveDialogLastDisplay';
+
+function shownRecently() {
+    try {
+        const lastShown = Number(
+            JSON.parse(window.localStorage?.getItem(LS_KEY) || '0')
+        );
+
+        return Date.now() - lastShown < RECENT_DELTA_MS;
+    } catch {
+        return false;
+    }
+}
+
+function markShown() {
+    window.localStorage?.setItem(LS_KEY, JSON.stringify(Date.now()));
+    window.dataLayer ||= [];
+    window.dataLayer.push({event: 'giveDialogImpression'});
+}
+
 export type VariantValue =
     | 'content-warning'
     | 'Instructor resource'
@@ -50,9 +72,20 @@ export default function useGiveDialog() {
         [close, data, Dialog]
     );
 
+    // Opens the dialog unless it fired recently. Returns whether it opened so
+    // callers know to suppress the default link navigation.
+    const openIfNotRecent = React.useCallback(() => {
+        if (shownRecently()) {
+            return false;
+        }
+        markShown();
+        open();
+        return true;
+    }, [open]);
+
     return {
         GiveDialog,
-        open,
+        open: openIfNotRecent,
         enabled: !data?.hide_donation_popup
     };
 }
@@ -61,9 +94,8 @@ export function useOpenGiveDialog() {
     const {GiveDialog, open, enabled} = useGiveDialog();
     const openGiveDialog = React.useCallback(
         (event: React.MouseEvent) => {
-            if (enabled && !isMobileDisplay()) {
+            if (enabled && !isMobileDisplay() && open()) {
                 event.preventDefault();
-                open();
             }
         },
         [enabled, open]

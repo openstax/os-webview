@@ -11,7 +11,10 @@ export function useTableOfContents() {
     const webviewLink = useRexPortalLinkOrNot(model.webviewRexLink);
     const [tocHtml, setTocHtml] = useState<string>('');
 
-    if (webviewLink) {
+    useEffect(() => {
+        if (!webviewLink) {
+            return;
+        }
         tableOfContentsHtml({
             cnxId: model.cnxId,
             webviewLink
@@ -20,7 +23,7 @@ export function useTableOfContents() {
                 `Failed to generate table of contents HTML for ${model.cnxId}: ${err}`
             );
         });
-    }
+    }, [model.cnxId, webviewLink]);
 
     return tocHtml as string;
 }
