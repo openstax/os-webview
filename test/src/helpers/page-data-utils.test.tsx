@@ -3,6 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import {
     fetchFromCMS,
     getUrlFor,
+    useDataFromPromise,
     useTextFromSlug
 } from '~/helpers/page-data-utils';
 
@@ -56,6 +57,18 @@ describe('page-data-utils', () => {
 
             expect(url).toContain('draft=');
             window.history.replaceState({}, '', '/');
+        });
+    });
+    describe('useDataFromPromise', () => {
+        it('sets data to null on rejection', async () => {
+            const rejected = Promise.reject(new Error('test error'));
+            function Component() {
+                const data = useDataFromPromise(rejected, 'default');
+
+                return <div>{String(data)}</div>;
+            }
+            render(<Component />);
+            await screen.findByText('null');
         });
     });
     describe('useTextFromSlug', () => {

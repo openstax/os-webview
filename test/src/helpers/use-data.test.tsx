@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, it, expect} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
-import useFetchedData from '~/helpers/use-data';
+import useFetchedData, {usePromise} from '~/helpers/use-data';
 
 function Component<E>({
     options,
@@ -126,5 +126,18 @@ describe('use-data', () => {
         );
         expect(global.fetch as jest.Mock).toHaveBeenCalledWith('transform');
         await screen.findByText('ok');
+    });
+});
+
+describe('usePromise', () => {
+    it('keeps default value on rejection', async () => {
+        const rejected = Promise.reject(new Error('test error'));
+        function Component() {
+            const data = usePromise(rejected, 'default');
+
+            return <div>{data}</div>;
+        }
+        render(<Component />);
+        await screen.findByText('default');
     });
 });
