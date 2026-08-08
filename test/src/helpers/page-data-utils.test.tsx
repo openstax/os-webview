@@ -60,6 +60,15 @@ describe('page-data-utils', () => {
         });
     });
     describe('useDataFromPromise', () => {
+        it('sets data to null when promise is missing', async () => {
+            function Component() {
+                const data = useDataFromPromise(null, 'default');
+
+                return <div>{String(data)}</div>;
+            }
+            render(<Component />);
+            await screen.findByText('null');
+        });
         it('sets data to null on rejection', async () => {
             const rejected = Promise.reject(new Error('test error'));
             function Component() {
