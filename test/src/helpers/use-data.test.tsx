@@ -138,6 +138,8 @@ describe('usePromise', () => {
             return <div>{data}</div>;
         }
         render(<Component />);
-        await screen.findByText('default');
+        // Await the rejected promise so the rejection handler runs before asserting
+        await rejected.catch(() => null);
+        screen.getByText('default');
     });
 });
