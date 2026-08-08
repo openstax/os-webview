@@ -39,7 +39,7 @@ jobs:
         # Requires the POSTHOG_PROJECT_ID and POSTHOG_CLI_API_KEY secrets; symbolication
         # is a diagnostic aid, so a failure here should never block a release.
         name: "Upload source maps to PostHog"
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+        if: (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')) && secrets.POSTHOG_PROJECT_ID != '' && secrets.POSTHOG_CLI_API_KEY != ''
         continue-on-error: true
         uses: PostHog/upload-source-maps@v2
         with:
