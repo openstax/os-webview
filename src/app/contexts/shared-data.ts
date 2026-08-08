@@ -8,6 +8,7 @@ type FlagName =
     | 'myox_pardot'
     | 'my_openstax'
     | 'new_subjects'
+    | 'streamlined_nav'
     | 'chat_book_details'
     | 'chat_subjects'
     | 'chat_contact'
