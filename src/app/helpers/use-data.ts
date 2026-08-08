@@ -64,7 +64,8 @@ export function usePromise<T>(promise: Promise<T>, defaultValue: T) {
     const [data, setData] = React.useState(defaultValue);
 
     React.useEffect(() => {
-        promise.then(setData);
+        // Swallow rejections; callers keep the last good value (or the default)
+        promise.then(setData, () => null);
     }, [promise]);
 
     return data;

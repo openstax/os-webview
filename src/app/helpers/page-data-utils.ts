@@ -157,7 +157,8 @@ export function useDataFromPromise<T = Json>(
 
     React.useEffect(() => {
         if (promise) {
-            promise.then(setData);
+            // Swallow rejections; a failed fetch reads the same as "no data"
+            promise.then(setData, () => setData(null));
         } else {
             setData(null);
         }
