@@ -11,13 +11,21 @@ const RECENT_DELTA_MS = 16 * 60 * 60 * 1000; // 16 hours
 const LS_KEY = 'giveDialogLastDisplay';
 
 function shownRecently() {
-    const lastShown = Number(window.localStorage.getItem(LS_KEY));
+    try {
+        const lastShown = Number(window.localStorage.getItem(LS_KEY));
 
-    return Date.now() - lastShown < RECENT_DELTA_MS;
+        return Date.now() - lastShown < RECENT_DELTA_MS;
+    } catch (_) {
+        return false;
+    }
 }
 
 function markShown() {
-    window.localStorage.setItem(LS_KEY, String(Date.now()));
+    try {
+        window.localStorage.setItem(LS_KEY, String(Date.now()));
+    } catch (_) {
+        // Storage unavailable; continue opening the dialog.
+    }
     window.dataLayer ||= [];
     window.dataLayer.push({event: 'giveDialogImpression'});
 }
@@ -68,7 +76,16 @@ export default function useGiveDialog() {
 
     // Opens the dialog unless it fired recently. Returns whether it opened so
     // callers know to suppress the default link navigation.
-    const openIfNotRecent = React.useCallback(() => {
+    // Content-warning dialogs bypass the donation frequency cap and impression tracking.
+    // Once a content warning has been acknowledged (cookie set), navigation proceeds directly.
+    const openIfNotRecent = React.useCallback((warning?: string, id?: string) => {
+        if (warning && id) {
+            if (checkWarningCookie(id)) {
+                return false; // Already acknowledged; navigate directly.
+            }
+            open();
+            return true;
+        }
         if (shownRecently()) {
             return false;
         }
@@ -84,15 +101,15 @@ export default function useGiveDialog() {
     };
 }
 
-export function useOpenGiveDialog() {
+export function useOpenGiveDialog(warning?: string, id?: string) {
     const {GiveDialog, open, enabled} = useGiveDialog();
     const openGiveDialog = React.useCallback(
         (event: React.MouseEvent) => {
-            if (enabled && !isMobileDisplay() && open()) {
+            if (enabled && !isMobileDisplay() && open(warning, id)) {
                 event.preventDefault();
             }
         },
-        [enabled, open]
+        [enabled, open, warning, id]
     );
 
     return {GiveDialog, openGiveDialog};

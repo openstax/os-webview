@@ -114,7 +114,10 @@ export function WebviewOption({model}: {model: Model}) {
         icon: faLaptop,
         text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : texts.link
     };
-    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog(
+        model.contentWarningText ?? undefined,
+        model.id.toString()
+    );
     const trackDownload = React.useCallback(
         (event: TrackedMouseEvent) => {
             trackLink(event, model.id.toString());
@@ -157,7 +160,10 @@ export function PdfOption({model}: {model: Model}) {
         : intl.formatMessage({id: 'getit.pdf.sample'});
     const text = pdfText + (model.comingSoon ? sampleText : '');
     const pdfLink = model.pdfUrl; // low/high-res split is obsolete; CMS serves a single PDF
-    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog(
+        model.contentWarningText ?? undefined,
+        model.id.toString()
+    );
     const trackDownload = React.useCallback(
         (event: TrackedMouseEvent) => {
             trackLink(event, model.id.toString());
