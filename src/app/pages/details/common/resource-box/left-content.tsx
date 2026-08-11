@@ -78,11 +78,12 @@ const iconLookup: {[key: string]: IconDefinition} = {
 
 function useVariant(): VariantValue {
     const {search} = useLocation();
+    const lowerSearch = search.toLowerCase();
 
-    if (search.includes('Instructor')) {
+    if (lowerSearch.includes('instructor')) {
         return 'Instructor resource';
     }
-    if (search.includes('Student')) {
+    if (lowerSearch.includes('student')) {
         return 'Student resource';
     }
     return '? resource';
