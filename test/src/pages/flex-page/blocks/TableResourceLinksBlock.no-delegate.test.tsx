@@ -18,7 +18,7 @@ jest.mock('~/contexts/user', () => ({
 // has no `table` block) and proves the wrapper doesn't crash the whole page
 // while that dependency bump is pending.
 describe('TableResourceLinksBlock before the renderer bump lands', () => {
-    it('is not registered in blockMap yet', () => {
+    it('is not registered in blockMap', () => {
         expect('table' in blockMap).toBe(false);
     });
 

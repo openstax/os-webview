@@ -311,10 +311,17 @@ describe('TableResourceLinksBlock', () => {
         expect(lastDelegateData().value.rows[1]).toEqual({cells: plainRow});
     });
 
-    it('registers the table override in blockMap once the delegate exists', () => {
-        expect(blockMap.table).toBeDefined();
-        expect(blockMap.table?.Component).toBe(TableResourceLinksBlock);
-        expect(blockMap.table?.config).toEqual({type: 'table', label: 'Table', categories: []});
+    it('does not override table in blockMap: patching cell data alone drops download tracking', () => {
+        // Rewriting a cell's cta yields the renderer's default bare <a>, which
+        // never calls trackLink, so /salesforce/download-tracking/ is never hit
+        // and no user-behavior adoption record is created. Registering this
+        // override is gated on flex-page-renderer exposing a per-cell render
+        // slot, so the cell can render the real resource-box button instead.
+        // The renderer supplies its own `table` via ...blocks; what must not
+        // happen is our wrapper replacing it.
+        const registered = (blockMap as unknown as {table?: {Component?: unknown}}).table;
+
+        expect(registered?.Component).not.toBe(TableResourceLinksBlock);
     });
 
     it('ignores a fetch that resolves after unmount instead of updating unmounted state', async () => {
