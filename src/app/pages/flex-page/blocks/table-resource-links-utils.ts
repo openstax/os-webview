@@ -1,29 +1,17 @@
 import React from 'react';
-import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
-import type {UserStatus} from '~/contexts/user';
-import {
-    instructorResourceBoxPermissions,
-    studentResourceBoxPermissions,
-    ResourceData
-} from '~/pages/details/common/resource-box/resource-box-utils';
-
-// The literal search string `resourceBoxModel` (resource-box-utils.tsx) passes
-// to instructorResourceBoxPermissions for the book detail page's own resource
-// boxes. Reusing it keeps our login/faculty-access return URL built the exact
-// same way (it's what produces the `?Instructor%20resources` suffix the CMS's
-// own fallback link already uses for this marker — see the flex-draft-save
-// contract for the `resource_ref` cta config).
-const INSTRUCTOR_RESOURCES_SEARCH = 'Instructor resources';
+import {fetchFromCMS, camelCaseKeys, useDataFromPromise} from '~/helpers/page-data-utils';
+import useUserContext from '~/contexts/user';
+import bookTitlesPromise from '~/models/book-titles';
+import {ResourceData} from '~/pages/details/common/resource-box/resource-box-utils';
 
 // --- Table block data shapes -----------------------------------------------
 //
 // @openstax/flex-page-renderer doesn't export `blocks.table` yet in the
-// version currently pinned by this app (the table block + this app's version
-// bump are separate, coordinated changes - see block-map.ts). These types
-// mirror the real TableBlock/CTABlock config shape (flex-pages
+// version currently pinned by this app. These types mirror the real
+// TableBlock/CTABlock config shape (flex-pages
 // packages/flex-page-renderer/src/blocks/TableBlock.config.ts and
 // CTABlock.config.ts) so this file keeps working unchanged once that bump
-// lands.
+// lands and a per-cell render slot is added.
 
 export type ResourceRefValue = {
     book_slug: string;
@@ -116,9 +104,22 @@ export type BookResourcesPayload = {
     bookStudentResources?: ResourceData[];
 };
 
+function isStudentRef(ref: ResourceRefValue): boolean {
+    return ref.resource_type.toLowerCase() === 'student';
+}
+
+// Instructor resources carry their heading nested under `.resource.heading`;
+// student resources carry it as a flat `.resourceHeading` (see the private
+// resourceBoxModel in student-resource-tab.tsx, which reads the same field -
+// there's no single shared field name to reuse here).
+function headingOf(resource: ResourceData, isStudent: boolean): string | undefined {
+    return isStudent ? resource.resourceHeading : resource.resource?.heading;
+}
+
 function findMatchingResource(
     resources: ResourceData[] | undefined,
-    heading: string
+    heading: string,
+    isStudent: boolean
 ): ResourceData | undefined {
     if (!resources) {
         return undefined;
@@ -126,152 +127,11 @@ function findMatchingResource(
 
     const target = normalizeHeading(heading);
 
-    return resources.find(
-        (r) => r.resource?.heading && normalizeHeading(r.resource.heading) === target
-    );
-}
+    return resources.find((r) => {
+        const candidate = headingOf(r, isStudent);
 
-export type CellResolution =
-    | {state: 'unlocked'; url: string; text: string; external: boolean}
-    | {state: 'locked'; url: string};
-
-type ResourceBoxPermissions = {iconType: string; link?: {text: string; url: string}};
-
-// resourceBoxPermissions (resource-box-utils.tsx) builds its return value from
-// a lookup table keyed by status, each branch with a different shape
-// (unlocked/locked include `link`, pending doesn't); TS collapses that
-// indexed access down to the narrowest common shape (`{iconType}`) rather
-// than the true union, so the real `link` property isn't visible on the
-// inferred return type. resource-boxes.tsx works around the same gap with its
-// own `ResourceModel` override; do the same here rather than touching code
-// under details/.
-function getPermissions(
-    resource: ResourceData,
-    isStudent: boolean,
-    userStatus: UserStatus
-): ResourceBoxPermissions {
-    return (isStudent
-        ? studentResourceBoxPermissions(resource, userStatus)
-        : instructorResourceBoxPermissions(resource, userStatus, INSTRUCTOR_RESOURCES_SEARCH)
-    ) as ResourceBoxPermissions;
-}
-
-// Resolves one resource_ref to a real link (verified instructor/student), a
-// login/faculty-access link (everyone else with an actionable next step), or
-// `null`/`undefined` when the CMS fallback should be left exactly as-is:
-// `undefined` means "still loading" (no payload for this slug yet), `null`
-// means "loaded, but nothing actionable" (no matching resource, or a pending-
-// verification state with no link at all to offer).
-export function resolveCellLink(
-    ref: ResourceRefValue,
-    payload: BookResourcesPayload | undefined,
-    userStatus: UserStatus
-): CellResolution | null | undefined {
-    if (!payload) {
-        return undefined;
-    }
-
-    const isStudent = ref.resource_type.toLowerCase() === 'student';
-    const resource = findMatchingResource(
-        isStudent ? payload.bookStudentResources : payload.bookFacultyResources,
-        ref.heading
-    );
-
-    if (!resource) {
-        return null;
-    }
-
-    const permissions = getPermissions(resource, isStudent, userStatus);
-
-    if (!permissions.link) {
-        return null;
-    }
-
-    return permissions.iconType === 'lock'
-        ? {state: 'locked', url: permissions.link.url}
-        : {
-            state: 'unlocked',
-            url: permissions.link.url,
-            text: permissions.link.text,
-            external: permissions.iconType === 'external-link-alt'
-        };
-}
-
-function patchCell(cell: TableCellConfig, resolution: CellResolution, loginToUnlockText: string): TableCellConfig {
-    // A ref is only ever produced for a cell whose cta[0] carries a
-    // resource_ref (see getResourceRef), so this cell is guaranteed to have
-    // one - non-null by construction rather than by a runtime check.
-    const originalCta = cell.cta![0];
-
-    const patchedCta: CTALinkFields = resolution.state === 'unlocked'
-        ? {
-            ...originalCta,
-            text: resolution.text,
-            target: {type: resolution.external ? 'external' : 'internal', value: resolution.url}
-        }
-        : {
-            ...originalCta,
-            text: loginToUnlockText,
-            target: {type: 'internal', value: resolution.url}
-        };
-
-    return {...cell, cta: [patchedCta]};
-}
-
-export type PatchContext = {
-    resourcesBySlug: Record<string, BookResourcesPayload>;
-    userStatus: UserStatus;
-    loginToUnlockText: string;
-};
-
-// Produces a patched copy of `data` with resolved cells rewritten - never
-// mutates the input. Rows/cells with nothing to patch are returned by
-// reference unchanged.
-export function patchTableData(
-    data: TableBlockConfig,
-    refs: ResourceRefLocation[],
-    context: PatchContext
-): TableBlockConfig {
-    const patchesByRow = new Map<number, Map<number, TableCellConfig>>();
-
-    refs.forEach(({rowIndex, cellIndex, ref}) => {
-        const resolution = resolveCellLink(ref, context.resourcesBySlug[ref.book_slug], context.userStatus);
-
-        if (!resolution) {
-            return;
-        }
-
-        const original = data.value.rows[rowIndex].cells[cellIndex];
-        const patchedCell = patchCell(original, resolution, context.loginToUnlockText);
-
-        if (!patchesByRow.has(rowIndex)) {
-            patchesByRow.set(rowIndex, new Map());
-        }
-        patchesByRow.get(rowIndex)?.set(cellIndex, patchedCell);
+        return candidate && normalizeHeading(candidate) === target;
     });
-
-    if (!patchesByRow.size) {
-        return data;
-    }
-
-    return {
-        ...data,
-        value: {
-            ...data.value,
-            rows: data.value.rows.map((row, rowIndex) => {
-                const rowPatches = patchesByRow.get(rowIndex);
-
-                if (!rowPatches) {
-                    return row;
-                }
-
-                return {
-                    ...row,
-                    cells: row.cells.map((cell, cellIndex) => rowPatches.get(cellIndex) ?? cell)
-                };
-            })
-        }
-    };
 }
 
 // Fetches `books/resources/` for every distinct book slug referenced by the
@@ -336,4 +196,80 @@ export function useResourcesBySlug(
     }, [key, isVerified]);
 
     return resourcesBySlug;
+}
+
+// `books/resources/` (FacultyResourcesSerializer) never serializes the book's
+// own numeric id - checked books/views.py + books/serializers.py in
+// openstax-cms; `Meta.fields` lists only the four resource collections, and
+// each resource's own back-reference to its book is deliberately blanked to
+// `{}`. `~/models/book-titles` is the existing, already-loaded-elsewhere
+// (page-data-utils.ts's getUrlFor uses the same promise) slug->id source, so
+// this reuses it rather than asking the CMS for a new field.
+function useBookIdBySlug(): Record<string, number> {
+    const bookTitles = useDataFromPromise(bookTitlesPromise);
+
+    return React.useMemo(() => {
+        const map: Record<string, number> = {};
+
+        (bookTitles ?? []).forEach((item) => {
+            map[item.meta.slug] = item.id;
+        });
+        return map;
+    }, [bookTitles]);
+}
+
+export type ResourceRefResolution = ResourceRefLocation & {
+    status: 'loading' | 'unmatched' | 'resolved';
+    resource?: ResourceData;
+    bookId?: number;
+};
+
+function resolveOne(
+    location: ResourceRefLocation,
+    payload: BookResourcesPayload | undefined,
+    bookId: number | undefined
+): ResourceRefResolution {
+    if (!payload || bookId === undefined) {
+        return {...location, status: 'loading'};
+    }
+
+    const isStudent = isStudentRef(location.ref);
+    const resource = findMatchingResource(
+        isStudent ? payload.bookStudentResources : payload.bookFacultyResources,
+        location.ref.heading,
+        isStudent
+    );
+
+    return resource
+        ? {...location, status: 'resolved', resource, bookId}
+        : {...location, status: 'unmatched'};
+}
+
+// The multi-slug resolution hook: given every resource_ref marker found in a
+// table (see findResourceRefs), fetches the distinct referenced books' data
+// (resources + numeric id) once each and returns each marker's resolved
+// state - `loading` (still fetching), `unmatched` (loaded, no resource with
+// that heading - the CMS's own fallback link should stay untouched), or
+// `resolved` (a real ResourceData + bookId a cell renderer can build a model
+// from). Deliberately doesn't compute permissions/URLs itself - that's
+// TableResourceCell's job, via the same instructorResourceBoxPermissions/
+// studentResourceBoxPermissions + LeftContent the book detail page uses, so
+// Give-dialog/download-tracking behavior isn't duplicated here.
+export function useResourceRefResolutions(refs: ResourceRefLocation[]): ResourceRefResolution[] {
+    const slugs = React.useMemo(
+        () => Array.from(new Set(refs.map(({ref}) => ref.book_slug))),
+        [refs]
+    );
+    const {isVerified} = useUserContext();
+    const resourcesBySlug = useResourcesBySlug(slugs, isVerified);
+    const bookIdBySlug = useBookIdBySlug();
+
+    return React.useMemo(
+        () => refs.map((location) => resolveOne(
+            location,
+            resourcesBySlug[location.ref.book_slug],
+            bookIdBySlug[location.ref.book_slug]
+        )),
+        [refs, resourcesBySlug, bookIdBySlug]
+    );
 }
