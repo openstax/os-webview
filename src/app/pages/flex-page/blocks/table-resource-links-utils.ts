@@ -1,16 +1,10 @@
 import React from 'react';
+import type {TableBlockConfig, TableCellConfig} from '@openstax/flex-page-renderer/blocks/TableBlock.config';
 import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
 import {ResourceData} from '~/pages/details/common/resource-box/resource-box-utils';
 
-// --- Table block data shapes -----------------------------------------------
-//
-// @openstax/flex-page-renderer doesn't export `blocks.table` yet in the
-// version currently pinned by this app. These types mirror the real
-// TableBlock/CTABlock config shape (flex-pages
-// packages/flex-page-renderer/src/blocks/TableBlock.config.ts and
-// CTABlock.config.ts) so this file keeps working unchanged once that bump
-// lands and a per-cell render slot is added.
+export type {TableBlockConfig, TableCellConfig};
 
 export type ResourceRefValue = {
     book_slug: string;
@@ -19,40 +13,7 @@ export type ResourceRefValue = {
     resource_type: string;
 };
 
-type CTAConfigEntry =
-    | {type: 'resource_ref'; value: ResourceRefValue}
-    | {type: string; value?: unknown};
-
-export type CTALinkFields = {
-    text: string;
-    aria_label?: string;
-    target: {
-        type: string;
-        value: string;
-        params?: Record<string, string>;
-    };
-    config: CTAConfigEntry[];
-};
-
-export type TableCellConfig = {
-    content?: string;
-    cta?: CTALinkFields[];
-};
-
-export type TableRowConfig = {
-    cells: TableCellConfig[];
-};
-
-export type TableBlockConfig = {
-    id: string;
-    type: 'table';
-    value: {
-        caption?: string;
-        columns: Array<{header: string; type?: string}>;
-        rows: TableRowConfig[];
-        config: Array<{type: string; id?: string; value: string}>;
-    };
-};
+type ResourceRefConfigEntry = {type: 'resource_ref'; value: ResourceRefValue};
 
 export type ResourceRefLocation = {
     rowIndex: number;
@@ -62,9 +23,17 @@ export type ResourceRefLocation = {
 
 function getResourceRef(cell: TableCellConfig): ResourceRefValue | null {
     const cta = cell.cta?.[0];
-    const entry = cta?.config.find(
-        (c): c is {type: 'resource_ref'; value: ResourceRefValue} => c.type === 'resource_ref'
-    );
+
+    if (!cta) {
+        return null;
+    }
+
+    // cta.config is typed narrowly by the renderer (its own `style`/
+    // `custom_color` CTA config options) - it has no idea about our
+    // resource_ref marker convention, but the CMS adds one to the same
+    // array at runtime regardless.
+    const entries = cta.config as unknown as Array<ResourceRefConfigEntry | {type: string}>;
+    const entry = entries.find((c): c is ResourceRefConfigEntry => c.type === 'resource_ref');
 
     return entry ? entry.value : null;
 }

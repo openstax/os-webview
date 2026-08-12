@@ -1,12 +1,12 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
+import type {CTALinkFields} from '@openstax/flex-page-renderer/blocks/CTABlock.config';
 import {
     findResourceRefs,
     normalizeHeading,
     useResourceRefResolutions,
     type TableBlockConfig,
-    type TableCellConfig,
-    type CTALinkFields
+    type TableCellConfig
 } from '~/pages/flex-page/blocks/table-resource-links-utils';
 
 const mockUseUserContext = jest.fn();
@@ -28,7 +28,12 @@ jest.mock('~/helpers/page-data-utils', () => ({
 // wire format the app camelCases at runtime).
 /* eslint-disable camelcase */
 
-function resourceRefCta(overrides: Partial<CTALinkFields> = {}): CTALinkFields {
+// The renderer's own CTALinkFields.config is a strict style/custom_color
+// union - it has no idea about our resource_ref marker, so `config` is
+// loosened here rather than on the real type.
+type CtaOverrides = Partial<Omit<CTALinkFields, 'config'>> & {config?: unknown[]};
+
+function resourceRefCta(overrides: CtaOverrides = {}): CTALinkFields {
     return {
         text: 'View on book page',
         aria_label: '',
@@ -45,7 +50,7 @@ function resourceRefCta(overrides: Partial<CTALinkFields> = {}): CTALinkFields {
             }
         ],
         ...overrides
-    };
+    } as unknown as CTALinkFields;
 }
 
 function tableWithCells(rows: TableCellConfig[][]): TableBlockConfig {
