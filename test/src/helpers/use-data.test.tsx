@@ -142,4 +142,30 @@ describe('usePromise', () => {
         await rejected.catch(() => null);
         screen.getByText('default');
     });
+    it('keeps last resolved value when next promise rejects', async () => {
+        let resolveFirst: (value: string) => void;
+        let rejectSecond: (reason?: Error) => void;
+        const first = new Promise<string>((resolve) => {
+            resolveFirst = resolve;
+        });
+        const second = new Promise<string>((_, reject) => {
+            rejectSecond = reject;
+        });
+
+        function Component({promise}: {promise: Promise<string>}) {
+            const data = usePromise(promise, 'default');
+
+            return <div>{data}</div>;
+        }
+
+        const {rerender} = render(<Component promise={first} />);
+        resolveFirst!('resolved value');
+        await screen.findByText('resolved value');
+
+        rerender(<Component promise={second} />);
+        rejectSecond!(new Error('test error'));
+        await second.catch(() => null);
+
+        screen.getByText('resolved value');
+    });
 });

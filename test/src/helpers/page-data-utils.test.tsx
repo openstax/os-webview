@@ -79,6 +79,31 @@ describe('page-data-utils', () => {
             render(<Component />);
             await screen.findByText('null');
         });
+        it('ignores stale rejection after promise changes', async () => {
+            let resolveCurrent: (value: string) => void;
+            let rejectStale: (reason?: Error) => void;
+            const stalePromise = new Promise<string>((_, reject) => {
+                rejectStale = reject;
+            });
+            const currentPromise = new Promise<string>((resolve) => {
+                resolveCurrent = resolve;
+            });
+
+            function Component({promise}: {promise: Promise<string> | null}) {
+                const data = useDataFromPromise(promise, 'default');
+
+                return <div>{String(data)}</div>;
+            }
+
+            const {rerender} = render(<Component promise={stalePromise} />);
+            rerender(<Component promise={currentPromise} />);
+            resolveCurrent!('fresh');
+            await screen.findByText('fresh');
+
+            rejectStale!(new Error('late error'));
+            await stalePromise.catch(() => null);
+            screen.getByText('fresh');
+        });
     });
     describe('useTextFromSlug', () => {
         function Component() {
