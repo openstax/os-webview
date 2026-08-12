@@ -41,12 +41,6 @@ function Top({model}: {model: ResourceModel}) {
                 <h3 className={model.k12 ? 'space-for-badge' : ''}>
                     {model.heading}
                 </h3>
-                {model.creatorFest && (
-                    <img
-                        title="This resource was created by instructors at Creator Fest"
-                        src="/dist/images/details/cf-badge.svg"
-                    />
-                )}
             </div>
             <RawHTML className="description" html={description} />
         </div>
