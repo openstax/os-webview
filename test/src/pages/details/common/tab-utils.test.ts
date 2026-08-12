@@ -1,4 +1,4 @@
-import { findSelectedTab, replaceSearchTerm } from '~/pages/details/common/tab-utils';
+import {findSelectedTab, replaceSearchTerm} from '~/pages/details/common/tab-utils';
 
 function setSearch(search: string) {
     Reflect.defineProperty(window, 'location', {

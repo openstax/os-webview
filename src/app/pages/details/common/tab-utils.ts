@@ -11,12 +11,13 @@ export function findSelectedTab(labels: string[]) {
 export function replaceSearchTerm(labels: string[], newValue: string) {
     const lowerLabels = labels.map((label) => label.toLowerCase());
     const possibleTabs = Array.from(new window.URLSearchParams(window.location.search).keys());
-    const index = possibleTabs.findIndex((tab) => lowerLabels.includes(tab.toLowerCase()));
+    const firstIndex = possibleTabs.findIndex((tab) => lowerLabels.includes(tab.toLowerCase()));
+    const filtered = possibleTabs.filter((tab) => !lowerLabels.includes(tab.toLowerCase()));
 
-    if (index < 0) {
-        possibleTabs.unshift(newValue);
+    if (firstIndex < 0) {
+        filtered.unshift(newValue);
     } else {
-        possibleTabs[index] = newValue;
+        filtered.splice(firstIndex, 0, newValue);
     }
-    return `?${possibleTabs.map((tab) => encodeURIComponent(tab)).join('&')}`;
+    return `?${filtered.map((tab) => encodeURIComponent(tab)).join('&')}`;
 }

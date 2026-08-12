@@ -9,15 +9,15 @@ export default function useGiveLinks() {
 }
 
 function getLinks(search: string) {
-    const lowerSearch = search.toLowerCase();
+    const keys = Array.from(new URLSearchParams(search).keys()).map((k) => k.toLowerCase());
 
-    if (lowerSearch.includes('instructor')) {
+    if (keys.includes('instructor resources')) {
         return [
             'https://riceconnect.rice.edu/donation/support-openstax-instructor-resources',
             'https://riceconnect.rice.edu/donation/support-openstax-instructor-resources-b'
         ];
     }
-    if (lowerSearch.includes('student')) {
+    if (keys.includes('student resources')) {
         return [
             'https://riceconnect.rice.edu/donation/support-openstax-student-resources',
             'https://riceconnect.rice.edu/donation/support-openstax-student-resources-b'
