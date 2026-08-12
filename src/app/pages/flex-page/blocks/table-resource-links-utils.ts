@@ -1,7 +1,6 @@
 import React from 'react';
-import {fetchFromCMS, camelCaseKeys, useDataFromPromise} from '~/helpers/page-data-utils';
+import {fetchFromCMS, camelCaseKeys} from '~/helpers/page-data-utils';
 import useUserContext from '~/contexts/user';
-import bookTitlesPromise from '~/models/book-titles';
 import {ResourceData} from '~/pages/details/common/resource-box/resource-box-utils';
 
 // --- Table block data shapes -----------------------------------------------
@@ -15,6 +14,7 @@ import {ResourceData} from '~/pages/details/common/resource-box/resource-box-uti
 
 export type ResourceRefValue = {
     book_slug: string;
+    book_id: number;
     heading: string;
     resource_type: string;
 };
@@ -198,26 +198,6 @@ export function useResourcesBySlug(
     return resourcesBySlug;
 }
 
-// `books/resources/` (FacultyResourcesSerializer) never serializes the book's
-// own numeric id - checked books/views.py + books/serializers.py in
-// openstax-cms; `Meta.fields` lists only the four resource collections, and
-// each resource's own back-reference to its book is deliberately blanked to
-// `{}`. `~/models/book-titles` is the existing, already-loaded-elsewhere
-// (page-data-utils.ts's getUrlFor uses the same promise) slug->id source, so
-// this reuses it rather than asking the CMS for a new field.
-function useBookIdBySlug(): Record<string, number> {
-    const bookTitles = useDataFromPromise(bookTitlesPromise);
-
-    return React.useMemo(() => {
-        const map: Record<string, number> = {};
-
-        (bookTitles ?? []).forEach((item) => {
-            map[item.meta.slug] = item.id;
-        });
-        return map;
-    }, [bookTitles]);
-}
-
 export type ResourceRefResolution = ResourceRefLocation & {
     status: 'loading' | 'unmatched' | 'resolved';
     resource?: ResourceData;
@@ -226,10 +206,9 @@ export type ResourceRefResolution = ResourceRefLocation & {
 
 function resolveOne(
     location: ResourceRefLocation,
-    payload: BookResourcesPayload | undefined,
-    bookId: number | undefined
+    payload: BookResourcesPayload | undefined
 ): ResourceRefResolution {
-    if (!payload || bookId === undefined) {
+    if (!payload) {
         return {...location, status: 'loading'};
     }
 
@@ -241,16 +220,16 @@ function resolveOne(
     );
 
     return resource
-        ? {...location, status: 'resolved', resource, bookId}
+        ? {...location, status: 'resolved', resource, bookId: location.ref.book_id}
         : {...location, status: 'unmatched'};
 }
 
 // The multi-slug resolution hook: given every resource_ref marker found in a
-// table (see findResourceRefs), fetches the distinct referenced books' data
-// (resources + numeric id) once each and returns each marker's resolved
-// state - `loading` (still fetching), `unmatched` (loaded, no resource with
-// that heading - the CMS's own fallback link should stay untouched), or
-// `resolved` (a real ResourceData + bookId a cell renderer can build a model
+// table (see findResourceRefs), fetches the distinct referenced books'
+// resources once each and returns each marker's resolved state - `loading`
+// (still fetching), `unmatched` (loaded, no resource with that heading - the
+// CMS's own fallback link should stay untouched), or `resolved` (a real
+// ResourceData + the marker's own book_id a cell renderer can build a model
 // from). Deliberately doesn't compute permissions/URLs itself - that's
 // TableResourceCell's job, via the same instructorResourceBoxPermissions/
 // studentResourceBoxPermissions + LeftContent the book detail page uses, so
@@ -262,14 +241,9 @@ export function useResourceRefResolutions(refs: ResourceRefLocation[]): Resource
     );
     const {isVerified} = useUserContext();
     const resourcesBySlug = useResourcesBySlug(slugs, isVerified);
-    const bookIdBySlug = useBookIdBySlug();
 
     return React.useMemo(
-        () => refs.map((location) => resolveOne(
-            location,
-            resourcesBySlug[location.ref.book_slug],
-            bookIdBySlug[location.ref.book_slug]
-        )),
-        [refs, resourcesBySlug, bookIdBySlug]
+        () => refs.map((location) => resolveOne(location, resourcesBySlug[location.ref.book_slug])),
+        [refs, resourcesBySlug]
     );
 }

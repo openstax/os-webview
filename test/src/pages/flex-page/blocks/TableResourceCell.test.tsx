@@ -38,7 +38,7 @@ function resolution(overrides: Partial<ResourceRefResolution> = {}): ResourceRef
     return {
         rowIndex: 0,
         cellIndex: 0,
-        ref: {book_slug: 'biology-2e', heading: 'Instructor’s Manual', resource_type: 'Instructor'},
+        ref: {book_slug: 'biology-2e', book_id: 46, heading: 'Instructor’s Manual', resource_type: 'Instructor'},
         status: 'resolved',
         bookId: 46,
         resource: {
@@ -179,7 +179,7 @@ describe('TableResourceCell', () => {
     it('resolves a Student resource_ref via studentResourceBoxPermissions (the duplicated model-builder)', () => {
         const userStatus = {isStudent: true} as UserStatus;
         const studentResolution = resolution({
-            ref: {book_slug: 'biology-2e', heading: 'Student Guide', resource_type: 'Student'},
+            ref: {book_slug: 'biology-2e', book_id: 46, heading: 'Student Guide', resource_type: 'Student'},
             resource: {
                 resourceHeading: 'Student Guide',
                 resourceUnlocked: false,

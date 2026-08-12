@@ -28,25 +28,6 @@ jest.mock('~/helpers/page-data-utils', () => ({
 // wire format the app camelCases at runtime).
 /* eslint-disable camelcase */
 
-let mockBookTitlesFixture: Array<{id: number; meta: {slug: string}}> = [];
-// Memoized per fixture reference: `import bookTitlesPromise from ...` reads
-// this getter on every render inside the hook, and useDataFromPromise's
-// effect depends on that promise's identity - a getter that minted a new
-// Promise on every access would re-fire that effect forever.
-let mockCachedFixture: typeof mockBookTitlesFixture | null = null;
-let mockCachedPromise: Promise<typeof mockBookTitlesFixture> | null = null;
-
-jest.mock('~/models/book-titles', () => ({
-    __esModule: true,
-    get default() {
-        if (mockCachedFixture !== mockBookTitlesFixture) {
-            mockCachedFixture = mockBookTitlesFixture;
-            mockCachedPromise = Promise.resolve(mockBookTitlesFixture);
-        }
-        return mockCachedPromise;
-    }
-}));
-
 function resourceRefCta(overrides: Partial<CTALinkFields> = {}): CTALinkFields {
     return {
         text: 'View on book page',
@@ -55,7 +36,12 @@ function resourceRefCta(overrides: Partial<CTALinkFields> = {}): CTALinkFields {
         config: [
             {
                 type: 'resource_ref',
-                value: {book_slug: 'biology-2e', heading: 'Instructor’s Manual', resource_type: 'Instructor'}
+                value: {
+                    book_slug: 'biology-2e',
+                    book_id: 46,
+                    heading: 'Instructor’s Manual',
+                    resource_type: 'Instructor'
+                }
             }
         ],
         ...overrides
@@ -86,7 +72,7 @@ describe('findResourceRefs', () => {
         const secondRefCta = resourceRefCta({
             config: [{
                 type: 'resource_ref',
-                value: {book_slug: 'university-physics', heading: 'Test Bank', resource_type: 'Instructor'}
+                value: {book_slug: 'university-physics', book_id: 47, heading: 'Test Bank', resource_type: 'Instructor'}
             }]
         });
         const data = tableWithCells([
@@ -159,13 +145,11 @@ describe('useResourceRefResolutions', () => {
     beforeEach(() => {
         mockFetchFromCMS.mockReset();
         mockUseUserContext.mockReset();
-        mockBookTitlesFixture = [];
     });
 
-    it('reports loading for every ref before the fetch and book-titles lookup resolve', () => {
+    it('reports loading for every ref before the fetch resolves', () => {
         mockUseUserContext.mockReturnValue({isVerified: true});
         mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Instructor’s Manual'));
-        mockBookTitlesFixture = [{id: 46, meta: {slug: 'biology-2e'}}];
         const refs = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
 
         render(<ResolutionsHarness refs={refs} />);
@@ -173,10 +157,9 @@ describe('useResourceRefResolutions', () => {
         expect(readResolutions()).toEqual([{rowIndex: 0, cellIndex: 0, ref: refs[0].ref, status: 'loading'}]);
     });
 
-    it('resolves to the matched resource and numeric book id once both fetches settle', async () => {
+    it('resolves to the matched resource and the marker’s own book_id once the fetch settles', async () => {
         mockUseUserContext.mockReturnValue({isVerified: true});
         mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Instructor’s Manual'));
-        mockBookTitlesFixture = [{id: 46, meta: {slug: 'biology-2e'}}];
         const refs = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
 
         render(<ResolutionsHarness refs={refs} />);
@@ -196,7 +179,6 @@ describe('useResourceRefResolutions', () => {
     it('resolves to unmatched when the fetch succeeds but no heading matches', async () => {
         mockUseUserContext.mockReturnValue({isVerified: false});
         mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Some Unrelated Resource'));
-        mockBookTitlesFixture = [{id: 46, meta: {slug: 'biology-2e'}}];
         const refs = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
 
         render(<ResolutionsHarness refs={refs} />);
@@ -212,11 +194,10 @@ describe('useResourceRefResolutions', () => {
     it('resolves a Student resource_ref against bookStudentResources via resourceHeading', async () => {
         mockUseUserContext.mockReturnValue({isVerified: false});
         mockFetchFromCMS.mockResolvedValue(studentResourcesPayload('Student Guide'));
-        mockBookTitlesFixture = [{id: 46, meta: {slug: 'biology-2e'}}];
         const studentCta = resourceRefCta({
             config: [{
                 type: 'resource_ref',
-                value: {book_slug: 'biology-2e', heading: 'Student Guide', resource_type: 'Student'}
+                value: {book_slug: 'biology-2e', book_id: 46, heading: 'Student Guide', resource_type: 'Student'}
             }]
         });
         const refs = findResourceRefs(tableWithCells([[{cta: [studentCta]}]]));
@@ -238,11 +219,10 @@ describe('useResourceRefResolutions', () => {
         mockUseUserContext.mockReturnValue({isVerified: false});
         // books/resources/ is faculty-only today - no book_student_resources key.
         mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Instructor’s Manual'));
-        mockBookTitlesFixture = [{id: 46, meta: {slug: 'biology-2e'}}];
         const studentCta = resourceRefCta({
             config: [{
                 type: 'resource_ref',
-                value: {book_slug: 'biology-2e', heading: 'Student Guide', resource_type: 'Student'}
+                value: {book_slug: 'biology-2e', book_id: 46, heading: 'Student Guide', resource_type: 'Student'}
             }]
         });
         const refs = findResourceRefs(tableWithCells([[{cta: [studentCta]}]]));
@@ -259,7 +239,6 @@ describe('useResourceRefResolutions', () => {
     it('stays loading (never crashes) for a slug whose fetch errors', async () => {
         mockUseUserContext.mockReturnValue({isVerified: true});
         mockFetchFromCMS.mockResolvedValue({error: 'not found'});
-        mockBookTitlesFixture = [{id: 46, meta: {slug: 'biology-2e'}}];
         const refs = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
 
         render(<ResolutionsHarness refs={refs} />);
@@ -275,7 +254,6 @@ describe('useResourceRefResolutions', () => {
 
     it('ignores a fetch that resolves after unmount instead of updating unmounted state', async () => {
         mockUseUserContext.mockReturnValue({isVerified: true});
-        mockBookTitlesFixture = [{id: 46, meta: {slug: 'biology-2e'}}];
         const originalError = console.error;
 
         console.error = jest.fn();
@@ -296,21 +274,22 @@ describe('useResourceRefResolutions', () => {
         console.error = originalError;
     });
 
-    it('resolves markers for two different books independently', async () => {
+    it('resolves markers for two different books independently, using each marker’s own book_id', async () => {
         mockUseUserContext.mockReturnValue({isVerified: true});
         mockFetchFromCMS.mockImplementation((url: string) => (url.includes('slug=biology-2e')
             ? Promise.resolve(facultyResourcesPayload('Instructor’s Manual'))
             : Promise.resolve(facultyResourcesPayload('Test Bank'))));
-        mockBookTitlesFixture = [
-            {id: 46, meta: {slug: 'biology-2e'}},
-            {id: 47, meta: {slug: 'university-physics'}}
-        ];
         const refs = findResourceRefs(tableWithCells([
             [{cta: [resourceRefCta()]}],
             [{cta: [resourceRefCta({
                 config: [{
                     type: 'resource_ref',
-                    value: {book_slug: 'university-physics', heading: 'Test Bank', resource_type: 'Instructor'}
+                    value: {
+                        book_slug: 'university-physics',
+                        book_id: 47,
+                        heading: 'Test Bank',
+                        resource_type: 'Instructor'
+                    }
                 }]
             })]}]
         ]));
