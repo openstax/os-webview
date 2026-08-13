@@ -48,10 +48,10 @@ function resourceRefCta(overrides: Partial<Omit<CTALinkFields, 'config'>> & {con
             {
                 type: 'resource_ref',
                 value: {
-                    book_slug: 'biology-2e',
-                    book_id: 46,
+                    bookSlug: 'biology-2e',
+                    bookId: 46,
                     heading: 'Instructor’s Manual',
-                    resource_type: 'Instructor'
+                    resourceType: 'Instructor'
                 }
             }
         ],
@@ -166,10 +166,10 @@ describe('TableResourceLinksBlock', () => {
                     config: [{
                         type: 'resource_ref',
                         value: {
-                            book_slug: 'university-physics',
-                            book_id: 47,
+                            bookSlug: 'university-physics',
+                            bookId: 47,
                             heading: 'Test Bank',
-                            resource_type: 'Instructor'
+                            resourceType: 'Instructor'
                         }
                     }]
                 })]}],

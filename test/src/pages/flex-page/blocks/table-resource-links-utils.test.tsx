@@ -1,6 +1,7 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
 import type {CTALinkFields} from '@openstax/flex-page-renderer/blocks/CTABlock.config';
+import {camelCaseKeys, type Json} from '~/helpers/page-data-utils';
 import {
     findResourceRefs,
     normalizeHeading,
@@ -24,8 +25,8 @@ jest.mock('~/helpers/page-data-utils', () => ({
     fetchFromCMS: (...args: [string]) => mockFetchFromCMS(...args)
 }));
 
-// The CMS/resources-API fixtures below are all snake_case (matching the real
-// wire format the app camelCases at runtime).
+// Block data reaches a block camelCased (usePageData); the resources-API
+// payloads below are raw snake_case, camelCased inside the hook itself.
 /* eslint-disable camelcase */
 
 // The renderer's own CTALinkFields.config is a strict style/custom_color
@@ -42,10 +43,10 @@ function resourceRefCta(overrides: CtaOverrides = {}): CTALinkFields {
             {
                 type: 'resource_ref',
                 value: {
-                    book_slug: 'biology-2e',
-                    book_id: 46,
+                    bookSlug: 'biology-2e',
+                    bookId: 46,
                     heading: 'Instructor’s Manual',
-                    resource_type: 'Instructor'
+                    resourceType: 'Instructor'
                 }
             }
         ],
@@ -77,7 +78,7 @@ describe('findResourceRefs', () => {
         const secondRefCta = resourceRefCta({
             config: [{
                 type: 'resource_ref',
-                value: {book_slug: 'university-physics', book_id: 47, heading: 'Test Bank', resource_type: 'Instructor'}
+                value: {bookSlug: 'university-physics', bookId: 47, heading: 'Test Bank', resourceType: 'Instructor'}
             }]
         });
         const data = tableWithCells([
@@ -88,6 +89,31 @@ describe('findResourceRefs', () => {
         expect(findResourceRefs(data)).toEqual([
             {rowIndex: 0, cellIndex: 1, ref: resourceRefCta().config[0].value},
             {rowIndex: 1, cellIndex: 0, ref: secondRefCta.config[0].value}
+        ]);
+    });
+
+    // The marker leaves the CMS snake_case and only ever reaches a block after
+    // usePageData has run the whole payload through camelCaseKeys; this pins
+    // the two spellings together so the CMS can't rename a key out from under
+    // the resolver.
+    it('reads a raw CMS marker put through the same camelCaseKeys usePageData applies', () => {
+        const cmsCta = resourceRefCta({
+            config: [{
+                type: 'resource_ref',
+                value: {
+                    book_slug: 'biology-2e',
+                    book_id: 46,
+                    heading: 'Instructor’s Manual',
+                    resource_type: 'Instructor'
+                }
+            }]
+        });
+        const data = camelCaseKeys(
+            tableWithCells([[{cta: [cmsCta]}]]) as unknown as Json
+        ) as unknown as TableBlockConfig;
+
+        expect(findResourceRefs(data)).toEqual([
+            {rowIndex: 0, cellIndex: 0, ref: resourceRefCta().config[0].value}
         ]);
     });
 
@@ -162,7 +188,7 @@ describe('useResourceRefResolutions', () => {
         expect(readResolutions()).toEqual([{rowIndex: 0, cellIndex: 0, ref: refs[0].ref, status: 'loading'}]);
     });
 
-    it('resolves to the matched resource and the marker’s own book_id once the fetch settles', async () => {
+    it('resolves to the matched resource and the marker’s own bookId once the fetch settles', async () => {
         mockUseUserContext.mockReturnValue({isVerified: true});
         mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Instructor’s Manual'));
         const refs = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
@@ -202,7 +228,7 @@ describe('useResourceRefResolutions', () => {
         const studentCta = resourceRefCta({
             config: [{
                 type: 'resource_ref',
-                value: {book_slug: 'biology-2e', book_id: 46, heading: 'Student Guide', resource_type: 'Student'}
+                value: {bookSlug: 'biology-2e', bookId: 46, heading: 'Student Guide', resourceType: 'Student'}
             }]
         });
         const refs = findResourceRefs(tableWithCells([[{cta: [studentCta]}]]));
@@ -227,7 +253,7 @@ describe('useResourceRefResolutions', () => {
         const studentCta = resourceRefCta({
             config: [{
                 type: 'resource_ref',
-                value: {book_slug: 'biology-2e', book_id: 46, heading: 'Student Guide', resource_type: 'Student'}
+                value: {bookSlug: 'biology-2e', bookId: 46, heading: 'Student Guide', resourceType: 'Student'}
             }]
         });
         const refs = findResourceRefs(tableWithCells([[{cta: [studentCta]}]]));
@@ -279,7 +305,7 @@ describe('useResourceRefResolutions', () => {
         console.error = originalError;
     });
 
-    it('resolves markers for two different books independently, using each marker’s own book_id', async () => {
+    it('resolves markers for two different books independently, using each marker’s own bookId', async () => {
         mockUseUserContext.mockReturnValue({isVerified: true});
         mockFetchFromCMS.mockImplementation((url: string) => (url.includes('slug=biology-2e')
             ? Promise.resolve(facultyResourcesPayload('Instructor’s Manual'))
@@ -290,10 +316,10 @@ describe('useResourceRefResolutions', () => {
                 config: [{
                     type: 'resource_ref',
                     value: {
-                        book_slug: 'university-physics',
-                        book_id: 47,
+                        bookSlug: 'university-physics',
+                        bookId: 47,
                         heading: 'Test Bank',
-                        resource_type: 'Instructor'
+                        resourceType: 'Instructor'
                     }
                 }]
             })]}]

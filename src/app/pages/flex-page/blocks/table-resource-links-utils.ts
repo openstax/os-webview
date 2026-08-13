@@ -6,11 +6,14 @@ import {ResourceData} from '~/pages/details/common/resource-box/resource-box-uti
 
 export type {TableBlockConfig, TableCellConfig};
 
+// The CMS emits this marker snake_case (book_slug/book_id/resource_type);
+// usePageData camelCases every key of a page payload before a block ever
+// sees it, so these are the names that actually arrive.
 export type ResourceRefValue = {
-    book_slug: string;
-    book_id: number;
+    bookSlug: string;
+    bookId: number;
     heading: string;
-    resource_type: string;
+    resourceType: string;
 };
 
 type ResourceRefConfigEntry = {type: 'resource_ref'; value: ResourceRefValue};
@@ -74,7 +77,7 @@ export type BookResourcesPayload = {
 };
 
 function isStudentRef(ref: ResourceRefValue): boolean {
-    return ref.resource_type.toLowerCase() === 'student';
+    return ref.resourceType.toLowerCase() === 'student';
 }
 
 // Instructor resources carry their heading nested under `.resource.heading`;
@@ -189,7 +192,7 @@ function resolveOne(
     );
 
     return resource
-        ? {...location, status: 'resolved', resource, bookId: location.ref.book_id}
+        ? {...location, status: 'resolved', resource, bookId: location.ref.bookId}
         : {...location, status: 'unmatched'};
 }
 
@@ -198,21 +201,21 @@ function resolveOne(
 // resources once each and returns each marker's resolved state - `loading`
 // (still fetching), `unmatched` (loaded, no resource with that heading - the
 // CMS's own fallback link should stay untouched), or `resolved` (a real
-// ResourceData + the marker's own book_id a cell renderer can build a model
+// ResourceData + the marker's own bookId a cell renderer can build a model
 // from). Deliberately doesn't compute permissions/URLs itself - that's
 // TableResourceCell's job, via the same instructorResourceBoxPermissions/
 // studentResourceBoxPermissions + LeftContent the book detail page uses, so
 // Give-dialog/download-tracking behavior isn't duplicated here.
 export function useResourceRefResolutions(refs: ResourceRefLocation[]): ResourceRefResolution[] {
     const slugs = React.useMemo(
-        () => Array.from(new Set(refs.map(({ref}) => ref.book_slug))),
+        () => Array.from(new Set(refs.map(({ref}) => ref.bookSlug))),
         [refs]
     );
     const {isVerified} = useUserContext();
     const resourcesBySlug = useResourcesBySlug(slugs, isVerified);
 
     return React.useMemo(
-        () => refs.map((location) => resolveOne(location, resourcesBySlug[location.ref.book_slug])),
+        () => refs.map((location) => resolveOne(location, resourcesBySlug[location.ref.bookSlug])),
         [refs, resourcesBySlug]
     );
 }

@@ -8,9 +8,6 @@ import type {ResourceRefResolution} from '~/pages/flex-page/blocks/table-resourc
 import type {ResourceData} from '~/pages/details/common/resource-box/resource-box-utils';
 import type {UserStatus} from '~/contexts/user';
 
-// resource_ref markers are snake_case (the CMS/marker contract).
-/* eslint-disable camelcase */
-
 const mockUseUserContext = jest.fn();
 
 jest.mock('~/contexts/user', () => ({
@@ -38,7 +35,7 @@ function resolution(overrides: Partial<ResourceRefResolution> = {}): ResourceRef
     return {
         rowIndex: 0,
         cellIndex: 0,
-        ref: {book_slug: 'biology-2e', book_id: 46, heading: 'Instructor’s Manual', resource_type: 'Instructor'},
+        ref: {bookSlug: 'biology-2e', bookId: 46, heading: 'Instructor’s Manual', resourceType: 'Instructor'},
         status: 'resolved',
         bookId: 46,
         resource: {
@@ -179,7 +176,7 @@ describe('TableResourceCell', () => {
     it('resolves a Student resource_ref via studentResourceBoxPermissions (the duplicated model-builder)', () => {
         const userStatus = {isStudent: true} as UserStatus;
         const studentResolution = resolution({
-            ref: {book_slug: 'biology-2e', book_id: 46, heading: 'Student Guide', resource_type: 'Student'},
+            ref: {bookSlug: 'biology-2e', bookId: 46, heading: 'Student Guide', resourceType: 'Student'},
             resource: {
                 resourceHeading: 'Student Guide',
                 resourceUnlocked: false,

@@ -46,7 +46,7 @@ function buildModel(resolution: ResourceRefResolution, userStatus: UserStatus): 
     // flex page, not just the book whose detail page happens to be open.
     const bookModel = {id: resolution.bookId} as ContextValues;
 
-    return resolution.ref.resource_type.toLowerCase() === 'student'
+    return resolution.ref.resourceType.toLowerCase() === 'student'
         ? buildStudentModel(resolution.resource, userStatus, bookModel)
         : (resourceBoxModel(resolution.resource, userStatus, bookModel) as ResourceModel);
 }
