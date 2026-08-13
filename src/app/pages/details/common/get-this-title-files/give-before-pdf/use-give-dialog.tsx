@@ -15,7 +15,7 @@ function shownRecently() {
         const lastShown = Number(window.localStorage.getItem(LS_KEY));
 
         return Date.now() - lastShown < RECENT_DELTA_MS;
-    } catch (_) {
+    } catch {
         return false;
     }
 }
@@ -23,7 +23,7 @@ function shownRecently() {
 function markShown() {
     try {
         window.localStorage.setItem(LS_KEY, String(Date.now()));
-    } catch (_) {
+    } catch {
         // Storage unavailable; continue opening the dialog.
     }
     window.dataLayer ||= [];
