@@ -56,9 +56,7 @@ function buildModel(resolution: ResourceRefResolution, userStatus: UserStatus): 
 // unlock" states, the Give-before-download modal, and the trackLink call
 // that posts to /salesforce/download-tracking/ (the adoption-tracking
 // record) - by reusing LeftContent itself rather than approximating its
-// anchor attributes/click handling by hand. Not wired into the table
-// renderer yet (see block-map.ts) - this is the unit that will be, once
-// flex-page-renderer exposes a per-cell render slot.
+// anchor attributes/click handling by hand.
 export function TableResourceCell({
     resolution,
     userStatus
@@ -72,5 +70,9 @@ export function TableResourceCell({
         return null;
     }
 
-    return <LeftContent model={model} />;
+    return (
+        <span className="table-resource-link">
+            <LeftContent model={model} />
+        </span>
+    );
 }
