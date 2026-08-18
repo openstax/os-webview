@@ -12,17 +12,29 @@ export function useTableOfContents() {
     const [tocHtml, setTocHtml] = useState<string>('');
 
     useEffect(() => {
-        if (!webviewLink) {
-            return;
+        // A slower earlier request must not overwrite a newer book's contents.
+        let current = true;
+
+        setTocHtml('');
+
+        if (webviewLink) {
+            tableOfContentsHtml({
+                cnxId: model.cnxId,
+                webviewLink
+            }).then((html) => {
+                if (current) {
+                    setTocHtml(html);
+                }
+            }, (err) => {
+                console.warn(
+                    `Failed to generate table of contents HTML for ${model.cnxId}: ${err}`
+                );
+            });
         }
-        tableOfContentsHtml({
-            cnxId: model.cnxId,
-            webviewLink
-        }).then(setTocHtml, (err) => {
-            console.warn(
-                `Failed to generate table of contents HTML for ${model.cnxId}: ${err}`
-            );
-        });
+
+        return () => {
+            current = false;
+        };
     }, [model.cnxId, webviewLink]);
 
     return tocHtml as string;

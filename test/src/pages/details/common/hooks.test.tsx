@@ -37,6 +37,42 @@ describe('details/common/hooks', () => {
         );
         console.warn = originalWarn;
     });
+    it('(useTableOfContents) ignores a slow request for the previous book', async () => {
+        function mockBook(cnxId: string) {
+            jest.spyOn(UDC, 'default').mockReturnValue(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                {webviewRexLink: 'https://openstax.org/books/thing', cnxId} as any
+            );
+        }
+
+        let resolveFirstBook: (html: string) => void = () => undefined;
+
+        mockTocHtml.mockReturnValueOnce(
+            new Promise<string>((resolve) => {
+                resolveFirstBook = resolve;
+            })
+        );
+        mockTocHtml.mockReturnValueOnce(Promise.resolve('second book contents'));
+
+        function Component() {
+            const tocHtml = useTableOfContents();
+
+            return <div>{tocHtml}</div>;
+        }
+
+        mockBook('first');
+        const {rerender} = render(<Component />);
+
+        mockBook('second');
+        rerender(<Component />);
+        await waitFor(() =>
+            expect(document.body.textContent).toBe('second book contents')
+        );
+
+        resolveFirstBook('first book contents');
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        expect(document.body.textContent).toBe('second book contents');
+    });
     it('(useTableOfContents) handles empty webviewLink', async () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         jest.spyOn(UDC, 'default').mockReturnValue({webviewRexLink: ''} as any);

@@ -11,6 +11,7 @@ import * as UC from '~/contexts/user';
 // College algebra book details
 import details from '../../../data/details-college-algebra';
 import {transformData, camelCaseKeys, Json} from '~/helpers/page-data-utils';
+import Cookies from 'js-cookie';
 
 const baseModel = camelCaseKeys(transformData(details as Record<string, Json>)) as Model;
 
@@ -145,6 +146,71 @@ describe('get-this-title', () => {
         expect(window.dataLayer).toContainEqual({
             event: 'giveDialogImpression'
         });
+    });
+    it('shows a content warning even when the dialog fired recently', async () => {
+        const warned = {...baseModel, contentWarningText: 'Heads up about this book'};
+
+        window.localStorage.setItem('giveDialogLastDisplay', String(Date.now()));
+        (window as unknown as Window & {dataLayer: object[]}).dataLayer = [];
+        render(<GTTinContext model={warned} />);
+
+        await user.click(await screen.findByText('Download a PDF'));
+
+        await screen.findByText('Heads up about this book');
+        expect(window.dataLayer).not.toContainEqual({
+            event: 'giveDialogImpression'
+        });
+    });
+    it('asks for a donation once the content warning is acknowledged', async () => {
+        const warned = {...baseModel, contentWarningText: 'Heads up about this book'};
+
+        Cookies.set(`content-warning-${baseModel.id}`, 'true');
+        render(<GTTinContext model={warned} />);
+
+        await user.click(await screen.findByText('Download a PDF'));
+
+        expect(screen.queryByText('Heads up about this book')).toBeNull();
+        await screen.findByRole('link', {name: 'Go to your file'});
+        Cookies.remove(`content-warning-${baseModel.id}`);
+    });
+    it('opens the dialog when localStorage cannot be read', async () => {
+        const realStorage = window.localStorage;
+        // Only the cap's own key throws: the language context reads storage
+        // during render, so breaking every key never gets us to a click.
+        const brokenStorage = {
+            ...realStorage,
+            getItem: (key: string) => {
+                if (key === 'giveDialogLastDisplay') {
+                    throw new Error('storage disabled');
+                }
+                return realStorage.getItem(key);
+            },
+            setItem: (key: string, value: string) => {
+                if (key === 'giveDialogLastDisplay') {
+                    throw new Error('storage disabled');
+                }
+                realStorage.setItem(key, value);
+            },
+            removeItem: (key: string) => realStorage.removeItem(key)
+        };
+
+        Object.defineProperty(window, 'localStorage', {
+            configurable: true,
+            writable: true,
+            value: brokenStorage
+        });
+
+        try {
+            render(<GTTinContext />);
+            await user.click(await screen.findByText('Download a PDF'));
+            await screen.findByRole('link', {name: 'Go to your file'});
+        } finally {
+            Object.defineProperty(window, 'localStorage', {
+                configurable: true,
+                writable: true,
+                value: realStorage
+            });
+        }
     });
     it('expands TOC option (Polish)', async () => {
         const mockIsPolish = jest.spyOn($, 'isPolish').mockReturnValue(true);

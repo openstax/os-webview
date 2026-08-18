@@ -30,6 +30,12 @@ function markShown() {
     window.dataLayer.push({event: 'giveDialogImpression'});
 }
 
+// openIfNotRecent and lookupVariant must agree here, or the decision to open
+// disagrees with the dialog that renders.
+function needsContentWarning(warning?: string, id?: string) {
+    return Boolean(warning && id && !checkWarningCookie(id));
+}
+
 export type VariantValue =
     | 'content-warning'
     | 'Instructor resource'
@@ -74,15 +80,11 @@ export default function useGiveDialog() {
         [close, data, Dialog]
     );
 
-    // Opens the dialog unless it fired recently. Returns whether it opened so
-    // callers know to suppress the default link navigation.
-    // Content-warning dialogs bypass the donation frequency cap and impression tracking.
-    // Once a content warning has been acknowledged (cookie set), navigation proceeds directly.
+    // Returns whether the dialog opened, so callers know to suppress the
+    // default link navigation. Content warnings answer to their own cookie,
+    // not the donation cap, and are not donation impressions.
     const openIfNotRecent = React.useCallback((warning?: string, id?: string) => {
-        if (warning && id) {
-            if (checkWarningCookie(id)) {
-                return false; // Already acknowledged; navigate directly.
-            }
+        if (needsContentWarning(warning, id)) {
             open();
             return true;
         }
@@ -125,7 +127,7 @@ function lookupVariant(warning: string, variantParams: {
 ] {
     const {id, variant} = variantParams;
 
-    if (warning && id && !checkWarningCookie(id)) {
+    if (needsContentWarning(warning, id)) {
         return [ContentWarning, variantParams as Parameters<typeof ContentWarning>];
     }
     if (variant !== undefined) {
