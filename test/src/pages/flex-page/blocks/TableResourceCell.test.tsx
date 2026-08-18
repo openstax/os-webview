@@ -173,6 +173,50 @@ describe('TableResourceCell', () => {
         expect(mockTrackLink).not.toHaveBeenCalled();
     });
 
+    it('reports the marker\u2019s own resource type as the nudge placement, not the flex-page route', async () => {
+        const user = userEvent.setup();
+        const userStatus = {isInstructor: true} as UserStatus;
+        const unlockedResolution = resolution({
+            resource: {
+                resource: {
+                    id: 3,
+                    heading: 'Test Bank',
+                    resourceCategory: 'Instructor Resources',
+                    resourceUnlocked: true,
+                    description: ''
+                },
+                linkText: 'Download',
+                linkDocument: {file: 'https://files.example.com/tb.pdf'},
+                comingSoonText: null,
+                printLink: null
+            } as ResourceData
+        });
+
+        mockUseUserContext.mockReturnValue({userStatus});
+        render(<Wrap><TableResourceCell resolution={unlockedResolution} userStatus={userStatus} /></Wrap>);
+        await user.click(screen.getByRole('link'));
+
+        // useVariant would read the flex-page URL, which names no resource type
+        // at all, and report '? resource'.
+        const nudge = await screen.findByText('Go to your resource');
+
+        expect(nudge.closest('.give-before-pdf')?.getAttribute('data-nudge-placement'))
+            .toBe('Instructor resource');
+    });
+
+    it('wraps the cell in a div, which can legally contain LeftContent\u2019s block-level branch', () => {
+        const userStatus = {isInstructor: false} as UserStatus;
+
+        mockUseUserContext.mockReturnValue({userStatus});
+        const {container} = render(
+            <Wrap><TableResourceCell resolution={resolution()} userStatus={userStatus} /></Wrap>
+        );
+        const wrapper = container.querySelector('.table-resource-link');
+
+        expect(wrapper?.tagName).toBe('DIV');
+        expect(wrapper?.querySelector('.left-no-button')).not.toBeNull();
+    });
+
     it('resolves a Student resource_ref via studentResourceBoxPermissions (the duplicated model-builder)', () => {
         const userStatus = {isStudent: true} as UserStatus;
         const studentResolution = resolution({

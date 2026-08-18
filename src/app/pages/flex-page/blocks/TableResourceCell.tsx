@@ -8,6 +8,7 @@ import {
 import type {ResourceModel} from '~/pages/details/common/resource-box/resource-boxes';
 import type {ContextValues} from '~/pages/details/context';
 import type {UserStatus} from '~/contexts/user';
+import type {VariantValue} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import type {ResourceRefResolution} from './table-resource-links-utils';
 
 // student-resource-tab.tsx builds an equivalent model with a private,
@@ -35,6 +36,10 @@ function buildStudentModel(
     ) as ResourceModel;
 }
 
+function isStudentResource(resolution: ResourceRefResolution): boolean {
+    return resolution.ref.resourceType.toLowerCase() === 'student';
+}
+
 function buildModel(resolution: ResourceRefResolution, userStatus: UserStatus): ResourceModel | null {
     if (resolution.status !== 'resolved' || !resolution.resource || resolution.bookId === undefined) {
         return null;
@@ -46,7 +51,7 @@ function buildModel(resolution: ResourceRefResolution, userStatus: UserStatus): 
     // flex page, not just the book whose detail page happens to be open.
     const bookModel = {id: resolution.bookId} as ContextValues;
 
-    return resolution.ref.resourceType.toLowerCase() === 'student'
+    return isStudentResource(resolution)
         ? buildStudentModel(resolution.resource, userStatus, bookModel)
         : (resourceBoxModel(resolution.resource, userStatus, bookModel) as ResourceModel);
 }
@@ -70,9 +75,15 @@ export function TableResourceCell({
         return null;
     }
 
+    const variant: VariantValue = isStudentResource(resolution)
+        ? 'Student resource'
+        : 'Instructor resource';
+
+    // A div, not a span: LeftContent's logged-in-non-instructor branch is a
+    // block-level div, which a span cannot legally contain.
     return (
-        <span className="table-resource-link">
-            <LeftContent model={model} />
-        </span>
+        <div className="table-resource-link">
+            <LeftContent model={model} variant={variant} />
+        </div>
     );
 }
