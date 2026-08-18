@@ -59,6 +59,9 @@ describe('TableResourceCell', () => {
     beforeEach(() => {
         mockUseUserContext.mockReset();
         mockTrackLink.mockReset();
+        // Table cells share the give-dialog frequency cap with every other
+        // mount point, so each click test has to start uncapped.
+        window.localStorage.removeItem('giveDialogLastDisplay');
     });
 
     it('renders nothing for a loading resolution', () => {
