@@ -20,7 +20,7 @@ type LinkIsSet = {
 };
 
 // eslint-disable-next-line complexity
-export default function LeftContent({model}: {model: ResourceModel}) {
+export default function LeftContent({model, variant}: {model: ResourceModel; variant?: VariantValue}) {
     const {userStatus} = useUserContext();
     const doneWaiting = useDoneWaitingForModelChange(model);
 
@@ -45,7 +45,7 @@ export default function LeftContent({model}: {model: ResourceModel}) {
         );
     }
 
-    return <LeftButton model={model as ResourceModel & LinkIsSet} />;
+    return <LeftButton model={model as ResourceModel & LinkIsSet} variant={variant} />;
 }
 
 function useDoneWaitingForModelChange(model: ResourceModel) {
@@ -76,6 +76,9 @@ const iconLookup: {[key: string]: IconDefinition} = {
     'external-link-alt': faExternalLinkAlt
 };
 
+// Callers that render a resource box outside the book detail page (e.g. a
+// flex-page table cell) pass an explicit variant instead - the route's query
+// string says nothing about the resource there.
 function useVariant(): VariantValue {
     const {search} = useLocation();
 
@@ -95,7 +98,7 @@ function LinkText({iconType, link}: LinkIsSet & {iconType: ResourceModel['iconTy
     return link.text;
 }
 
-function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
+function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant?: VariantValue}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
     const {GiveDialog, open, enabled} = useGiveDialog();
@@ -108,7 +111,7 @@ function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
         },
         [model.bookModel, userStatus]
     );
-    const variant = useVariant();
+    const routeVariant = useVariant();
     const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
@@ -142,7 +145,7 @@ function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
                             e: React.MouseEvent
                         ) => void
                     }
-                    variant={variant}
+                    variant={variant ?? routeVariant}
                 />
             )}
         </React.Fragment>
