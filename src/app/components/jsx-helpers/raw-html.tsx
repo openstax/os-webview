@@ -61,7 +61,7 @@ export default function RawHTML({
         // already-activated scripts) alone on re-renders with the same html,
         // so re-running would execute embedded scripts a second time.
     }, [embed, html]);
-React.useLayoutEffect(() => rewriteLinks?.(ref.current as HTMLElement), [rewriteLinks, html]);
+    React.useLayoutEffect(() => rewriteLinks?.(ref.current as HTMLElement), [rewriteLinks, html]);
 
     return React.createElement(Tag, {
         ref,
