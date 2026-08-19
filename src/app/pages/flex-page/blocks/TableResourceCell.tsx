@@ -1,5 +1,6 @@
 import React from 'react';
 import LeftContent from '~/pages/details/common/resource-box/left-content';
+import DownloadSource from '~/pages/details/common/download-source';
 import {
     resourceBoxModel,
     studentResourceBoxPermissions,
@@ -83,7 +84,7 @@ export function TableResourceCell({
     // block-level div, which a span cannot legally contain.
     return (
         <div className="table-resource-link">
-            <LeftContent model={model} variant={variant} />
+            <LeftContent model={model} variant={variant} downloadSource={DownloadSource.flexPage} />
         </div>
     );
 }

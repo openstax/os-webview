@@ -64,7 +64,8 @@ export default function ThankYou({
     source,
     itemType = 'PDF',
     track,
-    id
+    id,
+    downloadSource
 }: {
     link: string;
     close: () => void;
@@ -72,6 +73,7 @@ export default function ThankYou({
     itemType?: string;
     track?: string;
     id?: string;
+    downloadSource?: string;
 }) {
     const {first, last, school, accountUuid} = useUserFields();
     const afterSubmit = React.useCallback(() => {
@@ -163,6 +165,7 @@ export default function ThankYou({
                 className="never-mind"
                 href={link}
                 {...(track ? {'data-track': track} : {})}
+                data-source={downloadSource}
                 data-variant={itemType}
                 onClick={trackDownload}
             >

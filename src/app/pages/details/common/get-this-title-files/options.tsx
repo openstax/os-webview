@@ -16,6 +16,7 @@ import useTOCContext from '../toc-slideout/context';
 import {useDialog} from '~/components/dialog/dialog';
 import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
 import trackLink from '../track-link';
+import DownloadSource from '../download-source';
 import {useRexPortalLinkOrNot} from '~/helpers/rex-portal';
 import type {Model} from '../get-this-title';
 import type {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
@@ -141,6 +142,7 @@ export function WebviewOption({model}: {model: Model}) {
                     rel="noreferrer"
                     onClick={openGiveDialog}
                     data-track={WEBVIEW_TRACK}
+                    data-source={DownloadSource.bookDetail}
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>
@@ -151,6 +153,7 @@ export function WebviewOption({model}: {model: Model}) {
                     track={WEBVIEW_TRACK}
                     onDownload={trackDownload}
                     id={model.id.toString()}
+                    downloadSource={DownloadSource.bookDetail}
                 />
             </div>
         </Option>
@@ -188,6 +191,7 @@ export function PdfOption({model}: {model: Model}) {
                 text={text}
                 onClick={openGiveDialog}
                 data-track={PDF_TRACK}
+                data-source={DownloadSource.bookDetail}
             />
             <GiveDialog
                 link={pdfLink}
@@ -195,6 +199,7 @@ export function PdfOption({model}: {model: Model}) {
                 onDownload={trackDownload}
                 id={model.id.toString()}
                 warning={model.contentWarningText ?? undefined}
+                downloadSource={DownloadSource.bookDetail}
             />
         </React.Fragment>
     ) : null;

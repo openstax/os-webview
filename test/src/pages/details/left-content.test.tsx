@@ -103,6 +103,16 @@ describe('left-content', () => {
 
         await user.click(downloadLink);
     });
+    it('defaults the download source to the book detail page', async () => {
+        mockUseUserContext.mockReturnValue({
+            userStatus: {isInstructor: true}
+        });
+        const model = {link, ...baseModel, iconType: 'download'};
+
+        render(<Component model={model} />);
+
+        expect(screen.getByRole('link').dataset.source).toBe('Book detail');
+    });
     it('tracks a download for a signed-in non-instructor', async () => {
         const trackLink = jest.spyOn(TL, 'default');
 
