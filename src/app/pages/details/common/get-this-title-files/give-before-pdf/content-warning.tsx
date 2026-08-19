@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 
 export default function ContentWarning({
-    link, track, close, onDownload, variant, warning, id, downloadSource
+    link, track, close, onDownload, variant, warning, id
 }: {
     link: string;
     track: string | undefined;
@@ -12,7 +12,6 @@ export default function ContentWarning({
     variant?: string;
     warning: string;
     id: string;
-    downloadSource?: string;
 }) {
     const closeAfterDelay = React.useCallback(
         (event: React.MouseEvent) => {
@@ -35,7 +34,6 @@ export default function ContentWarning({
             <a
                 href={link}
                 {...(track ? {'data-track': track} : {})}
-                data-source={downloadSource}
                 onClick={closeAfterDelay}
                 className="btn go-to"
                 data-local="true"

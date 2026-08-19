@@ -126,32 +126,6 @@ describe('k12 subject resources', () => {
         expect(trackLink).toHaveBeenCalledWith(expect.anything(), '73');
         trackLink.mockRestore();
     });
-    it('reports K12 subject as the download source, on the link and in the dialog', async () => {
-        userContext.mockReturnValue({
-            isVerified: true,
-            userStatus: {isInstructor: true}
-        });
-        mockBookTitlesGetter.mockReturnValue([{title: 'book', id: 73}]);
-        render(
-            <MemoryRouter initialEntries={['/selector?Calculus']}>
-                <Resources
-                    data={unlockedResourceData()}
-                    labels={['one', 'two']}
-                    selectedLabel="one"
-                    setSelectedLabel={jest.fn()}
-                />
-            </MemoryRouter>
-        );
-        const link = await screen.findByText('book');
-
-        expect((link as HTMLElement).dataset.source).toBe('K12 subject');
-
-        await userEvent.setup().click(link);
-
-        const inDialog = await screen.findByText('Go to your resource');
-
-        expect((inDialog as HTMLElement).dataset.source).toBe('K12 subject');
-    });
     it('drops a book-title lookup that lands after unmount', async () => {
         userContext.mockReturnValue({
             isVerified: true,

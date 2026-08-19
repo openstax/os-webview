@@ -9,7 +9,6 @@ import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLin
 import {useToggle} from '~/helpers/data';
 import {useLocation} from 'react-router-dom';
 import trackLink from '../track-link';
-import DownloadSource from '../download-source';
 import {itemTypeForVariant} from '../get-this-title-files/give-before-pdf/give-before-other';
 import useGiveDialog, { VariantValue } from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
@@ -22,11 +21,7 @@ type LinkIsSet = {
 };
 
 // eslint-disable-next-line complexity
-export default function LeftContent({model, variant, downloadSource = DownloadSource.bookDetail}: {
-    model: ResourceModel;
-    variant?: VariantValue;
-    downloadSource?: string;
-}) {
+export default function LeftContent({model, variant}: {model: ResourceModel; variant?: VariantValue}) {
     const {userStatus} = useUserContext();
     const doneWaiting = useDoneWaitingForModelChange(model);
 
@@ -51,7 +46,7 @@ export default function LeftContent({model, variant, downloadSource = DownloadSo
         );
     }
 
-    return <LeftButton model={model as ResourceModel & LinkIsSet} variant={variant} downloadSource={downloadSource} />;
+    return <LeftButton model={model as ResourceModel & LinkIsSet} variant={variant} />;
 }
 
 function useDoneWaitingForModelChange(model: ResourceModel) {
@@ -104,11 +99,7 @@ function LinkText({iconType, link}: LinkIsSet & {iconType: ResourceModel['iconTy
     return link.text;
 }
 
-function LeftButton({model, variant, downloadSource}: {
-    model: ResourceModel & LinkIsSet;
-    variant?: VariantValue;
-    downloadSource: string;
-}) {
+function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant?: VariantValue}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
     const {GiveDialog, open, enabled} = useGiveDialog();
@@ -149,7 +140,6 @@ function LeftButton({model, variant, downloadSource}: {
                 data-analytics-select-content={model.heading}
                 data-content-type={`Book Resource (${model.resourceCategory})`}
                 data-variant={itemTypeForVariant(nudgeVariant)}
-                data-source={downloadSource}
                 aria-label={ariaLabel}
             >
                 <FontAwesomeIcon icon={icon} />
@@ -165,7 +155,6 @@ function LeftButton({model, variant, downloadSource}: {
                         ) => void
                     }
                     variant={nudgeVariant}
-                    downloadSource={downloadSource}
                 />
             )}
         </React.Fragment>

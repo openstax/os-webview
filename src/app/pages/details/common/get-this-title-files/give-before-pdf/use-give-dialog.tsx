@@ -55,8 +55,7 @@ export default function useGiveDialog() {
             onDownload,
             variant,
             warning='',
-            id,
-            downloadSource
+            id
         }: {
             link: string;
             track?: string;
@@ -64,9 +63,8 @@ export default function useGiveDialog() {
             variant?: VariantValue;
             warning?: string;
             id?: string;
-            downloadSource?: string;
         }) => {
-            const variantParams = {link, track, close, data, onDownload, variant, warning, id, downloadSource};
+            const variantParams = {link, track, close, data, onDownload, variant, warning, id};
             const [Variant, typedVariantParams] = lookupVariant(warning, variantParams);
             const aria =
                 Variant === GiveBeforePdf

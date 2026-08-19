@@ -9,7 +9,6 @@ export default function GiveBeforeOther({
     close,
     data,
     track,
-    downloadSource,
     variant,
     onDownload,
     id
@@ -18,7 +17,6 @@ export default function GiveBeforeOther({
     close: () => void;
     data: DonationPopupData;
     track?: string;
-    downloadSource?: string;
     variant: string;
     onDownload?: React.MouseEventHandler;
     id?: string;
@@ -44,7 +42,6 @@ export default function GiveBeforeOther({
                 itemType={itemTypeForVariant(variant)}
                 track={track}
                 id={id}
-                downloadSource={downloadSource}
             />
         );
     }
@@ -66,7 +63,6 @@ export default function GiveBeforeOther({
                 onClick={beforeOpen}
                 className='btn go-to'
                 {...(track ? {'data-track': track} : {})}
-                data-source={downloadSource}
                 data-variant={itemTypeForVariant(variant)}
                 data-local="true"
             >

@@ -147,36 +147,6 @@ describe('TableResourceCell', () => {
         expect(mockTrackLink).toHaveBeenCalledWith(expect.anything(), '46');
     });
 
-    it('reports Flex page as the download source, not the book detail page', async () => {
-        const userStatus = {isInstructor: true} as UserStatus;
-        const unlockedResolution = resolution({
-            resource: {
-                resource: {
-                    id: 4,
-                    heading: 'Test Bank',
-                    resourceCategory: 'Instructor Resources',
-                    resourceUnlocked: true,
-                    description: ''
-                },
-                linkText: 'Download',
-                linkDocument: {file: 'https://files.example.com/tb.pdf'},
-                comingSoonText: null,
-                printLink: null
-            } as ResourceData
-        });
-
-        mockUseUserContext.mockReturnValue({userStatus});
-        render(<Wrap><TableResourceCell resolution={unlockedResolution} userStatus={userStatus} /></Wrap>);
-
-        expect(screen.getByRole('link').dataset.source).toBe('Flex page');
-
-        await userEvent.setup().click(screen.getByRole('link'));
-
-        const inDialog = await screen.findByText('Go to your resource');
-
-        expect((inDialog as HTMLElement).dataset.source).toBe('Flex page');
-    });
-
     it('calls trackLink for a signed-in non-instructor too', async () => {
         const user = userEvent.setup();
         const userStatus = {isInstructor: false} as UserStatus;

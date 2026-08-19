@@ -3,7 +3,6 @@ import {Tabs, Item} from '~/components/tablist/tablist';
 import useUserContext from '~/contexts/user';
 import {useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import trackLink from '~/pages/details/common/track-link';
-import DownloadSource from '~/pages/details/common/download-source';
 import {itemTypeForVariant} from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-other';
 import bookTitles from '~/models/book-titles';
 import './resources.scss';
@@ -46,7 +45,6 @@ function LinkWithGiveDialog({
                 onClick={onClick}
                 data-track={track}
                 data-variant={itemTypeForVariant(VARIANT)}
-                data-source={DownloadSource.k12Subject}
             >
                 {book}
             </a>
@@ -55,7 +53,6 @@ function LinkWithGiveDialog({
                 variant={VARIANT}
                 track={track}
                 onDownload={trackDownloadClick}
-                downloadSource={DownloadSource.k12Subject}
             />
         </React.Fragment>
     );
