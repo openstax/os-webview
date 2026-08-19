@@ -103,10 +103,6 @@ Main routes in `router.tsx`:
 - Strict mode enabled, target ES6, module ES2020
 - Gradually migrating from JS/JSX to TS/TSX
 
-## Planning docs
-
-Planning and spec docs for this repo live in the Obsidian vault at `Hubs/OpenStax/os-webview/plans/` (and `specs/`), not in this repo.
-
 ## Error reporting (Sentry)
 
 - `src/app/sentry.js` is the only `Sentry.init` — imported first by `main.js`.
