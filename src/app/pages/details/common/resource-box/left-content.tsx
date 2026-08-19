@@ -103,14 +103,14 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
     const {GiveDialog, open, enabled} = useGiveDialog();
-    const {userStatus} = useUserContext();
+    // trackLink reports for any signed-in account. Gating on instructor status
+    // here dropped every student's resource download, and dropped an
+    // instructor's too whenever the click beat the user request.
     const trackDownloadClick = React.useCallback(
         (event: TrackedMouseEvent) => {
-            if (userStatus?.isInstructor) {
-                trackLink(event, model.bookModel.id.toString());
-            }
+            trackLink(event, model.bookModel.id.toString());
         },
-        [model.bookModel, userStatus]
+        [model.bookModel]
     );
     const routeVariant = useVariant();
     const nudgeVariant = variant ?? routeVariant;

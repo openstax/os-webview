@@ -103,7 +103,9 @@ describe('left-content', () => {
 
         await user.click(downloadLink);
     });
-    it("Doesn't track downloads if not instructor", async () => {
+    it('tracks a download for a signed-in non-instructor', async () => {
+        const trackLink = jest.spyOn(TL, 'default');
+
         mockUseUserContext.mockReturnValue({
             userStatus: {
                 isInstructor: false
@@ -120,6 +122,9 @@ describe('left-content', () => {
         const downloadLink = await screen.findByText('Go to your resource');
 
         await user.click(downloadLink);
+
+        expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
+        trackLink.mockRestore();
     });
     it('still reports the download when the dialog is capped', async () => {
         const trackLink = jest.spyOn(TL, 'default');

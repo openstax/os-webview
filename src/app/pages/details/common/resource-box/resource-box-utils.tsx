@@ -149,13 +149,6 @@ export function resourceBoxModel(
             comingSoonText: resourceData.comingSoonText,
             k12: resourceData.k12,
             videoReferenceNumber: resourceData.videoReferenceNumber,
-            trackResource: Boolean(userStatus.trackDownloads) && {
-                book: bookModel.id,
-                // eslint-disable-next-line camelcase
-                account_id: userStatus.userInfo.accounts_id,
-                // eslint-disable-next-line camelcase
-                resource_name: resourceData.resource?.heading
-            },
             printLink: resourceData.printLink,
             bookModel
         },

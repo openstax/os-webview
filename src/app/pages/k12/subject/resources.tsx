@@ -20,15 +20,12 @@ function LinkWithGiveDialog({
     track: string;
 }) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
-    const {userStatus} = useUserContext();
     const bookId = useBookId(book);
     const trackDownloadClick = React.useCallback(
         (event: React.MouseEvent<HTMLAnchorElement>) => {
-            if (userStatus?.isInstructor) {
-                trackLink(event, bookId);
-            }
+            trackLink(event, bookId);
         },
-        [userStatus, bookId]
+        [bookId]
     );
     const onClick = React.useCallback(
         (event: React.MouseEvent<HTMLAnchorElement>) => {
