@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {LanguageContextProvider} from '~/contexts/language';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import LeftContent from '~/pages/details/common/resource-box/left-content';
+import * as TL from '~/pages/details/common/track-link';
 
 const mockUseUserContext = jest.fn();
 
@@ -119,6 +120,26 @@ describe('left-content', () => {
         const downloadLink = await screen.findByText('Go to your resource');
 
         await user.click(downloadLink);
+    });
+    it('still reports the download when the dialog is capped', async () => {
+        const trackLink = jest.spyOn(TL, 'default');
+
+        mockUseUserContext.mockReturnValue({
+            userStatus: {isInstructor: true}
+        });
+        const model = {link, ...baseModel, iconType: 'download'};
+
+        window.localStorage.setItem('giveDialogLastDisplay', String(Date.now()));
+        render(<Component model={model} />);
+        const foundLink = screen.getByRole('link');
+
+        expect(foundLink.dataset.variant).toBe('resource');
+
+        await user.click(foundLink);
+
+        expect(screen.queryByText('Go to your resource')).toBeNull();
+        expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
+        trackLink.mockRestore();
     });
     it('handles unknown search', async () => {
         mockUseUserContext.mockReturnValue({

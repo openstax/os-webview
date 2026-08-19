@@ -103,6 +103,13 @@ export function TocOption({model}: {model: Model}) {
     );
 }
 
+// The download is recorded from whichever link the reader actually follows:
+// the dialog's when it opens, the option's own when the frequency cap skips it.
+// GetThisTitle's delegated click handler runs trackLink either way, but it only
+// builds tracking info for links carrying data-track.
+const WEBVIEW_TRACK = 'Online';
+const PDF_TRACK = 'PDF';
+
 export function WebviewOption({model}: {model: Model}) {
     const intl = useIntl();
     const texts = {
@@ -133,6 +140,7 @@ export function WebviewOption({model}: {model: Model}) {
                     data-local={isRex}
                     rel="noreferrer"
                     onClick={openGiveDialog}
+                    data-track={WEBVIEW_TRACK}
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>
@@ -140,7 +148,7 @@ export function WebviewOption({model}: {model: Model}) {
                     link={webviewLink}
                     variant="View online"
                     warning={model.contentWarningText ?? undefined}
-                    track="Online"
+                    track={WEBVIEW_TRACK}
                     onDownload={trackDownload}
                     id={model.id.toString()}
                 />
@@ -179,10 +187,11 @@ export function PdfOption({model}: {model: Model}) {
                 icon={faCloudDownloadAlt}
                 text={text}
                 onClick={openGiveDialog}
+                data-track={PDF_TRACK}
             />
             <GiveDialog
                 link={pdfLink}
-                track="PDF"
+                track={PDF_TRACK}
                 onDownload={trackDownload}
                 id={model.id.toString()}
                 warning={model.contentWarningText ?? undefined}

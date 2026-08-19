@@ -147,6 +147,30 @@ describe('get-this-title', () => {
             event: 'giveDialogImpression'
         });
     });
+    it('labels the option links so a capped download still gets reported', async () => {
+        window.localStorage.setItem('giveDialogLastDisplay', String(Date.now()));
+        render(<GTTinContext />);
+        const pdfLink = await screen.findByText('Download a PDF');
+
+        // GetThisTitle's delegated handler calls trackLink for every option
+        // click, but it only builds tracking info for links carrying
+        // data-track - which used to live on the dialog's link alone.
+        expect(pdfLink.closest('a')?.dataset.track).toBe('PDF');
+
+        console.error = jest.fn();
+        await user.click(pdfLink);
+        console.error = originalError;
+
+        expect(screen.queryByRole('link', {name: 'Go to your file'})).toBeNull();
+        expect(mockTrackLink).toHaveBeenCalled();
+        mockTrackLink.mockReset();
+    });
+    it('labels the view-online link the same way', async () => {
+        render(<GTTinContext />);
+        const onlineLink = await screen.findByText('View online');
+
+        expect(onlineLink.closest('a')?.dataset.track).toBe('Online');
+    });
     it('shows a content warning even when the dialog fired recently', async () => {
         const warned = {...baseModel, contentWarningText: 'Heads up about this book'};
 

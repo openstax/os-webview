@@ -9,6 +9,7 @@ import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLin
 import {useToggle} from '~/helpers/data';
 import {useLocation} from 'react-router-dom';
 import trackLink from '../track-link';
+import {itemTypeForVariant} from '../get-this-title-files/give-before-pdf/give-before-other';
 import useGiveDialog, { VariantValue } from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
@@ -112,12 +113,20 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
         [model.bookModel, userStatus]
     );
     const routeVariant = useVariant();
+    const nudgeVariant = variant ?? routeVariant;
     const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
-        if (isDownload && enabled && open()) {
-            event.preventDefault();
+        if (!isDownload) {
+            return;
         }
+        if (enabled && open()) {
+            event.preventDefault();
+            return;
+        }
+        // The dialog's own link is what normally reports the download, so a
+        // skipped dialog has to report it here or the CMS never sees it.
+        trackDownloadClick(event);
     }
 
     return (
@@ -130,6 +139,7 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
                 data-track={model.heading}
                 data-analytics-select-content={model.heading}
                 data-content-type={`Book Resource (${model.resourceCategory})`}
+                data-variant={itemTypeForVariant(nudgeVariant)}
                 aria-label={ariaLabel}
             >
                 <FontAwesomeIcon icon={icon} />
@@ -144,7 +154,7 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
                             e: React.MouseEvent
                         ) => void
                     }
-                    variant={variant ?? routeVariant}
+                    variant={nudgeVariant}
                 />
             )}
         </React.Fragment>
