@@ -156,11 +156,29 @@ export function useDataFromPromise<T = Json>(
     const [data, setData] = React.useState<T | null | undefined>(defaultValue);
 
     React.useEffect(() => {
+        let cancelled = false;
+
         if (promise) {
-            promise.then(setData);
+            // Swallow rejections; a failed fetch reads the same as "no data"
+            promise.then(
+                (resolved) => {
+                    if (!cancelled) {
+                        setData(resolved);
+                    }
+                },
+                () => {
+                    if (!cancelled) {
+                        setData(null);
+                    }
+                }
+            );
         } else {
             setData(null);
         }
+
+        return () => {
+            cancelled = true;
+        };
     }, [promise]);
 
     return data;

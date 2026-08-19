@@ -45,7 +45,7 @@ export default {
                     '<p data-block-key="eobsd">How do I get started? <br/></p>',
                 slug: 'why-use-openstax-textbooks',
                 answer: '<p data-block-key="ri8i3">As a first step, browse our free peer-reviewed <a href="https://openstax.org/subjects">digital library</a> and choose the resource(s) that fit your needs. From there, you can choose the OpenStax format that works best for your course, which students can easily access with a direct link from your syllabus or LMS. If you prefer to keep students learning within your learning management system (LMS), we also offer free course cartridge downloads. If you are an instructor who likes to provide students with custom assessments, assignments, and interactive features, consider using OpenStax <a href="https://openstax.org/assignable">Assignable</a>. No matter what you choose, you and your students can always access your books online version, download a free PDF, access a customizable .docx, or purchase a <a href="https://he.kendallhunt.com/openstax"> low-cost print version</a> of any OpenStax textbook.</p><p data-block-key="6jslc">For access to instructional resources, educators do need to create a free OpenStax instructor account and have their status verified. Finally, if you decide to use OpenStax resources in any way, please <a href="https://openstax.org/adoption">let us know</a> so we can update you on new resources and continue to help others! </p>',
-                document: null
+                document: 'this-one-fails'
             },
             id: 'c985605f-cc41-4758-84dc-a5e42098814c'
         },

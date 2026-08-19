@@ -20,11 +20,15 @@ function useDocModel(docId: string) {
 
         fetch(url, {credentials: 'include'})
             .then((r) => r.json())
-            .then((r) =>
-                setDocData({
-                    title: r.title,
-                    file: r.meta.download_url
-                })
+            .then(
+                (r) =>
+                    setDocData({
+                        title: r.title,
+                        file: r.meta.download_url
+                    }),
+                // A document that will not load renders as no download link,
+                // which is what a missing title already does.
+                () => setDocData({})
             );
     }, [docId]);
 

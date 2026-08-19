@@ -5,7 +5,8 @@ export default async function cmsFetch(path: string) {
     const url = path.replace(/[^?]+/, urlFromSlug);
 
     try {
-        return (await retry(() => fetch(url))).json();
+        // `await` is required: without it .json() rejects outside the try
+        return await (await retry(() => fetch(url))).json();
     } catch (err) {
         return Promise.reject(new Error(`Failed to fetch ${path}: ${err}`));
     }

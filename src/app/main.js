@@ -1,10 +1,13 @@
 import './sentry';
+import {listenForStaleChunks} from '~/helpers/stale-chunk';
 import cmsFetch from '~/helpers/cms-fetch';
 import {render} from 'preact';
 
 const GLOBAL_SETTINGS = ['piAId', 'piCId', 'piHostname'];
 
 window.SETTINGS = {};
+
+listenForStaleChunks();
 
 (async () => {
     const settings = (await cmsFetch('webview-settings')).settings;

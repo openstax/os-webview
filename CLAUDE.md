@@ -62,6 +62,9 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 ### Code Splitting
 - `src/app/helpers/jit-load.tsx` — lazy loading wrapper using `React.lazy` + `Suspense`
 - Webpack splits vendor chunks per-package
+- Production chunk names are content-hashed, so a deploy invalidates all ~500 of them. A tab
+  opened before a deploy 404s on the next chunk it requests; `src/app/helpers/stale-chunk.ts`
+  detects that and reloads (at most twice per tab, tracked in sessionStorage).
 
 ### Routing
 Main routes in `router.tsx`:
@@ -99,3 +102,27 @@ Main routes in `router.tsx`:
 ### TypeScript
 - Strict mode enabled, target ES6, module ES2020
 - Gradually migrating from JS/JSX to TS/TSX
+
+## Error reporting (Sentry)
+
+- `src/app/sentry.js` is the only `Sentry.init` — imported first by `main.js`.
+- `beforeSend` drops everything except `openstax.org`, so dev/staging errors never reach Sentry.
+- Noise filtering lives in three lists there: `ignoreErrors` (exact messages), `ignoreMessages`
+  (substring match, applied in `beforeSend`), and `denyUrls` (script origin). Use `denyUrls`,
+  not `ignoreUrls` — the latter was removed in SDK v7 and silently does nothing.
+- Integrations come from `@sentry/react` (v10). Do not add `@sentry/integrations`; it pulls a
+  second copy of the SDK core into the bundle. `dedupe` is already on by default.
+- Errors only — no tracing, replay, or feedback. `browserTracingIntegration` is deliberately
+  absent, and the production webpack config defines `__SENTRY_TRACING__` and `__SENTRY_DEBUG__`
+  as `false` so that code is stripped rather than merely unused. Adding a tracing integration
+  back without removing those defines will silently not work.
+- Render errors surface through `useErrorBoundary` in `shell/router-context.tsx`. That hook
+  swallows the error unless a handler is passed, so the `Sentry.captureException` callback
+  there is load-bearing.
+- User context (uuid, `logged_in`, `user_role`) is attached in `contexts/user.ts`. Keep names
+  and emails out of it.
+- Chunk-load failures are recovered from rather than reported — see `stale-chunk.ts`. They stay
+  in the ignore lists because Sentry's own global handlers capture them before the reload runs.
+- Source maps upload from `build.yml` on `main` and tags, under release `osweb@<package.json
+  version>` — that must stay in sync with `release` in `sentry.js`. Needs the
+  `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, and `SENTRY_PROJECT` repo secrets.
