@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Sentry from '@sentry/react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {useUserModel, UserModelType} from '~/models/usermodel';
 import useMyOpenStaxUser from '~/models/myopenstax-user';
@@ -34,6 +35,14 @@ function getUserStatus(user: Partial<UserModelType>) {
         school: user.accountsModel?.school_name,
         uuid: user.uuid
     };
+}
+
+function roleTag({isInstructor, isStudent}: UserStatus) {
+    if (isInstructor) {
+        return 'instructor';
+    }
+
+    return isStudent ? 'student' : 'anonymous';
 }
 
 function useContextValue() {
@@ -76,6 +85,13 @@ function useContextValue() {
             w.pi?.('identify_client', model.id);
         }
     }, [model]);
+
+    React.useEffect(() => {
+        // uuid only -- name and email would put PII in every Sentry event
+        Sentry.setUser(userStatus.uuid ? {id: userStatus.uuid} : null);
+        Sentry.setTag('logged_in', isLoggedIn);
+        Sentry.setTag('user_role', roleTag(userStatus));
+    }, [userStatus, isLoggedIn]);
 
     return value;
 }
