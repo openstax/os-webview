@@ -110,8 +110,12 @@ Main routes in `router.tsx`:
 - Noise filtering lives in three lists there: `ignoreErrors` (exact messages), `ignoreMessages`
   (substring match, applied in `beforeSend`), and `denyUrls` (script origin). Use `denyUrls`,
   not `ignoreUrls` — the latter was removed in SDK v7 and silently does nothing.
-- Integrations come from `@sentry/react` (v9). Do not add `@sentry/integrations`; it pulls a
+- Integrations come from `@sentry/react` (v10). Do not add `@sentry/integrations`; it pulls a
   second copy of the SDK core into the bundle. `dedupe` is already on by default.
+- Errors only — no tracing, replay, or feedback. `browserTracingIntegration` is deliberately
+  absent, and the production webpack config defines `__SENTRY_TRACING__` and `__SENTRY_DEBUG__`
+  as `false` so that code is stripped rather than merely unused. Adding a tracing integration
+  back without removing those defines will silently not work.
 - Render errors surface through `useErrorBoundary` in `shell/router-context.tsx`. That hook
   swallows the error unless a handler is passed, so the `Sentry.captureException` callback
   there is load-bearing.
