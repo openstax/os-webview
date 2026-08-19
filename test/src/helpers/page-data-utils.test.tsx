@@ -104,6 +104,27 @@ describe('page-data-utils', () => {
             await stalePromise.catch(() => null);
             screen.getByText('fresh');
         });
+        it('ignores stale resolution after promise changes', async () => {
+            let resolveStale: (value: string) => void;
+            const stalePromise = new Promise<string>((resolve) => {
+                resolveStale = resolve;
+            });
+
+            function Component({promise}: {promise: Promise<string> | null}) {
+                const data = useDataFromPromise(promise, 'default');
+
+                return <div>{String(data)}</div>;
+            }
+
+            const {rerender} = render(<Component promise={stalePromise} />);
+
+            rerender(<Component promise={null} />);
+            await screen.findByText('null');
+
+            resolveStale!('stale');
+            await stalePromise;
+            screen.getByText('null');
+        });
     });
     describe('useTextFromSlug', () => {
         function Component() {

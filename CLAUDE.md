@@ -99,3 +99,25 @@ Main routes in `router.tsx`:
 ### TypeScript
 - Strict mode enabled, target ES6, module ES2020
 - Gradually migrating from JS/JSX to TS/TSX
+
+## Planning docs
+
+Planning and spec docs for this repo live in the Obsidian vault at `Hubs/OpenStax/os-webview/plans/` (and `specs/`), not in this repo.
+
+## Error reporting (Sentry)
+
+- `src/app/sentry.js` is the only `Sentry.init` — imported first by `main.js`.
+- `beforeSend` drops everything except `openstax.org`, so dev/staging errors never reach Sentry.
+- Noise filtering lives in three lists there: `ignoreErrors` (exact messages), `ignoreMessages`
+  (substring match, applied in `beforeSend`), and `denyUrls` (script origin). Use `denyUrls`,
+  not `ignoreUrls` — the latter was removed in SDK v7 and silently does nothing.
+- Integrations come from `@sentry/react` (v9). Do not add `@sentry/integrations`; it pulls a
+  second copy of the SDK core into the bundle. `dedupe` is already on by default.
+- Render errors surface through `useErrorBoundary` in `shell/router-context.tsx`. That hook
+  swallows the error unless a handler is passed, so the `Sentry.captureException` callback
+  there is load-bearing.
+- User context (uuid, `logged_in`, `user_role`) is attached in `contexts/user.ts`. Keep names
+  and emails out of it.
+- Source maps upload from `build.yml` on `main` and tags, under release `osweb@<package.json
+  version>` — that must stay in sync with `release` in `sentry.js`. Needs the
+  `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, and `SENTRY_PROJECT` repo secrets.

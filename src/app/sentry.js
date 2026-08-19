@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import * as Integrations from '@sentry/integrations';
 import isSupported from '~/helpers/device';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -55,7 +54,7 @@ const ignoreMessages = [
     't.behaviors.embed.embed'
 ];
 
-const ignoreUrls = [
+const denyUrls = [
     'https://www.google-analytics.com/analytics.js',
     'https://js.pulseinsights.com'
 ];
@@ -98,13 +97,12 @@ Sentry.init({
     dsn: 'https://68df3e19624c434eb975dafa316c03ff@o484761.ingest.sentry.io/5691260',
     release: `osweb@${packageVersion}`,
     integrations: [
-        Integrations.extraErrorDataIntegration(),
-        Integrations.dedupeIntegration(),
+        Sentry.extraErrorDataIntegration(),
         Sentry.browserTracingIntegration()
     ],
     tracesSampleRate: 0.05,
     environment: window.location.hostname,
     ignoreErrors,
-    ignoreUrls,
+    denyUrls,
     beforeSend
 });
