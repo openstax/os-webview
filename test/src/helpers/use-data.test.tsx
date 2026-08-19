@@ -1,6 +1,6 @@
 import React from 'react';
 import {describe, it, expect} from '@jest/globals';
-import {render, screen} from '@testing-library/preact';
+import {act, render, screen} from '@testing-library/preact';
 import useFetchedData, {usePromise} from '~/helpers/use-data';
 
 function Component<E>({
@@ -167,5 +167,34 @@ describe('usePromise', () => {
         await second.catch(() => null);
 
         screen.getByText('resolved value');
+    });
+    it('ignores a stale promise that resolves after a newer one', async () => {
+        let resolveStale: (value: string) => void;
+        let resolveCurrent: (value: string) => void;
+        const stale = new Promise<string>((resolve) => {
+            resolveStale = resolve;
+        });
+        const current = new Promise<string>((resolve) => {
+            resolveCurrent = resolve;
+        });
+
+        function Component({promise}: {promise: Promise<string>}) {
+            const data = usePromise(promise, 'default');
+
+            return <div>{data}</div>;
+        }
+
+        const {rerender} = render(<Component promise={stale} />);
+
+        rerender(<Component promise={current} />);
+        resolveCurrent!('current value');
+        await screen.findByText('current value');
+
+        await act(async () => {
+            resolveStale!('stale value');
+            await stale;
+        });
+
+        screen.getByText('current value');
     });
 });

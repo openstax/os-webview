@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {act, render, screen} from '@testing-library/preact';
 import {
     fetchFromCMS,
     getUrlFor,
@@ -121,8 +121,11 @@ describe('page-data-utils', () => {
             rerender(<Component promise={null} />);
             await screen.findByText('null');
 
-            resolveStale!('stale');
-            await stalePromise;
+            await act(async () => {
+                resolveStale!('stale');
+                await stalePromise;
+            });
+
             screen.getByText('null');
         });
     });

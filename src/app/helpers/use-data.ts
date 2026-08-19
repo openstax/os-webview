@@ -64,8 +64,18 @@ export function usePromise<T>(promise: Promise<T>, defaultValue: T) {
     const [data, setData] = React.useState(defaultValue);
 
     React.useEffect(() => {
+        let cancelled = false;
+
         // Swallow rejections; callers keep the last good value (or the default)
-        promise.then(setData, () => null);
+        promise.then((value) => {
+            if (!cancelled) {
+                setData(value);
+            }
+        }, () => null);
+
+        return () => {
+            cancelled = true;
+        };
     }, [promise]);
 
     return data;
