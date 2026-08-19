@@ -62,6 +62,9 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 ### Code Splitting
 - `src/app/helpers/jit-load.tsx` — lazy loading wrapper using `React.lazy` + `Suspense`
 - Webpack splits vendor chunks per-package
+- Production chunk names are content-hashed, so a deploy invalidates all ~500 of them. A tab
+  opened before a deploy 404s on the next chunk it requests; `src/app/helpers/stale-chunk.ts`
+  detects that and reloads (at most twice per tab, tracked in sessionStorage).
 
 ### Routing
 Main routes in `router.tsx`:
@@ -118,6 +121,8 @@ Planning and spec docs for this repo live in the Obsidian vault at `Hubs/OpenSta
   there is load-bearing.
 - User context (uuid, `logged_in`, `user_role`) is attached in `contexts/user.ts`. Keep names
   and emails out of it.
+- Chunk-load failures are recovered from rather than reported — see `stale-chunk.ts`. They stay
+  in the ignore lists because Sentry's own global handlers capture them before the reload runs.
 - Source maps upload from `build.yml` on `main` and tags, under release `osweb@<package.json
   version>` — that must stay in sync with `release` in `sentry.js`. Needs the
   `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, and `SENTRY_PROJECT` repo secrets.
