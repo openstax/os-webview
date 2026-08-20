@@ -8,7 +8,8 @@ jest.mock('~/models/usermodel', () => ({
             Promise.resolve({
                 accounts_id: 12345, // eslint-disable-line camelcase
                 uuid: 'user-uuid-1',
-                salesforce_contact_id: 'contact-1' // eslint-disable-line camelcase
+                salesforce_contact_id: 'contact-1', // eslint-disable-line camelcase
+                groups: ['Faculty']
             })
     }
 }));
@@ -64,6 +65,12 @@ describe('trackLink', () => {
 
         expect(resource.trackingInfo?.resource_name).toBe('Answer Guide');
         expect(format.trackingInfo?.book_format).toBe('PDF');
+    });
+
+    it('reports the role of the person downloading', () => {
+        expect(clickOn({'data-track': 'Answer Guide'}).trackingInfo?.role).toBe(
+            'instructor'
+        );
     });
 
     it('reports nothing for a link with no data-track', () => {
