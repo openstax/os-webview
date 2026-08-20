@@ -14,7 +14,10 @@ jest.mock('~/models/usermodel', () => ({
     }
 }));
 
-function clickOn(attributes: Record<string, string>) {
+function clickOn(
+    attributes: Record<string, string>,
+    clickHandler: typeof trackLink = trackLink
+) {
     const link = document.createElement('a');
 
     link.setAttribute('href', '/a-file.pdf');
@@ -23,7 +26,7 @@ function clickOn(attributes: Record<string, string>) {
 
     const event = {target: link, defaultPrevented: false} as unknown as TrackedMouseEvent;
 
-    trackLink(event, '42');
+    clickHandler(event, '42');
     link.remove();
 
     return event;
@@ -70,6 +73,30 @@ describe('trackLink', () => {
     it('reports the role of the person downloading', () => {
         expect(clickOn({'data-track': 'Answer Guide'}).trackingInfo?.role).toBe(
             'instructor'
+        );
+    });
+
+    it('reports student when the downloader is not faculty', async () => {
+        jest.resetModules();
+        jest.doMock('~/models/usermodel', () => ({
+            __esModule: true,
+            default: {
+                load: () =>
+                    Promise.resolve({
+                        accounts_id: 12345, // eslint-disable-line camelcase
+                        uuid: 'user-uuid-1',
+                        salesforce_contact_id: 'contact-1', // eslint-disable-line camelcase
+                        groups: ['Student']
+                    })
+            }
+        }));
+
+        const {default: studentTrackLink} = await import('~/pages/details/common/track-link');
+
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        expect(clickOn({'data-track': 'Answer Guide'}, studentTrackLink).trackingInfo?.role).toBe(
+            'student'
         );
     });
 
