@@ -11,7 +11,7 @@ export type TrackingInfo = {
     book_format?: string;
     contact_id?: string;
     resource_name?: string;
-    role?: 'instructor' | 'student';
+    role?: string;
     source?: string;
 }
 

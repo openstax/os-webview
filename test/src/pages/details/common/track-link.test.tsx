@@ -1,4 +1,4 @@
-import trackLink, {downloadRole} from '~/pages/details/common/track-link';
+import trackLink from '~/pages/details/common/track-link';
 import type {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
 jest.mock('~/models/usermodel', () => ({
@@ -9,15 +9,12 @@ jest.mock('~/models/usermodel', () => ({
                 accounts_id: 12345, // eslint-disable-line camelcase
                 uuid: 'user-uuid-1',
                 salesforce_contact_id: 'contact-1', // eslint-disable-line camelcase
-                groups: ['Faculty']
+                self_reported_role: 'instructor' // eslint-disable-line camelcase
             })
     }
 }));
 
-function clickOn(
-    attributes: Record<string, string>,
-    clickHandler: typeof trackLink = trackLink
-) {
+function clickOn(attributes: Record<string, string>) {
     const link = document.createElement('a');
 
     link.setAttribute('href', '/a-file.pdf');
@@ -26,7 +23,7 @@ function clickOn(
 
     const event = {target: link, defaultPrevented: false} as unknown as TrackedMouseEvent;
 
-    clickHandler(event, '42');
+    trackLink(event, '42');
     link.remove();
 
     return event;
@@ -70,51 +67,13 @@ describe('trackLink', () => {
         expect(format.trackingInfo?.book_format).toBe('PDF');
     });
 
-    it('reports the role of the person downloading', () => {
+    it('reports the role the person downloading told us they hold', () => {
         expect(clickOn({'data-track': 'Answer Guide'}).trackingInfo?.role).toBe(
             'instructor'
         );
     });
 
-    it('reports student when the downloader is not faculty', async () => {
-        jest.resetModules();
-        jest.doMock('~/models/usermodel', () => ({
-            __esModule: true,
-            default: {
-                load: () =>
-                    Promise.resolve({
-                        accounts_id: 12345, // eslint-disable-line camelcase
-                        uuid: 'user-uuid-1',
-                        salesforce_contact_id: 'contact-1', // eslint-disable-line camelcase
-                        groups: ['Student']
-                    })
-            }
-        }));
-
-        const {default: studentTrackLink} = await import('~/pages/details/common/track-link');
-
-        await new Promise((resolve) => setTimeout(resolve, 0));
-
-        expect(clickOn({'data-track': 'Answer Guide'}, studentTrackLink).trackingInfo?.role).toBe(
-            'student'
-        );
-    });
-
     it('reports nothing for a link with no data-track', () => {
         expect(clickOn({}).trackingInfo).toBeUndefined();
-    });
-});
-
-describe('downloadRole', () => {
-    it('reads confirmed faculty as an instructor', () => {
-        expect(downloadRole({groups: ['Faculty']})).toBe('instructor');
-    });
-
-    it('reads any other signed-in reader as a student', () => {
-        expect(downloadRole({groups: ['Student']})).toBe('student');
-    });
-
-    it('reads a reader with no groups as a student', () => {
-        expect(downloadRole({})).toBe('student');
     });
 });
