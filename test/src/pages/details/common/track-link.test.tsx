@@ -1,4 +1,4 @@
-import trackLink from '~/pages/details/common/track-link';
+import trackLink, {downloadRole} from '~/pages/details/common/track-link';
 import type {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 
 jest.mock('~/models/usermodel', () => ({
@@ -75,5 +75,19 @@ describe('trackLink', () => {
 
     it('reports nothing for a link with no data-track', () => {
         expect(clickOn({}).trackingInfo).toBeUndefined();
+    });
+});
+
+describe('downloadRole', () => {
+    it('reads confirmed faculty as an instructor', () => {
+        expect(downloadRole({groups: ['Faculty']})).toBe('instructor');
+    });
+
+    it('reads any other signed-in reader as a student', () => {
+        expect(downloadRole({groups: ['Student']})).toBe('student');
+    });
+
+    it('reads a reader with no groups as a student', () => {
+        expect(downloadRole({})).toBe('student');
     });
 });

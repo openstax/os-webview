@@ -8,6 +8,12 @@ userModel.load().then((i) => {
     userInfo = i;
 });
 
+// A confirmed-faculty account is what the rest of the site treats as an
+// instructor, so a self-reported but unverified instructor files as a student.
+export function downloadRole(user: Partial<UserModelType>) {
+    return user.groups?.includes('Faculty') ? 'instructor' : 'student';
+}
+
 // eslint-disable-next-line complexity
 export default function trackLink(event: TrackedMouseEvent, id?: string) {
     const el = linkhelper.validUrlClick(event);
@@ -28,7 +34,7 @@ export default function trackLink(event: TrackedMouseEvent, id?: string) {
             [isResource ? 'resource_name' : 'book_format']: el.dataset.track,
             contact_id: userInfo?.salesforce_contact_id,
             source: window.location.pathname,
-            role: userInfo.groups?.includes('Faculty') ? 'instructor' : 'student'
+            role: downloadRole(userInfo)
         };
         /* eslint-enable camelcase */
     }
