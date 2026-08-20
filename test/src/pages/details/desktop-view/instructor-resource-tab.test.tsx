@@ -77,7 +77,6 @@ describe('details/instructor-resource-tab', () => {
         mockUseUserContext.mockReturnValue({
             userStatus: {
                 isInstructor: true,
-                trackDownloads: 'true',
                 userInfo: {
                     accounts_id: 12 // eslint-disable-line camelcase
                 }
