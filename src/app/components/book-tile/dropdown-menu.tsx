@@ -198,7 +198,7 @@ function MenuItemWithGiveDialog({
     id,
     ...props
 }: MenuItemWithGiveDialogProps) {
-    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog(warning, id);
 
     if (!props.url) {
         return null;

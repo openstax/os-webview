@@ -1,8 +1,11 @@
 import cmsFetch, {cmsPost} from '~/helpers/cms-fetch';
+import retry from '~/helpers/retry';
 
 jest.mock('~/helpers/retry', () => ({
     __esModule: true,
-    default() {throw new Error('retry failed');}
+    default: jest.fn(() => {
+        throw new Error('retry failed');
+    })
 }));
 
 const mockFetch = jest.fn().mockResolvedValue({
@@ -12,7 +15,21 @@ const mockFetch = jest.fn().mockResolvedValue({
 global.fetch = mockFetch;
 
 describe('cms-fetch', () => {
+    it('rejects when response json parsing fails', async () => {
+        (retry as jest.Mock).mockResolvedValueOnce({
+            json() {
+                return Promise.reject(new Error('json failed'));
+            }
+        });
+
+        await expect(cmsFetch('anything')).rejects.toThrow(
+            'Failed to fetch anything: Error: json failed'
+        );
+    });
     it('rejects when retry throws', async () => {
+        (retry as jest.Mock).mockImplementationOnce(() => {
+            throw new Error('retry failed');
+        });
         await expect(cmsFetch('anything')).rejects.toThrow();
     });
 });

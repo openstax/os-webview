@@ -1,8 +1,9 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {act, render, screen} from '@testing-library/preact';
 import {
     fetchFromCMS,
     getUrlFor,
+    useDataFromPromise,
     useTextFromSlug
 } from '~/helpers/page-data-utils';
 
@@ -56,6 +57,76 @@ describe('page-data-utils', () => {
 
             expect(url).toContain('draft=');
             window.history.replaceState({}, '', '/');
+        });
+    });
+    describe('useDataFromPromise', () => {
+        it('sets data to null when promise is missing', async () => {
+            function Component() {
+                const data = useDataFromPromise(null, 'default');
+
+                return <div>{String(data)}</div>;
+            }
+            render(<Component />);
+            await screen.findByText('null');
+        });
+        it('sets data to null on rejection', async () => {
+            const rejected = Promise.reject(new Error('test error'));
+            function Component() {
+                const data = useDataFromPromise(rejected, 'default');
+
+                return <div>{String(data)}</div>;
+            }
+            render(<Component />);
+            await screen.findByText('null');
+        });
+        it('ignores stale rejection after promise changes', async () => {
+            let resolveCurrent: (value: string) => void;
+            let rejectStale: (reason?: Error) => void;
+            const stalePromise = new Promise<string>((_, reject) => {
+                rejectStale = reject;
+            });
+            const currentPromise = new Promise<string>((resolve) => {
+                resolveCurrent = resolve;
+            });
+
+            function Component({promise}: {promise: Promise<string> | null}) {
+                const data = useDataFromPromise(promise, 'default');
+
+                return <div>{String(data)}</div>;
+            }
+
+            const {rerender} = render(<Component promise={stalePromise} />);
+            rerender(<Component promise={currentPromise} />);
+            resolveCurrent!('fresh');
+            await screen.findByText('fresh');
+
+            rejectStale!(new Error('late error'));
+            await stalePromise.catch(() => null);
+            screen.getByText('fresh');
+        });
+        it('ignores stale resolution after promise changes', async () => {
+            let resolveStale: (value: string) => void;
+            const stalePromise = new Promise<string>((resolve) => {
+                resolveStale = resolve;
+            });
+
+            function Component({promise}: {promise: Promise<string> | null}) {
+                const data = useDataFromPromise(promise, 'default');
+
+                return <div>{String(data)}</div>;
+            }
+
+            const {rerender} = render(<Component promise={stalePromise} />);
+
+            rerender(<Component promise={null} />);
+            await screen.findByText('null');
+
+            await act(async () => {
+                resolveStale!('stale');
+                await stalePromise;
+            });
+
+            screen.getByText('null');
         });
     });
     describe('useTextFromSlug', () => {

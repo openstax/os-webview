@@ -11,6 +11,8 @@ export type TrackingInfo = {
     book_format?: string;
     contact_id?: string;
     resource_name?: string;
+    role?: string;
+    source?: string;
 }
 
 export type TrackedMouseEvent = React.MouseEvent<HTMLAnchorElement> & {

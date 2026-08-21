@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import Resources from '~/pages/k12/subject/resources';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import { K12SubjectData } from '~/pages/k12/subject/subject';
+import * as TL from '~/pages/details/common/track-link';
 
 let userContext: jest.Mock;
 
@@ -21,7 +22,28 @@ jest.mock('~/models/book-titles', () => ({
     __esModule: true
 }));
 
+
+function unlockedResourceData() {
+    return {
+        resourcesHeading: 'Heading',
+        facultyResourceHeaders: [
+            {
+                id: 'faculty-resource-id',
+                heading: 'faculty-heading',
+                book: 'book',
+                resourceUnlocked: true,
+                linkExternal: '#external-link',
+                linkDocumentUrl: 'doc-link'
+            }
+        ] as Parameters<typeof Resources>[0]['data']['facultyResourceHeaders'],
+        studentResourceHeaders: []
+    } as unknown as K12SubjectData;
+}
+
 describe('k12 subject resources', () => {
+    // Reset the give-dialog frequency cap so each click test starts uncapped.
+    beforeEach(() => window.localStorage.removeItem('giveDialogLastDisplay'));
+
     it('renders unlocked resources', async () => {
         userContext.mockReturnValue({
             isVerified: true,
@@ -73,6 +95,58 @@ describe('k12 subject resources', () => {
         expect(links[4].textContent).toBe('Go to your resource');
 
         await user.click(links[4]);
+    });
+    it('still reports the download when the dialog is capped', async () => {
+        const trackLink = jest.spyOn(TL, 'default');
+
+        userContext.mockReturnValue({
+            isVerified: true,
+            userStatus: {isInstructor: true}
+        });
+        mockBookTitlesGetter.mockReturnValue([{title: 'book', id: 73}]);
+        window.localStorage.setItem('giveDialogLastDisplay', String(Date.now()));
+        render(
+            <MemoryRouter initialEntries={['/selector?Calculus']}>
+                <Resources
+                    data={unlockedResourceData()}
+                    labels={['one', 'two']}
+                    selectedLabel="one"
+                    setSelectedLabel={jest.fn()}
+                />
+            </MemoryRouter>
+        );
+        const link = await screen.findByText('book');
+
+        expect((link as HTMLElement).dataset.variant).toBe('resource');
+
+        await userEvent.setup().click(link);
+
+        expect(screen.queryByText('Go to your resource')).toBeNull();
+        // Synchronously, while the click is still being dispatched.
+        expect(trackLink).toHaveBeenCalledWith(expect.anything(), '73');
+        trackLink.mockRestore();
+    });
+    it('drops a book-title lookup that lands after unmount', async () => {
+        userContext.mockReturnValue({
+            isVerified: true,
+            userStatus: {isInstructor: true}
+        });
+        mockBookTitlesGetter.mockReturnValue([{title: 'book', id: 73}]);
+
+        const {unmount} = render(
+            <MemoryRouter initialEntries={['/selector?Calculus']}>
+                <Resources
+                    data={unlockedResourceData()}
+                    labels={['one', 'two']}
+                    selectedLabel="one"
+                    setSelectedLabel={jest.fn()}
+                />
+            </MemoryRouter>
+        );
+
+        unmount();
+        await Promise.resolve();
+        expect(screen.queryByText('book')).toBeNull();
     });
     it('renders locked resources', () => {
         userContext.mockReturnValue({isVerified: false});

@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, it, expect} from '@jest/globals';
-import {render, screen} from '@testing-library/preact';
-import useFetchedData from '~/helpers/use-data';
+import {act, render, screen} from '@testing-library/preact';
+import useFetchedData, {usePromise} from '~/helpers/use-data';
 
 function Component<E>({
     options,
@@ -126,5 +126,75 @@ describe('use-data', () => {
         );
         expect(global.fetch as jest.Mock).toHaveBeenCalledWith('transform');
         await screen.findByText('ok');
+    });
+});
+
+describe('usePromise', () => {
+    it('keeps default value on rejection', async () => {
+        const rejected = Promise.reject(new Error('test error'));
+        function Component() {
+            const data = usePromise(rejected, 'default');
+
+            return <div>{data}</div>;
+        }
+        render(<Component />);
+        // Await the rejected promise so the rejection handler runs before asserting
+        await rejected.catch(() => null);
+        screen.getByText('default');
+    });
+    it('keeps last resolved value when next promise rejects', async () => {
+        let resolveFirst: (value: string) => void;
+        let rejectSecond: (reason?: Error) => void;
+        const first = new Promise<string>((resolve) => {
+            resolveFirst = resolve;
+        });
+        const second = new Promise<string>((_, reject) => {
+            rejectSecond = reject;
+        });
+
+        function Component({promise}: {promise: Promise<string>}) {
+            const data = usePromise(promise, 'default');
+
+            return <div>{data}</div>;
+        }
+
+        const {rerender} = render(<Component promise={first} />);
+        resolveFirst!('resolved value');
+        await screen.findByText('resolved value');
+
+        rerender(<Component promise={second} />);
+        rejectSecond!(new Error('test error'));
+        await second.catch(() => null);
+
+        screen.getByText('resolved value');
+    });
+    it('ignores a stale promise that resolves after a newer one', async () => {
+        let resolveStale: (value: string) => void;
+        let resolveCurrent: (value: string) => void;
+        const stale = new Promise<string>((resolve) => {
+            resolveStale = resolve;
+        });
+        const current = new Promise<string>((resolve) => {
+            resolveCurrent = resolve;
+        });
+
+        function Component({promise}: {promise: Promise<string>}) {
+            const data = usePromise(promise, 'default');
+
+            return <div>{data}</div>;
+        }
+
+        const {rerender} = render(<Component promise={stale} />);
+
+        rerender(<Component promise={current} />);
+        resolveCurrent!('current value');
+        await screen.findByText('current value');
+
+        await act(async () => {
+            resolveStale!('stale value');
+            await stale;
+        });
+
+        screen.getByText('current value');
     });
 });

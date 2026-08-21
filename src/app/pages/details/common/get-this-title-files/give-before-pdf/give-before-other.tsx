@@ -39,7 +39,7 @@ export default function GiveBeforeOther({
                 link={link}
                 close={close}
                 source={variant}
-                itemType={lookupVariant(variant)}
+                itemType={itemTypeForVariant(variant)}
                 track={track}
                 id={id}
             />
@@ -63,16 +63,19 @@ export default function GiveBeforeOther({
                 onClick={beforeOpen}
                 className='btn go-to'
                 {...(track ? {'data-track': track} : {})}
-                data-variant={lookupVariant(variant)}
+                data-variant={itemTypeForVariant(variant)}
                 data-local="true"
             >
-                Go to your {lookupVariant(variant)}
+                Go to your {itemTypeForVariant(variant)}
             </a>
         </div>
     );
 }
 
-function lookupVariant(variant?: string) {
+// trackLink reads data-variant to decide whether a row lands in Salesforce as
+// a resource or a book format, so links that bypass this dialog must label
+// themselves the same way.
+export function itemTypeForVariant(variant?: string) {
     if (variant === 'View online') {
         return 'book';
     }

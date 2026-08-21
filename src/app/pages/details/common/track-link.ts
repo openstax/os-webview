@@ -26,7 +26,9 @@ export default function trackLink(event: TrackedMouseEvent, id?: string) {
             book: id,
             account_uuid: userInfo.uuid as string,
             [isResource ? 'resource_name' : 'book_format']: el.dataset.track,
-            contact_id: userInfo?.salesforce_contact_id
+            contact_id: userInfo?.salesforce_contact_id,
+            source: window.location.pathname,
+            role: userInfo.self_reported_role
         };
         /* eslint-enable camelcase */
     }

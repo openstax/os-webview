@@ -1,6 +1,6 @@
 import React from 'react';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
-import {render, screen} from '@testing-library/preact';
+import {render, screen, waitFor} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
@@ -139,6 +139,18 @@ describe('flex-page', () => {
         render(<Component />);
         expect(screen.getAllByText('Some html')).toHaveLength(1);
     });
+    it('runs scripts in htmlBlock', async () => {
+        const w = window as unknown as {flexScriptRan?: boolean};
+        w.flexScriptRan = false;
+
+        try {
+            body = [htmlBlock('<script>window.flexScriptRan = true;</script>')];
+            render(<Component />);
+            await waitFor(() => expect(w.flexScriptRan).toBe(true));
+        } finally {
+            w.flexScriptRan = undefined;
+        }
+    });
     it('renders linksBlock and sectionBlock', async () => {
         jest.spyOn(window, 'scrollBy').mockImplementation(() => null);
         body = [linksBlock(), sectionBlock()];
@@ -181,12 +193,11 @@ describe('flex-page', () => {
     it('renders cardsBlock with per-card accent and divider colors', () => {
         body = [cardsBlock(false, {accentColor: '#ff0000', dividerColor: '#00ff00'})];
         render(<Component />);
-        expect(
-            document.querySelector('[style*="--card-accent: #ff0000"]')
-        ).not.toBe(null);
-        expect(
-            document.querySelector('[style*="--card-divider: #00ff00"]')
-        ).not.toBe(null);
+        const card = screen.getByText('first card').closest<HTMLElement>('.content-block-card');
+
+        expect(card).not.toBe(null);
+        expect(card!.style.getPropertyValue('--card-accent')).toBe('#ff0000');
+        expect(card!.style.getPropertyValue('--card-divider')).toBe('#00ff00');
     });
 });
 
@@ -246,6 +257,11 @@ function ctaBlock(): BodyBlock {
 }
 
 function cardsBlock(withStyle?: boolean, cardColors?: {accentColor: string; dividerColor: string}): BodyBlock {
+    const cardConfig = cardColors ? [
+        {type: 'accent_color', value: cardColors.accentColor},
+        {type: 'divider_color', value: cardColors.dividerColor}
+    ] : [];
+
     return {
         id: 'cards-id',
         type: 'cards_block',
@@ -253,7 +269,7 @@ function cardsBlock(withStyle?: boolean, cardColors?: {accentColor: string; divi
             cards: [
                 {
                     text: 'first card',
-                    ...cardColors,
+                    config: cardConfig,
                     ctaBlock: withStyle ? [{
                         config: [
                             {
@@ -318,11 +334,11 @@ function faqBlock(content: Array<Record<string, unknown>> = []): BodyBlock {
     } as BodyBlock;
 }
 
-function htmlBlock(): BodyBlock {
+function htmlBlock(value = '<p>Some html</p>'): BodyBlock {
     return {
         id: 'html-id',
         type: 'html',
-        value: '<p>Some html</p>'
+        value
     } as BodyBlock;
 }
 

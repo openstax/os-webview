@@ -150,6 +150,14 @@ module.exports = (env, argv) => {
     console.log('Building', config.mode);
 
     if (config.mode === 'production') {
+        // Strips Sentry's tracing and debug-logging code from the bundle. We
+        // only report errors, so neither ships.
+        config.plugins.push(
+            new webpack.DefinePlugin({
+                __SENTRY_TRACING__: false,
+                __SENTRY_DEBUG__: false
+            })
+        );
         config.output.filename = '[name]-[contenthash].min.js';
         config.devtool = 'source-map';
         config.optimization.splitChunks.maxInitialRequests = 5;
