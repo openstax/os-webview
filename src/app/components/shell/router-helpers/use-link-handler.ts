@@ -40,6 +40,28 @@ function isPortalRoot(portalPrefix: string) {
     return Boolean(portalPrefix && portalPrefix === pathname);
 }
 
+// The request goes out before the navigation but is never awaited. Awaiting it
+// delays window.open past the click's user activation, and the popup blocker
+// then turns "open the resource in a new tab" into "replace the app with it" —
+// a ~300ms report is safely inside the window, but a retried one is not.
+// keepalive is what makes not-awaiting safe: it lets the request outlive the
+// page when the resource opens via location.assign instead of a new tab.
+function reportDownload(trackingInfo: TrackingInfo) {
+    retry(() =>
+        fetch(`${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`, {
+            method: 'POST',
+            mode: 'cors',
+            keepalive: true,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(trackingInfo)
+        })
+    ).catch((err) => {
+        console.error(`Unable to download-track: ${err}`);
+    });
+}
+
 export default function useLinkHandler() {
     const navigate = useNavigate();
     const navigateTo = useCallback(
@@ -81,26 +103,9 @@ export default function useLinkHandler() {
             }
 
             if (e.trackingInfo) {
-                retry(() =>
-                    fetch(
-                        `${$.apiOriginAndOldPrefix}/salesforce/download-tracking/`,
-                        {
-                            method: 'POST',
-                            mode: 'cors',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(e.trackingInfo)
-                        }
-                    )
-                )
-                    .catch((err) => {
-                        console.error(`Unable to download-track: ${err}`);
-                    })
-                    .finally(followLink);
-            } else {
-                followLink();
+                reportDownload(e.trackingInfo);
             }
+            followLink();
         },
         [navigateTo, portalPrefix]
     );
