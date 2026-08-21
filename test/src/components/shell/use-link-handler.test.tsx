@@ -216,6 +216,37 @@ describe('use-link-handler', () => {
         );
         await user.click(screen.getByRole('link'));
     });
+    it('opens the resource without waiting for the report', async () => {
+        setPortalPrefix('/portal');
+        const navigate = jest.fn();
+        const open = jest.spyOn(window, 'open').mockReturnValue({} as Window);
+
+        jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({
+            target: '',
+            href: 'clickHref',
+            preventDefault() {return;},
+            dataset: {}
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+        jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
+            'whatever'
+        );
+        jest.spyOn(linkHelper, 'isExternal').mockReturnValue(true);
+        (useNavigate as jest.Mock).mockReturnValue(navigate);
+
+        render(<Component track />);
+        // A report that never settles stands in for a slow or retried one. The
+        // resource still has to open, or the popup blocker gets it instead.
+        jest.spyOn(window, 'fetch').mockImplementation(
+            () => new Promise<Response>(() => undefined)
+        );
+        await user.click(screen.getByRole('link'));
+
+        expect(window.fetch).toHaveBeenCalledWith(
+            expect.stringContaining('/salesforce/download-tracking/'),
+            expect.objectContaining({keepalive: true})
+        );
+        expect(open).toHaveBeenCalledWith('clickHref', '_blank');
+    });
     it('catches tracking fetch failure', async () => {
         setPortalPrefix('/');
         const navigate = jest.fn();
