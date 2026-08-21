@@ -115,6 +115,31 @@ describe('Router', () => {
         jest.clearAllMocks();
     });
 
+    describe('scroll reset', () => {
+        const renderAt = (entries: string[]) =>
+            render(
+                <MemoryRouter initialEntries={entries}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+        beforeEach(() => {
+            window.scrollTo = jest.fn();
+        });
+
+        it('scrolls to the top on a new path', () => {
+            renderAt(['/subjects']);
+
+            expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+        });
+
+        it('leaves the scroll alone when the path has a hash', () => {
+            renderAt(['/subjects#math']);
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+        });
+    });
+
     describe('Router component', () => {
         it('renders without crashing', () => {
             render(
