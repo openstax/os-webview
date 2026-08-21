@@ -18,13 +18,10 @@ function checkUserForProblems(user?: Partial<UserModelType>) {
 
 export type UserStatus = ReturnType<typeof getUserStatus>;
 
-// eslint-disable-next-line complexity
 function getUserStatus(user: Partial<UserModelType>) {
     const isInstructor =
         user.username && 'groups' in user && user.groups?.includes('Faculty');
     const isStudent = user.username && !isInstructor;
-    const trackDownloads =
-        user.accountsModel?.faculty_status === 'confirmed_faculty';
 
     checkUserForProblems(user);
     return {
@@ -36,8 +33,7 @@ function getUserStatus(user: Partial<UserModelType>) {
         email: user.email,
         userInfo: user,
         school: user.accountsModel?.school_name,
-        uuid: user.uuid,
-        trackDownloads
+        uuid: user.uuid
     };
 }
 

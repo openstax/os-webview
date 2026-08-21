@@ -59,6 +59,9 @@ describe('TableResourceCell', () => {
     beforeEach(() => {
         mockUseUserContext.mockReset();
         mockTrackLink.mockReset();
+        // Table cells share the give-dialog frequency cap with every other
+        // mount point, so each click test has to start uncapped.
+        window.localStorage.removeItem('giveDialogLastDisplay');
     });
 
     it('renders nothing for a loading resolution', () => {
@@ -144,7 +147,7 @@ describe('TableResourceCell', () => {
         expect(mockTrackLink).toHaveBeenCalledWith(expect.anything(), '46');
     });
 
-    it('does not call trackLink when the user completing the download is not an instructor', async () => {
+    it('calls trackLink for a signed-in non-instructor too', async () => {
         const user = userEvent.setup();
         const userStatus = {isInstructor: false} as UserStatus;
         const unlockedResolution = resolution({
@@ -170,7 +173,9 @@ describe('TableResourceCell', () => {
 
         await user.click(downloadLink);
 
-        expect(mockTrackLink).not.toHaveBeenCalled();
+        // trackLink itself reports only for signed-in accounts; instructor
+        // status is not what decides whether a download counts.
+        expect(mockTrackLink).toHaveBeenCalledWith(expect.anything(), '46');
     });
 
     it('reports the marker\u2019s own resource type as the nudge placement, not the flex-page route', async () => {

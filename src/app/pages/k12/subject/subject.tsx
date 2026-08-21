@@ -39,7 +39,6 @@ export type ResourceHeader = {
     comingSoonText: string;
     k12: boolean;
     videoReferenceNumber: number;
-    trackResource: boolean;
     printLink: string;
     icon: string;
 } & LinkData;

@@ -49,5 +49,5 @@ function cookieKey(id: string) {
 }
 
 export function checkWarningCookie(id: string) {
-    return Cookies.get(id);
+    return Cookies.get(cookieKey(id));
 }

@@ -33,7 +33,15 @@ export default function GiveBeforePdf({
     }
 
     if (showThankYou) {
-        return <ThankYou link={link} close={close} source='PDF download' track={track} id={id} />;
+        return (
+            <ThankYou
+                link={link}
+                close={close}
+                source='PDF download'
+                track={track}
+                id={id}
+            />
+        );
     }
 
     return (

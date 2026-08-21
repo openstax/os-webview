@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {LanguageContextProvider} from '~/contexts/language';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import LeftContent from '~/pages/details/common/resource-box/left-content';
+import * as TL from '~/pages/details/common/track-link';
 
 const mockUseUserContext = jest.fn();
 
@@ -27,6 +28,9 @@ describe('left-content', () => {
     const link = {url: '#good-url', text: 'button-label'};
     // Setup option prevents await click from hanging when using faketimers
     const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
+
+    // Reset the give-dialog frequency cap so each click test starts uncapped.
+    beforeEach(() => window.localStorage.removeItem('giveDialogLastDisplay'));
 
     function Component({
         model,
@@ -99,7 +103,9 @@ describe('left-content', () => {
 
         await user.click(downloadLink);
     });
-    it("Doesn't track downloads if not instructor", async () => {
+    it('tracks a download for a signed-in non-instructor', async () => {
+        const trackLink = jest.spyOn(TL, 'default');
+
         mockUseUserContext.mockReturnValue({
             userStatus: {
                 isInstructor: false
@@ -116,6 +122,29 @@ describe('left-content', () => {
         const downloadLink = await screen.findByText('Go to your resource');
 
         await user.click(downloadLink);
+
+        expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
+        trackLink.mockRestore();
+    });
+    it('still reports the download when the dialog is capped', async () => {
+        const trackLink = jest.spyOn(TL, 'default');
+
+        mockUseUserContext.mockReturnValue({
+            userStatus: {isInstructor: true}
+        });
+        const model = {link, ...baseModel, iconType: 'download'};
+
+        window.localStorage.setItem('giveDialogLastDisplay', String(Date.now()));
+        render(<Component model={model} />);
+        const foundLink = screen.getByRole('link');
+
+        expect(foundLink.dataset.variant).toBe('resource');
+
+        await user.click(foundLink);
+
+        expect(screen.queryByText('Go to your resource')).toBeNull();
+        expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
+        trackLink.mockRestore();
     });
     it('handles unknown search', async () => {
         mockUseUserContext.mockReturnValue({
