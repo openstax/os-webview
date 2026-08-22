@@ -54,8 +54,6 @@ describe('blog pages', () => {
         expect(screen.queryByText('No matching blog posts found')).toBeNull();
     });
     test('Article page', async () => {
-        window.scrollTo = jest.fn();
-
         render(
             <MemoryRouter initialEntries={['/blog/blog-article']}>
                 <BlogContextProvider>
@@ -67,7 +65,6 @@ describe('blog pages', () => {
         );
         expect(await screen.findAllByText('Read more')).toHaveLength(3);
         expect(screen.queryAllByRole('link')).toHaveLength(7);
-        expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
     });
 
     test('assertTType throws for invalid value', () => {

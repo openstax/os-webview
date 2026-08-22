@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import useBlogContext from './blog-context';
 import {useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
@@ -142,13 +142,6 @@ export function ArticlePage() {
     // where :slug is a required route parameter
     const slug = assertDefined(useParams().slug);
     const [articleData, setArticleData] = React.useState<ArticleData>();
-
-    useEffect(
-        () => {
-            window.scrollTo(0, 0);
-        },
-        [slug]
-    );
 
     return (
         <WindowContextProvider>
