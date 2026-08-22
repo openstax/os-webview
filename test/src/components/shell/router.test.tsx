@@ -1,6 +1,7 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/preact';
+import {act, render, screen, waitFor} from '@testing-library/preact';
 import '@testing-library/jest-dom';
+import {NavigateFunction, useNavigate} from 'react-router-dom';
 import Router from '~/components/shell/router';
 import * as LayoutContext from '~/contexts/layout';
 import * as PortalContext from '~/contexts/portal';
@@ -113,6 +114,45 @@ describe('Router', () => {
 
     afterEach(() => {
         jest.clearAllMocks();
+    });
+
+    describe('scroll reset', () => {
+        let navigate: NavigateFunction;
+
+        const Navigator = () => {
+            navigate = useNavigate();
+            return null;
+        };
+
+        const renderAtHome = () => {
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Navigator />
+                    <Router />
+                </MemoryRouter>
+            );
+            (window.scrollTo as jest.Mock).mockClear();
+        };
+
+        beforeEach(() => {
+            window.scrollTo = jest.fn();
+        });
+
+        it('scrolls to the top on navigation to a new path', () => {
+            renderAtHome();
+
+            act(() => navigate('/subjects'));
+
+            expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+        });
+
+        it('leaves the scroll alone when the destination has a hash', () => {
+            renderAtHome();
+
+            act(() => navigate('/subjects#math'));
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+        });
     });
 
     describe('Router component', () => {

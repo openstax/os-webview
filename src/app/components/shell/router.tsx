@@ -43,9 +43,18 @@ function SkipToContent() {
 export default function Router() {
     const linkHandler = useLinkHandler() as unknown as (ev: MouseEvent) => void;
     const {origin} = window.location; // React-Router Location does not have origin
-    const {pathname} = useLocation();
+    const {pathname, hash} = useLocation();
     const canonicalUrl = `${origin}${pathname}`;
     const {isK12Portal} = usePortalContext();
+
+    // Browsers keep the scroll offset across a pushState navigation, so without
+    // this a new page opens wherever the last one was scrolled to. Skip it when
+    // there is a hash; that navigation is a request to scroll somewhere else.
+    useEffect(() => {
+        if (!hash) {
+            window.scrollTo(0, 0);
+        }
+    }, [pathname, hash]);
 
     useEffect(() => {
         document.addEventListener('click', linkHandler);
