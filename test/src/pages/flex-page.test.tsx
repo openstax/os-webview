@@ -183,6 +183,19 @@ describe('flex-page', () => {
         render(<Component />);
         expect(screen.getAllByText('book title')).toHaveLength(1);
     });
+    it('renders personBlock and opens the modal for a person with a full bio', async () => {
+        body = [personBlock()];
+        render(<Component />);
+        expect(screen.getByText('Our Team')).toBeTruthy();
+        expect(screen.getByText('Ada Lovelace')).toBeTruthy();
+        expect(screen.getByText('Alan Turing')).toBeTruthy();
+        // Ada has a full_bio, so her card is an expandable button; Alan has
+        // none, so his card is static and hers is the only button to click.
+        const user = userEvent.setup();
+
+        await user.click(screen.getByRole('button', {name: /Ada Lovelace/i}));
+        expect(screen.getByRole('dialog')).toBeTruthy();
+    });
     it('renders bigNumberBlock', () => {
         body = [bigNumberBlock(), bigNumberBlock('1M+', 'learners', 'blue')];
         render(<Component />);
@@ -422,6 +435,38 @@ function sectionBlock(): BodyBlock {
         }
     } as BodyBlock;
 }
+
+/* eslint-disable camelcase */
+function personBlock(): BodyBlock {
+    return {
+        id: 'person-id',
+        type: 'person',
+        value: {
+            heading: 'Our Team',
+            people: [
+                {
+                    name: 'Ada Lovelace',
+                    title: 'Mathematician',
+                    short_bio: 'Pioneer of computing.',
+                    full_bio: '<p>The full story of Ada.</p>',
+                    links: [
+                        {type: 'linkedin', url: 'https://linkedin.com/in/ada'}
+                    ],
+                    tags: [{id: 1, name: 'Core Team', slug: 'core-team'}]
+                },
+                {
+                    name: 'Alan Turing',
+                    title: 'Logician',
+                    short_bio: 'Foundations of computation.',
+                    links: [],
+                    tags: []
+                }
+            ],
+            config: []
+        }
+    } as BodyBlock;
+}
+/* eslint-enable camelcase */
 
 function bookListBlock(): BodyBlock {
     return {

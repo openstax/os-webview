@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import * as blocks from '@openstax/flex-page-renderer/blocks/index';
+import * as person from '@openstax/flex-page-os-blocks/blocks/PersonBlock';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FAQBlock} from './blocks/FAQBlock';
 import {BookListBlock} from './blocks/BookListBlock';
@@ -22,8 +23,10 @@ const HTMLBlock = ({data}: {data: {value: string}}) =>
 // trackLink) instead of the CMS's static fallback link. Every other cell,
 // and all of sorting/filtering/striping/row-limits, stays the delegate's own
 // behavior untouched - see ./blocks/TableResourceLinksBlock.
+// `person` (flex-page-os-blocks) already exports the {Component, config} shape.
 export const blockMap = {
     ...blocks,
+    person,
     html: {Component: HTMLBlock, config: blocks.html.config},
     faq: {Component: FAQBlock, config: FAQBlock.blockConfig},
     book_list: {Component: BookListBlock, config: BookListBlock.blockConfig},
