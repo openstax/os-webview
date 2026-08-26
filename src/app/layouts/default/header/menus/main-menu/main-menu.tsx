@@ -59,7 +59,9 @@ function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
 function MenusFromCMS() {
     const structure = useDataFromSlug('oxmenus') as MenuItemData[] | undefined;
 
-    if (!structure) {
+    // fetchFromCMS resolves with an {error} object (not an array) when the
+    // CMS is unreachable, so a truthiness check alone lets it through to .map.
+    if (!Array.isArray(structure)) {
         return null;
     }
 
