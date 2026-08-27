@@ -124,14 +124,17 @@ const mismatch: Record<string, string> = {
 };
 
 export function usePageDataFromRoute() {
-    const {dir: name, '*': other} = useParams();
+    const {dir, '*': other} = useParams();
+    // K12 subject pages render at /k12/<subject>; their CMS slugs are k12-<subject>
+    const [name, subPath] =
+        dir === 'k12' && other ? [`k12-${other}`, ''] : [dir, other];
     const data = usePageData<PageData>(
         `pages/${mismatch[name as string] ?? name}`,
         true
     );
     const hasError = data && 'error' in data;
 
-    return {name, data, hasError, other};
+    return {name, data, hasError, other: subPath};
 }
 
 export function FlexPageUsingItsOwnLayout({data}: {data: FlexPageData}) {

@@ -24,6 +24,7 @@ import homePage from '../data/home-page';
 import subjectPage from '../data/new-subjects';
 import flexPage from '../data/flex-page';
 import generalPage from '../data/general-page';
+import k12PageData from '../data/k12';
 import ChildrenContainer from '~/../../test/helpers/mock-children-container';
 
 const {useLocation} = RRD;
@@ -85,6 +86,11 @@ describe('shell', () => {
                 return {error: 'intentional'};
             case 'pages/general-page':
                 return camelCaseKeys(transformData(generalPage));
+            case 'pages/k12':
+                return camelCaseKeys(transformData(k12PageData));
+            case 'pages/k12-math':
+                // @ts-expect-error flexPage type
+                return camelCaseKeys(flexPage);
             default:
                 if (path.startsWith('errata/') || path.startsWith('pages/')
                 || path.startsWith('snippets/roles')) {
@@ -284,6 +290,20 @@ describe('shell', () => {
         mockBrowserInitialEntries(['/flex-page/extra/junk']);
         render(AppElement);
         await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
+    });
+    it('routes "/k12/<subject>" to the "k12-<subject>" CMS page', async () => {
+        setPortalPrefix('');
+        mockBrowserInitialEntriesWithLocation(['/k12/math']);
+        render(AppElement);
+        await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
+        // Renders in place -- no canonicalization redirect away from the subject URL
+        await screen.findByText('-/k12/math-');
+    });
+    it('routes "/k12" (no subject) to the "k12" CMS page as before', async () => {
+        setPortalPrefix('');
+        mockBrowserInitialEntries(['/k12']);
+        render(AppElement);
+        await screen.findByRole('link', {name: 'Algebra'});
     });
     it('loads general page within a portal route', async () => {
         setPortalPrefix('/landing-page');
