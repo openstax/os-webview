@@ -1,5 +1,5 @@
 import React from 'react';
-import {useParams, Routes, Route, Navigate} from 'react-router-dom';
+import {useParams, useLocation, Routes, Route, Navigate} from 'react-router-dom';
 import usePageData from '~/helpers/use-page-data';
 import FlexPage, {
     FlexPageData,
@@ -40,9 +40,11 @@ export function ErrataRoutes() {
 }
 
 export function DetailsRoutes() {
+    const {search} = useLocation();
+
     return (
         <Routes>
-            <Route index element={<Navigate to="/subjects" replace />} />
+            <Route index element={<Navigate to={{pathname: '/subjects', search}} replace />} />
             <Route
                 path="/books/:title"
                 element={<ImportedPage name="details" />}
@@ -58,6 +60,7 @@ export function DetailsRoutes() {
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
     const {'*': path} = useParams();
+    const {search} = useLocation();
 
     if (['books', 'textbooks'].includes(dir)) {
         return (
@@ -77,7 +80,7 @@ export function OtherPageRoutes() {
     if (dir === 'general') {
         return (
             <NonPortalRouteWrapper>
-                <Navigate to={`/${path}`} replace />
+                <Navigate to={{pathname: `/${path}`, search}} replace />
             </NonPortalRouteWrapper>
         );
     }
@@ -85,7 +88,7 @@ export function OtherPageRoutes() {
     if (dir === 'home') {
         return (
             <NonPortalRouteWrapper>
-                <Navigate to="/" replace />
+                <Navigate to={{pathname: '/', search}} replace />
             </NonPortalRouteWrapper>
         );
     }
@@ -161,8 +164,9 @@ export function NonFlexPageUsingDefaultLayout({data}: {data: PageData}) {
 
 function RedirectToCanonicalDetailsPage() {
     const {title} = useParams();
+    const {search} = useLocation();
 
-    return <Navigate to={`/details/books/${title}`} replace />;
+    return <Navigate to={{pathname: `/details/books/${title}`, search}} replace />;
 }
 
 const FOOTER_PAGES = [

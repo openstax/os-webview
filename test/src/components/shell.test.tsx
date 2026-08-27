@@ -51,7 +51,7 @@ describe('shell', () => {
     function LocationDisplay() {
         const loc = useLocation();
 
-        return <div>-{loc.pathname}-</div>;
+        return <div>-{loc.pathname}{loc.search}-</div>;
     }
     function mockBrowserInitialEntriesWithLocation(entries: string[]) {
         BrowserRouter.mockImplementationOnce(({children}) => (
@@ -165,6 +165,20 @@ describe('shell', () => {
 
         render(AppElement);
         await screen.findByText('-/anything-');
+    });
+    it('preserves the query string through the "general" redirect', async () => {
+        mockBrowserInitialEntriesWithLocation(['/general/anything?utm_source=test']);
+
+        render(AppElement);
+        await screen.findByText('-/anything?utm_source=test-');
+    });
+    it('includes the query string when calling piTracker', async () => {
+        w.piTracker = (path: string) => piTracker(path);
+        mockBrowserInitialEntries(['/adoption?utm_source=test']);
+
+        render(AppElement);
+        await screen.findByRole('combobox');
+        await waitFor(() => expect(piTracker).toHaveBeenCalledWith(expect.stringContaining('?utm_source=test')));
     });
     it('routes adoption (no CMS page data) page', async () => {
         mockBrowserInitialEntries(['/adoption']);
