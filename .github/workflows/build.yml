@@ -27,12 +27,22 @@ jobs:
         name: "Lint osweb"
         run: yarn lint
       -
-        name: "Build osweb"
-        run: ./script/build production
-      -
+        # Tag builds are releases; the tag names the Sentry/runtime release so
+        # each deploy gets its own release instead of sharing the stale
+        # package.json version. Branch builds keep the package.json fallback.
         name: "Read osweb version"
         id: osweb_version
-        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "version=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+          fi
+      -
+        name: "Build osweb"
+        run: ./script/build production
+        env:
+          RELEASE_VERSION: ${{ steps.osweb_version.outputs.version }}
       -
         name: "Run tests"
         run: ./script/test
@@ -52,8 +62,8 @@ jobs:
           api-key: ${{ secrets.POSTHOG_CLI_API_KEY }}
       -
         # Uploads the .map files to Sentry under the same release name sentry.js
-        # reports (osweb@<package.json version>), so exceptions resolve to real
-        # source instead of minified bundles. Runs after the PostHog upload so
+        # reports (osweb@<release version>, baked into the bundle at build time),
+        # so exceptions resolve to real source instead of minified bundles. Runs after the PostHog upload so
         # Sentry's debug IDs are injected into the assets we actually ship.
         # Symbolication is a diagnostic aid, so a failure here should never
         # block a release.

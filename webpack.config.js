@@ -81,7 +81,7 @@ const config = {
         new CopyWebpackPlugin({
             patterns: [{from: 'src/images', to: 'images'}]
         }),
-        new webpack.EnvironmentPlugin({API_ORIGIN}),
+        new webpack.EnvironmentPlugin({API_ORIGIN, RELEASE_VERSION: ''}),
         new ESLintPlugin({fix: true}),
         new FaviconsWebpackPlugin('./src/images/favicon.svg'),
         new HtmlWebpackPlugin({
