@@ -24,8 +24,15 @@ describe('shell/page-loaders', () => {
         });
     });
 
-    it('shows the loader while the chunk is still loading', () => {
-        const {container} = render(<PageLoading retry={jest.fn()} />);
+    it('renders nothing before the delay elapses', () => {
+        const {container} = render(<PageLoading retry={jest.fn()} pastDelay={false} />);
+
+        expect(container.innerHTML).toBe('');
+        expect(captureException).not.toHaveBeenCalled();
+    });
+
+    it('shows the loader once the delay has passed', () => {
+        const {container} = render(<PageLoading retry={jest.fn()} pastDelay={true} />);
 
         expect(container.querySelector('.os-loader')).toBeTruthy();
         expect(captureException).not.toHaveBeenCalled();
