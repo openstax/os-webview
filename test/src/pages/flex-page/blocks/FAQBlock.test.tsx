@@ -3,6 +3,7 @@ import {render, screen, waitFor} from '@testing-library/preact';
 import {LanguageContextProvider} from '~/contexts/language';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {FAQBlock, type FAQBlockConfig} from '~/pages/flex-page/blocks/FAQBlock';
+import {resetResourcesCacheForTesting} from '~/pages/flex-page/blocks/table-resource-links-utils';
 
 const mockUseUserContext = jest.fn();
 
@@ -80,6 +81,7 @@ describe('FAQBlock', () => {
     beforeEach(() => {
         mockFetchFromCMS.mockReset();
         mockUseUserContext.mockReset();
+        resetResourcesCacheForTesting();
     });
 
     // Regression: FAQBlock used to hand ContentBlockRoot the renderer's raw

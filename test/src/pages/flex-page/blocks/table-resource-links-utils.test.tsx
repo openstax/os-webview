@@ -6,6 +6,7 @@ import {
     findResourceRefs,
     normalizeHeading,
     useResourceRefResolutions,
+    resetResourcesCacheForTesting,
     type TableBlockConfig,
     type TableCellConfig
 } from '~/pages/flex-page/blocks/table-resource-links-utils';
@@ -162,20 +163,24 @@ function studentResourcesPayload(heading: string, extra: Record<string, unknown>
     };
 }
 
-function ResolutionsHarness({refs}: {refs: Parameters<typeof useResourceRefResolutions>[0]}) {
+function ResolutionsHarness({
+    refs,
+    testId = 'resolutions'
+}: {refs: Parameters<typeof useResourceRefResolutions>[0]; testId?: string}) {
     const resolutions = useResourceRefResolutions(refs);
 
-    return <pre data-testid="resolutions">{JSON.stringify(resolutions)}</pre>;
+    return <pre data-testid={testId}>{JSON.stringify(resolutions)}</pre>;
 }
 
-function readResolutions() {
-    return JSON.parse(screen.getByTestId('resolutions').textContent ?? '[]');
+function readResolutions(testId = 'resolutions') {
+    return JSON.parse(screen.getByTestId(testId).textContent ?? '[]');
 }
 
 describe('useResourceRefResolutions', () => {
     beforeEach(() => {
         mockFetchFromCMS.mockReset();
         mockUseUserContext.mockReset();
+        resetResourcesCacheForTesting();
     });
 
     it('reports loading for every ref before the fetch resolves', () => {
@@ -347,5 +352,216 @@ describe('useResourceRefResolutions', () => {
 
         expect(readResolutions()).toEqual([]);
         expect(mockFetchFromCMS).not.toHaveBeenCalled();
+    });
+});
+
+describe('id-first matching', () => {
+    beforeEach(() => {
+        mockFetchFromCMS.mockReset();
+        mockUseUserContext.mockReset();
+        resetResourcesCacheForTesting();
+    });
+
+    it('matches by resourceId even when the marker heading disagrees with the API row', async () => {
+        mockUseUserContext.mockReturnValue({isVerified: true});
+        mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('API Heading Drifted', {id: 999}));
+        const cta = resourceRefCta({
+            config: [{
+                type: 'resource_ref',
+                value: {
+                    bookSlug: 'biology-2e',
+                    bookId: 46,
+                    heading: 'A Totally Different Heading',
+                    resourceType: 'Instructor',
+                    resourceId: 999
+                }
+            }]
+        });
+        const refs = findResourceRefs(tableWithCells([[{cta: [cta]}]]));
+
+        render(<ResolutionsHarness refs={refs} />);
+
+        await waitFor(() => {
+            const [resolution] = readResolutions();
+
+            expect(resolution.status).toBe('resolved');
+        });
+        expect(readResolutions()[0].resource.id).toBe(999);
+    });
+
+    it('still matches by heading when the marker carries no resourceId (cached pre-id markers)', async () => {
+        mockUseUserContext.mockReturnValue({isVerified: true});
+        mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Instructor’s Manual', {id: 42}));
+        // resourceRefCta's default value has no resourceId at all.
+        const refs = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
+
+        render(<ResolutionsHarness refs={refs} />);
+
+        await waitFor(() => {
+            const [resolution] = readResolutions();
+
+            expect(resolution.status).toBe('resolved');
+        });
+        expect(readResolutions()[0].resource.id).toBe(42);
+    });
+
+    it('falls back to the heading match when resourceId matches no row in the pool', async () => {
+        mockUseUserContext.mockReturnValue({isVerified: true});
+        mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Instructor’s Manual', {id: 5}));
+        const cta = resourceRefCta({
+            config: [{
+                type: 'resource_ref',
+                value: {
+                    bookSlug: 'biology-2e',
+                    bookId: 46,
+                    heading: 'Instructor’s Manual',
+                    resourceType: 'Instructor',
+                    resourceId: 123456
+                }
+            }]
+        });
+        const refs = findResourceRefs(tableWithCells([[{cta: [cta]}]]));
+
+        render(<ResolutionsHarness refs={refs} />);
+
+        await waitFor(() => {
+            const [resolution] = readResolutions();
+
+            expect(resolution.status).toBe('resolved');
+        });
+        expect(readResolutions()[0].resource.id).toBe(5);
+    });
+});
+
+describe('per-slug request cache', () => {
+    beforeEach(() => {
+        mockFetchFromCMS.mockReset();
+        mockUseUserContext.mockReset();
+        resetResourcesCacheForTesting();
+    });
+
+    it('shares a single fetchFromCMS call across two tables referencing the same book and verified flag', async () => {
+        mockUseUserContext.mockReturnValue({isVerified: true});
+        mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Instructor’s Manual'));
+        const refsA = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
+        const refsB = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
+
+        render(
+            <React.Fragment>
+                <ResolutionsHarness refs={refsA} testId="a" />
+                <ResolutionsHarness refs={refsB} testId="b" />
+            </React.Fragment>
+        );
+
+        await waitFor(() => {
+            expect(readResolutions('a')[0].status).toBe('resolved');
+            expect(readResolutions('b')[0].status).toBe('resolved');
+        });
+        expect(mockFetchFromCMS).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not cache an error payload - a later mount for the same key refetches', async () => {
+        mockUseUserContext.mockReturnValue({isVerified: true});
+        mockFetchFromCMS.mockResolvedValueOnce({error: 'not found'});
+        const refs = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
+
+        const {unmount} = render(<ResolutionsHarness refs={refs} />);
+
+        // Let fetchBookResources's own `.then` run (it deletes the cache
+        // entry on an error payload) before the second mount checks it.
+        await Promise.resolve();
+        await Promise.resolve();
+        await Promise.resolve();
+        expect(mockFetchFromCMS).toHaveBeenCalledTimes(1);
+        unmount();
+
+        mockFetchFromCMS.mockResolvedValueOnce(facultyResourcesPayload('Instructor’s Manual'));
+        render(<ResolutionsHarness refs={refs} />);
+
+        await waitFor(() => {
+            const [resolution] = readResolutions();
+
+            expect(resolution.status).toBe('resolved');
+        });
+        expect(mockFetchFromCMS).toHaveBeenCalledTimes(2);
+    });
+});
+
+type DataLayerEvent = {event: string; [key: string]: unknown};
+
+function unmatchedTelemetryEvents(): DataLayerEvent[] {
+    return (window.dataLayer as unknown as DataLayerEvent[]).filter((e) => e.event === 'resourceRefUnmatched');
+}
+
+describe('unmatched telemetry', () => {
+    beforeEach(() => {
+        mockFetchFromCMS.mockReset();
+        mockUseUserContext.mockReset();
+        resetResourcesCacheForTesting();
+        window.dataLayer = [];
+    });
+
+    afterEach(() => {
+        window.dataLayer = [];
+    });
+
+    it('pushes one resourceRefUnmatched event for a distinct unmatched ref, deduped across mounts', async () => {
+        mockUseUserContext.mockReturnValue({isVerified: true});
+        mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Some Unrelated Resource'));
+        // Two separate tables both reference the same unmatched marker (same
+        // slug/heading/type but distinct ResolutionsHarness mounts, so each
+        // computes its own resolutions array) - this is what actually
+        // exercises the "already reported" branch of the dedup check, unlike
+        // a single component re-rendering with the same memoized resolutions.
+        const refsA = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
+        const refsB = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
+
+        render(
+            <React.Fragment>
+                <ResolutionsHarness refs={refsA} testId="a" />
+                <ResolutionsHarness refs={refsB} testId="b" />
+            </React.Fragment>
+        );
+
+        await waitFor(() => {
+            expect(readResolutions('a')[0].status).toBe('unmatched');
+            expect(readResolutions('b')[0].status).toBe('unmatched');
+        });
+
+        // The telemetry push happens in a useEffect, which - unlike the
+        // status-driven state update above - flushes on its own schedule
+        // rather than in the same commit `waitFor` just observed, so it
+        // needs its own poll.
+        await waitFor(() => {
+            expect(unmatchedTelemetryEvents()).toEqual([{
+                event: 'resourceRefUnmatched',
+                bookSlug: 'biology-2e',
+                heading: 'Instructor’s Manual',
+                resourceType: 'Instructor'
+            }]);
+        });
+    });
+
+    it('does not push a resourceRefUnmatched event for a resolved ref', async () => {
+        mockUseUserContext.mockReturnValue({isVerified: true});
+        mockFetchFromCMS.mockResolvedValue(facultyResourcesPayload('Instructor’s Manual'));
+        const refs = findResourceRefs(tableWithCells([[{cta: [resourceRefCta()]}]]));
+
+        render(<ResolutionsHarness refs={refs} />);
+
+        await waitFor(() => {
+            const [resolution] = readResolutions();
+
+            expect(resolution.status).toBe('resolved');
+        });
+
+        // Give the reporting effect a chance to flush (it runs on its own
+        // schedule, separate from the status-driven render above) before
+        // confirming it had nothing to report.
+        await new Promise((resolve) => {
+            setTimeout(resolve, 20);
+        });
+
+        expect(unmatchedTelemetryEvents()).toEqual([]);
     });
 });
