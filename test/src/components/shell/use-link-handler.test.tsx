@@ -29,7 +29,7 @@ function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
 }
 
 type WindowWithPiTracker = (typeof window) & {
-    piTracker: (path: string) => void;
+    piTracker?: (path: string) => void;
 }
 const w = window as WindowWithPiTracker;
 const piTracker = jest.fn();
@@ -124,12 +124,13 @@ describe('use-link-handler', () => {
         console.error = saveError;
         expect(notPrevented).not.toBeCalled();
     });
-    it('calls piTracker if available', async () => {
+    it('calls piTracker for external links', async () => {
         setPortalPrefix('/portal');
         const navigate = jest.fn();
 
         w.piTracker = (path: string) => piTracker(path);
 
+        jest.spyOn(linkHelper, 'isExternal').mockReturnValue(true);
         jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({
             target: 'clickTarget',
             href: 'clickHref',
@@ -145,6 +146,42 @@ describe('use-link-handler', () => {
         await user.click(screen.getByRole('link'));
         expect(notPrevented).not.toBeCalled();
         expect(piTracker).toBeCalledWith('clickHref');
+    });
+    it('tolerates external clicks when piTracker is absent', async () => {
+        setPortalPrefix('/portal');
+        delete w.piTracker;
+
+        jest.spyOn(linkHelper, 'isExternal').mockReturnValue(true);
+        jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({
+            target: 'clickTarget',
+            href: 'clickHref',
+            dataset: {}
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+        render(<Component />);
+        await user.click(screen.getByRole('link'));
+        expect(piTracker).not.toBeCalled();
+    });
+    it('does not call piTracker for internal links', async () => {
+        setPortalPrefix('/portal');
+        const navigate = jest.fn();
+
+        w.piTracker = (path: string) => piTracker(path);
+
+        jest.spyOn(linkHelper, 'isExternal').mockReturnValue(false);
+        jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({
+            href: 'clickHref',
+            dataset: {}
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+        jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
+            'whatever'
+        );
+        (useNavigate as jest.Mock).mockReturnValue(navigate);
+
+        render(<Component />);
+        await user.click(screen.getByRole('link'));
+        expect(piTracker).not.toBeCalled();
+        expect(navigate).toBeCalledWith('whatever', {x: 0, y: 0});
     });
     it('handles external URL opening local', async () => {
         setPortalPrefix('/portal');
