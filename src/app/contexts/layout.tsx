@@ -44,7 +44,7 @@ function useContextValue() {
             }
             const LoadableLayout = loadable({
                 loader: () => loaders[layoutParameterName](),
-                loading: LoadingPlaceholder
+                loading: () => <LoadingPlaceholder />
             });
 
             // Avoids initial flash default -> landing
