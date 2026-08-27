@@ -62,6 +62,12 @@ function reportDownload(trackingInfo: TrackingInfo) {
     });
 }
 
+function trackOutboundClick(href: string) {
+    if ('piTracker' in window && window.piTracker instanceof Function) {
+        window.piTracker(href.split('#')[0]);
+    }
+}
+
 export default function useLinkHandler() {
     const navigate = useNavigate();
     const navigateTo = useCallback(
@@ -97,9 +103,10 @@ export default function useLinkHandler() {
                 }
             };
 
-            // Pardot tracking
-            if ('piTracker' in window && window.piTracker instanceof Function) {
-                window.piTracker(fullyQualifiedHref.split('#')[0]);
+            // internal destinations report their own page view, on route
+            // change or on load; only outbound clicks need reporting here
+            if (linkHelper.isExternal(fullyQualifiedHref)) {
+                trackOutboundClick(fullyQualifiedHref);
             }
 
             if (e.trackingInfo) {
