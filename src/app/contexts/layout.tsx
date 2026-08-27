@@ -1,7 +1,7 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import loadable from 'react-loadable';
-import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import ChromeFallback from '~/components/shell/chrome-fallback';
 import deepEqual from 'deep-equal';
 
 // Webpack wasn't able to make the dynamic strings work in the Context value.
@@ -44,7 +44,7 @@ function useContextValue() {
             }
             const LoadableLayout = loadable({
                 loader: () => loaders[layoutParameterName](),
-                loading: () => <LoadingPlaceholder />
+                loading: () => <ChromeFallback />
             });
 
             // Avoids initial flash default -> landing
