@@ -23,7 +23,7 @@ describe('Unified MainBlogPage', () => {
         await waitFor(() =>
             expect(screen.getByRole('group', {name: 'Filter by subject'})).toBeInTheDocument()
         );
-        expect(screen.queryByText('Explore by subject')).not.toBeInTheDocument();
+        expect(screen.queryByText('Featured blog post')).not.toBeInTheDocument();
     });
 
     it('uses the CMS news-page title for the heading', async () => {
@@ -37,7 +37,7 @@ describe('Unified MainBlogPage', () => {
     it('shows discovery content and facet controls when no query or facets', async () => {
         renderMainBlog('/blog/');
         await waitFor(() =>
-            expect(screen.getByText('Explore by subject')).toBeInTheDocument()
+            expect(screen.getByText('Featured blog post')).toBeInTheDocument()
         );
         expect(screen.getByRole('group', {name: 'Filter by subject'})).toBeInTheDocument();
     });
