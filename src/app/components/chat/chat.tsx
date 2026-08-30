@@ -239,7 +239,7 @@ export default function Chat() {
 
         // Set hidden fields: sProduct and UUID (not editable by user)
         const hiddenFields: Record<string, string> = {
-            sProduct: 'Website'
+            Product: 'Website'
         };
         const visibleFields: Record<string, VisibleFieldArg> = {};
         const uuid = userStatus?.uuid || userModel?.uuid;
@@ -248,9 +248,12 @@ export default function Chat() {
         const email = userStatus?.email || userModel?.email;
         const school = userStatus?.school || userModel?.accountsModel?.school_name;
 
+        if (userStatus?.id || userModel?.id) {
+            hiddenFields.OpenStax_Id = String(userStatus?.id ?? userModel?.id);
+        }
 
         if (uuid) {
-            hiddenFields.OpenStax_UUID__c = uuid; // eslint-disable-line camelcase
+            hiddenFields.OpenStax_UUID = uuid;
         }
 
         prechatAPI.setHiddenPrechatFields(hiddenFields);
