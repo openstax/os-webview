@@ -249,11 +249,11 @@ export default function Chat() {
         const school = userStatus?.school || userModel?.accountsModel?.school_name;
 
         if (userStatus?.id || userModel?.id) {
-            hiddenFields.OpenStax_Id = String(userStatus?.id ?? userModel?.id);
+            hiddenFields['OpenStax_Id'] = String(userStatus?.id ?? userModel?.id);
         }
 
         if (uuid) {
-            hiddenFields.OpenStax_UUID = uuid;
+            hiddenFields['OpenStax_UUID'] = uuid;
         }
 
         prechatAPI.setHiddenPrechatFields(hiddenFields);
