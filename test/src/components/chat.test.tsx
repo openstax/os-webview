@@ -117,7 +117,7 @@ describe('Chat', () => {
         });
     });
 
-    it('sets sProduct for anonymous users', async () => {
+    it('sets Product for anonymous users', async () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         render(<Chat />);
@@ -134,7 +134,7 @@ describe('Chat', () => {
 
         await waitFor(() => {
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website'
+                Product: 'Website'
             });
             expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({});
         });
@@ -168,10 +168,10 @@ describe('Chat', () => {
         jest.advanceTimersByTime(250);
 
         await waitFor(() => {
-            // Hidden fields: sProduct and UUID only
+            // Hidden fields: Product and UUID only
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-123'
+                Product: 'Website',
+                OpenStax_UUID: 'test-uuid-123'
             });
 
             // Visible, editable fields: Name, Email, School
@@ -208,10 +208,10 @@ describe('Chat', () => {
         jest.advanceTimersByTime(250);
 
         await waitFor(() => {
-            // Hidden fields: sProduct and UUID
+            // Hidden fields: Product and UUID
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-123'
+                Product: 'Website',
+                OpenStax_UUID: 'test-uuid-123'
             });
 
             // Only FirstName should be set as visible field (others are missing)
@@ -308,7 +308,7 @@ describe('Chat', () => {
 
         // Verify initial fields (anonymous user)
         expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-            sProduct: 'Website'
+            Product: 'Website'
         });
         expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({});
 
@@ -333,10 +333,10 @@ describe('Chat', () => {
 
         // Verify fields updated with user information
         await waitFor(() => {
-            // Hidden fields: sProduct and UUID
+            // Hidden fields: Product and UUID
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-456'
+                Product: 'Website',
+                OpenStax_UUID: 'test-uuid-456'
             });
 
             // Visible fields: Name, Email, School
@@ -563,8 +563,8 @@ describe('Chat', () => {
         await waitFor(() => {
             // Should use userStatus fields (not userModel)
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website',
-                OpenStax_UUID__c: 'status-uuid-789'
+                Product: 'Website',
+                OpenStax_UUID: 'status-uuid-789'
             });
 
             expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({
