@@ -52,6 +52,26 @@ describe('flex-page', () => {
         expect(console.warn).toHaveBeenCalledWith('No layout set for page');
         console.warn = saveWarn;
     });
+    // The CMS omits the field entirely on some pages, not just leaves it empty
+    it('warns and renders with default when layout is absent', () => {
+        const saveWarn = console.warn;
+
+        console.warn = jest.fn();
+        body = [heroBlock()];
+        render(
+            <ShellContextProvider>
+                <MemoryRouter initialEntries={['']}>
+                    <LayoutContextProvider>
+                        <LayoutUsingData data={{body, schoolData: null}} >
+                            content
+                        </LayoutUsingData>
+                    </LayoutContextProvider>
+                </MemoryRouter>
+            </ShellContextProvider>
+        );
+        expect(console.warn).toHaveBeenCalledWith('No layout set for page');
+        console.warn = saveWarn;
+    });
     it('renders heroBlock with top image alignment', () => {
         const modBlock = heroBlock();
 
