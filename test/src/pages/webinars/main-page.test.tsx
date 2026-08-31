@@ -35,4 +35,24 @@ describe('webinars main page', () => {
         render(<Component />);
         expect(screen.getByText(pageData.heading)).toBeTruthy();
     });
+
+    it('links to a subject, with or without an icon', () => {
+        mockUseWebinarContext.mockReturnValue({
+            pageData,
+            past: [],
+            upcoming: [],
+            subjects: [
+                {id: 1, name: 'Math', subjectIcon: '/math.svg'},
+                {id: 2, name: 'Science'}
+            ],
+            collections: [],
+            searchFor: jest.fn(),
+            latestWebinars: []
+        });
+        render(<Component />);
+        expect(
+            screen.getByText('Math').closest('a')?.getAttribute('href')
+        ).toContain('explore/subjects/Math');
+        expect(screen.getByText('Science')).toBeTruthy();
+    });
 });
