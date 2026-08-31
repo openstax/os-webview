@@ -50,9 +50,9 @@ describe('webinars main page', () => {
             latestWebinars: []
         });
         render(<Component />);
-        expect(
-            screen.getByText('Math').closest('a')?.getAttribute('href')
-        ).toContain('explore/subjects/Math');
+        const mathLink = screen.getByText('Math').closest('a');
+        expect(mathLink).not.toBeNull();
+        expect(mathLink!.getAttribute('href')).toContain('explore/subjects/Math');
         expect(screen.getByText('Science')).toBeTruthy();
     });
 });
