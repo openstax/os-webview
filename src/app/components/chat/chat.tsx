@@ -237,7 +237,7 @@ export default function Chat() {
         // so we can safely access it without additional null checks
         const prechatAPI = assertDefined(window.embeddedservice_bootstrap?.prechatAPI);
 
-        // Set hidden fields: sProduct and UUID (not editable by user)
+        // Set hidden fields: Product and UUID (not editable by user)
         const hiddenFields: Record<string, string> = {
             Product: 'Website'
         };
@@ -248,12 +248,9 @@ export default function Chat() {
         const email = userStatus?.email || userModel?.email;
         const school = userStatus?.school || userModel?.accountsModel?.school_name;
 
-        if (userStatus?.id || userModel?.id) {
-            hiddenFields['OpenStax_Id'] = String(userStatus?.id ?? userModel?.id);
-        }
 
         if (uuid) {
-            hiddenFields['OpenStax_UUID'] = uuid;
+            hiddenFields.OpenStax_UUID = uuid; // eslint-disable-line camelcase
         }
 
         prechatAPI.setHiddenPrechatFields(hiddenFields);
