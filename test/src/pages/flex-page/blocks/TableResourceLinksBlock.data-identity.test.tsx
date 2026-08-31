@@ -39,6 +39,7 @@ jest.mock('@openstax/flex-page-renderer/blocks/index', () => ({
 }));
 
 import {TableResourceLinksBlock} from '~/pages/flex-page/blocks/TableResourceLinksBlock';
+import {resetResourcesCacheForTesting} from '~/pages/flex-page/blocks/table-resource-links-utils';
 import {blockMap} from '~/pages/flex-page/block-map';
 
 // resource_ref markers are snake_case (the CMS/marker contract).
@@ -85,6 +86,7 @@ describe('TableResourceLinksBlock data identity', () => {
         mockDelegateRender.mockClear();
         mockFetchFromCMS.mockReset();
         mockUseUserContext.mockReset();
+        resetResourcesCacheForTesting();
     });
 
     it('hands the delegate the exact same data object for a marker-free table', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes, Route, Navigate} from 'react-router-dom';
+import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
 import Error404 from '~/pages/404/404';
 import usePortalContext from '~/contexts/portal';
 import FlexPage, {
@@ -22,6 +22,7 @@ import {ImportedPage} from './page-loaders';
 export function RouteAsPortalOrNot() {
     const {name, data, hasError, other} = usePageDataFromRoute();
     const {portalPrefix, setPortal, setIsK12Portal} = usePortalContext();
+    const {search} = useLocation();
 
     if (!data) {
         return null;
@@ -72,7 +73,7 @@ export function RouteAsPortalOrNot() {
     if (isFlex) {
         if (other) {
             // Non-portal flex pages do not have children; keep it canonical
-            return <Navigate to={`/${name}`} />;
+            return <Navigate to={{pathname: `/${name}`, search}} />;
         }
         return <FlexPageUsingItsOwnLayout data={data} />;
     }

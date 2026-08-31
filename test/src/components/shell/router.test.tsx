@@ -228,6 +228,22 @@ describe('Router', () => {
             expect(typeof window.piTracker).toBe('function');
         });
 
+        it('includes the query string when calling piTracker', async () => {
+            const mockPiTracker = jest.fn();
+
+            window.piTracker = (url: string) => mockPiTracker(url);
+
+            render(
+                <MemoryRouter initialEntries={['/subjects?utm_source=test']}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+            await waitFor(() => {
+                expect(mockPiTracker).toHaveBeenCalledWith(expect.stringContaining('?utm_source=test'));
+            });
+        });
+
         it('does not call piTracker if it does not exist', () => {
             delete window.piTracker;
 

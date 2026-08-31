@@ -95,7 +95,7 @@ function beforeSend(event, hint) {
 
 Sentry.init({
     dsn: 'https://68df3e19624c434eb975dafa316c03ff@o484761.ingest.sentry.io/5691260',
-    release: `osweb@${packageVersion}`,
+    release: `osweb@${process.env.RELEASE_VERSION || packageVersion}`,
     integrations: [Sentry.extraErrorDataIntegration()],
     environment: window.location.hostname,
     ignoreErrors,
