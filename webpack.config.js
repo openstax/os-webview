@@ -160,6 +160,11 @@ module.exports = (env, argv) => {
         );
         config.output.filename = '[name]-[contenthash].min.js';
         config.devtool = 'source-map';
+        // SourceMapDevToolPlugin writes a provisional hash into each .map's
+        // `file` field, and RealContentHashPlugin then renames the .js without
+        // updating it (webpack#17664). Vendor chunks shipped maps pointing at a
+        // filename that does not exist, so Sentry could not symbolicate them.
+        config.optimization.realContentHash = false;
         config.optimization.splitChunks.maxInitialRequests = 5;
         config.output.chunkFilename = 'chunk-[chunkhash].js';
     } else {
