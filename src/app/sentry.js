@@ -51,7 +51,15 @@ const ignoreMessages = [
     'Loading chunk',
     'window.mobileAPI',
     'wistia.com',
-    't.behaviors.embed.embed'
+    't.behaviors.embed.embed',
+    // Firefox/Brave iOS inject a YouTube shim into every page; when it runs
+    // before its own globals exist it throws in our page's context.
+    '__firefox__',
+    // Android WebView bridges, from apps that embed openstax.org in-app.
+    'Java object is gone',
+    'Java bridge method invocation error',
+    // Browser extensions talking to a background page that has gone away.
+    'Invalid call to runtime.sendMessage()'
 ];
 
 const denyUrls = [
@@ -59,9 +67,24 @@ const denyUrls = [
     'https://js.pulseinsights.com'
 ];
 
+function exceptionValue(event) {
+    const values = event.exception?.values;
+
+    return values?.length ? values[0].value : '';
+}
+
+// A rejected promise carrying a non-Error has no `message`, so reading only
+// hint.originalException misses it. Sentry still records the rejected value as
+// the exception value, which is what the ignore list needs to see.
+function messageOf(event, error) {
+    const value = error?.message || exceptionValue(event);
+
+    return typeof value === 'string' ? value : '';
+}
+
 // eslint-disable-next-line complexity
 function beforeSend(event, hint) {
-    const error = hint.originalException;
+    const message = messageOf(event, hint?.originalException);
 
     if (window.location.hostname !== 'openstax.org') {
         return null;
@@ -72,22 +95,22 @@ function beforeSend(event, hint) {
     if (window.location.pathname.startsWith('/l/') || window.location.pathname.startsWith('/rex/')) {
         return null;
     }
-    if (ignoreMessages.find((fragment) => error?.message?.includes(fragment))) {
+    if (ignoreMessages.find((fragment) => message.includes(fragment))) {
         return null;
     }
-    if (error?.message?.match(/mce-visual-caret/i)) {
+    if (message.match(/mce-visual-caret/i)) {
         return null;
     }
-    if (error?.message?.match(/unexpected token/i)) {
+    if (message.match(/unexpected token/i)) {
         event.fingerprint = ['unexpected token'];
     }
-    if (error?.message?.match(/unexpected (eof|end)/i)) {
+    if (message.match(/unexpected (eof|end)/i)) {
         event.fingerprint = ['unexpected end'];
     }
-    if (error?.message?.match(/pulseinsights/i)) {
+    if (message.match(/pulseinsights/i)) {
         event.fingerprint = ['pulseinsights'];
     }
-    if (error?.message?.match(/localStorage/)) {
+    if (message.match(/localStorage/)) {
         event.fingerprint = ['localStorage'];
     }
     return event;
