@@ -77,12 +77,14 @@ function exceptionValue(event) {
 // hint.originalException misses it. Sentry still records the rejected value as
 // the exception value, which is what the ignore list needs to see.
 function messageOf(event, error) {
-    return error?.message || exceptionValue(event);
+    const value = error?.message || exceptionValue(event);
+
+    return typeof value === 'string' ? value : '';
 }
 
 // eslint-disable-next-line complexity
 function beforeSend(event, hint) {
-    const message = messageOf(event, hint.originalException);
+    const message = messageOf(event, hint?.originalException);
 
     if (window.location.hostname !== 'openstax.org') {
         return null;
