@@ -16,7 +16,7 @@ export default function Logo() {
             </span>
             <span className="logo-divider" aria-hidden="true" />
             <span className="rice-logo">
-                <a href="https://www.rice.edu">
+                <a href="/" aria-label="OpenStax home" data-analytics-link>
                     <img
                         src="/dist/images/topnav-rice.svg"
                         alt="Rice University logo"

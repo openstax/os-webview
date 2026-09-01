@@ -9,6 +9,7 @@ import type {
 import {LanguageContextProvider} from '~/contexts/language';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {TableResourceLinksBlock} from '~/pages/flex-page/blocks/TableResourceLinksBlock';
+import {resetResourcesCacheForTesting} from '~/pages/flex-page/blocks/table-resource-links-utils';
 
 const mockUseUserContext = jest.fn();
 
@@ -87,6 +88,7 @@ describe('TableResourceLinksBlock', () => {
     beforeEach(() => {
         mockFetchFromCMS.mockReset();
         mockUseUserContext.mockReset();
+        resetResourcesCacheForTesting();
     });
 
     it('renders the delegate for a marker-free table with no fetch', () => {

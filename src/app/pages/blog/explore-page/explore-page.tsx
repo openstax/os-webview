@@ -1,5 +1,5 @@
 import React from 'react';
-import useBlogContext, {assertTType, SubjectSnippet} from '../blog-context';
+import useBlogContext, {toTType, SubjectSnippet} from '../blog-context';
 import {useParams} from 'react-router-dom';
 import Breadcrumb from '~/components/breadcrumb/breadcrumb';
 import {WindowContextProvider} from '~/contexts/window';
@@ -109,7 +109,7 @@ function useParamsToSetTopic() {
     const {setTypeAndTopic} = useBlogContext();
 
     React.useEffect(() => {
-        setTypeAndTopic(assertTType(exploreType), topic);
+        setTypeAndTopic(toTType(exploreType), topic);
         return () => setTypeAndTopic(undefined, undefined);
     }, [exploreType, topic, setTypeAndTopic]);
 }

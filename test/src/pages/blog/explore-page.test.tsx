@@ -31,4 +31,9 @@ describe('blog/explore-page', () => {
 
         expect(await screen.findAllByText('OpenStax Math Textbooks')).toHaveLength(4);
     });
+    it('accepts the singular explore type used in CMS links', async () => {
+        render(<Component path='/blog/explore/subject/Math' />);
+
+        expect(await screen.findAllByText('OpenStax Math Textbooks')).toHaveLength(4);
+    });
 });

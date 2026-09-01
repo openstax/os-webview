@@ -1,6 +1,7 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/preact';
+import {act, render, screen, waitFor} from '@testing-library/preact';
 import '@testing-library/jest-dom';
+import {NavigateFunction, useNavigate} from 'react-router-dom';
 import Router from '~/components/shell/router';
 import * as LayoutContext from '~/contexts/layout';
 import * as PortalContext from '~/contexts/portal';
@@ -115,6 +116,45 @@ describe('Router', () => {
         jest.clearAllMocks();
     });
 
+    describe('scroll reset', () => {
+        let navigate: NavigateFunction;
+
+        const Navigator = () => {
+            navigate = useNavigate();
+            return null;
+        };
+
+        const renderAtHome = () => {
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Navigator />
+                    <Router />
+                </MemoryRouter>
+            );
+            (window.scrollTo as jest.Mock).mockClear();
+        };
+
+        beforeEach(() => {
+            window.scrollTo = jest.fn();
+        });
+
+        it('scrolls to the top on navigation to a new path', () => {
+            renderAtHome();
+
+            act(() => navigate('/subjects'));
+
+            expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+        });
+
+        it('leaves the scroll alone when the destination has a hash', () => {
+            renderAtHome();
+
+            act(() => navigate('/subjects#math'));
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+        });
+    });
+
     describe('Router component', () => {
         it('renders without crashing', () => {
             render(
@@ -186,6 +226,22 @@ describe('Router', () => {
             // Verify piTracker exists and is a function (covers line 57 check in router.tsx)
             expect('piTracker' in window).toBe(true);
             expect(typeof window.piTracker).toBe('function');
+        });
+
+        it('includes the query string when calling piTracker', async () => {
+            const mockPiTracker = jest.fn();
+
+            window.piTracker = (url: string) => mockPiTracker(url);
+
+            render(
+                <MemoryRouter initialEntries={['/subjects?utm_source=test']}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+            await waitFor(() => {
+                expect(mockPiTracker).toHaveBeenCalledWith(expect.stringContaining('?utm_source=test'));
+            });
         });
 
         it('does not call piTracker if it does not exist', () => {

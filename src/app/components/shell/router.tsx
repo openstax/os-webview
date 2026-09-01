@@ -43,9 +43,18 @@ function SkipToContent() {
 export default function Router() {
     const linkHandler = useLinkHandler() as unknown as (ev: MouseEvent) => void;
     const {origin} = window.location; // React-Router Location does not have origin
-    const {pathname} = useLocation();
-    const canonicalUrl = `${origin}${pathname}`;
+    const {pathname, hash, search} = useLocation();
+    const trackedUrl = `${origin}${pathname}${search}`;
     const {isK12Portal} = usePortalContext();
+
+    // Browsers keep the scroll offset across a pushState navigation, so without
+    // this a new page opens wherever the last one was scrolled to. Skip it when
+    // there is a hash; that navigation is a request to scroll somewhere else.
+    useEffect(() => {
+        if (!hash) {
+            window.scrollTo(0, 0);
+        }
+    }, [pathname, hash]);
 
     useEffect(() => {
         document.addEventListener('click', linkHandler);
@@ -55,9 +64,9 @@ export default function Router() {
 
     useEffect(() => {
         if ('piTracker' in window && window.piTracker instanceof Function) {
-            window.piTracker(canonicalUrl);
+            window.piTracker(trackedUrl);
         }
-    }, [canonicalUrl]);
+    }, [trackedUrl]);
 
     // Initialize GTM only when isK12Portal is explicitly false
     // isK12Portal starts as true (GTM disabled), then routing logic sets it to false when safe

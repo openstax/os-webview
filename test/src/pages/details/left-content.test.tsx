@@ -130,6 +130,34 @@ describe('left-content', () => {
         expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
         trackLink.mockRestore();
     });
+    it.each([
+        ['Instructor', 'an instructor'],
+        ['Student', 'a student']
+    ])(
+        'reports a link-icon resource for %s resources',
+        async (search) => {
+            const trackLink = jest.spyOn(TL, 'default');
+
+            mockUseUserContext.mockReturnValue({
+                userStatus: {isInstructor: search === 'Instructor'}
+            });
+            const model = {
+                link,
+                ...baseModel,
+                iconType: 'external-link-alt'
+            };
+
+            render(<Component model={model} search={search} />);
+
+            await user.click(screen.getByRole('link'));
+
+            // The donation nudge is for downloads; a link resource goes straight
+            // through, but still has to be reported.
+            expect(screen.queryByText('Go to your resource')).toBeNull();
+            expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
+            trackLink.mockRestore();
+        }
+    );
     it('still reports the download when the dialog is capped', async () => {
         const trackLink = jest.spyOn(TL, 'default');
 

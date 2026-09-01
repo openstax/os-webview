@@ -109,7 +109,11 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
     // instructor's too whenever the click beat the user request.
     const trackDownloadClick = React.useCallback(
         (event: TrackedMouseEvent) => {
-            trackLink(event, model.bookModel.id.toString());
+            // A malformed CMS resource can reach the exclamation-icon fallback
+            // with no book attached; trackLink treats a missing id as
+            // "nothing to report", and throwing here would abort the click
+            // before the resource opens.
+            trackLink(event, model.bookModel?.id.toString());
         },
         [model.bookModel]
     );
@@ -118,10 +122,10 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
     const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
-        if (!isDownload) {
-            return;
-        }
-        if (enabled && open()) {
+        // The donation nudge is for downloads only, but every resource counts as
+        // a resource access — link-icon resources (Canvas cartridges, OER
+        // Commons items) have to report too.
+        if (isDownload && enabled && open()) {
             event.preventDefault();
             return;
         }

@@ -4,7 +4,7 @@ import {Routes, Route} from 'react-router-dom';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import useBlogContext, {
     BlogContextProvider,
-    assertTType
+    toTType
 } from '~/pages/blog/blog-context';
 import BlogLoader from '~/pages/blog/blog';
 import {
@@ -54,8 +54,6 @@ describe('blog pages', () => {
         expect(screen.queryByText('No matching blog posts found')).toBeNull();
     });
     test('Article page', async () => {
-        window.scrollTo = jest.fn();
-
         render(
             <MemoryRouter initialEntries={['/blog/blog-article']}>
                 <BlogContextProvider>
@@ -67,11 +65,13 @@ describe('blog pages', () => {
         );
         expect(await screen.findAllByText('Read more')).toHaveLength(3);
         expect(screen.queryAllByRole('link')).toHaveLength(7);
-        expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
     });
 
-    test('assertTType throws for invalid value', () => {
-        expect(() => assertTType('invalid')).toThrowError();
+    test('toTType maps known types and drops the rest', () => {
+        expect(toTType('subject')).toBe('subjects');
+        expect(toTType('collections')).toBe('collections');
+        expect(toTType('invalid')).toBeUndefined();
+        expect(toTType(undefined)).toBeUndefined();
     });
 
     test('blog-context searchFor', async () => {

@@ -12,6 +12,14 @@ import {TableResourceCell} from './TableResourceCell';
 
 const Delegate = blocks.table.Component;
 
+// The block-map entry for `table`, shared with FAQBlock so tables nested
+// inside FAQ items resolve resource_ref markers too - FAQBlock can't import
+// the block map itself without a module cycle (block-map imports FAQBlock).
+export const tableBlockEntry = {
+    Component: TableResourceLinksBlock,
+    config: blocks.table.config
+};
+
 // Wraps the renderer's table block through its TableCellContext render slot
 // so cells carrying a resource_ref marker (an access-locked instructor/
 // student resource the CMS couldn't resolve server-side - its output is

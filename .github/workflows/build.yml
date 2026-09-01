@@ -27,60 +27,12 @@ jobs:
         name: "Lint osweb"
         run: yarn lint
       -
+        # Nothing here is shipped -- CodeBuild builds and deploys the real
+        # assets. This only proves the production build still compiles.
         name: "Build osweb"
         run: ./script/build production
       -
-        name: "Read osweb version"
-        id: osweb_version
-        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
-      -
         name: "Run tests"
         run: ./script/test
-      -
-        # Injects a chunk id into each built asset and uploads the matching .map to
-        # PostHog, so exception stack traces resolve to real files and line numbers.
-        # Must run before the archive step so the injected assets are the ones we ship.
-        # Requires the POSTHOG_PROJECT_ID and POSTHOG_CLI_API_KEY secrets; symbolication
-        # is a diagnostic aid, so a failure here should never block a release.
-        name: "Upload source maps to PostHog"
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
-        continue-on-error: true
-        uses: PostHog/upload-source-maps@v2
-        with:
-          directory: dist
-          project-id: ${{ secrets.POSTHOG_PROJECT_ID }}
-          api-key: ${{ secrets.POSTHOG_CLI_API_KEY }}
-      -
-        # Uploads the .map files to Sentry under the same release name sentry.js
-        # reports (osweb@<package.json version>), so exceptions resolve to real
-        # source instead of minified bundles. Runs after the PostHog upload so
-        # Sentry's debug IDs are injected into the assets we actually ship.
-        # Symbolication is a diagnostic aid, so a failure here should never
-        # block a release.
-        name: "Upload source maps to Sentry"
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
-        continue-on-error: true
-        uses: getsentry/action-release@v3
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-        with:
-          release: "osweb@${{ steps.osweb_version.outputs.version }}"
-          sourcemaps: ./dist
-          url_prefix: "~/dist"
-          # actions/checkout is shallow here, so commit association would fail
-          # before the upload ever runs.
-          set_commits: skip
-      -
-        name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.JENKINS_RUNDECK_ID_RSA }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      -
-        name: "Create archive for packages.cnx.org"
-        run: ./script/archive
 name: build
 on: push
