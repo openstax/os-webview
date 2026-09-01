@@ -66,6 +66,14 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
   opened before a deploy 404s on the next chunk it requests; `src/app/helpers/stale-chunk.ts`
   detects that and reloads (at most twice per tab, tracked in sessionStorage).
 
+### Patched dependencies
+- `patches/` holds `patch-package` diffs, reapplied by the `postinstall` script on every install.
+- `react-aria-carousel@0.2.0` is patched because its MutationObserver calls `hasAttribute` on
+  every added node, including text nodes, which throws on any page with a carousel. 0.2.0 is the
+  newest published version, so there is no upgrade to take instead. `test/src/components/
+  carousel.test.tsx` asserts the patch is present, since an install that skips scripts drops it
+  silently.
+
 ### Routing
 Main routes in `router.tsx`:
 - `/` — Home page

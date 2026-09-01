@@ -8,6 +8,7 @@ import JITLoad from '~/helpers/jit-load';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import {PortalContextProvider} from '~/contexts/portal';
 import HeadlessUserbar from '~/components/headless-userbar/headless-userbar';
+import ChromeFallback from './chrome-fallback';
 
 import Error404 from '~/pages/404/404';
 
@@ -49,7 +50,10 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/embedded/*" element={<EmbeddedApp />} />
-                    <Route path="*" element={<JITLoad importFn={importRouter} />} />
+                    <Route
+                        path="*"
+                        element={<JITLoad importFn={importRouter} fallback={<ChromeFallback />} />}
+                    />
                 </Routes>
             </BrowserRouter>
         </AppContext>

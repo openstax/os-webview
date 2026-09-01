@@ -4,7 +4,7 @@ import {Routes, Route} from 'react-router-dom';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import useBlogContext, {
     BlogContextProvider,
-    assertTType
+    toTType
 } from '~/pages/blog/blog-context';
 import BlogLoader from '~/pages/blog/blog';
 import {
@@ -67,8 +67,11 @@ describe('blog pages', () => {
         expect(screen.queryAllByRole('link')).toHaveLength(7);
     });
 
-    test('assertTType throws for invalid value', () => {
-        expect(() => assertTType('invalid')).toThrowError();
+    test('toTType maps known types and drops the rest', () => {
+        expect(toTType('subject')).toBe('subjects');
+        expect(toTType('collections')).toBe('collections');
+        expect(toTType('invalid')).toBeUndefined();
+        expect(toTType(undefined)).toBeUndefined();
     });
 
     test('blog-context searchFor', async () => {

@@ -5,11 +5,17 @@ import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeho
 import recoverFromStaleChunk from '~/helpers/stale-chunk';
 import useLayoutContext from '~/contexts/layout';
 
+type PageLoadingProps = {
+    error?: Error;
+    retry: () => void;
+    pastDelay?: boolean;
+};
+
 // react-loadable catches the import rejection itself, so a page chunk that
 // 404s after a deploy reaches neither the error boundary nor the
 // unhandledrejection listener in stale-chunk. Recover here or the tab sits on
 // the loader forever with nothing reported.
-export function PageLoading({error, retry}: {error?: Error; retry: () => void}) {
+export function PageLoading({error, retry, pastDelay}: PageLoadingProps) {
     React.useEffect(() => {
         if (error && !recoverFromStaleChunk(error)) {
             Sentry.captureException(error);
@@ -27,7 +33,11 @@ export function PageLoading({error, retry}: {error?: Error; retry: () => void}) 
         );
     }
 
-    return <LoadingPlaceholder />;
+    if (!pastDelay) {
+        return null;
+    }
+
+    return <LoadingPlaceholder fullPage />;
 }
 
 function usePage(name: string) {
@@ -35,6 +45,7 @@ function usePage(name: string) {
         return loadable({
             loader: () => import(`~/pages/${name}/${name}`),
             loading: PageLoading,
+            delay: 300,
             render(loaded, props: object) {
                 const Component = loaded.default;
 

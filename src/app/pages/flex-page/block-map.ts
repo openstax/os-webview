@@ -4,7 +4,7 @@ import * as blocks from '@openstax/flex-page-renderer/blocks/index';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FAQBlock} from './blocks/FAQBlock';
 import {BookListBlock} from './blocks/BookListBlock';
-import {TableResourceLinksBlock} from './blocks/TableResourceLinksBlock';
+import {tableBlockEntry} from './blocks/TableResourceLinksBlock';
 
 // The renderer's html block sets the markup with dangerouslySetInnerHTML, and
 // innerHTML never executes <script> tags. RawHTML's `embed` mode re-creates them
@@ -27,5 +27,5 @@ export const blockMap = {
     html: {Component: HTMLBlock, config: blocks.html.config},
     faq: {Component: FAQBlock, config: FAQBlock.blockConfig},
     book_list: {Component: BookListBlock, config: BookListBlock.blockConfig},
-    table: {Component: TableResourceLinksBlock, config: blocks.table.config}
+    table: tableBlockEntry
 } as const;

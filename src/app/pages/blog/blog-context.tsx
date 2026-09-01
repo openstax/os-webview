@@ -89,11 +89,16 @@ function useCollections() {
 
 export type TType = undefined | 'subjects' | 'collections';
 
-export function assertTType(s: string | undefined) {
-    if (s === undefined || ['subjects', 'collections'].includes(s)) {
-        return s as TType;
-    }
-    throw new Error(`Topic type is invalid: ${s}`);
+// CMS-authored links use the singular forms, e.g. /blog/explore/subject/Math
+const T_TYPES: Record<string, TType> = {
+    subject: 'subjects',
+    subjects: 'subjects',
+    collection: 'collections',
+    collections: 'collections'
+};
+
+export function toTType(s: string | undefined) {
+    return s === undefined ? undefined : T_TYPES[s];
 }
 
 function useTopicStories() {
