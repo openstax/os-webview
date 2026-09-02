@@ -5,6 +5,26 @@ jest.mock('~/models/accounts-model', () => ({
 
 import {initializeGTM} from '~/helpers/tag-manager';
 
+describe('tag-manager consent defaults', () => {
+    it('pushes each gtag command as one dataLayer entry', async () => {
+        const dataLayer: IArguments[] = [];
+
+        (window as unknown as {dataLayer: unknown[]}).dataLayer =
+            dataLayer as unknown[];
+        jest.resetModules();
+        await import('~/helpers/tag-manager');
+
+        const consent = dataLayer.find((entry) => entry[0] === 'consent');
+
+        // The spread bug scattered the command into three separate entries;
+        // one grouped entry proves the arguments object is pushed whole.
+        expect(consent).toBeDefined();
+        expect(consent).toHaveLength(3);
+        expect(consent?.[1]).toBe('default');
+        expect(typeof consent?.[2]).toBe('object');
+    });
+});
+
 describe('tag-manager fbq stub', () => {
     beforeEach(() => {
         delete (window as unknown as {fbq?: unknown}).fbq;

@@ -4,8 +4,9 @@ const tagManagerID = 'GTM-W6N7PB';
 // Initialize dataLayer and consent - these exist even if GTM doesn't load
 window.dataLayer ||= [];
 
-function gtag(...args) {
-  window.dataLayer.push(...args);
+function gtag() {
+  // eslint-disable-next-line prefer-rest-params
+  window.dataLayer.push(arguments);
 }
 /* eslint-disable camelcase */
 gtag('consent', 'default', {
