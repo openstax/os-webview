@@ -9,7 +9,7 @@ import './flex-page.scss';
 
 export type FlexPageData = {
     meta?: {type: string};
-    layout: [{type: LayoutName}?];
+    layout?: [{type: LayoutName}?];
     body: BlockData<typeof blockMap>;
     schoolData: null | {
         industry: string;
@@ -37,7 +37,7 @@ export function LayoutUsingData({
     children: React.ReactNode;
 }) {
     const {layoutParameters, setLayoutParameters} = useLayoutContext();
-    const layoutName = data.layout[0]?.type || warnAndUseDefault();
+    const layoutName = data.layout?.[0]?.type || warnAndUseDefault();
 
     if (layoutParameters.name !== layoutName) {
         setLayoutParameters({
