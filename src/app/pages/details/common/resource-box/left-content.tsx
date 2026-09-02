@@ -82,11 +82,12 @@ const iconLookup: {[key: string]: IconDefinition} = {
 // string says nothing about the resource there.
 function useVariant(): VariantValue {
     const {search} = useLocation();
+    const keys = Array.from(new URLSearchParams(search).keys()).map((k) => k.toLowerCase());
 
-    if (search.includes('Instructor')) {
+    if (keys.includes('instructor resources')) {
         return 'Instructor resource';
     }
-    if (search.includes('Student')) {
+    if (keys.includes('student resources')) {
         return 'Student resource';
     }
     return '? resource';

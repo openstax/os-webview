@@ -1,17 +1,23 @@
 export function findSelectedTab(labels: string[]) {
     const possibleTabs = Array.from(new window.URLSearchParams(window.location.search).keys());
 
-    return labels.find((label) => possibleTabs.includes(label)) || labels[0];
+    return (
+        labels.find((label) =>
+            possibleTabs.some((tab) => tab.toLowerCase() === label.toLowerCase())
+        ) || labels[0]
+    );
 }
 
 export function replaceSearchTerm(labels: string[], newValue: string) {
+    const lowerLabels = labels.map((label) => label.toLowerCase());
     const possibleTabs = Array.from(new window.URLSearchParams(window.location.search).keys());
-    const index = possibleTabs.findIndex((t) => labels.includes(t));
+    const firstIndex = possibleTabs.findIndex((tab) => lowerLabels.includes(tab.toLowerCase()));
+    const filtered = possibleTabs.filter((tab) => !lowerLabels.includes(tab.toLowerCase()));
 
-    if (index < 0) {
-        possibleTabs.unshift(encodeURIComponent(newValue));
+    if (firstIndex < 0) {
+        filtered.unshift(newValue);
     } else {
-        possibleTabs[index] = encodeURIComponent(newValue);
+        filtered.splice(firstIndex, 0, newValue);
     }
-    return `?${possibleTabs.join('&')}`;
+    return `?${filtered.map((tab) => encodeURIComponent(tab)).join('&')}`;
 }

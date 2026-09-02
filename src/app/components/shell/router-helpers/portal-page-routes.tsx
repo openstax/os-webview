@@ -33,7 +33,7 @@ export function RouteAsPortalOrNot() {
     }
 
     const isFlex = !hasError && isFlexPage(data);
-    const isPortal = isFlex && data.layout[0]?.type === 'landing';
+    const isPortal = isFlex && data.layout?.[0]?.type === 'landing';
 
     if (isPortal) {
         if (portalPrefix !== `/${name}`) {

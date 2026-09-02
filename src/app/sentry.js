@@ -59,7 +59,9 @@ const ignoreMessages = [
     'Java object is gone',
     'Java bridge method invocation error',
     // Browser extensions talking to a background page that has gone away.
-    'Invalid call to runtime.sendMessage()'
+    'Invalid call to runtime.sendMessage()',
+    // A third-party tag fired by GTM; the whole stack is inside gtm.js.
+    'AviviD is not defined'
 ];
 
 const denyUrls = [

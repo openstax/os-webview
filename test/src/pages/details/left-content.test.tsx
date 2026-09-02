@@ -80,7 +80,7 @@ describe('left-content', () => {
         });
         const model = {link, ...baseModel, ...{iconType: 'unlock'}};
 
-        render(<Component model={model} search="Student" />);
+        render(<Component model={model} search="STUDENT%20RESOURCES" />);
         const foundLink = screen.getByRole('link');
 
         expect(foundLink.textContent).toBe('button-label');
@@ -93,14 +93,16 @@ describe('left-content', () => {
         });
         const model = {link, ...baseModel, iconType: 'download'};
 
-        render(<Component model={model} />);
+        render(<Component model={model} search="instructor%20resources" />);
         const foundLink = screen.getByRole('link');
 
         expect(foundLink.textContent).toBe('button-label');
         await user.click(foundLink);
-        await screen.findByText('Give today');
+        const giveToday = await screen.findByText('Give today');
         const downloadLink = await screen.findByText('Go to your resource');
 
+        expect(giveToday.closest('a')?.getAttribute('href')).toContain('support-openstax-instructor-resources');
+        expect(document.querySelector('[data-nudge-placement="Instructor resource"]')).toBeTruthy();
         await user.click(downloadLink);
     });
     it('tracks a download for a signed-in non-instructor', async () => {
@@ -113,14 +115,16 @@ describe('left-content', () => {
         });
         const model = {link, ...baseModel, iconType: 'download'};
 
-        render(<Component model={model} search="Student" />);
+        render(<Component model={model} search="STUDENT%20RESOURCES" />);
         const foundLink = screen.getByRole('link');
 
         expect(foundLink.textContent).toBe('button-label');
         await user.click(foundLink);
-        await screen.findByText('Give today');
+        const giveToday = await screen.findByText('Give today');
         const downloadLink = await screen.findByText('Go to your resource');
 
+        expect(giveToday.closest('a')?.getAttribute('href')).toContain('support-openstax-student-resources');
+        expect(document.querySelector('[data-nudge-placement="Student resource"]')).toBeTruthy();
         await user.click(downloadLink);
 
         expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
@@ -187,9 +191,11 @@ describe('left-content', () => {
 
         expect(foundLink.textContent).toBe('button-label');
         await user.click(foundLink);
-        await screen.findByText('Give today');
+        const giveToday = await screen.findByText('Give today');
         const downloadLink = await screen.findByText('Go to your resource');
 
+        expect(giveToday.closest('a')?.getAttribute('href')).toContain('support-openstax-subject');
+        expect(document.querySelector('[data-nudge-placement="? resource"]')).toBeTruthy();
         await user.click(downloadLink);
     });
     it('handles unknown icon and unknown search', async () => {
