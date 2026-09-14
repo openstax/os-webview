@@ -675,13 +675,87 @@ describe('Router', () => {
             expect(event.defaultPrevented).toBe(false);
         });
 
-        it('focuses #main once it mounts after the click', async () => {
+        it('keeps waiting through unrelated changes until #main mounts', async () => {
             renderWithLayout();
             clickSkipLink();
+
+            appendToBody(document.createElement('span'));
+            await act(async () => undefined);
+
+            expect(document.activeElement).toBe(document.body);
 
             const mainEl = appendMain();
 
             await waitFor(() => expect(document.activeElement).toBe(mainEl));
+        });
+
+        it('leaves the default alone when #main cannot take focus', () => {
+            // No tabIndex, so focus() is a no-op and the handler must not
+            // claim it moved focus.
+            const UnfocusableMain = ({
+                children
+            }: {
+                children: React.ReactNode;
+            }) => <div id="main">{children}</div>;
+
+            renderWithLayout(UnfocusableMain);
+
+            const event = clickSkipLink();
+
+            expect(document.activeElement).not.toBe(
+                document.getElementById('main')
+            );
+            expect(event.defaultPrevented).toBe(false);
+        });
+
+        it('gives up waiting for #main after a couple of seconds', async () => {
+            jest.useFakeTimers();
+
+            try {
+                renderWithLayout();
+                clickSkipLink();
+
+                act(() => jest.advanceTimersByTime(5000));
+
+                const mainEl = appendMain();
+
+                await act(async () => undefined);
+
+                expect(document.activeElement).not.toBe(mainEl);
+            } finally {
+                jest.useRealTimers();
+            }
+        });
+
+        it('stops waiting for #main when the router unmounts', async () => {
+            jest.spyOn(LayoutContext, 'default').mockReturnValue({
+                Layout: ({children}: {children: React.ReactNode}) => (
+                    <div>{children}</div>
+                ),
+                setLayoutParameters: jest.fn()
+            } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+            const {unmount} = render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+            const event = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            });
+
+            act(() => {
+                screen.getByText('skip to main content').dispatchEvent(event);
+            });
+            unmount();
+
+            const mainEl = appendMain();
+
+            await act(async () => undefined);
+
+            expect(document.activeElement).not.toBe(mainEl);
         });
 
         it('leaves focus alone if the user moves on before #main mounts', async () => {
