@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
 import {Routes, Route, useLocation} from 'react-router-dom';
-import $ from '~/helpers/$';
 import {PageTitleConfirmation} from './announce-page-title';
-import {assertNotNull, assertDefined} from '~/helpers/data';
 import useLinkHandler from './router-helpers/use-link-handler';
 import {RouterContextProvider} from './router-context';
+import SkipToContent from './skip-to-content';
 import useLayoutContext, {LayoutContextProvider} from '~/contexts/layout';
 import usePortalContext from '~/contexts/portal';
 import {initializeGTM} from '~/helpers/tag-manager';
@@ -19,26 +18,6 @@ import {NonPortalRouteWrapper} from './router-helpers/non-portal-route-wrapper';
 import useSharedDataContext from '~/contexts/shared-data';
 import useUserContext from '~/contexts/user';
 import Chat from '~/components/chat/chat';
-import './skip-to-content.scss';
-
-function doSkipToContent(event: React.MouseEvent) {
-    event.preventDefault();
-    const mainEl = document.getElementById('main');
-    const target = assertDefined(
-        assertNotNull(mainEl?.querySelector($.focusable))
-    ) as HTMLElement;
-
-    $.scrollTo(target);
-    target.focus();
-}
-
-function SkipToContent() {
-    return (
-        <a className="skiptocontent" href="#main" onClick={doSkipToContent}>
-            skip to main content
-        </a>
-    );
-}
 
 export default function Router() {
     const linkHandler = useLinkHandler() as unknown as (ev: MouseEvent) => void;
