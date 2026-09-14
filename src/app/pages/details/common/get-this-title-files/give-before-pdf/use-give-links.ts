@@ -22,6 +22,21 @@ export type GiveLink = {
 
 // Links like `/details/${slug}?Instructor resources` (see book-tile/dropdown-menu.tsx) carry
 // the intended placement as a query-string key rather than a value.
+// give-before-other renders as soon as the dialog opens, and useDonationPopupData yields {}
+// until its request settles, so without a floor the Give anchor can have no href at all.
+const FALLBACK_POPUP_GIVE_LINK = 'https://riceconnect.rice.edu/donation/support-openstax-subject';
+
+const placementByVariant: {[variant: string]: Placement} = {
+    'Instructor resource': 'instructor_resources',
+    'Student resource': 'student_resources'
+};
+
+// Flex-page resource links carry the kind as a prop instead of the details-page query key
+// (see flex-page/blocks/TableResourceCell.tsx), so it is the only placement signal there.
+export function placementForVariant(variant?: string): Placement {
+    return (variant && placementByVariant[variant]) || 'other';
+}
+
 export function placementFromSearch(search: string): Placement | null {
     const keys = Array.from(new URLSearchParams(search).keys()).map((k) => k.toLowerCase());
 
@@ -83,7 +98,7 @@ function resolveGiveLink(giveLink: GiveLink | null, data: FallbackData) {
     const {url, headerSubtitle, giveLinkText} = giveLink ?? noGiveLink;
 
     return {
-        url: url || data.give_link,
+        url: url || data.give_link || FALLBACK_POPUP_GIVE_LINK,
         headerSubtitle: headerSubtitle || data.header_subtitle,
         giveLinkText: giveLinkText || data.give_link_text
     };

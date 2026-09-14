@@ -60,7 +60,7 @@ export default [
         variant: 'public good',
         url: 'https://riceconnect.rice.edu/donation/support-openstax-subject-b',
         header_subtitle: '',
-        give_link_text: '',
+        give_link_text: 'Give $50',
         is_active: true
     }
 ];

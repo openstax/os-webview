@@ -3,6 +3,7 @@ import {render, screen} from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import useGiveLink, {
+    placementForVariant,
     placementFromSearch,
     Placement,
     useResolvedGiveLink
@@ -132,6 +133,9 @@ const fallbackData = {
     header_subtitle: 'fallback subtitle',
     give_link_text: 'Give $25'
 };
+
+// What useDonationPopupData yields before its request settles.
+const unloadedData = {give_link: '', header_subtitle: '', give_link_text: ''};
 /* eslint-enable camelcase */
 
 function ResolvedProbe({placement}: {placement: Placement}) {
@@ -146,6 +150,20 @@ function ResolvedProbeContent({placement}: {placement: Placement}) {
     const {giveLinkText} = useResolvedGiveLink(placement, fallbackData);
 
     return <div data-testid="give-link-text">{giveLinkText}</div>;
+}
+
+function UrlProbe() {
+    return (
+        <MemoryRouter initialEntries={['/']}>
+            <UrlProbeContent />
+        </MemoryRouter>
+    );
+}
+
+function UrlProbeContent() {
+    const {url} = useResolvedGiveLink('other', unloadedData);
+
+    return <div data-testid="give-url">{url}</div>;
 }
 
 describe('useResolvedGiveLink', () => {
@@ -170,6 +188,17 @@ describe('useResolvedGiveLink', () => {
         render(<ResolvedProbe placement="pdf" />);
         await screen.findByText('Give $25');
     });
+
+    it('still yields a working url when neither the CMS nor the popup has loaded', async () => {
+        global.fetch = jest.fn().mockRejectedValue(new Error('network down'));
+        render(<UrlProbe />);
+
+        const url = await screen.findByTestId('give-url');
+
+        expect(url.textContent).toBe(
+            'https://riceconnect.rice.edu/donation/support-openstax-subject'
+        );
+    });
 });
 
 describe('placementFromSearch', () => {
@@ -188,5 +217,18 @@ describe('placementFromSearch', () => {
     it('returns null when neither key is present', () => {
         expect(placementFromSearch('')).toBeNull();
         expect(placementFromSearch('?something=else')).toBeNull();
+    });
+});
+
+describe('placementForVariant', () => {
+    it('maps the flex-page resource kinds to their placements', () => {
+        expect(placementForVariant('Instructor resource')).toBe('instructor_resources');
+        expect(placementForVariant('Student resource')).toBe('student_resources');
+    });
+
+    it('falls back to other for every other variant', () => {
+        expect(placementForVariant('View online')).toBe('other');
+        expect(placementForVariant('K12 resource')).toBe('other');
+        expect(placementForVariant(undefined)).toBe('other');
     });
 });

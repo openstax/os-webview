@@ -42,4 +42,17 @@ describe('GiveItem', () => {
             screen.getByRole('link', {name: 'Give'}).getAttribute('href')
         ).toBe(RICECONNECT);
     });
+
+    it('ignores a blank campaign link rather than rendering a dead CTA', () => {
+        (useGiveToday as jest.Mock).mockReturnValue({
+            showButton: true,
+            give_link: '',
+            default_give_link: RICECONNECT
+        });
+        render(<GiveItem />);
+
+        expect(
+            screen.getByRole('link', {name: 'Give'}).getAttribute('href')
+        ).toBe(RICECONNECT);
+    });
 });

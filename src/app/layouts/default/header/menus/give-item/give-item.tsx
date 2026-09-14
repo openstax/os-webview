@@ -6,7 +6,7 @@ import GiveButton from '../give-button/give-button';
 export default function GiveItem() {
     const giveData = useGiveToday();
 
-    return giveData.showButton ? (
+    return giveData.showButton && giveData.give_link ? (
         <GiveButton />
     ) : (
         <a
