@@ -58,7 +58,7 @@ function ProbeContent({placement}: {placement: Placement}) {
 
     return (
         <div data-testid="link">
-            {link ? `${link.url}|${link.header_subtitle}` : 'none'}
+            {link ? `${link.url}|${link.headerSubtitle}` : 'none'}
         </div>
     );
 }

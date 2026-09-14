@@ -15,7 +15,7 @@ type DonationLinkRow = {
 
 export type GiveLink = {
     url: string;
-    header_subtitle: string;
+    headerSubtitle: string;
 };
 
 // Links like `/details/${slug}?Instructor resources` (see book-tile/dropdown-menu.tsx) carry
@@ -65,9 +65,7 @@ export default function useGiveLink(defaultPlacement: Placement): GiveLink | nul
             return null;
         }
 
-        /* eslint-disable camelcase */
-        return {url: chosen.url, header_subtitle: chosen.header_subtitle};
-        /* eslint-enable camelcase */
+        return {url: chosen.url, headerSubtitle: chosen.header_subtitle};
     }, [rows, placement]);
 }
 
@@ -83,6 +81,6 @@ export function useResolvedGiveLink(defaultPlacement: Placement, data: FallbackD
 
     return {
         url: giveLink?.url || data.give_link,
-        headerSubtitle: giveLink?.header_subtitle || data.header_subtitle
+        headerSubtitle: giveLink?.headerSubtitle || data.header_subtitle
     };
 }
