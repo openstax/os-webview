@@ -25,4 +25,30 @@ describe('landing Header', () => {
 
         expect(screen.queryByRole('link', {name: 'Give'})).toBe(null);
     });
+
+    it('uses the campaign link while a Give Today campaign is running', () => {
+        (useGiveToday as jest.Mock).mockReturnValue({
+            showButton: true,
+            give_link: 'https://example.test/campaign',
+            default_give_link: GIVE_LINK
+        });
+        render(<Header links={[]} />);
+
+        expect(
+            screen.getByRole('link', {name: 'Give'}).getAttribute('href')
+        ).toBe('https://example.test/campaign');
+    });
+
+    it('ignores a campaign whose link was left blank', () => {
+        (useGiveToday as jest.Mock).mockReturnValue({
+            showButton: true,
+            give_link: '',
+            default_give_link: GIVE_LINK
+        });
+        render(<Header links={[]} />);
+
+        expect(
+            screen.getByRole('link', {name: 'Give'}).getAttribute('href')
+        ).toBe(GIVE_LINK);
+    });
 });
