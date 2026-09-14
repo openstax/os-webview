@@ -14,7 +14,9 @@ jest.mock('~/helpers/main-class-hooks', () => ({
 
 describe('give-before-other', () => {
     const close = jest.fn();
-    const data = {} as unknown as PopupData; // doesn't matter
+    const data = {
+        give_link: 'https://example.test/fallback-give-link' // eslint-disable-line camelcase
+    } as unknown as PopupData; // doesn't matter
     const onDownload = jest.fn();
     const user = userEvent.setup();
 

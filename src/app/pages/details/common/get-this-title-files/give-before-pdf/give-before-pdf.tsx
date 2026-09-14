@@ -2,8 +2,7 @@ import React from 'react';
 import ThankYou, {useOnThankYouClick} from './thank-you-form';
 import CommonElements from './common-elements';
 import type {DonationPopupData} from './use-donation-popup-data';
-import {enroll} from '@openstax/experiments';
-import useGiveLinks from './use-give-links';
+import {useResolvedGiveLink} from './use-give-links';
 import './give-before-pdf.scss';
 
 export default function GiveBeforePdf({
@@ -75,24 +74,7 @@ function GiveBeforePdfAfterConditionals({
     close: () => void;
     onDownload?: React.MouseEventHandler;
 }) {
-    const [controlLink, alternateLink] = useGiveLinks();
-    const variants = [
-        {
-            name: 'control',
-            headerSubtitle: data.header_subtitle,
-            giveLink: controlLink
-        },
-        {
-            name: 'public good',
-            headerSubtitle:
-                'Join us in sustaining OpenStax as a public good for years to come by giving today.',
-            giveLink: alternateLink
-        }
-    ];
-    const donationExperiment = enroll({
-        name: 'Donation Experiment 2023',
-        variants
-    });
+    const {url, headerSubtitle} = useResolvedGiveLink('pdf', data);
 
     React.useEffect(() => {
         window.dataLayer ||= [];
@@ -124,8 +106,8 @@ function GiveBeforePdfAfterConditionals({
             <CommonElements
                 onThankYouClick={onThankYouClick}
                 data={data}
-                giveLink={donationExperiment.giveLink}
-                headerSubtitle={donationExperiment.headerSubtitle}
+                giveLink={url}
+                headerSubtitle={headerSubtitle}
             />
             <a
                 href={link}

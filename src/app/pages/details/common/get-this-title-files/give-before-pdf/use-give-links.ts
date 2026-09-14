@@ -1,30 +1,88 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
+import {enroll} from '@openstax/experiments';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 
-// Two Give link options for each of: PDF downloads, Instructor resources, Student resources
-export default function useGiveLinks() {
-    const {search} = useLocation();
+export type Placement = 'pdf' | 'instructor_resources' | 'student_resources' | 'other';
 
-    return React.useMemo(() => getLinks(search), [search]);
-}
+type DonationLinkRow = {
+    placement: Placement;
+    variant: string;
+    url: string;
+    header_subtitle: string;
+    is_active: boolean;
+};
 
-function getLinks(search: string) {
+export type GiveLink = {
+    url: string;
+    header_subtitle: string;
+};
+
+// Links like `/details/${slug}?Instructor resources` (see book-tile/dropdown-menu.tsx) carry
+// the intended placement as a query-string key rather than a value.
+export function placementFromSearch(search: string): Placement | null {
     const keys = Array.from(new URLSearchParams(search).keys()).map((k) => k.toLowerCase());
 
     if (keys.includes('instructor resources')) {
-        return [
-            'https://riceconnect.rice.edu/donation/support-openstax-instructor-resources',
-            'https://riceconnect.rice.edu/donation/support-openstax-instructor-resources-b'
-        ];
+        return 'instructor_resources';
     }
     if (keys.includes('student resources')) {
-        return [
-            'https://riceconnect.rice.edu/donation/support-openstax-student-resources',
-            'https://riceconnect.rice.edu/donation/support-openstax-student-resources-b'
-        ];
+        return 'student_resources';
     }
-    return [
-        'https://riceconnect.rice.edu/donation/support-openstax-subject',
-        'https://riceconnect.rice.edu/donation/support-openstax-subject-b'
-    ];
+    return null;
+}
+
+function chooseRow(rows: DonationLinkRow[]): DonationLinkRow | null {
+    if (rows.length === 0) {
+        return null;
+    }
+    if (rows.length === 1) {
+        return rows[0];
+    }
+
+    const variants = rows.map((row) => ({...row, name: row.variant}));
+
+    return enroll({name: 'Donation Popup Link', variants});
+}
+
+export default function useGiveLink(defaultPlacement: Placement): GiveLink | null {
+    const {search} = useLocation();
+    const rows = useDataFromSlug<DonationLinkRow[]>('donations/donation-links');
+    const placement = React.useMemo(
+        () => placementFromSearch(search) ?? defaultPlacement,
+        [search, defaultPlacement]
+    );
+
+    return React.useMemo(() => {
+        if (!(rows instanceof Array)) {
+            return null;
+        }
+
+        const activeRows = rows.filter((row) => row.is_active && row.placement === placement);
+        const chosen = chooseRow(activeRows);
+
+        if (!chosen) {
+            return null;
+        }
+
+        /* eslint-disable camelcase */
+        return {url: chosen.url, header_subtitle: chosen.header_subtitle};
+        /* eslint-enable camelcase */
+    }, [rows, placement]);
+}
+
+type FallbackData = {
+    give_link: string;
+    header_subtitle: string;
+};
+
+// Callers render before the CMS request settles (and must still show a working Give
+// button if it fails), so the popup's own give_link/header_subtitle are the floor.
+export function useResolvedGiveLink(defaultPlacement: Placement, data: FallbackData) {
+    const giveLink = useGiveLink(defaultPlacement);
+
+    return {
+        url: giveLink?.url || data.give_link,
+        headerSubtitle: giveLink?.header_subtitle || data.header_subtitle
+    };
 }
