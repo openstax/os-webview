@@ -10,12 +10,14 @@ type DonationLinkRow = {
     variant: string;
     url: string;
     header_subtitle: string;
+    give_link_text: string;
     is_active: boolean;
 };
 
 export type GiveLink = {
     url: string;
     headerSubtitle: string;
+    giveLinkText: string;
 };
 
 // Links like `/details/${slug}?Instructor resources` (see book-tile/dropdown-menu.tsx) carry
@@ -65,22 +67,31 @@ export default function useGiveLink(defaultPlacement: Placement): GiveLink | nul
             return null;
         }
 
-        return {url: chosen.url, headerSubtitle: chosen.header_subtitle};
+        return {url: chosen.url, headerSubtitle: chosen.header_subtitle, giveLinkText: chosen.give_link_text};
     }, [rows, placement]);
 }
 
 type FallbackData = {
     give_link: string;
     header_subtitle: string;
+    give_link_text: string;
 };
 
-// Callers render before the CMS request settles (and must still show a working Give
-// button if it fails), so the popup's own give_link/header_subtitle are the floor.
-export function useResolvedGiveLink(defaultPlacement: Placement, data: FallbackData) {
-    const giveLink = useGiveLink(defaultPlacement);
+const noGiveLink: GiveLink = {url: '', headerSubtitle: '', giveLinkText: ''};
+
+function resolveGiveLink(giveLink: GiveLink | null, data: FallbackData) {
+    const {url, headerSubtitle, giveLinkText} = giveLink ?? noGiveLink;
 
     return {
-        url: giveLink?.url || data.give_link,
-        headerSubtitle: giveLink?.headerSubtitle || data.header_subtitle
+        url: url || data.give_link,
+        headerSubtitle: headerSubtitle || data.header_subtitle,
+        giveLinkText: giveLinkText || data.give_link_text
     };
+}
+
+// Callers render before the CMS request settles (and must still show a working Give
+// button if it fails), so the popup's own give_link/header_subtitle/give_link_text are
+// the floor. A blank string on the chosen row (unset variant override) falls back too.
+export function useResolvedGiveLink(defaultPlacement: Placement, data: FallbackData) {
+    return resolveGiveLink(useGiveLink(defaultPlacement), data);
 }

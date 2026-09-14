@@ -17,12 +17,14 @@ export default function CommonElements({
     data,
     onThankYouClick,
     headerSubtitle = data.header_subtitle,
-    giveLink
+    giveLink,
+    giveLinkText = data.give_link_text
 }: {
     data: Data;
     onThankYouClick: React.MouseEventHandler;
     headerSubtitle?: string;
     giveLink: string;
+    giveLinkText?: string;
 }) {
     const initialItem = React.useRef<HTMLAnchorElement>(null);
     const {pathname} = useLocation();
@@ -59,7 +61,7 @@ export default function CommonElements({
                     data-nudge-action="interacted"
                     ref={initialItem}
                 >
-                    {data.give_link_text}
+                    {giveLinkText}
                     <FontAwesomeIcon icon={faHeart} />
                 </a>
                 <a

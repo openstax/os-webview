@@ -4,7 +4,8 @@ import '@testing-library/jest-dom';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import useGiveLink, {
     placementFromSearch,
-    Placement
+    Placement,
+    useResolvedGiveLink
 } from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-links';
 
 jest.mock('@openstax/experiments', () => ({
@@ -19,6 +20,7 @@ function makeRow(overrides: Partial<{
     variant: string;
     url: string;
     header_subtitle: string;
+    give_link_text: string;
     is_active: boolean;
 }> = {}) {
     return {
@@ -26,6 +28,7 @@ function makeRow(overrides: Partial<{
         variant: 'control',
         url: 'https://give.example/control',
         header_subtitle: '',
+        give_link_text: '',
         is_active: true,
         ...overrides
     };
@@ -120,6 +123,52 @@ describe('useGiveLink', () => {
         ]);
         render(<Probe placement="pdf" path="/details/some-book?Instructor resources" />);
         await screen.findByText('https://give.example/instructor|');
+    });
+});
+
+/* eslint-disable camelcase */
+const fallbackData = {
+    give_link: 'https://fallback.example/give',
+    header_subtitle: 'fallback subtitle',
+    give_link_text: 'Give $25'
+};
+/* eslint-enable camelcase */
+
+function ResolvedProbe({placement}: {placement: Placement}) {
+    return (
+        <MemoryRouter initialEntries={['/']}>
+            <ResolvedProbeContent placement={placement} />
+        </MemoryRouter>
+    );
+}
+
+function ResolvedProbeContent({placement}: {placement: Placement}) {
+    const {giveLinkText} = useResolvedGiveLink(placement, fallbackData);
+
+    return <div data-testid="give-link-text">{giveLinkText}</div>;
+}
+
+describe('useResolvedGiveLink', () => {
+    afterEach(() => {
+        global.fetch = saveFetch;
+    });
+
+    it("renders the chosen variant's own give link text when set", async () => {
+        mockDonationLinks([makeRow({give_link_text: 'Give $50'})]);
+        render(<ResolvedProbe placement="pdf" />);
+        await screen.findByText('Give $50');
+    });
+
+    it("falls back to the popup's give link text when the variant's is blank", async () => {
+        mockDonationLinks([makeRow({give_link_text: ''})]);
+        render(<ResolvedProbe placement="pdf" />);
+        await screen.findByText('Give $25');
+    });
+
+    it("falls back to the popup's give link text when the CMS request fails", async () => {
+        global.fetch = jest.fn().mockRejectedValue(new Error('network down'));
+        render(<ResolvedProbe placement="pdf" />);
+        await screen.findByText('Give $25');
     });
 });
 
