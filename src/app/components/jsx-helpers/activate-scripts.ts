@@ -25,7 +25,11 @@ function sourceFor(text: string) {
 
     // Scoping the repeat makes it harmless instead of fatal: its declarations
     // are function-local now, and anything the first run hung off window is
-    // still there for it to find.
+    // still there for it to find. The one thing this does change is a repeat
+    // of a snippet that publishes a global with var/function for other code to
+    // read -- that global now keeps its first-run value instead of being
+    // reassigned. Self-contained snippets, which is all of them so far, do not
+    // notice.
     return `(function () {\n${text}\n})();`;
 }
 
