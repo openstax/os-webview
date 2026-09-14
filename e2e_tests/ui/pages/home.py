@@ -266,7 +266,7 @@ class HomeRex:
 
     @pytest.mark.asyncio
     async def click_k12_find_your_subject_book_cards_science_menu(self):
-        science_group = self.page.get_by_role("link", name="Science")
+        science_group = self.page.get_by_role("radio", name="Science")
         await science_group.scroll_into_view_if_needed()
         await science_group.click()
 
