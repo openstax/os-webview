@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {Routes, Route, useLocation} from 'react-router-dom';
 import $ from '~/helpers/$';
 import {PageTitleConfirmation} from './announce-page-title';
-import {assertNotNull, assertDefined} from '~/helpers/data';
 import useLinkHandler from './router-helpers/use-link-handler';
 import {RouterContextProvider} from './router-context';
 import useLayoutContext, {LayoutContextProvider} from '~/contexts/layout';
@@ -21,20 +20,81 @@ import useUserContext from '~/contexts/user';
 import Chat from '~/components/chat/chat';
 import './skip-to-content.scss';
 
-function doSkipToContent(event: React.MouseEvent) {
-    event.preventDefault();
-    const mainEl = document.getElementById('main');
-    const target = assertDefined(
-        assertNotNull(mainEl?.querySelector($.focusable))
-    ) as HTMLElement;
+// Long enough for a layout chunk to arrive on a slow connection, short enough
+// that we never pull focus back from someone who gave up and tabbed onward.
+const MAIN_WAIT_MS = 2000;
 
-    $.scrollTo(target);
-    target.focus();
+// The skip link targets the main region itself rather than the first focusable
+// thing inside it: #main carries tabIndex={-1} in every layout, and landing on
+// a descendant would silently skip whatever content sits above it.
+function focusMain() {
+    const mainEl = document.getElementById('main');
+
+    if (!mainEl) {
+        return false;
+    }
+
+    $.scrollTo(mainEl);
+    mainEl.focus({preventScroll: true});
+
+    // focus() is a no-op on an element that isn't focusable, so confirm it took
+    // rather than claiming success and suppressing the browser's own fallback.
+    return document.activeElement === mainEl;
+}
+
+// A layout is what renders #main, so on a cold load the region can still be
+// missing at the moment a keyboard user reaches the link. Watch for it to
+// arrive: the state that renders it lives below this component, so an effect
+// here would never re-run at the right time.
+function useSkipToContent() {
+    const stopWaitingRef = React.useRef<(() => void) | undefined>(undefined);
+
+    useEffect(() => () => stopWaitingRef.current?.(), []);
+
+    const waitForMain = React.useCallback((link: HTMLElement) => {
+        stopWaitingRef.current?.();
+
+        const observer = new MutationObserver(() => {
+            const active = document.activeElement;
+            // The user has moved on since the click; leave their focus alone.
+            const userMovedOn = active !== link && active !== document.body;
+
+            if (userMovedOn || focusMain()) {
+                stopWaitingRef.current?.();
+            }
+        });
+        const timer = window.setTimeout(
+            () => stopWaitingRef.current?.(),
+            MAIN_WAIT_MS
+        );
+
+        stopWaitingRef.current = () => {
+            observer.disconnect();
+            window.clearTimeout(timer);
+            stopWaitingRef.current = undefined;
+        };
+        observer.observe(document.body, {childList: true, subtree: true});
+    }, []);
+
+    return React.useCallback(
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
+            if (focusMain()) {
+                event.preventDefault();
+                return;
+            }
+            // Nothing to focus yet. Leave the browser's own href="#main"
+            // handling in place and take the user there once it mounts.
+            waitForMain(event.currentTarget);
+        },
+        [waitForMain]
+    );
 }
 
 function SkipToContent() {
+    const onClick = useSkipToContent();
+
     return (
-        <a className="skiptocontent" href="#main" onClick={doSkipToContent}>
+        <a className="skiptocontent" href="#main" onClick={onClick}>
             skip to main content
         </a>
     );

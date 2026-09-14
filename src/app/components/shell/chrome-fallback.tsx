@@ -10,7 +10,9 @@ export default function ChromeFallback() {
             <header id="header">
                 <Header />
             </header>
-            <DelayedFallback fullPage />
+            <div id="main" tabIndex={-1}>
+                <DelayedFallback fullPage />
+            </div>
         </React.Fragment>
     );
 }

@@ -40,7 +40,14 @@ function useContextValue() {
             const layoutParameterName = layoutParameters.name;
 
             if (layoutParameterName === null) {
-                return <div>{children}</div>;
+                // Stand in for the real layouts, which all render #main with
+                // the same tabIndex, so the skip link and post-navigation
+                // focus have a target before one has been chosen.
+                return (
+                    <div id="main" tabIndex={-1}>
+                        {children}
+                    </div>
+                );
             }
             const LoadableLayout = loadable({
                 loader: () => loaders[layoutParameterName](),

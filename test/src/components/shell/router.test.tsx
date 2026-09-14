@@ -46,10 +46,12 @@ jest.mock('~/components/shell/router-helpers/non-portal-route-wrapper', () => ({
     )
 }));
 
+const FOCUSABLE_SELECTOR =
+    'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 jest.mock('~/helpers/$', () => ({
+    __esModule: true,
     default: {
-        focusable:
-            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
         scrollTo: jest.fn()
     }
 }));
@@ -575,6 +577,127 @@ describe('Router', () => {
             expect(skipLink.tagName).toBe('A');
             expect(skipLink.getAttribute('href')).toBe('#main');
             expect(skipLink.className).toBe('skiptocontent');
+        });
+
+        // The default MockLayout renders no #main at all, which is the state a
+        // page is in before a layout chunk resolves.
+        const MainWithNothingFocusable = ({
+            children
+        }: {
+            children: React.ReactNode;
+        }) => (
+            <div id="main" tabIndex={-1}>
+                {children}
+            </div>
+        );
+
+        const renderWithLayout = (
+            Layout?: React.ComponentType<{children: React.ReactNode}>
+        ) => {
+            if (Layout) {
+                jest.spyOn(LayoutContext, 'default').mockReturnValue({
+                    Layout,
+                    setLayoutParameters: jest.fn()
+                } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+            }
+
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+        };
+
+        // Dispatching a real event (rather than fireEvent) is what lets us
+        // assert on defaultPrevented afterwards.
+        const clickSkipLink = () => {
+            const event = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            });
+
+            act(() => {
+                screen.getByText('skip to main content').dispatchEvent(event);
+            });
+
+            return event;
+        };
+
+        // Elements appended straight to the body, outside the testing-library
+        // container it tears down for us.
+        let addedElements: HTMLElement[] = [];
+
+        const appendToBody = <T extends HTMLElement>(el: T) => {
+            document.body.append(el);
+            addedElements.push(el);
+
+            return el;
+        };
+
+        const appendMain = () => {
+            const mainEl = document.createElement('div');
+
+            mainEl.id = 'main';
+            mainEl.tabIndex = -1;
+
+            return appendToBody(mainEl);
+        };
+
+        beforeEach(() => {
+            addedElements = [];
+        });
+
+        afterEach(() => {
+            addedElements.forEach((el) => el.remove());
+        });
+
+        it('focuses #main when it contains nothing focusable', () => {
+            renderWithLayout(MainWithNothingFocusable);
+
+            const event = clickSkipLink();
+
+            expect(
+                document.querySelector(`#main ${FOCUSABLE_SELECTOR}`)
+            ).toBeNull();
+            expect(document.activeElement).toBe(
+                document.getElementById('main')
+            );
+            expect(event.defaultPrevented).toBe(true);
+        });
+
+        it('leaves the default anchor behavior alone when #main is missing', () => {
+            renderWithLayout();
+
+            expect(document.getElementById('main')).toBeNull();
+
+            const event = clickSkipLink();
+
+            expect(event.defaultPrevented).toBe(false);
+        });
+
+        it('focuses #main once it mounts after the click', async () => {
+            renderWithLayout();
+            clickSkipLink();
+
+            const mainEl = appendMain();
+
+            await waitFor(() => expect(document.activeElement).toBe(mainEl));
+        });
+
+        it('leaves focus alone if the user moves on before #main mounts', async () => {
+            renderWithLayout();
+            clickSkipLink();
+
+            const button = appendToBody(document.createElement('button'));
+
+            button.focus();
+
+            const mainEl = appendMain();
+
+            await waitFor(() =>
+                expect(document.body.contains(mainEl)).toBe(true)
+            );
+            expect(document.activeElement).toBe(button);
         });
     });
 });
