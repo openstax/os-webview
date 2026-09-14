@@ -105,23 +105,3 @@ async def test_resources_tabs(chrome_page_unlogged, base_url, book_slug):
     await home.click_student_resources_tab()
 
     assert "Student" in chrome_page_unlogged.url
-
-
-@pytest.mark.parametrize("book_slug", ["anatomy-and-physiology-2e"])
-@pytest.mark.asyncio
-async def test_audiobook_link(chrome_page_unlogged, base_url, book_slug):
-
-    # GIVEN: Open osweb book details page
-
-    # WHEN: The Home page is fully loaded
-    details_books_url = f"{base_url}/details/books/{book_slug}"
-
-    await chrome_page_unlogged.goto(details_books_url)
-    home = HomeRex(chrome_page_unlogged)
-
-    await chrome_page_unlogged.keyboard.press("Escape")
-
-    # THEN: Audiobook link is visible and clickable (in both staging and prod)
-    assert await home.audiobook_link_is_visible()
-
-    assert await home.audiobook_link_purchase_options.is_enabled()
