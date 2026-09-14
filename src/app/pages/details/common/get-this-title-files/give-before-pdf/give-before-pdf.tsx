@@ -74,7 +74,7 @@ function GiveBeforePdfAfterConditionals({
     close: () => void;
     onDownload?: React.MouseEventHandler;
 }) {
-    const {url, headerSubtitle, giveLinkText} = useResolvedGiveLink('pdf', data);
+    const {url, headerSubtitle, headerImage, giveLinkText} = useResolvedGiveLink('pdf', data);
 
     React.useEffect(() => {
         window.dataLayer ||= [];
@@ -108,6 +108,7 @@ function GiveBeforePdfAfterConditionals({
                 data={data}
                 giveLink={url}
                 headerSubtitle={headerSubtitle}
+                headerImage={headerImage}
                 giveLinkText={giveLinkText}
             />
             <a

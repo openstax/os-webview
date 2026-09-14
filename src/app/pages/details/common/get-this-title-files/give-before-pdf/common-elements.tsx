@@ -17,12 +17,14 @@ export default function CommonElements({
     data,
     onThankYouClick,
     headerSubtitle = data.header_subtitle,
+    headerImage = data.header_image,
     giveLink,
     giveLinkText = data.give_link_text
 }: {
     data: Data;
     onThankYouClick: React.MouseEventHandler;
     headerSubtitle?: string;
+    headerImage?: string;
     giveLink: string;
     giveLinkText?: string;
 }) {
@@ -42,7 +44,7 @@ export default function CommonElements({
             ) : (
                 <img
                     className="header-image"
-                    src={data.header_image}
+                    src={headerImage}
                     alt=""
                     height="165"
                     width="165"

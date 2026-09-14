@@ -22,7 +22,7 @@ export default function GiveBeforeOther({
     id?: string;
 }) {
     const {showThankYou, onThankYouClick} = useOnThankYouClick();
-    const {url, headerSubtitle, giveLinkText} = useResolvedGiveLink(placementForVariant(variant), data);
+    const {url, headerSubtitle, headerImage, giveLinkText} = useResolvedGiveLink(placementForVariant(variant), data);
     const beforeOpen = React.useCallback(
         (e: React.MouseEvent) => {
             close();
@@ -58,6 +58,7 @@ export default function GiveBeforeOther({
                 onThankYouClick={onThankYouClick}
                 giveLink={url}
                 headerSubtitle={headerSubtitle}
+                headerImage={headerImage}
                 giveLinkText={giveLinkText}
             />
             <a
