@@ -22,7 +22,7 @@ export default [
         variant: 'control',
         url: 'https://riceconnect.rice.edu/donation/support-openstax-instructor-resources',
         header_subtitle: '',
-        header_image: '',
+        header_image: null,
         give_link_text: '',
         is_active: true
     },

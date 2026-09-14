@@ -10,7 +10,7 @@ type DonationLinkRow = {
     variant: string;
     url: string;
     header_subtitle: string;
-    header_image: string;
+    header_image: string | null;
     give_link_text: string;
     is_active: boolean;
 };
@@ -18,7 +18,7 @@ type DonationLinkRow = {
 export type GiveLink = {
     url: string;
     headerSubtitle: string;
-    headerImage: string;
+    headerImage: string | null;
     giveLinkText: string;
 };
 
@@ -103,7 +103,7 @@ type FallbackData = {
 const noGiveLink: GiveLink = {url: '', headerSubtitle: '', headerImage: '', giveLinkText: ''};
 
 // A blank value on the chosen row (unset variant override) falls back to the popup's own value.
-function pick(variantValue: string, fallbackValue: string) {
+function pick(variantValue: string | null, fallbackValue: string) {
     return variantValue || fallbackValue;
 }
 
