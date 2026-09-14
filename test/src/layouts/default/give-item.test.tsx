@@ -8,8 +8,11 @@ jest.mock('~/models/give-today', () => jest.fn());
 const RICECONNECT = 'https://riceconnect.rice.edu/donation/support-openstax-header';
 
 describe('GiveItem', () => {
-    it('renders a Give text link to RiceConnect when no campaign is active', () => {
-        (useGiveToday as jest.Mock).mockReturnValue({showButton: false});
+    it('renders a Give text link to the CMS default when no campaign is active', () => {
+        (useGiveToday as jest.Mock).mockReturnValue({
+            showButton: false,
+            default_give_link: RICECONNECT
+        });
         render(<GiveItem />);
 
         const link = screen.getByRole('link', {name: 'Give'});
@@ -29,5 +32,14 @@ describe('GiveItem', () => {
 
         expect(link.classList.contains('give-button')).toBe(true);
         expect(link.getAttribute('href')).toBe('https://example.test/campaign');
+    });
+
+    it('still renders a working Give link before the CMS responds', () => {
+        (useGiveToday as jest.Mock).mockReturnValue({});
+        render(<GiveItem />);
+
+        expect(
+            screen.getByRole('link', {name: 'Give'}).getAttribute('href')
+        ).toBe(RICECONNECT);
     });
 });
