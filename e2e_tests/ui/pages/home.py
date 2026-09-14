@@ -202,10 +202,15 @@ class HomeRex:
     # Higher Education and bookstore page
 
     async def click_higher_education_link(self):
-        await self.page.get_by_role("link", name="Explore Higher Ed resources").click()
+        hed_locator = self.page.get_by_role("link", name="Explore higher ed")
+        await hed_locator.scroll_into_view_if_needed()
+        await hed_locator.click()
 
     async def click_campus_affordability_link(self):
-        await self.page.get_by_role("link", name=re.compile(r"Explore your options", re.IGNORECASE)).click()
+        await self.page.locator("#accordion__heading-Campus_affordability_programs").click()
+
+    async def click_explore_your_options_link(self):
+        await self.page.get_by_role("link", name="Explore your options").click()
 
     @property
     def higher_education_bookstore_order_access_code(self):
@@ -238,16 +243,12 @@ class HomeRex:
         return self.page.get_by_role("link", name="order form")
 
     @property
-    def try_assignable_today_link(self):
-        return self.page.get_by_role("link", name=re.compile(r"Try Assignable", re.IGNORECASE))
+    def explore_openstax_assignable_link(self):
+        return self.page.get_by_role("link", name=re.compile(r"Explore Openstax Assignable", re.IGNORECASE))
 
     @property
     def free_digital_library_subjects(self):
-        return self.page.locator("div.content-block-cards a.cta-link")
-
-    @property
-    def search_technology_partners_link(self):
-        return self.page.get_by_role("link", name="Search Technology Partners")
+        return self.page.locator("div.content-block-links a")
 
     # K12 and Kinetic pages
 
@@ -260,13 +261,9 @@ class HomeRex:
     def k12_find_your_subject(self):
         return self.page.get_by_text("Find your subject below")
 
-    @property
-    def k12_find_your_subject_options(self):
-        return self.page.locator("div.buttons select.classic option[value]")
-
     @pytest.mark.asyncio
     async def click_k12_find_your_subject_book_cards_science_menu(self):
-        science_group = self.page.get_by_role("radio", name="Science")
+        science_group = self.page.get_by_role("link", name="Science")
         await science_group.scroll_into_view_if_needed()
         await science_group.click()
 
@@ -282,12 +279,6 @@ class HomeRex:
         for subject in ["Math", "Social Studies", "Science"]:
             link = subject_links.get_by_role("link", name=subject)
             assert await link.is_visible(), f"'{subject}' link not found in the subject links section"
-
-    @pytest.mark.asyncio
-    async def click_osweb_higher_ed_link(self):
-        hed_locator = self.page.get_by_role("link", name="Explore higher ed")
-        await hed_locator.scroll_into_view_if_needed()
-        await hed_locator.click()
 
     async def higher_ed_page_content_is_visible(self):
         hedc_locator = self.page.locator("#he_cards")
