@@ -16,11 +16,6 @@ function useContextValue(params: ContextParams = {}) {
             childIndex >= firstOnPage && childIndex <= lastOnPage,
         [firstOnPage, lastOnPage]
     );
-    const visibleChildren = useCallback(
-        (children: React.ReactNode[]) =>
-            children.slice(firstOnPage, lastOnPage + 1),
-        [firstOnPage, lastOnPage]
-    );
 
     return {
         currentPage,
@@ -28,8 +23,7 @@ function useContextValue(params: ContextParams = {}) {
         resultsPerPage,
         firstOnPage,
         lastOnPage,
-        isVisible,
-        visibleChildren
+        isVisible
     };
 }
 

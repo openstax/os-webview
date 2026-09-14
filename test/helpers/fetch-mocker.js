@@ -101,6 +101,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSchools = (/salesforce\/schools/).test(args[0]);
     const isSearchCollection = args[0].includes('/search/?collection=');
     const isSearchSubject = args[0].includes('/search/?subjects=');
+    const isSearchV2 = args[0].includes('/search/v2/');
     const isSfapiUser = (/api\/v1\/users/).test(args[0]);
     const isSfapiLists = (/api\/v1\/lists/).test(args[0]);
     const isSfapiSchoolTrinity = (/0017h00000YXEBzAAP/).test(args[0]);
@@ -223,6 +224,20 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = searchCollection;
             } else if (isSearchSubject) {
                 payload = searchSubject;
+            } else if (isSearchV2) {
+                payload = {
+                    query: '',
+                    sources: {
+                        news: {
+                            page: 1,
+                            page_size: 10, // eslint-disable-line camelcase
+                            total: 0,
+                            next: null,
+                            previous: null,
+                            results: []
+                        }
+                    }
+                };
             } else if (isSfapiLists) {
                 payload = sfapiLists;
             } else if (isSfapiSchoolTrinity) {
