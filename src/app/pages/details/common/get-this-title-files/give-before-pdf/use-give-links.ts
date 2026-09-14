@@ -11,6 +11,7 @@ type DonationLinkRow = {
     url: string;
     header_subtitle: string;
     header_image: string | null;
+    header_title: string;
     give_link_text: string;
     is_active: boolean;
 };
@@ -19,6 +20,7 @@ export type GiveLink = {
     url: string;
     headerSubtitle: string;
     headerImage: string | null;
+    headerTitle: string;
     giveLinkText: string;
 };
 
@@ -88,6 +90,7 @@ export default function useGiveLink(defaultPlacement: Placement): GiveLink | nul
             url: chosen.url,
             headerSubtitle: chosen.header_subtitle,
             headerImage: chosen.header_image,
+            headerTitle: chosen.header_title,
             giveLinkText: chosen.give_link_text
         };
     }, [rows, placement]);
@@ -97,10 +100,17 @@ type FallbackData = {
     give_link: string;
     header_subtitle: string;
     header_image: string;
+    header_title: string;
     give_link_text: string;
 };
 
-const noGiveLink: GiveLink = {url: '', headerSubtitle: '', headerImage: '', giveLinkText: ''};
+const noGiveLink: GiveLink = {
+    url: '',
+    headerSubtitle: '',
+    headerImage: '',
+    headerTitle: '',
+    giveLinkText: ''
+};
 
 // A blank value on the chosen row (unset variant override) falls back to the popup's own value.
 function pick(variantValue: string | null, fallbackValue: string) {
@@ -108,19 +118,20 @@ function pick(variantValue: string | null, fallbackValue: string) {
 }
 
 function resolveGiveLink(giveLink: GiveLink | null, data: FallbackData) {
-    const {url, headerSubtitle, headerImage, giveLinkText} = giveLink ?? noGiveLink;
+    const {url, headerSubtitle, headerImage, headerTitle, giveLinkText} = giveLink ?? noGiveLink;
 
     return {
         url: pick(url, data.give_link) || FALLBACK_POPUP_GIVE_LINK,
         headerSubtitle: pick(headerSubtitle, data.header_subtitle),
         headerImage: pick(headerImage, data.header_image),
+        headerTitle: pick(headerTitle, data.header_title),
         giveLinkText: pick(giveLinkText, data.give_link_text)
     };
 }
 
 // Callers render before the CMS request settles (and must still show a working Give
-// button if it fails), so the popup's own give_link/header_subtitle/header_image/give_link_text
-// are the floor.
+// button if it fails), so the popup's own give_link/header_subtitle/header_image/header_title/
+// give_link_text are the floor.
 export function useResolvedGiveLink(defaultPlacement: Placement, data: FallbackData) {
     return resolveGiveLink(useGiveLink(defaultPlacement), data);
 }

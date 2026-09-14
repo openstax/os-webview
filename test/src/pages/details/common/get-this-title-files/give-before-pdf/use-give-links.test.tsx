@@ -22,6 +22,7 @@ function makeRow(overrides: Partial<{
     url: string;
     header_subtitle: string;
     header_image: string;
+    header_title: string;
     give_link_text: string;
     is_active: boolean;
 }> = {}) {
@@ -31,6 +32,7 @@ function makeRow(overrides: Partial<{
         url: 'https://give.example/control',
         header_subtitle: '',
         header_image: '',
+        header_title: '',
         give_link_text: '',
         is_active: true,
         ...overrides
@@ -134,11 +136,18 @@ const fallbackData = {
     give_link: 'https://fallback.example/give',
     header_subtitle: 'fallback subtitle',
     header_image: 'https://fallback.example/image.jpg',
+    header_title: 'Fallback title',
     give_link_text: 'Give $25'
 };
 
 // What useDonationPopupData yields before its request settles.
-const unloadedData = {give_link: '', header_subtitle: '', header_image: '', give_link_text: ''};
+const unloadedData = {
+    give_link: '',
+    header_subtitle: '',
+    header_image: '',
+    header_title: '',
+    give_link_text: ''
+};
 /* eslint-enable camelcase */
 
 function ResolvedProbe({placement}: {placement: Placement}) {
@@ -150,12 +159,13 @@ function ResolvedProbe({placement}: {placement: Placement}) {
 }
 
 function ResolvedProbeContent({placement}: {placement: Placement}) {
-    const {giveLinkText, headerImage} = useResolvedGiveLink(placement, fallbackData);
+    const {giveLinkText, headerImage, headerTitle} = useResolvedGiveLink(placement, fallbackData);
 
     return (
         <React.Fragment>
             <div data-testid="give-link-text">{giveLinkText}</div>
             <div data-testid="header-image">{headerImage}</div>
+            <div data-testid="header-title">{headerTitle}</div>
         </React.Fragment>
     );
 }
@@ -213,6 +223,24 @@ describe('useResolvedGiveLink', () => {
         global.fetch = jest.fn().mockRejectedValue(new Error('network down'));
         render(<ResolvedProbe placement="pdf" />);
         await screen.findByText('https://fallback.example/image.jpg');
+    });
+
+    it("renders the chosen variant's own header title when set", async () => {
+        mockDonationLinks([makeRow({header_title: 'Give $50 titled'})]);
+        render(<ResolvedProbe placement="pdf" />);
+        await screen.findByText('Give $50 titled');
+    });
+
+    it("falls back to the popup's header title when the variant's is blank", async () => {
+        mockDonationLinks([makeRow({header_title: ''})]);
+        render(<ResolvedProbe placement="pdf" />);
+        await screen.findByText('Fallback title');
+    });
+
+    it("falls back to the popup's header title when the CMS request fails", async () => {
+        global.fetch = jest.fn().mockRejectedValue(new Error('network down'));
+        render(<ResolvedProbe placement="pdf" />);
+        await screen.findByText('Fallback title');
     });
 
     it('still yields a working url when neither the CMS nor the popup has loaded', async () => {

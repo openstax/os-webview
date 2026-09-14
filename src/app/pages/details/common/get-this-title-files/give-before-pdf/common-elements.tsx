@@ -18,6 +18,7 @@ export default function CommonElements({
     onThankYouClick,
     headerSubtitle = data.header_subtitle,
     headerImage = data.header_image,
+    headerTitle = data.header_title,
     giveLink,
     giveLinkText = data.give_link_text
 }: {
@@ -25,6 +26,7 @@ export default function CommonElements({
     onThankYouClick: React.MouseEventHandler;
     headerSubtitle?: string;
     headerImage?: string;
+    headerTitle?: string;
     giveLink: string;
     giveLinkText?: string;
 }) {
@@ -51,7 +53,7 @@ export default function CommonElements({
                 />
             )}
             <p>
-                <span className="header-title">{data.header_title}</span>
+                <span className="header-title">{headerTitle}</span>
                 <br />
                 <span>{headerSubtitle}</span>
             </p>
