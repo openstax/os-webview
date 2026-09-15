@@ -8,6 +8,8 @@ import {
 import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
+import {useExperimentReader, type FlagValue} from '~/helpers/posthog';
+import {isNodeVisible, type FlagAwareNode} from './nav-experiments';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveItem from '../give-item/give-item';
@@ -15,18 +17,23 @@ import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
 type MenuItemData =
-    | {
+    | (FlagAwareNode & {
           name: string;
           menu: MenuItemData[];
-      }
-    | {
+      })
+    | (FlagAwareNode & {
           label: string;
           partial_url: string;
-      }
+      })
     | object;
 
-function DropdownOrMenuItem({item}: {item: MenuItemData}) {
+type GetVariant = (flag: string) => FlagValue;
+
+function DropdownOrMenuItem({item, getVariant}: {item: MenuItemData; getVariant: GetVariant}) {
     if (!('name' in item) && !('label' in item)) {
+        return null;
+    }
+    if (!isNodeVisible(item, getVariant)) {
         return null;
     }
     if ('menu' in item) {
@@ -35,7 +42,7 @@ function DropdownOrMenuItem({item}: {item: MenuItemData}) {
                 label={item.name!}
                 navAnalytics={`Main Menu (${item.name})`}
             >
-                <MenusFromStructure structure={item.menu} />
+                <MenusFromStructure structure={item.menu} getVariant={getVariant} />
             </Dropdown>
         );
     }
@@ -43,13 +50,24 @@ function DropdownOrMenuItem({item}: {item: MenuItemData}) {
     return <MenuItem label={item.label} url={item.partial_url} />;
 }
 
-function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
+function keyFor(item: MenuItemData, index: number): string | number {
+    if ('key' in item && item.key) {
+        return item.key;
+    }
+    if ('label' in item) {
+        return item.label;
+    }
+    return index;
+}
+
+function MenusFromStructure({structure, getVariant}: {structure: MenuItemData[]; getVariant: GetVariant}) {
     return (
         <React.Fragment>
             {structure.map((item, index) => (
                 <DropdownOrMenuItem
-                    key={'label' in item ? item.label : index}
+                    key={keyFor(item, index)}
                     item={item}
+                    getVariant={getVariant}
                 />
             ))}
         </React.Fragment>
@@ -57,6 +75,7 @@ function MenusFromStructure({structure}: {structure: MenuItemData[]}) {
 }
 
 function MenusFromCMS() {
+    const getVariant = useExperimentReader();
     const structure = useDataFromSlug<MenuItemData[]>('oxmenus');
 
     // fetchFromCMS resolves with an {error} object (not an array) when the
@@ -65,7 +84,7 @@ function MenusFromCMS() {
         return null;
     }
 
-    return <MenusFromStructure structure={structure} />;
+    return <MenusFromStructure structure={structure} getVariant={getVariant} />;
 }
 
 function K12MenuItem() {
