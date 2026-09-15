@@ -180,5 +180,12 @@ describe('LoginMenuWithDropdown', () => {
 
             expect(await screen.findByRole('link', {name: 'Account Dashboard'})).toBeInTheDocument();
         });
+
+        it('shows Account Profile when the SF fetch fails', async () => {
+            renderWithRealContext('confirmed_faculty', true, null);
+
+            expect(await screen.findByRole('link', {name: 'Account Profile'})).toBeInTheDocument();
+            expect(screen.queryByRole('link', {name: 'Account Dashboard'})).toBeNull();
+        });
     });
 });
