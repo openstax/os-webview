@@ -180,6 +180,27 @@ describe('posthog interop', () => {
         expect(posthogCapture).toHaveBeenCalledWith(error);
     });
 
+    it('drops queued exceptions after PostHog never loads', async () => {
+        const posthogModule = await freshModule();
+        const setConfig = jest.fn();
+        const posthogCapture = jest.fn();
+
+        posthogModule.captureException(new Error('Failed to fetch sticky/'));
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(60000);
+
+        setPostHog({
+            __loaded: true,
+            'set_config': setConfig,
+            captureException: posthogCapture
+        });
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(1000);
+
+        expect(setConfig).toHaveBeenCalledWith({'before_send': posthogModule.beforeSend});
+        expect(posthogCapture).not.toHaveBeenCalled();
+    });
+
     it('installs only once', async () => {
         const posthogModule = await freshModule();
         const setConfig = jest.fn();

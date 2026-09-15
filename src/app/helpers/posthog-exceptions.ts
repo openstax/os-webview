@@ -25,6 +25,7 @@ type PostHog = {
 // than poll a page where the tag never fires (K12 portal, blocked GTM).
 const POLL_INTERVAL = 500;
 const POLL_LIMIT = 60;
+const MAX_PENDING_EXCEPTIONS = 20;
 
 type LoadedPostHog = PostHog & {set_config: NonNullable<PostHog['set_config']>};
 
@@ -78,6 +79,13 @@ let filterInstalled = false;
 let filterInstalling = false;
 let pendingExceptions: unknown[] = [];
 
+function queueException(error: unknown) {
+    pendingExceptions = [
+        ...pendingExceptions.slice(-(MAX_PENDING_EXCEPTIONS - 1)),
+        error
+    ];
+}
+
 function flushPendingExceptions(posthog: LoadedPostHog) {
     pendingExceptions.forEach((error) => posthog.captureException?.(error));
     pendingExceptions = [];
@@ -102,6 +110,9 @@ export function installExceptionFilter() {
         }
         if (posthog || attempts >= POLL_LIMIT) {
             filterInstalling = false;
+            if (!posthog) {
+                pendingExceptions = [];
+            }
             window.clearInterval(poll);
         }
     }, POLL_INTERVAL);
@@ -118,6 +129,6 @@ export function captureException(error: unknown) {
         return;
     }
     if (!posthog) {
-        pendingExceptions.push(error);
+        queueException(error);
     }
 }
