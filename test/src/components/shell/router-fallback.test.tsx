@@ -35,4 +35,14 @@ describe('shell router fallback', () => {
         expect(document.querySelector('#header')).toBeTruthy();
         expect(screen.getByText('mock-header')).toBeInTheDocument();
     });
+
+    it('gives the skip link a #main to land on, and only one of them', () => {
+        render(AppElement);
+
+        expect(document.querySelectorAll('#main')).toHaveLength(1);
+        expect(document.querySelector('#main')).toHaveAttribute(
+            'tabindex',
+            '-1'
+        );
+    });
 });

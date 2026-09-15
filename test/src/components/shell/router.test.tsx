@@ -46,10 +46,12 @@ jest.mock('~/components/shell/router-helpers/non-portal-route-wrapper', () => ({
     )
 }));
 
+const FOCUSABLE_SELECTOR =
+    'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 jest.mock('~/helpers/$', () => ({
+    __esModule: true,
     default: {
-        focusable:
-            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
         scrollTo: jest.fn()
     }
 }));
@@ -575,6 +577,286 @@ describe('Router', () => {
             expect(skipLink.tagName).toBe('A');
             expect(skipLink.getAttribute('href')).toBe('#main');
             expect(skipLink.className).toBe('skiptocontent');
+        });
+
+        // The default MockLayout renders no #main at all, which is the state a
+        // page is in before a layout chunk resolves.
+        const MainWithNothingFocusable = ({
+            children
+        }: {
+            children: React.ReactNode;
+        }) => (
+            <div id="main" tabIndex={-1}>
+                {children}
+            </div>
+        );
+
+        const renderWithLayout = (
+            Layout?: React.ComponentType<{children: React.ReactNode}>
+        ) => {
+            if (Layout) {
+                jest.spyOn(LayoutContext, 'default').mockReturnValue({
+                    Layout,
+                    setLayoutParameters: jest.fn()
+                } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+            }
+
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+        };
+
+        // Dispatching a real event (rather than fireEvent) is what lets us
+        // assert on defaultPrevented afterwards.
+        const clickSkipLink = () => {
+            const event = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            });
+
+            act(() => {
+                screen.getByText('skip to main content').dispatchEvent(event);
+            });
+
+            return event;
+        };
+
+        // Elements appended straight to the body, outside the testing-library
+        // container it tears down for us.
+        let addedElements: HTMLElement[] = [];
+
+        const appendToBody = <T extends HTMLElement>(el: T) => {
+            document.body.append(el);
+            addedElements.push(el);
+
+            return el;
+        };
+
+        const appendMain = () => {
+            const mainEl = document.createElement('div');
+
+            mainEl.id = 'main';
+            mainEl.tabIndex = -1;
+
+            return appendToBody(mainEl);
+        };
+
+        beforeEach(() => {
+            addedElements = [];
+        });
+
+        afterEach(() => {
+            addedElements.forEach((el) => el.remove());
+        });
+
+        it('focuses #main when it contains nothing focusable', () => {
+            renderWithLayout(MainWithNothingFocusable);
+
+            const event = clickSkipLink();
+
+            expect(
+                document.querySelector(`#main ${FOCUSABLE_SELECTOR}`)
+            ).toBeNull();
+            expect(document.activeElement).toBe(
+                document.getElementById('main')
+            );
+            expect(event.defaultPrevented).toBe(true);
+        });
+
+        it('leaves the default anchor behavior alone when #main is missing', () => {
+            renderWithLayout();
+
+            expect(document.getElementById('main')).toBeNull();
+
+            const event = clickSkipLink();
+
+            expect(event.defaultPrevented).toBe(false);
+        });
+
+        it('keeps waiting through unrelated changes until #main mounts', async () => {
+            renderWithLayout();
+            clickSkipLink();
+
+            appendToBody(document.createElement('span'));
+            await act(async () => undefined);
+
+            expect(document.activeElement).toBe(document.body);
+
+            const mainEl = appendMain();
+
+            await waitFor(() => expect(document.activeElement).toBe(mainEl));
+        });
+
+        it('leaves the default alone when #main cannot take focus', () => {
+            // No tabIndex, so focus() is a no-op and the handler must not
+            // claim it moved focus.
+            const UnfocusableMain = ({
+                children
+            }: {
+                children: React.ReactNode;
+            }) => <div id="main">{children}</div>;
+
+            renderWithLayout(UnfocusableMain);
+
+            const event = clickSkipLink();
+
+            expect(document.activeElement).not.toBe(
+                document.getElementById('main')
+            );
+            expect(event.defaultPrevented).toBe(false);
+        });
+
+        it('gives up waiting for #main after a couple of seconds', async () => {
+            jest.useFakeTimers();
+
+            try {
+                renderWithLayout();
+                clickSkipLink();
+
+                act(() => jest.advanceTimersByTime(5000));
+
+                const mainEl = appendMain();
+
+                await act(async () => undefined);
+
+                expect(document.activeElement).not.toBe(mainEl);
+            } finally {
+                jest.useRealTimers();
+            }
+        });
+
+        it('stops waiting for #main when the router unmounts', async () => {
+            jest.spyOn(LayoutContext, 'default').mockReturnValue({
+                Layout: ({children}: {children: React.ReactNode}) => (
+                    <div>{children}</div>
+                ),
+                setLayoutParameters: jest.fn()
+            } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+            const {unmount} = render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+            const event = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            });
+
+            act(() => {
+                screen.getByText('skip to main content').dispatchEvent(event);
+            });
+            unmount();
+
+            const mainEl = appendMain();
+
+            await act(async () => undefined);
+
+            expect(document.activeElement).not.toBe(mainEl);
+        });
+
+        it('leaves focus alone if the user moves on before #main mounts', async () => {
+            renderWithLayout();
+            clickSkipLink();
+
+            const button = appendToBody(document.createElement('button'));
+
+            button.focus();
+
+            const mainEl = appendMain();
+
+            await waitFor(() =>
+                expect(document.body.contains(mainEl)).toBe(true)
+            );
+            expect(document.activeElement).toBe(button);
+        });
+
+        // Both the null layout and ChromeFallback render a stand-in #main that
+        // the real layout replaces once its chunk resolves; the stand-in takes
+        // any focus sitting on it with it when it goes.
+        const renderSwappingLayout = () => {
+            let resolve = () => undefined as void;
+            const SwappingLayout = ({
+                children
+            }: {
+                children: React.ReactNode;
+            }) => {
+                const [resolved, setResolved] = React.useState(false);
+
+                resolve = () => setResolved(true);
+
+                return resolved ? (
+                    <main id="main" tabIndex={-1} data-testid="real-main">
+                        {children}
+                    </main>
+                ) : (
+                    <div id="main" tabIndex={-1} data-testid="standin-main">
+                        {children}
+                    </div>
+                );
+            };
+
+            renderWithLayout(SwappingLayout);
+
+            return () => act(() => resolve());
+        };
+
+        it('follows #main through the swap to the real layout', async () => {
+            const resolveLayout = renderSwappingLayout();
+
+            clickSkipLink();
+
+            expect(document.activeElement).toBe(
+                screen.getByTestId('standin-main')
+            );
+
+            // An unrelated change while the stand-in is still on the page
+            // leaves the focus we just moved where it is.
+            appendToBody(document.createElement('span'));
+            await act(async () => undefined);
+
+            expect(document.activeElement).toBe(
+                screen.getByTestId('standin-main')
+            );
+
+            resolveLayout();
+
+            await waitFor(() =>
+                expect(document.activeElement).toBe(
+                    screen.getByTestId('real-main')
+                )
+            );
+        });
+
+        it('leaves focus alone when the user moves on before the swap', async () => {
+            const resolveLayout = renderSwappingLayout();
+
+            clickSkipLink();
+
+            const button = appendToBody(document.createElement('button'));
+
+            button.focus();
+            resolveLayout();
+
+            await waitFor(() =>
+                expect(screen.getByTestId('real-main')).toBeInTheDocument()
+            );
+            expect(document.activeElement).toBe(button);
+        });
+
+        it('keeps the document link handler off the fallback click', () => {
+            renderWithLayout();
+
+            expect(document.getElementById('main')).toBeNull();
+
+            clickSkipLink();
+
+            // Left to bubble, use-link-handler would preventDefault this click
+            // and route it instead -- a navigation that moves no focus at all.
+            expect(mockLinkHandler).not.toHaveBeenCalled();
         });
     });
 });
