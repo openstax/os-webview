@@ -41,7 +41,25 @@ type FooterData = {
     copyright: string;
     apStatement: string;
     socialLinks?: SocialLink[];
+    facebookLink?: string;
+    twitterLink?: string;
+    linkedinLink?: string;
 };
+
+// This endpoint's response is CloudFront-cached for the better part of a day, so a
+// copy predating the CMS release can still be served after this ships. Absent means
+// that stale payload; an empty list means an editor removed every link, so it stands.
+function socialLinksFrom(data: FooterData) {
+    if (data.socialLinks) {
+        return data.socialLinks;
+    }
+
+    return [
+        {platform: 'facebook', url: data.facebookLink},
+        {platform: 'twitter', url: data.twitterLink},
+        {platform: 'linkedin', url: data.linkedinLink}
+    ].filter((link): link is SocialLink => Boolean(link.url));
+}
 
 const socialPlatforms: {[key: string]: {icon: IconDefinition; label: string}} = {
     facebook: {icon: faFacebookF, label: 'Facebook'},
@@ -124,16 +142,8 @@ function SocialLinks({links}: {links: SocialLink[]}) {
     );
 }
 
-function Footer({
-    data: {
-        supporters,
-        copyright,
-        apStatement,
-        socialLinks
-    }
-}: {
-    data: FooterData;
-}) {
+function Footer({data}: {data: FooterData}) {
+    const {supporters, copyright, apStatement} = data;
     const {rewriteLinks} = usePortalContext();
     const columns = useFooterColumns();
 
@@ -161,7 +171,7 @@ function Footer({
                             apStatement={apStatement}
                         />
                     </div>
-                    <SocialLinks links={socialLinks ?? []} />
+                    <SocialLinks links={socialLinksFrom(data)} />
                 </div>
             </div>
         </React.Fragment>
