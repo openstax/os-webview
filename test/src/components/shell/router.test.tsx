@@ -773,5 +773,90 @@ describe('Router', () => {
             );
             expect(document.activeElement).toBe(button);
         });
+
+        // Both the null layout and ChromeFallback render a stand-in #main that
+        // the real layout replaces once its chunk resolves; the stand-in takes
+        // any focus sitting on it with it when it goes.
+        const renderSwappingLayout = () => {
+            let resolve = () => undefined as void;
+            const SwappingLayout = ({
+                children
+            }: {
+                children: React.ReactNode;
+            }) => {
+                const [resolved, setResolved] = React.useState(false);
+
+                resolve = () => setResolved(true);
+
+                return resolved ? (
+                    <main id="main" tabIndex={-1} data-testid="real-main">
+                        {children}
+                    </main>
+                ) : (
+                    <div id="main" tabIndex={-1} data-testid="standin-main">
+                        {children}
+                    </div>
+                );
+            };
+
+            renderWithLayout(SwappingLayout);
+
+            return () => act(() => resolve());
+        };
+
+        it('follows #main through the swap to the real layout', async () => {
+            const resolveLayout = renderSwappingLayout();
+
+            clickSkipLink();
+
+            expect(document.activeElement).toBe(
+                screen.getByTestId('standin-main')
+            );
+
+            // An unrelated change while the stand-in is still on the page
+            // leaves the focus we just moved where it is.
+            appendToBody(document.createElement('span'));
+            await act(async () => undefined);
+
+            expect(document.activeElement).toBe(
+                screen.getByTestId('standin-main')
+            );
+
+            resolveLayout();
+
+            await waitFor(() =>
+                expect(document.activeElement).toBe(
+                    screen.getByTestId('real-main')
+                )
+            );
+        });
+
+        it('leaves focus alone when the user moves on before the swap', async () => {
+            const resolveLayout = renderSwappingLayout();
+
+            clickSkipLink();
+
+            const button = appendToBody(document.createElement('button'));
+
+            button.focus();
+            resolveLayout();
+
+            await waitFor(() =>
+                expect(screen.getByTestId('real-main')).toBeInTheDocument()
+            );
+            expect(document.activeElement).toBe(button);
+        });
+
+        it('keeps the document link handler off the fallback click', () => {
+            renderWithLayout();
+
+            expect(document.getElementById('main')).toBeNull();
+
+            clickSkipLink();
+
+            // Left to bubble, use-link-handler would preventDefault this click
+            // and route it instead -- a navigation that moves no focus at all.
+            expect(mockLinkHandler).not.toHaveBeenCalled();
+        });
     });
 });

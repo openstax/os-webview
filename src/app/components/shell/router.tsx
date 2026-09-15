@@ -26,65 +26,92 @@ const MAIN_WAIT_MS = 2000;
 
 // The skip link targets the main region itself rather than the first focusable
 // thing inside it: #main carries tabIndex={-1} in every layout, and landing on
-// a descendant would silently skip whatever content sits above it.
+// a descendant would silently skip whatever content sits above it. Returns the
+// element focus ended up on, or null -- focus() is a no-op on an element that
+// isn't focusable, so the caller has to be told which it got rather than
+// assuming the move took.
 function focusMain() {
     const mainEl = document.getElementById('main');
 
     if (!mainEl) {
-        return false;
+        return null;
     }
 
     $.scrollTo(mainEl);
     mainEl.focus({preventScroll: true});
 
-    // focus() is a no-op on an element that isn't focusable, so confirm it took
-    // rather than claiming success and suppressing the browser's own fallback.
-    return document.activeElement === mainEl;
+    return document.activeElement === mainEl ? mainEl : null;
 }
 
-// A layout is what renders #main, so on a cold load the region can still be
-// missing at the moment a keyboard user reaches the link. Watch for it to
-// arrive: the state that renders it lives below this component, so an effect
-// here would never re-run at the right time.
+// Focus is still ours while it sits on the link, on the element we moved it to,
+// or back on the body because that element was just swapped out. Anything else
+// is the user having moved on, and we leave them where they are.
+function userMovedOn(link: HTMLElement, focused: HTMLElement | null) {
+    const active = document.activeElement;
+
+    return active !== link && active !== focused && active !== document.body;
+}
+
+// A layout is what renders #main, so at the moment a keyboard user reaches the
+// link the region may be missing entirely, or may be one of the stand-ins the
+// null layout and ChromeFallback render until a chunk resolves -- and a
+// stand-in takes the focus with it when it goes. Either way the answer is to
+// watch the DOM: the state that renders and replaces #main lives below this
+// component, so an effect here would never re-run at the right time.
 function useSkipToContent() {
     const stopWaitingRef = React.useRef<(() => void) | undefined>(undefined);
 
     useEffect(() => () => stopWaitingRef.current?.(), []);
 
-    const waitForMain = React.useCallback((link: HTMLElement) => {
-        stopWaitingRef.current?.();
+    const waitForMain = React.useCallback(
+        (link: HTMLElement, initiallyFocused: HTMLElement | null) => {
+            stopWaitingRef.current?.();
 
-        const observer = new MutationObserver(() => {
-            const active = document.activeElement;
-            // The user has moved on since the click; leave their focus alone.
-            const userMovedOn = active !== link && active !== document.body;
+            let focused = initiallyFocused;
+            const observer = new MutationObserver(() => {
+                if (userMovedOn(link, focused)) {
+                    stopWaitingRef.current?.();
+                    return;
+                }
+                // What we focused is still on the page, so there is nothing to
+                // do yet; keep watching in case it gets replaced later.
+                if (focused?.isConnected) {
+                    return;
+                }
+                focused = focusMain();
+            });
+            const timer = window.setTimeout(
+                () => stopWaitingRef.current?.(),
+                MAIN_WAIT_MS
+            );
 
-            if (userMovedOn || focusMain()) {
-                stopWaitingRef.current?.();
-            }
-        });
-        const timer = window.setTimeout(
-            () => stopWaitingRef.current?.(),
-            MAIN_WAIT_MS
-        );
-
-        stopWaitingRef.current = () => {
-            observer.disconnect();
-            window.clearTimeout(timer);
-            stopWaitingRef.current = undefined;
-        };
-        observer.observe(document.body, {childList: true, subtree: true});
-    }, []);
+            stopWaitingRef.current = () => {
+                observer.disconnect();
+                window.clearTimeout(timer);
+                stopWaitingRef.current = undefined;
+            };
+            observer.observe(document.body, {childList: true, subtree: true});
+        },
+        []
+    );
 
     return React.useCallback(
         (event: React.MouseEvent<HTMLAnchorElement>) => {
-            if (focusMain()) {
+            const focused = focusMain();
+
+            if (focused) {
                 event.preventDefault();
-                return;
+            } else {
+                // Nothing to focus yet, so the browser's own href="#main"
+                // handling is the floor. Keep the click away from the
+                // document-level link handler, which would preventDefault it
+                // and route it through the router instead -- a navigation that
+                // moves no focus at all.
+                event.stopPropagation();
             }
-            // Nothing to focus yet. Leave the browser's own href="#main"
-            // handling in place and take the user there once it mounts.
-            waitForMain(event.currentTarget);
+            // Whatever we just focused may be a stand-in that a resolving
+            // chunk is about to replace, so keep watching either way.
+            waitForMain(event.currentTarget, focused);
         },
         [waitForMain]
     );
