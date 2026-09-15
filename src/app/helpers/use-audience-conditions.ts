@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
 import useUserContext from '~/contexts/user';
-import accountsModel, {AccountsUserModel} from '~/models/accounts-model';
-import type {UserModelType} from '~/models/usermodel';
+import type {AccountsUserModel} from '~/models/accounts-model';
+import userModelLoader, {UserModelType} from '~/models/usermodel';
 
 const ADMIN_ROLES = ['administrator', 'librarian', 'designer'];
 
@@ -30,9 +30,14 @@ function buildConditions(userModel: Partial<UserModelType> | undefined, isLogged
 }
 
 // Returns the audience slugs that apply to the current viewer, or `undefined`
-// until we know who they are. `accountsModel.load()` is memoized, so this never
-// triggers its own network request - it just observes the shared promise that
-// `~/contexts/user` already kicked off.
+// until we know who they are. This observes `userModel.load()` rather than
+// `accountsModel.load()` on purpose: both are memoized so neither adds a
+// request, but the accounts promise settles one microtask BEFORE the context
+// has mapped it and called setData. Resolving off it therefore produced a real
+// intermediate render of `['role:anonymous']` for a logged-in instructor -
+// exactly the wrong-content flash the `undefined` state exists to prevent.
+// `~/contexts/user` registers its own mapping first, so its setData always
+// lands ahead of the callback below.
 //
 // `undefined` while unresolved (rather than an early `['role:anonymous']`) keeps
 // personalization purely additive: unconditioned blocks always render, and a
@@ -52,7 +57,7 @@ export default function useAudienceConditions(): string[] | undefined {
             }
         };
 
-        accountsModel.load()?.then(markResolved, markResolved);
+        userModelLoader.load()?.then(markResolved, markResolved);
 
         return () => {
             cancelled = true;
