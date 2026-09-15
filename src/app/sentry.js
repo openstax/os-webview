@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import isSupported from '~/helpers/device';
-import {denyUrls, isIgnoredMessage, isFromDeniedScheme} from '~/helpers/exception-filters';
+import {denyUrls, isIgnoredMessage, isFromDeniedScheme, isFromDeniedUrl} from '~/helpers/exception-filters';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const packageVersion = require('../../package.json').version;
@@ -72,6 +72,9 @@ function beforeSend(event, hint) {
         return null;
     }
     if (isFromDeniedScheme(frameFilenames(event))) {
+        return null;
+    }
+    if (isFromDeniedUrl(frameFilenames(event))) {
         return null;
     }
     if (message.match(/mce-visual-caret/i)) {
