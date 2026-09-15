@@ -73,7 +73,7 @@ describe('Footer', () => {
         (window as any).getCkyConsent = jest.fn(); // eslint-disable-line @typescript-eslint/no-explicit-any
         mockUseDataFromSlug.mockReturnValue(
             footerMenus.map((column) =>
-                column.key === 'policies' ? {...column, key: 'legal', name: 'Legal'} : column)
+                column.key === 'footer-policies' ? {...column, key: 'legal', name: 'Legal'} : column)
         );
 
         renderFooter();
@@ -88,6 +88,32 @@ describe('Footer', () => {
 
         expect(helpColumn?.querySelector('button')).toBeNull();
         expect(legalColumn?.querySelector('button')?.textContent).toBe('Manage cookies');
+    });
+
+    it('follows the Policies column when an editor reorders it out of last place', async () => {
+        (window as any).getCkyConsent = jest.fn(); // eslint-disable-line @typescript-eslint/no-explicit-any
+        const reordered = [
+            footerMenus.find((column) => column.key === 'footer-policies'),
+            ...footerMenus.filter((column) => column.key !== 'footer-policies')
+        ];
+
+        mockUseDataFromSlug.mockReturnValue(reordered);
+        renderFooter();
+        document.dispatchEvent(new Event('cookieyes_banner_load'));
+
+        await waitFor(() => {
+            expect(screen.getByText('Manage cookies')).toBeInTheDocument();
+        });
+
+        const policiesColumn = screen
+            .getByRole('heading', {name: 'Policies', level: 3})
+            .closest('.column');
+        const lastColumn = screen
+            .getByRole('heading', {name: 'OpenStax', level: 3})
+            .closest('.column');
+
+        expect(policiesColumn?.querySelector('button')?.textContent).toBe('Manage cookies');
+        expect(lastColumn?.querySelector('button')).toBeNull();
     });
 
     it('renders the rest of the footer without throwing when the columns request fails', () => {
