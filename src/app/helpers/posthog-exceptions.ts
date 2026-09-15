@@ -1,6 +1,6 @@
 // PostHog is loaded by a tag inside our GTM container, not by this bundle, so
 // the only handle we have on it is `window.posthog` once that tag has run.
-import {isIgnoredMessage, isFromDeniedScheme} from './exception-filters';
+import {isIgnoredMessage, isFromDeniedScheme, isFromDeniedUrl} from './exception-filters';
 
 type ExceptionValue = {
     value?: string;
@@ -52,8 +52,7 @@ function messageOf(result: CaptureResult) {
 function frameFilenamesOf(result: CaptureResult) {
     return exceptionsIn(result)
         .flatMap((exception) => exception.stacktrace?.frames ?? [])
-        .map((frame) => frame.filename)
-        .filter((filename): filename is string => Boolean(filename));
+        .map((frame) => frame.filename || '');
 }
 
 // `before_send` sees every event, so anything that is not an exception has to
@@ -68,11 +67,20 @@ export function beforeSend(result: CaptureResult | null) {
     if (isFromDeniedScheme(frameFilenamesOf(result))) {
         return null;
     }
+    if (isFromDeniedUrl(frameFilenamesOf(result))) {
+        return null;
+    }
 
     return result;
 }
 
 let filterInstalled = false;
+let pendingExceptions: unknown[] = [];
+
+function flushPendingExceptions(posthog: LoadedPostHog) {
+    pendingExceptions.forEach((error) => posthog.captureException?.(error));
+    pendingExceptions = [];
+}
 
 export function installExceptionFilter() {
     if (filterInstalled) {
@@ -88,6 +96,7 @@ export function installExceptionFilter() {
             filterInstalled = true;
             // eslint-disable-next-line camelcase -- PostHog's config key
             posthog.set_config({before_send: beforeSend});
+            flushPendingExceptions(posthog);
         }
         if (posthog || attempts >= POLL_LIMIT) {
             window.clearInterval(poll);
@@ -99,5 +108,13 @@ export function installExceptionFilter() {
 // autocapture, so anything we now recover from has to be reported deliberately
 // or the failure becomes invisible.
 export function captureException(error: unknown) {
-    loadedPostHog()?.captureException?.(error);
+    const posthog = loadedPostHog();
+
+    if (posthog?.captureException) {
+        posthog.captureException(error);
+        return;
+    }
+    if (!posthog) {
+        pendingExceptions.push(error);
+    }
 }

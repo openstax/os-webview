@@ -74,3 +74,9 @@ export function isFromDeniedScheme(filenames: string[]) {
         )
     );
 }
+
+export function isFromDeniedUrl(filenames: string[]) {
+    return filenames.some((filename) =>
+        denyUrls.some((url) => filename.startsWith(url))
+    );
+}

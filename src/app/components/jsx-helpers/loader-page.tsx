@@ -80,7 +80,7 @@ export default function LoaderPage({
 
     return (
         <PageAttempt
-            key={attempt}
+            key={`${slug}:${attempt}`}
             {...{slug, Child, props, preserveWrapping, doDocumentSetup, noCamelCase, onRetry}}
         />
     );

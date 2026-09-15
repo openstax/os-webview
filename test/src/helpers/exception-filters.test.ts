@@ -1,4 +1,4 @@
-import {isIgnoredMessage, isFromDeniedScheme} from '~/helpers/exception-filters';
+import {isIgnoredMessage, isFromDeniedScheme, isFromDeniedUrl} from '~/helpers/exception-filters';
 
 describe('exception-filters', () => {
     it('ignores a message on the shared noise list', () => {
@@ -30,7 +30,25 @@ describe('exception-filters', () => {
         ).toBe(false);
     });
 
+    it('keeps a stack with an extension frame and an unknown frame', () => {
+        expect(
+            isFromDeniedScheme([
+                'webkit-masked-url://hidden/',
+                ''
+            ])
+        ).toBe(false);
+    });
+
     it('keeps an exception that reported no frames at all', () => {
         expect(isFromDeniedScheme([])).toBe(false);
+    });
+
+    it('drops a stack frame from a denied script URL', () => {
+        expect(
+            isFromDeniedUrl(['https://www.google-analytics.com/analytics.js'])
+        ).toBe(true);
+        expect(
+            isFromDeniedUrl(['https://openstax.org/dist/main.js'])
+        ).toBe(false);
     });
 });

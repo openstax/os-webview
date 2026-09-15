@@ -27,11 +27,11 @@ describe('use-page-data', () => {
 
     // Before this, a rejected CMS fetch left `data` undefined forever and every
     // consumer sat on its loading state.
-    it('hands a rejected fetch to onError, and reports it', async () => {
+    it('hands a retryable fetch failure to onError, and reports it', async () => {
         const failure = new Error('Failed to fetch sticky/: Maximum retries exceeded');
         const onError = jest.fn();
 
-        fetchFromCMS.mockRejectedValue(failure);
+        fetchFromCMS.mockResolvedValue({error: failure, slug: 'snippets/sticky'});
 
         const {result} = renderHook(() =>
             usePageData('snippets/sticky', false, false, onError)
@@ -44,6 +44,20 @@ describe('use-page-data', () => {
         // reporters, so both tools have to hear about it explicitly.
         expect(captureException).toHaveBeenCalledWith(failure);
         expect(reportToPostHog).toHaveBeenCalledWith(failure);
+    });
+
+    it('keeps a 404 response as page data', async () => {
+        const missing = {error: new Error('page not found'), slug: 'snippets/missing'};
+
+        fetchFromCMS.mockResolvedValue(missing);
+
+        const {result} = renderHook(() =>
+            usePageData<typeof missing>('snippets/missing')
+        );
+
+        await waitFor(() => expect(result.current).toEqual(missing));
+        expect(captureException).not.toHaveBeenCalled();
+        expect(reportToPostHog).not.toHaveBeenCalled();
     });
 
     it('wraps a rejection that is not an Error', async () => {

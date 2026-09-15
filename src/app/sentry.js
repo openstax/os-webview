@@ -43,8 +43,7 @@ function exceptionValue(event) {
 function frameFilenames(event) {
     return (event.exception?.values ?? [])
         .flatMap((value) => value.stacktrace?.frames ?? [])
-        .map((frame) => frame.filename)
-        .filter(Boolean);
+        .map((frame) => frame.filename || '');
 }
 
 // A rejected promise carrying a non-Error has no `message`, so reading only

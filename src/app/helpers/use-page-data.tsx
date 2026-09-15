@@ -11,6 +11,14 @@ export type Data = {
     [key: string | symbol]: Data | string | undefined | number | object;
 };
 
+function isPageNotFoundError(error: unknown) {
+    return error instanceof Error && error.message === 'page not found';
+}
+
+function hasError(data: Json): data is Json & {error: unknown} {
+    return data instanceof Object && 'error' in data;
+}
+
 // eslint-disable-next-line complexity
 async function replaceImageNumbersWithImageData(data: Data) {
     if (typeof data.image === 'number') {
@@ -32,6 +40,13 @@ async function fetchDataAndExpandImages(
 ): Promise<Json> {
     const data = await fetchFromCMS(slug, preserveWrapping);
 
+    if (data.error) {
+        if (isPageNotFoundError(data.error)) {
+            return data;
+        }
+        throw data.error;
+    }
+
     await replaceImageNumbersWithImageData(data);
 
     return data;
@@ -44,8 +59,8 @@ export function fetchPageData<T>(
 ): Promise<T> {
     const camelCaseOrNot = noCamelCase ? (obj: unknown) => obj : camelCaseKeys;
 
-    return fetchDataAndExpandImages(slug, preserveWrapping).then(
-        camelCaseOrNot
+    return fetchDataAndExpandImages(slug, preserveWrapping).then((data) =>
+        hasError(data) ? data : camelCaseOrNot(data)
     ) as Promise<T>;
 }
 

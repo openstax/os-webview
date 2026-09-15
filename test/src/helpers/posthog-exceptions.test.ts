@@ -6,7 +6,7 @@ function exceptionEvent(value: string, filenames: string[] = []) {
     return {
         event: '$exception',
         properties: {
-            $exception_list: [
+            '$exception_list': [
                 {
                     value,
                     stacktrace: {frames: filenames.map((filename) => ({filename}))}
@@ -42,6 +42,25 @@ describe('posthog beforeSend', () => {
         ).toBeNull();
     });
 
+    it('keeps an extension stack when any frame filename is unknown', () => {
+        const mixed = exceptionEvent('undefined is not an object', [
+            'webkit-masked-url://hidden/',
+            ''
+        ]);
+
+        expect(beforeSend(mixed)).toBe(mixed);
+    });
+
+    it('drops an exception from a denied script URL', () => {
+        expect(
+            beforeSend(
+                exceptionEvent('third-party script failed', [
+                    'https://js.pulseinsights.com/dist/survey.js'
+                ])
+            )
+        ).toBeNull();
+    });
+
     it('keeps our own CMS fetch failure', () => {
         const ours = exceptionEvent(
             'Failed to fetch sticky/: Error: Maximum retries exceeded: TypeError: Failed to fetch',
@@ -61,7 +80,7 @@ describe('posthog beforeSend', () => {
         const partial = {
             event: '$exception',
             properties: {
-                $exception_list: [{}, {stacktrace: {frames: [{}]}}]
+                '$exception_list': [{}, {stacktrace: {frames: [{}]}}]
             }
         } as BeforeSend;
 
@@ -100,13 +119,13 @@ describe('posthog interop', () => {
         expect(setConfig).not.toHaveBeenCalled();
 
         // The snippet stub arrives first; only the initialized library counts.
-        setPostHog({set_config: setConfig});
+        setPostHog({'set_config': setConfig});
         jest.advanceTimersByTime(1000);
         expect(setConfig).not.toHaveBeenCalled();
 
-        setPostHog({__loaded: true, set_config: setConfig});
+        setPostHog({__loaded: true, 'set_config': setConfig});
         jest.advanceTimersByTime(1000);
-        expect(setConfig).toHaveBeenCalledWith({before_send: posthogModule.beforeSend});
+        expect(setConfig).toHaveBeenCalledWith({'before_send': posthogModule.beforeSend});
 
         // Installed once, and the poll stops.
         setConfig.mockClear();
@@ -133,12 +152,31 @@ describe('posthog interop', () => {
         const posthogCapture = jest.fn();
 
         // Loaded, but from a build without exception capture.
-        setPostHog({__loaded: true, set_config: jest.fn()});
+        setPostHog({__loaded: true, 'set_config': jest.fn()});
         expect(() => captureException(error)).not.toThrow();
 
-        setPostHog({__loaded: true, set_config: jest.fn(), captureException: posthogCapture});
+        setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
         captureException(error);
 
+        expect(posthogCapture).toHaveBeenCalledWith(error);
+    });
+
+    it('flushes queued exceptions once PostHog loads', async () => {
+        const posthogModule = await freshModule();
+        const setConfig = jest.fn();
+        const posthogCapture = jest.fn();
+        const error = new Error('Failed to fetch sticky/');
+
+        posthogModule.captureException(error);
+        posthogModule.installExceptionFilter();
+        setPostHog({
+            __loaded: true,
+            'set_config': setConfig,
+            captureException: posthogCapture
+        });
+        jest.advanceTimersByTime(1000);
+
+        expect(setConfig).toHaveBeenCalledWith({'before_send': posthogModule.beforeSend});
         expect(posthogCapture).toHaveBeenCalledWith(error);
     });
 
@@ -146,7 +184,7 @@ describe('posthog interop', () => {
         const posthogModule = await freshModule();
         const setConfig = jest.fn();
 
-        setPostHog({__loaded: true, set_config: setConfig});
+        setPostHog({__loaded: true, 'set_config': setConfig});
         posthogModule.installExceptionFilter();
         jest.advanceTimersByTime(1000);
         posthogModule.installExceptionFilter();

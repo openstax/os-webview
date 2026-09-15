@@ -20,6 +20,10 @@ function renderPage(ui: React.JSX.Element) {
 }
 
 describe('loader-page', () => {
+    beforeEach(() => {
+        fetchFromCMS.mockReset();
+    });
+
     // The rest of the code is exercised in other tests.
     it('loads 404 on data error', async () => {
         const data = {
@@ -45,5 +49,25 @@ describe('loader-page', () => {
         await userEvent.click(screen.getByRole('button', {name: 'Try again'}));
 
         await screen.findByText('the page');
+    });
+
+    it('clears a failed attempt when the slug changes', async () => {
+        const Child = ({data}: {data: {title: string}}) => <div>{data.title}</div>;
+
+        fetchFromCMS.mockRejectedValueOnce(new Error('Failed to fetch first/'));
+        const {rerender} = renderPage(<LoaderPage slug="pages/first" Child={Child} />);
+
+        await screen.findByText("This page didn't load");
+
+        fetchFromCMS.mockResolvedValueOnce({title: 'second page'});
+        rerender(
+            <MemoryRouter initialEntries={['/testpage']}>
+                <LayoutContextProvider>
+                    <LoaderPage slug="pages/second" Child={Child} />
+                </LayoutContextProvider>
+            </MemoryRouter>
+        );
+
+        await screen.findByText('second page');
     });
 });
