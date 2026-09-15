@@ -5,34 +5,151 @@ import Copyright from './copyright';
 import CookieYesToggle from './cookie-yes-toggle';
 import ListOfLinks from '~/components/list-of-links/list-of-links';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons/faFacebookF';
 import {faXTwitter} from '@fortawesome/free-brands-svg-icons/faXTwitter';
 import {faLinkedinIn} from '@fortawesome/free-brands-svg-icons/faLinkedinIn';
 import {faInstagram} from '@fortawesome/free-brands-svg-icons/faInstagram';
 import {faYoutube} from '@fortawesome/free-brands-svg-icons/faYoutube';
+import {faTiktok} from '@fortawesome/free-brands-svg-icons/faTiktok';
+import {faThreads} from '@fortawesome/free-brands-svg-icons/faThreads';
+import {faBluesky} from '@fortawesome/free-brands-svg-icons/faBluesky';
+import {faMastodon} from '@fortawesome/free-brands-svg-icons/faMastodon';
 import usePortalContext from '~/contexts/portal';
+import {useDataFromSlug} from '~/helpers/page-data-utils';
 import './footer.scss';
 
-function Footer({
-    data: {
-        supporters,
-        copyright,
-        apStatement,
-        facebookLink,
-        twitterLink,
-        linkedinLink
+type FooterMenuItem = {
+    label: string;
+    partial_url: string;
+    key?: string;
+};
+
+type FooterMenuColumn = {
+    key: string;
+    name: string;
+    menu: FooterMenuItem[];
+};
+
+type SocialLink = {
+    platform: string;
+    url: string;
+};
+
+type FooterData = {
+    supporters: string;
+    copyright: string;
+    apStatement: string;
+    socialLinks?: SocialLink[];
+    facebookLink?: string;
+    twitterLink?: string;
+    linkedinLink?: string;
+};
+
+// This endpoint's response is CloudFront-cached for the better part of a day, so a
+// copy predating the CMS release can still be served after this ships. Absent means
+// that stale payload; an empty list means an editor removed every link, so it stands.
+function socialLinksFrom(data: FooterData) {
+    if (data.socialLinks) {
+        return data.socialLinks;
     }
-}: {
-    data: {
-        supporters: string;
-        copyright: string;
-        apStatement: string;
-        facebookLink: string;
-        twitterLink: string;
-        linkedinLink: string;
-    };
-}) {
+
+    return [
+        {platform: 'facebook', url: data.facebookLink},
+        {platform: 'twitter', url: data.twitterLink},
+        {platform: 'linkedin', url: data.linkedinLink}
+    ].filter((link): link is SocialLink => Boolean(link.url));
+}
+
+const socialPlatforms: {[key: string]: {icon: IconDefinition; label: string}} = {
+    facebook: {icon: faFacebookF, label: 'Facebook'},
+    twitter: {icon: faXTwitter, label: 'X'},
+    linkedin: {icon: faLinkedinIn, label: 'LinkedIn'},
+    instagram: {icon: faInstagram, label: 'Instagram'},
+    youtube: {icon: faYoutube, label: 'YouTube'},
+    tiktok: {icon: faTiktok, label: 'TikTok'},
+    threads: {icon: faThreads, label: 'Threads'},
+    bluesky: {icon: faBluesky, label: 'Bluesky'},
+    mastodon: {icon: faMastodon, label: 'Mastodon'}
+};
+
+function useFooterColumns() {
+    const structure = useDataFromSlug<FooterMenuColumn[]>('oxmenus/?placement=footer');
+
+    return Array.isArray(structure) ? structure : [];
+}
+
+// Matches the key the CMS seeds for the Policies column. Menus keys are global
+// across both navs, hence the prefix.
+const POLICIES_KEY = 'footer-policies';
+
+function FooterColumns({columns}: {columns: FooterMenuColumn[]}) {
+    if (!columns.length) {
+        return null;
+    }
+
+    const policiesIndex = columns.findIndex((column) => column.key === POLICIES_KEY);
+    const cookieToggleIndex = policiesIndex === -1 ? columns.length - 1 : policiesIndex;
+
+    return (
+        <React.Fragment>
+            {columns.map((column, index) => (
+                <div className={`column col${index + 1}`} key={column.key}>
+                    <h3>{column.name}</h3>
+                    <ListOfLinks>
+                        {column.menu.map((item) => (
+                            <a href={item.partial_url} key={item.key ?? item.label}>
+                                {item.label}
+                            </a>
+                        ))}
+                        {index === cookieToggleIndex ? <CookieYesToggle /> : null}
+                    </ListOfLinks>
+                </div>
+            ))}
+        </React.Fragment>
+    );
+}
+
+function SocialLinks({links}: {links: SocialLink[]}) {
+    return (
+        <ul className="social">
+            {links.map((link) => {
+                const platform = socialPlatforms[link.platform];
+
+                if (!platform) {
+                    return null;
+                }
+
+                return (
+                    <li key={link.platform}>
+                        <a
+                            className={`btn btn-social ${link.platform}`}
+                            href={link.url}
+                            title={`OpenStax on ${platform.label}`}
+                        >
+                            <FontAwesomeIcon icon={platform.icon} />
+                        </a>
+                    </li>
+                );
+            })}
+            <li>
+                <a className="rice-logo" href="http://www.rice.edu">
+                    <img
+                        src="/dist/images/rice-logo-white.png"
+                        alt="Rice University logo"
+                        width="99"
+                        height="40"
+                    />
+                </a>
+            </li>
+        </ul>
+    );
+}
+
+function Footer({data}: {data: FooterData}) {
+    const {supporters, copyright, apStatement} = data;
     const {rewriteLinks} = usePortalContext();
+    const columns = useFooterColumns();
 
     React.useLayoutEffect(
         () =>
@@ -47,42 +164,7 @@ function Footer({
             <div className="top">
                 <div className="boxed">
                     <RawHTML html={supporters} />
-                    <div className="column col1">
-                        <h3>Help</h3>
-                        <ListOfLinks>
-                            <a href="/contact">Contact Us</a>
-                            <a href="https://help.openstax.org/s/">
-                                Support Center
-                            </a>
-                            <a href="/faq" aria-label="frequently asked questions">FAQ</a>
-                            <a href="/print/">Order Print</a>
-                            <a href="https://status.openstax.org/">
-                                System Status
-                            </a>
-                        </ListOfLinks>
-                    </div>
-                    <div className="column col2">
-                        <h3>OpenStax</h3>
-                        <ListOfLinks>
-                            <a href="/press">Press</a>
-                            <a href="http://www2.openstax.org/l/218812/2016-10-04/lvk">
-                                Newsletter
-                            </a>
-                            <a href="/careers">Careers</a>
-                        </ListOfLinks>
-                    </div>
-                    <div className="column col3">
-                        <h3>Policies</h3>
-                        <ListOfLinks>
-                            <a href="/accessibility-statement">
-                                Accessibility Statement
-                            </a>
-                            <a href="/tos">Terms of Use</a>
-                            <a href="/license">Licensing</a>
-                            <a href="/privacy">Privacy Notice</a>
-                            <CookieYesToggle />
-                        </ListOfLinks>
-                    </div>
+                    <FooterColumns columns={columns} />
                 </div>
             </div>
             <div className="bottom">
@@ -93,63 +175,7 @@ function Footer({
                             apStatement={apStatement}
                         />
                     </div>
-                    <ul className="social">
-                        <li>
-                            <a
-                                className="btn btn-social facebook"
-                                href={facebookLink}
-                                title="OpenStax on Facebook"
-                            >
-                                <FontAwesomeIcon icon={faFacebookF} />
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="btn btn-social twitter"
-                                href={twitterLink}
-                                title="OpenStax on X"
-                            >
-                                <FontAwesomeIcon icon={faXTwitter} />
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="btn btn-social linkedin"
-                                href={linkedinLink}
-                                title="OpenStax on LinkedIn"
-                            >
-                                <FontAwesomeIcon icon={faLinkedinIn} />
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="btn btn-social instagram"
-                                href="https://www.instagram.com/openstax/"
-                                title="OpenStax on Instagram"
-                            >
-                                <FontAwesomeIcon icon={faInstagram} />
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                className="btn btn-social youtube"
-                                href="https://www.youtube.com/openstax/"
-                                title="OpenStax on YouTube"
-                            >
-                                <FontAwesomeIcon icon={faYoutube} />
-                            </a>
-                        </li>
-                        <li>
-                            <a className="rice-logo" href="http://www.rice.edu">
-                                <img
-                                    src="/dist/images/rice-logo-white.png"
-                                    alt="Rice University logo"
-                                    width="99"
-                                    height="40"
-                                />
-                            </a>
-                        </li>
-                    </ul>
+                    <SocialLinks links={socialLinksFrom(data)} />
                 </div>
             </div>
         </React.Fragment>
