@@ -158,7 +158,10 @@ describe('posthog interop', () => {
         setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
         captureException(error);
 
-        expect(posthogCapture).toHaveBeenCalledWith(error);
+        expect(posthogCapture).toHaveBeenCalledTimes(3);
+        expect(posthogCapture).toHaveBeenNthCalledWith(1, error);
+        expect(posthogCapture).toHaveBeenNthCalledWith(2, error);
+        expect(posthogCapture).toHaveBeenNthCalledWith(3, error);
     });
 
     it('flushes queued exceptions once PostHog loads', async () => {
