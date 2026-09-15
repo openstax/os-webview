@@ -1,6 +1,6 @@
 export default [
     {
-        key: 'help',
+        key: 'footer-help',
         name: 'Help',
         menu: [
             {label: 'Contact Us', partial_url: '/contact', key: 'contact-us'},
@@ -11,7 +11,7 @@ export default [
         ]
     },
     {
-        key: 'openstax',
+        key: 'footer-openstax',
         name: 'OpenStax',
         menu: [
             {label: 'Press', partial_url: '/press', key: 'press'},
@@ -20,7 +20,7 @@ export default [
         ]
     },
     {
-        key: 'policies',
+        key: 'footer-policies',
         name: 'Policies',
         menu: [
             {label: 'Accessibility Statement', partial_url: '/accessibility-statement', key: 'accessibility-statement'},

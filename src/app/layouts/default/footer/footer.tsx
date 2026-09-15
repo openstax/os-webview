@@ -79,12 +79,16 @@ function useFooterColumns() {
     return Array.isArray(structure) ? structure : [];
 }
 
+// Matches the key the CMS seeds for the Policies column. Menus keys are global
+// across both navs, hence the prefix.
+const POLICIES_KEY = 'footer-policies';
+
 function FooterColumns({columns}: {columns: FooterMenuColumn[]}) {
     if (!columns.length) {
         return null;
     }
 
-    const policiesIndex = columns.findIndex((column) => column.key === 'policies');
+    const policiesIndex = columns.findIndex((column) => column.key === POLICIES_KEY);
     const cookieToggleIndex = policiesIndex === -1 ? columns.length - 1 : policiesIndex;
 
     return (
