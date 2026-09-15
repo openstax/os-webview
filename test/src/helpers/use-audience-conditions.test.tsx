@@ -2,6 +2,8 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import useAudienceConditions from '~/helpers/use-audience-conditions';
 import * as UUC from '~/contexts/user';
+import {UserContextProvider} from '~/contexts/user';
+import {waitFor} from '@testing-library/preact';
 import accountsModel from '~/models/accounts-model';
 import userModel from '../data/userModel';
 
@@ -215,5 +217,53 @@ describe('useAudienceConditions', () => {
 
         render(<Component />);
         await screen.findByText('["role:anonymous"]');
+    });
+});
+
+// The accounts promise settles one microtask before `~/contexts/user` has
+// mapped it and pushed the user into context. Resolving off it emitted a real
+// intermediate `['role:anonymous']` render for a logged-in instructor, so this
+// mounts the genuine provider - no mocked context - to keep that ordering
+// locked down.
+describe('useAudienceConditions resolution ordering', () => {
+    const confirmedFaculty = {
+        id: 1,
+        uuid: 'u-1',
+        first_name: 'A',
+        last_name: 'B',
+        faculty_status: 'confirmed_faculty',
+        self_reported_role: 'instructor',
+        using_openstax: true,
+        contact_infos: [
+            {type: 'EmailAddress', value: 'a@b.c', is_verified: true, is_guessed_preferred: true}
+        ],
+        applications: []
+    };
+
+    it('never emits role:anonymous to a logged-in instructor', async () => {
+        const seen: (string[] | undefined)[] = [];
+
+        function Probe() {
+            seen.push(useAudienceConditions());
+            return null;
+        }
+
+        let release: (v: unknown) => void = () => undefined;
+
+        (window as any)._OX_USER_PROMISE = new Promise((resolve) => {
+            release = resolve;
+        });
+
+        render(
+            <UserContextProvider>
+                <Probe />
+            </UserContextProvider>
+        );
+        release(confirmedFaculty);
+
+        await waitFor(() =>
+            expect(seen.some((c) => c?.includes('role:instructor'))).toBe(true)
+        );
+        expect(seen.filter((c) => c?.includes('role:anonymous'))).toHaveLength(0);
     });
 });
