@@ -25,6 +25,10 @@ type OSUser = {
 async function fetchUser() {
     const user = await sfApiFetch('users');
 
+    if (!user) {
+        return {error: 'MyOpenStax user unavailable'} as OSUser;
+    }
+
     return camelCaseKeys({...INITIAL_STATE, ...user}) as OSUser;
 }
 
