@@ -122,8 +122,19 @@ describe('TableResourceLinksBlock data identity', () => {
         expect(mockDelegateRender.mock.calls.length).toBeGreaterThan(0);
     });
 
-    it('is registered in blockMap as the table override', () => {
-        expect(blockMap.table.Component).toBe(TableResourceLinksBlock);
+    it('is registered in blockMap as the table override, wrapped for audience gating', () => {
+        // block-map.ts wraps every entry (including this override) with an
+        // audience gate, so blockMap.table.Component is no longer
+        // TableResourceLinksBlock by reference - prove it still delegates to it
+        // instead.
+        mockUseUserContext.mockReturnValue({userStatus: {}, isVerified: false});
+        const data = tableWithCells([[{content: 'plain'}]]);
+        const GatedTable = blockMap.table.Component;
+
+        render(<Wrap><GatedTable data={data} /></Wrap>);
+
         expect(blockMap.table.config).toEqual({type: 'table', label: 'Table', categories: ['content']});
+        expect(mockDelegateRender).toHaveBeenCalledTimes(1);
+        expect(mockDelegateRender.mock.calls[0][0].data).toBe(data);
     });
 });
