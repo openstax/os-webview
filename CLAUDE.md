@@ -66,6 +66,42 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
   opened before a deploy 404s on the next chunk it requests; `src/app/helpers/stale-chunk.ts`
   detects that and reloads (at most twice per tab, tracked in sessionStorage).
 
+### Flex pages and audience gating
+- `src/app/pages/flex-page/flex-page.tsx` renders CMS-authored flex pages via
+  `@openstax/flex-page-renderer`'s `ContentBlockRoot`, using the block components in
+  `src/app/pages/flex-page/block-map.ts`.
+- CMS editors can set a free-text `rendering_condition` on a `hero`, `section`, or CTA button-bar
+  block (comma-separated condition slugs — OR semantics, at least one active slug renders the
+  block). `src/app/helpers/use-audience-conditions.ts` computes which slugs apply to the current
+  viewer and `flex-page.tsx` passes that as `activeConditions` to `ContentBlockRoot`.
+- Slug vocabulary (the source of truth — keep this table, the hook's checks, and the CMS field's
+  help text in sync):
+
+  | slug | condition |
+  |---|---|
+  | `role:anonymous` | not logged in |
+  | `role:student` | `accountsModel.self_reported_role === 'student'` |
+  | `role:instructor` | `accountsModel.faculty_status === 'confirmed_faculty'` |
+  | `role:admin` | `accountsModel.self_reported_role` is `administrator`, `librarian`, or `designer` |
+  | `status:verified` | `accountsModel.faculty_status === 'confirmed_faculty'` |
+  | `status:pending` | `userModel.pendingInstructorAccess` is true |
+  | `school:assignable` | `accountsModel.assignable_school_integrated === true` |
+  | `adopter:yes` | `accountsModel.using_openstax === true` |
+
+  A viewer can match several slugs at once (e.g. a confirmed-faculty self-declared administrator
+  gets `role:instructor`, `status:verified`, and `role:admin`).
+- `useAudienceConditions` returns `undefined` until the accounts fetch resolves, not an early
+  `['role:anonymous']`. That keeps personalization additive: unconditioned blocks always render,
+  and a conditioned block only appears once the viewer's audience is actually known — emitting
+  `role:anonymous` immediately would show anonymous content to a logged-in instructor for a
+  moment and then swap it, a flash of wrong content plus a double layout shift.
+- `block-map.ts` wraps every block type (not just hero/section/CTA) with the same
+  `rendering_condition` check at module scope, so gating works even for block types the
+  `flex-page-renderer` package hasn't added its own check to yet. The condition value may be a
+  comma-separated string or an array of slugs (the CMS's `rendering_condition` field is a
+  `MultipleChoiceBlock` whose API representation joins picked slugs into that same string, so the
+  wrapper accepts both for resilience if that join is ever dropped).
+
 ### Patched dependencies
 - `patches/` holds `patch-package` diffs, reapplied by the `postinstall` script on every install.
 - `react-aria-carousel@0.2.0` is patched because its MutationObserver calls `hasAttribute` on
