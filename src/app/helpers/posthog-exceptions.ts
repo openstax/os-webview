@@ -75,6 +75,7 @@ export function beforeSend(result: CaptureResult | null) {
 }
 
 let filterInstalled = false;
+let filterInstalling = false;
 let pendingExceptions: unknown[] = [];
 
 function flushPendingExceptions(posthog: LoadedPostHog) {
@@ -83,9 +84,10 @@ function flushPendingExceptions(posthog: LoadedPostHog) {
 }
 
 export function installExceptionFilter() {
-    if (filterInstalled) {
+    if (filterInstalled || filterInstalling) {
         return;
     }
+    filterInstalling = true;
 
     let attempts = 0;
     const poll = window.setInterval(() => {
@@ -99,6 +101,7 @@ export function installExceptionFilter() {
             flushPendingExceptions(posthog);
         }
         if (posthog || attempts >= POLL_LIMIT) {
+            filterInstalling = false;
             window.clearInterval(poll);
         }
     }, POLL_INTERVAL);

@@ -192,4 +192,15 @@ describe('posthog interop', () => {
 
         expect(setConfig).toHaveBeenCalledTimes(1);
     });
+
+    it('does not start a second poll while the first install is still waiting', async () => {
+        const posthogModule = await freshModule();
+        const setInterval = jest.spyOn(window, 'setInterval');
+
+        posthogModule.installExceptionFilter();
+        posthogModule.installExceptionFilter();
+
+        expect(setInterval).toHaveBeenCalledTimes(1);
+        setInterval.mockRestore();
+    });
 });
