@@ -21,12 +21,15 @@ async def test_buy_print_copy_link(chrome_page_unlogged, base_url, book_slug):
     await chrome_page_unlogged.keyboard.press("Escape")
 
     # THEN: Buy print copy button exists and opens correct page
-    assert await home.buy_print_copy_button_is_visible()
+    await home.buy_print_copy_button.wait_for(state="visible")
+    assert await home.buy_print_copy_button.is_visible()
 
     async with chrome_page_unlogged.expect_popup() as popup_info:
-        await home.click_buy_print_copy_button()
+        await home.buy_print_copy_button.click()
 
     new_tab = await popup_info.value
+    await new_tab.wait_for_load_state("domcontentloaded")
+
     new_tab_content = await new_tab.content()
 
     if "staging" in details_books_url:

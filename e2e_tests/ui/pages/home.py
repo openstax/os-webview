@@ -56,10 +56,9 @@ class HomeRex:
                 "The layout or URL routing may have changed in the CMS."
             )
 
-    async def available_book_list(self):
-        return (
-            await self.page.locator(".course-list").first.locator("div > div").count()
-        )
+    @property
+    def available_book_list(self):
+        return self.page.locator("#assignable_titles li")
 
     # Subjects homepage
 
@@ -180,11 +179,9 @@ class HomeRex:
     async def click_book_selection(self):
         await self.page.get_by_label("Astronomy 2e book").click()
 
-    async def buy_print_copy_button_is_visible(self):
-        return await self.page.locator("a").get_by_text("Buy a print copy").is_visible()
-
-    async def click_buy_print_copy_button(self):
-        await self.page.locator("a").get_by_text("Buy a print copy").click()
+    @property
+    def buy_print_copy_button(self):
+        return self.page.locator("a").get_by_text("Buy a print copy")
 
     async def bookstore_box_is_visible(self):
         return await self.page.get_by_role("heading", name="Bookstore").is_visible()
@@ -267,9 +264,9 @@ class HomeRex:
         await science_group.scroll_into_view_if_needed()
         await science_group.click()
 
-    @pytest.mark.asyncio
-    async def k12_find_your_subject_book_card_astronomy_is_visible(self):
-        return await self.page.get_by_role("link", name="Astronomy").is_visible()
+    @property
+    def k12_find_your_subject_book_card_astronomy(self):
+        return self.page.get_by_role("link", name="Astronomy")
 
     @pytest.mark.asyncio
     async def check_links_in_subject_options(self):
