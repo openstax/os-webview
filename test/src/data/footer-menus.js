@@ -16,7 +16,7 @@ export default [
         menu: [
             {label: 'Press', partial_url: '/press', key: 'press'},
             {label: 'Newsletter', partial_url: 'http://www2.openstax.org/l/218812/2016-10-04/lvk', key: 'newsletter'},
-            {label: 'Careers', partial_url: '/careers', key: 'careers'}
+            {label: 'Careers', partial_url: '/careers'}
         ]
     },
     {

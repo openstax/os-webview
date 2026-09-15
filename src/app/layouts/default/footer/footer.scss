@@ -37,18 +37,18 @@ $lower-footer: #3b3b3b;
             grid-row-gap: 2rem;
 
             @include width-up-to($phone-max) {
-                grid-template: 'headline'
-                'mission'
-                'col1'
-                'col2'
-                'col3';
+                grid-template-columns: 1fr;
             }
 
+            // The columns come from the CMS, so their number is not fixed. Flowing them
+            // into implicit tracks keeps a fourth column in the row instead of dropping
+            // it outside the grid.
             @include wider-than($phone-max) {
                 align-items: start;
+                grid-auto-columns: auto;
+                grid-auto-flow: column;
                 grid-column-gap: 4rem;
-                grid-template: 'headline col1 col2 col3'
-                'mission col1 col2 col3' / minmax(auto, 50rem) auto auto auto;
+                grid-template-columns: minmax(auto, 50rem);
             }
 
             @include wider-than($tablet-max) {
@@ -57,7 +57,6 @@ $lower-footer: #3b3b3b;
         }
 
         h2 {
-            grid-area: headline;
             margin: 0;
 
             @include width-up-to($phone-max) {
@@ -75,7 +74,6 @@ $lower-footer: #3b3b3b;
         }
 
         .mission {
-            grid-area: mission;
 
             @include wider-than($phone-max) {
                 @include set-font(body-large);
@@ -118,17 +116,6 @@ $lower-footer: #3b3b3b;
                 }
             }
 
-            &.col1 {
-                grid-area: col1;
-            }
-
-            &.col2 {
-                grid-area: col2;
-            }
-
-            &.col3 {
-                grid-area: col3;
-            }
         }
     }
 
