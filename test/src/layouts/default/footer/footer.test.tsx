@@ -136,4 +136,32 @@ describe('Footer', () => {
 
         expect(riceLogo).not.toBeNull();
     });
+
+    it('falls back to the legacy link fields on a cached pre-release payload', () => {
+        const {socialLinks: _unused, ...withoutSocialLinks} = footerData;
+
+        mockUsePageData.mockReturnValue({
+            ...withoutSocialLinks,
+            facebookLink: 'https://www.facebook.com/openstax',
+            twitterLink: 'https://twitter.com/openstax',
+            linkedinLink: ''
+        });
+
+        const {container} = renderFooter();
+        const socialLinkEls = container.querySelectorAll('.social > li > a.btn-social');
+
+        expect(socialLinkEls).toHaveLength(2);
+        expect(socialLinkEls[0]).toHaveAttribute('href', 'https://www.facebook.com/openstax');
+        expect(socialLinkEls[1]).toHaveAttribute('href', 'https://twitter.com/openstax');
+    });
+
+    it('renders no social icons when an editor has removed them all', () => {
+        mockUsePageData.mockReturnValue({...footerData, socialLinks: []});
+
+        const {container} = renderFooter();
+
+        expect(
+            container.querySelectorAll('.social > li > a.btn-social')
+        ).toHaveLength(0);
+    });
 });
