@@ -123,10 +123,7 @@ describe('TableResourceLinksBlock data identity', () => {
     });
 
     it('is registered in blockMap as the table override, wrapped for audience gating', () => {
-        // block-map.ts wraps every entry (including this override) with an
-        // audience gate, so blockMap.table.Component is no longer
-        // TableResourceLinksBlock by reference - prove it still delegates to it
-        // instead.
+        // Wrapped by the audience gate, so assert delegation not identity.
         mockUseUserContext.mockReturnValue({userStatus: {}, isVerified: false});
         const data = tableWithCells([[{content: 'plain'}]]);
         const GatedTable = blockMap.table.Component;

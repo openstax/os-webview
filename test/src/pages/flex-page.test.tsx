@@ -492,11 +492,8 @@ function conditionedBlock(id: string, condition: string | string[] | undefined, 
     } as BodyBlock;
 }
 
-// `divider` has no CMS-registered rendering_condition field and no built-in
-// check for it (unlike hero/section/cta_block), so it exercises only this
-// repo's own block-map wrapper - useful for the array-form condition value,
-// which the flex-page-renderer package's own `condition.split(',')` checks
-// would throw on.
+// `divider` has no built-in condition check, so it exercises only our wrapper -
+// the renderer's own `condition.split(',')` would throw on the array form.
 function conditionedDivider(id: string, condition: string | string[]): BodyBlock {
     return {
         id,

@@ -9,9 +9,6 @@ function isAdminRole(role: string | undefined): boolean {
     return Boolean(role && ADMIN_ROLES.includes(role));
 }
 
-// Slug vocabulary for flex-page block `rendering_condition`s. Keep this list, the
-// underlying checks, and the "Audience gating" section of CLAUDE.md in sync -
-// that table is the single source of truth for CMS editors and contributors.
 function buildConditions(userModel: Partial<UserModelType> | undefined, isLoggedIn: boolean): string[] {
     const accounts: Partial<AccountsUserModel> = userModel?.accountsModel ?? {};
     const facultyVerified = accounts.faculty_status === 'confirmed_faculty';
@@ -29,22 +26,13 @@ function buildConditions(userModel: Partial<UserModelType> | undefined, isLogged
     return checks.filter(([, matches]) => matches).map(([slug]) => slug);
 }
 
-// Returns the audience slugs that apply to the current viewer, or `undefined`
-// until we know who they are. This observes `userModel.load()` rather than
-// `accountsModel.load()` on purpose: both are memoized so neither adds a
-// request, but the accounts promise settles one microtask BEFORE the context
-// has mapped it and called setData. Resolving off it therefore produced a real
-// intermediate render of `['role:anonymous']` for a logged-in instructor -
-// exactly the wrong-content flash the `undefined` state exists to prevent.
-// `~/contexts/user` registers its own mapping first, so its setData always
-// lands ahead of the callback below.
+// `undefined` until the viewer is known keeps gating additive: a conditioned
+// block appears once we know the audience rather than flashing the anonymous
+// variant at a logged-in instructor and swapping it out.
 //
-// `undefined` while unresolved (rather than an early `['role:anonymous']`) keeps
-// personalization purely additive: unconditioned blocks always render, and a
-// conditioned block only appears once we actually know the viewer's audience.
-// Emitting `role:anonymous` immediately would show anonymous content to a
-// logged-in instructor for a moment and then swap it out - a flash of wrong
-// content plus a double layout shift.
+// Resolve off `userModel.load()`, not `accountsModel.load()`: the accounts
+// promise settles a microtask before `~/contexts/user` maps it and calls
+// setData, which really did render `['role:anonymous']` to instructors.
 export default function useAudienceConditions(): string[] | undefined {
     const {userModel, isLoggedIn} = useUserContext();
     const [resolved, setResolved] = useState(false);
