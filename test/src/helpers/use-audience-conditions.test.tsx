@@ -220,11 +220,8 @@ describe('useAudienceConditions', () => {
     });
 });
 
-// The accounts promise settles one microtask before `~/contexts/user` has
-// mapped it and pushed the user into context. Resolving off it emitted a real
-// intermediate `['role:anonymous']` render for a logged-in instructor, so this
-// mounts the genuine provider - no mocked context - to keep that ordering
-// locked down.
+// Mounts the real provider, not a mocked context: a mock cannot reproduce the
+// promise ordering this guards against.
 describe('useAudienceConditions resolution ordering', () => {
     const confirmedFaculty = {
         id: 1,

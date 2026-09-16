@@ -31,26 +31,14 @@ const composedBlockMap = {
     table: tableBlockEntry
 } as const;
 
-// A literal-typed 'rendering_condition' member alongside a catch-all member is
-// what lets findByType's Extract-based return type resolve to something other
-// than `never` - every block's config union is really its own specific set of
-// literal-tagged options, but this wrapper handles all of them generically.
-//
-// The CMS field is being converted from free text to a MultipleChoiceBlock,
-// whose API representation joins the picked slugs back into the same
-// comma-separated string this already expects - but a bare string[] is accepted
-// too, so this degrades gracefully if that join is ever dropped.
+// The literal-typed member is what keeps findByType's Extract-based return type
+// from collapsing to `never` for a map handling every block type generically.
 type RenderingConditionConfig = Array<
     {type: 'rendering_condition'; value: string | string[]} | {type: string; value: unknown}
 >;
 
-// Only 3 of ~20 flex-page-renderer block types check `rendering_condition`
-// themselves (SectionBlock, HeroBlock, CTABlock). Rather than waiting on a
-// flex-pages release to add the check everywhere, every block in this map gets
-// wrapped with the same audience gate here.
-//
-// Not every block's `value` is an object - `html`'s is a plain string - so a
-// missing or non-object value just means "no condition", not a crash.
+// `html`'s value is a plain string, not an object, so a missing config just
+// means "no condition" rather than a crash.
 function getConditionConfig(data: {value?: unknown}): RenderingConditionConfig | undefined {
     const value = data?.value;
 
@@ -60,8 +48,8 @@ function getConditionConfig(data: {value?: unknown}): RenderingConditionConfig |
     return undefined;
 }
 
-// Accepts either the comma-separated string the field emits today or a bare
-// array of slugs, trims each one, and drops empties either way.
+// The CMS field emits a comma-separated string; an array is accepted too so a
+// change to that serialization degrades instead of throwing.
 function conditionSlugs(condition: string | string[] | undefined): string[] {
     if (!condition) {
         return [];
@@ -71,11 +59,8 @@ function conditionSlugs(condition: string | string[] | undefined): string[] {
     return raw.map((slug) => slug.trim()).filter((slug) => slug.length > 0);
 }
 
-// Same OR semantics the renderer's own SectionBlock/HeroBlock/CTABlock apply: no
-// condition set -> always render; condition set -> render if any slug is active.
-// Those three blocks end up checked twice (once here, once in their own
-// built-in check), but both read the same field the same way, so they always
-// agree - the duplicate check is harmless.
+// SectionBlock, HeroBlock and CTABlock run this same check internally, so they
+// are gated twice; both read the same field the same way and always agree.
 function matchesCondition(config: RenderingConditionConfig | undefined, activeConditions: string[] | undefined) {
     const slugs = conditionSlugs(findByType(config, 'rendering_condition')?.value);
 
@@ -96,15 +81,10 @@ function withAudienceGate(Component: React.ComponentType<GatedBlockProps>) {
     };
 }
 
-// Built once at module scope (composedBlockMap is already module-level) so
-// wrapped component identity stays stable across renders - do not move this
-// inside a component or a hook.
-//
-// Each block's Component has its own distinct, specific props type (the html
-// block's data is a bare string, the table block's is a TableBlockConfig, and so
-// on), so there is no single type all ~19 of them share other than this loose
-// one. withAudienceGate only ever reads `data` and `activeConditions` off props
-// and otherwise forwards them untouched, so the cast is safe at runtime.
+// Wrapped once at module scope: moving this into a component or hook would
+// change component identity every render and remount every block. The cast is
+// needed because the ~19 blocks share no common props type; the gate only reads
+// `data` and `activeConditions` and forwards the rest untouched.
 export const blockMap = Object.fromEntries(
     Object.entries(composedBlockMap).map(([type, def]) => [
         type,
