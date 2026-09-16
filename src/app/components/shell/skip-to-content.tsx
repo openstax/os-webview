@@ -33,14 +33,19 @@ function focusMain() {
     return true;
 }
 
-// Nobody has taken focus since the click: it is still on the link, or on the
-// body because nothing else has claimed it. Anything else means the user moved
-// on while the layout was loading, and we leave them where they went.
+// Nobody else has taken focus since the click: it is still on the link, or on
+// the body because nothing has claimed it, or already on #main -- a page's own
+// useDocumentHead effect focuses the region on mount, and child effects run
+// before the parent's, so we routinely arrive to find our own target focused.
+// Being beaten to the focus by the thing we were going to focus is not a
+// reason to skip the scroll that goes with it. Anything else is the user
+// moving on while the layout loaded, and we leave them where they went.
 function focusIsUnclaimed() {
     const active = document.activeElement;
 
     return (
         active === document.body ||
+        active === document.getElementById('main') ||
         active === document.querySelector(`a.${LINK_CLASS}`)
     );
 }
