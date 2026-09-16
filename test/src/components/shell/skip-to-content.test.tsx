@@ -25,6 +25,29 @@ function MainRegion() {
     );
 }
 
+// A page inside the region. useDocumentHead focuses #main on mount
+// (use-document-head.ts:62), and child effects run before the parent's, so the
+// region finds its own target already focused -- with no scroll, because that
+// focus passes preventScroll and the fragment navigation had nothing to scroll
+// to at the time.
+function PageThatFocusesMain() {
+    React.useEffect(() => {
+        document.getElementById('main')?.focus({preventScroll: true});
+    }, []);
+
+    return <div>page content</div>;
+}
+
+function MainRegionWithPage() {
+    useSkipTargetFocus();
+
+    return (
+        <div id="main" tabIndex={-1}>
+            <PageThatFocusesMain />
+        </div>
+    );
+}
+
 describe('skip-to-content target', () => {
     afterEach(() => {
         window.location.hash = '';
@@ -67,6 +90,19 @@ describe('skip-to-content target', () => {
         render(<MainRegion />);
 
         expect(document.activeElement).toBe(button);
+    });
+
+    it('still scrolls when a page effect focused #main first', () => {
+        window.location.hash = '#main';
+
+        render(<MainRegionWithPage />);
+
+        const mainEl = document.getElementById('main');
+
+        expect(document.activeElement).toBe(mainEl);
+        // The focus was already in the right place; the scroll is the half
+        // that would otherwise go missing.
+        expect($.scrollTo).toHaveBeenCalledWith(mainEl);
     });
 
     it('does nothing when the skip link was not the way in', () => {
