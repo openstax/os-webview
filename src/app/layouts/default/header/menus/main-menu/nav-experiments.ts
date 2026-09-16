@@ -1,20 +1,14 @@
 import type {FlagValue} from '~/helpers/posthog';
 
-/** Flag metadata any CMS menu node may carry (snake_case, matching the
- *  oxmenus API — same casing as `partial_url`). */
+// snake_case to match the oxmenus API, as with `partial_url`.
 export type FlagAwareNode = {
     key?: string;
     feature_flag?: string;
     flag_value?: string;
 };
 
-/** Generic visibility gate from a node's optional flag metadata.
- *  - no feature_flag     → always visible
- *  - flag_value provided → visible iff String(variant) === flag_value
- *  - flag_value blank    → visible iff the flag is truthy
- *  Nodes gated ON by a flag appear once PostHog's flags resolve (fine for
- *  additive items); author controls/defaults WITHOUT a feature_flag so they
- *  render immediately. */
+// Flagged nodes appear only once PostHog resolves, so anything that must paint
+// immediately is authored without a feature_flag.
 export function isNodeVisible(
     node: FlagAwareNode,
     getVariant: (flag: string) => FlagValue

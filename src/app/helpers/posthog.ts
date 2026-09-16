@@ -7,20 +7,18 @@ type PostHogClient = {
     onFeatureFlags: (cb: () => void) => void;
 };
 
-/** PostHog is loaded by GTM; it may not be present yet (pre-consent). */
+// Loaded by GTM, so it may not be present yet (pre-consent).
 function getPostHog(): PostHogClient | undefined {
     return (window as unknown as {posthog?: PostHogClient}).posthog;
 }
 
-/** Read an experiment/feature-flag variant. Reading it auto-fires the
- *  `$feature_flag_called` exposure event in PostHog. */
+// Reading a flag auto-fires PostHog's `$feature_flag_called` exposure event.
 export function getExperimentVariant(flagKey: string): FlagValue {
     return getPostHog()?.getFeatureFlag(flagKey);
 }
 
-/** Subscribe to PostHog flag resolution and return a synchronous variant
- *  reader. Re-renders the caller once flags load, so callers can read any
- *  number of flags (e.g. while filtering a list) without breaking hooks rules. */
+// Returns a plain reader rather than a hook per flag so callers can read any
+// number of flags, e.g. while filtering a list, without breaking hooks rules.
 export function useExperimentReader(): (flag: string) => FlagValue {
     const [, forceRender] = React.useReducer((n: number) => n + 1, 0);
 
