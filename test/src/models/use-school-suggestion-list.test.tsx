@@ -1,8 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
-import * as USDC from '~/contexts/shared-data';
-import * as SFF from '~/models/sfapi';
+import * as CMSF from '~/helpers/cms-fetch';
 
 
 describe('models/use-school-suggestion-list', () => {
@@ -20,18 +19,17 @@ describe('models/use-school-suggestion-list', () => {
         render(<Component searchTerm="Casper College" />);
         await screen.findByText(40);
     });
+    it('handles a null fetch result', () => {
+        const spy = jest.spyOn(CMSF, 'default').mockResolvedValue(null);
+
+        render(<Component searchTerm="Rice" />);
+        jest.runAllTimers();
+        screen.getByText(0);
+        spy.mockRestore();
+    });
     it('returns empty list for empty search string', async () => {
         render(<Component searchTerm="" />);
         // The fetch won't actually change the screen value
-        jest.runAllTimers();
-        screen.getByText(0);
-    });
-    it('works via sfApiFetch, too', () => {
-        jest.spyOn(USDC, 'default').mockReturnValue({
-            flags: {my_openstax: true} // eslint-disable-line camelcase
-        } as ReturnType<typeof USDC.default>);
-        jest.spyOn(SFF, 'default').mockResolvedValue(undefined);
-        render(<Component searchTerm="Rice" />);
         jest.runAllTimers();
         screen.getByText(0);
     });

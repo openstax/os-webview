@@ -17,6 +17,12 @@ describe('models/sfapi', () => {
         expect(await sfApiFetch('thing')).toBeNull();
         expect(console.warn).toHaveBeenCalled();
     });
+    it('returns the parsed response', async () => {
+        const returnValue = {schools: ['a school']};
+
+        mockFetch.mockResolvedValue({json: () => Promise.resolve(returnValue)});
+        expect(await sfApiFetch('schools', '/search?name=a')).toEqual(returnValue);
+    });
     it('handles post error', async () => {
         console.warn = jest.fn();
         mockFetch.mockRejectedValue(new Error('expected error'));

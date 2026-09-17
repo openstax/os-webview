@@ -207,14 +207,8 @@ describe('default layout', () => {
         });
     }
 
-    const myOpenStaxUser = {
-        contact: {
-            firstName: 'Roy',
-            lastName: 'Johnson'
-        }
-    };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const loggedInUser = {userModel: {id: 16249}, myOpenStaxUser} as any;
+    const loggedInUser = {userModel: {id: 16249}} as any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const loggedOutUser = {} as any;
 
@@ -307,7 +301,7 @@ describe('default layout', () => {
         render(<MemoryRouter initialEntries={['/webinars']}>
             <LoginMenu />
         </MemoryRouter>);
-        await screen.findByText('Account Dashboard');
+        await screen.findByText('Account Profile');
     });
     it('closes mobile menu on location change', () => {
         const toggleActive = jest.fn();
@@ -323,9 +317,6 @@ describe('default layout', () => {
     });
     it('renders login-menu options based on userModel', async () => {
         spyUseUserContext.mockReturnValue({
-            myOpenStaxUser: {
-                error: 'true'
-            },
             // @ts-expect-error userModel missssing properties
             userModel: {
                 instructorEligible: true,
