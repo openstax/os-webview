@@ -1,6 +1,7 @@
 {
     "give_link_text": "Give",
     "give_link": "https://riceconnect.rice.edu/donation/support-openstax-header",
+    "default_give_link": "https://riceconnect.rice.edu/donation/support-openstax-header",
     "start": "2023-04-04T05:00:00Z",
     "expires": "2023-04-05T05:00:00Z",
     "menu_start": "2023-12-14T06:00:00Z",
