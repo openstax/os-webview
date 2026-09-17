@@ -6,6 +6,12 @@ import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import LeftContent from '~/pages/details/common/resource-box/left-content';
 import * as TL from '~/pages/details/common/track-link';
 
+// enroll() picks a variant at random; these assertions read the rendered Give label,
+// so the choice has to be deterministic here.
+jest.mock('@openstax/experiments', () => ({
+    enroll: jest.fn(({variants}) => variants[0])
+}));
+
 const mockUseUserContext = jest.fn();
 
 jest.mock('~/contexts/user', () => ({

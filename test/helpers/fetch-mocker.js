@@ -13,6 +13,7 @@ import booksForAnalyticsData from '../src/data/books-for-analytics';
 import bookTitleData from '../src/data/book-titles';
 import buyprintData from '../src/data/buyprint';
 import chemistryData from '../src/data/chemistry-atoms-first.json';
+import donationLinksData from '../src/data/donation-links';
 import donationPopupData from '../src/data/donation-popup';
 import errataData from '../src/data/errata';
 import errataBookData from '../src/data/errata-book';
@@ -70,6 +71,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBookTitles = args[0].endsWith('pages/?type=books.Book&fields=title,id,book_state,promote_snippet&limit=250');
     const isBuyprint = args[0].includes('buyprint');
     const isChemistry = args[0].endsWith('pages/93/?format=json');
+    const isDonationLinks = args[0].includes('donation-links');
     const isDonationPopup = args[0].includes('donation-popup');
     const isErrata = (/pages\/errata\//).test(args[0]);
     const isErrataBook = (/errata\/\?book_title/).test(args[0]);
@@ -135,6 +137,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = blogPinned;
             } else if (isChemistry) {
                 payload = chemistryData;
+            } else if (isDonationLinks) {
+                payload = donationLinksData;
             } else if (isDonationPopup) {
                 payload = donationPopupData;
             } else if (isErrata) {
