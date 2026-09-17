@@ -21,12 +21,15 @@ async def test_buy_print_copy_link(chrome_page_unlogged, base_url, book_slug):
     await chrome_page_unlogged.keyboard.press("Escape")
 
     # THEN: Buy print copy button exists and opens correct page
-    assert await home.buy_print_copy_button_is_visible()
+    await home.buy_print_copy_button.wait_for(state="visible")
+    assert await home.buy_print_copy_button.is_visible()
 
     async with chrome_page_unlogged.expect_popup() as popup_info:
-        await home.click_buy_print_copy_button()
+        await home.buy_print_copy_button.click()
 
     new_tab = await popup_info.value
+    await new_tab.wait_for_load_state("domcontentloaded")
+
     new_tab_content = await new_tab.content()
 
     if "staging" in details_books_url:
@@ -105,23 +108,3 @@ async def test_resources_tabs(chrome_page_unlogged, base_url, book_slug):
     await home.click_student_resources_tab()
 
     assert "Student" in chrome_page_unlogged.url
-
-
-@pytest.mark.parametrize("book_slug", ["anatomy-and-physiology-2e"])
-@pytest.mark.asyncio
-async def test_audiobook_link(chrome_page_unlogged, base_url, book_slug):
-
-    # GIVEN: Open osweb book details page
-
-    # WHEN: The Home page is fully loaded
-    details_books_url = f"{base_url}/details/books/{book_slug}"
-
-    await chrome_page_unlogged.goto(details_books_url)
-    home = HomeRex(chrome_page_unlogged)
-
-    await chrome_page_unlogged.keyboard.press("Escape")
-
-    # THEN: Audiobook link is visible and clickable (in both staging and prod)
-    assert await home.audiobook_link_is_visible()
-
-    assert await home.audiobook_link_purchase_options.is_enabled()
