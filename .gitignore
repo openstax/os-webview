@@ -1,6 +1,6 @@
 .DS_Store
 src/settings.js
-node_modules/
+node_modules
 /dev/
 /dist/
 coverage/

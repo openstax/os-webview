@@ -1,6 +1,6 @@
 import React from 'react';
 import ThankYou, {useOnThankYouClick} from './thank-you-form';
-import useGiveLinks from './use-give-links';
+import {placementForVariant, useResolvedGiveLink} from './use-give-links';
 import CommonElements from './common-elements';
 import type {DonationPopupData} from './use-donation-popup-data';
 
@@ -22,7 +22,13 @@ export default function GiveBeforeOther({
     id?: string;
 }) {
     const {showThankYou, onThankYouClick} = useOnThankYouClick();
-    const [controlLink] = useGiveLinks();
+    const {
+        url,
+        headerSubtitle,
+        headerImage,
+        headerTitle,
+        giveLinkText
+    } = useResolvedGiveLink(placementForVariant(variant), data);
     const beforeOpen = React.useCallback(
         (e: React.MouseEvent) => {
             close();
@@ -56,7 +62,11 @@ export default function GiveBeforeOther({
             <CommonElements
                 data={data}
                 onThankYouClick={onThankYouClick}
-                giveLink={controlLink}
+                giveLink={url}
+                headerSubtitle={headerSubtitle}
+                headerImage={headerImage}
+                headerTitle={headerTitle}
+                giveLinkText={giveLinkText}
             />
             <a
                 href={link}
