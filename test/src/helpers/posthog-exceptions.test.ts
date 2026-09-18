@@ -183,6 +183,22 @@ describe('posthog interop', () => {
         expect(posthogCapture).toHaveBeenCalledWith(error);
     });
 
+    it('reports each handled exception once when PostHog is already ready', async () => {
+        const posthogModule = await freshModule();
+        const firstError = new Error('first failure');
+        const secondError = new Error('second failure');
+        const posthogCapture = jest.fn();
+
+        setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
+
+        posthogModule.captureException(firstError);
+        posthogModule.captureException(secondError);
+
+        expect(posthogCapture).toHaveBeenCalledTimes(2);
+        expect(posthogCapture).toHaveBeenNthCalledWith(1, firstError);
+        expect(posthogCapture).toHaveBeenNthCalledWith(2, secondError);
+    });
+
     it('drops queued exceptions after PostHog never loads', async () => {
         const posthogModule = await freshModule();
         const setConfig = jest.fn();

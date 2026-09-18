@@ -128,8 +128,11 @@ export function installExceptionFilter() {
 export function captureException(error: unknown) {
     const posthog = loadedPostHog();
 
-    queueException(error);
     if (posthog?.captureException) {
         flushPendingExceptions(posthog);
+        posthog.captureException(error);
+        return;
     }
+
+    queueException(error);
 }
