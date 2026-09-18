@@ -158,10 +158,8 @@ describe('posthog interop', () => {
         setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
         captureException(error);
 
-        expect(posthogCapture).toHaveBeenCalledTimes(3);
-        expect(posthogCapture).toHaveBeenNthCalledWith(1, error);
-        expect(posthogCapture).toHaveBeenNthCalledWith(2, error);
-        expect(posthogCapture).toHaveBeenNthCalledWith(3, error);
+        expect(posthogCapture).toHaveBeenCalledTimes(1);
+        expect(posthogCapture).toHaveBeenCalledWith(error);
     });
 
     it('flushes queued exceptions once PostHog loads', async () => {
@@ -218,6 +216,22 @@ describe('posthog interop', () => {
 
         expect(setConfig).toHaveBeenCalledWith({'before_send': posthogModule.beforeSend});
         expect(posthogCapture).not.toHaveBeenCalled();
+    });
+
+    it('drops queued exceptions once PostHog loads without exception capture', async () => {
+        const posthogModule = await freshModule();
+        const posthogCapture = jest.fn();
+
+        posthogModule.captureException(new Error('Failed to fetch sticky/'));
+        setPostHog({__loaded: true, 'set_config': jest.fn()});
+        posthogModule.captureException(new Error('Missing capture support'));
+        setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
+        posthogModule.captureException(new Error('Fresh failure'));
+
+        expect(posthogCapture).toHaveBeenCalledTimes(1);
+        expect(posthogCapture).toHaveBeenCalledWith(
+            expect.objectContaining({message: 'Fresh failure'})
+        );
     });
 
     it('installs only once', async () => {

@@ -88,6 +88,7 @@ function queueException(error: unknown) {
 
 function flushPendingExceptions(posthog: LoadedPostHog) {
     if (!posthog.captureException) {
+        pendingExceptions = [];
         return;
     }
 
@@ -128,7 +129,11 @@ export function installExceptionFilter() {
 export function captureException(error: unknown) {
     const posthog = loadedPostHog();
 
-    if (posthog?.captureException) {
+    if (posthog) {
+        if (!posthog.captureException) {
+            pendingExceptions = [];
+            return;
+        }
         flushPendingExceptions(posthog);
         posthog.captureException(error);
         return;
