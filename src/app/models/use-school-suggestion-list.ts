@@ -1,7 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import cmsFetch from '~/helpers/cms-fetch';
 import debounce from 'lodash/debounce';
-import type {SchoolInfo} from './query-schools';
 
 export const schoolTypeValues = [
     'College/University (4)',
@@ -13,35 +11,66 @@ export const schoolTypeValues = [
     'Other'
 ] as const;
 
-type SchoolFetchFunction = (value: string) => Promise<SchoolInfo[] | null>;
+// sfapi rejects a shorter query with a 422
+const MINIMUM_QUERY_LENGTH = 3;
 
-const debouncedFetch = debounce(
-    (schoolFetch: SchoolFetchFunction, value, setSchools) => {
-        if (value?.length > 1) {
-            schoolFetch(value)
-                .then((list) =>
-                    list?.map((entry) => ({
-                        name: entry.name,
-                        type: entry.type,
-                        location: entry.location,
-                        total_school_enrollment: entry.total_school_enrollment // eslint-disable-line camelcase
-                    }))
-                )
-                .then(setSchools);
-        } else {
-            setSchools([]);
+const server = 'https://salesforce.openstax.org';
+
+export type SchoolSuggestion = {
+    name: string;
+    type: string;
+    location: string;
+    total_school_enrollment: string | null;
+};
+
+type SFSchool = {
+    name: string;
+    type: string;
+    country: string | null;
+};
+
+// Salesforce counts territories as domestic, and sfapi gives us only the country.
+function locationOf(country: SFSchool['country']) {
+    return country?.startsWith('United States') ? 'Domestic' : 'Foreign';
+}
+
+async function fetchSchools(value: string): Promise<SchoolSuggestion[]> {
+    try {
+        const response = await fetch(
+            `${server}/api/v1/schools?name=${encodeURIComponent(value)}`,
+            {mode: 'cors'}
+        );
+
+        // 404 is how sfapi reports no matches
+        if (!response.ok) {
+            return [];
         }
-    },
-    300
-);
+        const {schools} = (await response.json()) as {schools: SFSchool[]};
 
-const schoolFetch: SchoolFetchFunction = (value) =>
-    cmsFetch(`salesforce/schools?search=${value}`);
+        return schools.map((school) => ({
+            name: school.name,
+            type: school.type,
+            location: locationOf(school.country),
+            // not in the public schools response
+            total_school_enrollment: null // eslint-disable-line camelcase
+        }));
+    } catch {
+        return [];
+    }
+}
+
+const debouncedFetch = debounce((value, setSchools) => {
+    if (value?.length >= MINIMUM_QUERY_LENGTH) {
+        fetchSchools(value).then(setSchools);
+    } else {
+        setSchools([]);
+    }
+}, 300);
 
 export default function useMatchingSchools(value: string) {
-    const [schools, setSchools] = useState<SchoolInfo[] | undefined>([]);
+    const [schools, setSchools] = useState<SchoolSuggestion[]>([]);
     const schoolNames = useMemo(
-        () => schools?.map((s) => s.name).sort() ?? [],
+        () => schools.map((s) => s.name).sort(),
         [schools]
     );
     const schoolSet = useMemo(
@@ -51,14 +80,14 @@ export default function useMatchingSchools(value: string) {
     const schoolIsOk = schoolSet.has(value.toLowerCase());
     const selectedSchool =
         schoolIsOk &&
-        schools?.find((s) => s.name.toLowerCase() === value.toLowerCase());
+        schools.find((s) => s.name.toLowerCase() === value.toLowerCase());
     const schoolOptions = useMemo(
         () => schoolNames.map((n) => ({label: n, value: n})),
         [schoolNames]
     );
 
     React.useEffect(
-        () => debouncedFetch(schoolFetch, value, setSchools),
+        () => debouncedFetch(value, setSchools),
         [value]
     );
 
