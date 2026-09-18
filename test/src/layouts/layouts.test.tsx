@@ -78,10 +78,14 @@ describe('layouts/landing', () => {
 
         render(<Component data={data} />);
 
+        // Footer nav columns load from a separate CMS request than the rest
+        // of the footer, so wait for one of their links before counting.
+        await screen.findByRole('link', {name: 'Contact Us'});
+
         // Find social links by title
-        expect(await screen.findAllByTitle(/^OpenStax on .+$/)).toHaveLength(5);
+        expect(screen.getAllByTitle(/^OpenStax on .+$/)).toHaveLength(5);
         // Default footer has 17 links + 1 link in layout = 18 links
-        expect(await screen.findAllByRole('link')).toHaveLength(19);
+        expect(screen.getAllByRole('link')).toHaveLength(19);
     });
     it('renders the flex footer for flex pages', async () => {
         const title = 'some-title';

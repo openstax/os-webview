@@ -4,5 +4,12 @@ export default {
     "ap_statement": "Advanced Placement<sup>\u00ae</sup> and AP<sup>\u00ae</sup> are trademarks registered and/or\r\nowned by the College Board, which is not affiliated with, and does not endorse, this site.",
     "copyright": "\u00a9 1999-2018, Rice University. Except where otherwise noted,\u00a0textbooks on this site are licensed under a Creative Commons Attribution\u00a04.0 International License.",
     "facebook_link": "https://www.facebook.com/openstax",
-    "twitter_link": "https://twitter.com/openstax"
+    "twitter_link": "https://twitter.com/openstax",
+    "social_links": [
+        {"platform": "facebook", "url": "https://www.facebook.com/openstax"},
+        {"platform": "twitter", "url": "https://twitter.com/openstax"},
+        {"platform": "linkedin", "url": "https://www.linkedin.com/company/openstax"},
+        {"platform": "instagram", "url": "https://www.instagram.com/openstax/"},
+        {"platform": "youtube", "url": "https://www.youtube.com/openstax/"}
+    ]
 };
