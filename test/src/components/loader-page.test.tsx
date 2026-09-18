@@ -24,6 +24,17 @@ describe('loader-page', () => {
         fetchFromCMS.mockReset();
     });
 
+    it('sets document metadata when requested', async () => {
+        const data = {title: 'A title'};
+        const Child = () => <div>the page</div>;
+        const setPageTitleAndDescriptionFromBookData = jest.spyOn(DH, 'setPageTitleAndDescriptionFromBookData');
+
+        renderPage(<LoadedPage data={data} Child={Child} props={{}} doDocumentSetup />);
+
+        await screen.findByText('the page');
+        expect(setPageTitleAndDescriptionFromBookData).toHaveBeenCalledWith(data);
+    });
+
     // The rest of the code is exercised in other tests.
     it('loads 404 on data error', async () => {
         const data = {
