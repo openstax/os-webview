@@ -1,6 +1,4 @@
 import React, {useState, useMemo} from 'react';
-import useSharedDataContext from '~/contexts/shared-data';
-import sfApiFetch from '~/models/sfapi';
 import cmsFetch from '~/helpers/cms-fetch';
 import debounce from 'lodash/debounce';
 import type {SchoolInfo} from './query-schools';
@@ -15,10 +13,7 @@ export const schoolTypeValues = [
     'Other'
 ] as const;
 
-export type SchoolType = typeof schoolTypeValues[number];
-
-type SFSchoolInfo = SchoolInfo & {school_type?: SchoolType};
-type SchoolFetchFunction = (value: string) => Promise<SFSchoolInfo[] | null>;
+type SchoolFetchFunction = (value: string) => Promise<SchoolInfo[] | null>;
 
 const debouncedFetch = debounce(
     (schoolFetch: SchoolFetchFunction, value, setSchools) => {
@@ -27,7 +22,7 @@ const debouncedFetch = debounce(
                 .then((list) =>
                     list?.map((entry) => ({
                         name: entry.name,
-                        type: entry.school_type || entry.type, // different names in sfapi and old cms?
+                        type: entry.type,
                         location: entry.location,
                         total_school_enrollment: entry.total_school_enrollment // eslint-disable-line camelcase
                     }))
@@ -40,26 +35,10 @@ const debouncedFetch = debounce(
     300
 );
 
-function useSchoolFetchFunction() {
-    const {flags} = useSharedDataContext();
-    const {my_openstax: isEnabled} = flags || {};
-    const fn = useMemo(
-        () =>
-            (isEnabled
-                ? (value: string) =>
-                      sfApiFetch('schools', `/search?name=${value}`)
-                : (value: string) =>
-                      cmsFetch(
-                          `salesforce/schools?search=${value}`
-                      )) as SchoolFetchFunction,
-        [isEnabled]
-    );
-
-    return fn;
-}
+const schoolFetch: SchoolFetchFunction = (value) =>
+    cmsFetch(`salesforce/schools?search=${value}`);
 
 export default function useMatchingSchools(value: string) {
-    const schoolFetch = useSchoolFetchFunction();
     const [schools, setSchools] = useState<SchoolInfo[] | undefined>([]);
     const schoolNames = useMemo(
         () => schools?.map((s) => s.name).sort() ?? [],
@@ -80,7 +59,7 @@ export default function useMatchingSchools(value: string) {
 
     React.useEffect(
         () => debouncedFetch(schoolFetch, value, setSchools),
-        [value, schoolFetch]
+        [value]
     );
 
     return {schoolNames, schoolIsOk, selectedSchool, schoolOptions};

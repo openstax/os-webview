@@ -10,20 +10,6 @@ const settings = (window as WindowWithSettings).SETTINGS;
 const reqFacultyAccessLink = `${settings.accountHref}/i/signup/educator/cs_form`;
 const profileLink = `${settings.accountHref}/profile`;
 
-function AccountItem() {
-    const {myOpenStaxUser} = useUserContext();
-    const mosIsAvailable = !myOpenStaxUser.error;
-
-    return mosIsAvailable ? (
-        <MenuItem label="Account Dashboard" url="/account" />
-    ) : (
-        <MenuItem
-            label="Account Profile"
-            url={`${settings.accountHref}/profile`}
-        />
-    );
-}
-
 export default function LoginMenuWithDropdown() {
     const userModel = assertDefined(useUserContext().userModel);
 
@@ -37,7 +23,7 @@ export default function LoginMenuWithDropdown() {
             label={label}
             excludeWrapper
         >
-            <AccountItem />
+            <MenuItem label="Account Profile" url={profileLink} />
             {userModel.instructorEligible && (
                 <MenuItem
                     label="Request instructor access"
