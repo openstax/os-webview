@@ -1,4 +1,5 @@
 import React, {useState, useMemo} from 'react';
+import cmsFetch from '~/helpers/cms-fetch';
 import debounce from 'lodash/debounce';
 
 export const schoolTypeValues = [
@@ -29,34 +30,66 @@ type SFSchool = {
     country: string | null;
 };
 
+type CMSSchool = {
+    name: string;
+    type: string;
+    location: string;
+    total_school_enrollment: string | null;
+};
+
 // Salesforce counts territories as domestic, and sfapi gives us only the country.
 function locationOf(country: SFSchool['country']) {
     return country?.startsWith('United States') ? 'Domestic' : 'Foreign';
 }
 
-async function fetchSchools(value: string): Promise<SchoolSuggestion[]> {
+// null means "ask the CMS instead"; an empty array is sfapi answering that it has no match
+async function fetchFromSfapi(value: string): Promise<SchoolSuggestion[] | null> {
+    let response;
+
     try {
-        const response = await fetch(
+        response = await fetch(
             `${server}/api/v1/schools?name=${encodeURIComponent(value)}`,
             {mode: 'cors'}
         );
+    } catch {
+        return null;
+    }
+    if (response.status === 404) {
+        return [];
+    }
+    if (!response.ok) {
+        return null;
+    }
+    const {schools} = (await response.json()) as {schools: SFSchool[]};
 
-        // 404 is how sfapi reports no matches
-        if (!response.ok) {
-            return [];
-        }
-        const {schools} = (await response.json()) as {schools: SFSchool[]};
+    return schools.map((school) => ({
+        name: school.name,
+        type: school.type,
+        location: locationOf(school.country),
+        // not in the public schools response
+        total_school_enrollment: null // eslint-disable-line camelcase
+    }));
+}
+
+async function fetchFromCms(value: string): Promise<SchoolSuggestion[]> {
+    try {
+        const schools: CMSSchool[] = await cmsFetch(
+            `salesforce/schools?search=${value}`
+        );
 
         return schools.map((school) => ({
             name: school.name,
             type: school.type,
-            location: locationOf(school.country),
-            // not in the public schools response
-            total_school_enrollment: null // eslint-disable-line camelcase
+            location: school.location,
+            total_school_enrollment: school.total_school_enrollment // eslint-disable-line camelcase
         }));
     } catch {
         return [];
     }
+}
+
+async function fetchSchools(value: string) {
+    return (await fetchFromSfapi(value)) ?? fetchFromCms(value);
 }
 
 const debouncedFetch = debounce((value, setSchools) => {

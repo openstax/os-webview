@@ -1,6 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
+import * as CMSF from '~/helpers/cms-fetch';
 
 describe('models/use-school-suggestion-list', () => {
     const saveFetch = global.fetch;
@@ -10,18 +11,29 @@ describe('models/use-school-suggestion-list', () => {
 
         return (
             <div>
-                <div data-testid="count">{schoolNames.length}</div>
-                <div data-testid="location">
-                    {selectedSchool ? selectedSchool.location : ''}
-                </div>
+                <div>{schoolNames.length}</div>
+                <div>{selectedSchool ? selectedSchool.location : ''}</div>
             </div>
         );
+    }
+
+    // sfapi is unreachable, so every call falls through to the CMS
+    function breakSfapi(reason: 'reject' | number) {
+        global.fetch = jest.fn().mockImplementation((url: string) => {
+            if (url.includes('salesforce.openstax.org')) {
+                return reason === 'reject'
+                    ? Promise.reject(new Error('expected'))
+                    : Promise.resolve({ok: false, status: reason});
+            }
+            return saveFetch(url);
+        });
     }
 
     jest.useFakeTimers();
 
     afterEach(() => {
         global.fetch = saveFetch;
+        jest.restoreAllMocks();
     });
 
     it('fetches schools', async () => {
@@ -51,19 +63,28 @@ describe('models/use-school-suggestion-list', () => {
         await screen.findByText(location);
     });
 
-    it('treats a not-found response as no matches', async () => {
-        global.fetch = jest.fn().mockResolvedValue({ok: false});
+    it('takes a not-found from sfapi as the answer', async () => {
+        global.fetch = jest.fn().mockResolvedValue({ok: false, status: 404});
         render(<Component searchTerm="Zzzqqx" />);
         jest.runAllTimers();
         await screen.findByText(0);
         expect(global.fetch).toHaveBeenCalled();
     });
 
-    it('treats a failed request as no matches', async () => {
-        global.fetch = jest.fn().mockRejectedValue(new Error('expected'));
-        render(<Component searchTerm="American" />);
+    it.each(['reject' as const, 500])(
+        'falls back to the CMS when sfapi answers %s',
+        async (reason) => {
+            breakSfapi(reason);
+            render(<Component searchTerm="Casper College" />);
+            await screen.findByText(40);
+        }
+    );
+
+    it('gives up when the CMS fails too', async () => {
+        breakSfapi('reject');
+        jest.spyOn(CMSF, 'default').mockRejectedValue(new Error('expected'));
+        render(<Component searchTerm="Casper College" />);
         jest.runAllTimers();
         await screen.findByText(0);
-        expect(global.fetch).toHaveBeenCalled();
     });
 });
