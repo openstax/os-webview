@@ -11,6 +11,7 @@ import * as TagManager from '~/helpers/tag-manager';
 import * as UsePageData from '~/helpers/use-page-data';
 import * as UseLinkHandler from '~/components/shell/router-helpers/use-link-handler';
 import * as PageRoutes from '~/components/shell/router-helpers/page-routes';
+import $ from '~/helpers/$';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 declare global {
@@ -46,10 +47,12 @@ jest.mock('~/components/shell/router-helpers/non-portal-route-wrapper', () => ({
     )
 }));
 
+const FOCUSABLE_SELECTOR =
+    'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 jest.mock('~/helpers/$', () => ({
+    __esModule: true,
     default: {
-        focusable:
-            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
         scrollTo: jest.fn()
     }
 }));
@@ -575,6 +578,112 @@ describe('Router', () => {
             expect(skipLink.tagName).toBe('A');
             expect(skipLink.getAttribute('href')).toBe('#main');
             expect(skipLink.className).toBe('skiptocontent');
+        });
+
+        // The default MockLayout renders no #main at all, which is the state a
+        // page is in before a layout chunk resolves.
+        const MainWithNothingFocusable = ({
+            children
+        }: {
+            children: React.ReactNode;
+        }) => (
+            <div id="main" tabIndex={-1}>
+                {children}
+            </div>
+        );
+
+        const renderWithLayout = (
+            Layout?: React.ComponentType<{children: React.ReactNode}>
+        ) => {
+            if (Layout) {
+                jest.spyOn(LayoutContext, 'default').mockReturnValue({
+                    Layout,
+                    setLayoutParameters: jest.fn()
+                } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+            }
+
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+        };
+
+        // Dispatching a real event (rather than fireEvent) is what lets us
+        // assert on defaultPrevented afterwards.
+        const clickSkipLink = () => {
+            const event = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            });
+
+            act(() => {
+                screen.getByText('skip to main content').dispatchEvent(event);
+            });
+
+            return event;
+        };
+
+        it('focuses #main when it contains nothing focusable', () => {
+            renderWithLayout(MainWithNothingFocusable);
+
+            const event = clickSkipLink();
+
+            expect(
+                document.querySelector(`#main ${FOCUSABLE_SELECTOR}`)
+            ).toBeNull();
+            expect(document.activeElement).toBe(
+                document.getElementById('main')
+            );
+            expect($.scrollTo).toHaveBeenCalledWith(
+                document.getElementById('main')
+            );
+            expect(event.defaultPrevented).toBe(true);
+        });
+
+        it('leaves the default anchor behavior alone when #main is missing', () => {
+            renderWithLayout();
+
+            expect(document.getElementById('main')).toBeNull();
+
+            const event = clickSkipLink();
+
+            // The browser's own fragment navigation is what leaves #main in
+            // the URL for the layout to pick up when it mounts.
+            expect(event.defaultPrevented).toBe(false);
+        });
+
+        it('leaves the default alone when #main cannot take focus', () => {
+            // No tabIndex, so focus() is a no-op and the handler must not
+            // claim it moved focus.
+            const UnfocusableMain = ({
+                children
+            }: {
+                children: React.ReactNode;
+            }) => <div id="main">{children}</div>;
+
+            renderWithLayout(UnfocusableMain);
+
+            const event = clickSkipLink();
+
+            expect(document.activeElement).not.toBe(
+                document.getElementById('main')
+            );
+            expect(event.defaultPrevented).toBe(false);
+            // The default is left alone, so the browser performs its own
+            // fragment scroll; ours on top of it would be two at once.
+            expect($.scrollTo).not.toHaveBeenCalled();
+        });
+
+        it('keeps the document link handler off the fallback click', () => {
+            renderWithLayout();
+
+            clickSkipLink();
+
+            // Left to bubble, use-link-handler would preventDefault this click
+            // and route it instead -- a navigation that moves no focus at all
+            // and leaves no hash worth reading.
+            expect(mockLinkHandler).not.toHaveBeenCalled();
         });
     });
 });

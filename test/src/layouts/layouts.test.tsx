@@ -25,6 +25,22 @@ describe('layouts/landing', () => {
         );
     }
 
+    // The skip link's click falls through to the browser when #main does not
+    // exist yet, leaving the hash behind; the region claims it on mount.
+    it('claims the focus the skip link asked for', () => {
+        window.location.hash = '#main';
+
+        try {
+            render(<Component />);
+
+            expect(document.activeElement).toBe(
+                document.getElementById('main')
+            );
+        } finally {
+            window.location.hash = '';
+        }
+    });
+
     it('renders without data object', () => {
         render(<Component />);
         expect(screen.getAllByRole('img')).toHaveLength(2);
