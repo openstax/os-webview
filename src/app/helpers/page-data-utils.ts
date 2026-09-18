@@ -1,5 +1,5 @@
 import React from 'react';
-import bookPromise from '~/models/book-titles';
+import * as BookTitles from '~/models/book-titles';
 import urlFromSlug from './url-from-slug';
 
 type TypeAndValue = {
@@ -48,7 +48,7 @@ export async function getUrlFor(initialSlug: string) {
     if (initialSlug.startsWith('books/') && initialSlug.length > 6) {
         const strippedSlug = initialSlug.substring(6);
 
-        const bookList = await bookPromise;
+        const bookList = await BookTitles.getBookTitles();
         const bookEntry = bookList.find(
             (e) => e.meta.slug === strippedSlug
         );
