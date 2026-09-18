@@ -158,8 +158,10 @@ describe('posthog interop', () => {
         setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
         captureException(error);
 
-        expect(posthogCapture).toHaveBeenCalledTimes(1);
-        expect(posthogCapture).toHaveBeenCalledWith(error);
+        expect(posthogCapture).toHaveBeenCalledTimes(3);
+        expect(posthogCapture).toHaveBeenNthCalledWith(1, error);
+        expect(posthogCapture).toHaveBeenNthCalledWith(2, error);
+        expect(posthogCapture).toHaveBeenNthCalledWith(3, error);
     });
 
     it('flushes queued exceptions once PostHog loads', async () => {
@@ -218,14 +220,16 @@ describe('posthog interop', () => {
         expect(posthogCapture).not.toHaveBeenCalled();
     });
 
-    it('drops queued exceptions once PostHog loads without exception capture', async () => {
+    it('drops queued exceptions once the installed PostHog lacks exception capture', async () => {
         const posthogModule = await freshModule();
+        const setConfig = jest.fn();
         const posthogCapture = jest.fn();
 
         posthogModule.captureException(new Error('Failed to fetch sticky/'));
-        setPostHog({__loaded: true, 'set_config': jest.fn()});
-        posthogModule.captureException(new Error('Missing capture support'));
-        setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
+        setPostHog({__loaded: true, 'set_config': setConfig});
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(1000);
+        setPostHog({__loaded: true, 'set_config': setConfig, captureException: posthogCapture});
         posthogModule.captureException(new Error('Fresh failure'));
 
         expect(posthogCapture).toHaveBeenCalledTimes(1);

@@ -129,11 +129,7 @@ export function installExceptionFilter() {
 export function captureException(error: unknown) {
     const posthog = loadedPostHog();
 
-    if (posthog) {
-        if (!posthog.captureException) {
-            pendingExceptions = [];
-            return;
-        }
+    if (posthog?.captureException) {
         flushPendingExceptions(posthog);
         posthog.captureException(error);
         return;
