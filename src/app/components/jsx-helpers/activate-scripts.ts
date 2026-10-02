@@ -17,7 +17,21 @@ const ACTIVATED = 'data-activated';
 // against the same window.
 const alreadyRun = new Set<string>();
 
-function sourceFor(text: string) {
+const CLASSIC_TYPE = /^(application|text)\/(x-)?(java|ecma)script$/i;
+
+// Only inline classic JavaScript can be run twice by wrapping it. A module
+// would stop parsing inside a function (import/export/top-level await), and a
+// data block such as application/ld+json would stop being valid JSON.
+function isClassic(s: HTMLScriptElement) {
+    const type = s.getAttribute('type')?.trim();
+
+    return !type || CLASSIC_TYPE.test(type);
+}
+
+function sourceFor(text: string, wrappable: boolean) {
+    if (!wrappable) {
+        return text;
+    }
     if (!alreadyRun.has(text)) {
         alreadyRun.add(text);
         return text;
@@ -40,7 +54,11 @@ function replacementFor(s: HTMLScriptElement) {
         newScript.setAttribute(a.name, a.value)
     );
     if (s.textContent) {
-        newScript.appendChild(document.createTextNode(sourceFor(s.textContent)));
+        const wrappable = !s.src && isClassic(s);
+
+        newScript.appendChild(
+            document.createTextNode(sourceFor(s.textContent, wrappable))
+        );
     }
     newScript.async = false;
     // Marked before insertion, because inserting runs the script synchronously
@@ -67,6 +85,14 @@ export default function activateScripts(el: HTMLElement) {
             return;
         }
 
+        // Removed while the walk was waiting on an earlier script. Nothing to
+        // replace, and a load promise for it would never settle.
+        if (!s.parentNode) {
+            processOne();
+
+            return;
+        }
+
         const newScript = replacementFor(s);
         const p = s.src
             ? new Promise((resolve) => {
@@ -77,7 +103,7 @@ export default function activateScripts(el: HTMLElement) {
               })
             : Promise.resolve();
 
-        s.parentNode?.replaceChild(newScript, s);
+        s.parentNode.replaceChild(newScript, s);
 
         p.then(processOne);
     };

@@ -120,4 +120,50 @@ describe('activate-scripts', () => {
 
         expect(recorder().ran).toEqual([]);
     });
+
+    it('leaves a repeated module script unwrapped', async () => {
+        const source = 'export const x = 1; window.ran.push("module");';
+
+        activateScripts(container(`<script type="module">${source}</script>`));
+        activateScripts(container(`<script type="module">${source}</script>`));
+        await flush();
+
+        const texts = Array.from(document.querySelectorAll('script')).map(
+            (s) => s.textContent
+        );
+
+        expect(texts).toEqual([source, source]);
+    });
+
+    it('leaves a repeated JSON data block unchanged', async () => {
+        const json = '{"@context": "https://schema.org"}';
+
+        activateScripts(
+            container(`<script type="application/ld+json">${json}</script>`)
+        );
+        activateScripts(
+            container(`<script type="application/ld+json">${json}</script>`)
+        );
+        await flush();
+
+        const texts = Array.from(document.querySelectorAll('script')).map(
+            (s) => s.textContent
+        );
+
+        expect(texts).toEqual([json, json]);
+    });
+
+    it('keeps going when a detached script has a src', async () => {
+        const el = container(
+            '<script src="/first.js"></script><script src="/gone.js"></script><script>window.ran.push("after")</script>'
+        );
+
+        activateScripts(el);
+        await flush();
+        scriptsIn(el)[1].remove();
+        scriptsIn(el)[0].dispatchEvent(new Event('load'));
+        await flush();
+
+        expect(recorder().ran).toEqual(['after']);
+    });
 });
