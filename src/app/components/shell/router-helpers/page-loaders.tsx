@@ -2,6 +2,7 @@ import React from 'react';
 import loadable from 'react-loadable';
 import * as Sentry from '@sentry/react';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
+import LoadingFailure from '~/components/loading-placeholder/loading-failure';
 import recoverFromStaleChunk from '~/helpers/stale-chunk';
 import useLayoutContext from '~/contexts/layout';
 
@@ -23,14 +24,7 @@ export function PageLoading({error, retry, pastDelay}: PageLoadingProps) {
     }, [error]);
 
     if (error) {
-        return (
-            <div>
-                <p>This page did not load.</p>
-                <button type="button" onClick={retry}>
-                    Try again
-                </button>
-            </div>
-        );
+        return <LoadingFailure onRetry={retry} />;
     }
 
     if (!pastDelay) {

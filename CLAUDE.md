@@ -115,9 +115,13 @@ Main routes in `router.tsx`:
 
 - `src/app/sentry.js` is the only `Sentry.init` — imported first by `main.js`.
 - `beforeSend` drops everything except `openstax.org`, so dev/staging errors never reach Sentry.
-- Noise filtering lives in three lists there: `ignoreErrors` (exact messages), `ignoreMessages`
-  (substring match, applied in `beforeSend`), and `denyUrls` (script origin). Use `denyUrls`,
-  not `ignoreUrls` — the latter was removed in SDK v7 and silently does nothing.
+- Noise filtering lives in four lists. `ignoreErrors` stays in `sentry.js`: Sentry
+  substring-matches it against the whole exception value, which is too broad to reuse. The other
+  three are in `src/app/helpers/exception-filters.ts` so PostHog gets them too — `ignoreMessages`
+  (substring match, applied in `beforeSend`), `denyFrameSchemes` (drops an exception whose every
+  stack frame is a browser-extension url, including Safari's `webkit-masked-url://`), and
+  `denyUrls` (script origin). Use `denyUrls`, not `ignoreUrls` — the latter was removed in SDK v7
+  and silently does nothing.
 - Integrations come from `@sentry/react` (v10). Do not add `@sentry/integrations`; it pulls a
   second copy of the SDK core into the bundle. `dedupe` is already on by default.
 - Errors only — no tracing, replay, or feedback. `browserTracingIntegration` is deliberately
@@ -134,3 +138,15 @@ Main routes in `router.tsx`:
 - Source maps upload from `build.yml` on `main` and tags, under release `osweb@<package.json
   version>` — that must stay in sync with `release` in `sentry.js`. Needs the
   `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, and `SENTRY_PROJECT` repo secrets.
+
+## Error reporting (PostHog)
+
+- PostHog is loaded by a tag inside the GTM container, not by this bundle, so `window.posthog` is
+  the only handle on it and it only exists once `initializeGTM()` has run (which itself only
+  happens off the K12 portal).
+- `src/app/helpers/posthog-exceptions.ts` polls for that global and installs a `before_send` hook
+  applying the shared filters from `exception-filters.ts`. Without it, exception autocapture
+  reports everything Sentry has been told to ignore.
+- Anywhere we start handling a rejection that used to go unhandled, report it deliberately with
+  both `Sentry.captureException` and this module's `captureException` — handling it removes it
+  from both tools' unhandled-rejection capture.
