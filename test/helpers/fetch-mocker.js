@@ -105,6 +105,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSearchSubject = args[0].includes('/search/?subjects=');
     const isSfapiUser = (/api\/v1\/users/).test(args[0]);
     const isSfapiLists = (/api\/v1\/lists/).test(args[0]);
+    const isSfapiImpact = (/api\/v1\/impact\/books/).test(args[0]);
     const isSfapiSchoolTrinity = (/0017h00000YXEBzAAP/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isSubjectPage = args[0].includes('pages/subjects');
@@ -229,6 +230,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = searchSubject;
             } else if (isSfapiLists) {
                 payload = sfapiLists;
+            } else if (isSfapiImpact) {
+                payload = {books: []};
             } else if (isSfapiSchoolTrinity) {
                 payload = sfapiSchoolTrinity;
             } else if (isImage) {

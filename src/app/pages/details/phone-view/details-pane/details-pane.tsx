@@ -17,7 +17,7 @@ export default function DetailsPane({
         <div className="details-pane">
             <RawHTML html={model.description} />
             <hr className="thin-rule" />
-            {model.adoptions && <SavingsBlurb />}
+            <SavingsBlurb />
             <div className="authors-region">
                 <CollapsingPane title={polish ? 'Autorzy' : 'Authors'}>
                     <Authors />
