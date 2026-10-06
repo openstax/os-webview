@@ -12,6 +12,7 @@ import ReactModal from 'react-modal';
 import TakeoverDialog from './takeover-dialog/takeover-dialog';
 import cn from 'classnames';
 import './default.scss';
+import {useSkipTargetFocus} from '~/components/shell/skip-to-content';
 
 export default function DefaultLayout({children}: React.PropsWithChildren<object>) {
     // BrowserRouter has to include everything that uses useLocation
@@ -44,6 +45,7 @@ function Main({children}: React.PropsWithChildren<object>) {
     React.useEffect(() => {
         ReactModal.setAppElement(ref.current as HTMLDivElement);
     }, []);
+    useSkipTargetFocus();
 
     return (
         <div
