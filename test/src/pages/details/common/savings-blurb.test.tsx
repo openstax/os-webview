@@ -71,6 +71,30 @@ describe('details/common/savings-blurb', () => {
         await waitFor(() => expect(spySfApiFetch).toHaveBeenCalled());
         expect(container.querySelector('.savings-blurb')).toBeNull();
     });
+    it('hides the previous book while the next one loads', async () => {
+        let resolveNext: (value: unknown) => void = () => null;
+
+        spySfApiFetch.mockImplementation((_type, specifier) =>
+            specifier?.includes('Biology')
+                ? new Promise((resolve) => {
+                      resolveNext = resolve;
+                  })
+                : Promise.resolve({books: [{adoptions: 4983, savings: 100}]})
+        );
+        const {container, rerender} = render(<SavingsBlurb />);
+
+        await screen.findByText('4,983');
+
+        mockContext({salesforceName: 'Biology'});
+        rerender(<SavingsBlurb />);
+        await waitFor(() =>
+            expect(container.querySelector('.savings-blurb')).toBeNull()
+        );
+
+        resolveNext({books: [{adoptions: 1831, savings: 200}]});
+        await screen.findByText('1,831');
+        expect(screen.queryByText('4,983')).toBeNull();
+    });
     it('does not fetch without a salesforce name', async () => {
         mockContext({salesforceName: undefined});
         const {container} = render(<SavingsBlurb />);
