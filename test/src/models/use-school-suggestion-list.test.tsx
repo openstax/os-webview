@@ -19,11 +19,12 @@ describe('models/use-school-suggestion-list', () => {
         render(<Component searchTerm="Casper College" />);
         await screen.findByText(40);
     });
-    it('handles a null fetch result', () => {
+    it('handles a null fetch result', async () => {
         const spy = jest.spyOn(CMSF, 'default').mockResolvedValue(null);
 
         render(<Component searchTerm="Rice" />);
         jest.runAllTimers();
+        await Promise.resolve();
         screen.getByText(0);
         spy.mockRestore();
     });
