@@ -17,6 +17,14 @@ const ACTIVATED = 'data-activated';
 // against the same window.
 const alreadyRun = new Set<string>();
 
+// Blob URLs of the inline scripts run on behalf of CMS embeds. Entries stay
+// after the URL is revoked, because error stack frames keep carrying it.
+const embedScriptUrls = new Set<string>();
+
+export function isEmbedScriptUrl(url: string) {
+    return embedScriptUrls.has(url);
+}
+
 const CLASSIC_TYPE = /^(application|text)\/(x-)?(java|ecma)script$/i;
 
 // Only inline classic JavaScript can be run twice by wrapping it. A module
@@ -47,6 +55,18 @@ function sourceFor(text: string, wrappable: boolean) {
     return `(function () {\n${text}\n})();`;
 }
 
+// A script loaded from a blob: URL shows that URL in error stacks in every
+// engine. An inline one reports the page's own URL, and WebKit ignores
+// //# sourceURL, so this is the only way to tell CMS scripts apart in stacks.
+function runFromBlob(newScript: HTMLScriptElement, source: string) {
+    const url = URL.createObjectURL(
+        new Blob([source], {type: 'text/javascript'})
+    );
+
+    embedScriptUrls.add(url);
+    newScript.src = url;
+}
+
 function replacementFor(s: HTMLScriptElement) {
     const newScript = document.createElement('script');
 
@@ -56,9 +76,13 @@ function replacementFor(s: HTMLScriptElement) {
     if (s.textContent) {
         const wrappable = !s.src && isClassic(s);
 
-        newScript.appendChild(
-            document.createTextNode(sourceFor(s.textContent, wrappable))
-        );
+        const source = sourceFor(s.textContent, wrappable);
+
+        if (wrappable && typeof URL.createObjectURL === 'function') {
+            runFromBlob(newScript, source);
+        } else {
+            newScript.appendChild(document.createTextNode(source));
+        }
     }
     newScript.async = false;
     // Marked before insertion, because inserting runs the script synchronously
@@ -94,7 +118,7 @@ export default function activateScripts(el: HTMLElement) {
         }
 
         const newScript = replacementFor(s);
-        const p = s.src
+        const p = newScript.src
             ? new Promise((resolve) => {
                   newScript.onload = resolve;
                   // Without this, one 404 parks the chain forever and no later
@@ -105,7 +129,12 @@ export default function activateScripts(el: HTMLElement) {
 
         s.parentNode.replaceChild(newScript, s);
 
-        p.then(processOne);
+        p.then(() => {
+            if (isEmbedScriptUrl(newScript.src)) {
+                URL.revokeObjectURL(newScript.src);
+            }
+            processOne();
+        });
     };
 
     processOne();
