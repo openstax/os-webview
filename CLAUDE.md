@@ -127,6 +127,11 @@ Main routes in `router.tsx`:
   are kept, because GTM custom-HTML tags (consent, PostHog) and CMS embeds run that way. The
   exception is Chrome and the Google app on iOS: they inject inline scripts of their own, so
   there every stack with no `/dist/` frame is dropped.
+- CMS-embedded scripts (RawHTML `embed`, which includes flex-page HTML blocks) run from `blob:`
+  URLs that `activate-scripts.ts` records. `beforeSend` keeps their errors on every browser and
+  tags them `cms_embed:true`, for filtering or alerting. A `blob:` URL is used rather than
+  `//# sourceURL` because WebKit ignores `sourceURL` in stacks, and a `sourceURL` on another
+  origin makes WebKit mute the error entirely.
 - Integrations come from `@sentry/react` (v10). Do not add `@sentry/integrations`; it pulls a
   second copy of the SDK core into the bundle. `dedupe` is already on by default.
 - Errors only — no tracing, replay, or feedback. `browserTracingIntegration` is deliberately

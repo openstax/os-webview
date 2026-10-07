@@ -9,9 +9,15 @@ jest.mock('~/helpers/device', () => ({
     __esModule: true,
     default: () => true
 }));
+jest.mock('~/components/jsx-helpers/activate-scripts', () => ({
+    isEmbedScriptUrl: (url: string) => url === 'blob:https://dev.openstax.org/cms-1'
+}));
 
 type Frame = {filename?: string};
-type SentryEvent = {exception?: {values: {stacktrace?: {frames: Frame[]}}[]}};
+type SentryEvent = {
+    exception?: {values: {stacktrace?: {frames: Frame[]}}[]};
+    tags?: Record<string, unknown>;
+};
 
 const options = (Sentry.init as jest.Mock).mock.calls[0][0];
 const beforeSend: (event: SentryEvent) => SentryEvent | null = options.beforeSend;
@@ -19,6 +25,7 @@ const page = 'https://dev.openstax.org/details/books/biology-2e';
 const ourBundle = 'https://dev.openstax.org/dist/main-abc.min.js';
 const vendor = 'https://cdn.example.com/dist/lib.js';
 const extension = 'chrome-extension://abc/content.js';
+const cmsEmbed = 'blob:https://dev.openstax.org/cms-1';
 
 function eventWithFrames(...filenames: (string | undefined)[]): SentryEvent {
     return {
@@ -47,6 +54,15 @@ describe('sentry', () => {
         expect(sentOrDropped(eventWithFrames(page, vendor))).toBe('sent');
         expect(sentOrDropped(eventWithFrames('<anonymous>'))).toBe('sent');
     });
+    it('keeps and tags errors from CMS embed scripts', () => {
+        const event = eventWithFrames(cmsEmbed, vendor);
+
+        expect(sentOrDropped(event)).toBe('sent');
+        expect(event.tags).toHaveProperty('cms_embed', true);
+    });
+    it('treats blob scripts that are not CMS embeds as other origins', () => {
+        expect(sentOrDropped(eventWithFrames('blob:https://dev.openstax.org/other'))).toBe('dropped');
+    });
     it('keeps errors with no stack to judge by', () => {
         expect(sentOrDropped({exception: {values: [{}]}})).toBe('sent');
         expect(sentOrDropped({})).toBe('sent');
@@ -63,8 +79,9 @@ describe('sentry', () => {
         it('drops inline-only stacks, since the browser injects its own', () => {
             expect(sentOrDropped(eventWithFrames(page, page))).toBe('dropped');
         });
-        it('still keeps errors from our bundles or with no script frames', () => {
+        it('still keeps errors from our bundles, CMS embeds, or with no script frames', () => {
             expect(sentOrDropped(eventWithFrames(page, ourBundle))).toBe('sent');
+            expect(sentOrDropped(eventWithFrames(page, cmsEmbed))).toBe('sent');
             expect(sentOrDropped(eventWithFrames('<anonymous>'))).toBe('sent');
         });
     });
