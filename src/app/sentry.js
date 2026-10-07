@@ -61,7 +61,14 @@ const ignoreMessages = [
     // Browser extensions talking to a background page that has gone away.
     'Invalid call to runtime.sendMessage()',
     // A third-party tag fired by GTM; the whole stack is inside gtm.js.
-    'AviviD is not defined'
+    'AviviD is not defined',
+    // Browsers older than Chrome 93 / Safari 15.4, failing inside a dependency.
+    'Object.hasOwn is not a function',
+    // Globals that in-app browsers and extensions expect to have injected.
+    'xbrowser is not defined',
+    'swbrowser is not defined',
+    'XHRInterface is not defined',
+    'zaloJSV2'
 ];
 
 const denyUrls = [
@@ -84,11 +91,24 @@ function messageOf(event, error) {
     return typeof value === 'string' ? value : '';
 }
 
+// Our code only ever runs from the /dist/ bundles. An error whose stack never
+// touches them came from something else on the page: scripts Chrome on iOS
+// injects, extensions, GTM tags. denyUrls can't catch these because it only
+// checks the top frame, and injected scripts report the page's own URL.
+function isFromOtherScripts(event) {
+    const ourScripts = `${window.location.origin}/dist/`;
+    const frames = (event.exception?.values ?? [])
+        .flatMap((value) => value.stacktrace?.frames ?? []);
+
+    return frames.length > 0 &&
+        !frames.some((frame) => frame.filename?.startsWith(ourScripts));
+}
+
 // eslint-disable-next-line complexity
 function beforeSend(event, hint) {
     const message = messageOf(event, hint?.originalException);
 
-    if (window.location.hostname !== 'openstax.org') {
+    if (isFromOtherScripts(event)) {
         return null;
     }
     if (!isSupported()) {
@@ -119,6 +139,9 @@ function beforeSend(event, hint) {
 }
 
 Sentry.init({
+    // Off everywhere but production. Disabling only in beforeSend would still
+    // let session envelopes through, which skews release health.
+    enabled: window.location.hostname === 'openstax.org',
     dsn: 'https://68df3e19624c434eb975dafa316c03ff@o484761.ingest.sentry.io/5691260',
     release: `osweb@${process.env.RELEASE_VERSION || packageVersion}`,
     integrations: [Sentry.extraErrorDataIntegration()],

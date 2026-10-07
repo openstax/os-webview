@@ -10,7 +10,7 @@ OpenStax webview — the main openstax.org website. A Preact/TypeScript SPA that
 
 ### Build
 ```bash
-script/build             # Dev build (output in dev/)
+script/build             # Dev build (output in dist/; needs nvm, else run `yarn webpack --mode development`)
 ```
 
 ### Testing
@@ -19,7 +19,7 @@ yarn test                # Run all tests with coverage
 yarn jest layout.test    # Run a single test by name pattern
 yarn jest test/src/components/shell.test.tsx  # Run a specific test file
 ```
-Note: Tests require the dev build (`dev/` directory) to exist.
+Note: Tests require the build (`dist/` directory) to exist.
 
 ### Linting
 ```bash
@@ -117,10 +117,13 @@ Main routes in `router.tsx`:
 ## Error reporting (Sentry)
 
 - `src/app/sentry.js` is the only `Sentry.init` — imported first by `main.js`.
-- `beforeSend` drops everything except `openstax.org`, so dev/staging errors never reach Sentry.
+- `enabled` is false everywhere but `openstax.org`. Don't move that check into `beforeSend`:
+  session envelopes skip `beforeSend`, so dev and staging would still skew release health.
 - Noise filtering lives in three lists there: `ignoreErrors` (exact messages), `ignoreMessages`
   (substring match, applied in `beforeSend`), and `denyUrls` (script origin). Use `denyUrls`,
   not `ignoreUrls` — the latter was removed in SDK v7 and silently does nothing.
+- `beforeSend` also drops any error whose stack has no frame under `/dist/`. Scripts that Chrome
+  on iOS injects report the page's own URL, so `denyUrls` (top frame only) can't catch them.
 - Integrations come from `@sentry/react` (v10). Do not add `@sentry/integrations`; it pulls a
   second copy of the SDK core into the bundle. `dedupe` is already on by default.
 - Errors only — no tracing, replay, or feedback. `browserTracingIntegration` is deliberately
@@ -134,6 +137,9 @@ Main routes in `router.tsx`:
   and emails out of it.
 - Chunk-load failures are recovered from rather than reported — see `stale-chunk.ts`. They stay
   in the ignore lists because Sentry's own global handlers capture them before the reload runs.
-- Source maps upload from `build.yml` on `main` and tags, under release `osweb@<package.json
-  version>` — that must stay in sync with `release` in `sentry.js`. Needs the
-  `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, and `SENTRY_PROJECT` repo secrets.
+- Source maps are uploaded by CodeBuild, not GitHub Actions (`bit-deployment`
+  `cfn/fe_project.yml`). After `script/build production` it runs `posthog-cli sourcemap process`,
+  then `sentry-cli sourcemaps inject` and `upload` on `dist/`, under release
+  `osweb@$RELEASE_VERSION` (the release tag). `sentry.js` builds the same string from
+  `process.env.RELEASE_VERSION`. Tokens come from SSM `/shared/codebuild/*`. If one is missing the
+  build warns and skips the upload, so a release can ship unsymbolicated without failing.
