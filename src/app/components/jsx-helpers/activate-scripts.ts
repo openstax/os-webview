@@ -85,9 +85,9 @@ function replacementFor(s: HTMLScriptElement) {
         }
     }
     newScript.async = false;
-    // Marked before insertion, because inserting runs the script synchronously
-    // and the script itself can trigger a re-render that walks this container
-    // again.
+    // Marked before insertion, because inserting can run the script
+    // synchronously (the text-node fallback) and the script itself can trigger
+    // a re-render that walks this container again.
     newScript.setAttribute(ACTIVATED, 'true');
 
     return newScript;

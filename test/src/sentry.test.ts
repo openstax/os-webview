@@ -60,6 +60,12 @@ describe('sentry', () => {
         expect(sentOrDropped(event)).toBe('sent');
         expect(event.tags).toHaveProperty('cms_embed', true);
     });
+    it('recognises CMS embed frames whose blob: prefix the stack parser dropped', () => {
+        const event = eventWithFrames('https://dev.openstax.org/cms-1');
+
+        expect(sentOrDropped(event)).toBe('sent');
+        expect(event.tags).toHaveProperty('cms_embed', true);
+    });
     it('treats blob scripts that are not CMS embeds as other origins', () => {
         expect(sentOrDropped(eventWithFrames('blob:https://dev.openstax.org/other'))).toBe('dropped');
     });
@@ -82,6 +88,7 @@ describe('sentry', () => {
         it('still keeps errors from our bundles, CMS embeds, or with no script frames', () => {
             expect(sentOrDropped(eventWithFrames(page, ourBundle))).toBe('sent');
             expect(sentOrDropped(eventWithFrames(page, cmsEmbed))).toBe('sent');
+            expect(sentOrDropped(eventWithFrames(page, 'https://dev.openstax.org/cms-1'))).toBe('sent');
             expect(sentOrDropped(eventWithFrames('<anonymous>'))).toBe('sent');
         });
     });

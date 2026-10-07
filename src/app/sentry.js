@@ -99,6 +99,12 @@ function scriptUrls(event) {
         .filter((url) => (/^(blob:)?[a-z-]+:\/\//).test(url));
 }
 
+// Sentry's Safari and Firefox stack parser drops the blob: prefix from a frame
+// it reads, leaving https://origin/<uuid>, so the lookup has to put it back.
+function isCmsEmbed(url) {
+    return isEmbedScriptUrl(url) || isEmbedScriptUrl(`blob:${url}`);
+}
+
 // Our bundles live under /dist/, and CMS embeds run from blob: URLs that
 // activate-scripts records. GTM tags run inline, so their frames carry the
 // page's URL, and we keep those. A stack made only of other origins (vendor
@@ -107,7 +113,7 @@ function scriptUrls(event) {
 function isFromOtherScripts(urls) {
     const origin = window.location.origin;
 
-    if (urls.some((url) => url.startsWith(`${origin}/dist/`) || isEmbedScriptUrl(url))) {
+    if (urls.some((url) => url.startsWith(`${origin}/dist/`) || isCmsEmbed(url))) {
         return false;
     }
     // Chrome and the Google app on iOS inject scripts that report the page's URL
@@ -125,7 +131,7 @@ function beforeSend(event, hint) {
     if (isFromOtherScripts(urls)) {
         return null;
     }
-    if (urls.some(isEmbedScriptUrl)) {
+    if (urls.some(isCmsEmbed)) {
         event.tags = {...event.tags, 'cms_embed': true};
     }
     if (!isSupported()) {
