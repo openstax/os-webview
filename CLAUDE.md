@@ -122,8 +122,11 @@ Main routes in `router.tsx`:
 - Noise filtering lives in three lists there: `ignoreErrors` (exact messages), `ignoreMessages`
   (substring match, applied in `beforeSend`), and `denyUrls` (script origin). Use `denyUrls`,
   not `ignoreUrls` — the latter was removed in SDK v7 and silently does nothing.
-- `beforeSend` also drops any error whose stack has no frame under `/dist/`. Scripts that Chrome
-  on iOS injects report the page's own URL, so `denyUrls` (top frame only) can't catch them.
+- `beforeSend` also drops errors whose stack has no `/dist/` frame and whose script frames all
+  come from other origins (vendor CDNs, extensions). Inline frames, which carry the page's URL,
+  are kept, because GTM custom-HTML tags (consent, PostHog) and CMS embeds run that way. The
+  exception is Chrome and the Google app on iOS: they inject inline scripts of their own, so
+  there every stack with no `/dist/` frame is dropped.
 - Integrations come from `@sentry/react` (v10). Do not add `@sentry/integrations`; it pulls a
   second copy of the SDK core into the bundle. `dedupe` is already on by default.
 - Errors only — no tracing, replay, or feedback. `browserTracingIntegration` is deliberately

@@ -91,17 +91,29 @@ function messageOf(event, error) {
     return typeof value === 'string' ? value : '';
 }
 
-// Our code only ever runs from the /dist/ bundles. An error whose stack never
-// touches them came from something else on the page: scripts Chrome on iOS
-// injects, extensions, GTM tags. denyUrls can't catch these because it only
-// checks the top frame, and injected scripts report the page's own URL.
-function isFromOtherScripts(event) {
-    const ourScripts = `${window.location.origin}/dist/`;
-    const frames = (event.exception?.values ?? [])
-        .flatMap((value) => value.stacktrace?.frames ?? []);
+function scriptUrls(event) {
+    return (event.exception?.values ?? [])
+        .flatMap((value) => value.stacktrace?.frames ?? [])
+        .map((frame) => frame.filename)
+        .filter((url) => (/^[a-z-]+:\/\//).test(url));
+}
 
-    return frames.length > 0 &&
-        !frames.some((frame) => frame.filename?.startsWith(ourScripts));
+// Our bundles live under /dist/. GTM tags and CMS embeds run inline, so their
+// frames carry the page's URL, and we keep those. A stack made only of other
+// origins (vendor CDNs, extensions) is dropped. denyUrls can't do this because
+// it checks the top frame alone.
+function isFromOtherScripts(event) {
+    const urls = scriptUrls(event);
+    const origin = window.location.origin;
+
+    if (urls.some((url) => url.startsWith(`${origin}/dist/`))) {
+        return false;
+    }
+    // Chrome and the Google app on iOS inject scripts that report the page's URL
+    if ((/CriOS|GSA\//).test(window.navigator.userAgent)) {
+        return urls.length > 0;
+    }
+    return urls.length > 0 && !urls.some((url) => url.startsWith(`${origin}/`));
 }
 
 // eslint-disable-next-line complexity
