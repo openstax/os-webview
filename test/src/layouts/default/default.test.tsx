@@ -20,6 +20,7 @@ import MemoryRouter from '../../../helpers/future-memory-router';
 import {Link} from 'react-router-dom';
 import * as UUC from '~/contexts/user';
 import LoginMenu from '~/layouts/default/header/menus/main-menu/login-menu/login-menu-with-dropdown';
+import settings from '~/helpers/window-settings';
 import MenuExpander from '~/layouts/default/header/menus/menu-expander/menu-expander';
 import {DropdownContextProvider} from '~/layouts/default/header/menus/dropdown-context';
 import '@testing-library/jest-dom';
@@ -325,7 +326,8 @@ describe('default layout', () => {
         render(<MemoryRouter initialEntries={['/webinars']}>
             <LoginMenu />
         </MemoryRouter>);
-        await screen.findByText('Account Profile');
+        expect(await screen.findByRole('link', {name: 'Account Profile'}))
+            .toHaveAttribute('href', `${settings().accountHref}/profile`);
     });
     it('closes mobile menu on location change', () => {
         const toggleActive = jest.fn();
