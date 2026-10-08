@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render, screen, waitFor} from '@testing-library/preact';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
 import * as CMSF from '~/helpers/cms-fetch';
 
@@ -86,5 +86,15 @@ describe('models/use-school-suggestion-list', () => {
         render(<Component searchTerm="Casper College" />);
         jest.runAllTimers();
         await screen.findByText(0);
+    });
+
+    it('handles a null fetch result from the CMS fallback', async () => {
+        breakSfapi('reject');
+        const spy = jest.spyOn(CMSF, 'default').mockResolvedValue(null);
+
+        render(<Component searchTerm="Rice" />);
+        jest.runAllTimers();
+        await waitFor(() => expect(spy).toHaveBeenCalled());
+        screen.getByText(0);
     });
 });
