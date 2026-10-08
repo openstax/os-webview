@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/preact';
+import {act, render, screen} from '@testing-library/preact';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
 import * as CMSF from '~/helpers/cms-fetch';
 
@@ -90,11 +90,16 @@ describe('models/use-school-suggestion-list', () => {
 
     it('handles a null fetch result from the CMS fallback', async () => {
         breakSfapi('reject');
+        const {rerender} = render(<Component searchTerm="Casper College" />);
+
+        await screen.findByText(40);
         const spy = jest.spyOn(CMSF, 'default').mockResolvedValue(null);
 
-        render(<Component searchTerm="Rice" />);
-        jest.runAllTimers();
-        await waitFor(() => expect(spy).toHaveBeenCalled());
-        screen.getByText(0);
+        rerender(<Component searchTerm="Rice" />);
+        await act(async () => {
+            jest.runAllTimers();
+        });
+        expect(spy).toHaveBeenCalledWith('salesforce/schools?search=Rice');
+        await screen.findByText(0);
     });
 });
