@@ -39,7 +39,14 @@ export const ignoreMessages = [
     // Browser extensions talking to a background page that has gone away.
     'Invalid call to runtime.sendMessage()',
     // A third-party tag fired by GTM; the whole stack is inside gtm.js.
-    'AviviD is not defined'
+    'AviviD is not defined',
+    // Browsers older than Chrome 93 / Safari 15.4, failing inside a dependency.
+    'Object.hasOwn is not a function',
+    // Globals that in-app browsers and extensions expect to have injected.
+    'xbrowser is not defined',
+    'swbrowser is not defined',
+    'XHRInterface is not defined',
+    'zaloJSV2'
 ];
 
 // Browser extensions run in our page's context, so what they throw arrives

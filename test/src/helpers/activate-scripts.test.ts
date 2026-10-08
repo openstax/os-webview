@@ -1,5 +1,14 @@
-import {describe, it, expect, beforeEach} from '@jest/globals';
-import activateScripts from '~/components/jsx-helpers/activate-scripts';
+import {
+    describe,
+    it,
+    expect,
+    beforeEach,
+    afterEach,
+    jest
+} from '@jest/globals';
+import activateScripts, {
+    isEmbedScriptUrl
+} from '~/components/jsx-helpers/activate-scripts';
 
 type Recorder = {ran: unknown[]};
 
@@ -165,5 +174,155 @@ describe('activate-scripts', () => {
         await flush();
 
         expect(recorder().ran).toEqual(['after']);
+    });
+});
+
+describe('activate-scripts from blob URLs', () => {
+    const original = {
+        create: URL.createObjectURL,
+        revoke: URL.revokeObjectURL
+    };
+    let blobs: Blob[];
+
+    const readBlob = (blob: Blob) =>
+        new Promise<string>((resolve) => {
+            const reader = new FileReader();
+
+            reader.onload = () => resolve(reader.result as string);
+            reader.readAsText(blob);
+        });
+
+    beforeEach(() => {
+        document.body.innerHTML = '';
+        recorder().ran = [];
+        blobs = [];
+        URL.createObjectURL = jest.fn((blob: Blob | MediaSource) => {
+            blobs.push(blob as Blob);
+
+            return `blob:https://dev.openstax.org/${blobs.length}-${Math.random()}`;
+        });
+        URL.revokeObjectURL = jest.fn();
+    });
+
+    afterEach(() => {
+        URL.createObjectURL = original.create;
+        URL.revokeObjectURL = original.revoke;
+    });
+
+    it('loads an inline classic script from a blob and records the URL', async () => {
+        const el = container('<script>window.ran.push("first blob")</script>');
+
+        activateScripts(el);
+        await flush();
+
+        const [script] = scriptsIn(el);
+
+        expect(script.src).toMatch(/^blob:https:\/\/dev\.openstax\.org\//);
+        expect(script.textContent).toBe('');
+        expect(isEmbedScriptUrl(script.src)).toBe(true);
+        expect(isEmbedScriptUrl('https://openstax.org/')).toBe(false);
+        expect(script.getAttribute('data-activated')).toBe('true');
+        expect(await readBlob(blobs[0])).toBe('window.ran.push("first blob")');
+        expect(blobs[0].type).toBe('text/javascript');
+    });
+
+    it('waits for each blob script to load before the next', async () => {
+        const el = container(
+            '<script>window.ran.push("a")</script><script>window.ran.push("b")</script>'
+        );
+
+        activateScripts(el);
+        await flush();
+        expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
+        expect(scriptsIn(el)[1].getAttribute('data-activated')).toBeNull();
+
+        scriptsIn(el)[0].dispatchEvent(new Event('load'));
+        await flush();
+
+        expect(URL.createObjectURL).toHaveBeenCalledTimes(2);
+        expect(scriptsIn(el)[1].src).toMatch(/^blob:/);
+    });
+
+    it('revokes the blob URL on load but keeps it recorded', async () => {
+        const el = container('<script>window.ran.push("a")</script>');
+
+        activateScripts(el);
+        await flush();
+
+        const {src} = scriptsIn(el)[0];
+
+        expect(URL.revokeObjectURL).not.toHaveBeenCalled();
+        scriptsIn(el)[0].dispatchEvent(new Event('load'));
+        await flush();
+
+        expect(URL.revokeObjectURL).toHaveBeenCalledWith(src);
+        expect(isEmbedScriptUrl(src)).toBe(true);
+    });
+
+    it('revokes and carries on when a blob script errors', async () => {
+        const el = container(
+            '<script>window.ran.push("a")</script><script src="/x.js"></script>'
+        );
+
+        activateScripts(el);
+        await flush();
+        scriptsIn(el)[0].dispatchEvent(new Event('error'));
+        await flush();
+
+        expect(URL.revokeObjectURL).toHaveBeenCalledTimes(1);
+        expect(scriptsIn(el)[1].getAttribute('data-activated')).toBe('true');
+    });
+
+    it('wraps the blob source of a repeated snippet', async () => {
+        const source = 'const repeated = 1; window.ran.push(repeated)';
+
+        activateScripts(container(`<script>${source}</script>`));
+        activateScripts(container(`<script>${source}</script>`));
+        await flush();
+
+        expect(await readBlob(blobs[0])).toBe(source);
+        expect(await readBlob(blobs[1])).toBe(
+            `(function () {\n${source}\n})();`
+        );
+    });
+
+    it('leaves module, JSON and external scripts out of the blob path', async () => {
+        const el = container(
+            '<script type="module">export const x = 1;</script>' +
+                '<script type="application/ld+json">{"a": 1}</script>'
+        );
+
+        activateScripts(el);
+        await flush();
+
+        expect(URL.createObjectURL).not.toHaveBeenCalled();
+        expect(scriptsIn(el).map((s) => s.textContent)).toEqual([
+            'export const x = 1;',
+            '{"a": 1}'
+        ]);
+
+        const ext = container('<script src="/external.js"></script>');
+
+        activateScripts(ext);
+        await flush();
+        scriptsIn(ext)[0].dispatchEvent(new Event('load'));
+        await flush();
+
+        expect(URL.createObjectURL).not.toHaveBeenCalled();
+        expect(URL.revokeObjectURL).not.toHaveBeenCalled();
+        expect(scriptsIn(ext)[0].getAttribute('src')).toBe('/external.js');
+    });
+
+    it('falls back to a text node when createObjectURL is unavailable', async () => {
+        // @ts-expect-error simulating an environment without the API
+        delete URL.createObjectURL;
+        const el = container('<script>window.ran.push("text")</script>');
+
+        activateScripts(el);
+        await flush();
+
+        expect(scriptsIn(el)[0].src).toBe('');
+        expect(scriptsIn(el)[0].textContent).toBe('window.ran.push("text")');
+        expect(recorder().ran).toEqual(['text']);
     });
 });
