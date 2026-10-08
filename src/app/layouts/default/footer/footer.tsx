@@ -15,6 +15,7 @@ import {faTiktok} from '@fortawesome/free-brands-svg-icons/faTiktok';
 import {faThreads} from '@fortawesome/free-brands-svg-icons/faThreads';
 import {faBluesky} from '@fortawesome/free-brands-svg-icons/faBluesky';
 import {faMastodon} from '@fortawesome/free-brands-svg-icons/faMastodon';
+import * as Sentry from '@sentry/react';
 import usePortalContext from '~/contexts/portal';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import './footer.scss';
@@ -75,8 +76,48 @@ const socialPlatforms: {[key: string]: {icon: IconDefinition; label: string}} = 
     mastodon: {icon: faMastodon, label: 'Mastodon'}
 };
 
+// Shown only when the columns request fails, so the Policies and Privacy links
+// are never missing from the page. Mirrors what the CMS seeds.
+const fallbackLinks: [string, string, [string, string][]][] = [
+    ['footer-help', 'Help', [
+        ['Contact Us', '/contact'],
+        ['Support Center', 'https://help.openstax.org/s/'],
+        ['FAQ', '/faq'],
+        ['Order Print', '/print/'],
+        ['System Status', 'https://status.openstax.org/']
+    ]],
+    ['footer-openstax', 'OpenStax', [
+        ['Press', '/press'],
+        ['Newsletter', 'http://www2.openstax.org/l/218812/2016-10-04/lvk'],
+        ['Careers', '/careers']
+    ]],
+    ['footer-policies', 'Policies', [
+        ['Accessibility Statement', '/accessibility-statement'],
+        ['Terms of Use', '/tos'],
+        ['Licensing', '/license'],
+        ['Privacy Notice', '/privacy']
+    ]]
+];
+const fallbackColumns: FooterMenuColumn[] = fallbackLinks.map(([key, name, links]) => ({
+    key,
+    name,
+    menu: links.map(([label, url]) => ({label, 'partial_url': url}))
+}));
+
+// undefined means still loading; null (rejected) or {error} means the request failed.
 function useFooterColumns() {
     const structure = useDataFromSlug<FooterMenuColumn[]>('oxmenus/?placement=footer');
+    const failed = structure === null || (structure !== undefined && !Array.isArray(structure));
+
+    React.useEffect(() => {
+        if (failed) {
+            Sentry.captureMessage('Footer columns request failed; using fallback links');
+        }
+    }, [failed]);
+
+    if (failed) {
+        return fallbackColumns;
+    }
 
     return Array.isArray(structure) ? structure : [];
 }
@@ -158,14 +199,14 @@ function Footer({data}: {data: FooterData}) {
             rewriteLinks?.(
                 document.querySelector('.page-footer') as HTMLElement
             ),
-        [rewriteLinks]
+        [rewriteLinks, columns]
     );
 
     return (
         <React.Fragment>
             <div className="top">
                 <div className="boxed">
-                    <RawHTML html={supporters} />
+                    <RawHTML className="supporters" html={supporters} />
                     <FooterColumns columns={columns} />
                 </div>
             </div>

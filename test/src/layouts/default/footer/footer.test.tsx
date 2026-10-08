@@ -116,17 +116,25 @@ describe('Footer', () => {
         expect(lastColumn?.querySelector('button')).toBeNull();
     });
 
-    it('renders the rest of the footer without throwing when the columns request fails', () => {
+    it('falls back to the built-in links when the columns request fails', () => {
         mockUseDataFromSlug.mockReturnValue({error: new Error('Failed to fetch'), slug: 'oxmenus'});
 
         expect(() => renderFooter()).not.toThrow();
 
-        expect(screen.queryByRole('heading', {level: 3})).toBeNull();
+        expect(screen.getByRole('link', {name: 'Privacy Notice'})).toHaveAttribute('href', '/privacy');
         expect(screen.getByText(footerData.supporters)).toBeInTheDocument();
         expect(screen.getByRole('link', {name: 'Rice University logo'})).toHaveAttribute(
             'href',
             'http://www.rice.edu'
         );
+    });
+
+    it('shows no columns while the request is still loading', () => {
+        mockUseDataFromSlug.mockReturnValue(undefined);
+
+        renderFooter();
+
+        expect(screen.queryByRole('heading', {level: 3})).toBeNull();
     });
 
     it('renders the rest of the footer without throwing when the columns response is empty', () => {

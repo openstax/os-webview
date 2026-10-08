@@ -56,6 +56,12 @@ $lower-footer: #3b3b3b;
             }
         }
 
+        // Pin the headline block to the first track; the CMS columns auto-place after it.
+        .supporters {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
         h2 {
             margin: 0;
 
@@ -74,7 +80,6 @@ $lower-footer: #3b3b3b;
         }
 
         .mission {
-
             @include wider-than($phone-max) {
                 @include set-font(body-large);
             }
@@ -115,7 +120,6 @@ $lower-footer: #3b3b3b;
                     text-decoration: underline;
                 }
             }
-
         }
     }
 
