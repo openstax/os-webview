@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/react';
 import isSupported from '~/helpers/device';
+import {isEmbedScriptUrl} from '~/components/jsx-helpers/activate-scripts';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const packageVersion = require('../../package.json').version;
@@ -95,18 +96,24 @@ function scriptUrls(event) {
     return (event.exception?.values ?? [])
         .flatMap((value) => value.stacktrace?.frames ?? [])
         .map((frame) => frame.filename)
-        .filter((url) => (/^[a-z-]+:\/\//).test(url));
+        .filter((url) => (/^(blob:)?[a-z-]+:\/\//).test(url));
 }
 
-// Our bundles live under /dist/. GTM tags and CMS embeds run inline, so their
-// frames carry the page's URL, and we keep those. A stack made only of other
-// origins (vendor CDNs, extensions) is dropped. denyUrls can't do this because
-// it checks the top frame alone.
-function isFromOtherScripts(event) {
-    const urls = scriptUrls(event);
+// Sentry's Safari and Firefox stack parser drops the blob: prefix from a frame
+// it reads, leaving https://origin/<uuid>, so the lookup has to put it back.
+function isCmsEmbed(url) {
+    return isEmbedScriptUrl(url) || isEmbedScriptUrl(`blob:${url}`);
+}
+
+// Our bundles live under /dist/, and CMS embeds run from blob: URLs that
+// activate-scripts records. GTM tags run inline, so their frames carry the
+// page's URL, and we keep those. A stack made only of other origins (vendor
+// CDNs, extensions) is dropped. denyUrls can't do this because it checks the
+// top frame alone.
+function isFromOtherScripts(urls) {
     const origin = window.location.origin;
 
-    if (urls.some((url) => url.startsWith(`${origin}/dist/`))) {
+    if (urls.some((url) => url.startsWith(`${origin}/dist/`) || isCmsEmbed(url))) {
         return false;
     }
     // Chrome and the Google app on iOS inject scripts that report the page's URL
@@ -119,9 +126,13 @@ function isFromOtherScripts(event) {
 // eslint-disable-next-line complexity
 function beforeSend(event, hint) {
     const message = messageOf(event, hint?.originalException);
+    const urls = scriptUrls(event);
 
-    if (isFromOtherScripts(event)) {
+    if (isFromOtherScripts(urls)) {
         return null;
+    }
+    if (urls.some(isCmsEmbed)) {
+        event.tags = {...event.tags, 'cms_embed': true};
     }
     if (!isSupported()) {
         return null;
