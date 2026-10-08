@@ -1,5 +1,7 @@
 import React from 'react';
 import useOptimizedImage from '~/helpers/use-optimized-image';
+import useGiveToday from '~/models/give-today';
+import headerGiveLink from '~/models/give-link';
 import {LinkFields, Link} from '@openstax/flex-page-renderer/components/Link';
 import './header.scss';
 
@@ -10,6 +12,7 @@ export default function Header({
     links: LinkFields[];
     showGive?: boolean;
 }) {
+    const giveHref = headerGiveLink(useGiveToday());
     const riceLogo = useOptimizedImage(
         'https://assets.openstax.org/oscms-prodcms/media/images/rice-logo-blue.original.webp',
         150
@@ -40,7 +43,7 @@ export default function Header({
                 {showGive && (
                     <li>
                         <a
-                            href="https://riceconnect.rice.edu/donation/support-openstax-header"
+                            href={giveHref}
                             className="give-button"
                             data-analytics-link
                         >

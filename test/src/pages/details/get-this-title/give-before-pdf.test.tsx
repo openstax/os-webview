@@ -20,7 +20,8 @@ const onDownload = jest.fn();
 const data: DonationPopupData = {
     download_ready: 'your download is ready',
     header_subtitle: 'header-subtitle',
-    download_image: 'image-url'
+    download_image: 'image-url',
+    give_link: 'https://example.test/fallback-give-link'
 } as unknown as DonationPopupData; // doesn't matter
 /* eslint-enable camelcase */
 

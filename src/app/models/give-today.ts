@@ -4,6 +4,7 @@ import {useDataFromPromise} from '~/helpers/page-data-utils';
 type PromiseData = {
     give_link_text: string;
     give_link: string;
+    default_give_link: string;
     menu_start: string;
     menu_expires: string;
     start: string;

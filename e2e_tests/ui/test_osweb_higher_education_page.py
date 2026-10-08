@@ -18,16 +18,13 @@ async def test_osweb_higher_education_page(chrome_page, base_url):
         await home.click_higher_education_link()
 
         # THEN: HE page opens
-        assert await home.try_assignable_today_link.is_visible()
+        assert await home.explore_openstax_assignable_link.is_visible()
+
+        assert await home.higher_ed_page_content_is_visible()
 
         assert await home.free_digital_library_subjects.count() == 8
 
-        assert await home.search_technology_partners_link.is_visible()
-
-        assert (
-            "affordable technology for higher education"
-            in await chrome_page.inner_text("body")
-        )
+        assert await home.higher_ed_page_innovation_section_is_visible()
 
 
 @pytest.mark.asyncio
@@ -44,6 +41,7 @@ async def test_osweb_higher_education_page_bookstore_link(chrome_page, base_url)
     else:
         await home.click_higher_education_link()
         await home.click_campus_affordability_link()
+        await home.click_explore_your_options_link()
 
     # THEN: Bookstore page elements are visible/enabled in both staging and prod envs
     assert await home.higher_education_bookstore_order_access_code.is_visible()

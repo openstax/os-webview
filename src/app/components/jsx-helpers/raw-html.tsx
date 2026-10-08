@@ -1,40 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 import usePortalContext from '~/contexts/portal';
+import activateScripts from './activate-scripts';
 import './raw-html.scss';
-
-// Making scripts work, per https://stackoverflow.com/a/47614491/392102
-function activateScripts(el: HTMLElement) {
-    const scripts: HTMLScriptElement[] = Array.from(
-        el.querySelectorAll('script')
-    );
-    const processOne = () => {
-        const s = scripts.shift();
-
-        if (!s) {
-            return;
-        }
-        const newScript = document.createElement('script');
-        const p = s.src
-            ? new Promise((resolve) => {
-                  newScript.onload = resolve;
-              })
-            : Promise.resolve();
-
-        Array.from(s.attributes).forEach((a) =>
-            newScript.setAttribute(a.name, a.value)
-        );
-        if (s.textContent) {
-            newScript.appendChild(document.createTextNode(s.textContent));
-        }
-        newScript.async = false;
-        s.parentNode?.replaceChild(newScript, s);
-
-        p.then(processOne);
-    };
-
-    processOne();
-}
 
 type RawHTMLArgs = ({
     Tag?: string;
@@ -53,14 +21,14 @@ export default function RawHTML({
     const ref = React.useRef<HTMLElement>();
     const {rewriteLinks} = usePortalContext();
 
-    React.useEffect(() => {
-        if (embed && ref.current) {
-            activateScripts(ref.current);
-        }
+    React.useEffect(
         // Only when the markup itself changes; React leaves the DOM (and the
         // already-activated scripts) alone on re-renders with the same html,
-        // so re-running would execute embedded scripts a second time.
-    }, [embed, html]);
+        // so re-running would execute embedded scripts a second time. The
+        // returned cleanup abandons a walk that is still in flight.
+        () => (embed && ref.current ? activateScripts(ref.current) : undefined),
+        [embed, html]
+    );
     React.useLayoutEffect(() => rewriteLinks?.(ref.current as HTMLElement), [rewriteLinks, html]);
 
     return React.createElement(Tag, {
