@@ -2,8 +2,10 @@ import React from 'react';
 import FormInput from '~/components/form-input/form-input';
 import FormSelect from '~/components/form-select/form-select';
 import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
-import useMatchingSchools, {schoolTypeValues} from '~/models/use-school-suggestion-list';
-import type {SchoolInfo as School} from '~/models/query-schools';
+import useMatchingSchools, {
+    schoolTypeValues,
+    type SchoolSuggestion as School
+} from '~/models/use-school-suggestion-list';
 import {useIntl, FormattedMessage} from 'react-intl';
 import './school-selector.scss';
 
