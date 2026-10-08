@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/react';
 import isSupported from '~/helpers/device';
+import {isEmbedScriptUrl} from '~/components/jsx-helpers/activate-scripts';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const packageVersion = require('../../package.json').version;
@@ -61,7 +62,14 @@ const ignoreMessages = [
     // Browser extensions talking to a background page that has gone away.
     'Invalid call to runtime.sendMessage()',
     // A third-party tag fired by GTM; the whole stack is inside gtm.js.
-    'AviviD is not defined'
+    'AviviD is not defined',
+    // Browsers older than Chrome 93 / Safari 15.4, failing inside a dependency.
+    'Object.hasOwn is not a function',
+    // Globals that in-app browsers and extensions expect to have injected.
+    'xbrowser is not defined',
+    'swbrowser is not defined',
+    'XHRInterface is not defined',
+    'zaloJSV2'
 ];
 
 const denyUrls = [
@@ -84,12 +92,47 @@ function messageOf(event, error) {
     return typeof value === 'string' ? value : '';
 }
 
+function scriptUrls(event) {
+    return (event.exception?.values ?? [])
+        .flatMap((value) => value.stacktrace?.frames ?? [])
+        .map((frame) => frame.filename)
+        .filter((url) => (/^(blob:)?[a-z-]+:\/\//).test(url));
+}
+
+// Sentry's Safari and Firefox stack parser drops the blob: prefix from a frame
+// it reads, leaving https://origin/<uuid>, so the lookup has to put it back.
+function isCmsEmbed(url) {
+    return isEmbedScriptUrl(url) || isEmbedScriptUrl(`blob:${url}`);
+}
+
+// Our bundles live under /dist/, and CMS embeds run from blob: URLs that
+// activate-scripts records. GTM tags run inline, so their frames carry the
+// page's URL, and we keep those. A stack made only of other origins (vendor
+// CDNs, extensions) is dropped. denyUrls can't do this because it checks the
+// top frame alone.
+function isFromOtherScripts(urls) {
+    const origin = window.location.origin;
+
+    if (urls.some((url) => url.startsWith(`${origin}/dist/`) || isCmsEmbed(url))) {
+        return false;
+    }
+    // Chrome and the Google app on iOS inject scripts that report the page's URL
+    if ((/CriOS|GSA\//).test(window.navigator.userAgent)) {
+        return urls.length > 0;
+    }
+    return urls.length > 0 && !urls.some((url) => url.startsWith(`${origin}/`));
+}
+
 // eslint-disable-next-line complexity
 function beforeSend(event, hint) {
     const message = messageOf(event, hint?.originalException);
+    const urls = scriptUrls(event);
 
-    if (window.location.hostname !== 'openstax.org') {
+    if (isFromOtherScripts(urls)) {
         return null;
+    }
+    if (urls.some(isCmsEmbed)) {
+        event.tags = {...event.tags, 'cms_embed': true};
     }
     if (!isSupported()) {
         return null;
@@ -119,6 +162,9 @@ function beforeSend(event, hint) {
 }
 
 Sentry.init({
+    // Off everywhere but production. Disabling only in beforeSend would still
+    // let session envelopes through, which skews release health.
+    enabled: window.location.hostname === 'openstax.org',
     dsn: 'https://68df3e19624c434eb975dafa316c03ff@o484761.ingest.sentry.io/5691260',
     release: `osweb@${process.env.RELEASE_VERSION || packageVersion}`,
     integrations: [Sentry.extraErrorDataIntegration()],

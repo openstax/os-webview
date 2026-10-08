@@ -12,7 +12,6 @@ const model = {
     id: 2,
     title: 'model-title',
     description: 'model-description',
-    adoptions: 69,
     slug: 'whatever'
 } as Props['model'];
 
