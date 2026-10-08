@@ -57,7 +57,9 @@ function socialLinksFrom(data: FooterData) {
     return [
         {platform: 'facebook', url: data.facebookLink},
         {platform: 'twitter', url: data.twitterLink},
-        {platform: 'linkedin', url: data.linkedinLink}
+        {platform: 'linkedin', url: data.linkedinLink},
+        {platform: 'instagram', url: 'https://www.instagram.com/openstax/'},
+        {platform: 'youtube', url: 'https://www.youtube.com/openstax/'}
     ].filter((link): link is SocialLink => Boolean(link.url));
 }
 

@@ -176,9 +176,11 @@ describe('Footer', () => {
         const {container} = renderFooter();
         const socialLinkEls = container.querySelectorAll('.social > li > a.btn-social');
 
-        expect(socialLinkEls).toHaveLength(2);
+        expect(socialLinkEls).toHaveLength(4);
         expect(socialLinkEls[0]).toHaveAttribute('href', 'https://www.facebook.com/openstax');
         expect(socialLinkEls[1]).toHaveAttribute('href', 'https://twitter.com/openstax');
+        expect(socialLinkEls[2]).toHaveAttribute('href', 'https://www.instagram.com/openstax/');
+        expect(socialLinkEls[3]).toHaveAttribute('href', 'https://www.youtube.com/openstax/');
     });
 
     it('renders no social icons when an editor has removed them all', () => {
