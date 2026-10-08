@@ -102,6 +102,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isCmsSchools = (/salesforce\/schools/).test(args[0]);
     const isSearchCollection = args[0].includes('/search/?collection=');
     const isSearchSubject = args[0].includes('/search/?subjects=');
+    const isSfapiImpact = (/api\/v1\/impact\/books/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isSubjectPage = args[0].includes('pages/subjects');
     const isTeam = (/pages\/team/).test(args[0]);
@@ -223,6 +224,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = searchCollection;
             } else if (isSearchSubject) {
                 payload = searchSubject;
+            } else if (isSfapiImpact) {
+                payload = {books: []};
             } else if (isImage) {
                 // ignore
             } else {
