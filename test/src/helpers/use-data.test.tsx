@@ -1,6 +1,6 @@
 import React from 'react';
 import {describe, it, expect} from '@jest/globals';
-import {act, render, screen} from '@testing-library/preact';
+import {act, render, screen, waitFor} from '@testing-library/preact';
 import useFetchedData, {usePromise} from '~/helpers/use-data';
 
 function Component<E>({
@@ -28,6 +28,50 @@ describe('use-data', () => {
         ];
 
         render(<Component options={options} compare="hold" />);
+    });
+    it('handles slug', async () => {
+        (global.fetch as jest.Mock).mockImplementationOnce(() =>
+            Promise.resolve({
+                json() {
+                    return 'slug-output';
+                }
+            })
+        );
+
+        render(
+            <Component
+                options={[{slug: 'some-slug'}, 'never']}
+                compare="slug-output"
+            />
+        );
+        await screen.findByText('ok');
+        expect(global.fetch as jest.Mock).toHaveBeenCalledWith(
+            expect.stringContaining('some-slug')
+        );
+    });
+    it('keeps default value, without an unhandled rejection, when slug fetch fails', async () => {
+        const unhandled = jest.fn();
+        const rejection = Promise.reject(new TypeError('Load failed'));
+
+        process.on('unhandledRejection', unhandled);
+        (global.fetch as jest.Mock).mockImplementationOnce(() => rejection);
+
+        render(
+            <Component
+                options={[{slug: 'failing-slug'}, 'default']}
+                compare="default"
+            />
+        );
+        await waitFor(() => expect(global.fetch as jest.Mock).toHaveBeenCalledWith(
+            expect.stringContaining('failing-slug')
+        ));
+        await rejection.catch(() => null);
+        // unhandledRejection is emitted after the microtask queue drains
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        process.off('unhandledRejection', unhandled);
+
+        screen.getByText('ok');
+        expect(unhandled).not.toHaveBeenCalled();
     });
     it('handles url', async () => {
         (global.fetch as jest.Mock).mockImplementationOnce(() =>

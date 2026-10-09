@@ -142,10 +142,12 @@ function useTocTree(
 
     useEffect(() => {
         if (slug) {
-            bookToc(slug).then((contents: TocContent[]) =>
-                updateTree(flattenTree(contents))
-            );
-            // FOR TESTING
+            bookToc(slug)
+                .then((contents: TocContent[]) =>
+                    updateTree(flattenTree(contents))
+                )
+                .catch(() => updateTree([]));
+            // FOR TESTING, replace the catch above with
             // .catch(() => {
             //     console.info('caught...using testdata', testData);
             //     updateTree(flattenTree(testData.tree.contents));

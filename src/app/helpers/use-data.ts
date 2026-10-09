@@ -29,9 +29,7 @@ export default function useFetchedData<T>(
         if (!slug) {
             return null;
         }
-        return new Promise<Response>((resolve) =>
-            getUrlFor(slug).then((url: string) => fetch(url).then(resolve))
-        );
+        return getUrlFor(slug).then((url: string) => fetch(url));
     }, [slug]);
     const url = (options as UrlSource).url;
     const urlPromise = React.useMemo(() => {
