@@ -1,0 +1,22 @@
+@import 'pattern-library/core/pattern-library/headers';
+
+// Occupies the same space the loading placeholder was holding, so a page that
+// fails does not collapse to bare chrome.
+.os-loading-failure {
+    align-content: center;
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+    min-height: 50vh;
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+
+    h2 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+    }
+}
