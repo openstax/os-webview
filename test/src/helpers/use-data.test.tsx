@@ -1,7 +1,14 @@
 import React from 'react';
 import {describe, it, expect} from '@jest/globals';
 import {act, render, screen, waitFor} from '@testing-library/preact';
+import * as Sentry from '@sentry/react';
+import * as PostHog from '~/helpers/posthog-exceptions';
 import useFetchedData, {usePromise} from '~/helpers/use-data';
+
+jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
+
+const reportToSentry = Sentry.captureException as jest.Mock;
+const reportToPostHog = jest.spyOn(PostHog, 'captureException');
 
 function Component<E>({
     options,
@@ -49,8 +56,10 @@ describe('use-data', () => {
             expect.stringContaining('some-slug')
         );
     });
-    it('keeps default value, without an unhandled rejection, when slug fetch fails', async () => {
+    it('keeps default value, and reports instead of leaving unhandled, when slug fetch fails', async () => {
         const unhandled = jest.fn();
+
+        reportToPostHog.mockImplementation(() => undefined);
         const rejection = Promise.reject(new TypeError('Load failed'));
 
         process.on('unhandledRejection', unhandled);
@@ -72,6 +81,12 @@ describe('use-data', () => {
 
         screen.getByText('ok');
         expect(unhandled).not.toHaveBeenCalled();
+        const failure = reportToSentry.mock.calls[0][0] as Error;
+
+        expect(failure.message).toBe(
+            'Failed to fetch failing-slug: TypeError: Load failed'
+        );
+        expect(reportToPostHog).toHaveBeenCalledWith(failure);
     });
     it('handles url', async () => {
         (global.fetch as jest.Mock).mockImplementationOnce(() =>
