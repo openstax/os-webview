@@ -23,19 +23,6 @@ function ArticleCard({article}: {article: ArticleSummaryData}) {
     );
 }
 
-function VisibleArticles({articles}: {articles: ArticleSummaryData[]}) {
-    const {setCurrentPage, visibleChildren} = usePaginatorContext();
-    const location = useLocation();
-
-    React.useEffect(() => setCurrentPage(1), [location, setCurrentPage]);
-
-    return visibleChildren(
-        articles.map((article) => (
-            <ArticleCard key={article.articleSlug} article={article} />
-        ))
-    );
-}
-
 function statusMessage(isLoading: boolean, count: number) {
     if (isLoading) {
         return 'Searching blog posts';
@@ -46,11 +33,18 @@ function statusMessage(isLoading: boolean, count: number) {
     return `${count} blog ${count === 1 ? 'post' : 'posts'} found`;
 }
 
-export default function SearchResults() {
-    const {articles, isLoading} = useAllArticles();
+function ResultsForPage() {
+    const {currentPage, resultsPerPage, setCurrentPage} = usePaginatorContext();
+    const {articles, isLoading, total} = useAllArticles(currentPage, resultsPerPage);
     const {q} = useBlogSearchParams();
+    const location = useLocation();
     const regionRef = React.useRef<HTMLDivElement>(null);
     const focusedForQuery = React.useRef<string | undefined>(undefined);
+
+    // Reset to page 1 whenever the query or facets change. Page clicks are
+    // local paginator state and never touch the URL, so a location change
+    // always means a new search, not just a page turn.
+    React.useEffect(() => setCurrentPage(1), [location, setCurrentPage]);
 
     // Move focus to the first result only when the search query changes (an
     // explicit search), never when a facet is toggled. Yanking focus on a
@@ -69,19 +63,27 @@ export default function SearchResults() {
     return (
         <div className="search-results" ref={regionRef} aria-busy={isLoading}>
             <div className="sr-only" role="status" aria-live="polite">
-                {statusMessage(isLoading, articles.length)}
+                {statusMessage(isLoading, total)}
             </div>
             {showNoResults && <NoResults />}
             {articles.length > 0 && (
-                <PaginatorContextProvider
-                    contextValueParameters={{resultsPerPage: 10}}
-                >
+                <React.Fragment>
                     <div className="boxed cards">
-                        <VisibleArticles articles={articles} />
+                        {articles.map((article) => (
+                            <ArticleCard key={article.articleSlug} article={article} />
+                        ))}
                     </div>
-                    <PaginatorControls items={articles.length} />
-                </PaginatorContextProvider>
+                    <PaginatorControls items={total} />
+                </React.Fragment>
             )}
         </div>
+    );
+}
+
+export default function SearchResults() {
+    return (
+        <PaginatorContextProvider contextValueParameters={{resultsPerPage: 10}}>
+            <ResultsForPage />
+        </PaginatorContextProvider>
     );
 }
