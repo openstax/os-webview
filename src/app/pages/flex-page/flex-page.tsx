@@ -5,6 +5,7 @@ import {ContentBlockRoot, BlockData} from '@openstax/flex-page-renderer/ContentB
 import {blockMap} from './block-map';
 import usePortalContext from '~/contexts/portal';
 import {assertNotNull} from '~/helpers/data';
+import useAudienceConditions from '~/helpers/use-audience-conditions';
 import './flex-page.scss';
 
 export type FlexPageData = {
@@ -21,7 +22,9 @@ export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) =>
     ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type);
 
 function FlexPageBody({data}: {data: FlexPageData}) {
-    return <ContentBlockRoot data={data.body} blocks={blockMap} />;
+    const activeConditions = useAudienceConditions();
+
+    return <ContentBlockRoot data={data.body} blocks={blockMap} activeConditions={activeConditions} />;
 }
 
 function warnAndUseDefault() {
