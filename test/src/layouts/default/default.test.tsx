@@ -20,6 +20,7 @@ import MemoryRouter from '../../../helpers/future-memory-router';
 import {Link} from 'react-router-dom';
 import * as UUC from '~/contexts/user';
 import LoginMenu from '~/layouts/default/header/menus/main-menu/login-menu/login-menu-with-dropdown';
+import settings from '~/helpers/window-settings';
 import MenuExpander from '~/layouts/default/header/menus/menu-expander/menu-expander';
 import {DropdownContextProvider} from '~/layouts/default/header/menus/dropdown-context';
 import '@testing-library/jest-dom';
@@ -207,14 +208,8 @@ describe('default layout', () => {
         });
     }
 
-    const myOpenStaxUser = {
-        contact: {
-            firstName: 'Roy',
-            lastName: 'Johnson'
-        }
-    };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const loggedInUser = {userModel: {id: 16249}, myOpenStaxUser} as any;
+    const loggedInUser = {userModel: {id: 16249}} as any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const loggedOutUser = {} as any;
 
@@ -331,7 +326,8 @@ describe('default layout', () => {
         render(<MemoryRouter initialEntries={['/webinars']}>
             <LoginMenu />
         </MemoryRouter>);
-        await screen.findByText('Account Dashboard');
+        expect(await screen.findByRole('link', {name: 'Account Profile'}))
+            .toHaveAttribute('href', `${settings().accountHref}/profile`);
     });
     it('closes mobile menu on location change', () => {
         const toggleActive = jest.fn();
@@ -347,9 +343,6 @@ describe('default layout', () => {
     });
     it('renders login-menu options based on userModel', async () => {
         spyUseUserContext.mockReturnValue({
-            myOpenStaxUser: {
-                error: 'true'
-            },
             // @ts-expect-error userModel missssing properties
             userModel: {
                 instructorEligible: true,
