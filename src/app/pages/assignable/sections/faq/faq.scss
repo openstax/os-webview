@@ -1,6 +1,0 @@
-@import 'pattern-library/core/pattern-library/headers';
-@import '../../../../components/faq-section/faq-section';
-
-.assignable.page .faq {
-    @include faq-section();
-}
