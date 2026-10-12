@@ -34,7 +34,6 @@ yarn lint:css            # Stylelint on SCSS files
 ### Framework & Rendering
 - **Preact** with `@preact/compat` aliased as `react`/`react-dom` (in both webpack and jest configs)
 - **React Router DOM v6** for routing
-- **Emotion** (`@emotion/react`, `@emotion/styled`) for CSS-in-JS alongside SCSS files
 - **React Intl** for internationalization (babel-plugin-formatjs for message extraction)
 
 ### Entry Point & App Structure
@@ -105,7 +104,6 @@ Main routes in `router.tsx`:
 - React hooks rules enforced (`exhaustive-deps` is an error)
 - `no-shadow` enabled — avoid variable shadowing
 - Unused vars pattern: prefix with `_`
-- The `css` prop is allowed on JSX elements (Emotion)
 
 ### Prettier Config
 - Single quotes, no trailing commas, no bracket spacing, JSX uses double quotes
