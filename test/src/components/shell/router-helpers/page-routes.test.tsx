@@ -86,8 +86,6 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
 
         renderAt('/about');
 
-        await waitFor(() => {
-            expect(screen.queryByTestId('flex-page')).toBeNull();
-        });
+        expect(await screen.findByText('Uh-oh, no page here')).toBeInTheDocument();
     });
 });
