@@ -27,7 +27,13 @@ const flexData = {
 };
 
 function Location() {
-    return <div data-testid="location">{useLocation().pathname}</div>;
+    const {pathname, search} = useLocation();
+
+    return (
+        <div data-testid="location" data-search={search}>
+            {pathname}
+        </div>
+    );
 }
 
 function renderAt(path: string) {
@@ -71,6 +77,16 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
         expect(await screen.findByTestId('flex-page')).toBeInTheDocument();
         expect(mockUsePageData).toHaveBeenCalledWith(`pages/${slug}`, true);
         expect(mockUsePageData).not.toHaveBeenCalledWith(`pages/${dir}`, true);
+    });
+
+    it('redirects a trailing slash to the canonical URL, keeping the query string', async () => {
+        renderAt('/press/?ref=nav');
+
+        await waitFor(() => {
+            expect(screen.getByTestId('location')).toHaveTextContent(/^\/press$/);
+        });
+        expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+        expect(await screen.findByTestId('flex-page')).toBeInTheDocument();
     });
 
     it('redirects a subpath of a non-portal FlexPage to its canonical URL', async () => {
