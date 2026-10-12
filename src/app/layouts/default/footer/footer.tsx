@@ -41,28 +41,8 @@ type FooterData = {
     supporters: string;
     copyright: string;
     apStatement: string;
-    socialLinks?: SocialLink[];
-    facebookLink?: string;
-    twitterLink?: string;
-    linkedinLink?: string;
+    socialLinks: SocialLink[];
 };
-
-// This endpoint's response is CloudFront-cached for the better part of a day, so a
-// copy predating the CMS release can still be served after this ships. Absent means
-// that stale payload; an empty list means an editor removed every link, so it stands.
-function socialLinksFrom(data: FooterData) {
-    if (data.socialLinks) {
-        return data.socialLinks;
-    }
-
-    return [
-        {platform: 'facebook', url: data.facebookLink},
-        {platform: 'twitter', url: data.twitterLink},
-        {platform: 'linkedin', url: data.linkedinLink},
-        {platform: 'instagram', url: 'https://www.instagram.com/openstax/'},
-        {platform: 'youtube', url: 'https://www.youtube.com/openstax/'}
-    ].filter((link): link is SocialLink => Boolean(link.url));
-}
 
 const socialPlatforms: {[key: string]: {icon: IconDefinition; label: string}} = {
     facebook: {icon: faFacebookF, label: 'Facebook'},
@@ -169,6 +149,7 @@ function SocialLinks({links}: {links: SocialLink[]}) {
                             className={`btn btn-social ${link.platform}`}
                             href={link.url}
                             title={`OpenStax on ${platform.label}`}
+                            aria-label={`OpenStax on ${platform.label}`}
                         >
                             <FontAwesomeIcon icon={platform.icon} />
                         </a>
@@ -218,7 +199,7 @@ function Footer({data}: {data: FooterData}) {
                             apStatement={apStatement}
                         />
                     </div>
-                    <SocialLinks links={socialLinksFrom(data)} />
+                    <SocialLinks links={data.socialLinks} />
                 </div>
             </div>
         </React.Fragment>

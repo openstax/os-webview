@@ -116,6 +116,25 @@ describe('Footer', () => {
         expect(lastColumn?.querySelector('button')).toBeNull();
     });
 
+    it('shows the cookie toggle when CookieYes loaded before the columns arrived', async () => {
+        (window as any).getCkyConsent = jest.fn(); // eslint-disable-line @typescript-eslint/no-explicit-any
+        mockUseDataFromSlug.mockReturnValue(undefined);
+
+        const {rerender} = renderFooter();
+
+        document.dispatchEvent(new Event('cookieyes_banner_load'));
+        mockUseDataFromSlug.mockReturnValue(footerMenus);
+        rerender(
+            <MemoryRouter initialEntries={['/']}>
+                <FooterLoader />
+            </MemoryRouter>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText('Manage cookies')).toBeInTheDocument();
+        });
+    });
+
     it('falls back to the built-in links when the columns request fails', () => {
         mockUseDataFromSlug.mockReturnValue({error: new Error('Failed to fetch'), slug: 'oxmenus'});
 
@@ -163,32 +182,13 @@ describe('Footer', () => {
         expect(socialLinkEls).toHaveLength(2);
         expect(socialLinkEls[0]).toHaveAttribute('href', 'https://www.facebook.com/openstax');
         expect(socialLinkEls[0]).toHaveAttribute('title', 'OpenStax on Facebook');
+        expect(socialLinkEls[0]).toHaveAccessibleName('OpenStax on Facebook');
         expect(socialLinkEls[1]).toHaveAttribute('href', 'https://mastodon.social/@openstax');
         expect(socialLinkEls[1]).toHaveAttribute('title', 'OpenStax on Mastodon');
 
         const riceLogo = container.querySelector('.social > li:last-child > .rice-logo');
 
         expect(riceLogo).not.toBeNull();
-    });
-
-    it('falls back to the legacy link fields on a cached pre-release payload', () => {
-        const {socialLinks: _unused, ...withoutSocialLinks} = footerData;
-
-        mockUsePageData.mockReturnValue({
-            ...withoutSocialLinks,
-            facebookLink: 'https://www.facebook.com/openstax',
-            twitterLink: 'https://twitter.com/openstax',
-            linkedinLink: ''
-        });
-
-        const {container} = renderFooter();
-        const socialLinkEls = container.querySelectorAll('.social > li > a.btn-social');
-
-        expect(socialLinkEls).toHaveLength(4);
-        expect(socialLinkEls[0]).toHaveAttribute('href', 'https://www.facebook.com/openstax');
-        expect(socialLinkEls[1]).toHaveAttribute('href', 'https://twitter.com/openstax');
-        expect(socialLinkEls[2]).toHaveAttribute('href', 'https://www.instagram.com/openstax/');
-        expect(socialLinkEls[3]).toHaveAttribute('href', 'https://www.youtube.com/openstax/');
     });
 
     it('renders no social icons when an editor has removed them all', () => {

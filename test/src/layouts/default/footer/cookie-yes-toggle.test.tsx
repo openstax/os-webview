@@ -42,6 +42,15 @@ describe('CookieYesToggle', () => {
         expect(button?.type).toBe('button');
     });
 
+    it('renders on mount when CookieYes loaded before it', () => {
+        (window as any).getCkyConsent = jest.fn(); // eslint-disable-line @typescript-eslint/no-explicit-any
+        document.dispatchEvent(new Event('cookieyes_banner_load'));
+
+        render(<CookieYesToggle />);
+
+        expect(screen.getByText('Manage cookies')).toBeInTheDocument();
+    });
+
     it('does not re-render when already loaded', async () => {
         (window as any).getCkyConsent = jest.fn();
 
