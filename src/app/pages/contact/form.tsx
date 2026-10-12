@@ -17,7 +17,6 @@ const options: {
     'Adopting OpenStax Textbooks',
     'OpenStax Kinetic',
     'OpenStax Assignable',
-    'Staxly, AI Study Coach',
     'Donations',
     'College/University Partnerships',
     'Media Inquiries',
