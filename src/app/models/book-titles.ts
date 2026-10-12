@@ -20,5 +20,20 @@ export type Item = {
     }
 };
 
-export default cmsFetch('pages/?type=books.Book&fields=title,id,book_state,promote_snippet&limit=250')
-    .then((r) => r.items) as Promise<Item[]>;
+const path = 'pages/?type=books.Book&fields=title,id,book_state,promote_snippet&limit=250';
+
+let bookPromise: Promise<Item[]> | null = null;
+
+export function getBookTitles() {
+    if (!bookPromise) {
+        bookPromise = (cmsFetch(path).then((r) => r.items) as Promise<Item[]>)
+            .catch((error: Error) => {
+                bookPromise = null;
+                throw error;
+            });
+    }
+
+    return bookPromise;
+}
+
+export default getBookTitles();

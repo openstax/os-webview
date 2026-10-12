@@ -1,4 +1,5 @@
 import accountsModel from '~/models/accounts-model';
+import {installExceptionFilter} from '~/helpers/posthog-exceptions';
 const tagManagerID = 'GTM-W6N7PB';
 
 // Initialize dataLayer and consent - these exist even if GTM doesn't load
@@ -70,6 +71,10 @@ export function initializeGTM() {
 
     // Ensure `fbq` exists before GTM's Facebook Pixel tag can fire
     stubFacebookPixel(window);
+
+    // PostHog is one of the tags in this container, and it autocaptures
+    // exceptions. Nothing else applies our noise filters to it.
+    installExceptionFilter();
 
     // eslint-disable-next-line max-params
     (function (w, d, s, l, i) {

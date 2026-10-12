@@ -1,5 +1,6 @@
 import React from 'react';
 import {act, render, screen} from '@testing-library/preact';
+import * as BookTitles from '~/models/book-titles';
 import {
     fetchFromCMS,
     getUrlFor,
@@ -58,6 +59,29 @@ describe('page-data-utils', () => {
             expect(url).toContain('draft=');
             window.history.replaceState({}, '', '/');
         });
+        it('retries a failed book lookup on the next call', async () => {
+            const getBookTitles = jest.spyOn(BookTitles, 'getBookTitles');
+
+            getBookTitles
+                .mockRejectedValueOnce(new Error('temporary failure'))
+                .mockResolvedValueOnce([
+                    {
+                        id: 1,
+                        'book_state': 'live',
+                        title: 'Book Title',
+                        'promote_snippet': [],
+                        meta: {
+                            slug: 'originalslug',
+                            'detail_url': 'https://openstax.org/details/books/originalslug/'
+                        }
+                    }
+                ]);
+
+            await expect(getUrlFor('books/originalslug')).rejects.toThrow('temporary failure');
+            await expect(getUrlFor('books/originalslug')).resolves.toMatch(
+                'details/books/originalslug/?format=json'
+            );
+        });
     });
     describe('useDataFromPromise', () => {
         it('sets data to null when promise is missing', async () => {
@@ -71,6 +95,7 @@ describe('page-data-utils', () => {
         });
         it('sets data to null on rejection', async () => {
             const rejected = Promise.reject(new Error('test error'));
+
             function Component() {
                 const data = useDataFromPromise(rejected, 'default');
 
@@ -96,6 +121,7 @@ describe('page-data-utils', () => {
             }
 
             const {rerender} = render(<Component promise={stalePromise} />);
+
             rerender(<Component promise={currentPromise} />);
             resolveCurrent!('fresh');
             await screen.findByText('fresh');

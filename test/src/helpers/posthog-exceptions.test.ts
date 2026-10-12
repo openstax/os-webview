@@ -1,0 +1,264 @@
+import {beforeSend, captureException} from '~/helpers/posthog-exceptions';
+
+type BeforeSend = Parameters<typeof beforeSend>[0];
+
+function exceptionEvent(value: string, filenames: string[] = []) {
+    return {
+        event: '$exception',
+        properties: {
+            '$exception_list': [
+                {
+                    value,
+                    stacktrace: {frames: filenames.map((filename) => ({filename}))}
+                }
+            ]
+        }
+    } as BeforeSend;
+}
+
+function setPostHog(posthog: unknown) {
+    (window as unknown as {posthog?: unknown}).posthog = posthog;
+}
+
+describe('posthog beforeSend', () => {
+    it('passes through anything that is not an exception', () => {
+        const pageview = {event: '$pageview'} as BeforeSend;
+
+        expect(beforeSend(pageview)).toBe(pageview);
+        expect(beforeSend(null)).toBeNull();
+    });
+
+    it('drops an exception on the shared noise list', () => {
+        expect(beforeSend(exceptionEvent('Object Not Found Matching Id:4'))).toBeNull();
+    });
+
+    it('drops an exception thrown entirely inside a browser extension', () => {
+        expect(
+            beforeSend(
+                exceptionEvent('undefined is not an object (evaluating \'e.fields.pageInfo\')', [
+                    'webkit-masked-url://hidden/'
+                ])
+            )
+        ).toBeNull();
+    });
+
+    it('keeps an extension stack when any frame filename is unknown', () => {
+        const mixed = exceptionEvent('undefined is not an object', [
+            'webkit-masked-url://hidden/',
+            ''
+        ]);
+
+        expect(beforeSend(mixed)).toBe(mixed);
+    });
+
+    it('drops an exception from a denied script URL', () => {
+        expect(
+            beforeSend(
+                exceptionEvent('third-party script failed', [
+                    'https://js.pulseinsights.com/dist/survey.js'
+                ])
+            )
+        ).toBeNull();
+    });
+
+    it('keeps our own CMS fetch failure', () => {
+        const ours = exceptionEvent(
+            'Failed to fetch sticky/: Error: Maximum retries exceeded: TypeError: Failed to fetch',
+            ['https://openstax.org/dist/main.js']
+        );
+
+        expect(beforeSend(ours)).toBe(ours);
+    });
+
+    it('keeps an exception with no value and no frames', () => {
+        const bare = {event: '$exception', properties: {}} as BeforeSend;
+
+        expect(beforeSend(bare)).toBe(bare);
+    });
+
+    it('keeps an exception whose value and frame filenames are missing', () => {
+        const partial = {
+            event: '$exception',
+            properties: {
+                '$exception_list': [{}, {stacktrace: {frames: [{}]}}]
+            }
+        } as BeforeSend;
+
+        expect(beforeSend(partial)).toBe(partial);
+    });
+});
+
+// `installExceptionFilter` only ever installs once, so each test needs its own
+// copy of the module.
+async function freshModule() {
+    let module = {} as typeof import('~/helpers/posthog-exceptions');
+
+    jest.isolateModules(() => {
+        module = jest.requireActual('~/helpers/posthog-exceptions');
+    });
+
+    return module;
+}
+
+describe('posthog interop', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        setPostHog(undefined);
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
+    it('installs the filter once GTM has loaded and initialized PostHog', async () => {
+        const posthogModule = await freshModule();
+        const setConfig = jest.fn();
+
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(1000);
+        expect(setConfig).not.toHaveBeenCalled();
+
+        // The snippet stub arrives first; only the initialized library counts.
+        setPostHog({'set_config': setConfig});
+        jest.advanceTimersByTime(1000);
+        expect(setConfig).not.toHaveBeenCalled();
+
+        setPostHog({__loaded: true, 'set_config': setConfig});
+        jest.advanceTimersByTime(1000);
+        expect(setConfig).toHaveBeenCalledWith({'before_send': posthogModule.beforeSend});
+
+        // Installed once, and the poll stops.
+        setConfig.mockClear();
+        jest.advanceTimersByTime(60000);
+        expect(setConfig).not.toHaveBeenCalled();
+    });
+
+    it('gives up polling on a page where PostHog never loads', async () => {
+        const posthogModule = await freshModule();
+        const clearInterval = jest.spyOn(window, 'clearInterval');
+
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(60000);
+
+        expect(clearInterval).toHaveBeenCalled();
+        clearInterval.mockRestore();
+    });
+
+    it('reports a handled exception, and does nothing without PostHog', () => {
+        const error = new Error('Failed to fetch sticky/');
+
+        expect(() => captureException(error)).not.toThrow();
+
+        const posthogCapture = jest.fn();
+
+        // Loaded, but from a build without exception capture.
+        setPostHog({__loaded: true, 'set_config': jest.fn()});
+        expect(() => captureException(error)).not.toThrow();
+
+        setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
+        captureException(error);
+
+        expect(posthogCapture).toHaveBeenCalledTimes(3);
+        expect(posthogCapture).toHaveBeenNthCalledWith(1, error);
+        expect(posthogCapture).toHaveBeenNthCalledWith(2, error);
+        expect(posthogCapture).toHaveBeenNthCalledWith(3, error);
+    });
+
+    it('flushes queued exceptions once PostHog loads', async () => {
+        const posthogModule = await freshModule();
+        const setConfig = jest.fn();
+        const posthogCapture = jest.fn();
+        const error = new Error('Failed to fetch sticky/');
+
+        posthogModule.captureException(error);
+        posthogModule.installExceptionFilter();
+        setPostHog({
+            __loaded: true,
+            'set_config': setConfig,
+            captureException: posthogCapture
+        });
+        jest.advanceTimersByTime(1000);
+
+        expect(setConfig).toHaveBeenCalledWith({'before_send': posthogModule.beforeSend});
+        expect(posthogCapture).toHaveBeenCalledWith(error);
+    });
+
+    it('reports each handled exception once when PostHog is already ready', async () => {
+        const posthogModule = await freshModule();
+        const firstError = new Error('first failure');
+        const secondError = new Error('second failure');
+        const posthogCapture = jest.fn();
+
+        setPostHog({__loaded: true, 'set_config': jest.fn(), captureException: posthogCapture});
+
+        posthogModule.captureException(firstError);
+        posthogModule.captureException(secondError);
+
+        expect(posthogCapture).toHaveBeenCalledTimes(2);
+        expect(posthogCapture).toHaveBeenNthCalledWith(1, firstError);
+        expect(posthogCapture).toHaveBeenNthCalledWith(2, secondError);
+    });
+
+    it('drops queued exceptions after PostHog never loads', async () => {
+        const posthogModule = await freshModule();
+        const setConfig = jest.fn();
+        const posthogCapture = jest.fn();
+
+        posthogModule.captureException(new Error('Failed to fetch sticky/'));
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(60000);
+
+        setPostHog({
+            __loaded: true,
+            'set_config': setConfig,
+            captureException: posthogCapture
+        });
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(1000);
+
+        expect(setConfig).toHaveBeenCalledWith({'before_send': posthogModule.beforeSend});
+        expect(posthogCapture).not.toHaveBeenCalled();
+    });
+
+    it('drops queued exceptions once the installed PostHog lacks exception capture', async () => {
+        const posthogModule = await freshModule();
+        const setConfig = jest.fn();
+        const posthogCapture = jest.fn();
+
+        posthogModule.captureException(new Error('Failed to fetch sticky/'));
+        setPostHog({__loaded: true, 'set_config': setConfig});
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(1000);
+        setPostHog({__loaded: true, 'set_config': setConfig, captureException: posthogCapture});
+        posthogModule.captureException(new Error('Fresh failure'));
+
+        expect(posthogCapture).toHaveBeenCalledTimes(1);
+        expect(posthogCapture).toHaveBeenCalledWith(
+            expect.objectContaining({message: 'Fresh failure'})
+        );
+    });
+
+    it('installs only once', async () => {
+        const posthogModule = await freshModule();
+        const setConfig = jest.fn();
+
+        setPostHog({__loaded: true, 'set_config': setConfig});
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(1000);
+        posthogModule.installExceptionFilter();
+        jest.advanceTimersByTime(1000);
+
+        expect(setConfig).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not start a second poll while the first install is still waiting', async () => {
+        const posthogModule = await freshModule();
+        const setInterval = jest.spyOn(window, 'setInterval');
+
+        posthogModule.installExceptionFilter();
+        posthogModule.installExceptionFilter();
+
+        expect(setInterval).toHaveBeenCalledTimes(1);
+        setInterval.mockRestore();
+    });
+});
