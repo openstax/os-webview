@@ -200,8 +200,10 @@ describe('contact form', () => {
     it('goes to the confirmation page after submitting outside the embedded form', async () => {
         renderForm();
 
+await user.type(screen.getByRole('textbox', {name: 'Your Name'}), 'Username');
+        await user.type(screen.getByRole('textbox', {name: 'Your Email Address'}), 'somebody@example.com');
+        await user.type(screen.getByRole('textbox', {name: 'Your Message'}), 'message text');
         await user.click(screen.getByRole('button', {name: 'Submit'}));
-
         expect(await screen.findByText('Message sent')).toBeTruthy();
     });
 });
