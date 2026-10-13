@@ -169,7 +169,7 @@ describe('contact form', () => {
 
     it('posts to the Zapier hook, except for OpenStax Polska, which goes to the CMS', async () => {
         const {container} = renderForm();
-        const action = () => container.querySelector('form')?.getAttribute('action');
+        await waitFor(() => expect(container.querySelector('form')).not.toBeNull());
 
         expect(action()).toBe(zapierHook);
 
