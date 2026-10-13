@@ -5,9 +5,10 @@ import cn from 'classnames';
 
 type FileButtonProps = {
     name: string;
+    accept?: string;
 };
 
-export function FileButton({name}: FileButtonProps) {
+export function FileButton({name, accept}: FileButtonProps) {
     const [filePath, updateFilePath] = useState('');
     const empty = filePath === '';
 
@@ -36,6 +37,7 @@ export function FileButton({name}: FileButtonProps) {
                     type="file"
                     className="hidden"
                     name={name}
+                    accept={accept}
                     onChange={setFile}
                 />
             </label>

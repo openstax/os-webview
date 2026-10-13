@@ -3,6 +3,9 @@ import useUserContext from '~/contexts/user';
 import trackLink from '../../track-link';
 import './thank-you-form.scss';
 import SchoolSelector from '~/components/school-selector/school-selector';
+import {FileButton} from '~/pages/errata-form/form/FileUploader';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPaperclip} from '@fortawesome/free-solid-svg-icons/faPaperclip';
 
 function FormWithAfterSubmit({
     afterSubmit,
@@ -89,6 +92,7 @@ export default function ThankYou({
         <FormWithAfterSubmit
             action={`${process.env.API_ORIGIN}/apps/cms/api/donations/thankyounote/`}
             method="post"
+            encType="multipart/form-data"
             className="thank-you-form"
             afterSubmit={afterSubmit}
         >
@@ -141,6 +145,18 @@ export default function ThankYou({
                     />
                 </label>
             </div>
+            <div
+                className="attachment"
+                role="group"
+                aria-labelledby="thank-you-attachment-prompt"
+            >
+                <div id="thank-you-attachment-prompt" className="prompt">
+                    <FontAwesomeIcon icon={faPaperclip} aria-hidden="true" />
+                    Optional: Upload a photo or video of yourself to share
+                    alongside your thank you note. It really means a lot!
+                </div>
+                <FileButton name="attachment" accept="image/*,video/*" />
+            </div>
             <div className="consent-checkbox">
                 <label>
                     Consent <span className="asterisk" />
@@ -150,10 +166,15 @@ export default function ThankYou({
                         type="checkbox"
                         name="consent_to_share_or_contact"
                         value="True"
+                        required
                     />
                     By clicking here I understand that OpenStax may include my
                     story in publications and distribution in printed,
-                    electronic, and digital media.
+                    electronic, and digital media. If I have uploaded a photo
+                    or video, I hereby grant OpenStax the right to use my
+                    image, voice, and name in print, photographs, and video
+                    and audio recordings for educational or promotional
+                    purposes.
                 </label>
             </div>
             <button className="primary">
