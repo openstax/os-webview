@@ -4,5 +4,12 @@
     "ap_statement": "Advanced Placement<sup>\u00ae</sup> and AP<sup>\u00ae</sup> are trademarks registered and/or\r\nowned by the College Board, which is not affiliated with, and does not endorse, this site.",
     "facebook_link": "https://www.facebook.com/openstax",
     "twitter_link": "https://twitter.com/openstax",
-    "linkedin_link": "https://www.linkedin.com/company/openstax"
+    "linkedin_link": "https://www.linkedin.com/company/openstax",
+    "social_links": [
+        {"platform": "facebook", "url": "https://www.facebook.com/openstax"},
+        {"platform": "twitter", "url": "https://twitter.com/openstax"},
+        {"platform": "linkedin", "url": "https://www.linkedin.com/company/openstax"},
+        {"platform": "instagram", "url": "https://www.instagram.com/openstax/"},
+        {"platform": "youtube", "url": "https://www.youtube.com/openstax/"}
+    ]
 }
