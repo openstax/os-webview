@@ -146,8 +146,10 @@ describe('contact form', () => {
     const zapierHook = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
     const polskaEndpoint = '/apps/cms/api/mail/send_mail';
 
-    function renderForm() {
-        return render(
+    // The Salesforce context loads its oid asynchronously; until it arrives the
+    // form is replaced by a loading placeholder.
+    async function renderForm() {
+        const result = render(
             <MemoryRouter initialEntries={['/contact']}>
                 <SalesforceContextProvider>
                     <Routes>
@@ -160,16 +162,27 @@ describe('contact form', () => {
                 </SalesforceContextProvider>
             </MemoryRouter>
         );
+
+        await waitFor(() => expect(result.container.querySelector('form')).not.toBeNull());
+
+        return result;
     }
 
+    // The dropdown's toggle drops any open or close within 125ms of the last
+    // one (toggle-context.ts), so clicks that land inside that window silently
+    // do nothing. Let it lapse before each click that toggles the menu.
+    const afterToggleThrottle = () => new Promise((resolve) => setTimeout(resolve, 150));
+
     async function chooseSubject(name: string) {
+        await afterToggleThrottle();
         await user.click(screen.getAllByRole('combobox')[0]);
-        await user.click(screen.getByRole('option', {name}));
+        await afterToggleThrottle();
+        await user.click(await screen.findByRole('option', {name}));
     }
 
     it('posts to the Zapier hook, except for OpenStax Polska, which goes to the CMS', async () => {
-        const {container} = renderForm();
-        await waitFor(() => expect(container.querySelector('form')).not.toBeNull());
+        const {container} = await renderForm();
+        const action = () => container.querySelector('form')?.getAttribute('action');
 
         expect(action()).toBe(zapierHook);
 
@@ -180,7 +193,7 @@ describe('contact form', () => {
         expect(action()).toBe(zapierHook);
     });
     it('asks for an Assignable topic and tags the product only when Assignable is chosen', async () => {
-        const {container} = renderForm();
+        const {container} = await renderForm();
         const product = () =>
             container.querySelector<HTMLInputElement>('input[name="product"]')?.value;
         const topicQuestion = () =>
@@ -198,12 +211,17 @@ describe('contact form', () => {
         expect(product()).toBe('');
     });
     it('goes to the confirmation page after submitting outside the embedded form', async () => {
-        renderForm();
+        await renderForm();
 
-await user.type(screen.getByRole('textbox', {name: 'Your Name'}), 'Username');
-        await user.type(screen.getByRole('textbox', {name: 'Your Email Address'}), 'somebody@example.com');
+        // The fields are required, so fill them in before submitting
+        await user.type(screen.getByRole('textbox', {name: 'Your Name'}), 'Username');
+        await user.type(
+            screen.getByRole('textbox', {name: 'Your Email Address'}),
+            'somebody@example.com'
+        );
         await user.type(screen.getByRole('textbox', {name: 'Your Message'}), 'message text');
         await user.click(screen.getByRole('button', {name: 'Submit'}));
+
         expect(await screen.findByText('Message sent')).toBeTruthy();
     });
 });
