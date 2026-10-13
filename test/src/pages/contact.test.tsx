@@ -2,6 +2,7 @@ import React from 'react';
 import {fireEvent, render, screen, waitFor} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
+import {Routes, Route} from 'react-router-dom';
 import ContactPage from '~/pages/contact/contact';
 import Form from '~/pages/contact/form';
 import * as UPD from '~/helpers/use-page-data';
@@ -137,6 +138,71 @@ describe('contact page', () => {
 
         await user.click(submitButton);
         expect(setSubmitted).toHaveBeenCalledWith(true);
+    });
+});
+
+describe('contact form', () => {
+    const user = userEvent.setup();
+    const zapierHook = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
+    const polskaEndpoint = '/apps/cms/api/mail/send_mail';
+
+    function renderForm() {
+        return render(
+            <MemoryRouter initialEntries={['/contact']}>
+                <SalesforceContextProvider>
+                    <Routes>
+                        <Route path="/contact" element={<Form />} />
+                        <Route
+                            path="/confirmation/contact"
+                            element={<div>Message sent</div>}
+                        />
+                    </Routes>
+                </SalesforceContextProvider>
+            </MemoryRouter>
+        );
+    }
+
+    async function chooseSubject(name: string) {
+        await user.click(screen.getAllByRole('combobox')[0]);
+        await user.click(screen.getByRole('option', {name}));
+    }
+
+    it('posts to the Zapier hook, except for OpenStax Polska, which goes to the CMS', async () => {
+        const {container} = renderForm();
+        const action = () => container.querySelector('form')?.getAttribute('action');
+
+        expect(action()).toBe(zapierHook);
+
+        await chooseSubject('OpenStax Polska');
+        expect(action()).toBe(polskaEndpoint);
+
+        await chooseSubject('Donations');
+        expect(action()).toBe(zapierHook);
+    });
+    it('asks for an Assignable topic and tags the product only when Assignable is chosen', async () => {
+        const {container} = renderForm();
+        const product = () =>
+            container.querySelector<HTMLInputElement>('input[name="product"]')?.value;
+        const topicQuestion = () =>
+            screen.queryByText('What Assignable topic in particular?');
+
+        expect(topicQuestion()).toBeNull();
+        expect(product()).toBe('');
+
+        await chooseSubject('OpenStax Assignable');
+        expect(topicQuestion()).not.toBeNull();
+        expect(product()).toBe('Assignable');
+
+        await chooseSubject('General');
+        expect(topicQuestion()).toBeNull();
+        expect(product()).toBe('');
+    });
+    it('goes to the confirmation page after submitting outside the embedded form', async () => {
+        renderForm();
+
+        await user.click(screen.getByRole('button', {name: 'Submit'}));
+
+        expect(await screen.findByText('Message sent')).toBeTruthy();
     });
 });
 
