@@ -110,8 +110,8 @@
     .cb-group {
         @include set-font(body-regular);
 
-        align-items: center;
-        column-gap: $normal-margin;
+        align-items: start;
+        column-gap: 1rem;
         display: grid;
         grid-template-columns: 2rem auto;
         max-width: 55rem;
@@ -120,7 +120,7 @@
             border: thin solid ui-color(form-border);
             border-radius: 0.2rem;
             height: 2rem;
-            margin: 0;
+            margin: 0.4rem 0 0;
             width: 2rem;
 
             &:not(:checked) {
