@@ -218,6 +218,36 @@ describe('ThankYou', () => {
 
             await user.click(screen.getByRole('button', {name: 'Clear file'}));
             expect(screen.queryByText('me-with-book.png')).toBeNull();
+            // The file must not still be in the input, or it would be submitted
+            expect(fileInput.files).toHaveLength(0);
+            expect(fileInput.value).toBe('');
+        });
+
+        it.each([['Enter', '{Enter}'], ['Space', ' ']])(
+            'opens the file picker from the keyboard with %s',
+            async (_name, keys) => {
+                const user = userEvent.setup();
+                const {container} = renderForm();
+                const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+                const openPicker = jest.spyOn(fileInput, 'click');
+
+                screen.getByRole('button', {name: 'Add file'}).focus();
+                await user.keyboard(keys);
+
+                expect(openPicker).toHaveBeenCalledTimes(1);
+            }
+        );
+
+        it('ignores other keys on the Add file button', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+            const openPicker = jest.spyOn(fileInput, 'click');
+
+            screen.getByRole('button', {name: 'Add file'}).focus();
+            await user.keyboard('a');
+
+            expect(openPicker).not.toHaveBeenCalled();
         });
 
         it('requires consent, which now covers the use of an uploaded image, voice and name', () => {
