@@ -74,11 +74,35 @@
         .file-button {
             @include file-button();
 
-            // The form's own button styling is not meant for this one
+            // The "Add file" / "Change" label is the control, so it has to
+            // look and feel like the form's other buttons
+            .btn {
+                @include button();
+
+                cursor: pointer;
+                min-width: 9em;
+            }
+
+            // The form styles every <button> as a full-size one; this is a
+            // small icon button
             .clear-file {
                 @include button-reset();
 
+                align-items: center;
+                border-radius: 0.5rem;
+                box-shadow: none;
+                display: inline-flex;
+                font-size: 1.6rem;
+                height: 3rem;
+                justify-content: center;
+                min-width: 0;
                 padding: 0;
+                width: 3rem;
+
+                &:hover,
+                &:focus {
+                    background-color: ui-color(form-border);
+                }
             }
         }
     }
