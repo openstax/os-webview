@@ -105,7 +105,7 @@ describe('give-before-pdf', () => {
         await user.click(screen.getByRole('checkbox'));
         console.error = jest.fn();
         // This is the submit button, but submit doesn't work in testing :(
-        await user.click(screen.getByRole('button'));
+        await user.click(screen.getByRole('button', {name: /Submit note/}));
         expect(console.error).toHaveBeenCalledWith(
             expect.stringContaining(
                 'Not implemented: HTMLFormElement.prototype.submit'
