@@ -45,6 +45,10 @@ jest.mock('react-modal', () => ({
 }));
 global.scrollTo = jest.fn();
 
+// The first render in this file loads the app's lazy chunks, and jest transforms
+// them synchronously, so under CPU load it can exceed the default 5s on its own.
+jest.setTimeout(15000);
+
 describe('shell', () => {
     const user = userEvent.setup();
 

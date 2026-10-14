@@ -30,7 +30,13 @@ jest.mock('~/helpers/page-data-utils', () => ({
     useDataFromSlug: () => mockDataFromSlug()
 }));
 
-jest.mock('~/pages/details/common/resource-box/left-content');
+// An explicit factory rather than an automock. With the automock, the shell
+// contexts resolved to each other's values (useIntl() returned the portal
+// context) once the Emotion babel preset was removed; the cause was not traced.
+jest.mock('~/pages/details/common/resource-box/left-content', () => ({
+    __esModule: true,
+    default: jest.fn()
+}));
 
 function Component({data=bookData}) {
     return (

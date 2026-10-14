@@ -22,7 +22,7 @@ import {ImportedPage} from './page-loaders';
 export function RouteAsPortalOrNot() {
     const {name, data, hasError, other} = usePageDataFromRoute();
     const {portalPrefix, setPortal, setIsK12Portal} = usePortalContext();
-    const {search} = useLocation();
+    const {pathname, search} = useLocation();
 
     if (!data) {
         return null;
@@ -71,9 +71,10 @@ export function RouteAsPortalOrNot() {
     setPortal('');
     setIsK12Portal(false);
     if (isFlex) {
-        if (other) {
-            // Non-portal flex pages do not have children; keep it canonical
-            return <Navigate to={{pathname: `/${name}`, search}} />;
+        // Non-portal flex pages do not have children, and /name/ is the same
+        // page as /name; keep it canonical
+        if (other || pathname.endsWith('/')) {
+            return <Navigate to={{pathname: `/${name}`, search}} replace />;
         }
         return <FlexPageUsingItsOwnLayout data={data} />;
     }

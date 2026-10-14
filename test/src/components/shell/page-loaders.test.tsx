@@ -5,6 +5,10 @@ import * as Sentry from '@sentry/react';
 import {PageLoading} from '~/components/shell/router-helpers/page-loaders';
 
 jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
+jest.mock('~/pages/404/404', () => ({
+    __esModule: true,
+    default: () => <h1>Page not found</h1>
+}));
 
 const captureException = Sentry.captureException as jest.Mock;
 
@@ -61,5 +65,18 @@ describe('shell/page-loaders', () => {
         await userEvent.click(screen.getByRole('button', {name: 'Try again'}));
 
         expect(retry).toHaveBeenCalled();
+    });
+
+    it('shows the 404 page, without reporting or retrying, when the page has no component', () => {
+        const missingPage = Object.assign(new Error("Cannot find module './research/research'"), {
+            code: 'MODULE_NOT_FOUND'
+        });
+
+        render(<PageLoading error={missingPage} retry={jest.fn()} />);
+
+        expect(screen.getByText('Page not found')).toBeTruthy();
+        expect(screen.queryByRole('button', {name: 'Try again'})).toBeNull();
+        expect(captureException).not.toHaveBeenCalled();
+        expect(reload).not.toHaveBeenCalled();
     });
 });
