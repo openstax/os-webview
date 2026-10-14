@@ -2,6 +2,7 @@ import React from 'react';
 import {fireEvent, render, screen, waitFor} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
+import {Routes, Route} from 'react-router-dom';
 import ContactPage from '~/pages/contact/contact';
 import Form from '~/pages/contact/form';
 import * as UPD from '~/helpers/use-page-data';
@@ -137,6 +138,91 @@ describe('contact page', () => {
 
         await user.click(submitButton);
         expect(setSubmitted).toHaveBeenCalledWith(true);
+    });
+});
+
+describe('contact form', () => {
+    const user = userEvent.setup();
+    const zapierHook = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
+    const polskaEndpoint = '/apps/cms/api/mail/send_mail';
+
+    // The Salesforce context loads its oid asynchronously; until it arrives the
+    // form is replaced by a loading placeholder.
+    async function renderForm() {
+        const result = render(
+            <MemoryRouter initialEntries={['/contact']}>
+                <SalesforceContextProvider>
+                    <Routes>
+                        <Route path="/contact" element={<Form />} />
+                        <Route
+                            path="/confirmation/contact"
+                            element={<div>Message sent</div>}
+                        />
+                    </Routes>
+                </SalesforceContextProvider>
+            </MemoryRouter>
+        );
+
+        await waitFor(() => expect(result.container.querySelector('form')).not.toBeNull());
+
+        return result;
+    }
+
+    // The dropdown's toggle drops any open or close within 125ms of the last
+    // one (toggle-context.ts), so clicks that land inside that window silently
+    // do nothing. Let it lapse before each click that toggles the menu.
+    const afterToggleThrottle = () => new Promise((resolve) => setTimeout(resolve, 150));
+
+    async function chooseSubject(name: string) {
+        await afterToggleThrottle();
+        await user.click(screen.getAllByRole('combobox')[0]);
+        await afterToggleThrottle();
+        await user.click(await screen.findByRole('option', {name}));
+    }
+
+    it('posts to the Zapier hook, except for OpenStax Polska, which goes to the CMS', async () => {
+        const {container} = await renderForm();
+        const action = () => container.querySelector('form')?.getAttribute('action');
+
+        expect(action()).toBe(zapierHook);
+
+        await chooseSubject('OpenStax Polska');
+        expect(action()).toBe(polskaEndpoint);
+
+        await chooseSubject('Donations');
+        expect(action()).toBe(zapierHook);
+    });
+    it('asks for an Assignable topic and tags the product only when Assignable is chosen', async () => {
+        const {container} = await renderForm();
+        const product = () =>
+            container.querySelector<HTMLInputElement>('input[name="product"]')?.value;
+        const topicQuestion = () =>
+            screen.queryByText('What Assignable topic in particular?');
+
+        expect(topicQuestion()).toBeNull();
+        expect(product()).toBe('');
+
+        await chooseSubject('OpenStax Assignable');
+        expect(topicQuestion()).not.toBeNull();
+        expect(product()).toBe('Assignable');
+
+        await chooseSubject('General');
+        expect(topicQuestion()).toBeNull();
+        expect(product()).toBe('');
+    });
+    it('goes to the confirmation page after submitting outside the embedded form', async () => {
+        await renderForm();
+
+        // The fields are required, so fill them in before submitting
+        await user.type(screen.getByRole('textbox', {name: 'Your Name'}), 'Username');
+        await user.type(
+            screen.getByRole('textbox', {name: 'Your Email Address'}),
+            'somebody@example.com'
+        );
+        await user.type(screen.getByRole('textbox', {name: 'Your Message'}), 'message text');
+        await user.click(screen.getByRole('button', {name: 'Submit'}));
+
+        expect(await screen.findByText('Message sent')).toBeTruthy();
     });
 });
 
