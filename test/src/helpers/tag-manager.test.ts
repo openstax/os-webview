@@ -80,3 +80,76 @@ describe('tag-manager event capture', () => {
         expect(scriptSources()).toHaveLength(2);
     });
 });
+
+describe('tag-manager initializeAnalytics', () => {
+    type SchoolData = {industry: string; salesforceId: string; researchAgreementActive: boolean};
+    const k12 = {industry: 'K12', salesforceId: 'sf-a', researchAgreementActive: false};
+    const researchA = {...k12, researchAgreementActive: true};
+    const researchB = {...researchA, salesforceId: 'sf-b'};
+    const savedLocation = window.location;
+    let reload: jest.Mock;
+    let initializeAnalytics: (schoolData: SchoolData | null) => void;
+
+    const dataLayer = () => (window as unknown as {dataLayer: object[]}).dataLayer;
+
+    beforeEach(async () => {
+        reload = jest.fn();
+        Reflect.defineProperty(window, 'location', {
+            writable: true,
+            value: {origin: 'https://openstax.org', pathname: '/', reload}
+        });
+        (window as unknown as {dataLayer: object[]}).dataLayer = [];
+        // A fresh copy, since the module remembers which analytics it loaded
+        jest.resetModules();
+        ({initializeAnalytics} = await import('~/helpers/tag-manager'));
+    });
+
+    afterEach(() => {
+        Reflect.defineProperty(window, 'location', {writable: true, value: savedLocation});
+    });
+
+    it('loads GTM for a page with no school', () => {
+        initializeAnalytics(null);
+
+        expect(dataLayer()).toContainEqual(expect.objectContaining({event: 'gtm.js'}));
+    });
+
+    it('loads only event capture for a K12 school with a research agreement', () => {
+        initializeAnalytics(researchA);
+
+        expect(dataLayer()).toContainEqual({'os.organization_id': 'sf-a'});
+        expect(dataLayer()).not.toContainEqual(expect.objectContaining({event: 'gtm.js'}));
+    });
+
+    it('loads nothing for a K12 school without a research agreement', () => {
+        const entriesBefore = dataLayer().length;
+
+        initializeAnalytics(k12);
+
+        expect(dataLayer()).toHaveLength(entriesBefore);
+    });
+
+    it.each([
+        ['no school', null, 'no school', null],
+        ['a K12 school without an agreement', k12, 'no school', null],
+        ['a research school', researchA, 'the same research school', researchA]
+    ])('keeps the page when going from %s to %s', (_, first, __, second) => {
+        initializeAnalytics(first);
+        initializeAnalytics(second);
+
+        expect(reload).not.toHaveBeenCalled();
+    });
+
+    it.each([
+        ['no school', null, 'a K12 school without an agreement', k12],
+        ['no school', null, 'a research school', researchA],
+        ['a research school', researchA, 'another research school', researchB],
+        ['a research school', researchA, 'a K12 school without an agreement', k12],
+        ['a research school', researchA, 'no school', null]
+    ])('reloads the page when going from %s to %s', (_, first, __, second) => {
+        initializeAnalytics(first);
+        initializeAnalytics(second);
+
+        expect(reload).toHaveBeenCalled();
+    });
+});

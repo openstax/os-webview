@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import usePortalContext from '~/contexts/portal';
-import {initializeGTM} from '~/helpers/tag-manager';
+import {initializeAnalytics} from '~/helpers/tag-manager';
 
 // Wrapper component that enables GTM for non-portal routes
 // Used for:
@@ -22,7 +22,7 @@ export function NonPortalRouteWrapper({children}: {children: React.ReactNode}) {
     setPortal('');
 
     useEffect(() => {
-        initializeGTM();
+        initializeAnalytics(null);
     }, []);
 
     return <>{children}</>;

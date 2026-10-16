@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
+import {FetchStateType} from '@openstax/ts-utils/fetch';
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
 import Error404 from '~/pages/404/404';
 import usePortalContext from '~/contexts/portal';
-import {initializeEventCapture, initializeGTM} from '~/helpers/tag-manager';
+import {initializeAnalytics} from '~/helpers/tag-manager';
 import FlexPage, {
     isFlexPage,
     LayoutUsingData
@@ -28,18 +29,9 @@ export function RouteAsPortalOrNot() {
     const isPortal = isFlex && data.layout?.[0]?.type === 'landing';
     const schoolData = isPortal ? data.schoolData : null;
 
-    // Keyed to the page data rather than the route, because after navigating the data is
-    // still the previous page's until the new page's data arrives
     useEffect(() => {
-        if (!data || hasError) {
-            return;
-        }
-        // GTM is not loaded for K12 schools, but K12 schools with a research agreement
-        // still get event capture, which GTM would otherwise load
-        if (schoolData?.industry !== 'K12') {
-            initializeGTM();
-        } else if (schoolData.researchAgreementActive) {
-            initializeEventCapture(schoolData.salesforceId);
+        if (data && !hasError) {
+            initializeAnalytics(schoolData);
         }
     }, [data, hasError, schoolData]);
 
@@ -93,7 +85,13 @@ export function RouteAsPortalOrNot() {
 }
 
 function PortalSubRoute() {
-    const {name, data, hasError} = usePageDataFromRoute();
+    const {name, pageData, data, hasError} = usePageDataFromRoute();
+
+    // Waiting avoids importing a page by name before knowing it has no CMS data.
+    // A page whose data failed to load still falls through to ImportedPage below.
+    if (pageData.type === FetchStateType.LOADING) {
+        return null;
+    }
 
     if (hasError) {
         return <Error404 />;
@@ -104,7 +102,7 @@ function PortalSubRoute() {
     }
 
     if (data?.body) {
-        return <GeneralPageFromSlug slug={`spike/${data?.meta.slug}`} />;
+        return <GeneralPageFromSlug slug={`spike/${data.meta.slug}`} />;
     }
 
     return <ImportedPage name={assertDefined(name)} />;

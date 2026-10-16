@@ -1,6 +1,7 @@
 import React from 'react';
+import {FetchStateType} from '@openstax/ts-utils/fetch';
 import {useParams, useLocation, Routes, Route, Navigate} from 'react-router-dom';
-import usePageData from '~/helpers/use-page-data';
+import usePageData, {usePageDataFetchState} from '~/helpers/use-page-data';
 import FlexPage, {
     FlexPageData,
     LayoutUsingData
@@ -131,13 +132,15 @@ export function usePageDataFromRoute() {
     // K12 subject pages render at /k12/<subject>; their CMS slugs are k12-<subject>
     const [name, subPath] =
         dir === 'k12' && other ? [`k12-${other}`, ''] : [dir, other];
-    const data = usePageData<PageData>(
+    const pageData = usePageDataFetchState<PageData>(
         `pages/${mismatch[name as string] ?? name}`,
         true
     );
+    // Only the current page's loaded data, never the previous page's that loading keeps
+    const data = pageData.type === FetchStateType.SUCCESS ? pageData.data : undefined;
     const hasError = data && 'error' in data;
 
-    return {name, data, hasError, other: subPath};
+    return {name, pageData, data, hasError, other: subPath};
 }
 
 export function FlexPageUsingItsOwnLayout({data}: {data: FlexPageData}) {

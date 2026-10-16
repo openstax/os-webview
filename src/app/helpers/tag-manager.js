@@ -107,7 +107,8 @@ export function initializeGTM() {
     );
 }
 
-let eventCaptureInitialized = false;
+// The Salesforce Account ID event capture was loaded for, or null if it was not loaded
+let eventCaptureOrganizationId = null;
 
 /**
  * Load event capture without GTM, which normally loads it.
@@ -115,10 +116,10 @@ let eventCaptureInitialized = false;
  * @param {string} organizationId - the school's Salesforce Account ID
  */
 export function initializeEventCapture(organizationId) {
-    if (eventCaptureInitialized) {
+    if (eventCaptureOrganizationId !== null) {
         return;
     }
-    eventCaptureInitialized = true;
+    eventCaptureOrganizationId = organizationId;
 
     // The analytics helper reads these when it loads, so they must be set first
     window.dataLayer.push({'os.organization_id': organizationId});
@@ -141,6 +142,40 @@ export function initializeEventCapture(organizationId) {
         }
       }
     );
+}
+
+function areDifferentAnalyticsRunning(isK12, organizationId) {
+    const isRunning = gtmInitialized || eventCaptureOrganizationId !== null;
+
+    return isRunning && (gtmInitialized === isK12 || eventCaptureOrganizationId !== organizationId);
+}
+
+// Nothing is loaded for a K12 school without a research agreement
+function loadAnalytics(isK12, organizationId) {
+    if (!isK12) {
+        initializeGTM();
+    } else if (organizationId !== null) {
+        initializeEventCapture(organizationId);
+    }
+}
+
+/**
+ * Load the analytics a page needs: GTM, except that K12 schools get only event capture,
+ * and only when they have a research agreement.
+ * Loaded scripts cannot be removed, so if the previous page started different analytics,
+ * the page is reloaded to start over with the right ones.
+ * @param {{industry: string, salesforceId: string, researchAgreementActive: boolean} | null} schoolData
+ *   - null when the page does not belong to a school
+ */
+export function initializeAnalytics(schoolData) {
+    const isK12 = schoolData?.industry === 'K12';
+    const organizationId = isK12 && schoolData.researchAgreementActive ? schoolData.salesforceId : null;
+
+    if (areDifferentAnalyticsRunning(isK12, organizationId)) {
+        window.location.reload();
+    } else {
+        loadAnalytics(isK12, organizationId);
+    }
 }
 
 export function setContentTags(contentTags) {

@@ -26,6 +26,7 @@ import flexPage from '../data/flex-page';
 import generalPage from '../data/general-page';
 import k12PageData from '../data/k12';
 import ChildrenContainer from '~/../../test/helpers/mock-children-container';
+import {pageDataState} from '~/../../test/helpers/page-data-state';
 
 const {useLocation} = RRD;
 const BrowserRouter = jest.spyOn(RRD, 'BrowserRouter').mockImplementation(({children}) => (
@@ -67,7 +68,7 @@ describe('shell', () => {
     }
 
     // eslint-disable-next-line complexity
-    const spyUpd = jest.spyOn(UPD, 'default').mockImplementation((path) => {
+    function pageDataFor(path: string) {
         switch (path) {
             case 'pages/form-headings?locale=en':
                 return camelCaseKeys(formHeadings);
@@ -103,7 +104,14 @@ describe('shell', () => {
                 console.info('*** Requested', path);
                 return {};
         }
-    });
+    }
+    const spyUpd = jest.spyOn(UPD, 'default').mockImplementation(pageDataFor);
+
+    // The page routes read their data through usePageDataFetchState; serve it from the
+    // mock above, treating no data as still loading
+    jest.spyOn(UPD, 'usePageDataFetchState').mockImplementation(
+        ((path: string) => pageDataState(UPD.default(path))) as unknown as typeof UPD.usePageDataFetchState
+    );
     const setPortal = jest.fn();
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
 
@@ -328,8 +336,8 @@ describe('shell', () => {
         await waitFor(() => expect(spyGP).toHaveBeenCalled());
         spyGP.mockClear();
     });
-    it('does not load GTM script for K12 portals', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+    it('loads analytics for a K12 portal\'s school', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
 
         // Create a K12 portal page data
         const schoolData = {
@@ -349,11 +357,11 @@ describe('shell', () => {
         render(AppElement);
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
-        // GTM should NOT be initialized for K12 portals
-        expect(spyInitializeGTM).not.toHaveBeenCalled();
+        await waitFor(() => expect(spyInitializeAnalytics).toHaveBeenCalledWith(schoolData));
+        spyInitializeAnalytics.mockRestore();
     });
-    it('loads GTM script for non-K12 portals', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+    it('loads analytics for a non-K12 portal\'s school', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
 
         // Create a non-K12 portal page data
         const schoolData = {
@@ -373,13 +381,11 @@ describe('shell', () => {
         render(AppElement);
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
-        // GTM should be initialized for non-K12 portals
-        await waitFor(() => {
-            expect(spyInitializeGTM).toHaveBeenCalled();
-        });
+        await waitFor(() => expect(spyInitializeAnalytics).toHaveBeenCalledWith(schoolData));
+        spyInitializeAnalytics.mockRestore();
     });
-    it('loads GTM script for no-data pages (e.g., /adoption)', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+    it('loads analytics for no school on no-data pages (e.g., /adoption)', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
         const mockSetPortal = jest.fn();
 
         // Mock portal context with functions that can be tracked
@@ -402,9 +408,10 @@ describe('shell', () => {
             expect(mockSetPortal).toHaveBeenCalledWith('');
         });
 
-        // And GTM should be initialized
+        // And analytics for a page with no school should be loaded
         await waitFor(() => {
-            expect(spyInitializeGTM).toHaveBeenCalled();
+            expect(spyInitializeAnalytics).toHaveBeenCalledWith(null);
         });
+        spyInitializeAnalytics.mockRestore();
     });
 });
