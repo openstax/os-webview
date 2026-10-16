@@ -94,7 +94,7 @@ describe('use-link-handler', () => {
 
         jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue(el);
         jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
-            'whatever'
+            '/portal/whatever'
         );
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
@@ -104,7 +104,69 @@ describe('use-link-handler', () => {
         expect(console.error).toHaveBeenCalled();
         console.error = saveError;
         expect(notPrevented).not.toBeCalled();
-        expect(navigate).toBeCalledWith('whatever', {x: 0, y: 0});
+        expect(navigate).toBeCalledWith('/portal/whatever', {x: 0, y: 0});
+    });
+    describe('links that leave a portal', () => {
+        const savedLocation = window.location;
+        let assign: jest.Mock;
+
+        function clickLinkTo(path: string) {
+            jest.spyOn(linkHelper, 'validUrlClick').mockReturnValue({
+                href: `https://openstax.org${path}`,
+                dataset: {}
+            } as unknown as HTMLAnchorElement);
+            jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(path);
+            render(<Component />);
+            return user.click(screen.getByRole('link'));
+        }
+
+        beforeEach(() => {
+            assign = jest.fn();
+            Reflect.defineProperty(window, 'location', {
+                writable: true,
+                value: {origin: 'https://openstax.org', pathname: '/portal/contact', assign}
+            });
+        });
+
+        afterEach(() => {
+            Reflect.defineProperty(window, 'location', {writable: true, value: savedLocation});
+        });
+
+        it('loads the page fully when the link leaves the portal', async () => {
+            const navigate = jest.fn();
+
+            setPortalPrefix('/portal');
+            (useNavigate as jest.Mock).mockReturnValue(navigate);
+
+            await clickLinkTo('/portal-b?from=portal');
+
+            expect(assign).toBeCalledWith('/portal-b?from=portal');
+            expect(navigate).not.toBeCalled();
+        });
+
+        it('stays in the app for the portal\'s own landing page', async () => {
+            const navigate = jest.fn();
+
+            setPortalPrefix('/portal');
+            (useNavigate as jest.Mock).mockReturnValue(navigate);
+
+            await clickLinkTo('/portal?ref=nav');
+
+            expect(navigate).toBeCalledWith('/portal?ref=nav', {x: 0, y: 0});
+            expect(assign).not.toBeCalled();
+        });
+
+        it('stays in the app when not in a portal', async () => {
+            const navigate = jest.fn();
+
+            setPortalPrefix('');
+            (useNavigate as jest.Mock).mockReturnValue(navigate);
+
+            await clickLinkTo('/portal-b');
+
+            expect(navigate).toBeCalledWith('/portal-b', {x: 0, y: 0});
+            expect(assign).not.toBeCalled();
+        });
     });
     it('Changes window location when stripping does nothing', async () => {
         setPortalPrefix('/portal');
@@ -172,14 +234,14 @@ describe('use-link-handler', () => {
             dataset: {}
         } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
         jest.spyOn(linkHelper, 'stripOpenStaxDomain').mockReturnValue(
-            'whatever'
+            '/portal/whatever'
         );
         (useNavigate as jest.Mock).mockReturnValue(navigate);
 
         render(<Component />);
         await user.click(screen.getByRole('link'));
         expect(piTracker).not.toBeCalled();
-        expect(navigate).toBeCalledWith('whatever', {x: 0, y: 0});
+        expect(navigate).toBeCalledWith('/portal/whatever', {x: 0, y: 0});
     });
     it('handles external URL opening local', async () => {
         setPortalPrefix('/portal');

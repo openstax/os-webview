@@ -40,6 +40,12 @@ function isPortalRoot(portalPrefix: string) {
     return Boolean(portalPrefix && portalPrefix === pathname);
 }
 
+function isOutsidePortal(path: string, portalPrefix: string) {
+    const {pathname} = new URL(path, window.location.origin);
+
+    return Boolean(portalPrefix) && pathname !== portalPrefix && !pathname.startsWith(`${portalPrefix}/`);
+}
+
 // The request goes out before the navigation but is never awaited. Awaiting it
 // delays window.open past the click's user activation, and the popup blocker
 // then turns "open the resource in a new tab" into "replace the app with it" —
@@ -70,19 +76,22 @@ function trackOutboundClick(href: string) {
 
 export default function useLinkHandler() {
     const navigate = useNavigate();
+    const {portalPrefix} = usePortalContext();
     const navigateTo = useCallback(
         (path: Location['href'], state: State = {x: 0, y: 0}) => {
             const stripped = linkHelper.stripOpenStaxDomain(path);
 
-            if (stripped.startsWith('http')) {
+            // Leaving a portal changes the page's school whenever the portal has one, and
+            // analytics then need a full page load (see initializeAnalytics). Loading fully
+            // now avoids rendering the new page in the app only to reload it.
+            if (stripped.startsWith('http') || isOutsidePortal(stripped, portalPrefix)) {
                 window.location.assign(stripped);
             } else {
                 navigate(stripped, state);
             }
         },
-        [navigate]
+        [navigate, portalPrefix]
     );
-    const {portalPrefix} = usePortalContext();
     const linkHandler = useCallback(
         (e: TrackedMouseEvent) => {
             // Only handle left-clicks on links
