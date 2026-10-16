@@ -96,8 +96,7 @@ describe('details/common/hooks', () => {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix: '/landing-page',
             setPortal,
-            rewriteLinks: jest.fn(),
-            portal: {name: 'landing-page', schoolData: null}
+            rewriteLinks: jest.fn()
         });
 
         function Component() {

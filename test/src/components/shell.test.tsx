@@ -17,7 +17,6 @@ import * as DH from '~/helpers/use-document-head';
 import * as UC from '~/contexts/user';
 import * as TM from '~/helpers/tag-manager';
 import {camelCaseKeys, transformData} from '~/helpers/page-data-utils';
-import type {SchoolData} from '~/pages/flex-page/flex-page';
 import landingPage from '../data/landing-page';
 import contactPage from '../data/contact-page';
 import formHeadings from '../data/form-headings';
@@ -105,8 +104,6 @@ describe('shell', () => {
                 return {};
         }
     });
-    // The landing page fixture has no schoolData, so tests that use it unchanged
-    // expect setPortal to receive undefined for it
     const setPortal = jest.fn();
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
 
@@ -116,12 +113,11 @@ describe('shell', () => {
     const w = window as WindowWithPiTracker;
     const piTracker = jest.fn();
 
-    function setPortalPrefix(portalPrefix: string, schoolData: SchoolData | null = null) {
+    function setPortalPrefix(portalPrefix: string) {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix,
             setPortal,
-            rewriteLinks: jest.fn(),
-            portal: {name: portalPrefix.slice(1), schoolData}
+            rewriteLinks: jest.fn()
         });
     }
 
@@ -199,7 +195,7 @@ describe('shell', () => {
         mockBrowserInitialEntries(['/landing-page/adoption']);
         render(AppElement);
 
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', undefined));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
         await waitFor(() => expect(piTracker).toHaveBeenCalled());
     });
 
@@ -252,7 +248,7 @@ describe('shell', () => {
         mockBrowserInitialEntries(['/landing-page']);
         render(AppElement);
 
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', undefined));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
     });
     it('renders nothing when data is null', async () => {
         setPortalPrefix('/landing-page');
@@ -268,7 +264,7 @@ describe('shell', () => {
 
         mockBrowserInitialEntries(['/landing-page/contact']);
         render(AppElement);
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', undefined));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
     });
     // -- Warnings are generated from failed reads
     it('renders as a portal route with nothing beyond the portal', async () => {
@@ -283,7 +279,7 @@ describe('shell', () => {
 
         mockBrowserInitialEntries(['/landing-page/contact']);
         render(AppElement);
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', undefined));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
     });
     it('renders ordinary page through portal', async () => {
         setPortalPrefix('/landing-page');
@@ -347,11 +343,11 @@ describe('shell', () => {
         };
 
         spyUpd.mockReturnValueOnce(k12PortalPage);
-        setPortalPrefix('', schoolData);
+        setPortalPrefix('');
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', schoolData));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
         // GTM should NOT be initialized for K12 portals
         expect(spyInitializeGTM).not.toHaveBeenCalled();
@@ -371,11 +367,11 @@ describe('shell', () => {
         };
 
         spyUpd.mockReturnValueOnce(nonK12PortalPage);
-        setPortalPrefix('', schoolData);
+        setPortalPrefix('');
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', schoolData));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
         // GTM should be initialized for non-K12 portals
         await waitFor(() => {
@@ -390,8 +386,7 @@ describe('shell', () => {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix: '',
             setPortal: mockSetPortal,
-            rewriteLinks: jest.fn(),
-            portal: {name: '', schoolData: null}
+            rewriteLinks: jest.fn()
         });
 
         mockBrowserInitialEntries(['/adoption']);
@@ -402,8 +397,7 @@ describe('shell', () => {
         await screen.findByRole('combobox');
         await screen.findByText('Let us know you\'re using OpenStax');
 
-        // NonPortalRouteWrapper should have cleared the portal and recorded that the page has no school,
-        // to enable GTM
+        // NonPortalRouteWrapper should have cleared the portal
         await waitFor(() => {
             expect(mockSetPortal).toHaveBeenCalledWith('');
         });

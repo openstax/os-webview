@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
 import Error404 from '~/pages/404/404';
 import usePortalContext from '~/contexts/portal';
+import {initializeEventCapture, initializeGTM} from '~/helpers/tag-manager';
 import FlexPage, {
     isFlexPage,
     LayoutUsingData
@@ -23,6 +24,24 @@ export function RouteAsPortalOrNot() {
     const {name, data, hasError, other} = usePageDataFromRoute();
     const {portalPrefix, setPortal} = usePortalContext();
     const {pathname, search} = useLocation();
+    const isFlex = !hasError && isFlexPage(data);
+    const isPortal = isFlex && data.layout?.[0]?.type === 'landing';
+    const schoolData = isPortal ? data.schoolData : null;
+
+    // Keyed to the page data rather than the route, because after navigating the data is
+    // still the previous page's until the new page's data arrives
+    useEffect(() => {
+        if (!data || hasError) {
+            return;
+        }
+        // GTM is not loaded for K12 schools, but K12 schools with a research agreement
+        // still get event capture, which GTM would otherwise load
+        if (schoolData?.industry !== 'K12') {
+            initializeGTM();
+        } else if (schoolData.researchAgreementActive) {
+            initializeEventCapture(schoolData.salesforceId);
+        }
+    }, [data, hasError, schoolData]);
 
     if (!data) {
         return null;
@@ -32,12 +51,9 @@ export function RouteAsPortalOrNot() {
         return <Error404 />;
     }
 
-    const isFlex = !hasError && isFlexPage(data);
-    const isPortal = isFlex && data.layout?.[0]?.type === 'landing';
-
     if (isPortal) {
         if (portalPrefix !== `/${name}`) {
-            setPortal(assertDefined(name), data.schoolData);
+            setPortal(assertDefined(name));
             return null;
         }
 
@@ -84,7 +100,7 @@ function PortalSubRoute() {
     }
 
     if (isFlexPage(data)) {
-        return <FlexPage data={assertDefined(data)} />;
+        return <FlexPage data={data} />;
     }
 
     if (data?.body) {

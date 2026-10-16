@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import usePortalContext from '~/contexts/portal';
+import {initializeGTM} from '~/helpers/tag-manager';
 
 // Wrapper component that enables GTM for non-portal routes
 // Used for:
@@ -19,6 +20,10 @@ export function NonPortalRouteWrapper({children}: {children: React.ReactNode}) {
     // This ensures FlexPage's useLayoutEffect sees the correct portal state and
     // doesn't rewrite links with a stale portal prefix.
     setPortal('');
+
+    useEffect(() => {
+        initializeGTM();
+    }, []);
 
     return <>{children}</>;
 }
