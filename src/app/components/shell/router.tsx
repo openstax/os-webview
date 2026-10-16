@@ -6,7 +6,7 @@ import {RouterContextProvider} from './router-context';
 import SkipToContent from './skip-to-content';
 import useLayoutContext, {LayoutContextProvider} from '~/contexts/layout';
 import usePortalContext from '~/contexts/portal';
-import {initializeGTM} from '~/helpers/tag-manager';
+import {initializeEventCapture, initializeGTM} from '~/helpers/tag-manager';
 import {
     HomePage,
     ErrataRoutes,
@@ -24,7 +24,7 @@ export default function Router() {
     const {origin} = window.location; // React-Router Location does not have origin
     const {pathname, hash, search} = useLocation();
     const trackedUrl = `${origin}${pathname}${search}`;
-    const {isK12Portal} = usePortalContext();
+    const {portal} = usePortalContext();
 
     // Browsers keep the scroll offset across a pushState navigation, so without
     // this a new page opens wherever the last one was scrolled to. Skip it when
@@ -47,13 +47,20 @@ export default function Router() {
         }
     }, [trackedUrl]);
 
-    // Initialize GTM only when isK12Portal is explicitly false
-    // isK12Portal starts as true (GTM disabled), then routing logic sets it to false when safe
+    // GTM is not loaded for K12 schools, but K12 schools with a research agreement
+    // still get event capture, which GTM would otherwise load
     useEffect(() => {
-        if (isK12Portal === false) {
-            initializeGTM();
+        if (!portal) {
+            return;
         }
-    }, [isK12Portal]);
+        const {schoolData} = portal;
+
+        if (schoolData?.industry !== 'K12') {
+            initializeGTM();
+        } else if (schoolData.researchAgreementActive) {
+            initializeEventCapture(schoolData.salesforceId);
+        }
+    }, [portal]);
 
     return (
         <RouterContextProvider>

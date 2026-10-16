@@ -13,6 +13,7 @@ import * as UseLinkHandler from '~/components/shell/router-helpers/use-link-hand
 import * as PageRoutes from '~/components/shell/router-helpers/page-routes';
 import $ from '~/helpers/$';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import type {SchoolData} from '~/pages/flex-page/flex-page';
 
 declare global {
     interface Window {
@@ -60,6 +61,7 @@ jest.mock('~/helpers/$', () => ({
 describe('Router', () => {
     let mockLinkHandler: jest.Mock;
     let mockInitializeGTM: jest.Mock;
+    let mockInitializeEventCapture: jest.Mock;
     let addEventListenerSpy: jest.SpyInstance;
     let removeEventListenerSpy: jest.SpyInstance;
 
@@ -70,6 +72,7 @@ describe('Router', () => {
         // Create mocks
         mockLinkHandler = jest.fn();
         mockInitializeGTM = jest.fn();
+        mockInitializeEventCapture = jest.fn();
 
         // Spy on event listeners
         addEventListenerSpy = jest.spyOn(document, 'addEventListener');
@@ -82,14 +85,16 @@ describe('Router', () => {
         jest.spyOn(TagManager, 'initializeGTM').mockImplementation(
             mockInitializeGTM
         );
+        jest.spyOn(TagManager, 'initializeEventCapture').mockImplementation(
+            mockInitializeEventCapture
+        );
 
         // Mock contexts with default values
         jest.spyOn(PortalContext, 'default').mockReturnValue({
             portalPrefix: '',
             setPortal: jest.fn(),
             rewriteLinks: jest.fn(),
-            isK12Portal: true,
-            setIsK12Portal: jest.fn()
+            portal: null
         });
 
         jest.spyOn(SharedDataContext, 'default').mockReturnValue({
@@ -262,14 +267,28 @@ describe('Router', () => {
             ).toBeInTheDocument();
         });
 
-        it('initializes GTM when isK12Portal is false', async () => {
+        function mockLoadedPortal(schoolData: SchoolData | null) {
             jest.spyOn(PortalContext, 'default').mockReturnValue({
                 portalPrefix: '',
                 setPortal: jest.fn(),
                 rewriteLinks: jest.fn(),
-                isK12Portal: false,
-                setIsK12Portal: jest.fn()
+                portal: {name: '', schoolData}
             });
+        }
+
+        it('does not initialize GTM or event capture before the portal is known', () => {
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+            expect(mockInitializeGTM).not.toHaveBeenCalled();
+            expect(mockInitializeEventCapture).not.toHaveBeenCalled();
+        });
+
+        it('initializes GTM when the page has no school', async () => {
+            mockLoadedPortal(null);
 
             render(
                 <MemoryRouter initialEntries={['/']}>
@@ -282,13 +301,11 @@ describe('Router', () => {
             });
         });
 
-        it('does not initialize GTM when isK12Portal is true', () => {
-            jest.spyOn(PortalContext, 'default').mockReturnValue({
-                portalPrefix: '',
-                setPortal: jest.fn(),
-                rewriteLinks: jest.fn(),
-                isK12Portal: true,
-                setIsK12Portal: jest.fn()
+        it('initializes GTM for a non-K12 school', async () => {
+            mockLoadedPortal({
+                industry: 'Higher Education',
+                salesforceId: 'sf-account-id',
+                researchAgreementActive: true
             });
 
             render(
@@ -297,6 +314,45 @@ describe('Router', () => {
                 </MemoryRouter>
             );
 
+            await waitFor(() => {
+                expect(mockInitializeGTM).toHaveBeenCalled();
+            });
+            expect(mockInitializeEventCapture).not.toHaveBeenCalled();
+        });
+
+        it('does not initialize GTM or event capture for a K12 school without a research agreement', () => {
+            mockLoadedPortal({
+                industry: 'K12',
+                salesforceId: 'sf-account-id',
+                researchAgreementActive: false
+            });
+
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+            expect(mockInitializeGTM).not.toHaveBeenCalled();
+            expect(mockInitializeEventCapture).not.toHaveBeenCalled();
+        });
+
+        it('initializes event capture but not GTM for a K12 school with a research agreement', async () => {
+            mockLoadedPortal({
+                industry: 'K12',
+                salesforceId: 'sf-account-id',
+                researchAgreementActive: true
+            });
+
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+            await waitFor(() => {
+                expect(mockInitializeEventCapture).toHaveBeenCalledWith('sf-account-id');
+            });
             expect(mockInitializeGTM).not.toHaveBeenCalled();
         });
     });

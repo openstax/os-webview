@@ -97,8 +97,7 @@ describe('details/common/hooks', () => {
             portalPrefix: '/landing-page',
             setPortal,
             rewriteLinks: jest.fn(),
-            isK12Portal: false,
-            setIsK12Portal: jest.fn()
+            portal: {name: 'landing-page', schoolData: null}
         });
 
         function Component() {

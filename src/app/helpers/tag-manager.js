@@ -107,6 +107,42 @@ export function initializeGTM() {
     );
 }
 
+let eventCaptureInitialized = false;
+
+/**
+ * Load event capture without GTM, which normally loads it.
+ * This should be called for K12 portals whose school has a research agreement
+ * @param {string} organizationId - the school's Salesforce Account ID
+ */
+export function initializeEventCapture(organizationId) {
+    if (eventCaptureInitialized) {
+        return;
+    }
+    eventCaptureInitialized = true;
+
+    // The analytics helper reads these when it loads, so they must be set first
+    window.dataLayer.push({'os.organization_id': organizationId});
+    accountsModel.load().then(
+      (user) => {
+        window.dataLayer.push({'os.user': user});
+
+        // helper.js checks for window.EventCapture (set by standalone.umd.js) only once, when it runs,
+        // and silently skips all event capture if it is missing, so standalone.umd.js must run first.
+        // Scripts added this way run in the order they are added only when not async
+        for (const src of [
+            'https://ram.openstax.org/quasar/standalone.umd.js',
+            'https://ram.openstax.org/analytics/helper.js'
+        ]) {
+            const script = document.createElement('script');
+
+            script.async = false;
+            script.src = src;
+            document.head.appendChild(script);
+        }
+      }
+    );
+}
+
 export function setContentTags(contentTags) {
   window.oxDLF.push({contentTags});
 }

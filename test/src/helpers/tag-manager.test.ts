@@ -1,9 +1,10 @@
 jest.mock('~/models/accounts-model', () => ({
     __esModule: true,
-    default: {load: () => Promise.resolve(null)}
+    default: {load: () => Promise.resolve({uuid: 'user-uuid'})}
 }));
 
-import {initializeGTM} from '~/helpers/tag-manager';
+import {waitFor} from '@testing-library/preact';
+import {initializeEventCapture, initializeGTM} from '~/helpers/tag-manager';
 
 describe('tag-manager consent defaults', () => {
     it('pushes each gtag command as one dataLayer entry', async () => {
@@ -47,5 +48,35 @@ describe('tag-manager fbq stub', () => {
             )
         ).not.toThrow();
         expect(fbq?.queue).toContainEqual(['track', 'PageView']);
+    });
+});
+
+describe('tag-manager event capture', () => {
+    const scriptSources = () =>
+        Array.from(document.head.querySelectorAll('script')).map((s) => s.src);
+
+    it('sets the organization and user, then loads the scripts in order', async () => {
+        const dataLayer = (window as unknown as {dataLayer: object[]}).dataLayer;
+
+        initializeEventCapture('sf-account-id');
+
+        expect(dataLayer).toContainEqual({'os.organization_id': 'sf-account-id'});
+        await waitFor(() => {
+            expect(scriptSources()).toEqual([
+                'https://ram.openstax.org/quasar/standalone.umd.js',
+                'https://ram.openstax.org/analytics/helper.js'
+            ]);
+        });
+        expect(dataLayer).toContainEqual({'os.user': {uuid: 'user-uuid'}});
+        expect(
+            Array.from(document.head.querySelectorAll('script')).every((s) => !s.async)
+        ).toBe(true);
+    });
+
+    it('only loads the scripts once', async () => {
+        initializeEventCapture('sf-account-id');
+        await Promise.resolve();
+
+        expect(scriptSources()).toHaveLength(2);
     });
 });

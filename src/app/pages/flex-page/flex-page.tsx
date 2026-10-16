@@ -11,9 +11,13 @@ export type FlexPageData = {
     meta?: {type: string};
     layout?: [{type: LayoutName}?];
     body: BlockData<typeof blockMap>;
-    schoolData: null | {
-        industry: string;
-    };
+    schoolData: SchoolData | null;
+};
+
+export type SchoolData = {
+    industry: string;
+    salesforceId: string;
+    researchAgreementActive: boolean;
 };
 
 export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) =>

@@ -17,6 +17,7 @@ import * as DH from '~/helpers/use-document-head';
 import * as UC from '~/contexts/user';
 import * as TM from '~/helpers/tag-manager';
 import {camelCaseKeys, transformData} from '~/helpers/page-data-utils';
+import type {SchoolData} from '~/pages/flex-page/flex-page';
 import landingPage from '../data/landing-page';
 import contactPage from '../data/contact-page';
 import formHeadings from '../data/form-headings';
@@ -104,6 +105,8 @@ describe('shell', () => {
                 return {};
         }
     });
+    // The landing page fixture has no schoolData, so tests that use it unchanged
+    // expect setPortal to receive undefined for it
     const setPortal = jest.fn();
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
 
@@ -113,13 +116,12 @@ describe('shell', () => {
     const w = window as WindowWithPiTracker;
     const piTracker = jest.fn();
 
-    function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
+    function setPortalPrefix(portalPrefix: string, schoolData: SchoolData | null = null) {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix,
             setPortal,
             rewriteLinks: jest.fn(),
-            isK12Portal,
-            setIsK12Portal: jest.fn()
+            portal: {name: portalPrefix.slice(1), schoolData}
         });
     }
 
@@ -197,7 +199,7 @@ describe('shell', () => {
         mockBrowserInitialEntries(['/landing-page/adoption']);
         render(AppElement);
 
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', undefined));
         await waitFor(() => expect(piTracker).toHaveBeenCalled());
     });
 
@@ -250,7 +252,7 @@ describe('shell', () => {
         mockBrowserInitialEntries(['/landing-page']);
         render(AppElement);
 
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', undefined));
     });
     it('renders nothing when data is null', async () => {
         setPortalPrefix('/landing-page');
@@ -266,7 +268,7 @@ describe('shell', () => {
 
         mockBrowserInitialEntries(['/landing-page/contact']);
         render(AppElement);
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', undefined));
     });
     // -- Warnings are generated from failed reads
     it('renders as a portal route with nothing beyond the portal', async () => {
@@ -281,7 +283,7 @@ describe('shell', () => {
 
         mockBrowserInitialEntries(['/landing-page/contact']);
         render(AppElement);
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', undefined));
     });
     it('renders ordinary page through portal', async () => {
         setPortalPrefix('/landing-page');
@@ -334,18 +336,22 @@ describe('shell', () => {
         const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
 
         // Create a K12 portal page data
+        const schoolData = {
+            industry: 'K12',
+            salesforceId: 'sf-account-id',
+            researchAgreementActive: false
+        };
         const k12PortalPage = {
             ...camelCaseKeys(landingPage) as object,
-            schoolData: {industry: 'K12'}
+            schoolData
         };
 
         spyUpd.mockReturnValueOnce(k12PortalPage);
-        // Set portal context to indicate K12 portal (isK12Portal === true)
-        setPortalPrefix('', true);
+        setPortalPrefix('', schoolData);
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', schoolData));
 
         // GTM should NOT be initialized for K12 portals
         expect(spyInitializeGTM).not.toHaveBeenCalled();
@@ -354,18 +360,22 @@ describe('shell', () => {
         const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
 
         // Create a non-K12 portal page data
+        const schoolData = {
+            industry: 'Higher Education',
+            salesforceId: 'sf-account-id',
+            researchAgreementActive: false
+        };
         const nonK12PortalPage = {
             ...camelCaseKeys(landingPage) as object,
-            schoolData: {industry: 'Higher Education'}
+            schoolData
         };
 
         spyUpd.mockReturnValueOnce(nonK12PortalPage);
-        // Set portal context to indicate non-K12 portal (isK12Portal === false)
-        setPortalPrefix('', false);
+        setPortalPrefix('', schoolData);
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
-        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
+        await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page', schoolData));
 
         // GTM should be initialized for non-K12 portals
         await waitFor(() => {
@@ -374,7 +384,6 @@ describe('shell', () => {
     });
     it('loads GTM script for no-data pages (e.g., /adoption)', async () => {
         const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
-        const setIsK12Portal = jest.fn();
         const mockSetPortal = jest.fn();
 
         // Mock portal context with functions that can be tracked
@@ -382,8 +391,7 @@ describe('shell', () => {
             portalPrefix: '',
             setPortal: mockSetPortal,
             rewriteLinks: jest.fn(),
-            isK12Portal: false,
-            setIsK12Portal
+            portal: {name: '', schoolData: null}
         });
 
         mockBrowserInitialEntries(['/adoption']);
@@ -394,17 +402,15 @@ describe('shell', () => {
         await screen.findByRole('combobox');
         await screen.findByText('Let us know you\'re using OpenStax');
 
-        // NonPortalRouteWrapper should have called setIsK12Portal(false) to enable GTM
+        // NonPortalRouteWrapper should have cleared the portal and recorded that the page has no school,
+        // to enable GTM
         await waitFor(() => {
-            expect(setIsK12Portal).toHaveBeenCalledWith(false);
+            expect(mockSetPortal).toHaveBeenCalledWith('');
         });
 
         // And GTM should be initialized
         await waitFor(() => {
             expect(spyInitializeGTM).toHaveBeenCalled();
         });
-
-        // Portal should be cleared for non-portal pages
-        expect(mockSetPortal).toHaveBeenCalledWith('');
     });
 });
