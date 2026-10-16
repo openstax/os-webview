@@ -55,12 +55,11 @@ describe('tag-manager event capture', () => {
     const scriptSources = () =>
         Array.from(document.head.querySelectorAll('script')).map((s) => s.src);
 
-    it('sets the organization and user, then loads the scripts in order', async () => {
+    it('sets the user, then loads the scripts in order', async () => {
         const dataLayer = (window as unknown as {dataLayer: object[]}).dataLayer;
 
-        initializeEventCapture('sf-account-id');
+        initializeEventCapture();
 
-        expect(dataLayer).toContainEqual({'os.organization_id': 'sf-account-id'});
         await waitFor(() => {
             expect(scriptSources()).toEqual([
                 'https://ram.openstax.org/quasar/standalone.umd.js',
@@ -74,7 +73,7 @@ describe('tag-manager event capture', () => {
     });
 
     it('only loads the scripts once', async () => {
-        initializeEventCapture('sf-account-id');
+        initializeEventCapture();
         await Promise.resolve();
 
         expect(scriptSources()).toHaveLength(2);
@@ -86,6 +85,8 @@ describe('tag-manager initializeAnalytics', () => {
     const k12 = {industry: 'K12', salesforceId: 'sf-a', researchAgreementActive: false};
     const researchA = {...k12, researchAgreementActive: true};
     const researchB = {...researchA, salesforceId: 'sf-b'};
+    const higherEdA = {...k12, industry: 'Higher Education'};
+    const higherEdB = {...higherEdA, salesforceId: 'sf-b'};
     const savedLocation = window.location;
     let reload: jest.Mock;
     let initializeAnalytics: (schoolData: SchoolData | null) => void;
@@ -108,20 +109,31 @@ describe('tag-manager initializeAnalytics', () => {
         Reflect.defineProperty(window, 'location', {writable: true, value: savedLocation});
     });
 
-    it('loads GTM for a page with no school', () => {
+    it('loads GTM, with no organization, for a page with no school', () => {
         initializeAnalytics(null);
 
         expect(dataLayer()).toContainEqual(expect.objectContaining({event: 'gtm.js'}));
+        expect(dataLayer()).not.toContainEqual(expect.objectContaining({'os.organization_id': expect.anything()}));
     });
 
-    it('loads only event capture for a K12 school with a research agreement', () => {
+    it('sets the organization, then loads GTM, for a school that is not K12', () => {
+        initializeAnalytics(higherEdA);
+
+        const organizationAt = dataLayer().findIndex((entry) => 'os.organization_id' in entry);
+        const gtmAt = dataLayer().findIndex((entry) => 'event' in entry && entry.event === 'gtm.js');
+
+        expect(dataLayer()[organizationAt]).toEqual({'os.organization_id': 'sf-a'});
+        expect(organizationAt).toBeLessThan(gtmAt);
+    });
+
+    it('sets the organization and loads only event capture for a K12 school with a research agreement', () => {
         initializeAnalytics(researchA);
 
         expect(dataLayer()).toContainEqual({'os.organization_id': 'sf-a'});
         expect(dataLayer()).not.toContainEqual(expect.objectContaining({event: 'gtm.js'}));
     });
 
-    it('loads nothing for a K12 school without a research agreement', () => {
+    it('loads nothing, not even the organization, for a K12 school without a research agreement', () => {
         const entriesBefore = dataLayer().length;
 
         initializeAnalytics(k12);
@@ -129,9 +141,28 @@ describe('tag-manager initializeAnalytics', () => {
         expect(dataLayer()).toHaveLength(entriesBefore);
     });
 
+    // Otherwise GTM, loaded for the next page, would read that school's organization
+    it('loads GTM without the earlier K12 school\'s organization', () => {
+        initializeAnalytics(k12);
+        initializeAnalytics(null);
+
+        expect(reload).not.toHaveBeenCalled();
+        expect(dataLayer()).toContainEqual(expect.objectContaining({event: 'gtm.js'}));
+        expect(dataLayer()).not.toContainEqual({'os.organization_id': 'sf-a'});
+    });
+
+    it('does not set the new school\'s organization when reloading for it', () => {
+        initializeAnalytics(researchA);
+        initializeAnalytics(researchB);
+
+        expect(reload).toHaveBeenCalled();
+        expect(dataLayer()).not.toContainEqual({'os.organization_id': 'sf-b'});
+    });
+
     it.each([
         ['no school', null, 'no school', null],
         ['a K12 school without an agreement', k12, 'no school', null],
+        ['a school that is not K12', higherEdA, 'the same school', higherEdA],
         ['a research school', researchA, 'the same research school', researchA]
     ])('keeps the page when going from %s to %s', (_, first, __, second) => {
         initializeAnalytics(first);
@@ -141,6 +172,9 @@ describe('tag-manager initializeAnalytics', () => {
     });
 
     it.each([
+        ['no school', null, 'a school that is not K12', higherEdA],
+        ['a school that is not K12', higherEdA, 'no school', null],
+        ['a school that is not K12', higherEdA, 'another school that is not K12', higherEdB],
         ['no school', null, 'a K12 school without an agreement', k12],
         ['no school', null, 'a research school', researchA],
         ['a research school', researchA, 'another research school', researchB],
