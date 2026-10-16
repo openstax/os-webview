@@ -1,6 +1,7 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {act, render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
+import Cookies from 'js-cookie';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import useAdoptionMicrosurveyContent from '~/layouts/default/microsurvey-popup/adoption-content';
 import * as UM from '~/models/usermodel';
@@ -42,10 +43,20 @@ describe('microsurvey-popup/adoption-content', () => {
         render(<WrappedComponent path='/' />);
         expect(document.body.textContent).toBe('');
     });
-    it('renders nothing on the renewal-form even if user is an adopter', () => {
+    it('renders nothing on the renewal-form even if user is an adopter, and dismisses the popup', () => {
+        jest.useFakeTimers();
         jest.spyOn(UM, 'useUserModel').mockReturnValue({...userModelAdopter(true)});
         render(<WrappedComponent path='/renewal-form' />);
         expect(document.body.textContent).toBe('');
+
+        act(() => {
+            jest.advanceTimersByTime(10);
+        });
+        expect(Cookies.get('renewal_dialog_dismissed')).toBeTruthy();
+
+        jest.useRealTimers();
+        // Clear the dismissal so the popup can show in the next test
+        Cookies.remove('renewal_dialog_dismissed');
     });
     it('renders the page on other paths if user is faculty/adopter', async () => {
         jest.spyOn(UM, 'useUserModel').mockReturnValue({...userModelAdopter(true)});

@@ -107,6 +107,95 @@ export function initializeGTM() {
     );
 }
 
+let eventCaptureInitialized = false;
+
+/**
+ * Load event capture without GTM, which normally loads it.
+ * This should be called for K12 portals whose school has a research agreement
+ */
+export function initializeEventCapture() {
+    if (eventCaptureInitialized) {
+        return;
+    }
+    eventCaptureInitialized = true;
+
+    // The analytics helper reads the user when it loads, so it must be set first
+    accountsModel.load().then(
+      (user) => {
+        window.dataLayer.push({'os.user': user});
+
+        // helper.js checks for window.EventCapture (set by standalone.umd.js) only once, when it runs,
+        // and silently skips all event capture if it is missing, so standalone.umd.js must run first.
+        // Scripts added this way run in the order they are added only when not async
+        for (const src of [
+            'https://ram.openstax.org/quasar/standalone.umd.js',
+            'https://ram.openstax.org/analytics/helper.js'
+        ]) {
+            const script = document.createElement('script');
+
+            script.async = false;
+            script.src = src;
+            document.head.appendChild(script);
+        }
+      }
+    );
+}
+
+// The analytics a page needs: GTM, except that K12 schools get only event capture,
+// and only when they have a research agreement
+function analyticsFor(schoolData) {
+    const isK12 = schoolData?.industry === 'K12';
+
+    return {
+        usesGTM: !isK12,
+        usesEventCapture: isK12 && schoolData.researchAgreementActive,
+        organizationId: schoolData?.salesforceId ?? null
+    };
+}
+
+// What initializeAnalytics loaded, or null until it has loaded something
+let runningAnalytics = null;
+
+function isAlreadyRunning(analytics) {
+    return runningAnalytics.usesGTM === analytics.usesGTM &&
+        runningAnalytics.usesEventCapture === analytics.usesEventCapture &&
+        runningAnalytics.organizationId === analytics.organizationId;
+}
+
+function startAnalytics(analytics) {
+    runningAnalytics = analytics;
+
+    // The analytics helper, whether loaded by GTM or with event capture, reads the
+    // organization when it loads, so it must be set first
+    if (analytics.organizationId !== null) {
+        window.dataLayer.push({'os.organization_id': analytics.organizationId});
+    }
+    if (analytics.usesGTM) {
+        initializeGTM();
+    } else {
+        initializeEventCapture();
+    }
+}
+
+/**
+ * Load the analytics a page needs, including its school's organization.
+ * Loaded scripts cannot be removed and the organization is only read when they load,
+ * so if the previous page started anything different, the page is reloaded to start over.
+ * @param {{industry: string, salesforceId: string, researchAgreementActive: boolean} | null} schoolData
+ *   - null when the page does not belong to a school
+ */
+export function initializeAnalytics(schoolData) {
+    const analytics = analyticsFor(schoolData);
+
+    if (runningAnalytics !== null) {
+        if (!isAlreadyRunning(analytics)) {
+            window.location.reload();
+        }
+    } else if (analytics.usesGTM || analytics.usesEventCapture) {
+        startAnalytics(analytics);
+    }
+}
+
 export function setContentTags(contentTags) {
   window.oxDLF.push({contentTags});
 }

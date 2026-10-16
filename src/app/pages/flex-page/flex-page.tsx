@@ -11,12 +11,18 @@ export type FlexPageData = {
     meta?: {type: string};
     layout?: [{type: LayoutName}?];
     body: BlockData<typeof blockMap>;
-    schoolData: null | {
-        industry: string;
-    };
+    schoolData: SchoolData | null;
 };
 
-export const isFlexPage = (data?: {meta?: FlexPageData['meta']}) =>
+export type SchoolData = {
+    industry: string;
+    salesforceId: string;
+    researchAgreementActive: boolean;
+};
+
+export const isFlexPage = (
+    data?: {meta?: FlexPageData['meta']}
+): data is {meta: {type: 'pages.FlexPage' | 'pages.RootPage'}} =>
     typeof data?.meta?.type === 'string' &&
     ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type);
 

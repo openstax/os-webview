@@ -5,8 +5,6 @@ import useLinkHandler from './router-helpers/use-link-handler';
 import {RouterContextProvider} from './router-context';
 import SkipToContent from './skip-to-content';
 import useLayoutContext, {LayoutContextProvider} from '~/contexts/layout';
-import usePortalContext from '~/contexts/portal';
-import {initializeGTM} from '~/helpers/tag-manager';
 import {
     HomePage,
     ErrataRoutes,
@@ -24,7 +22,6 @@ export default function Router() {
     const {origin} = window.location; // React-Router Location does not have origin
     const {pathname, hash, search} = useLocation();
     const trackedUrl = `${origin}${pathname}${search}`;
-    const {isK12Portal} = usePortalContext();
 
     // Browsers keep the scroll offset across a pushState navigation, so without
     // this a new page opens wherever the last one was scrolled to. Skip it when
@@ -46,14 +43,6 @@ export default function Router() {
             window.piTracker(trackedUrl);
         }
     }, [trackedUrl]);
-
-    // Initialize GTM only when isK12Portal is explicitly false
-    // isK12Portal starts as true (GTM disabled), then routing logic sets it to false when safe
-    useEffect(() => {
-        if (isK12Portal === false) {
-            initializeGTM();
-        }
-    }, [isK12Portal]);
 
     return (
         <RouterContextProvider>
