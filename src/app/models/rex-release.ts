@@ -6,6 +6,7 @@ function rexOriginFromWebview(url: string) {
 }
 
 // CAUTION: Lodash memoize only distinguishes the first parameter
+// Rejections are evicted from both caches so a later call can retry
 const fetchRexInfo = memoize((rexOrigin) => {
     return retry(() => fetch(`${rexOrigin}/rex/environment.json`))
         .then((response) => response.json())
@@ -21,6 +22,7 @@ const fetchRexInfo = memoize((rexOrigin) => {
         )
         .then(([release, config]) => ({release, config}))
         .catch((err) => {
+            fetchRexInfo.cache.delete(rexOrigin);
             throw new Error(`Fetching Rex info: ${err}`);
         });
 });
@@ -43,6 +45,7 @@ const fetchContents = memoize((cnxId, rexOrigin) => {
         })
         .then((response) => response.json())
         .catch((err) => {
+            fetchContents.cache.delete(cnxId);
             throw new Error(`Fetching Rex contents: ${err}`);
         });
 });
