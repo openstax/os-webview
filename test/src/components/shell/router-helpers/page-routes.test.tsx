@@ -224,7 +224,6 @@ describe('page-routes: analytics', () => {
 
         act(() => resolveBySlug['pages/portal-b'](portalData(portalBSchool)));
 
-        // initializeAnalytics reloads the page, since portal B needs different analytics
         await waitFor(() => expect(initializeAnalytics).toHaveBeenLastCalledWith(portalBSchool));
     });
 });

@@ -62,12 +62,18 @@ function stubFacebookPixel(w) {
 /**
  * Initialize Google Tag Manager
  * This should be called conditionally based on portal K12 status
+ * @param {string | null} organizationId - the school's Salesforce Account ID, or null for no school
  */
-export function initializeGTM() {
+export function initializeGTM(organizationId = null) {
     if (gtmInitialized) {
         return;
     }
     gtmInitialized = true;
+
+    // The analytics helper GTM loads reads the organization when it loads, so it must be set first
+    if (organizationId !== null) {
+        window.dataLayer.push({'os.organization_id': organizationId});
+    }
 
     // Ensure `fbq` exists before GTM's Facebook Pixel tag can fire
     stubFacebookPixel(window);
@@ -107,8 +113,7 @@ export function initializeGTM() {
     );
 }
 
-// The Salesforce Account ID event capture was loaded for, or null if it was not loaded
-let eventCaptureOrganizationId = null;
+let eventCaptureInitialized = false;
 
 /**
  * Load event capture without GTM, which normally loads it.
@@ -116,10 +121,10 @@ let eventCaptureOrganizationId = null;
  * @param {string} organizationId - the school's Salesforce Account ID
  */
 export function initializeEventCapture(organizationId) {
-    if (eventCaptureOrganizationId !== null) {
+    if (eventCaptureInitialized) {
         return;
     }
-    eventCaptureOrganizationId = organizationId;
+    eventCaptureInitialized = true;
 
     // The analytics helper reads these when it loads, so they must be set first
     window.dataLayer.push({'os.organization_id': organizationId});
@@ -144,37 +149,20 @@ export function initializeEventCapture(organizationId) {
     );
 }
 
-function areDifferentAnalyticsRunning(isK12, organizationId) {
-    const isRunning = gtmInitialized || eventCaptureOrganizationId !== null;
-
-    return isRunning && (gtmInitialized === isK12 || eventCaptureOrganizationId !== organizationId);
-}
-
-// Nothing is loaded for a K12 school without a research agreement
-function loadAnalytics(isK12, organizationId) {
-    if (!isK12) {
-        initializeGTM();
-    } else if (organizationId !== null) {
-        initializeEventCapture(organizationId);
-    }
-}
-
 /**
  * Load the analytics a page needs: GTM, except that K12 schools get only event capture,
- * and only when they have a research agreement.
- * Loaded scripts cannot be removed, so if the previous page started different analytics,
- * the page is reloaded to start over with the right ones.
+ * and only when they have a research agreement. Nothing is loaded for a K12 school
+ * without a research agreement.
  * @param {{industry: string, salesforceId: string, researchAgreementActive: boolean} | null} schoolData
  *   - null when the page does not belong to a school
  */
 export function initializeAnalytics(schoolData) {
-    const isK12 = schoolData?.industry === 'K12';
-    const organizationId = isK12 && schoolData.researchAgreementActive ? schoolData.salesforceId : null;
+    const organizationId = schoolData?.salesforceId ?? null;
 
-    if (areDifferentAnalyticsRunning(isK12, organizationId)) {
-        window.location.reload();
-    } else {
-        loadAnalytics(isK12, organizationId);
+    if (schoolData?.industry !== 'K12') {
+        initializeGTM(organizationId);
+    } else if (schoolData.researchAgreementActive) {
+        initializeEventCapture(organizationId);
     }
 }
 
