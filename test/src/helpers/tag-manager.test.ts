@@ -1,9 +1,10 @@
 jest.mock('~/models/accounts-model', () => ({
     __esModule: true,
-    default: {load: () => Promise.resolve(null)}
+    default: {load: () => Promise.resolve({uuid: 'user-uuid'})}
 }));
 
-import {initializeGTM} from '~/helpers/tag-manager';
+import {waitFor} from '@testing-library/preact';
+import {initializeEventCapture, initializeGTM} from '~/helpers/tag-manager';
 
 describe('tag-manager consent defaults', () => {
     it('pushes each gtag command as one dataLayer entry', async () => {
@@ -47,5 +48,83 @@ describe('tag-manager fbq stub', () => {
             )
         ).not.toThrow();
         expect(fbq?.queue).toContainEqual(['track', 'PageView']);
+    });
+});
+
+describe('tag-manager event capture', () => {
+    const scriptSources = () =>
+        Array.from(document.head.querySelectorAll('script')).map((s) => s.src);
+
+    it('sets the organization and user, then loads the scripts in order', async () => {
+        const dataLayer = (window as unknown as {dataLayer: object[]}).dataLayer;
+
+        initializeEventCapture('sf-account-id');
+
+        expect(dataLayer).toContainEqual({'os.organization_id': 'sf-account-id'});
+        await waitFor(() => {
+            expect(scriptSources()).toEqual([
+                'https://ram.openstax.org/quasar/standalone.umd.js',
+                'https://ram.openstax.org/analytics/helper.js'
+            ]);
+        });
+        expect(dataLayer).toContainEqual({'os.user': {uuid: 'user-uuid'}});
+        expect(
+            Array.from(document.head.querySelectorAll('script')).every((s) => !s.async)
+        ).toBe(true);
+    });
+
+    it('only loads the scripts once', async () => {
+        initializeEventCapture('sf-account-id');
+        await Promise.resolve();
+
+        expect(scriptSources()).toHaveLength(2);
+    });
+});
+
+describe('tag-manager initializeAnalytics', () => {
+    type SchoolData = {industry: string; salesforceId: string; researchAgreementActive: boolean};
+    const k12 = {industry: 'K12', salesforceId: 'sf-a', researchAgreementActive: false};
+    const researchA = {...k12, researchAgreementActive: true};
+    let initializeAnalytics: (schoolData: SchoolData | null) => void;
+
+    const dataLayer = () => (window as unknown as {dataLayer: object[]}).dataLayer;
+
+    beforeEach(async () => {
+        (window as unknown as {dataLayer: object[]}).dataLayer = [];
+        // A fresh copy, since the module remembers which analytics it loaded
+        jest.resetModules();
+        ({initializeAnalytics} = await import('~/helpers/tag-manager'));
+    });
+
+    it('loads GTM, with no organization, for a page with no school', () => {
+        initializeAnalytics(null);
+
+        expect(dataLayer()).toContainEqual(expect.objectContaining({event: 'gtm.js'}));
+        expect(dataLayer()).not.toContainEqual(expect.objectContaining({'os.organization_id': expect.anything()}));
+    });
+
+    it('sets the organization, then loads GTM, for a school that is not K12', () => {
+        initializeAnalytics({...k12, industry: 'Higher Education'});
+
+        const organizationAt = dataLayer().findIndex((entry) => 'os.organization_id' in entry);
+        const gtmAt = dataLayer().findIndex((entry) => 'event' in entry && entry.event === 'gtm.js');
+
+        expect(dataLayer()[organizationAt]).toEqual({'os.organization_id': 'sf-a'});
+        expect(organizationAt).toBeLessThan(gtmAt);
+    });
+
+    it('loads only event capture for a K12 school with a research agreement', () => {
+        initializeAnalytics(researchA);
+
+        expect(dataLayer()).toContainEqual({'os.organization_id': 'sf-a'});
+        expect(dataLayer()).not.toContainEqual(expect.objectContaining({event: 'gtm.js'}));
+    });
+
+    it('loads nothing for a K12 school without a research agreement', () => {
+        const entriesBefore = dataLayer().length;
+
+        initializeAnalytics(k12);
+
+        expect(dataLayer()).toHaveLength(entriesBefore);
     });
 });

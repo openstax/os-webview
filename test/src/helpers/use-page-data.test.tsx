@@ -1,8 +1,9 @@
+import {fetchLoading, fetchSuccess, FetchStateType} from '@openstax/ts-utils/fetch';
 import {renderHook, waitFor, act} from '@testing-library/preact';
 import * as Sentry from '@sentry/react';
 import * as PostHog from '~/helpers/posthog-exceptions';
 import * as PageDataUtils from '~/helpers/page-data-utils';
-import usePageData from '~/helpers/use-page-data';
+import usePageData, {usePageDataFetchState} from '~/helpers/use-page-data';
 
 jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
 
@@ -20,9 +21,10 @@ describe('use-page-data', () => {
     it('returns the data once it arrives', async () => {
         fetchFromCMS.mockResolvedValue({title: 'a_page'});
 
-        const {result} = renderHook(() => usePageData<{title: string}>('pages/whatever'));
+        const {result} = renderHook(() => usePageDataFetchState<{title: string}>('pages/whatever'));
 
-        await waitFor(() => expect(result.current).toEqual({title: 'a_page'}));
+        expect(result.current).toEqual(fetchLoading());
+        await waitFor(() => expect(result.current).toEqual(fetchSuccess({title: 'a_page'})));
     });
 
     // Before this, a rejected CMS fetch left `data` undefined forever and every
@@ -34,11 +36,11 @@ describe('use-page-data', () => {
         fetchFromCMS.mockResolvedValue({error: failure, slug: 'snippets/sticky'});
 
         const {result} = renderHook(() =>
-            usePageData('snippets/sticky', false, false, onError)
+            usePageDataFetchState('snippets/sticky', false, false, onError)
         );
 
         await waitFor(() => expect(onError).toHaveBeenCalledWith(failure));
-        expect(result.current).toBeUndefined();
+        expect(result.current).toEqual({type: FetchStateType.ERROR, error: failure});
 
         // Handling the rejection takes it away from the unhandled-rejection
         // reporters, so both tools have to hear about it explicitly.
@@ -52,10 +54,10 @@ describe('use-page-data', () => {
         fetchFromCMS.mockResolvedValue(missing);
 
         const {result} = renderHook(() =>
-            usePageData<typeof missing>('snippets/missing')
+            usePageDataFetchState<typeof missing>('snippets/missing')
         );
 
-        await waitFor(() => expect(result.current).toEqual(missing));
+        await waitFor(() => expect(result.current).toEqual(fetchSuccess(missing)));
         expect(captureException).not.toHaveBeenCalled();
         expect(reportToPostHog).not.toHaveBeenCalled();
     });
@@ -65,7 +67,7 @@ describe('use-page-data', () => {
 
         fetchFromCMS.mockRejectedValue('just a string');
 
-        renderHook(() => usePageData('snippets/sticky', false, false, onError));
+        renderHook(() => usePageDataFetchState('snippets/sticky', false, false, onError));
 
         await waitFor(() =>
             expect(onError).toHaveBeenCalledWith(
@@ -81,7 +83,7 @@ describe('use-page-data', () => {
 
         const {rerender} = renderHook(
             ({onError}: {onError: () => void}) =>
-                usePageData('pages/whatever', false, false, onError),
+                usePageDataFetchState('pages/whatever', false, false, onError),
             {initialProps: {onError: jest.fn()}}
         );
 
@@ -103,9 +105,9 @@ describe('use-page-data', () => {
                 })
         );
 
-        const succeeding = renderHook(() => usePageData('pages/first'));
+        const succeeding = renderHook(() => usePageDataFetchState('pages/first'));
         const failing = renderHook(() =>
-            usePageData('pages/second', false, false, onError)
+            usePageDataFetchState('pages/second', false, false, onError)
         );
 
         succeeding.unmount();
@@ -117,11 +119,80 @@ describe('use-page-data', () => {
             await new Promise((settle) => window.setTimeout(settle, 0));
         });
 
-        expect(succeeding.result.current).toBeUndefined();
+        expect(succeeding.result.current).toEqual(fetchLoading());
         expect(onError).not.toHaveBeenCalled();
         // Reported even though nothing is left on screen to show it.
         expect(captureException).toHaveBeenCalledWith(
             expect.objectContaining({message: 'too late to matter'})
         );
+    });
+
+    describe('when the slug changes', () => {
+        function renderForSlug(slug: string) {
+            return renderHook(
+                (props: {slug: string}) => usePageDataFetchState<{title: string}>(props.slug),
+                {initialProps: {slug}}
+            );
+        }
+
+        // Waiting for an effect would leave a render where the new slug's state
+        // is still the previous page's success
+        it('is loading, with the previous page\'s data, on the render where the slug changes', async () => {
+            fetchFromCMS.mockResolvedValueOnce({title: 'first'});
+            fetchFromCMS.mockReturnValueOnce(new Promise(() => undefined));
+
+            const {result, rerender} = renderForSlug('pages/first');
+
+            expect(result.current).toEqual(fetchLoading());
+            await waitFor(() => expect(result.current).toEqual(fetchSuccess({title: 'first'})));
+
+            rerender({slug: 'pages/second'});
+
+            expect(result.current).toEqual(fetchLoading(fetchSuccess({title: 'first'})));
+        });
+
+        it('keeps the previous page\'s data when the next page fails to load', async () => {
+            const failure = new Error('CMS is down');
+
+            fetchFromCMS.mockResolvedValueOnce({title: 'first'});
+            fetchFromCMS.mockRejectedValueOnce(failure);
+
+            const {result, rerender} = renderForSlug('pages/first');
+
+            await waitFor(() => expect(result.current).toEqual(fetchSuccess({title: 'first'})));
+            rerender({slug: 'pages/second'});
+
+            await waitFor(() => expect(result.current).toEqual({
+                type: FetchStateType.ERROR,
+                data: {title: 'first'},
+                error: failure
+            }));
+        });
+    });
+
+    describe('usePageData', () => {
+        it('returns nothing until the data arrives, then the data', async () => {
+            fetchFromCMS.mockResolvedValue({title: 'a_page'});
+
+            const {result} = renderHook(() => usePageData<{title: string}>('pages/whatever'));
+
+            expect(result.current).toBeUndefined();
+            await waitFor(() => expect(result.current).toEqual({title: 'a_page'}));
+        });
+
+        it('keeps returning the previous page\'s data while the next page loads', async () => {
+            fetchFromCMS.mockResolvedValueOnce({title: 'first'});
+            fetchFromCMS.mockReturnValueOnce(new Promise(() => undefined));
+
+            const {result, rerender} = renderHook(
+                (props: {slug: string}) => usePageData<{title: string}>(props.slug),
+                {initialProps: {slug: 'pages/first'}}
+            );
+
+            await waitFor(() => expect(result.current).toEqual({title: 'first'}));
+            rerender({slug: 'pages/second'});
+
+            expect(result.current).toEqual({title: 'first'});
+        });
     });
 });
