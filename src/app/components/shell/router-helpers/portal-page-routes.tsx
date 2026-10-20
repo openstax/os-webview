@@ -12,6 +12,7 @@ import {
     FlexPageUsingItsOwnLayout,
     NonFlexPageUsingDefaultLayout,
     DetailsRoutes,
+    ErrataRoutes,
     isNoDataPage,
     generateFooterPageRoutes
 } from './page-routes';
@@ -62,6 +63,8 @@ export function RouteAsPortalOrNot() {
                 <Routes>
                     {generateFooterPageRoutes()}
                     <Route path="/details/*" element={<DetailsRoutes />} />
+                    <Route path="/errata/*" element={<ErrataRoutes />} />
+                    <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
                     <Route path="/:dir/*" element={<PortalSubRoute />} />
                 </Routes>
             </LayoutUsingData>

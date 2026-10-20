@@ -17,6 +17,13 @@ jest.mock('~/pages/flex-page/flex-page', () => ({
     LayoutUsingData: ({children}: {children: React.ReactNode}) => <>{children}</>
 }));
 
+// Shows which page a route imports, without loading the page
+jest.mock('~/components/shell/router-helpers/page-loaders', () => ({
+    __esModule: true,
+    ...jest.requireActual('~/components/shell/router-helpers/page-loaders'),
+    ImportedPage: ({name}: {name: string}) => <div data-testid="imported-page">{name}</div>
+}));
+
 const mockUsePageData = jest.spyOn(UPD, 'default');
 
 const flexData = {
@@ -103,5 +110,26 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
         renderAt('/about');
 
         expect(await screen.findByText('Uh-oh, no page here')).toBeInTheDocument();
+    });
+});
+
+describe('page-routes: errata pages in a portal', () => {
+    beforeEach(() => {
+        mockUsePageData.mockReturnValue({...flexData, layout: [{type: 'landing'}]});
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/my-portal/errata/?book=Some%20Book', 'errata-summary'],
+        ['/my-portal/errata/form?book=Some%20Book', 'errata-form'],
+        ['/my-portal/errata/7199', 'errata-detail'],
+        ['/my-portal/confirmation/errata?id=7199', 'confirmation']
+    ])('renders %s with the %s page', async (path, page) => {
+        renderAt(path);
+
+        expect(await screen.findByTestId('imported-page')).toHaveTextContent(page);
     });
 });

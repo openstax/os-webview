@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 import useErrataFormContext from '../errata-form-context';
 import useUserContext from '~/contexts/user';
+import usePortalContext from '~/contexts/portal';
 import ErrorTypeSelector from './ErrorTypeSelector';
 import ErrorSourceSelector from './ErrorSourceSelector';
 import ErrorLocationSelector from './ErrorLocationSelector/ErrorLocationSelector';
@@ -146,15 +147,16 @@ function removeEmptyFileWidgets(formEl: HTMLFormElement) {
 function useBannedDialog() {
     const [bannedText, setBannedText] = useState<string>();
     const navigate = useNavigate();
+    const {portalPrefix} = usePortalContext();
     const handleSubmissionResponse = React.useCallback(
         (json: ApiResponse) => {
             if (json.id) {
-                navigate(`/confirmation/errata?id=${json.id}`);
+                navigate(`${portalPrefix}/confirmation/errata?id=${json.id}`);
             } else if (json.submitted_by_account_id) {
                 setBannedText(json.submitted_by_account_id[0]);
             }
         },
-        [navigate]
+        [navigate, portalPrefix]
     );
 
     // TESTING
