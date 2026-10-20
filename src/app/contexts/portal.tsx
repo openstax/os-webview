@@ -1,5 +1,6 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
+import {assertNotNull} from '~/helpers/data';
 
 function useContextValue() {
     const [portal, setPortal] = React.useState('');
@@ -11,9 +12,14 @@ function useContextValue() {
         const linkNodes = container.querySelectorAll('a[href^="/"]');
 
         for (const node of linkNodes) {
-            const href = node.getAttribute('href');
+            const href = assertNotNull(node.getAttribute('href'));
 
-            node.setAttribute('href', `${portalPrefix}${href}`);
+            // Nested containers rewrite the same links, and CMS links can already
+            // point into the portal; a path starting with the portal name can only
+            // be in the portal, since no other page can have that name
+            if (href !== portalPrefix && !href.startsWith(`${portalPrefix}/`)) {
+                node.setAttribute('href', `${portalPrefix}${href}`);
+            }
         }
     },
     [portalPrefix]);
