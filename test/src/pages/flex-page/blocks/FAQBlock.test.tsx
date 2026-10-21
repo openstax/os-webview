@@ -1,6 +1,7 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
 import {LanguageContextProvider} from '~/contexts/language';
+import {PortalContextProvider} from '~/contexts/portal';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {FAQBlock, type FAQBlockConfig} from '~/pages/flex-page/blocks/FAQBlock';
 import {resetResourcesCacheForTesting} from '~/pages/flex-page/blocks/table-resource-links-utils';
@@ -25,7 +26,9 @@ jest.mock('~/helpers/page-data-utils', () => ({
 function Wrap({children}: React.PropsWithChildren) {
     return (
         <MemoryRouter initialEntries={['/some-flex-page']}>
-            <LanguageContextProvider>{children}</LanguageContextProvider>
+            <PortalContextProvider>
+                <LanguageContextProvider>{children}</LanguageContextProvider>
+            </PortalContextProvider>
         </MemoryRouter>
     );
 }

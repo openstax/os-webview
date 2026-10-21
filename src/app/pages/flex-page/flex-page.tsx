@@ -54,7 +54,14 @@ export default function FlexPage({data}: {data: FlexPageData}) {
     const {rewriteLinks} = usePortalContext();
 
     React.useLayoutEffect(() => {
-        rewriteLinks(assertNotNull(ref.current));
+        const main = assertNotNull(ref.current);
+        // Blocks can add links after the first render, like table rows on
+        // "Show more", filtering or sorting
+        const observer = new MutationObserver(() => rewriteLinks(main));
+
+        rewriteLinks(main);
+        observer.observe(main, {childList: true, subtree: true});
+        return () => observer.disconnect();
     }, [data, rewriteLinks]);
 
     return (

@@ -3,6 +3,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import useOptimizedImage, {
     maxDimIfNarrowerThan
 } from '~/helpers/use-optimized-image';
+import usePortalContext from '~/contexts/portal';
 import './banner.scss';
 
 export type BannerProps = {
@@ -28,6 +29,7 @@ export default function Banner({
 }: BannerProps) {
     const maxDim = maxDimIfNarrowerThan(1920);
     const optimizedImage = useOptimizedImage(backgroundImage, maxDim);
+    const {hrefInPortal} = usePortalContext();
 
     return (
         <section className="banner">
@@ -38,7 +40,7 @@ export default function Banner({
             <div className="content-block">
                 <h1>{heading}</h1>
                 <RawHTML html={description} />
-                <a className="btn primary" href={link}>
+                <a className="btn primary" href={hrefInPortal(link)}>
                     {linkText}
                 </a>
             </div>

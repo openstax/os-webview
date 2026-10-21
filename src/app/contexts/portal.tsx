@@ -2,30 +2,76 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {assertNotNull} from '~/helpers/data';
 
+// Paths the server sends to other apps or services, which are never os-webview pages
+const OTHER_APP_PATH = /^\/(?:apps|accounts|oxauth|r|l|blog-feed|documents)(?:[/?#]|$)/;
+// REX book pages, which REX shows in a portal under its own portal path
+const REX_BOOK_PATH = /^(?:\/apps\/rex)?\/books\//;
+
+// The same two hosts that helpers/link.ts treats as this site. Relative paths
+// and anything malformed (CMS links are typed in by hand) don't parse.
+function isAbsoluteSiteUrl(href: string) {
+    try {
+        const {protocol, origin, hostname} = new URL(href);
+
+        return ['http:', 'https:'].includes(protocol) &&
+            (origin === window.location.origin || hostname === 'openstax.org');
+    } catch {
+        return false;
+    }
+}
+
+function pathOfUrl(href: string) {
+    const {pathname, search, hash} = new URL(href);
+
+    return `${pathname}${search}${hash}`;
+}
+
+// A path starting with the portal name can only be in the portal, since no
+// other page can have that name, so links already in the portal (whether
+// rewritten by a nested container or written that way in the CMS) are kept.
+function isInPortal(path: string, portalPrefix: string) {
+    return path === portalPrefix || path.startsWith(`${portalPrefix}/`);
+}
+
+// A path on this site, not //other-host
+function isSitePath(path: string) {
+    return path.startsWith('/') && !path.startsWith('//');
+}
+
+function hrefInPortalFor(href: string, portalPrefix: string) {
+    const path = isAbsoluteSiteUrl(href) ? pathOfUrl(href) : href;
+
+    if (!isSitePath(path) || isInPortal(path, portalPrefix)) {
+        return href;
+    }
+    if (REX_BOOK_PATH.test(path)) {
+        return path.replace(REX_BOOK_PATH, `/apps/rex/portal${portalPrefix}/books/`);
+    }
+    return OTHER_APP_PATH.test(path) ? href : `${portalPrefix}${path}`;
+}
+
 function useContextValue() {
     const [portal, setPortal] = React.useState('');
     // Start with true (GTM disabled) until we determine it's safe to enable
     const [isK12Portal, setIsK12Portal] = React.useState<boolean>(true);
     const portalPrefix = portal ? `/${portal}` : '';
-    // Site links get the portal prefix; other links are returned as they are.
-    // A path starting with the portal name can only be in the portal, since no
-    // other page can have that name, so links already in the portal (whether
-    // rewritten by a nested container or written that way in the CMS) are kept.
+    // Links to os-webview pages on this site get the portal prefix, and links to
+    // REX books go to REX's portal path; other links are returned as they are.
     const hrefInPortal = React.useCallback(
-        (href: string) => portalPrefix &&
-            href.startsWith('/') &&
-            href !== portalPrefix &&
-            !href.startsWith(`${portalPrefix}/`)
-            ? `${portalPrefix}${href}`
-            : href,
+        (href: string) => portalPrefix ? hrefInPortalFor(href, portalPrefix) : href,
         [portalPrefix]
     );
     const rewriteLinks = React.useCallback((container: HTMLElement) => {
         if (!portalPrefix) {return;}
-        const linkNodes = container.querySelectorAll('a[href^="/"]');
+        const linkNodes = container.querySelectorAll('a[href]');
 
         for (const node of linkNodes) {
-            node.setAttribute('href', hrefInPortal(assertNotNull(node.getAttribute('href'))));
+            const href = assertNotNull(node.getAttribute('href'));
+            const newHref = hrefInPortal(href);
+
+            if (newHref !== href) {
+                node.setAttribute('href', newHref);
+            }
         }
     },
     [portalPrefix, hrefInPortal]);

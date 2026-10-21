@@ -1,10 +1,16 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render as originalRender, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {LanguageContextProvider} from '~/contexts/language';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 import LeftContent from '~/pages/details/common/resource-box/left-content';
 import * as TL from '~/pages/details/common/track-link';
+
+// Resource buttons read the portal context, which the shell provides
+function render(ui: React.ReactElement) {
+    return originalRender(ui, {wrapper: ShellContextProvider});
+}
 
 // enroll() picks a variant at random; these assertions read the rendered Give label,
 // so the choice has to be deterministic here.

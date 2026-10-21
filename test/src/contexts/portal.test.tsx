@@ -91,4 +91,80 @@ describe('portal context hrefInPortal', () => {
             '#top'
         ]));
     });
+
+    it('treats absolute links to this site like site paths', async () => {
+        const {container} = render(
+            <PortalContextProvider>
+                <HrefsInPortal
+                    portal="my-portal"
+                    hrefs={[
+                        'https://openstax.org/blog?q=x#top',
+                        `${window.location.origin}/subjects`,
+                        'https://openstax.org/my-portal/k12',
+                        'https://openstax.org.example.com/blog',
+                        'https://',
+                        '//cdn.example.org/file'
+                    ]}
+                />
+            </PortalContextProvider>
+        );
+
+        await waitFor(() => expect(renderedHrefs(container)).toEqual([
+            '/my-portal/blog?q=x#top',
+            '/my-portal/subjects',
+            'https://openstax.org/my-portal/k12',
+            'https://openstax.org.example.com/blog',
+            'https://',
+            '//cdn.example.org/file'
+        ]));
+    });
+
+    it('sends REX book links to REX in the portal', async () => {
+        const {container} = render(
+            <PortalContextProvider>
+                <HrefsInPortal
+                    portal="my-portal"
+                    hrefs={[
+                        '/books/biology-2e/pages/1-1',
+                        '/apps/rex/books/physics/pages/2-1',
+                        'https://openstax.org/books/chemistry/pages/3-1'
+                    ]}
+                />
+            </PortalContextProvider>
+        );
+
+        await waitFor(() => expect(renderedHrefs(container)).toEqual([
+            '/apps/rex/portal/my-portal/books/biology-2e/pages/1-1',
+            '/apps/rex/portal/my-portal/books/physics/pages/2-1',
+            '/apps/rex/portal/my-portal/books/chemistry/pages/3-1'
+        ]));
+    });
+
+    it('leaves links to other apps and services alone', async () => {
+        const otherAppHrefs = [
+            '/apps/cms/api/v2/pages/x',
+            '/accounts/i/login',
+            '/oxauth/logout',
+            '/r/content-reuse-request',
+            '/l/abc',
+            '/blog-feed/',
+            '/documents/file.pdf',
+            'https://openstax.org/documents/file.pdf'
+        ];
+        const {container} = render(
+            <PortalContextProvider>
+                <HrefsInPortal
+                    portal="my-portal"
+                    // Pages that only start with one of those names are still os-webview pages
+                    hrefs={[...otherAppHrefs, '/research', '/apps-and-tools']}
+                />
+            </PortalContextProvider>
+        );
+
+        await waitFor(() => expect(renderedHrefs(container)).toEqual([
+            ...otherAppHrefs,
+            '/my-portal/research',
+            '/my-portal/apps-and-tools'
+        ]));
+    });
 });

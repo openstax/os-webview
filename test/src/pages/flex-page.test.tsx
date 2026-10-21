@@ -6,6 +6,8 @@ import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
 import { LayoutContextProvider } from '~/contexts/layout';
+import InPortal from '~/../../test/helpers/in-portal';
+import {assertNotNull} from '~/helpers/data';
 
 type Data = Parameters<typeof FlexPage>[0]['data'];
 type BodyBlock = Data['body'][number];
@@ -32,6 +34,26 @@ describe('flex-page', () => {
         body = [heroBlock()];
         render(<Component />);
         expect(screen.getAllByRole('img')).toHaveLength(1);
+    });
+    it('keeps links added after the first render in the portal', async () => {
+        body = [heroBlock()];
+        const {container} = render(
+            <ShellContextProvider>
+                <MemoryRouter initialEntries={['/my-portal']}>
+                    <InPortal portal="my-portal">
+                        <FlexPage data={{body, layout: [{type: 'landing'}], schoolData: null}} />
+                    </InPortal>
+                </MemoryRouter>
+            </ShellContextProvider>
+        );
+        const main = await waitFor(() => assertNotNull(container.querySelector('main')));
+        // Like a table block adding rows on "Show more"
+        const lateLink = document.createElement('a');
+
+        lateLink.setAttribute('href', '/subjects');
+        main.appendChild(lateLink);
+
+        await waitFor(() => expect(lateLink.getAttribute('href')).toBe('/my-portal/subjects'));
     });
     it('warns and renders with default when layout is not provided', () => {
         const saveWarn = console.warn;
