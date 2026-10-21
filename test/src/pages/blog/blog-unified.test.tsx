@@ -43,7 +43,7 @@ describe('Unified MainBlogPage', () => {
     });
 
     it('shows no-results message AND keeps facet controls visible when search returns empty', async () => {
-        jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
+        jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue({sources: {news: {total: 0, results: []}}});
         renderMainBlog('/blog/?q=zzzznomatch');
         expect(
             await screen.findByText(/No matching blog posts found/i)

@@ -7,9 +7,13 @@ import useAllArticles from '~/pages/blog/search-results/use-all-articles';
 
 type RenderHookWrapper = ComponentType<{children: Element}>;
 
+function searchV2Envelope(results: unknown[], total = results.length) {
+    return {sources: {news: {total, results}}};
+}
+
 afterEach(() => jest.restoreAllMocks());
 it('builds the search slug from q, subjects, collection, and sort', async () => {
-    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
+    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue(searchV2Envelope([]));
 
     function Wrapper({children}: {children: React.ReactNode}) {
         return (
@@ -19,7 +23,7 @@ it('builds the search slug from q, subjects, collection, and sort', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
+    renderHook(() => useAllArticles(1, 10), {wrapper: Wrapper as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slug = spy.mock.calls[0][0] as string;
@@ -30,7 +34,7 @@ it('builds the search slug from q, subjects, collection, and sort', async () => 
 });
 
 it('includes collection in the slug when present', async () => {
-    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
+    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue(searchV2Envelope([]));
 
     function Wrapper({children}: {children: React.ReactNode}) {
         return (
@@ -40,7 +44,7 @@ it('includes collection in the slug when present', async () => {
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
+    renderHook(() => useAllArticles(1, 10), {wrapper: Wrapper as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slug = spy.mock.calls[0][0] as string;
@@ -50,7 +54,7 @@ it('includes collection in the slug when present', async () => {
 });
 
 it('omits sort from the slug when sort is relevance (the default)', async () => {
-    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
+    const spy = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue(searchV2Envelope([]));
 
     function WrapperNoSort({children}: {children: React.ReactNode}) {
         return (
@@ -60,7 +64,7 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: WrapperNoSort as unknown as RenderHookWrapper});
+    renderHook(() => useAllArticles(1, 10), {wrapper: WrapperNoSort as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
     const slugNoSort = spy.mock.calls[0][0] as string;
@@ -68,7 +72,7 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
     expect(slugNoSort).not.toContain('sort=');
 
     jest.restoreAllMocks();
-    const spy2 = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue([]);
+    const spy2 = jest.spyOn(pageDataUtils, 'fetchFromCMS').mockResolvedValue(searchV2Envelope([]));
 
     function WrapperRelevance({children}: {children: React.ReactNode}) {
         return (
@@ -78,7 +82,7 @@ it('omits sort from the slug when sort is relevance (the default)', async () => 
         );
     }
 
-    renderHook(() => useAllArticles(), {wrapper: WrapperRelevance as unknown as RenderHookWrapper});
+    renderHook(() => useAllArticles(1, 10), {wrapper: WrapperRelevance as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy2).toHaveBeenCalled());
     const slugRelevance = spy2.mock.calls[0][0] as string;
@@ -101,7 +105,7 @@ it('cancels pending fetch when hook unmounts (line 46)', async () => {
         );
     }
 
-    const {unmount} = renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
+    const {unmount} = renderHook(() => useAllArticles(1, 10), {wrapper: Wrapper as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
 
@@ -109,7 +113,7 @@ it('cancels pending fetch when hook unmounts (line 46)', async () => {
     unmount();
 
     // Now resolve the fetch - the cancelled check at line 46 should prevent state updates
-    resolveFetch!([
+    resolveFetch!(searchV2Envelope([
         {
             id: 1,
             title: 'Test Article',
@@ -117,7 +121,7 @@ it('cancels pending fetch when hook unmounts (line 46)', async () => {
             date: '2024-01-01',
             articleImage: null
         }
-    ]);
+    ]));
 
     // Wait a bit to ensure no state updates throw errors about unmounted components
     await new Promise((resolve) => setTimeout(resolve, 50));
@@ -137,7 +141,7 @@ it('handles fetch errors when not cancelled (line 57, cancelled = false)', async
         );
     }
 
-    const {result} = renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
+    const {result} = renderHook(() => useAllArticles(1, 10), {wrapper: Wrapper as unknown as RenderHookWrapper});
 
     // Initially loading
     expect(result.current.isLoading).toBe(true);
@@ -165,7 +169,7 @@ it('handles fetch errors when cancelled (line 57, cancelled = true)', async () =
         );
     }
 
-    const {unmount} = renderHook(() => useAllArticles(), {wrapper: Wrapper as unknown as RenderHookWrapper});
+    const {unmount} = renderHook(() => useAllArticles(1, 10), {wrapper: Wrapper as unknown as RenderHookWrapper});
 
     await waitFor(() => expect(spy).toHaveBeenCalled());
 
