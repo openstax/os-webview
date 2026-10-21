@@ -6,6 +6,7 @@ import FlexPage, {
     LayoutUsingData
 } from '~/pages/flex-page/flex-page';
 import useLayoutContext from '~/contexts/layout';
+import usePortalContext from '~/contexts/portal';
 import {assertDefined} from '~/helpers/data';
 import {GeneralPageFromSlug} from '~/pages/general/general';
 import {ImportedPage} from './page-loaders';
@@ -41,10 +42,11 @@ export function ErrataRoutes() {
 
 export function DetailsRoutes() {
     const {search} = useLocation();
+    const {portalPrefix} = usePortalContext();
 
     return (
         <Routes>
-            <Route index element={<Navigate to={{pathname: '/subjects', search}} replace />} />
+            <Route index element={<Navigate to={{pathname: `${portalPrefix}/subjects`, search}} replace />} />
             <Route
                 path="/books/:title"
                 element={<ImportedPage name="details" />}
@@ -179,8 +181,9 @@ export function NonFlexPageUsingDefaultLayout({data}: {data: PageData}) {
 function RedirectToCanonicalDetailsPage() {
     const {title} = useParams();
     const {search} = useLocation();
+    const {portalPrefix} = usePortalContext();
 
-    return <Navigate to={{pathname: `/details/books/${title}`, search}} replace />;
+    return <Navigate to={{pathname: `${portalPrefix}/details/books/${title}`, search}} replace />;
 }
 
 const FOOTER_PAGES = [

@@ -2,6 +2,7 @@ import React, {ReactElement} from 'react';
 import {useNavigate} from 'react-router-dom';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useData from '~/helpers/use-data';
+import usePortalContext from '~/contexts/portal';
 import {Collection, Category} from '~/components/explore-by/types';
 import {PageData, Webinar} from './types';
 
@@ -55,10 +56,11 @@ function useContextValue() {
     const collections = useCollections();
     const webinars = useWebinars();
     const navigate = useNavigate();
+    const {portalPrefix} = usePortalContext();
     const searchFor = React.useCallback(
         (term: string) =>
-            navigate(`/webinars/search?q=${encodeURIComponent(term)}`),
-        [navigate]
+            navigate(`${portalPrefix}/webinars/search?q=${encodeURIComponent(term)}`),
+        [navigate, portalPrefix]
     );
     const pageData = useData<PageData>(
         {
