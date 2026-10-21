@@ -117,6 +117,7 @@ describe('shell', () => {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix,
             setPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal,
             setIsK12Portal: jest.fn()
@@ -381,6 +382,7 @@ describe('shell', () => {
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix: '',
             setPortal: mockSetPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: false,
             setIsK12Portal

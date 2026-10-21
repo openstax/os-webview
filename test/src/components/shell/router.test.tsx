@@ -87,6 +87,7 @@ describe('Router', () => {
         jest.spyOn(PortalContext, 'default').mockReturnValue({
             portalPrefix: '',
             setPortal: jest.fn(),
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: true,
             setIsK12Portal: jest.fn()
@@ -266,6 +267,7 @@ describe('Router', () => {
             jest.spyOn(PortalContext, 'default').mockReturnValue({
                 portalPrefix: '',
                 setPortal: jest.fn(),
+                hrefInPortal: (href: string) => href,
                 rewriteLinks: jest.fn(),
                 isK12Portal: false,
                 setIsK12Portal: jest.fn()
@@ -286,6 +288,7 @@ describe('Router', () => {
             jest.spyOn(PortalContext, 'default').mockReturnValue({
                 portalPrefix: '',
                 setPortal: jest.fn(),
+                hrefInPortal: (href: string) => href,
                 rewriteLinks: jest.fn(),
                 isK12Portal: true,
                 setIsK12Portal: jest.fn()

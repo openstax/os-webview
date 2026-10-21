@@ -5,6 +5,7 @@ import {htmlToText, assertDefined} from '~/helpers/data';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
 import Hero from './hero';
 import JITLoad from '~/helpers/jit-load';
+import usePortalContext from '~/contexts/portal';
 import {AllSubjectsAboutOpenStax} from './about-openstax';
 import LoadSubject from './specific/specific';
 import './subjects.scss';
@@ -69,17 +70,19 @@ function RedirectSlash() {
 }
 
 export default function SubjectsRouter() {
+    const {portalPrefix} = usePortalContext();
+
     return (
         <SubjectsContextProvider>
             <Routes>
                 <Route path="/" element={<RedirectSlash />} />
                 <Route
                     path="view-all"
-                    element={<Navigate to="/subjects" replace />}
+                    element={<Navigate to={`${portalPrefix}/subjects`} replace />}
                 />
                 <Route
                     path="ap"
-                    element={<Navigate to="/subjects/high-school" replace />}
+                    element={<Navigate to={`${portalPrefix}/subjects/high-school`} replace />}
                 />
                 <Route path=":subject" element={<LoadSubject />} />
             </Routes>

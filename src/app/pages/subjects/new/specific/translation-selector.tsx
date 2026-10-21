@@ -4,6 +4,7 @@ import LanguageSelector, {
     LocaleEntry
 } from '~/components/language-selector/language-selector';
 import useLanguageContext from '~/contexts/language';
+import usePortalContext from '~/contexts/portal';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
 
@@ -79,14 +80,15 @@ function useNavigateOnLanguageChange(
 ) {
     const {language} = useLanguageContext();
     const navigate = useNavigate();
+    const {portalPrefix} = usePortalContext();
 
     React.useEffect(() => {
         const slug = translationSlug(language).slug;
 
         if (slug) {
-            navigate(`/subjects/${slug.replace('-books', '')}`, {
+            navigate(`${portalPrefix}/subjects/${slug.replace('-books', '')}`, {
                 replace: true
             });
         }
-    }, [language, translationSlug, navigate]);
+    }, [language, translationSlug, navigate, portalPrefix]);
 }

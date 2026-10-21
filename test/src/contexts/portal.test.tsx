@@ -53,3 +53,42 @@ describe('portal context rewriteLinks', () => {
         ]));
     });
 });
+
+function HrefsInPortal({portal, hrefs}: {portal: string; hrefs: string[]}) {
+    const {setPortal, hrefInPortal} = usePortalContext();
+
+    React.useEffect(() => setPortal(portal), [setPortal, portal]);
+
+    return <div>{hrefs.map((href) => <a key={href} href={hrefInPortal(href)}>{href}</a>)}</div>;
+}
+
+describe('portal context hrefInPortal', () => {
+    it('returns links unchanged outside a portal', () => {
+        const {container} = render(
+            <PortalContextProvider>
+                <HrefsInPortal portal="" hrefs={['/subjects']} />
+            </PortalContextProvider>
+        );
+
+        expect(renderedHrefs(container)).toEqual(['/subjects']);
+    });
+
+    it('prefixes site links, and leaves links already in the portal and external links alone', async () => {
+        const {container} = render(
+            <PortalContextProvider>
+                <HrefsInPortal
+                    portal="my-portal"
+                    hrefs={['/subjects', '/my-portal', '/my-portal/blog', 'https://example.org/', '#top']}
+                />
+            </PortalContextProvider>
+        );
+
+        await waitFor(() => expect(renderedHrefs(container)).toEqual([
+            '/my-portal/subjects',
+            '/my-portal',
+            '/my-portal/blog',
+            'https://example.org/',
+            '#top'
+        ]));
+    });
+});
