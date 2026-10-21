@@ -2,6 +2,7 @@ import React from 'react';
 import {NavigateOptions, useNavigate} from 'react-router-dom';
 import PartnerCard from '~/components/partner-card/partner-card';
 import {assertNotNull} from '~/helpers/data';
+import usePortalContext from '~/contexts/portal';
 import './partners.scss';
 
 type PartnerBlurb = {
@@ -29,6 +30,7 @@ export default function Partners({
 }) {
     const {title, seeMoreText, blurbs, badgeImage} = model;
     const navigate = useNavigate();
+    const {portalPrefix, hrefInPortal} = usePortalContext();
     const onClick = React.useCallback(
         (event: React.MouseEvent<HTMLAnchorElement>) => {
             const destUrl = event.currentTarget.getAttribute('href');
@@ -51,7 +53,7 @@ export default function Partners({
                 </span>
                 <a
                     className="filter-for-book"
-                    href="/partners"
+                    href={`${portalPrefix}/partners`}
                     onClick={onClick}
                 >
                     {seeMoreText}
@@ -67,7 +69,7 @@ export default function Partners({
                             <PartnerCard
                                 type={blurb.type}
                                 title={blurb.name}
-                                href={blurb.url}
+                                href={hrefInPortal(blurb.url)}
                                 logoUrl={blurb.image}
                                 tags={[blurb.cost, blurb.type].filter(
                                     (x) => x

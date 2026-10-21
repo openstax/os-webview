@@ -23,8 +23,13 @@ export function useContactDialog() {
             className?: string;
         }
     ) {
+        const {portalPrefix} = usePortalContext();
         const contactFormUrl = React.useMemo(() => {
-            const formUrl = '/embedded/contact';
+            // The form runs in an iframe outside the portal, so it is told the
+            // portal for the links it shows
+            const formUrl = portalPrefix
+                ? `/embedded/contact?portal=${encodeURIComponent(portalPrefix.slice(1))}`
+                : '/embedded/contact';
 
             if (contactFormParams !== undefined) {
                 const params = contactFormParams
@@ -32,11 +37,11 @@ export function useContactDialog() {
                     .map((p) => `body=${p}`)
                     .join('&');
 
-                return `${formUrl}?${params}`;
+                return `${formUrl}${portalPrefix ? '&' : '?'}${params}`;
             }
 
             return formUrl;
-        }, [contactFormParams]);
+        }, [contactFormParams, portalPrefix]);
 
         React.useEffect(
             () => {

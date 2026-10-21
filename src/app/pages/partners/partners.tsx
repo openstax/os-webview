@@ -7,6 +7,7 @@ import MobileControlRow from './mobile-controls/mobile-controls';
 import Results, {costOptions} from './results/results';
 import {useLocation} from 'react-router-dom';
 import {SearchContextProvider} from './search-context';
+import usePortalContext from '~/contexts/portal';
 import type {OptionType} from '~/components/form-elements/form-elements';
 import './partners.scss';
 
@@ -14,6 +15,7 @@ function Confirmation() {
     const location = useLocation();
     const bookSlug = location.state?.slug;
     const [done, toggleDone] = useToggle();
+    const {portalPrefix} = usePortalContext();
 
     if (done) {
         return null;
@@ -29,7 +31,7 @@ function Confirmation() {
                         <span>
                             {' '}
                             or return to{' '}
-                            <a href={`/details/${bookSlug}`}>your book</a>
+                            <a href={`${portalPrefix}/details/${bookSlug}`}>your book</a>
                         </span>
                     )}
                     .
@@ -134,6 +136,7 @@ function Partners({data}: {data: PartnerPageData}) {
     const description = data.description;
     const {linkTexts} = textsFromData(data);
     const bannerRef = React.useRef<HTMLDivElement>(null);
+    const {portalPrefix} = usePortalContext();
 
     React.useEffect(() => {
         bannerRef.current?.style.setProperty('--background-url', `url(${data.header_image_url})`);
@@ -150,13 +153,13 @@ function Partners({data}: {data: PartnerPageData}) {
                         <div className="button-row">
                             <a
                                 className="btn primary"
-                                href="/openstax-ally-technology-partner-program"
+                                href={`${portalPrefix}/openstax-ally-technology-partner-program`}
                             >
                                 Apply now
                             </a>
                             <a
                                 className="btn"
-                                href="/webinars/explore/collections/Technology%20Partners"
+                                href={`${portalPrefix}/webinars/explore/collections/Technology%20Partners`}
                             >
                                 Watch webinars
                             </a>

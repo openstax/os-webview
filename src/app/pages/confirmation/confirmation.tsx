@@ -127,6 +127,7 @@ export default function Confirmation() {
     const {headline, adoptionQuestion} = models[referringPage];
     const adoptionModel = models.contact;
     const errataModel = models.errata;
+    const {portalPrefix} = usePortalContext();
 
     useDocumentHead({title: 'Thanks!'});
     useCanonicalLink();
@@ -145,7 +146,7 @@ export default function Confirmation() {
                         </p>
                         {referringPage === 'contact' && (
                             <a
-                                href={adoptionModel.adoptionUrl}
+                                href={`${portalPrefix}${adoptionModel.adoptionUrl}`}
                                 title={adoptionModel.adoptionLinkText}
                                 className="btn cta"
                             >

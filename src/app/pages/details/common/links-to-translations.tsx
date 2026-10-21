@@ -2,6 +2,7 @@ import React from 'react';
 import useDetailsContext, {LocaleType, TranslationType} from '../context';
 import {FormattedMessage} from 'react-intl';
 import LanguageSelector, {LanguageText} from '~/components/language-selector/language-selector';
+import usePortalContext from '~/contexts/portal';
 
 export default function LinksToTranslations() {
     const {
@@ -44,11 +45,12 @@ function AnotherLanguage({
         () => translations.find((t) => t.locale === locale),
         [translations, locale]
     );
+    const {portalPrefix} = usePortalContext();
 
     // translation is guaranteed to have a valid value, because the locale
     // is pulled from translations
     return (
-         <a href={`/details/books/${translation?.slug}`}>
+         <a href={`${portalPrefix}/details/books/${translation?.slug}`}>
             <LanguageText locale={locale} />
         </a>
     );

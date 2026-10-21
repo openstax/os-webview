@@ -13,6 +13,7 @@ import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {useIntl} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useTOCContext from '../toc-slideout/context';
+import usePortalContext from '~/contexts/portal';
 import {useDialog} from '~/components/dialog/dialog';
 import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
 import trackLink from '../track-link';
@@ -69,6 +70,7 @@ export function SimpleLinkOption({
 
 export function TocOption({model}: {model: Model}) {
     const {toggle, isOpen} = useTOCContext();
+    const {portalPrefix} = usePortalContext();
     const includeTOC = ['live', 'deprecated', 'new_edition_available'].includes(
         model.bookState
     );
@@ -89,7 +91,7 @@ export function TocOption({model}: {model: Model}) {
     return (
         <div className="option toc-option">
             <a
-                href="/"
+                href={`${portalPrefix}/`}
                 role="button"
                 className="show-toc"
                 aria-pressed={isOpen}
