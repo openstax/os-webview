@@ -105,18 +105,32 @@ export function OtherPageRoutes() {
     return <RouteAsPortalOrNot />;
 }
 
+const NO_DATA_PAGES = [
+    'adopters',
+    'adoption',
+    'blog',
+    'campaign',
+    'confirmation',
+    'institutional-partnership-application',
+    'interest',
+    'renewal-form',
+    'separatemap'
+];
+
 export function isNoDataPage(dir: string) {
-    return [
-        'adopters',
-        'adoption',
-        'blog',
-        'campaign',
-        'confirmation',
-        'institutional-partnership-application',
-        'interest',
-        'renewal-form',
-        'separatemap'
-    ].includes(dir);
+    return NO_DATA_PAGES.includes(dir);
+}
+
+// Like the top-level /:dir/* route, so that pages with their own routes, like
+// the blog, match them below /<name>
+export function generateNoDataPageRoutes() {
+    return NO_DATA_PAGES.map((name) => (
+        <Route
+            path={`/${name}/*`}
+            key={name}
+            element={<ImportedPage name={name} />}
+        />
+    ));
 }
 
 // There are a couple of pages whose names in the CMS don't match their osweb urls

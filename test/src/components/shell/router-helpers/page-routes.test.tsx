@@ -17,12 +17,19 @@ jest.mock('~/pages/flex-page/flex-page', () => ({
     LayoutUsingData: ({children}: {children: React.ReactNode}) => <>{children}</>
 }));
 
-// Shows which page a route imports, without loading the page
-jest.mock('~/components/shell/router-helpers/page-loaders', () => ({
-    __esModule: true,
-    ...jest.requireActual('~/components/shell/router-helpers/page-loaders'),
-    ImportedPage: ({name}: {name: string}) => <div data-testid="imported-page">{name}</div>
-}));
+// Shows which page a route imports, and the rest of the path that the page's
+// own routes would match, without loading the page
+jest.mock('~/components/shell/router-helpers/page-loaders', () => {
+    const {useParams} = jest.requireActual('react-router-dom');
+
+    return {
+        __esModule: true,
+        ...jest.requireActual('~/components/shell/router-helpers/page-loaders'),
+        ImportedPage: ({name}: {name: string}) => (
+            <div data-testid="imported-page" data-rest={useParams()['*']}>{name}</div>
+        )
+    };
+});
 
 const mockUsePageData = jest.spyOn(UPD, 'default');
 
@@ -131,5 +138,28 @@ describe('page-routes: errata pages in a portal', () => {
         renderAt(path);
 
         expect(await screen.findByTestId('imported-page')).toHaveTextContent(page);
+    });
+});
+
+describe('page-routes: blog pages in a portal', () => {
+    beforeEach(() => {
+        mockUsePageData.mockReturnValue({...flexData, layout: [{type: 'landing'}]});
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/my-portal/blog', ''],
+        ['/my-portal/blog/some-article', 'some-article'],
+        ['/my-portal/blog/explore/subjects/Math', 'explore/subjects/Math']
+    ])('renders %s with the blog page, which routes %j itself', async (path, rest) => {
+        renderAt(path);
+
+        const page = await screen.findByTestId('imported-page');
+
+        expect(page).toHaveTextContent('blog');
+        expect(page).toHaveAttribute('data-rest', rest);
     });
 });

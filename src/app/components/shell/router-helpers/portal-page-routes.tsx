@@ -13,8 +13,8 @@ import {
     NonFlexPageUsingDefaultLayout,
     DetailsRoutes,
     ErrataRoutes,
-    isNoDataPage,
-    generateFooterPageRoutes
+    generateFooterPageRoutes,
+    generateNoDataPageRoutes
 } from './page-routes';
 import {assertDefined} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
@@ -50,21 +50,13 @@ export function RouteAsPortalOrNot() {
             return <FlexPageUsingItsOwnLayout data={data} />;
         }
 
-        if (isNoDataPage(other)) {
-            return (
-                <LayoutUsingData data={data}>
-                    <ImportedPage name={other} />
-                </LayoutUsingData>
-            );
-        }
-
         return (
             <LayoutUsingData data={data}>
                 <Routes>
                     {generateFooterPageRoutes()}
+                    {generateNoDataPageRoutes()}
                     <Route path="/details/*" element={<DetailsRoutes />} />
                     <Route path="/errata/*" element={<ErrataRoutes />} />
-                    <Route path="/confirmation/*" element={<ImportedPage name="confirmation" />} />
                     <Route path="/:dir/*" element={<PortalSubRoute />} />
                 </Routes>
             </LayoutUsingData>
