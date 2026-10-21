@@ -29,8 +29,11 @@ function pathOfUrl(href: string) {
 // A path starting with the portal name can only be in the portal, since no
 // other page can have that name, so links already in the portal (whether
 // rewritten by a nested container or written that way in the CMS) are kept.
+// The portal name ends at a slash, query, fragment or the end of the path.
 function isInPortal(path: string, portalPrefix: string) {
-    return path === portalPrefix || path.startsWith(`${portalPrefix}/`);
+    const nextCharacter = path.charAt(portalPrefix.length);
+
+    return path.startsWith(portalPrefix) && ['', '/', '?', '#'].includes(nextCharacter);
 }
 
 // A path on this site, not //other-host

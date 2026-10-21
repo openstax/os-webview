@@ -92,6 +92,24 @@ describe('portal context hrefInPortal', () => {
         ]));
     });
 
+    it('leaves portal links with a query or fragment alone', async () => {
+        const {container} = render(
+            <PortalContextProvider>
+                <HrefsInPortal
+                    portal="my-portal"
+                    // A page whose name only starts with the portal's name is a different page
+                    hrefs={['/my-portal#faq', '/my-portal?ref=nav', '/my-portal-two']}
+                />
+            </PortalContextProvider>
+        );
+
+        await waitFor(() => expect(renderedHrefs(container)).toEqual([
+            '/my-portal#faq',
+            '/my-portal?ref=nav',
+            '/my-portal/my-portal-two'
+        ]));
+    });
+
     it('treats absolute links to this site like site paths', async () => {
         const {container} = render(
             <PortalContextProvider>
