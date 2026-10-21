@@ -9,13 +9,14 @@ import FlexPage, {
 import {GeneralPageFromSlug} from '~/pages/general/general';
 import {
     usePageDataFromRoute,
+    usePageNameFromRoute,
     FlexPageUsingItsOwnLayout,
     NonFlexPageUsingDefaultLayout,
     DetailsRoutes,
     ErrataRoutes,
     generateFooterPageRoutes,
     generateNoDataPageRoutes,
-    isSinglePathSegment
+    hasOnlySlugCharacters
 } from './page-routes';
 import {assertDefined} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
@@ -78,9 +79,15 @@ export function RouteAsPortalOrNot() {
 }
 
 function PortalSubRoute() {
+    const {name} = usePageNameFromRoute();
+
+    return hasOnlySlugCharacters(name) ? <PortalSubPage /> : <Error404 />;
+}
+
+function PortalSubPage() {
     const {name, data, hasError} = usePageDataFromRoute();
 
-    if (hasError || !isSinglePathSegment(assertDefined(name))) {
+    if (hasError) {
         return <Error404 />;
     }
 

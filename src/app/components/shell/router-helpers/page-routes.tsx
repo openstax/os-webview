@@ -59,21 +59,23 @@ export function DetailsRoutes() {
     );
 }
 
-// The router decodes %2F and %5C in a path segment to / and \. Page names are
-// never more than one segment, and one that was could load another page's data
-// (pages/a/../b) and put its name in links as `//host/…`.
-export function isSinglePathSegment(name: string) {
-    return !(/[/\\]/).test(name);
+// The router decodes escapes in a path segment, like %2F to / and %09 to a tab.
+// A page name with those could load another page's data (pages/a/../b) and put
+// its name in links as `//host/…`, so only ASCII letters, digits, hyphens and
+// underscores are allowed.
+export function hasOnlySlugCharacters(name: string) {
+    return (/^[\w-]+$/).test(name);
 }
 
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
+
+    return hasOnlySlugCharacters(dir) ? <NamedPageRoutes dir={dir} /> : <Error404 />;
+}
+
+function NamedPageRoutes({dir}: {dir: string}) {
     const {'*': path} = useParams();
     const {search} = useLocation();
-
-    if (!isSinglePathSegment(dir)) {
-        return <Error404 />;
-    }
 
     if (['books', 'textbooks'].includes(dir)) {
         return (
@@ -153,13 +155,20 @@ const mismatch: Record<string, string> = {
     foundation: 'supporters'
 };
 
-export function usePageDataFromRoute() {
+// The CMS page name for the route, and the rest of the path after it
+export function usePageNameFromRoute() {
     const {dir, '*': other} = useParams();
+
     // K12 subject pages render at /k12/<subject>; their CMS slugs are k12-<subject>
-    const [name, subPath] =
-        dir === 'k12' && other ? [`k12-${other}`, ''] : [dir, other];
+    return dir === 'k12' && other
+        ? {name: `k12-${other}`, subPath: ''}
+        : {name: assertDefined(dir), subPath: other};
+}
+
+export function usePageDataFromRoute() {
+    const {name, subPath} = usePageNameFromRoute();
     const data = usePageData<PageData>(
-        `pages/${mismatch[name as string] ?? name}`,
+        `pages/${mismatch[name] ?? name}`,
         true
     );
     const hasError = data && 'error' in data;

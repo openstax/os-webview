@@ -120,7 +120,7 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
     });
 });
 
-describe('page-routes: page names with a decoded slash or backslash', () => {
+describe('page-routes: page names with decoded characters a slug cannot have', () => {
     beforeEach(() => {
         // Any fetched page would be a portal, which is the case that must not happen
         mockUsePageData.mockReturnValue({...flexData, layout: [{type: 'landing'}]});
@@ -132,7 +132,10 @@ describe('page-routes: page names with a decoded slash or backslash', () => {
 
     it.each([
         '/%2Fevil.example%2F..%2F..%2Fmy-portal/subjects',
-        '/%5Cevil.example%2F..%2F..%2Fmy-portal/subjects'
+        '/%5Cevil.example%2F..%2F..%2Fmy-portal/subjects',
+        '/%09my-portal/subjects',
+        '/my-portal%0A/subjects',
+        '/my-portal%0D/subjects'
     ])('renders %s as not found, without fetching page data', async (path) => {
         renderAt(path);
 
