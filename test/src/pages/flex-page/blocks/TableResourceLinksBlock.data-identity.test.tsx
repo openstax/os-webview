@@ -122,8 +122,16 @@ describe('TableResourceLinksBlock data identity', () => {
         expect(mockDelegateRender.mock.calls.length).toBeGreaterThan(0);
     });
 
-    it('is registered in blockMap as the table override', () => {
-        expect(blockMap.table.Component).toBe(TableResourceLinksBlock);
+    it('is registered in blockMap as the table override, wrapped for audience gating', () => {
+        // Wrapped by the audience gate, so assert delegation not identity.
+        mockUseUserContext.mockReturnValue({userStatus: {}, isVerified: false});
+        const data = tableWithCells([[{content: 'plain'}]]);
+        const GatedTable = blockMap.table.Component;
+
+        render(<Wrap><GatedTable data={data} /></Wrap>);
+
         expect(blockMap.table.config).toEqual({type: 'table', label: 'Table', categories: ['content']});
+        expect(mockDelegateRender).toHaveBeenCalledTimes(1);
+        expect(mockDelegateRender.mock.calls[0][0].data).toBe(data);
     });
 });
