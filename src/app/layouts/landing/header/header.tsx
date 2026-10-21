@@ -2,6 +2,8 @@ import React from 'react';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import useGiveToday from '~/models/give-today';
 import headerGiveLink from '~/models/give-link';
+import usePortalContext from '~/contexts/portal';
+import {assertNotNull} from '~/helpers/data';
 import {LinkFields, Link} from '@openstax/flex-page-renderer/components/Link';
 import './header.scss';
 
@@ -17,6 +19,11 @@ export default function Header({
         'https://assets.openstax.org/oscms-prodcms/media/images/rice-logo-blue.original.webp',
         150
     );
+    const menuRef = React.useRef<HTMLMenuElement>(null);
+    const {rewriteLinks} = usePortalContext();
+
+    // The nav links come from the CMS, so site links among them get the portal
+    React.useLayoutEffect(() => rewriteLinks(assertNotNull(menuRef.current)), [rewriteLinks, links]);
 
     return (
         <div className="container" data-analytics-label="Header">
@@ -34,7 +41,7 @@ export default function Header({
                     width="150"
                 />
             </div>
-            <menu data-analytics-nav="Landing Menu">
+            <menu data-analytics-nav="Landing Menu" ref={menuRef}>
                 {links.map((link, i) => (
                     <li key={i}>
                         <Link link={link} />
