@@ -14,7 +14,8 @@ import {
     DetailsRoutes,
     ErrataRoutes,
     generateFooterPageRoutes,
-    generateNoDataPageRoutes
+    generateNoDataPageRoutes,
+    isSinglePathSegment
 } from './page-routes';
 import {assertDefined} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
@@ -79,7 +80,7 @@ export function RouteAsPortalOrNot() {
 function PortalSubRoute() {
     const {name, data, hasError} = usePageDataFromRoute();
 
-    if (hasError) {
+    if (hasError || !isSinglePathSegment(assertDefined(name))) {
         return <Error404 />;
     }
 

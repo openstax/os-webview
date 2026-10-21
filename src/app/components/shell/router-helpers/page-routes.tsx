@@ -59,10 +59,21 @@ export function DetailsRoutes() {
     );
 }
 
+// The router decodes %2F and %5C in a path segment to / and \. Page names are
+// never more than one segment, and one that was could load another page's data
+// (pages/a/../b) and put its name in links as `//host/…`.
+export function isSinglePathSegment(name: string) {
+    return !(/[/\\]/).test(name);
+}
+
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
     const {'*': path} = useParams();
     const {search} = useLocation();
+
+    if (!isSinglePathSegment(dir)) {
+        return <Error404 />;
+    }
 
     if (['books', 'textbooks'].includes(dir)) {
         return (

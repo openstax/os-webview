@@ -120,6 +120,33 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
     });
 });
 
+describe('page-routes: page names with a decoded slash or backslash', () => {
+    beforeEach(() => {
+        // Any fetched page would be a portal, which is the case that must not happen
+        mockUsePageData.mockReturnValue({...flexData, layout: [{type: 'landing'}]});
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        '/%2Fevil.example%2F..%2F..%2Fmy-portal/subjects',
+        '/%5Cevil.example%2F..%2F..%2Fmy-portal/subjects'
+    ])('renders %s as not found, without fetching page data', async (path) => {
+        renderAt(path);
+
+        expect(await screen.findByText('Uh-oh, no page here')).toBeInTheDocument();
+        expect(mockUsePageData).not.toHaveBeenCalled();
+    });
+
+    it('renders a portal sub-page with one as not found', async () => {
+        renderAt('/my-portal/%2Fevil.example');
+
+        expect(await screen.findByText('Uh-oh, no page here')).toBeInTheDocument();
+    });
+});
+
 describe('page-routes: errata pages in a portal', () => {
     beforeEach(() => {
         mockUsePageData.mockReturnValue({...flexData, layout: [{type: 'landing'}]});
