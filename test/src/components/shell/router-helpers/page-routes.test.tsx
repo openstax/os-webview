@@ -120,6 +120,27 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
     });
 });
 
+describe('page-routes: k12 subject pages in a portal', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('routes /<portal>/k12/<subject> through the k12 page, which routes the subject', async () => {
+        // Old-style subject pages are neither FlexPages nor general pages
+        mockUsePageData.mockImplementation((slug: string) => slug === 'pages/my-portal'
+            ? {...flexData, layout: [{type: 'landing'}]}
+            : {meta: {type: 'pages.K12Subject', slug: 'k12-algebra'}});
+
+        renderAt('/my-portal/k12/algebra');
+
+        const page = await screen.findByTestId('imported-page');
+
+        expect(mockUsePageData).toHaveBeenCalledWith('pages/k12-algebra', true);
+        expect(page).toHaveTextContent('k12');
+        expect(page).toHaveAttribute('data-rest', 'algebra');
+    });
+});
+
 describe('page-routes: page names with decoded characters a slug cannot have', () => {
     beforeEach(() => {
         // Any fetched page would be a portal, which is the case that must not happen

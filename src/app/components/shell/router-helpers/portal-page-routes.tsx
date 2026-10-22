@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
+import {Routes, Route, Navigate, useLocation, useParams} from 'react-router-dom';
 import Error404 from '~/pages/404/404';
 import usePortalContext from '~/contexts/portal';
 import FlexPage, {
@@ -85,7 +85,10 @@ function PortalSubRoute() {
 }
 
 function PortalSubPage() {
-    const {name, data, hasError} = usePageDataFromRoute();
+    const {data, hasError} = usePageDataFromRoute();
+    // The page module is named for the route segment, which can differ from the
+    // CMS page name: /k12/<subject> is the k12 page, which routes the subject itself
+    const {dir} = useParams();
 
     if (hasError) {
         return <Error404 />;
@@ -99,5 +102,5 @@ function PortalSubPage() {
         return <GeneralPageFromSlug slug={`spike/${data?.meta.slug}`} />;
     }
 
-    return <ImportedPage name={assertDefined(name)} />;
+    return <ImportedPage name={assertDefined(dir)} />;
 }
