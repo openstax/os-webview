@@ -7,14 +7,15 @@ const OTHER_APP_PATH = /^\/(?:apps|accounts|oxauth|r|l|blog-feed|documents)(?:[/
 // REX book pages, which REX shows in a portal under its own portal path
 const REX_BOOK_PATH = /^(?:\/apps\/rex)?\/books\//;
 
-// The same two hosts that helpers/link.ts treats as this site. Relative paths
-// and anything malformed (CMS links are typed in by hand) don't parse.
+// This site's own origin, and openstax.org with or without www (the CMS uses
+// both). Relative paths and anything malformed (CMS links are typed in by hand)
+// don't parse.
 function isAbsoluteSiteUrl(href: string) {
     try {
         const {protocol, origin, hostname} = new URL(href);
 
         return ['http:', 'https:'].includes(protocol) &&
-            (origin === window.location.origin || hostname === 'openstax.org');
+            (origin === window.location.origin || ['openstax.org', 'www.openstax.org'].includes(hostname));
     } catch {
         return false;
     }

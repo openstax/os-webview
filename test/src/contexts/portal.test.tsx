@@ -134,8 +134,11 @@ describe('portal context hrefInPortal', () => {
                     hrefs={[
                         'https://openstax.org/blog?q=x#top',
                         `${window.location.origin}/subjects`,
+                        // The K12 subject pages' adoption button links here
+                        'https://www.openstax.org/adoption',
                         'https://openstax.org/my-portal/k12',
                         'https://openstax.org.example.com/blog',
+                        'https://www.openstax.org.example.com/blog',
                         'https://',
                         '//cdn.example.org/file'
                     ]}
@@ -146,8 +149,10 @@ describe('portal context hrefInPortal', () => {
         await waitFor(() => expect(renderedHrefs(container)).toEqual([
             '/my-portal/blog?q=x#top',
             '/my-portal/subjects',
+            '/my-portal/adoption',
             'https://openstax.org/my-portal/k12',
             'https://openstax.org.example.com/blog',
+            'https://www.openstax.org.example.com/blog',
             'https://',
             '//cdn.example.org/file'
         ]));
