@@ -198,7 +198,7 @@ export function NonFlexPageUsingDefaultLayout({data}: {data: PageData}) {
     );
 }
 
-function RedirectToCanonicalDetailsPage() {
+export function RedirectToCanonicalDetailsPage() {
     const {title} = useParams();
     const {search} = useLocation();
     const {portalPrefix} = usePortalContext();

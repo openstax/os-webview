@@ -110,6 +110,22 @@ describe('portal context hrefInPortal', () => {
         ]));
     });
 
+    it('keeps /general links in the portal, for its routes to redirect', async () => {
+        const {container} = render(
+            <PortalContextProvider>
+                <HrefsInPortal
+                    portal="my-portal"
+                    hrefs={['https://openstax.org/general/online-resources', '/general/online-resources']}
+                />
+            </PortalContextProvider>
+        );
+
+        await waitFor(() => expect(renderedHrefs(container)).toEqual([
+            '/my-portal/general/online-resources',
+            '/my-portal/general/online-resources'
+        ]));
+    });
+
     it('treats absolute links to this site like site paths', async () => {
         const {container} = render(
             <PortalContextProvider>

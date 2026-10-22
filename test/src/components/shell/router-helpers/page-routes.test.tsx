@@ -120,6 +120,30 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
     });
 });
 
+describe('page-routes: redirects in a portal', () => {
+    beforeEach(() => {
+        mockUsePageData.mockReturnValue({...flexData, layout: [{type: 'landing'}]});
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/my-portal/general/online-resources', '/my-portal/online-resources'],
+        ['/my-portal/home/major-funders', '/my-portal'],
+        ['/my-portal/textbooks/biology', '/my-portal/details/books/biology'],
+        ['/my-portal/books/biology', '/my-portal/details/books/biology']
+    ])('redirects %s to %s', async (path, destination) => {
+        renderAt(`${path}?ref=nav`);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
+        });
+        expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+    });
+});
+
 describe('page-routes: k12 subject pages in a portal', () => {
     afterEach(() => {
         jest.clearAllMocks();

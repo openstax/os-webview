@@ -16,7 +16,8 @@ import {
     ErrataRoutes,
     generateFooterPageRoutes,
     generateNoDataPageRoutes,
-    hasOnlySlugCharacters
+    hasOnlySlugCharacters,
+    RedirectToCanonicalDetailsPage
 } from './page-routes';
 import {assertDefined} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
@@ -59,6 +60,11 @@ export function RouteAsPortalOrNot() {
                     {generateNoDataPageRoutes()}
                     <Route path="/details/*" element={<DetailsRoutes />} />
                     <Route path="/errata/*" element={<ErrataRoutes />} />
+                    {/* The same redirects as the top-level router */}
+                    <Route path="/books/:title" element={<RedirectToCanonicalDetailsPage />} />
+                    <Route path="/textbooks/:title" element={<RedirectToCanonicalDetailsPage />} />
+                    <Route path="/general/*" element={<RedirectToPortalPage />} />
+                    <Route path="/home/*" element={<RedirectToPortalRoot />} />
                     <Route path="/:dir/*" element={<PortalSubRoute />} />
                 </Routes>
             </LayoutUsingData>
@@ -76,6 +82,23 @@ export function RouteAsPortalOrNot() {
         return <FlexPageUsingItsOwnLayout data={data} />;
     }
     return <NonFlexPageUsingDefaultLayout data={data} />;
+}
+
+// Redirects /general/<page> to /<page>
+function RedirectToPortalPage() {
+    const {'*': page} = useParams();
+    const {search} = useLocation();
+    const {portalPrefix} = usePortalContext();
+
+    return <Navigate to={{pathname: `${portalPrefix}/${page}`, search}} replace />;
+}
+
+// Redirects /home/… to the home page, which in a portal is the portal's own page
+function RedirectToPortalRoot() {
+    const {search} = useLocation();
+    const {portalPrefix} = usePortalContext();
+
+    return <Navigate to={{pathname: portalPrefix, search}} replace />;
 }
 
 function PortalSubRoute() {
