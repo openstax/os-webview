@@ -149,19 +149,22 @@ describe('page-routes: k12 subject pages in a portal', () => {
         jest.clearAllMocks();
     });
 
-    it('routes /<portal>/k12/<subject> through the k12 page, which routes the subject', async () => {
+    it.each([
+        ['/my-portal/k12/algebra', 'algebra'],
+        ['/my-portal/k12/algebra/', 'algebra/']
+    ])('routes %s through the k12 page, which routes the subject', async (path, rest) => {
         // Old-style subject pages are neither FlexPages nor general pages
         mockUsePageData.mockImplementation((slug: string) => slug === 'pages/my-portal'
             ? {...flexData, layout: [{type: 'landing'}]}
             : {meta: {type: 'pages.K12Subject', slug: 'k12-algebra'}});
 
-        renderAt('/my-portal/k12/algebra');
+        renderAt(path);
 
         const page = await screen.findByTestId('imported-page');
 
         expect(mockUsePageData).toHaveBeenCalledWith('pages/k12-algebra', true);
         expect(page).toHaveTextContent('k12');
-        expect(page).toHaveAttribute('data-rest', 'algebra');
+        expect(page).toHaveAttribute('data-rest', rest);
     });
 });
 

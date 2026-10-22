@@ -159,9 +159,10 @@ const mismatch: Record<string, string> = {
 export function usePageNameFromRoute() {
     const {dir, '*': other} = useParams();
 
-    // K12 subject pages render at /k12/<subject>; their CMS slugs are k12-<subject>
+    // K12 subject pages render at /k12/<subject>; their CMS slugs are k12-<subject>.
+    // The rest of the path keeps a trailing slash, which isn't part of the subject.
     return dir === 'k12' && other
-        ? {name: `k12-${other}`, subPath: ''}
+        ? {name: `k12-${other.replace(/\/$/, '')}`, subPath: ''}
         : {name: assertDefined(dir), subPath: other};
 }
 
