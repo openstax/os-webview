@@ -6,7 +6,8 @@ import FlexPage, {
     LayoutUsingData
 } from '~/pages/flex-page/flex-page';
 import useLayoutContext from '~/contexts/layout';
-import {assertDefined} from '~/helpers/data';
+import usePortalContext from '~/contexts/portal';
+import {assertDefined, hasOnlySlugCharacters} from '~/helpers/data';
 import {GeneralPageFromSlug} from '~/pages/general/general';
 import {ImportedPage} from './page-loaders';
 import {RouteAsPortalOrNot} from './portal-page-routes';
@@ -40,11 +41,12 @@ export function ErrataRoutes() {
 }
 
 export function DetailsRoutes() {
-    const {search} = useLocation();
+    const {search, hash} = useLocation();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <Routes>
-            <Route index element={<Navigate to={{pathname: '/subjects', search}} replace />} />
+            <Route index element={<Navigate to={{pathname: `${linkPrefix}/subjects`, search, hash}} replace />} />
             <Route
                 path="/books/:title"
                 element={<ImportedPage name="details" />}
@@ -59,8 +61,25 @@ export function DetailsRoutes() {
 
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
+    const {pathname, search, hash} = useLocation();
+    // The pathname keeps escapes that the router decodes in dir
+    const [, rawDir, ...rest] = pathname.split('/');
+
+    if (!hasOnlySlugCharacters(dir)) {
+        return <Error404 />;
+    }
+    // A name with escapes, like %6Dy-portal, goes to its plain form so the
+    // pathname starts with the page (or portal) name, as code that reads it
+    // expects. The plain form never needs escapes, so this happens only once.
+    if (rawDir !== dir) {
+        return <Navigate to={{pathname: ['', dir, ...rest].join('/'), search, hash}} replace />;
+    }
+    return <NamedPageRoutes dir={dir} />;
+}
+
+function NamedPageRoutes({dir}: {dir: string}) {
     const {'*': path} = useParams();
-    const {search} = useLocation();
+    const {search, hash} = useLocation();
 
     if (['books', 'textbooks'].includes(dir)) {
         return (
@@ -80,7 +99,7 @@ export function OtherPageRoutes() {
     if (dir === 'general') {
         return (
             <NonPortalRouteWrapper>
-                <Navigate to={{pathname: `/${path}`, search}} replace />
+                <Navigate to={{pathname: `/${path}`, search, hash}} replace />
             </NonPortalRouteWrapper>
         );
     }
@@ -88,7 +107,7 @@ export function OtherPageRoutes() {
     if (dir === 'home') {
         return (
             <NonPortalRouteWrapper>
-                <Navigate to={{pathname: '/', search}} replace />
+                <Navigate to={{pathname: '/', search, hash}} replace />
             </NonPortalRouteWrapper>
         );
     }
@@ -105,18 +124,32 @@ export function OtherPageRoutes() {
     return <RouteAsPortalOrNot />;
 }
 
+const NO_DATA_PAGES = [
+    'adopters',
+    'adoption',
+    'blog',
+    'campaign',
+    'confirmation',
+    'institutional-partnership-application',
+    'interest',
+    'renewal-form',
+    'separatemap'
+];
+
 export function isNoDataPage(dir: string) {
-    return [
-        'adopters',
-        'adoption',
-        'blog',
-        'campaign',
-        'confirmation',
-        'institutional-partnership-application',
-        'interest',
-        'renewal-form',
-        'separatemap'
-    ].includes(dir);
+    return NO_DATA_PAGES.includes(dir);
+}
+
+// Like the top-level /:dir/* route, so that pages with their own routes, like
+// the blog, match them below /<name>
+export function generateNoDataPageRoutes() {
+    return NO_DATA_PAGES.map((name) => (
+        <Route
+            path={`/${name}/*`}
+            key={name}
+            element={<ImportedPage name={name} />}
+        />
+    ));
 }
 
 // There are a couple of pages whose names in the CMS don't match their osweb urls
@@ -126,13 +159,21 @@ const mismatch: Record<string, string> = {
     foundation: 'supporters'
 };
 
-export function usePageDataFromRoute() {
+// The CMS page name for the route, and the rest of the path after it
+export function usePageNameFromRoute() {
     const {dir, '*': other} = useParams();
-    // K12 subject pages render at /k12/<subject>; their CMS slugs are k12-<subject>
-    const [name, subPath] =
-        dir === 'k12' && other ? [`k12-${other}`, ''] : [dir, other];
+
+    // K12 subject pages render at /k12/<subject>; their CMS slugs are k12-<subject>.
+    // The rest of the path keeps a trailing slash, which isn't part of the subject.
+    return dir === 'k12' && other
+        ? {name: `k12-${other.replace(/\/$/, '')}`, subPath: ''}
+        : {name: assertDefined(dir), subPath: other};
+}
+
+export function usePageDataFromRoute() {
+    const {name, subPath} = usePageNameFromRoute();
     const data = usePageData<PageData>(
-        `pages/${mismatch[name as string] ?? name}`,
+        `pages/${mismatch[name] ?? name}`,
         true
     );
     const hasError = data && 'error' in data;
@@ -162,11 +203,12 @@ export function NonFlexPageUsingDefaultLayout({data}: {data: PageData}) {
     );
 }
 
-function RedirectToCanonicalDetailsPage() {
+export function RedirectToCanonicalDetailsPage() {
     const {title} = useParams();
-    const {search} = useLocation();
+    const {search, hash} = useLocation();
+    const {linkPrefix} = usePortalContext();
 
-    return <Navigate to={{pathname: `/details/books/${title}`, search}} replace />;
+    return <Navigate to={{pathname: `${linkPrefix}/details/books/${title}`, search, hash}} replace />;
 }
 
 const FOOTER_PAGES = [

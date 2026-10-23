@@ -1,9 +1,15 @@
 import React from 'react';
 import InstitutionalPartnership from '~/pages/institutional-partnership/institutional-partnership';
-import {render, screen} from '@testing-library/preact';
+import {render as originalRender, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+
+// The page reads the portal context, which the shell provides
+function render(ui: React.ReactElement) {
+    return originalRender(ui, {wrapper: ShellContextProvider});
+}
 
 const user = userEvent.setup();
 

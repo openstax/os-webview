@@ -7,6 +7,7 @@ import type {
     TableColumnConfig
 } from '@openstax/flex-page-renderer/blocks/TableBlock.config';
 import {LanguageContextProvider} from '~/contexts/language';
+import {PortalContextProvider} from '~/contexts/portal';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {TableResourceLinksBlock} from '~/pages/flex-page/blocks/TableResourceLinksBlock';
 import {resetResourcesCacheForTesting} from '~/pages/flex-page/blocks/table-resource-links-utils';
@@ -35,7 +36,9 @@ jest.mock('~/helpers/page-data-utils', () => ({
 function Wrap({children}: React.PropsWithChildren) {
     return (
         <MemoryRouter initialEntries={['/some-flex-page']}>
-            <LanguageContextProvider>{children}</LanguageContextProvider>
+            <PortalContextProvider>
+                <LanguageContextProvider>{children}</LanguageContextProvider>
+            </PortalContextProvider>
         </MemoryRouter>
     );
 }

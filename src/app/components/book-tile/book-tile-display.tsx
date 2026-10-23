@@ -20,7 +20,7 @@ export default function BookTile({book}: {book: BookInfo & AdditionalFields}) {
     const snippets = book.promoteSnippet?.filter((s) => s.value.image);
     const promoteSnippet = snippets?.find((s) => s.value.image);
     const ref = React.useRef<HTMLDivElement>(null);
-    const {portalPrefix, rewriteLinks} = usePortalContext();
+    const {portalPrefix, linkPrefix, rewriteLinks} = usePortalContext();
     const {pathname} = useLocation();
     const classes = cn({
         'book-tile': true,
@@ -28,16 +28,16 @@ export default function BookTile({book}: {book: BookInfo & AdditionalFields}) {
         promote: Boolean(promoteSnippet)
     });
 
-    /* For a top-level Flex (portal) page, links are rewritten elsewhere
-     * Tiles in sub-pages need to rewrite their links
-     */
+    // In a K12 portal, rewriting is safe to repeat, so tiles always rewrite their
+    // links. Other portals add the prefix again each time, so there tiles leave
+    // the portal's own page to rewrite them.
     React.useLayoutEffect(() => {
         const normalizedPathname = pathname.replace(/\/$/, '');
 
-        if (portalPrefix !== normalizedPathname) {
+        if (linkPrefix || portalPrefix !== normalizedPathname) {
             rewriteLinks(assertNotNull<HTMLElement>(ref.current));
         }
-    }, [pathname, portalPrefix, rewriteLinks]);
+    }, [linkPrefix, pathname, portalPrefix, rewriteLinks, slug]);
 
     return (
         <div className={classes} ref={ref}>

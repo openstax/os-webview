@@ -5,6 +5,7 @@ import {useErrataDetail, Errata} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
+import usePortalContext from '~/contexts/portal';
 import './confirmation.scss';
 
 type ModelKey = 'contact' | 'errata';
@@ -24,7 +25,8 @@ const models = {
 };
 
 function useReferringPage() {
-    const {pathname} = useLocation();
+    const {portalPrefix} = usePortalContext();
+    const pathname = useLocation().pathname.slice(portalPrefix.length);
     let referringPage = pathname.replace('/confirmation/', '');
 
     if (referringPage === pathname) {
@@ -50,7 +52,8 @@ function useDefaultEmail() {
 }
 
 function SubmitAgainButton({detail}: {detail: {bookTitle: string}}) {
-    const url = `/errata/form?book=${encodeURIComponent(detail.bookTitle)}`;
+    const {linkPrefix} = usePortalContext();
+    const url = `${linkPrefix}/errata/form?book=${encodeURIComponent(detail.bookTitle)}`;
     const text = `Submit ${detail.bookTitle} errata`;
 
     return (
@@ -77,6 +80,7 @@ function BelowHeader({text, data}: {text: string; data?: Errata}) {
 
 function ErrataStatusNotification({errataId}: {errataId: string}) {
     const email = useDefaultEmail();
+    const {linkPrefix} = usePortalContext();
     const notifyByEmail = email && email !== 'none@openstax.org';
 
     return notifyByEmail ? (
@@ -84,7 +88,7 @@ function ErrataStatusNotification({errataId}: {errataId: string}) {
     ) : (
         <React.Fragment>
             <br />
-            <a className="header-link" href={`/errata/${errataId}`}>
+            <a className="header-link" href={`${linkPrefix}/errata/${errataId}`}>
                 Track the status of your submission
             </a>
         </React.Fragment>
@@ -123,6 +127,7 @@ export default function Confirmation() {
     const {headline, adoptionQuestion} = models[referringPage];
     const adoptionModel = models.contact;
     const errataModel = models.errata;
+    const {linkPrefix} = usePortalContext();
 
     useDocumentHead({title: 'Thanks!'});
     useCanonicalLink();
@@ -141,7 +146,7 @@ export default function Confirmation() {
                         </p>
                         {referringPage === 'contact' && (
                             <a
-                                href={adoptionModel.adoptionUrl}
+                                href={`${linkPrefix}${adoptionModel.adoptionUrl}`}
                                 title={adoptionModel.adoptionLinkText}
                                 className="btn cta"
                             >

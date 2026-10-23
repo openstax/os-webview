@@ -4,6 +4,7 @@ import ProgressBar from './progress-bar/progress-bar';
 import Detail from './detail/detail';
 import {getDisplayStatus, Errata} from '~/helpers/errata';
 import {useLocation} from 'react-router-dom';
+import usePortalContext from '~/contexts/portal';
 import './errata-detail.scss';
 
 function ProgressBarBlock({data}: {data: Errata}) {
@@ -39,7 +40,8 @@ function ErrataDetail({data}: {data: Errata}) {
 }
 
 export default function ErrataDetailLoader() {
-    const slug = useLocation().pathname.substring(1);
+    const {portalPrefix} = usePortalContext();
+    const slug = useLocation().pathname.slice(portalPrefix.length + 1);
 
     return (
         <div className="errata-detail page">

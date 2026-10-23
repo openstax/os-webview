@@ -3,6 +3,7 @@ import JITLoad from '~/helpers/jit-load';
 import useSpecificSubjectContext from './context';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import usePortalContext from '~/contexts/portal';
 import useEnglishSubject from './use-english-subject';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
@@ -63,11 +64,13 @@ function Card({
     registration_url: url,
     registration_link_text: watchText
 }: WebinarCardData) {
+    const {hrefInPortal} = usePortalContext();
+
     return (
         <div className="card">
             <h2>{title}</h2>
             <RawHTML html={description} />
-            <a href={url}>
+            <a href={hrefInPortal(url)}>
                 {watchText} <FontAwesomeIcon icon={faChevronRight} />
             </a>
         </div>

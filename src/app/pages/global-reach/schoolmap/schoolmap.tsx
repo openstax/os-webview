@@ -1,6 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons/faChevronRight';
+import usePortalContext from '~/contexts/portal';
 import './schoolmap.scss';
 
 export default function SchoolMap({
@@ -14,6 +15,8 @@ export default function SchoolMap({
     link: string;
     cta: string;
 }) {
+    const {hrefInPortal} = usePortalContext();
+
     return (
         <div className="schoolmapbox">
             <div className="content schoolmapdiv">
@@ -21,7 +24,7 @@ export default function SchoolMap({
                     <div className="txthead">{heading}</div>
                     <div className="txtbdy">{blurb}</div>
                     <div className="txtlink">
-                        <a href={linkUrl}>{linkText}</a>
+                        <a href={hrefInPortal(linkUrl)}>{linkText}</a>
                         <span className="linkarrow">
                             <FontAwesomeIcon icon={faChevronRight} />
                         </span>
