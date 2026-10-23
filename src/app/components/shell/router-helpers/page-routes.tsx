@@ -41,12 +41,12 @@ export function ErrataRoutes() {
 }
 
 export function DetailsRoutes() {
-    const {search} = useLocation();
+    const {search, hash} = useLocation();
     const {linkPrefix} = usePortalContext();
 
     return (
         <Routes>
-            <Route index element={<Navigate to={{pathname: `${linkPrefix}/subjects`, search}} replace />} />
+            <Route index element={<Navigate to={{pathname: `${linkPrefix}/subjects`, search, hash}} replace />} />
             <Route
                 path="/books/:title"
                 element={<ImportedPage name="details" />}
@@ -79,7 +79,7 @@ export function OtherPageRoutes() {
 
 function NamedPageRoutes({dir}: {dir: string}) {
     const {'*': path} = useParams();
-    const {search} = useLocation();
+    const {search, hash} = useLocation();
 
     if (['books', 'textbooks'].includes(dir)) {
         return (
@@ -99,7 +99,7 @@ function NamedPageRoutes({dir}: {dir: string}) {
     if (dir === 'general') {
         return (
             <NonPortalRouteWrapper>
-                <Navigate to={{pathname: `/${path}`, search}} replace />
+                <Navigate to={{pathname: `/${path}`, search, hash}} replace />
             </NonPortalRouteWrapper>
         );
     }
@@ -107,7 +107,7 @@ function NamedPageRoutes({dir}: {dir: string}) {
     if (dir === 'home') {
         return (
             <NonPortalRouteWrapper>
-                <Navigate to={{pathname: '/', search}} replace />
+                <Navigate to={{pathname: '/', search, hash}} replace />
             </NonPortalRouteWrapper>
         );
     }
@@ -205,10 +205,10 @@ export function NonFlexPageUsingDefaultLayout({data}: {data: PageData}) {
 
 export function RedirectToCanonicalDetailsPage() {
     const {title} = useParams();
-    const {search} = useLocation();
+    const {search, hash} = useLocation();
     const {linkPrefix} = usePortalContext();
 
-    return <Navigate to={{pathname: `${linkPrefix}/details/books/${title}`, search}} replace />;
+    return <Navigate to={{pathname: `${linkPrefix}/details/books/${title}`, search, hash}} replace />;
 }
 
 const FOOTER_PAGES = [

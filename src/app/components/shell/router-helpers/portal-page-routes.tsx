@@ -25,7 +25,7 @@ import {ImportedPage} from './page-loaders';
 export function RouteAsPortalOrNot() {
     const {name, data, hasError, other} = usePageDataFromRoute();
     const {portalPrefix, setPortal, setIsK12Portal} = usePortalContext();
-    const {pathname, search} = useLocation();
+    const {pathname, search, hash} = useLocation();
 
     if (!data) {
         return null;
@@ -76,7 +76,7 @@ export function RouteAsPortalOrNot() {
         // Non-portal flex pages do not have children, and /name/ is the same
         // page as /name; keep it canonical
         if (other || pathname.endsWith('/')) {
-            return <Navigate to={{pathname: `/${name}`, search}} replace />;
+            return <Navigate to={{pathname: `/${name}`, search, hash}} replace />;
         }
         return <FlexPageUsingItsOwnLayout data={data} />;
     }
@@ -86,18 +86,18 @@ export function RouteAsPortalOrNot() {
 // Redirects /general/<page> to /<page>
 function RedirectToPortalPage() {
     const {'*': page} = useParams();
-    const {search} = useLocation();
+    const {search, hash} = useLocation();
     const {portalPrefix} = usePortalContext();
 
-    return <Navigate to={{pathname: `${portalPrefix}/${page}`, search}} replace />;
+    return <Navigate to={{pathname: `${portalPrefix}/${page}`, search, hash}} replace />;
 }
 
 // Redirects /home/… to the home page, which in a portal is the portal's own page
 function RedirectToPortalRoot() {
-    const {search} = useLocation();
+    const {search, hash} = useLocation();
     const {portalPrefix} = usePortalContext();
 
-    return <Navigate to={{pathname: portalPrefix, search}} replace />;
+    return <Navigate to={{pathname: portalPrefix, search, hash}} replace />;
 }
 
 function PortalSubRoute() {

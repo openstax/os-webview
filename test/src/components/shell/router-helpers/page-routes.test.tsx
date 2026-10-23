@@ -43,10 +43,10 @@ const flexData = {
 const k12PortalData = {...flexData, layout: [{type: 'landing'}], schoolData: {industry: 'K12'}};
 
 function Location() {
-    const {pathname, search} = useLocation();
+    const {pathname, search, hash} = useLocation();
 
     return (
-        <div data-testid="location" data-search={search}>
+        <div data-testid="location" data-search={search} data-hash={hash}>
             {pathname}
         </div>
     );
@@ -95,13 +95,14 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
         expect(mockUsePageData).not.toHaveBeenCalledWith(`pages/${dir}`, true);
     });
 
-    it('redirects a trailing slash to the canonical URL, keeping the query string', async () => {
-        renderAt('/press/?ref=nav');
+    it('redirects a trailing slash to the canonical URL, keeping the query string and fragment', async () => {
+        renderAt('/press/?ref=nav#contacts');
 
         await waitFor(() => {
             expect(screen.getByTestId('location')).toHaveTextContent(/^\/press$/);
         });
         expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+        expect(screen.getByTestId('location')).toHaveAttribute('data-hash', '#contacts');
         expect(await screen.findByTestId('flex-page')).toBeInTheDocument();
     });
 
@@ -156,14 +157,15 @@ describe('page-routes: redirects in a portal', () => {
         ['/my-portal/textbooks/biology', '/my-portal/details/books/biology'],
         ['/my-portal/books/biology', '/my-portal/details/books/biology'],
         ['/my-portal/details', '/my-portal/subjects']
-    ])('redirects %s to %s in a K12 portal', async (path, destination) => {
+    ])('redirects %s to %s in a K12 portal, keeping the query string and fragment', async (path, destination) => {
         mockUsePageData.mockReturnValue(k12PortalData);
-        renderAt(`${path}?ref=nav`);
+        renderAt(`${path}?ref=nav#faq`);
 
         await waitFor(() => {
             expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
         });
         expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+        expect(screen.getByTestId('location')).toHaveAttribute('data-hash', '#faq');
     });
 
     it.each([
@@ -176,6 +178,29 @@ describe('page-routes: redirects in a portal', () => {
         await waitFor(() => {
             expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
         });
+    });
+});
+
+describe('page-routes: redirects outside a portal', () => {
+    beforeEach(() => {
+        mockUsePageData.mockReturnValue(flexData);
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/general/online-resources', '/online-resources'],
+        ['/home/major-funders', '/']
+    ])('redirects %s to %s, keeping the query string and fragment', async (path, destination) => {
+        renderAt(`${path}?ref=nav#faq`);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
+        });
+        expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+        expect(screen.getByTestId('location')).toHaveAttribute('data-hash', '#faq');
     });
 });
 
