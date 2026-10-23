@@ -1,9 +1,8 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
-import ShellContextProvider from '~/../../test/helpers/shell-context';
-import InPortal from '~/../../test/helpers/in-portal';
 import LandingLayout from '~/layouts/landing/landing';
+import usePortalContext, {PortalContextProvider} from '~/contexts/portal';
 import '@testing-library/jest-dom';
 import * as PDU from '~/helpers/page-data-utils';
 import footerMenus from '../data/footer-menus';
@@ -21,11 +20,9 @@ describe('layouts/landing', () => {
     function Component({data}: Parameters<typeof LandingLayout>[0]) {
         return (
             <MemoryRouter initialEntries={['']}>
-                <ShellContextProvider>
-                    <LandingLayout data={data}>
-                        <div>child contents</div>
-                    </LandingLayout>
-                </ShellContextProvider>
+                <LandingLayout data={data}>
+                    <div>child contents</div>
+                </LandingLayout>
             </MemoryRouter>
         );
     }
@@ -121,7 +118,11 @@ describe('layouts/landing', () => {
         const meta = {type};
         const data = {title, layout, meta} as const;
 
-        render(<Component data={data} />);
+        render(
+            <PortalContextProvider>
+                <Component data={data} />
+            </PortalContextProvider>
+        );
 
         // Flex footer does not have social links
         await expect(screen.findAllByTitle(/^OpenStax on .+$/)).rejects.toThrow(
@@ -135,17 +136,17 @@ describe('layouts/landing', () => {
         const layout = [{value: {navLinks: []}}];
         const type = 'pages.FlexPage';
         const meta = {type};
+        const ComponentInPortal = ({data}: Parameters<typeof Component>[0]) => {
+            const {setPortal} = usePortalContext();
+
+            setPortal('/a-portal');
+            return <Component data={data} />;
+        };
 
         render(
-            <MemoryRouter initialEntries={['']}>
-                <ShellContextProvider>
-                    <InPortal portal="a-portal">
-                        <LandingLayout data={{title, layout, meta} as const}>
-                            <div>child contents</div>
-                        </LandingLayout>
-                    </InPortal>
-                </ShellContextProvider>
-            </MemoryRouter>
+            <PortalContextProvider>
+                <ComponentInPortal data={{title, layout, meta} as const} />
+            </PortalContextProvider>
         );
 
         // Flex footer does not have social links
@@ -155,6 +156,6 @@ describe('layouts/landing', () => {
         // Default footer has 4 links + 1 link in layout = 5 links
         const links = await screen.findAllByRole('link');
 
-        expect(links[1]).toHaveAttribute('href', '/a-portal/accessibility-statement');
+        expect(links[1]).toHaveAttribute('href', '//a-portal/accessibility-statement');
     });
 });
