@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import {Routes, Route} from 'react-router-dom';
 import ContactPage from '~/pages/contact/contact';
 import Form from '~/pages/contact/form';
+import EmbeddedForm from '~/pages/contact/embedded';
 import * as UPD from '~/helpers/use-page-data';
 import * as UDH from '~/helpers/use-document-head';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
@@ -244,6 +245,35 @@ describe('contact form', () => {
         await fillAndSubmit();
 
         expect(await screen.findByText('Message sent')).toBeTruthy();
+    });
+});
+
+describe('embedded contact form', () => {
+    afterEach(() => {
+        window.history.replaceState(null, '', '/');
+    });
+
+    // The form reads the page's own URL, since it runs in an iframe
+    function renderAt(path: string) {
+        window.history.replaceState(null, '', path);
+        render(
+            <MemoryRouter initialEntries={[path]}>
+                <SalesforceContextProvider>
+                    <EmbeddedForm />
+                </SalesforceContextProvider>
+            </MemoryRouter>
+        );
+    }
+
+    it.each([
+        ['/embedded/contact?portal=school-portal&body=x', '/school-portal/subjects'],
+        ['/embedded/contact?body=x', '/subjects'],
+        // A crafted portal must not make the link go to another site
+        ['/embedded/contact?portal=%2Fevil.example', '/subjects']
+    ])('at %s links to the subjects page at %s', (path, subjectsHref) => {
+        renderAt(path);
+
+        expect(screen.getByRole('link', {name: 'subjects page'}).getAttribute('href')).toBe(subjectsHref);
     });
 });
 

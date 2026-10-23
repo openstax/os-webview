@@ -18,17 +18,17 @@ export function useContactDialog() {
     const [Dialog, open, close] = useDialog();
 
     function ContactDialog(
-        {contactFormParams, className}: {
+        {contactFormParams, className, portal}: {
             contactFormParams?: {key: string; value: string}[];
             className?: string;
+            portal?: string;
         }
     ) {
-        const {portalPrefix} = usePortalContext();
         const contactFormUrl = React.useMemo(() => {
             // The form runs in an iframe outside the portal, so it is told the
             // portal for the links it shows
-            const formUrl = portalPrefix
-                ? `/embedded/contact?portal=${encodeURIComponent(portalPrefix.slice(1))}`
+            const formUrl = portal
+                ? `/embedded/contact?portal=${encodeURIComponent(portal)}`
                 : '/embedded/contact';
 
             if (contactFormParams !== undefined) {
@@ -37,11 +37,11 @@ export function useContactDialog() {
                     .map((p) => `body=${p}`)
                     .join('&');
 
-                return `${formUrl}${portalPrefix ? '&' : '?'}${params}`;
+                return `${formUrl}${portal ? '&' : '?'}${params}`;
             }
 
             return formUrl;
-        }, [contactFormParams, portalPrefix]);
+        }, [contactFormParams, portal]);
 
         React.useEffect(
             () => {
@@ -72,7 +72,7 @@ export function useContactDialog() {
 function FlexFooter({data}: Props) {
     const {ContactDialog, open: openContactDialog} = useContactDialog();
     const contactFormParams = [{key: 'source_url', value: window.location.href}];
-    const {rewriteLinks} = usePortalContext();
+    const {portalPrefix, isK12Portal, rewriteLinks} = usePortalContext();
 
     React.useLayoutEffect(() => rewriteLinks?.(document.querySelector('.page-footer') as HTMLElement),
     [rewriteLinks]);
@@ -90,6 +90,8 @@ function FlexFooter({data}: Props) {
                             <ContactDialog
                                 className="contact-dialog"
                                 contactFormParams={contactFormParams}
+                                // Only K12 school portals keep readers in the portal
+                                portal={isK12Portal ? portalPrefix.slice(1) : undefined}
                             />
                         </button>
                         <CookieYesToggle />

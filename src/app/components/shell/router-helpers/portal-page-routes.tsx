@@ -16,10 +16,9 @@ import {
     ErrataRoutes,
     generateFooterPageRoutes,
     generateNoDataPageRoutes,
-    hasOnlySlugCharacters,
     RedirectToCanonicalDetailsPage
 } from './page-routes';
-import {assertDefined} from '~/helpers/data';
+import {assertDefined, hasOnlySlugCharacters} from '~/helpers/data';
 import {ImportedPage} from './page-loaders';
 
 // eslint-disable-next-line complexity

@@ -1,4 +1,5 @@
 import React from 'react';
+import {hasOnlySlugCharacters} from '~/helpers/data';
 import Form from './form';
 import './embedded.scss';
 
@@ -6,8 +7,8 @@ import './embedded.scss';
 export default function EmbeddedForm() {
     const [submitted, setSubmitted] = React.useState(false);
     // Set by the portal footer that opens this form, since this page is not in the portal
-    const portal = new window.URLSearchParams(window.location.search).get('portal');
-    const subjectsHref = portal ? `/${portal}/subjects` : '/subjects';
+    const portal = new window.URLSearchParams(window.location.search).get('portal') ?? '';
+    const subjectsHref = hasOnlySlugCharacters(portal) ? `/${portal}/subjects` : '/subjects';
 
     if (submitted) {
         return <ThankYou />;

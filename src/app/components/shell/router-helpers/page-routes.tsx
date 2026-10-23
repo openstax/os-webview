@@ -7,7 +7,7 @@ import FlexPage, {
 } from '~/pages/flex-page/flex-page';
 import useLayoutContext from '~/contexts/layout';
 import usePortalContext from '~/contexts/portal';
-import {assertDefined} from '~/helpers/data';
+import {assertDefined, hasOnlySlugCharacters} from '~/helpers/data';
 import {GeneralPageFromSlug} from '~/pages/general/general';
 import {ImportedPage} from './page-loaders';
 import {RouteAsPortalOrNot} from './portal-page-routes';
@@ -57,14 +57,6 @@ export function DetailsRoutes() {
             />
         </Routes>
     );
-}
-
-// The router decodes escapes in a path segment, like %2F to / and %09 to a tab.
-// A page name with those could load another page's data (pages/a/../b) and put
-// its name in links as `//host/…`, so only ASCII letters, digits, hyphens and
-// underscores are allowed.
-export function hasOnlySlugCharacters(name: string) {
-    return (/^[\w-]+$/).test(name);
 }
 
 export function OtherPageRoutes() {
