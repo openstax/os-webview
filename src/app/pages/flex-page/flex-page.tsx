@@ -51,22 +51,11 @@ export function LayoutUsingData({
 
 export default function FlexPage({data}: {data: FlexPageData}) {
     const ref = React.useRef<HTMLElement>(null);
-    const {linkPrefix, rewriteLinks} = usePortalContext();
+    const {rewriteLinks} = usePortalContext();
 
     React.useLayoutEffect(() => {
-        const main = assertNotNull(ref.current);
-
-        rewriteLinks(main);
-        if (!linkPrefix) {
-            return undefined;
-        }
-        // Blocks can add links after the first render, like table rows on
-        // "Show more", filtering or sorting, and K12 portals keep those in too
-        const observer = new MutationObserver(() => rewriteLinks(main));
-
-        observer.observe(main, {childList: true, subtree: true});
-        return () => observer.disconnect();
-    }, [data, linkPrefix, rewriteLinks]);
+        rewriteLinks(assertNotNull(ref.current));
+    }, [data, rewriteLinks]);
 
     return (
         <main className="flex-page page flex-structure-container" ref={ref}>

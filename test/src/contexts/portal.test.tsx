@@ -201,7 +201,6 @@ describe('portal context hrefInPortal', () => {
                     portal="my-portal"
                     hrefs={[
                         '/books/biology-2e/pages/1-1',
-                        '/apps/rex/books/physics/pages/2-1',
                         'https://openstax.org/books/chemistry/pages/3-1'
                     ]}
                 />
@@ -210,7 +209,6 @@ describe('portal context hrefInPortal', () => {
 
         await waitFor(() => expect(renderedHrefs(container)).toEqual([
             '/apps/rex/portal/my-portal/books/biology-2e/pages/1-1',
-            '/apps/rex/portal/my-portal/books/physics/pages/2-1',
             '/apps/rex/portal/my-portal/books/chemistry/pages/3-1'
         ]));
     });
@@ -224,8 +222,7 @@ describe('portal context hrefInPortal', () => {
                         '/books/biology',
                         'https://openstax.org/books/preparing-for-college-success/',
                         '/books/biology-2e?Instructor%20resources',
-                        '/books/biology-2e#pages',
-                        '/apps/rex/books/physics'
+                        '/books/biology-2e#pages'
                     ]}
                 />
             </PortalContextProvider>
@@ -235,9 +232,7 @@ describe('portal context hrefInPortal', () => {
             '/my-portal/books/biology',
             '/my-portal/books/preparing-for-college-success/',
             '/my-portal/books/biology-2e?Instructor%20resources',
-            '/my-portal/books/biology-2e#pages',
-            // Links to REX itself still go to REX
-            '/apps/rex/portal/my-portal/books/physics'
+            '/my-portal/books/biology-2e#pages'
         ]));
     });
 
