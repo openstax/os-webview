@@ -122,6 +122,29 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
     });
 });
 
+describe('page-routes: page names with escapes', () => {
+    beforeEach(() => {
+        mockUsePageData.mockReturnValue(k12PortalData);
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/%6Dy-portal/errata/7199', '/my-portal/errata/7199', 'errata-detail'],
+        ['/%6Dy-portal/confirmation/contact', '/my-portal/confirmation/contact', 'confirmation'],
+        ['/%6Dy-portal/blog/some%2Farticle', '/my-portal/blog/some%2Farticle', 'blog']
+    ])('redirects %s to %s once, keeping the rest of the path as it was', async (path, destination, page) => {
+        renderAt(`${path}?ref=nav#top`);
+
+        // The page renders at the plain portal name, so the redirect has settled
+        expect(await screen.findByTestId('imported-page')).toHaveTextContent(page);
+        expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
+        expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+    });
+});
+
 describe('page-routes: redirects in a portal', () => {
     afterEach(() => {
         jest.clearAllMocks();

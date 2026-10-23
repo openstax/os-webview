@@ -61,8 +61,20 @@ export function DetailsRoutes() {
 
 export function OtherPageRoutes() {
     const dir = assertDefined(useParams().dir);
+    const {pathname, search, hash} = useLocation();
+    // The pathname keeps escapes that the router decodes in dir
+    const [, rawDir, ...rest] = pathname.split('/');
 
-    return hasOnlySlugCharacters(dir) ? <NamedPageRoutes dir={dir} /> : <Error404 />;
+    if (!hasOnlySlugCharacters(dir)) {
+        return <Error404 />;
+    }
+    // A name with escapes, like %6Dy-portal, goes to its plain form so the
+    // pathname starts with the page (or portal) name, as code that reads it
+    // expects. The plain form never needs escapes, so this happens only once.
+    if (rawDir !== dir) {
+        return <Navigate to={{pathname: ['', dir, ...rest].join('/'), search, hash}} replace />;
+    }
+    return <NamedPageRoutes dir={dir} />;
 }
 
 function NamedPageRoutes({dir}: {dir: string}) {
