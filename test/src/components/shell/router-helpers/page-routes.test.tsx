@@ -156,6 +156,7 @@ describe('page-routes: redirects in a portal', () => {
         ['/my-portal/home/major-funders', '/my-portal'],
         ['/my-portal/textbooks/biology', '/my-portal/details/books/biology'],
         ['/my-portal/books/biology', '/my-portal/details/books/biology'],
+        ['/my-portal/books/biology/', '/my-portal/details/books/biology'],
         ['/my-portal/details', '/my-portal/subjects']
     ])('redirects %s to %s in a K12 portal, keeping the query string and fragment', async (path, destination) => {
         mockUsePageData.mockReturnValue(k12PortalData);

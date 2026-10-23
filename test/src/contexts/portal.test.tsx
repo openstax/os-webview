@@ -215,6 +215,32 @@ describe('portal context hrefInPortal', () => {
         ]));
     });
 
+    it('keeps bare book links in the portal, for its routes to redirect to the details page', async () => {
+        const {container} = render(
+            <PortalContextProvider>
+                <HrefsInPortal
+                    portal="my-portal"
+                    hrefs={[
+                        '/books/biology',
+                        'https://openstax.org/books/preparing-for-college-success/',
+                        '/books/biology-2e?Instructor%20resources',
+                        '/books/biology-2e#pages',
+                        '/apps/rex/books/physics'
+                    ]}
+                />
+            </PortalContextProvider>
+        );
+
+        await waitFor(() => expect(renderedHrefs(container)).toEqual([
+            '/my-portal/books/biology',
+            '/my-portal/books/preparing-for-college-success/',
+            '/my-portal/books/biology-2e?Instructor%20resources',
+            '/my-portal/books/biology-2e#pages',
+            // Links to REX itself still go to REX
+            '/apps/rex/portal/my-portal/books/physics'
+        ]));
+    });
+
     it('leaves links to other apps and services alone', async () => {
         const otherAppHrefs = [
             '/apps/cms/api/v2/pages/x',

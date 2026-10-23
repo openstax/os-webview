@@ -4,8 +4,9 @@ import {assertNotNull} from '~/helpers/data';
 
 // Paths the server sends to other apps or services, which are never os-webview pages
 const OTHER_APP_PATH = /^\/(?:apps|accounts|oxauth|r|l|blog-feed|documents)(?:[/?#]|$)/;
-// REX book pages, which REX shows in a portal under its own portal path
-const REX_BOOK_PATH = /^(?:\/apps\/rex)?\/books\//;
+// REX book pages, which REX shows in a portal under its own portal path. A bare
+// /books/<title> is not one: the server redirects it to the book's details page.
+const REX_BOOK_PATH = /^(?:\/apps\/rex\/books\/|\/books\/(?=[^/?#]+\/pages\/))/;
 
 // This site's own origin, and openstax.org with or without www (the CMS uses
 // both). Relative paths and anything malformed (CMS links are typed in by hand)
