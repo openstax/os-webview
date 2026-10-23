@@ -147,16 +147,16 @@ function removeEmptyFileWidgets(formEl: HTMLFormElement) {
 function useBannedDialog() {
     const [bannedText, setBannedText] = useState<string>();
     const navigate = useNavigate();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
     const handleSubmissionResponse = React.useCallback(
         (json: ApiResponse) => {
             if (json.id) {
-                navigate(`${portalPrefix}/confirmation/errata?id=${json.id}`);
+                navigate(`${linkPrefix}/confirmation/errata?id=${json.id}`);
             } else if (json.submitted_by_account_id) {
                 setBannedText(json.submitted_by_account_id[0]);
             }
         },
-        [navigate, portalPrefix]
+        [navigate, linkPrefix]
     );
 
     // TESTING

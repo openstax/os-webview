@@ -29,26 +29,26 @@ function NavigateToTranslation({translations}: {translations: LocaleEntry[]}) {
     const {language} = useLanguageContext();
     const tx = translations.find((t) => t.locale === language);
     const navigate = useNavigate();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     if (!tx) {
         return <NotAvailable />;
     }
     window.setTimeout(() => {
-        navigate(`${portalPrefix}/subjects/${tx.slug.replace('-books', '')}`, {replace: true});
+        navigate(`${linkPrefix}/subjects/${tx.slug.replace('-books', '')}`, {replace: true});
     }, 0);
     return null;
 }
 
 function NotAvailable() {
     const {formatMessage} = useIntl();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <div className='boxed'>
             <h1>
                 {formatMessage({id: 'subject.notAvailableText'})}{' '}
-                <a href={`${portalPrefix}/subjects`}>
+                <a href={`${linkPrefix}/subjects`}>
                     {formatMessage({id: 'subject.notAvailableLinkText'})}
                 </a>
             </h1>

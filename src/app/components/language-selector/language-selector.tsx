@@ -17,12 +17,12 @@ export type LocaleEntry = Required<PLocaleEntry>
 
 export function LanguageLink({locale, slug}: PLocaleEntry) {
     const {setLanguage} = useLanguageContext();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
     const onClick = React.useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         setLanguage(locale);
     }, [locale, setLanguage]);
-    const href = slug ? `${portalPrefix}/subjects/${slug}/` : locale;
+    const href = slug ? `${linkPrefix}/subjects/${slug}/` : locale;
     const props = locale === 'pl' ? {href: polishSite, target: '_blank'} : {href, onClick};
 
     return (<a {...props}><LanguageText locale={locale} /></a>);

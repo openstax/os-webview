@@ -15,7 +15,7 @@ function Confirmation() {
     const location = useLocation();
     const bookSlug = location.state?.slug;
     const [done, toggleDone] = useToggle();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     if (done) {
         return null;
@@ -31,7 +31,7 @@ function Confirmation() {
                         <span>
                             {' '}
                             or return to{' '}
-                            <a href={`${portalPrefix}/details/${bookSlug}`}>your book</a>
+                            <a href={`${linkPrefix}/details/${bookSlug}`}>your book</a>
                         </span>
                     )}
                     .
@@ -136,7 +136,7 @@ function Partners({data}: {data: PartnerPageData}) {
     const description = data.description;
     const {linkTexts} = textsFromData(data);
     const bannerRef = React.useRef<HTMLDivElement>(null);
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     React.useEffect(() => {
         bannerRef.current?.style.setProperty('--background-url', `url(${data.header_image_url})`);
@@ -153,13 +153,13 @@ function Partners({data}: {data: PartnerPageData}) {
                         <div className="button-row">
                             <a
                                 className="btn primary"
-                                href={`${portalPrefix}/openstax-ally-technology-partner-program`}
+                                href={`${linkPrefix}/openstax-ally-technology-partner-program`}
                             >
                                 Apply now
                             </a>
                             <a
                                 className="btn"
-                                href={`${portalPrefix}/webinars/explore/collections/Technology%20Partners`}
+                                href={`${linkPrefix}/webinars/explore/collections/Technology%20Partners`}
                             >
                                 Watch webinars
                             </a>

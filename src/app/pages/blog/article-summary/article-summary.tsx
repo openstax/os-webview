@@ -99,8 +99,8 @@ export default function ArticleSummary({
     HeadTag = 'h2'
 }: ArticleSummaryData) {
     const tabTarget = openInNewWindow ? {target: '_blank'} : {};
-    const {portalPrefix} = usePortalContext();
-    const href = `${portalPrefix}/blog/${articleSlug}`;
+    const {linkPrefix} = usePortalContext();
+    const href = `${linkPrefix}/blog/${articleSlug}`;
     const SubTag = HeadTag.replace(/\d/, (n) =>
         (Number(n) + 1).toString()
     ) as keyof JSX.IntrinsicElements;

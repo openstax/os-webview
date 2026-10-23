@@ -54,33 +54,56 @@ function hrefInPortalFor(href: string, portalPrefix: string) {
     return OTHER_APP_PATH.test(path) ? href : `${portalPrefix}${path}`;
 }
 
+function rewriteLinksInPortal(container: HTMLElement, portalPrefix: string) {
+    const linkNodes = container.querySelectorAll('a[href]');
+
+    for (const node of linkNodes) {
+        const href = assertNotNull(node.getAttribute('href'));
+        const newHref = hrefInPortalFor(href, portalPrefix);
+
+        if (newHref !== href) {
+            node.setAttribute('href', newHref);
+        }
+    }
+}
+
+// What other portals have always done: prefix relative links, without checking
+// whether they already have it
+function prefixRelativeLinks(container: HTMLElement, portalPrefix: string) {
+    const linkNodes = container.querySelectorAll('a[href^="/"]');
+
+    for (const node of linkNodes) {
+        const href = node.getAttribute('href');
+
+        node.setAttribute('href', `${portalPrefix}${href}`);
+    }
+}
+
 function useContextValue() {
     const [portal, setPortal] = React.useState('');
     // Start with true (GTM disabled) until we determine it's safe to enable
     const [isK12Portal, setIsK12Portal] = React.useState<boolean>(true);
     const portalPrefix = portal ? `/${portal}` : '';
-    // Links to os-webview pages on this site get the portal prefix, and links to
-    // REX books go to REX's portal path; other links are returned as they are.
+    // Only K12 school portals keep readers in the portal, so this is the prefix
+    // for site links there, and empty everywhere else
+    const linkPrefix = isK12Portal ? portalPrefix : '';
+    // In a K12 portal, links to os-webview pages on this site get the portal
+    // prefix, and links to REX books go to REX's portal path; other links are
+    // returned as they are.
     const hrefInPortal = React.useCallback(
-        (href: string) => portalPrefix ? hrefInPortalFor(href, portalPrefix) : href,
-        [portalPrefix]
+        (href: string) => linkPrefix ? hrefInPortalFor(href, linkPrefix) : href,
+        [linkPrefix]
     );
     const rewriteLinks = React.useCallback((container: HTMLElement) => {
-        if (!portalPrefix) {return;}
-        const linkNodes = container.querySelectorAll('a[href]');
-
-        for (const node of linkNodes) {
-            const href = assertNotNull(node.getAttribute('href'));
-            const newHref = hrefInPortal(href);
-
-            if (newHref !== href) {
-                node.setAttribute('href', newHref);
-            }
+        if (linkPrefix) {
+            rewriteLinksInPortal(container, linkPrefix);
+        } else if (portalPrefix) {
+            prefixRelativeLinks(container, portalPrefix);
         }
     },
-    [portalPrefix, hrefInPortal]);
+    [portalPrefix, linkPrefix]);
 
-    return {portalPrefix, setPortal, hrefInPortal, rewriteLinks, isK12Portal, setIsK12Portal};
+    return {portalPrefix, linkPrefix, setPortal, hrefInPortal, rewriteLinks, isK12Portal, setIsK12Portal};
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});

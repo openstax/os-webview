@@ -157,7 +157,7 @@ function useContextValue({
     meta
 }: NewsPageData) {
     const navigate = useNavigate();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
     const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} =
         useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
@@ -178,8 +178,8 @@ function useContextValue({
         [navigate]
     );
     const searchFor = React.useCallback(
-        (searchString: string) => setPath(`${portalPrefix}/blog/?q=${searchString}`),
-        [setPath, portalPrefix]
+        (searchString: string) => setPath(`${linkPrefix}/blog/?q=${searchString}`),
+        [setPath, linkPrefix]
     );
 
     if (pinnedStory && !pinnedStory.slug) {

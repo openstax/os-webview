@@ -1,4 +1,5 @@
 import React from 'react';
+import {useLocation} from 'react-router-dom';
 import PromoteBadge from '~/components/promote-badge/promote-badge';
 import type {Item} from '~/models/book-titles';
 import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
@@ -19,17 +20,24 @@ export default function BookTile({book}: {book: BookInfo & AdditionalFields}) {
     const snippets = book.promoteSnippet?.filter((s) => s.value.image);
     const promoteSnippet = snippets?.find((s) => s.value.image);
     const ref = React.useRef<HTMLDivElement>(null);
-    const {rewriteLinks} = usePortalContext();
+    const {portalPrefix, linkPrefix, rewriteLinks} = usePortalContext();
+    const {pathname} = useLocation();
     const classes = cn({
         'book-tile': true,
         'coming-soon': comingSoon,
         promote: Boolean(promoteSnippet)
     });
 
-    // Rewriting is safe to repeat, so tiles inside a page that also rewrites its links are fine
+    // In a K12 portal, rewriting is safe to repeat, so tiles always rewrite their
+    // links. Other portals add the prefix again each time, so there tiles leave
+    // the portal's own page to rewrite them.
     React.useLayoutEffect(() => {
-        rewriteLinks(assertNotNull<HTMLElement>(ref.current));
-    }, [rewriteLinks, slug]);
+        const normalizedPathname = pathname.replace(/\/$/, '');
+
+        if (linkPrefix || portalPrefix !== normalizedPathname) {
+            rewriteLinks(assertNotNull<HTMLElement>(ref.current));
+        }
+    }, [linkPrefix, pathname, portalPrefix, rewriteLinks, slug]);
 
     return (
         <div className={classes} ref={ref}>

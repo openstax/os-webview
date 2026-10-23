@@ -39,6 +39,8 @@ const flexData = {
     layout: [{type: 'default'}],
     schoolData: null
 };
+// Only K12 school portals keep readers in the portal
+const k12PortalData = {...flexData, layout: [{type: 'landing'}], schoolData: {industry: 'K12'}};
 
 function Location() {
     const {pathname, search} = useLocation();
@@ -121,10 +123,6 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
 });
 
 describe('page-routes: redirects in a portal', () => {
-    beforeEach(() => {
-        mockUsePageData.mockReturnValue({...flexData, layout: [{type: 'landing'}]});
-    });
-
     afterEach(() => {
         jest.clearAllMocks();
     });
@@ -133,14 +131,28 @@ describe('page-routes: redirects in a portal', () => {
         ['/my-portal/general/online-resources', '/my-portal/online-resources'],
         ['/my-portal/home/major-funders', '/my-portal'],
         ['/my-portal/textbooks/biology', '/my-portal/details/books/biology'],
-        ['/my-portal/books/biology', '/my-portal/details/books/biology']
-    ])('redirects %s to %s', async (path, destination) => {
+        ['/my-portal/books/biology', '/my-portal/details/books/biology'],
+        ['/my-portal/details', '/my-portal/subjects']
+    ])('redirects %s to %s in a K12 portal', async (path, destination) => {
+        mockUsePageData.mockReturnValue(k12PortalData);
         renderAt(`${path}?ref=nav`);
 
         await waitFor(() => {
             expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
         });
         expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+    });
+
+    it.each([
+        ['/my-portal/books/biology', '/details/books/biology'],
+        ['/my-portal/details', '/subjects']
+    ])('redirects %s out of a portal that is not K12, to %s', async (path, destination) => {
+        mockUsePageData.mockReturnValue({...flexData, layout: [{type: 'landing'}]});
+        renderAt(path);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
+        });
     });
 });
 

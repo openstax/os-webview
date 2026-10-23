@@ -17,8 +17,8 @@ type Blurb = {
 }
 
 function Card({article_image: image, title: linkText, slug}: Omit<Blurb, 'id'>) {
-    const {portalPrefix} = usePortalContext();
-    const link = `${portalPrefix}/blog/${slug}`;
+    const {linkPrefix} = usePortalContext();
+    const link = `${linkPrefix}/blog/${slug}`;
     const optimizedImage = useOptimizedImage(image, 400);
 
     return (

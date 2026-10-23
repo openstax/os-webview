@@ -45,12 +45,12 @@ function AnotherLanguage({
         () => translations.find((t) => t.locale === locale),
         [translations, locale]
     );
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     // translation is guaranteed to have a valid value, because the locale
     // is pulled from translations
     return (
-         <a href={`${portalPrefix}/details/books/${translation?.slug}`}>
+         <a href={`${linkPrefix}/details/books/${translation?.slug}`}>
             <LanguageText locale={locale} />
         </a>
     );

@@ -6,12 +6,12 @@ import usePortalContext from '~/contexts/portal';
 import $ from '~/helpers/$';
 
 function EnglishButtonGroup({title}: {title: string}) {
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <div className="button-group">
             <a
-                href={`${portalPrefix}/errata/form?book=${encodeURIComponent(title)}`}
+                href={`${linkPrefix}/errata/form?book=${encodeURIComponent(title)}`}
                 className="btn secondary medium"
             >
                 <FormattedMessage
@@ -20,7 +20,7 @@ function EnglishButtonGroup({title}: {title: string}) {
                 />
             </a>
             <a
-                href={`${portalPrefix}/errata/?book=${encodeURIComponent(title)}`}
+                href={`${linkPrefix}/errata/?book=${encodeURIComponent(title)}`}
                 className="btn default medium"
             >
                 <FormattedMessage

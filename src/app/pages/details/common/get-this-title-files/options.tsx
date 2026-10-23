@@ -70,7 +70,7 @@ export function SimpleLinkOption({
 
 export function TocOption({model}: {model: Model}) {
     const {toggle, isOpen} = useTOCContext();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
     const includeTOC = ['live', 'deprecated', 'new_edition_available'].includes(
         model.bookState
     );
@@ -91,7 +91,7 @@ export function TocOption({model}: {model: Model}) {
     return (
         <div className="option toc-option">
             <a
-                href={`${portalPrefix}/`}
+                href={`${linkPrefix}/`}
                 role="button"
                 className="show-toc"
                 aria-pressed={isOpen}

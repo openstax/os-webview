@@ -46,11 +46,11 @@ export function InstructorResourcesPane({
         )
         .map((res) => resourceBoxModel(res, userStatus, model));
     const navigate = useNavigate();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     function goToPartners(event: React.MouseEvent) {
         event.preventDefault();
-        navigate(`${portalPrefix}/partners`, {
+        navigate(`${linkPrefix}/partners`, {
             book: model.salesforceAbbreviation,
             redirect: true
         } as NavigateOptions);
@@ -65,7 +65,7 @@ export function InstructorResourcesPane({
                     models={featuredModels}
                 />
             )}
-            <a className="card filter-for-book" href={`${portalPrefix}/partners`} onClick={goToPartners}>
+            <a className="card filter-for-book" href={`${linkPrefix}/partners`} onClick={goToPartners}>
                 OpenStax Partners <FontAwesomeIcon icon={faSignOutAlt} />
             </a>
             <div

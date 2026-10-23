@@ -11,7 +11,7 @@ export default function Map({
     buttonText: string;
     imageUrl: string;
 }) {
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <div className="mapbox">
@@ -22,7 +22,7 @@ export default function Map({
             <div className="overlay">
                 <div className="boxed">
                     <h1>{title}</h1>
-                    <a href={`${portalPrefix}/separatemap`} className="btn primary">
+                    <a href={`${linkPrefix}/separatemap`} className="btn primary">
                         {buttonText}
                     </a>
                 </div>

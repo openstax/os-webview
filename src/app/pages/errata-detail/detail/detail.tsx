@@ -38,7 +38,7 @@ function LabelValuePairs({detail, pairs}: {detail: DetailData; pairs: Pairs}) {
 
 export default function Detail({data}: {data: Errata}) {
     const detail = useErrataDetail(data);
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     if (!detail) {
         return null;
@@ -61,7 +61,7 @@ export default function Detail({data}: {data: Errata}) {
             <div className="note">
                 {'You can check the status of all errata submissions on the '}
                 <a
-                    href={`${portalPrefix}/errata/?book=${encodeURIComponent(detail.bookTitle)}`}
+                    href={`${linkPrefix}/errata/?book=${encodeURIComponent(detail.bookTitle)}`}
                 >
                     <RawHTML Tag="span" html={detail.bookTitle} /> Errata Page
                 </a>

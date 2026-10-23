@@ -70,7 +70,7 @@ function RedirectSlash() {
 }
 
 export default function SubjectsRouter() {
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <SubjectsContextProvider>
@@ -78,11 +78,11 @@ export default function SubjectsRouter() {
                 <Route path="/" element={<RedirectSlash />} />
                 <Route
                     path="view-all"
-                    element={<Navigate to={`${portalPrefix}/subjects`} replace />}
+                    element={<Navigate to={`${linkPrefix}/subjects`} replace />}
                 />
                 <Route
                     path="ap"
-                    element={<Navigate to={`${portalPrefix}/subjects/high-school`} replace />}
+                    element={<Navigate to={`${linkPrefix}/subjects/high-school`} replace />}
                 />
                 <Route path=":subject" element={<LoadSubject />} />
             </Routes>

@@ -6,7 +6,7 @@ import usePortalContext from '~/contexts/portal';
 
 function afterFormSubmit(
     navigate: NavigateFunction,
-    portalPrefix: string,
+    linkPrefix: string,
     preselectedTitle: string,
     selectedBooks: SalesforceBook[]
 ) {
@@ -19,7 +19,7 @@ function afterFormSubmit(
         /* Send to Tech Scout with books pre-selected -- Language removed */
         const scoutBooks = selectedBooks.map((sfBook) => sfBook.value.replace(/ *\[.*/, ''));
 
-        navigate(`${portalPrefix}/partners`, {
+        navigate(`${linkPrefix}/partners`, {
             state: {
                 confirmation: true,
                 book: scoutBooks,
@@ -37,17 +37,17 @@ export function useFirstSearchArgument() {
 
 export function useAfterSubmit(selectedBooksRef: React.MutableRefObject<SalesforceBook[]>) {
     const navigate = useNavigate();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
     const preselectedTitle = useFirstSearchArgument();
 
     return React.useCallback(
         () =>
             afterFormSubmit(
                 navigate,
-                portalPrefix,
+                linkPrefix,
                 preselectedTitle,
                 selectedBooksRef.current
             ),
-        [navigate, portalPrefix, selectedBooksRef, preselectedTitle]
+        [navigate, linkPrefix, selectedBooksRef, preselectedTitle]
     );
 }

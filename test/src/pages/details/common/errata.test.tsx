@@ -47,6 +47,23 @@ describe('details/common/errata', () => {
         expect(screen.getByRole('link', {name: 'Errata list'}).getAttribute('href'))
             .toBe('/my-portal/errata/?book=title');
     });
+    test('ErrataSection links to errata outside a portal that is not K12', async () => {
+        spyDetailsContext.mockReturnValue({
+            title: 'title',
+            bookState: 'live',
+            errataContent: 'A <b>blurb</b>'
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+        render(
+            <ShellContextProvider>
+                <InPortal portal="my-portal" isK12Portal={false}>
+                    <ErrataSection />
+                </InPortal>
+            </ShellContextProvider>
+        );
+
+        expect((await screen.findByRole('link', {name: 'Suggest a correction'})).getAttribute('href'))
+            .toBe('/errata/form?book=title');
+    });
     test('ErrataSection is null if book has state unavailable', async () => {
         spyDetailsContext.mockReturnValue({
             title: 'title',

@@ -65,7 +65,7 @@ function ArticleLoader({slug, onLoad}: ArticleArgs) {
 }
 
 function ArticleNotFound() {
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <div className="text-content article-not-found">
@@ -73,7 +73,7 @@ function ArticleNotFound() {
             <p>
                 The story you&rsquo;re looking for may have been moved or taken
                 down. Browse our latest blog posts below, or head back to the{' '}
-                <a href={`${portalPrefix}/blog`}>OpenStax blog</a>.
+                <a href={`${linkPrefix}/blog`}>OpenStax blog</a>.
             </p>
         </div>
     );

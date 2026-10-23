@@ -80,17 +80,17 @@ function useIsEmbedded() {
 function useAfterSubmit(setSubmitted?: SetSubmitted) {
     const navigate = useNavigate();
     const isEmbedded = useIsEmbedded();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return React.useCallback(
         () => {
             if (isEmbedded) {
                 (setSubmitted as SetSubmitted)(true); // the embedded form passes it
             } else {
-                navigate(`${portalPrefix}/confirmation/contact`);
+                navigate(`${linkPrefix}/confirmation/contact`);
             }
         },
-        [navigate, isEmbedded, setSubmitted, portalPrefix]
+        [navigate, isEmbedded, setSubmitted, linkPrefix]
     );
 }
 

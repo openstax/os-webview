@@ -11,10 +11,10 @@ type BreadcrumbArgs = {
 
 export default function Breadcrumb({name}: BreadcrumbArgs) {
     const {pathname} = useLocation();
-    const {portalPrefix} = usePortalContext();
-    // In a portal, the top level is the first page under the portal, not the portal itself.
+    const {linkPrefix} = usePortalContext();
+    // In a K12 portal, the top level is the first page under the portal, not the portal itself.
     // Remove everything after the first slash that follows a character.
-    const topLevel = portalPrefix + pathname.slice(portalPrefix.length).replace(/(?<=.)\/.*/, '');
+    const topLevel = linkPrefix + pathname.slice(linkPrefix.length).replace(/(?<=.)\/.*/, '');
     const goBack = useGoBack(topLevel);
 
     return (

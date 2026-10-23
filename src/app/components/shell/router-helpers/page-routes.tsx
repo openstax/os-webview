@@ -42,11 +42,11 @@ export function ErrataRoutes() {
 
 export function DetailsRoutes() {
     const {search} = useLocation();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <Routes>
-            <Route index element={<Navigate to={{pathname: `${portalPrefix}/subjects`, search}} replace />} />
+            <Route index element={<Navigate to={{pathname: `${linkPrefix}/subjects`, search}} replace />} />
             <Route
                 path="/books/:title"
                 element={<ImportedPage name="details" />}
@@ -194,9 +194,9 @@ export function NonFlexPageUsingDefaultLayout({data}: {data: PageData}) {
 export function RedirectToCanonicalDetailsPage() {
     const {title} = useParams();
     const {search} = useLocation();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
-    return <Navigate to={{pathname: `${portalPrefix}/details/books/${title}`, search}} replace />;
+    return <Navigate to={{pathname: `${linkPrefix}/details/books/${title}`, search}} replace />;
 }
 
 const FOOTER_PAGES = [

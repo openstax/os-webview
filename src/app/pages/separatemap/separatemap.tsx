@@ -11,10 +11,10 @@ import usePortalContext from '~/contexts/portal';
 import './separatemap.scss';
 
 function GoBackControl() {
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
-        <a href={`${portalPrefix}/global-reach`} className="back-impact-div">
+        <a href={`${linkPrefix}/global-reach`} className="back-impact-div">
             <span className="close-map-msg">Close map</span>
             <div className="back-impact-btn">
                 <FontAwesomeIcon icon={faTimes} className="left-arrow-bak" />
@@ -35,7 +35,7 @@ function SearchBoxDiv() {
 
 function PopupMessage() {
     const [popupVisible, togglePopup] = useToggle(true);
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         popupVisible && (
@@ -53,7 +53,7 @@ function PopupMessage() {
                 </div>
                 <div>Not seeing your school? Numbers aren&apos;t right?</div>
                 <div className="popup-msg-link">
-                    <a href={`${portalPrefix}/adoption`}>Let us know.</a>
+                    <a href={`${linkPrefix}/adoption`}>Let us know.</a>
                 </div>
                 <div>
                     Since our books are free, we rely on instructors to tell us

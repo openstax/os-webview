@@ -95,6 +95,7 @@ describe('details/common/hooks', () => {
         jest.spyOn(UDC, 'default').mockReturnValue({webviewRexLink: ''} as any);
         jest.spyOn(PC, 'default').mockReturnValue({
             portalPrefix: '/landing-page',
+            linkPrefix: '',
             setPortal,
             hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),

@@ -54,6 +54,42 @@ describe('portal context rewriteLinks', () => {
     });
 });
 
+function LinksInPortalThatIsNotK12({hrefs}: {hrefs: string[]}) {
+    const ref = React.useRef<HTMLDivElement>(null);
+    const {setPortal, setIsK12Portal, linkPrefix, hrefInPortal, rewriteLinks} = usePortalContext();
+
+    React.useEffect(() => {
+        setPortal('my-portal');
+        setIsK12Portal(false);
+    }, [setPortal, setIsK12Portal]);
+    React.useLayoutEffect(() => rewriteLinks(ref.current as HTMLElement), [rewriteLinks]);
+
+    return (
+        <div ref={ref} data-link-prefix={linkPrefix}>
+            {hrefs.map((href) => <a key={href} href={hrefInPortal(href)}>{href}</a>)}
+        </div>
+    );
+}
+
+describe('portal context in a portal that is not K12', () => {
+    it('only prefixes relative links, and builds links without the portal', async () => {
+        const {container} = render(
+            <PortalContextProvider>
+                <LinksInPortalThatIsNotK12
+                    hrefs={['/subjects', 'https://openstax.org/blog', '/books/biology-2e/pages/1-1']}
+                />
+            </PortalContextProvider>
+        );
+
+        await waitFor(() => expect(renderedHrefs(container)).toEqual([
+            '/my-portal/subjects',
+            'https://openstax.org/blog',
+            '/my-portal/books/biology-2e/pages/1-1'
+        ]));
+        expect(container.firstElementChild?.getAttribute('data-link-prefix')).toBe('');
+    });
+});
+
 function HrefsInPortal({portal, hrefs}: {portal: string; hrefs: string[]}) {
     const {setPortal, hrefInPortal} = usePortalContext();
 

@@ -30,7 +30,7 @@ export default function Partners({
 }) {
     const {title, seeMoreText, blurbs, badgeImage} = model;
     const navigate = useNavigate();
-    const {portalPrefix, hrefInPortal} = usePortalContext();
+    const {linkPrefix, hrefInPortal} = usePortalContext();
     const onClick = React.useCallback(
         (event: React.MouseEvent<HTMLAnchorElement>) => {
             const destUrl = event.currentTarget.getAttribute('href');
@@ -53,7 +53,7 @@ export default function Partners({
                 </span>
                 <a
                     className="filter-for-book"
-                    href={`${portalPrefix}/partners`}
+                    href={`${linkPrefix}/partners`}
                     onClick={onClick}
                 >
                     {seeMoreText}

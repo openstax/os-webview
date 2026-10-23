@@ -61,7 +61,7 @@ export default function MoreStories({
     exceptSlug: string;
     subhead?: Parameters<typeof Section>[0]['topicHeading'];
 }) {
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <Section
@@ -73,7 +73,7 @@ export default function MoreStories({
             <div className="button-row">
                 <a
                     className="btn primary"
-                    href={`${portalPrefix}/blog/latest`}
+                    href={`${linkPrefix}/blog/latest`}
                     data-analytics-link="blog_latest"
                 >
                     View more of the latest

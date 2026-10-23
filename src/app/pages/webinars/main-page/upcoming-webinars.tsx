@@ -6,7 +6,7 @@ import {RetraceableLink} from '~/components/breadcrumb/breadcrumb';
 
 export default function UpcomingWebinars() {
     const {upcoming} = useWebinarContext();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <WebinarGridSection
@@ -15,7 +15,7 @@ export default function UpcomingWebinars() {
         >
             <RetraceableLink
                 className='btn primary'
-                to={`${portalPrefix}/webinars/upcoming`}
+                to={`${linkPrefix}/webinars/upcoming`}
                 data-analytics-link='webinars_upcoming'
             >
                 View all upcoming webinars

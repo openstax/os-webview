@@ -52,8 +52,8 @@ function useDefaultEmail() {
 }
 
 function SubmitAgainButton({detail}: {detail: {bookTitle: string}}) {
-    const {portalPrefix} = usePortalContext();
-    const url = `${portalPrefix}/errata/form?book=${encodeURIComponent(detail.bookTitle)}`;
+    const {linkPrefix} = usePortalContext();
+    const url = `${linkPrefix}/errata/form?book=${encodeURIComponent(detail.bookTitle)}`;
     const text = `Submit ${detail.bookTitle} errata`;
 
     return (
@@ -80,7 +80,7 @@ function BelowHeader({text, data}: {text: string; data?: Errata}) {
 
 function ErrataStatusNotification({errataId}: {errataId: string}) {
     const email = useDefaultEmail();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
     const notifyByEmail = email && email !== 'none@openstax.org';
 
     return notifyByEmail ? (
@@ -88,7 +88,7 @@ function ErrataStatusNotification({errataId}: {errataId: string}) {
     ) : (
         <React.Fragment>
             <br />
-            <a className="header-link" href={`${portalPrefix}/errata/${errataId}`}>
+            <a className="header-link" href={`${linkPrefix}/errata/${errataId}`}>
                 Track the status of your submission
             </a>
         </React.Fragment>
@@ -127,7 +127,7 @@ export default function Confirmation() {
     const {headline, adoptionQuestion} = models[referringPage];
     const adoptionModel = models.contact;
     const errataModel = models.errata;
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     useDocumentHead({title: 'Thanks!'});
     useCanonicalLink();
@@ -146,7 +146,7 @@ export default function Confirmation() {
                         </p>
                         {referringPage === 'contact' && (
                             <a
-                                href={`${portalPrefix}${adoptionModel.adoptionUrl}`}
+                                href={`${linkPrefix}${adoptionModel.adoptionUrl}`}
                                 title={adoptionModel.adoptionLinkText}
                                 className="btn cta"
                             >

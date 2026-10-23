@@ -56,11 +56,11 @@ function useContextValue() {
     const collections = useCollections();
     const webinars = useWebinars();
     const navigate = useNavigate();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
     const searchFor = React.useCallback(
         (term: string) =>
-            navigate(`${portalPrefix}/webinars/search?q=${encodeURIComponent(term)}`),
-        [navigate, portalPrefix]
+            navigate(`${linkPrefix}/webinars/search?q=${encodeURIComponent(term)}`),
+        [navigate, linkPrefix]
     );
     const pageData = useData<PageData>(
         {

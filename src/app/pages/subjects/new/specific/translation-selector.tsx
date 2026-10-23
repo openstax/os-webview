@@ -80,15 +80,15 @@ function useNavigateOnLanguageChange(
 ) {
     const {language} = useLanguageContext();
     const navigate = useNavigate();
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     React.useEffect(() => {
         const slug = translationSlug(language).slug;
 
         if (slug) {
-            navigate(`${portalPrefix}/subjects/${slug.replace('-books', '')}`, {
+            navigate(`${linkPrefix}/subjects/${slug.replace('-books', '')}`, {
                 replace: true
             });
         }
-    }, [language, translationSlug, navigate, portalPrefix]);
+    }, [language, translationSlug, navigate, linkPrefix]);
 }

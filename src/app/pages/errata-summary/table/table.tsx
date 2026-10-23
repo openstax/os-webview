@@ -166,7 +166,7 @@ function DesktopHeaderRow({sortController}: DesktopHeaderRowProps): React.ReactE
 }
 
 function DesktopDataColumn({colSpec, entry}: DesktopDataColumnProps): React.ReactElement {
-    const {portalPrefix} = usePortalContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <td>
@@ -181,7 +181,7 @@ function DesktopDataColumn({colSpec, entry}: DesktopDataColumnProps): React.Reac
                             {
                                 colSpec.id === 'displayStatus' &&
                                 entry[colSpec.id] === 'No Correction' &&
-                                    <a href={`${portalPrefix}/errata/${entry.id}`}>Details</a>
+                                    <a href={`${linkPrefix}/errata/${entry.id}`}>Details</a>
                             }
                         </React.Fragment>
                 }
