@@ -23,6 +23,7 @@ export const filterLiveBooks = (entry: Book) =>
 function BookToSalesforceBook(book: Book) {
     return {
         text: book.salesforce_name,
+        title: book.title,
         value: book.salesforce_abbreviation,
         comingSoon: book.book_state === 'coming_soon',
         subjects: book.subjects,
