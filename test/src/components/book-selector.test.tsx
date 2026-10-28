@@ -104,6 +104,39 @@ jest.mock('~/models/books', () => {
             content_warning_text: ''
         },
         {
+            id: 15,
+            book_state: 'live',
+            cover_url: 'http://example.com/university-physics-1.jpg',
+            salesforce_abbreviation: 'University Physics (Calc)',
+            salesforce_name: 'University Physics',
+            slug: 'university-physics-volume-1',
+            subjects: ['Science'],
+            title: 'University Physics Volume 1',
+            content_warning_text: ''
+        },
+        {
+            id: 16,
+            book_state: 'live',
+            cover_url: 'http://example.com/university-physics-2.jpg',
+            salesforce_abbreviation: 'University Physics (Calc)',
+            salesforce_name: 'University Physics',
+            slug: 'university-physics-volume-2',
+            subjects: ['Science'],
+            title: 'University Physics Volume 2',
+            content_warning_text: ''
+        },
+        {
+            id: 17,
+            book_state: 'live',
+            cover_url: 'http://example.com/university-physics-3.jpg',
+            salesforce_abbreviation: 'University Physics (Calc)',
+            salesforce_name: 'University Physics',
+            slug: 'university-physics-volume-3',
+            subjects: ['Science'],
+            title: 'University Physics Volume 3',
+            content_warning_text: ''
+        },
+        {
             id: 3,
             book_state: 'live',
             cover_url: 'http://example.com/algebra-spanish.jpg',
@@ -488,6 +521,8 @@ describe('book-selector', () => {
             ['Maternal-Newborn', ['Maternal Newborn Nursing']],
             ['chem', ['Chemistry', 'Organic Chemistry']],
             ['calculus volume 1', ['Calculus Volume 1']],
+            ['university physics volume 2', ['University Physics']],
+            ['university physics volume 3', ['University Physics']],
             ['algebra', ['Álgebra']]
         ])('finds %s', async (query, expected) => {
             await search(query);

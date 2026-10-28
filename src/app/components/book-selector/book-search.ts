@@ -17,11 +17,13 @@ export function searchTokens(query: string) {
 }
 
 export function matchesSearch(
-    book: {text?: string; title?: string},
+    book: {text?: string; title?: string; searchableTitles?: string[]},
     query: string
 ) {
     const tokens = searchTokens(query);
-    const words = normalize([book.text, book.title].join(' ')).split(' ');
+    const words = normalize(
+        [book.text, book.title, ...(book.searchableTitles ?? [])].join(' ')
+    ).split(' ');
 
     return tokens.every((t) => words.some((w) => w.startsWith(t)));
 }
