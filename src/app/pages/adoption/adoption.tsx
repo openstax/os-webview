@@ -35,8 +35,7 @@ function BookSelectorPage({
 }) {
     const [selectedBooks, toggleBook] = useSelectedBooks();
     const bookList = React.useMemo(
-        () =>
-            selectedBooks.map((b) => b.value.replace(/ *\[.*/, '')).join('; '),
+        () => selectedBooks.map((b) => b.value).join('; '),
         [selectedBooks]
     );
     const {formatMessage} = useIntl();
