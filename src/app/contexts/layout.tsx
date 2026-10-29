@@ -2,6 +2,7 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import loadable from 'react-loadable';
 import ChromeFallback from '~/components/shell/chrome-fallback';
+import {DelayedFallback} from '~/helpers/jit-load';
 import deepEqual from 'deep-equal';
 
 // Webpack wasn't able to make the dynamic strings work in the Context value.
@@ -9,6 +10,12 @@ export type LayoutName = 'default' | 'landing';
 const loaders = {
     default: () => import('~/layouts/default/default'),
     landing: () => import('~/layouts/landing/landing')
+};
+// Landing pages, portals among them, bring their own header, so the default
+// nav must not stand in for it while their layout loads.
+const fallbacks = {
+    default: ChromeFallback,
+    landing: () => <DelayedFallback fullPage />
 };
 
 type LayoutParameters = {
@@ -44,7 +51,7 @@ function useContextValue() {
             }
             const LoadableLayout = loadable({
                 loader: () => loaders[layoutParameterName](),
-                loading: () => <ChromeFallback />
+                loading: fallbacks[layoutParameterName]
             });
 
             // Avoids initial flash default -> landing
