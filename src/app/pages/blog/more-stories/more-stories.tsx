@@ -5,6 +5,7 @@ import ArticleSummary, {
 } from '../article-summary/article-summary';
 import useLatestBlogEntries from '~/models/blog-entries';
 import useBlogContext from '../blog-context';
+import usePortalContext from '~/contexts/portal';
 import './more-stories.scss';
 import Section from '~/components/explore-page/section/section';
 
@@ -60,6 +61,8 @@ export default function MoreStories({
     exceptSlug: string;
     subhead?: Parameters<typeof Section>[0]['topicHeading'];
 }) {
+    const {linkPrefix} = usePortalContext();
+
     return (
         <Section
             className="more-stories"
@@ -70,7 +73,7 @@ export default function MoreStories({
             <div className="button-row">
                 <a
                     className="btn primary"
-                    href="/blog/latest"
+                    href={`${linkPrefix}/blog/latest`}
                     data-analytics-link="blog_latest"
                 >
                     View more of the latest

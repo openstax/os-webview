@@ -5,6 +5,8 @@ import ArticleSummary, {
     blurbModel
 } from '~/pages/blog/article-summary/article-summary';
 import userEvent from '@testing-library/user-event';
+import {PortalContextProvider} from '~/contexts/portal';
+import InPortal from '~/../../test/helpers/in-portal';
 
 describe('article-summary', () => {
     it('handles openInNewWindow', async () => {
@@ -64,6 +66,31 @@ describe('article-summary', () => {
 
         await user.click(links[0]);
         expect(setPath).toBeCalled();
+    });
+    it('links to the article in the portal', async () => {
+        render(
+            <PortalContextProvider>
+                <InPortal portal="my-portal">
+                    <ArticleSummary
+                        articleSlug="article-slug"
+                        image="image-url"
+                        headline="Article Headline"
+                        subheading="Sub heading"
+                        body="some text"
+                        date="Today"
+                        author="Jest"
+                        collectionNames={[]}
+                        articleSubjectNames={[]}
+                        setPath={jest.fn()}
+                        openInNewWindow={false}
+                    />
+                </InPortal>
+            </PortalContextProvider>
+        );
+        const links = await screen.findAllByRole('link');
+
+        expect(links.map((l) => l.getAttribute('href')))
+            .toEqual(['/my-portal/blog/article-slug', '/my-portal/blog/article-slug']);
     });
     it('is ok with no setPath', async () => {
         const user = userEvent.setup();

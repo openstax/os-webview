@@ -4,6 +4,8 @@ import {waitFor, within} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import ErrataSummaryLoader from '~/pages/errata-summary/errata-summary';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
+import InPortal from '~/../../test/helpers/in-portal';
 
 const searchStr = '/errata/?book=Anatomy%20and%20Physiology';
 
@@ -23,10 +25,27 @@ async function getTableRows() {
 describe('errata-summary', () => {
     const user = userEvent.setup({delay: null});
 
+    it('links to details in the portal', async () => {
+        render(
+            <MemoryRouter>
+                <ShellContextProvider>
+                    <InPortal portal="my-portal">
+                        <ErrataSummaryLoader />
+                    </InPortal>
+                </ShellContextProvider>
+            </MemoryRouter>
+        );
+        const detailsLinks = await screen.findAllByRole('link', {name: 'Details'});
+
+        expect(detailsLinks[0].getAttribute('href')).toMatch(/^\/my-portal\/errata\/\d+$/);
+    });
+
     it('shows all items in table', async () => {
         render(
             <MemoryRouter>
-                <ErrataSummaryLoader />
+                <ShellContextProvider>
+                    <ErrataSummaryLoader />
+                </ShellContextProvider>
             </MemoryRouter>
         );
         expect(await getTableRows()).toHaveLength(54);
@@ -47,7 +66,9 @@ describe('errata-summary', () => {
     it('filters', async () => {
         render(
             <MemoryRouter>
-                <ErrataSummaryLoader />
+                <ShellContextProvider>
+                    <ErrataSummaryLoader />
+                </ShellContextProvider>
             </MemoryRouter>
         );
         const reviewButton = await screen.findByRole('radio', {
@@ -72,7 +93,9 @@ describe('errata-summary', () => {
     it('filters for Corrected', async () => {
         render(
             <MemoryRouter>
-                <ErrataSummaryLoader />
+                <ShellContextProvider>
+                    <ErrataSummaryLoader />
+                </ShellContextProvider>
             </MemoryRouter>
         );
         await user.click(await screen.findByRole('radio', {name: 'Corrected'}));
@@ -81,7 +104,9 @@ describe('errata-summary', () => {
     it('handles mouseenter/leave over tooltip', async () => {
         render(
             <MemoryRouter>
-                <ErrataSummaryLoader />
+                <ShellContextProvider>
+                    <ErrataSummaryLoader />
+                </ShellContextProvider>
             </MemoryRouter>
         );
 
@@ -98,7 +123,9 @@ describe('errata-summary', () => {
 
         render(
             <MemoryRouter>
-                <ErrataSummaryLoader />
+                <ShellContextProvider>
+                    <ErrataSummaryLoader />
+                </ShellContextProvider>
             </MemoryRouter>
         );
         await screen.findByText('Unknown Book not found');
@@ -107,7 +134,9 @@ describe('errata-summary', () => {
         window.history.pushState('', '', '/errata/');
         render(
             <MemoryRouter>
-                <ErrataSummaryLoader />
+                <ShellContextProvider>
+                    <ErrataSummaryLoader />
+                </ShellContextProvider>
             </MemoryRouter>
         );
         screen.getByText('No book or errata ID selected');

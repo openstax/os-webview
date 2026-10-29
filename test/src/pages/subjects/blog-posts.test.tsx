@@ -3,6 +3,7 @@ import {describe, expect, it} from '@jest/globals';
 import {render, screen} from '@testing-library/preact';
 import MaybeBlogPosts from '~/pages/subjects/new/specific/blog-posts';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
+import InPortal from '~/../../test/helpers/in-portal';
 import { SpecificSubjectContextProvider } from '~/pages/subjects/new/specific/context';
 import businessBooksData from '~/../../test/src/data/business-books';
 import businessBlogBlurbs from '~/../../test/src/data/business-blog-blurbs';
@@ -57,6 +58,27 @@ describe('subjects/blog-posts section', () => {
         ));
         render(<Component />);
         await screen.findByText('Meet our student blogger Kharl');
+    });
+    it('links to blog posts in the portal', async () => {
+        mockUsePageData.mockReturnValue(businessBooksData);
+        mockUseDataFromSlug.mockReturnValue(businessBlogBlurbs);
+        mockCarouselSection.mockImplementation(({children}) => (
+            <div id="carousel-section">
+                {children}
+            </div>
+        ));
+        render(
+            <ShellContextProvider>
+                <InPortal portal="my-portal">
+                    <SpecificSubjectContextProvider contextValueParameters="business">
+                        <MaybeBlogPosts />
+                    </SpecificSubjectContextProvider>
+                </InPortal>
+            </ShellContextProvider>
+        );
+        const link = await screen.findByRole('link', {name: 'Meet our student blogger Kharl'});
+
+        expect(link.getAttribute('href')).toMatch(/^\/my-portal\/blog\/./);
     });
     it('returns no-blogs message if none found', async () => {
         const dataNoSubject = {...businessBooksData};

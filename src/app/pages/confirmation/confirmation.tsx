@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import userModel from '~/models/usermodel';
 import {useErrataDetail, Errata} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
+import usePortalContext from '~/contexts/portal';
+import Error404 from '~/pages/404/404';
 import './confirmation.scss';
 
 type ModelKey = 'contact' | 'errata';
@@ -23,16 +25,18 @@ const models = {
     }
 };
 
+// The page the reader came from, in /confirmation/<page> or the older
+// /<page>-confirmation. The route parameters are used rather than the pathname
+// because the router has decoded them, so a name with escapes like %63ontact
+// still reads as contact.
 function useReferringPage() {
-    const {pathname} = useLocation();
-    let referringPage = pathname.replace('/confirmation/', '');
+    const {dir, '*': rest} = useParams();
 
-    if (referringPage === pathname) {
-        referringPage = pathname
-            .replace('-confirmation', '')
-            .replace(/^\//, '');
-    }
-    return referringPage as ModelKey;
+    return rest ? rest.replace(/\/$/, '') : dir?.replace(/-confirmation$/, '');
+}
+
+function isModelKey(name: string | undefined): name is ModelKey {
+    return name !== undefined && Object.keys(models).includes(name);
 }
 
 function useDefaultEmail() {
@@ -50,7 +54,8 @@ function useDefaultEmail() {
 }
 
 function SubmitAgainButton({detail}: {detail: {bookTitle: string}}) {
-    const url = `/errata/form?book=${encodeURIComponent(detail.bookTitle)}`;
+    const {linkPrefix} = usePortalContext();
+    const url = `${linkPrefix}/errata/form?book=${encodeURIComponent(detail.bookTitle)}`;
     const text = `Submit ${detail.bookTitle} errata`;
 
     return (
@@ -77,6 +82,7 @@ function BelowHeader({text, data}: {text: string; data?: Errata}) {
 
 function ErrataStatusNotification({errataId}: {errataId: string}) {
     const email = useDefaultEmail();
+    const {linkPrefix} = usePortalContext();
     const notifyByEmail = email && email !== 'none@openstax.org';
 
     return notifyByEmail ? (
@@ -84,7 +90,7 @@ function ErrataStatusNotification({errataId}: {errataId: string}) {
     ) : (
         <React.Fragment>
             <br />
-            <a className="header-link" href={`/errata/${errataId}`}>
+            <a className="header-link" href={`${linkPrefix}/errata/${errataId}`}>
                 Track the status of your submission
             </a>
         </React.Fragment>
@@ -115,6 +121,13 @@ function ErrataButtonsAndDetail({
 
 export default function Confirmation() {
     const referringPage = useReferringPage();
+
+    return isModelKey(referringPage)
+        ? <ConfirmationPage referringPage={referringPage} />
+        : <Error404 />;
+}
+
+function ConfirmationPage({referringPage}: {referringPage: ModelKey}) {
     const isErrata = referringPage === 'errata';
     const {search} = useLocation();
     const id = new window.URLSearchParams(search).get(
@@ -123,6 +136,7 @@ export default function Confirmation() {
     const {headline, adoptionQuestion} = models[referringPage];
     const adoptionModel = models.contact;
     const errataModel = models.errata;
+    const {linkPrefix} = usePortalContext();
 
     useDocumentHead({title: 'Thanks!'});
     useCanonicalLink();
@@ -141,7 +155,7 @@ export default function Confirmation() {
                         </p>
                         {referringPage === 'contact' && (
                             <a
-                                href={adoptionModel.adoptionUrl}
+                                href={`${linkPrefix}${adoptionModel.adoptionUrl}`}
                                 title={adoptionModel.adoptionLinkText}
                                 className="btn cta"
                             >

@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, useNavigate, useLocation} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import usePortalContext, {pathAfterPrefix} from '~/contexts/portal';
 import './breadcrumb.scss';
 
 type BreadcrumbArgs = {
@@ -10,8 +11,10 @@ type BreadcrumbArgs = {
 
 export default function Breadcrumb({name}: BreadcrumbArgs) {
     const {pathname} = useLocation();
-    // Remove everything after the first slash that follows a character
-    const topLevel = pathname.replace(/(?<=.)\/.*/, '');
+    const {linkPrefix} = usePortalContext();
+    // In a K12 portal, the top level is the first page under the portal, not the portal itself.
+    // Remove everything after the first slash that follows a character.
+    const topLevel = linkPrefix + pathAfterPrefix(pathname, linkPrefix).replace(/(?<=.)\/.*/, '');
     const goBack = useGoBack(topLevel);
 
     return (

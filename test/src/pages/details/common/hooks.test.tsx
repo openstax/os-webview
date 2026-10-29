@@ -94,8 +94,11 @@ describe('details/common/hooks', () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         jest.spyOn(UDC, 'default').mockReturnValue({webviewRexLink: ''} as any);
         jest.spyOn(PC, 'default').mockReturnValue({
+            portal: 'landing-page',
             portalPrefix: '/landing-page',
+            linkPrefix: '',
             setPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: false,
             setIsK12Portal: jest.fn()

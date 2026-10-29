@@ -4,11 +4,14 @@ import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {upcomingWebinar} from '../../data/webinars';
 import ViewWebinarsPage from '~/pages/webinars/view-webinars-page/view-webinars-page';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 
 function Component(props: Parameters<typeof ViewWebinarsPage>[0]) {
     return (
         <MemoryRouter initialEntries={['/general/kinetic']}>
-            <ViewWebinarsPage {...props} />
+            <ShellContextProvider>
+                <ViewWebinarsPage {...props} />
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }

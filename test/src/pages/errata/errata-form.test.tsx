@@ -4,6 +4,9 @@ import userEvent from '@testing-library/user-event';
 import ErrataForm from '~/pages/errata-form/errata-form';
 import * as UC from '~/contexts/user';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
+import InPortal from '~/../../test/helpers/in-portal';
+import {Routes, Route} from 'react-router-dom';
 import rexReleaseData from '~/../../test/src/data/astronomy-toc.json';
 
 const mockUseUserContext = jest.spyOn(UC, 'default');
@@ -17,7 +20,9 @@ jest.mock('~/models/rex-release', () => ({
 function Component({bookTitle = 'some-title'}) {
     return (
         <MemoryRouter initialEntries={[`/errata/form?book=${bookTitle}`]}>
-            <ErrataForm />
+            <ShellContextProvider>
+                <ErrataForm />
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }
@@ -187,6 +192,43 @@ describe('errata-form', () => {
         });
         await user.click(screen.getByRole('button', {name: 'Submit'}));
         expect(global.fetch).toHaveBeenCalled();
+        global.fetch = saveFetch;
+    });
+    it('goes to the confirmation page in the portal after submitting', async () => {
+        render(
+            <MemoryRouter initialEntries={['/my-portal/errata/form?book=foo&location=somewhere&source=Assignable']}>
+                <ShellContextProvider>
+                    <InPortal portal="my-portal">
+                        <Routes>
+                            <Route path="/my-portal/errata/form" element={<ErrataForm />} />
+                            <Route path="/my-portal/confirmation/errata" element={<div>confirmation page</div>} />
+                        </Routes>
+                    </InPortal>
+                </ShellContextProvider>
+            </MemoryRouter>
+        );
+        await user.click(await screen.findByRole('radio', {name: 'Typo'}));
+        await user.click(
+            screen.getByRole('radio', {
+                name: 'Textbook includes print, PDF, and web view'
+            })
+        );
+        await userEvent.type(
+            screen.getByRole('textbox', {
+                name: 'Tell us in detail about the error and your suggestion.'
+            }),
+            'some text'
+        );
+
+        const saveFetch = global.fetch;
+
+        global.fetch = jest.fn().mockResolvedValue({
+            json: () => ({
+                id: 1
+            })
+        });
+        await user.click(screen.getByRole('button', {name: 'Submit'}));
+        await screen.findByText('confirmation page');
         global.fetch = saveFetch;
     });
     it('unpacks json from submission response with no id', async () => {

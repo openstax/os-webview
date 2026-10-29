@@ -2,6 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import {render, screen, waitFor} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
 import {MainBlogPage} from '~/pages/blog/blog-pages';
 import {describe, it} from '@jest/globals';
@@ -10,9 +11,11 @@ import * as pageDataUtils from '~/helpers/page-data-utils';
 function renderMainBlog(initialEntry: string) {
     render(
         <MemoryRouter initialEntries={[initialEntry]}>
-            <BlogContextProvider>
-                <MainBlogPage />
-            </BlogContextProvider>
+            <ShellContextProvider>
+                <BlogContextProvider>
+                    <MainBlogPage />
+                </BlogContextProvider>
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }

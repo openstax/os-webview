@@ -2,6 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import {useLocation} from 'react-router-dom';
+import usePortalContext from '~/contexts/portal';
 
 type Data = {
     header_subtitle: string;
@@ -32,6 +33,7 @@ export default function CommonElements({
 }) {
     const initialItem = React.useRef<HTMLAnchorElement>(null);
     const {pathname} = useLocation();
+    const {hrefInPortal} = usePortalContext();
 
     React.useEffect(() => initialItem.current?.focus(), []);
     return (
@@ -69,7 +71,7 @@ export default function CommonElements({
                     <FontAwesomeIcon icon={faHeart} />
                 </a>
                 <a
-                    href={data.thank_you_link}
+                    href={hrefInPortal(data.thank_you_link)}
                     className="btn secondary"
                     onClick={onThankYouClick}
                     data-nudge-action="thank-you"
