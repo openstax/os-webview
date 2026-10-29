@@ -126,6 +126,11 @@ export function initializeEventCapture(organizationId) {
     }
     eventCaptureInitialized = true;
 
+    // Only production sends events to the production RAM
+    const ramOrigin = window.location.hostname === 'openstax.org'
+        ? 'https://ram.openstax.org'
+        : 'https://dev.ram.sandbox.openstax.org';
+
     // The analytics helper reads these when it loads, so they must be set first
     window.dataLayer.push({'os.organization_id': organizationId});
     accountsModel.load().then(
@@ -136,8 +141,8 @@ export function initializeEventCapture(organizationId) {
         // and silently skips all event capture if it is missing, so standalone.umd.js must run first.
         // Scripts added this way run in the order they are added only when not async
         for (const src of [
-            'https://ram.openstax.org/quasar/standalone.umd.js',
-            'https://ram.openstax.org/analytics/helper.js'
+            `${ramOrigin}/quasar/standalone.umd.js`,
+            `${ramOrigin}/analytics/helper.js`
         ]) {
             const script = document.createElement('script');
 

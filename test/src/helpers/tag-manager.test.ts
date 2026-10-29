@@ -55,16 +55,17 @@ describe('tag-manager event capture', () => {
     const scriptSources = () =>
         Array.from(document.head.querySelectorAll('script')).map((s) => s.src);
 
-    it('sets the organization and user, then loads the scripts in order', async () => {
+    it('sets the organization and user, then loads the scripts in order from the dev RAM off production', async () => {
         const dataLayer = (window as unknown as {dataLayer: object[]}).dataLayer;
 
+        expect(window.location.hostname).toBe('dev.openstax.org');
         initializeEventCapture('sf-account-id');
 
         expect(dataLayer).toContainEqual({'os.organization_id': 'sf-account-id'});
         await waitFor(() => {
             expect(scriptSources()).toEqual([
-                'https://ram.openstax.org/quasar/standalone.umd.js',
-                'https://ram.openstax.org/analytics/helper.js'
+                'https://dev.ram.sandbox.openstax.org/quasar/standalone.umd.js',
+                'https://dev.ram.sandbox.openstax.org/analytics/helper.js'
             ]);
         });
         expect(dataLayer).toContainEqual({'os.user': {uuid: 'user-uuid'}});
