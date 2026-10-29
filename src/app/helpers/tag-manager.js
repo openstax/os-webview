@@ -166,6 +166,12 @@ export function initializeEventCapture(organizationId) {
  * Load the analytics a page needs: GTM, except that K12 schools get only event capture,
  * and only when they have a research agreement. Nothing is loaded for a K12 school
  * without a research agreement.
+ *
+ * Only the first call loads anything, because loaded scripts can't be removed or reconfigured.
+ * That is only correct because readers can't move between a school's portal and other pages
+ * without a full page load: by design, no page outside a portal links into a school's portal,
+ * and links inside a K12 portal are kept in the portal (see rewriteLinks in contexts/portal).
+ * If a page linking to K12 portals is added in the future, then we'll have to prevent SPA navigation into them.
  * @param {import('~/contexts/portal').SchoolData | null} schoolData
  *   - null when the page does not belong to a school
  */
