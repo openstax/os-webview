@@ -24,6 +24,14 @@ gtag('set', 'ads_data_redaction', true);
 gtag('set', 'url_passthrough', false);
 /* eslint-enable camelcase */
 
+// The analytics helper, whether loaded by GTM or by initializeEventCapture, reads these when it loads
+window.dataLayer.push({
+    'os.app': 'os-webview',
+    // Deployed builds set RELEASE_VERSION to the release tag, and webpack sets it to
+    // 'development' in every other build
+    'os.release_id': process.env.RELEASE_VERSION
+});
+
 window.oxDLF ||= [];
 
 let gtmInitialized = false;

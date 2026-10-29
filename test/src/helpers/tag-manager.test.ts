@@ -24,6 +24,16 @@ describe('tag-manager consent defaults', () => {
         expect(consent?.[1]).toBe('default');
         expect(typeof consent?.[2]).toBe('object');
     });
+
+    it('sets the app and release for the analytics helper', async () => {
+        const dataLayer: object[] = [];
+
+        (window as unknown as {dataLayer: unknown[]}).dataLayer = dataLayer;
+        jest.resetModules();
+        await import('~/helpers/tag-manager');
+
+        expect(dataLayer).toContainEqual({'os.app': 'os-webview', 'os.release_id': process.env.RELEASE_VERSION});
+    });
 });
 
 describe('tag-manager fbq stub', () => {
