@@ -130,7 +130,8 @@ describe('shell', () => {
             hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal,
-            setIsK12Portal: jest.fn()
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
     }
 
@@ -402,7 +403,8 @@ describe('shell', () => {
             hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: false,
-            setIsK12Portal: jest.fn()
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
 
         mockBrowserInitialEntries(['/adoption']);

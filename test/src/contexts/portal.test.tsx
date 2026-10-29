@@ -2,12 +2,16 @@ import React from 'react';
 import {describe, expect, it} from '@jest/globals';
 import {render, waitFor} from '@testing-library/preact';
 import usePortalContext, {PortalContextProvider, pathAfterPrefix} from '~/contexts/portal';
+import {schoolDataFor} from '~/../../test/helpers/in-portal';
 
 function Links({portal, hrefs}: {portal: string; hrefs: string[]}) {
     const ref = React.useRef<HTMLDivElement>(null);
-    const {setPortal, rewriteLinks} = usePortalContext();
+    const {setPortal, setSchoolData, rewriteLinks} = usePortalContext();
 
-    React.useEffect(() => setPortal(portal), [setPortal, portal]);
+    React.useEffect(() => {
+        setPortal(portal);
+        setSchoolData(schoolDataFor(true));
+    }, [setPortal, setSchoolData, portal]);
     React.useLayoutEffect(() => {
         rewriteLinks(ref.current as HTMLElement);
         rewriteLinks(ref.current as HTMLElement);
@@ -56,12 +60,12 @@ describe('portal context rewriteLinks', () => {
 
 function LinksInPortalThatIsNotK12({hrefs}: {hrefs: string[]}) {
     const ref = React.useRef<HTMLDivElement>(null);
-    const {setPortal, setIsK12Portal, linkPrefix, hrefInPortal, rewriteLinks} = usePortalContext();
+    const {setPortal, setSchoolData, linkPrefix, hrefInPortal, rewriteLinks} = usePortalContext();
 
     React.useEffect(() => {
         setPortal('my-portal');
-        setIsK12Portal(false);
-    }, [setPortal, setIsK12Portal]);
+        setSchoolData(schoolDataFor(false));
+    }, [setPortal, setSchoolData]);
     React.useLayoutEffect(() => {
         rewriteLinks(ref.current as HTMLElement);
         rewriteLinks(ref.current as HTMLElement);
@@ -103,9 +107,12 @@ describe('portal context in a portal that is not K12', () => {
 });
 
 function HrefsInPortal({portal, hrefs}: {portal: string; hrefs: string[]}) {
-    const {setPortal, hrefInPortal} = usePortalContext();
+    const {setPortal, setSchoolData, hrefInPortal} = usePortalContext();
 
-    React.useEffect(() => setPortal(portal), [setPortal, portal]);
+    React.useEffect(() => {
+        setPortal(portal);
+        setSchoolData(schoolDataFor(true));
+    }, [setPortal, setSchoolData, portal]);
 
     return <div>{hrefs.map((href) => <a key={href} href={hrefInPortal(href)}>{href}</a>)}</div>;
 }

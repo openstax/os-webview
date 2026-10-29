@@ -86,7 +86,8 @@ describe('Router', () => {
             hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: true,
-            setIsK12Portal: jest.fn()
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
 
         jest.spyOn(SharedDataContext, 'default').mockReturnValue({

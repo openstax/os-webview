@@ -153,7 +153,7 @@ export function initializeEventCapture(organizationId) {
  * Load the analytics a page needs: GTM, except that K12 schools get only event capture,
  * and only when they have a research agreement. Nothing is loaded for a K12 school
  * without a research agreement.
- * @param {{industry: string, salesforceId: string, researchAgreementActive: boolean} | null} schoolData
+ * @param {import('~/contexts/portal').SchoolData | null} schoolData
  *   - null when the page does not belong to a school
  */
 export function initializeAnalytics(schoolData) {

@@ -15,7 +15,8 @@ function mockPortal(portalPrefix: string, isK12Portal: boolean) {
         hrefInPortal: jest.fn(),
         rewriteLinks: jest.fn(),
         isK12Portal,
-        setIsK12Portal: jest.fn()
+        schoolData: null,
+        setSchoolData: jest.fn()
     });
 }
 

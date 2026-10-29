@@ -3,7 +3,7 @@ import {LoadedPage} from '~/components/jsx-helpers/loader-page';
 import useLayoutContext, {LayoutName} from '~/contexts/layout';
 import {ContentBlockRoot, BlockData} from '@openstax/flex-page-renderer/ContentBlockRoot';
 import {blockMap} from './block-map';
-import usePortalContext from '~/contexts/portal';
+import usePortalContext, {SchoolData} from '~/contexts/portal';
 import {assertNotNull} from '~/helpers/data';
 import './flex-page.scss';
 
@@ -12,12 +12,6 @@ export type FlexPageData = {
     layout?: [{type: LayoutName}?];
     body: BlockData<typeof blockMap>;
     schoolData: SchoolData | null;
-};
-
-export type SchoolData = {
-    industry: string;
-    salesforceId: string;
-    researchAgreementActive: boolean;
 };
 
 export const isFlexPage = (

@@ -10,7 +10,7 @@ import * as PageDataUtils from '~/helpers/page-data-utils';
 import {initializeAnalytics} from '~/helpers/tag-manager';
 import * as UPD from '~/helpers/use-page-data';
 import {OtherPageRoutes} from '~/components/shell/router-helpers/page-routes';
-import type {SchoolData} from '~/pages/flex-page/flex-page';
+import type {SchoolData} from '~/contexts/portal';
 
 jest.mock('~/helpers/tag-manager', () => ({
     initializeAnalytics: jest.fn()

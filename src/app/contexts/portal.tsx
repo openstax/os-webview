@@ -3,6 +3,12 @@ import buildContext from '~/components/jsx-helpers/build-context';
 import {assertNotNull} from '~/helpers/data';
 import {OTHER_SERVICE_PATH_NAMES} from '~/helpers/link';
 
+export type SchoolData = {
+    industry: string;
+    salesforceId: string;
+    researchAgreementActive: boolean;
+};
+
 // Paths the server sends to other apps or services, which are never os-webview pages
 const OTHER_APP_PATH = new RegExp(
     `^/(?:apps|r|l|${OTHER_SERVICE_PATH_NAMES.join('|')})(?:[/?#]|$)`
@@ -93,7 +99,9 @@ function prefixRelativeLinks(container: HTMLElement, portalPrefix: string) {
 
 function useContextValue() {
     const [portal, setPortal] = React.useState('');
-    const [isK12Portal, setIsK12Portal] = React.useState<boolean>(true);
+    // The school the portal belongs to, or null when the page is not in a school's portal
+    const [schoolData, setSchoolData] = React.useState<SchoolData | null>(null);
+    const isK12Portal = schoolData?.industry === 'K12';
     const portalPrefix = portal ? `/${portal}` : '';
     // Only K12 school portals keep readers in the portal, so this is the prefix
     // for site links there, and empty everywhere else
@@ -114,7 +122,9 @@ function useContextValue() {
     },
     [portalPrefix, linkPrefix]);
 
-    return {portal, portalPrefix, linkPrefix, setPortal, hrefInPortal, rewriteLinks, isK12Portal, setIsK12Portal};
+    return {
+        portal, portalPrefix, linkPrefix, setPortal, schoolData, setSchoolData, isK12Portal, hrefInPortal, rewriteLinks
+    };
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});
