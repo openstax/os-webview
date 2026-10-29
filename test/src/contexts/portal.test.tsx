@@ -1,7 +1,7 @@
 import React from 'react';
 import {describe, expect, it} from '@jest/globals';
 import {render, waitFor} from '@testing-library/preact';
-import usePortalContext, {PortalContextProvider} from '~/contexts/portal';
+import usePortalContext, {PortalContextProvider, pathAfterPrefix} from '~/contexts/portal';
 
 function Links({portal, hrefs}: {portal: string; hrefs: string[]}) {
     const ref = React.useRef<HTMLDivElement>(null);
@@ -274,5 +274,22 @@ describe('portal context hrefInPortal', () => {
             '/my-portal/research',
             '/my-portal/apps-and-tools'
         ]));
+    });
+});
+
+describe('pathAfterPrefix', () => {
+    it('returns the rest of a path in the portal', () => {
+        expect(pathAfterPrefix('/my-portal/confirmation/contact', '/my-portal')).toBe('/confirmation/contact');
+        expect(pathAfterPrefix('/my-portal', '/my-portal')).toBe('');
+    });
+
+    it('returns a path that is not in the portal as it is', () => {
+        expect(pathAfterPrefix('/%6Dy-portal/confirmation/contact', '/my-portal'))
+            .toBe('/%6Dy-portal/confirmation/contact');
+        expect(pathAfterPrefix('/my-portal-two/blog', '/my-portal')).toBe('/my-portal-two/blog');
+    });
+
+    it('returns the whole path when there is no prefix', () => {
+        expect(pathAfterPrefix('/blog/post', '')).toBe('/blog/post');
     });
 });

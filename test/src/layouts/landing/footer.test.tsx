@@ -93,6 +93,7 @@ describe('flex landing footer portal', () => {
 
     function mockPortal(portalPrefix: string, isK12Portal: boolean) {
         jest.spyOn(PC, 'default').mockReturnValue({
+            portal: portalPrefix.slice(1),
             portalPrefix,
             linkPrefix: isK12Portal ? portalPrefix : '',
             setPortal: jest.fn(),

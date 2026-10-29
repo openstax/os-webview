@@ -72,7 +72,7 @@ export function useContactDialog() {
 function FlexFooter({data}: Props) {
     const {ContactDialog, open: openContactDialog} = useContactDialog();
     const contactFormParams = [{key: 'source_url', value: window.location.href}];
-    const {portalPrefix, isK12Portal, rewriteLinks} = usePortalContext();
+    const {portal, isK12Portal, rewriteLinks} = usePortalContext();
 
     React.useLayoutEffect(() => rewriteLinks?.(document.querySelector('.page-footer') as HTMLElement),
     [rewriteLinks]);
@@ -91,7 +91,7 @@ function FlexFooter({data}: Props) {
                                 className="contact-dialog"
                                 contactFormParams={contactFormParams}
                                 // Only K12 school portals keep readers in the portal
-                                portal={isK12Portal ? portalPrefix.slice(1) : undefined}
+                                portal={isK12Portal ? portal : undefined}
                             />
                         </button>
                         <CookieYesToggle />

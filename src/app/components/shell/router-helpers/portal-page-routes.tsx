@@ -18,7 +18,8 @@ import {
     generateNoDataPageRoutes,
     RedirectToCanonicalDetailsPage
 } from './page-routes';
-import {assertDefined, hasOnlySlugCharacters} from '~/helpers/data';
+import {assertDefined} from '~/helpers/data';
+import {hasOnlySlugCharacters} from '~/helpers/url-from-slug';
 import {ImportedPage} from './page-loaders';
 
 // eslint-disable-next-line complexity

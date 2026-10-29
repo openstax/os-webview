@@ -8,6 +8,7 @@ const rexLink = 'https://openstax.org/books/algebra-1/pages/quick-start';
 
 function mockPortal(portalPrefix: string, isK12Portal: boolean) {
     jest.spyOn(PC, 'default').mockReturnValue({
+        portal: portalPrefix.slice(1),
         portalPrefix,
         linkPrefix: isK12Portal ? portalPrefix : '',
         setPortal: jest.fn(),

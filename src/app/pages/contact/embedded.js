@@ -1,5 +1,5 @@
 import React from 'react';
-import {hasOnlySlugCharacters} from '~/helpers/data';
+import {hasOnlySlugCharacters} from '~/helpers/url-from-slug';
 import Form from './form';
 import './embedded.scss';
 

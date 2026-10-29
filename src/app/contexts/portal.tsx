@@ -41,6 +41,12 @@ function isInPortal(path: string, portalPrefix: string) {
     return path.startsWith(portalPrefix) && ['', '/', '?', '#'].includes(nextCharacter);
 }
 
+// The rest of a path after the portal prefix. A path that isn't in the portal is
+// returned as it is, instead of being cut at the wrong place.
+export function pathAfterPrefix(path: string, portalPrefix: string) {
+    return isInPortal(path, portalPrefix) ? path.slice(portalPrefix.length) : path;
+}
+
 // A path on this site, not //other-host
 function isSitePath(path: string) {
     return path.startsWith('/') && !path.startsWith('//');
@@ -109,7 +115,7 @@ function useContextValue() {
     },
     [portalPrefix, linkPrefix]);
 
-    return {portalPrefix, linkPrefix, setPortal, hrefInPortal, rewriteLinks, isK12Portal, setIsK12Portal};
+    return {portal, portalPrefix, linkPrefix, setPortal, hrefInPortal, rewriteLinks, isK12Portal, setIsK12Portal};
 }
 
 const {useContext, ContextProvider} = buildContext({useContextValue});

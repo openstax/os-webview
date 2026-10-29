@@ -7,7 +7,8 @@ import FlexPage, {
 } from '~/pages/flex-page/flex-page';
 import useLayoutContext from '~/contexts/layout';
 import usePortalContext from '~/contexts/portal';
-import {assertDefined, hasOnlySlugCharacters} from '~/helpers/data';
+import {assertDefined} from '~/helpers/data';
+import {hasOnlySlugCharacters} from '~/helpers/url-from-slug';
 import {GeneralPageFromSlug} from '~/pages/general/general';
 import {ImportedPage} from './page-loaders';
 import {RouteAsPortalOrNot} from './portal-page-routes';

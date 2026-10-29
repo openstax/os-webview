@@ -5,7 +5,7 @@ import {useErrataDetail, Errata} from '~/helpers/errata';
 import {ErrataDetailBlock} from '~/pages/errata-detail/errata-detail';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import useDocumentHead, {useCanonicalLink} from '~/helpers/use-document-head';
-import usePortalContext from '~/contexts/portal';
+import usePortalContext, {pathAfterPrefix} from '~/contexts/portal';
 import './confirmation.scss';
 
 type ModelKey = 'contact' | 'errata';
@@ -26,7 +26,7 @@ const models = {
 
 function useReferringPage() {
     const {portalPrefix} = usePortalContext();
-    const pathname = useLocation().pathname.slice(portalPrefix.length);
+    const pathname = pathAfterPrefix(useLocation().pathname, portalPrefix);
     let referringPage = pathname.replace('/confirmation/', '');
 
     if (referringPage === pathname) {
