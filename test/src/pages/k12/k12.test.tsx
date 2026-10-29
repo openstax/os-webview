@@ -31,8 +31,11 @@ jest.mock('~/pages/k12/import-subject', () => ({
     default: () => mockImportSubject()
 }));
 const portalSpy = jest.spyOn(PC, 'default').mockReturnValue({
+    portal: '',
     portalPrefix: '',
+    linkPrefix: '',
     setPortal: jest.fn(),
+    hrefInPortal: (href: string) => href,
     rewriteLinks: jest.fn(),
     isK12Portal: false,
     setIsK12Portal: jest.fn()

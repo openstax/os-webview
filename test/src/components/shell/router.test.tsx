@@ -85,8 +85,11 @@ describe('Router', () => {
 
         // Mock contexts with default values
         jest.spyOn(PortalContext, 'default').mockReturnValue({
+            portal: '',
             portalPrefix: '',
+            linkPrefix: '',
             setPortal: jest.fn(),
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: true,
             setIsK12Portal: jest.fn()
@@ -264,8 +267,11 @@ describe('Router', () => {
 
         it('initializes GTM when isK12Portal is false', async () => {
             jest.spyOn(PortalContext, 'default').mockReturnValue({
+                portal: '',
                 portalPrefix: '',
+                linkPrefix: '',
                 setPortal: jest.fn(),
+                hrefInPortal: (href: string) => href,
                 rewriteLinks: jest.fn(),
                 isK12Portal: false,
                 setIsK12Portal: jest.fn()
@@ -284,8 +290,11 @@ describe('Router', () => {
 
         it('does not initialize GTM when isK12Portal is true', () => {
             jest.spyOn(PortalContext, 'default').mockReturnValue({
+                portal: '',
                 portalPrefix: '',
+                linkPrefix: '',
                 setPortal: jest.fn(),
+                hrefInPortal: (href: string) => href,
                 rewriteLinks: jest.fn(),
                 isK12Portal: true,
                 setIsK12Portal: jest.fn()

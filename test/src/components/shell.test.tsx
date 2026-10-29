@@ -115,8 +115,11 @@ describe('shell', () => {
 
     function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
         jest.spyOn(PC, 'default').mockReturnValue({
+            portal: portalPrefix.slice(1),
             portalPrefix,
+            linkPrefix: isK12Portal ? portalPrefix : '',
             setPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal,
             setIsK12Portal: jest.fn()
@@ -379,8 +382,11 @@ describe('shell', () => {
 
         // Mock portal context with functions that can be tracked
         jest.spyOn(PC, 'default').mockReturnValue({
+            portal: '',
             portalPrefix: '',
+            linkPrefix: '',
             setPortal: mockSetPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: false,
             setIsK12Portal

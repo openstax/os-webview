@@ -20,8 +20,11 @@ const setPortal = jest.fn();
 
 function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
     jest.spyOn(PC, 'default').mockReturnValue({
+        portal: portalPrefix.slice(1),
         portalPrefix,
+        linkPrefix: isK12Portal ? portalPrefix : '',
         setPortal,
+        hrefInPortal: (href: string) => href,
         rewriteLinks: jest.fn(),
         isK12Portal,
         setIsK12Portal: jest.fn()

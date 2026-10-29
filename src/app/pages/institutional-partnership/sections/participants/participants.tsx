@@ -5,6 +5,7 @@ import groupBy from 'lodash/groupBy';
 import EstablishedPartners from './established-partners/established-partners';
 import Dialog from '~/components/dialog/dialog';
 import {useToggle} from '~/helpers/data';
+import usePortalContext from '~/contexts/portal';
 import './participants.scss';
 
 export type Icon = {
@@ -38,6 +39,7 @@ export default function Participants({
         false?: Icon[];
     };
     const [isOpen, toggle] = useToggle();
+    const {hrefInPortal} = usePortalContext();
 
     function showEstablished(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
@@ -61,7 +63,7 @@ export default function Participants({
                 {established &&
                     <a
                         className="show-established-partners"
-                        href={linkTarget}
+                        href={hrefInPortal(linkTarget)}
                         onClick={showEstablished}
                     >
                         <span>{linkText}</span>

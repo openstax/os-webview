@@ -1,11 +1,18 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render as originalRender, screen} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 import Resources from '~/pages/k12/subject/resources';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import { K12SubjectData } from '~/pages/k12/subject/subject';
 import * as TL from '~/pages/details/common/track-link';
+import {PortalContextProvider} from '~/contexts/portal';
+
+// Resource buttons read the portal context. This file mocks the user context
+// module, which the shell context needs, so only the portal context is provided.
+function render(ui: React.ReactElement) {
+    return originalRender(ui, {wrapper: PortalContextProvider});
+}
 
 let userContext: jest.Mock;
 
