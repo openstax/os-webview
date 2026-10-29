@@ -177,10 +177,11 @@ describe('book-tile-display portal link rewriting', () => {
         return <div ref={ref}>{children}</div>;
     }
 
-    function InPortal({children}: React.PropsWithChildren<object>) {
-        const {setPortal} = usePortalContext();
+    function InPortal({isK12Portal = true, children}: React.PropsWithChildren<{isK12Portal?: boolean}>) {
+        const {setPortal, setIsK12Portal} = usePortalContext();
 
         setPortal('k12');
+        setIsK12Portal(isK12Portal);
         return (
             <LanguageContextProvider>
                 <MemoryRouter initialEntries={['/k12/subjects/math']}>
@@ -207,6 +208,21 @@ describe('book-tile-display portal link rewriting', () => {
         render(
             <PortalContextProvider>
                 <InPortal>
+                    <RewritingContainer>
+                        <BookTileDisplay book={bookData} />
+                    </RewritingContainer>
+                </InPortal>
+            </PortalContextProvider>
+        );
+
+        expect(screen.getByRole('link', {name: /Sample Title book/i}))
+            .toHaveAttribute('href', '/k12/details/sample');
+    });
+
+    it('prefixes the tile link only once inside a rewriting page in a portal that is not K12', () => {
+        render(
+            <PortalContextProvider>
+                <InPortal isK12Portal={false}>
                     <RewritingContainer>
                         <BookTileDisplay book={bookData} />
                     </RewritingContainer>

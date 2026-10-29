@@ -1,9 +1,12 @@
 import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {assertNotNull} from '~/helpers/data';
+import {OTHER_SERVICE_PATH_NAMES} from '~/helpers/link';
 
 // Paths the server sends to other apps or services, which are never os-webview pages
-const OTHER_APP_PATH = /^\/(?:apps|accounts|oxauth|r|l|blog-feed|documents)(?:[/?#]|$)/;
+const OTHER_APP_PATH = new RegExp(
+    `^/(?:apps|r|l|${OTHER_SERVICE_PATH_NAMES.join('|')})(?:[/?#]|$)`
+);
 // REX book pages, which REX shows in a portal under its own portal path. A bare
 // /books/<title> is not one: the server redirects it to the book's details page.
 const REX_BOOK_PATH = /^\/books\/(?=[^/?#]+\/pages\/)/;
@@ -68,15 +71,17 @@ function rewriteLinksInPortal(container: HTMLElement, portalPrefix: string) {
     }
 }
 
-// What other portals have always done: prefix relative links, without checking
-// whether they already have it
+// What other portals have always done: prefix relative links. Links that already
+// have the prefix are left alone, so containers can be rewritten more than once.
 function prefixRelativeLinks(container: HTMLElement, portalPrefix: string) {
     const linkNodes = container.querySelectorAll('a[href^="/"]');
 
     for (const node of linkNodes) {
-        const href = node.getAttribute('href');
+        const href = assertNotNull(node.getAttribute('href'));
 
-        node.setAttribute('href', `${portalPrefix}${href}`);
+        if (!isInPortal(href, portalPrefix)) {
+            node.setAttribute('href', `${portalPrefix}${href}`);
+        }
     }
 }
 
