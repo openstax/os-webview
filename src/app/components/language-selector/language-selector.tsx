@@ -1,5 +1,6 @@
 import React from 'react';
 import useLanguageContext from '~/contexts/language';
+import usePortalContext from '~/contexts/portal';
 import {FormattedMessage} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons/faGlobe';
@@ -16,11 +17,12 @@ export type LocaleEntry = Required<PLocaleEntry>
 
 export function LanguageLink({locale, slug}: PLocaleEntry) {
     const {setLanguage} = useLanguageContext();
+    const {linkPrefix} = usePortalContext();
     const onClick = React.useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         setLanguage(locale);
     }, [locale, setLanguage]);
-    const href = slug ? `/subjects/${slug}/` : locale;
+    const href = slug ? `${linkPrefix}/subjects/${slug}/` : locale;
     const props = locale === 'pl' ? {href: polishSite, target: '_blank'} : {href, onClick};
 
     return (<a {...props}><LanguageText locale={locale} /></a>);

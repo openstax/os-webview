@@ -168,87 +168,69 @@ describe('book-tile', () => {
 });
 
 describe('book-tile-display portal link rewriting', () => {
-    it('does not rewrite links when portalPrefix matches pathname', () => {
-        const ComponentWithMatchingPath = () => {
-            const {setPortal} = usePortalContext();
+    // Stands in for a page, like a FlexPage, that rewrites all of its links after the tile does
+    function RewritingContainer({children}: React.PropsWithChildren<object>) {
+        const ref = React.useRef<HTMLDivElement>(null);
+        const {rewriteLinks} = usePortalContext();
 
-            // Set portal to match the pathname
-            setPortal('k12');
+        React.useLayoutEffect(() => rewriteLinks(ref.current as HTMLElement), [rewriteLinks]);
+        return <div ref={ref}>{children}</div>;
+    }
 
-            return (
-                <LanguageContextProvider>
-                    <MemoryRouter initialEntries={['/k12']}>
-                        <BookTileDisplay book={bookData} />
-                    </MemoryRouter>
-                </LanguageContextProvider>
-            );
-        };
+    function InPortal({isK12Portal = true, children}: React.PropsWithChildren<{isK12Portal?: boolean}>) {
+        const {setPortal, setIsK12Portal} = usePortalContext();
 
-        render(
-            <PortalContextProvider>
-                <ComponentWithMatchingPath />
-            </PortalContextProvider>
-        );
-
-        // The link should remain as-is (not double-prefixed)
-        const link = screen.getByRole('link', {name: /Sample Title book/i});
-
-        expect(link).toHaveAttribute('href', '/details/sample');
-    });
-
-    it('rewrites links when portalPrefix differs from pathname', () => {
-        const ComponentWithDifferentPath = () => {
-            const {setPortal} = usePortalContext();
-
-            // Set portal but use a different pathname (simulating a sub-page)
-            setPortal('k12');
-
-            return (
-                <LanguageContextProvider>
-                    <MemoryRouter initialEntries={['/k12/subjects/math']}>
-                        <BookTileDisplay book={bookData} />
-                    </MemoryRouter>
-                </LanguageContextProvider>
-            );
-        };
-
-        render(
-            <PortalContextProvider>
-                <ComponentWithDifferentPath />
-            </PortalContextProvider>
-        );
-
-        // The link should be prefixed with the portal
-        const link = screen.getByRole('link', {name: /Sample Title book/i});
-
-        expect(link).toHaveAttribute('href', '/k12/details/sample');
-    });
-
-    it('handles trailing slashes in pathname comparison', () => {
-        const ComponentWithTrailingSlash = () => {
-            const {setPortal} = usePortalContext();
-
-            // Set portal and use pathname with trailing slash
-            setPortal('k12');
-
-            return (
-                <MemoryRouter initialEntries={['/k12/']}>
-                    <BookTileDisplay book={bookData} />
-                </MemoryRouter>
-            );
-        };
-
-        render(
+        setPortal('k12');
+        setIsK12Portal(isK12Portal);
+        return (
             <LanguageContextProvider>
-                <PortalContextProvider>
-                    <ComponentWithTrailingSlash />
-                </PortalContextProvider>
+                <MemoryRouter initialEntries={['/k12/subjects/math']}>
+                    {children}
+                </MemoryRouter>
             </LanguageContextProvider>
         );
+    }
 
-        // The link should remain as-is (pathname normalized, so /k12/ matches /k12)
-        const link = screen.getByRole('link', {name: /Sample Title book/i});
+    it('prefixes the tile link with the portal', () => {
+        render(
+            <PortalContextProvider>
+                <InPortal>
+                    <BookTileDisplay book={bookData} />
+                </InPortal>
+            </PortalContextProvider>
+        );
 
-        expect(link).toHaveAttribute('href', '/details/sample');
+        expect(screen.getByRole('link', {name: /Sample Title book/i}))
+            .toHaveAttribute('href', '/k12/details/sample');
+    });
+
+    it('prefixes the tile link only once inside a page that also rewrites links', () => {
+        render(
+            <PortalContextProvider>
+                <InPortal>
+                    <RewritingContainer>
+                        <BookTileDisplay book={bookData} />
+                    </RewritingContainer>
+                </InPortal>
+            </PortalContextProvider>
+        );
+
+        expect(screen.getByRole('link', {name: /Sample Title book/i}))
+            .toHaveAttribute('href', '/k12/details/sample');
+    });
+
+    it('prefixes the tile link only once inside a rewriting page in a portal that is not K12', () => {
+        render(
+            <PortalContextProvider>
+                <InPortal isK12Portal={false}>
+                    <RewritingContainer>
+                        <BookTileDisplay book={bookData} />
+                    </RewritingContainer>
+                </InPortal>
+            </PortalContextProvider>
+        );
+
+        expect(screen.getByRole('link', {name: /Sample Title book/i}))
+            .toHaveAttribute('href', '/k12/details/sample');
     });
 });

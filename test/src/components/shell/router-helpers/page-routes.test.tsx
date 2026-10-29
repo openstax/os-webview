@@ -26,6 +26,20 @@ jest.mock('~/pages/flex-page/flex-page', () => ({
     LayoutUsingData: ({children}: {children: React.ReactNode}) => <>{children}</>
 }));
 
+// Shows which page a route imports, and the rest of the path that the page's
+// own routes would match, without loading the page
+jest.mock('~/components/shell/router-helpers/page-loaders', () => {
+    const {useParams} = jest.requireActual('react-router-dom');
+
+    return {
+        __esModule: true,
+        ...jest.requireActual('~/components/shell/router-helpers/page-loaders'),
+        ImportedPage: ({name}: {name: string}) => (
+            <div data-testid="imported-page" data-rest={useParams()['*']}>{name}</div>
+        )
+    };
+});
+
 const realUsePageDataFetchState = UPD.usePageDataFetchState;
 const mockUsePageDataFetchState = jest.spyOn(UPD, 'usePageDataFetchState');
 const fetchFromCMS = jest.spyOn(PageDataUtils, 'fetchFromCMS');
@@ -36,12 +50,14 @@ const flexData = {
     layout: [{type: 'default'}],
     schoolData: null
 };
+// Only K12 school portals keep readers in the portal
+const k12PortalData = {...flexData, layout: [{type: 'landing'}], schoolData: {industry: 'K12'}};
 
 function Location() {
-    const {pathname, search} = useLocation();
+    const {pathname, search, hash} = useLocation();
 
     return (
-        <div data-testid="location" data-search={search}>
+        <div data-testid="location" data-search={search} data-hash={hash}>
             {pathname}
         </div>
     );
@@ -90,13 +106,14 @@ describe('page-routes: pages now served by CMS FlexPages', () => {
         expect(mockUsePageDataFetchState).not.toHaveBeenCalledWith(`pages/${dir}`, true);
     });
 
-    it('redirects a trailing slash to the canonical URL, keeping the query string', async () => {
-        renderAt('/press/?ref=nav');
+    it('redirects a trailing slash to the canonical URL, keeping the query string and fragment', async () => {
+        renderAt('/press/?ref=nav#contacts');
 
         await waitFor(() => {
             expect(screen.getByTestId('location')).toHaveTextContent(/^\/press$/);
         });
         expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+        expect(screen.getByTestId('location')).toHaveAttribute('data-hash', '#contacts');
         expect(await screen.findByTestId('flex-page')).toBeInTheDocument();
     });
 
@@ -225,5 +242,186 @@ describe('page-routes: analytics', () => {
         act(() => resolveBySlug['pages/portal-b'](portalData(portalBSchool)));
 
         await waitFor(() => expect(initializeAnalytics).toHaveBeenLastCalledWith(portalBSchool));
+    });
+});
+
+describe('page-routes: page names with escapes', () => {
+    beforeEach(() => {
+        mockUsePageDataFetchState.mockReturnValue(fetchSuccess(k12PortalData));
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/%6Dy-portal/errata/7199', '/my-portal/errata/7199', 'errata-detail'],
+        ['/%6Dy-portal/confirmation/contact', '/my-portal/confirmation/contact', 'confirmation'],
+        ['/%6Dy-portal/blog/some%2Farticle', '/my-portal/blog/some%2Farticle', 'blog']
+    ])('redirects %s to %s once, keeping the rest of the path as it was', async (path, destination, page) => {
+        renderAt(`${path}?ref=nav#top`);
+
+        // The page renders at the plain portal name, so the redirect has settled
+        expect(await screen.findByTestId('imported-page')).toHaveTextContent(page);
+        expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
+        expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+    });
+});
+
+describe('page-routes: redirects in a portal', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/my-portal/general/online-resources', '/my-portal/online-resources'],
+        ['/my-portal/home/major-funders', '/my-portal'],
+        ['/my-portal/textbooks/biology', '/my-portal/details/books/biology'],
+        ['/my-portal/books/biology', '/my-portal/details/books/biology'],
+        ['/my-portal/books/biology/', '/my-portal/details/books/biology'],
+        ['/my-portal/details', '/my-portal/subjects']
+    ])('redirects %s to %s in a K12 portal, keeping the query string and fragment', async (path, destination) => {
+        mockUsePageDataFetchState.mockReturnValue(fetchSuccess(k12PortalData));
+        renderAt(`${path}?ref=nav#faq`);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
+        });
+        expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+        expect(screen.getByTestId('location')).toHaveAttribute('data-hash', '#faq');
+    });
+
+    it.each([
+        ['/my-portal/books/biology', '/details/books/biology'],
+        ['/my-portal/details', '/subjects']
+    ])('redirects %s out of a portal that is not K12, to %s', async (path, destination) => {
+        mockUsePageDataFetchState.mockReturnValue(fetchSuccess({...flexData, layout: [{type: 'landing'}]}));
+        renderAt(path);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
+        });
+    });
+});
+
+describe('page-routes: redirects outside a portal', () => {
+    beforeEach(() => {
+        mockUsePageDataFetchState.mockReturnValue(fetchSuccess(flexData));
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/general/online-resources', '/online-resources'],
+        ['/home/major-funders', '/']
+    ])('redirects %s to %s, keeping the query string and fragment', async (path, destination) => {
+        renderAt(`${path}?ref=nav#faq`);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('location')).toHaveTextContent(new RegExp(`^${destination}$`));
+        });
+        expect(screen.getByTestId('location')).toHaveAttribute('data-search', '?ref=nav');
+        expect(screen.getByTestId('location')).toHaveAttribute('data-hash', '#faq');
+    });
+});
+
+describe('page-routes: k12 subject pages in a portal', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/my-portal/k12/algebra', 'algebra'],
+        ['/my-portal/k12/algebra/', 'algebra/']
+    ])('routes %s through the k12 page, which routes the subject', async (path, rest) => {
+        // Old-style subject pages are neither FlexPages nor general pages
+        mockUsePageDataFetchState.mockImplementation(((slug: string) => fetchSuccess(slug === 'pages/my-portal'
+            ? {...flexData, layout: [{type: 'landing'}]}
+            : {meta: {type: 'pages.K12Subject', slug: 'k12-algebra'}})
+        ) as unknown as typeof UPD.usePageDataFetchState);
+
+        renderAt(path);
+
+        const page = await screen.findByTestId('imported-page');
+
+        expect(mockUsePageDataFetchState).toHaveBeenCalledWith('pages/k12-algebra', true);
+        expect(page).toHaveTextContent('k12');
+        expect(page).toHaveAttribute('data-rest', rest);
+    });
+});
+
+describe('page-routes: page names with decoded characters a slug cannot have', () => {
+    beforeEach(() => {
+        // Any fetched page would be a portal, which is the case that must not happen
+        mockUsePageDataFetchState.mockReturnValue(fetchSuccess({...flexData, layout: [{type: 'landing'}]}));
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        '/%2Fevil.example%2F..%2F..%2Fmy-portal/subjects',
+        '/%5Cevil.example%2F..%2F..%2Fmy-portal/subjects',
+        '/%09my-portal/subjects',
+        '/my-portal%0A/subjects',
+        '/my-portal%0D/subjects'
+    ])('renders %s as not found, without fetching page data', async (path) => {
+        renderAt(path);
+
+        expect(await screen.findByText('Uh-oh, no page here')).toBeInTheDocument();
+        expect(mockUsePageDataFetchState).not.toHaveBeenCalled();
+    });
+
+    it('renders a portal sub-page with one as not found', async () => {
+        renderAt('/my-portal/%2Fevil.example');
+
+        expect(await screen.findByText('Uh-oh, no page here')).toBeInTheDocument();
+    });
+});
+
+describe('page-routes: errata pages in a portal', () => {
+    beforeEach(() => {
+        mockUsePageDataFetchState.mockReturnValue(fetchSuccess({...flexData, layout: [{type: 'landing'}]}));
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/my-portal/errata/?book=Some%20Book', 'errata-summary'],
+        ['/my-portal/errata/form?book=Some%20Book', 'errata-form'],
+        ['/my-portal/errata/7199', 'errata-detail'],
+        ['/my-portal/confirmation/errata?id=7199', 'confirmation']
+    ])('renders %s with the %s page', async (path, page) => {
+        renderAt(path);
+
+        expect(await screen.findByTestId('imported-page')).toHaveTextContent(page);
+    });
+});
+
+describe('page-routes: blog pages in a portal', () => {
+    beforeEach(() => {
+        mockUsePageDataFetchState.mockReturnValue(fetchSuccess({...flexData, layout: [{type: 'landing'}]}));
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it.each([
+        ['/my-portal/blog', ''],
+        ['/my-portal/blog/some-article', 'some-article'],
+        ['/my-portal/blog/explore/subjects/Math', 'explore/subjects/Math']
+    ])('renders %s with the blog page, which routes %j itself', async (path, rest) => {
+        renderAt(path);
+
+        const page = await screen.findByTestId('imported-page');
+
+        expect(page).toHaveTextContent('blog');
+        expect(page).toHaveAttribute('data-rest', rest);
     });
 });

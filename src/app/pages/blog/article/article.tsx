@@ -7,6 +7,7 @@ import React, {useState, useRef} from 'react';
 import {FetchStateType} from '@openstax/ts-utils/fetch';
 import {usePageDataFetchState} from '~/helpers/use-page-data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import usePortalContext from '~/contexts/portal';
 import {
     setPageTitleAndDescriptionFromBookData,
     BookData
@@ -67,13 +68,15 @@ function ArticleLoader({slug, onLoad}: ArticleArgs) {
 }
 
 function ArticleNotFound() {
+    const {linkPrefix} = usePortalContext();
+
     return (
         <div className="text-content article-not-found">
             <h1>This post is no longer available</h1>
             <p>
                 The story you&rsquo;re looking for may have been moved or taken
                 down. Browse our latest blog posts below, or head back to the{' '}
-                <a href="/blog">OpenStax blog</a>.
+                <a href={`${linkPrefix}/blog`}>OpenStax blog</a>.
             </p>
         </div>
     );

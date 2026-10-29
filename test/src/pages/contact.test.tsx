@@ -5,9 +5,12 @@ import userEvent from '@testing-library/user-event';
 import {Routes, Route} from 'react-router-dom';
 import ContactPage from '~/pages/contact/contact';
 import Form from '~/pages/contact/form';
+import EmbeddedForm from '~/pages/contact/embedded';
 import * as UPD from '~/helpers/use-page-data';
 import * as UDH from '~/helpers/use-document-head';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
+import InPortal from '~/../../test/helpers/in-portal';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import * as SFF from '~/components/salesforce-form/salesforce-form';
 
@@ -52,9 +55,11 @@ const pageData = {
 function Component({path='/contact'}) {
     return (
         <MemoryRouter initialEntries={[path]}>
-            <SalesforceContextProvider>
-                <ContactPage />
-            </SalesforceContextProvider>
+            <ShellContextProvider>
+                <SalesforceContextProvider>
+                    <ContactPage />
+                </SalesforceContextProvider>
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }
@@ -109,9 +114,11 @@ describe('contact page', () => {
         spyUsePageData.mockReturnValue(pageData);
         render(
             <MemoryRouter initialEntries={['/embedded/contact?body=1&body=2']}>
-                <SalesforceContextProvider>
-                    <Form setSubmitted={setSubmitted} />
-                </SalesforceContextProvider>
+                <ShellContextProvider>
+                    <SalesforceContextProvider>
+                        <Form setSubmitted={setSubmitted} />
+                    </SalesforceContextProvider>
+                </ShellContextProvider>
             </MemoryRouter>
         );
         const getLoadingText = () => screen.getByText('Loading...');
@@ -148,18 +155,24 @@ describe('contact form', () => {
 
     // The Salesforce context loads its oid asynchronously; until it arrives the
     // form is replaced by a loading placeholder.
-    async function renderForm() {
+    async function renderForm(portal = '') {
+        const prefix = portal ? `/${portal}` : '';
+        const routes = (
+            <Routes>
+                <Route path={`${prefix}/contact`} element={<Form />} />
+                <Route
+                    path={`${prefix}/confirmation/contact`}
+                    element={<div>Message sent</div>}
+                />
+            </Routes>
+        );
         const result = render(
-            <MemoryRouter initialEntries={['/contact']}>
-                <SalesforceContextProvider>
-                    <Routes>
-                        <Route path="/contact" element={<Form />} />
-                        <Route
-                            path="/confirmation/contact"
-                            element={<div>Message sent</div>}
-                        />
-                    </Routes>
-                </SalesforceContextProvider>
+            <MemoryRouter initialEntries={[`${prefix}/contact`]}>
+                <ShellContextProvider>
+                    <SalesforceContextProvider>
+                        {portal ? <InPortal portal={portal}>{routes}</InPortal> : routes}
+                    </SalesforceContextProvider>
+                </ShellContextProvider>
             </MemoryRouter>
         );
 
@@ -210,9 +223,7 @@ describe('contact form', () => {
         expect(topicQuestion()).toBeNull();
         expect(product()).toBe('');
     });
-    it('goes to the confirmation page after submitting outside the embedded form', async () => {
-        await renderForm();
-
+    async function fillAndSubmit() {
         // The fields are required, so fill them in before submitting
         await user.type(screen.getByRole('textbox', {name: 'Your Name'}), 'Username');
         await user.type(
@@ -221,8 +232,48 @@ describe('contact form', () => {
         );
         await user.type(screen.getByRole('textbox', {name: 'Your Message'}), 'message text');
         await user.click(screen.getByRole('button', {name: 'Submit'}));
+    }
+
+    it('goes to the confirmation page after submitting outside the embedded form', async () => {
+        await renderForm();
+        await fillAndSubmit();
 
         expect(await screen.findByText('Message sent')).toBeTruthy();
+    });
+    it('goes to the confirmation page in the portal after submitting there', async () => {
+        await renderForm('my-portal');
+        await fillAndSubmit();
+
+        expect(await screen.findByText('Message sent')).toBeTruthy();
+    });
+});
+
+describe('embedded contact form', () => {
+    afterEach(() => {
+        window.history.replaceState(null, '', '/');
+    });
+
+    // The form reads the page's own URL, since it runs in an iframe
+    function renderAt(path: string) {
+        window.history.replaceState(null, '', path);
+        render(
+            <MemoryRouter initialEntries={[path]}>
+                <SalesforceContextProvider>
+                    <EmbeddedForm />
+                </SalesforceContextProvider>
+            </MemoryRouter>
+        );
+    }
+
+    it.each([
+        ['/embedded/contact?portal=school-portal&body=x', '/school-portal/subjects'],
+        ['/embedded/contact?body=x', '/subjects'],
+        // A crafted portal must not make the link go to another site
+        ['/embedded/contact?portal=%2Fevil.example', '/subjects']
+    ])('at %s links to the subjects page at %s', (path, subjectsHref) => {
+        renderAt(path);
+
+        expect(screen.getByRole('link', {name: 'subjects page'}).getAttribute('href')).toBe(subjectsHref);
     });
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render as originalRender, screen} from '@testing-library/preact';
 import {describe, it, expect} from '@jest/globals';
+import {PortalContextProvider} from '~/contexts/portal';
 import {ArticleFromSlug} from '~/pages/blog/article/article';
 import useScrollProgress from '~/pages/blog/article/use-progress';
 import pageData, {featuredVideo, pdfBody} from '~/../../test/src/data/article-page-data';
@@ -8,6 +9,11 @@ import * as HelpersData from '~/helpers/data';
 import * as WCtx from '~/contexts/window';
 import * as DH from '~/helpers/use-document-head';
 import {pageDataState as mockPageDataState} from '~/../../test/helpers/page-data-state';
+
+// Articles read the portal context
+function render(ui: React.ReactElement) {
+    return originalRender(ui, {wrapper: PortalContextProvider});
+}
 
 const mockUsePageData = jest.fn();
 const onload = jest.fn();

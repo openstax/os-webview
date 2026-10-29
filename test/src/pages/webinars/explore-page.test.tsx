@@ -8,16 +8,19 @@ import useWebinarContext from '~/pages/webinars/webinar-context';
 import {pastWebinar} from '../../data/webinars';
 import type {Webinar} from '~/pages/webinars/types';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 
 function Component({path}: {path: string}) {
     return (
         <MemoryRouter basename='/webinars' initialEntries={[path]}>
-            <Routes>
-                <Route
-                    path='explore/:exploreType/:topic'
-                    element={<ExplorePage />}
-                />
-            </Routes>
+            <ShellContextProvider>
+                <Routes>
+                    <Route
+                        path='explore/:exploreType/:topic'
+                        element={<ExplorePage />}
+                    />
+                </Routes>
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }

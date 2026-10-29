@@ -79,9 +79,14 @@ describe('Router', () => {
 
         // Mock contexts with default values
         jest.spyOn(PortalContext, 'default').mockReturnValue({
+            portal: '',
             portalPrefix: '',
+            linkPrefix: '',
             setPortal: jest.fn(),
-            rewriteLinks: jest.fn()
+            hrefInPortal: (href: string) => href,
+            rewriteLinks: jest.fn(),
+            isK12Portal: true,
+            setIsK12Portal: jest.fn()
         });
 
         jest.spyOn(SharedDataContext, 'default').mockReturnValue({

@@ -3,6 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import usePageData from '~/helpers/use-page-data';
 import type {LocaleEntry} from '~/components/language-selector/language-selector';
 import useLanguageContext from '~/contexts/language';
+import usePortalContext from '~/contexts/portal';
 import {useIntl} from 'react-intl';
 
 type PageData = {
@@ -28,24 +29,26 @@ function NavigateToTranslation({translations}: {translations: LocaleEntry[]}) {
     const {language} = useLanguageContext();
     const tx = translations.find((t) => t.locale === language);
     const navigate = useNavigate();
+    const {linkPrefix} = usePortalContext();
 
     if (!tx) {
         return <NotAvailable />;
     }
     window.setTimeout(() => {
-        navigate(`/subjects/${tx.slug.replace('-books', '')}`, {replace: true});
+        navigate(`${linkPrefix}/subjects/${tx.slug.replace('-books', '')}`, {replace: true});
     }, 0);
     return null;
 }
 
 function NotAvailable() {
     const {formatMessage} = useIntl();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <div className='boxed'>
             <h1>
                 {formatMessage({id: 'subject.notAvailableText'})}{' '}
-                <a href='/subjects'>
+                <a href={`${linkPrefix}/subjects`}>
                     {formatMessage({id: 'subject.notAvailableLinkText'})}
                 </a>
             </h1>
