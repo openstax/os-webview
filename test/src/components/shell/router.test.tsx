@@ -7,7 +7,6 @@ import * as LayoutContext from '~/contexts/layout';
 import * as PortalContext from '~/contexts/portal';
 import * as SharedDataContext from '~/contexts/shared-data';
 import * as UserContext from '~/contexts/user';
-import * as TagManager from '~/helpers/tag-manager';
 import * as UsePageData from '~/helpers/use-page-data';
 import * as UseLinkHandler from '~/components/shell/router-helpers/use-link-handler';
 import * as PageRoutes from '~/components/shell/router-helpers/page-routes';
@@ -59,7 +58,6 @@ jest.mock('~/helpers/$', () => ({
 
 describe('Router', () => {
     let mockLinkHandler: jest.Mock;
-    let mockInitializeGTM: jest.Mock;
     let addEventListenerSpy: jest.SpyInstance;
     let removeEventListenerSpy: jest.SpyInstance;
 
@@ -69,7 +67,6 @@ describe('Router', () => {
 
         // Create mocks
         mockLinkHandler = jest.fn();
-        mockInitializeGTM = jest.fn();
 
         // Spy on event listeners
         addEventListenerSpy = jest.spyOn(document, 'addEventListener');
@@ -78,9 +75,6 @@ describe('Router', () => {
         // Mock dependencies
         jest.spyOn(UseLinkHandler, 'default').mockReturnValue(
             mockLinkHandler
-        );
-        jest.spyOn(TagManager, 'initializeGTM').mockImplementation(
-            mockInitializeGTM
         );
 
         // Mock contexts with default values
@@ -92,7 +86,8 @@ describe('Router', () => {
             hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: true,
-            setIsK12Portal: jest.fn()
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
 
         jest.spyOn(SharedDataContext, 'default').mockReturnValue({
@@ -263,50 +258,6 @@ describe('Router', () => {
             expect(
                 screen.getByTestId('page-title-confirmation')
             ).toBeInTheDocument();
-        });
-
-        it('initializes GTM when isK12Portal is false', async () => {
-            jest.spyOn(PortalContext, 'default').mockReturnValue({
-                portal: '',
-                portalPrefix: '',
-                linkPrefix: '',
-                setPortal: jest.fn(),
-                hrefInPortal: (href: string) => href,
-                rewriteLinks: jest.fn(),
-                isK12Portal: false,
-                setIsK12Portal: jest.fn()
-            });
-
-            render(
-                <MemoryRouter initialEntries={['/']}>
-                    <Router />
-                </MemoryRouter>
-            );
-
-            await waitFor(() => {
-                expect(mockInitializeGTM).toHaveBeenCalled();
-            });
-        });
-
-        it('does not initialize GTM when isK12Portal is true', () => {
-            jest.spyOn(PortalContext, 'default').mockReturnValue({
-                portal: '',
-                portalPrefix: '',
-                linkPrefix: '',
-                setPortal: jest.fn(),
-                hrefInPortal: (href: string) => href,
-                rewriteLinks: jest.fn(),
-                isK12Portal: true,
-                setIsK12Portal: jest.fn()
-            });
-
-            render(
-                <MemoryRouter initialEntries={['/']}>
-                    <Router />
-                </MemoryRouter>
-            );
-
-            expect(mockInitializeGTM).not.toHaveBeenCalled();
         });
     });
 

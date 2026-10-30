@@ -26,6 +26,7 @@ import flexPage from '../data/flex-page';
 import generalPage from '../data/general-page';
 import k12PageData from '../data/k12';
 import ChildrenContainer from '~/../../test/helpers/mock-children-container';
+import {pageDataState} from '~/../../test/helpers/page-data-state';
 
 const {useLocation} = RRD;
 const BrowserRouter = jest.spyOn(RRD, 'BrowserRouter').mockImplementation(({children}) => (
@@ -67,7 +68,7 @@ describe('shell', () => {
     }
 
     // eslint-disable-next-line complexity
-    const spyUpd = jest.spyOn(UPD, 'default').mockImplementation((path) => {
+    function pageDataFor(path: string) {
         switch (path) {
             case 'pages/form-headings?locale=en':
                 return camelCaseKeys(formHeadings);
@@ -103,7 +104,14 @@ describe('shell', () => {
                 console.info('*** Requested', path);
                 return {};
         }
-    });
+    }
+    const spyUpd = jest.spyOn(UPD, 'default').mockImplementation(pageDataFor);
+
+    // The page routes read their data through usePageDataFetchState; serve it from the
+    // mock above, treating no data as still loading
+    jest.spyOn(UPD, 'usePageDataFetchState').mockImplementation(
+        ((path: string) => pageDataState(UPD.default(path))) as unknown as typeof UPD.usePageDataFetchState
+    );
     const setPortal = jest.fn();
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
 
@@ -122,7 +130,8 @@ describe('shell', () => {
             hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal,
-            setIsK12Portal: jest.fn()
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
     }
 
@@ -333,51 +342,56 @@ describe('shell', () => {
         await waitFor(() => expect(spyGP).toHaveBeenCalled());
         spyGP.mockClear();
     });
-    it('does not load GTM script for K12 portals', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+    it('loads analytics for a K12 portal\'s school', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
 
         // Create a K12 portal page data
+        const schoolData = {
+            industry: 'K12',
+            salesforceId: 'sf-account-id',
+            researchAgreementActive: false
+        };
         const k12PortalPage = {
             ...camelCaseKeys(landingPage) as object,
-            schoolData: {industry: 'K12'}
+            schoolData
         };
 
         spyUpd.mockReturnValueOnce(k12PortalPage);
-        // Set portal context to indicate K12 portal (isK12Portal === true)
-        setPortalPrefix('', true);
+        setPortalPrefix('');
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
-        // GTM should NOT be initialized for K12 portals
-        expect(spyInitializeGTM).not.toHaveBeenCalled();
+        await waitFor(() => expect(spyInitializeAnalytics).toHaveBeenCalledWith(schoolData));
+        spyInitializeAnalytics.mockRestore();
     });
-    it('loads GTM script for non-K12 portals', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+    it('loads analytics for a non-K12 portal\'s school', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
 
         // Create a non-K12 portal page data
+        const schoolData = {
+            industry: 'Higher Education',
+            salesforceId: 'sf-account-id',
+            researchAgreementActive: false
+        };
         const nonK12PortalPage = {
             ...camelCaseKeys(landingPage) as object,
-            schoolData: {industry: 'Higher Education'}
+            schoolData
         };
 
         spyUpd.mockReturnValueOnce(nonK12PortalPage);
-        // Set portal context to indicate non-K12 portal (isK12Portal === false)
-        setPortalPrefix('', false);
+        setPortalPrefix('');
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
-        // GTM should be initialized for non-K12 portals
-        await waitFor(() => {
-            expect(spyInitializeGTM).toHaveBeenCalled();
-        });
+        await waitFor(() => expect(spyInitializeAnalytics).toHaveBeenCalledWith(schoolData));
+        spyInitializeAnalytics.mockRestore();
     });
-    it('loads GTM script for no-data pages (e.g., /adoption)', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
-        const setIsK12Portal = jest.fn();
+    it('loads analytics for no school on no-data pages (e.g., /adoption)', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
         const mockSetPortal = jest.fn();
 
         // Mock portal context with functions that can be tracked
@@ -389,7 +403,8 @@ describe('shell', () => {
             hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: false,
-            setIsK12Portal
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
 
         mockBrowserInitialEntries(['/adoption']);
@@ -400,17 +415,15 @@ describe('shell', () => {
         await screen.findByRole('combobox');
         await screen.findByText('Let us know you\'re using OpenStax');
 
-        // NonPortalRouteWrapper should have called setIsK12Portal(false) to enable GTM
+        // NonPortalRouteWrapper should have cleared the portal
         await waitFor(() => {
-            expect(setIsK12Portal).toHaveBeenCalledWith(false);
+            expect(mockSetPortal).toHaveBeenCalledWith('');
         });
 
-        // And GTM should be initialized
+        // And analytics for a page with no school should be loaded
         await waitFor(() => {
-            expect(spyInitializeGTM).toHaveBeenCalled();
+            expect(spyInitializeAnalytics).toHaveBeenCalledWith(null);
         });
-
-        // Portal should be cleared for non-portal pages
-        expect(mockSetPortal).toHaveBeenCalledWith('');
+        spyInitializeAnalytics.mockRestore();
     });
 });

@@ -24,6 +24,14 @@ gtag('set', 'ads_data_redaction', true);
 gtag('set', 'url_passthrough', false);
 /* eslint-enable camelcase */
 
+// The analytics helper, whether loaded by GTM or by initializeEventCapture, reads these when it loads
+window.dataLayer.push({
+    'os.app': 'os-webview',
+    // Deployed builds set RELEASE_VERSION to the release tag, and webpack sets it to
+    // 'development' in every other build
+    'os.release_id': process.env.RELEASE_VERSION
+});
+
 window.oxDLF ||= [];
 
 let gtmInitialized = false;
@@ -62,12 +70,18 @@ function stubFacebookPixel(w) {
 /**
  * Initialize Google Tag Manager
  * This should be called conditionally based on portal K12 status
+ * @param {string | null} organizationId - the school's Salesforce Account ID, or null for no school
  */
-export function initializeGTM() {
+export function initializeGTM(organizationId = null) {
     if (gtmInitialized) {
         return;
     }
     gtmInitialized = true;
+
+    // The analytics helper GTM loads reads the organization when it loads, so it must be set first
+    if (organizationId !== null) {
+        window.dataLayer.push({'os.organization_id': organizationId});
+    }
 
     // Ensure `fbq` exists before GTM's Facebook Pixel tag can fire
     stubFacebookPixel(window);
@@ -105,6 +119,70 @@ export function initializeGTM() {
         window.oxDLF.push({user});
       }
     );
+}
+
+let eventCaptureInitialized = false;
+
+/**
+ * Load event capture without GTM, which normally loads it.
+ * This should be called for K12 portals whose school has a research agreement
+ * @param {string} organizationId - the school's Salesforce Account ID
+ */
+export function initializeEventCapture(organizationId) {
+    if (eventCaptureInitialized) {
+        return;
+    }
+    eventCaptureInitialized = true;
+
+    // Only production sends events to the production RAM
+    const ramOrigin = window.location.hostname === 'openstax.org'
+        ? 'https://ram.openstax.org'
+        : 'https://dev.ram.sandbox.openstax.org';
+
+    // The analytics helper reads these when it loads, so they must be set first
+    window.dataLayer.push({'os.organization_id': organizationId});
+    accountsModel.load().then(
+      (user) => {
+        window.dataLayer.push({'os.user': user});
+
+        // helper.js checks for window.EventCapture (set by standalone.umd.js) only once, when it runs,
+        // and silently skips all event capture if it is missing, so standalone.umd.js must run first.
+        // Scripts added this way run in the order they are added only when not async
+        for (const src of [
+            `${ramOrigin}/quasar/standalone.umd.js`,
+            `${ramOrigin}/analytics/helper.js`
+        ]) {
+            const script = document.createElement('script');
+
+            script.async = false;
+            script.src = src;
+            document.head.appendChild(script);
+        }
+      }
+    );
+}
+
+/**
+ * Load the analytics a page needs: GTM, except that K12 schools get only event capture,
+ * and only when they have a research agreement. Nothing is loaded for a K12 school
+ * without a research agreement.
+ *
+ * Only the first call loads anything, because loaded scripts can't be removed or reconfigured.
+ * That is only correct because readers can't move between a school's portal and other pages
+ * without a full page load: by design, no page outside a portal links into a school's portal,
+ * and links inside a K12 portal are kept in the portal (see rewriteLinks in contexts/portal).
+ * If a page linking to K12 portals is added in the future, then we'll have to prevent SPA navigation into them.
+ * @param {import('~/contexts/portal').SchoolData | null} schoolData
+ *   - null when the page does not belong to a school
+ */
+export function initializeAnalytics(schoolData) {
+    const organizationId = schoolData?.salesforceId ?? null;
+
+    if (schoolData?.industry !== 'K12') {
+        initializeGTM(organizationId);
+    } else if (schoolData.researchAgreementActive) {
+        initializeEventCapture(organizationId);
+    }
 }
 
 export function setContentTags(contentTags) {

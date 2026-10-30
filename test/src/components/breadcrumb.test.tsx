@@ -2,6 +2,7 @@ import React from 'react';
 import {describe, expect, it} from '@jest/globals';
 import {render, screen, waitFor} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import {schoolDataFor} from '~/../../test/helpers/in-portal';
 import userEvent from '@testing-library/user-event';
 import Breadcrumb, {RetraceableLink} from '~/components/breadcrumb/breadcrumb';
 import usePortalContext, {PortalContextProvider} from '~/contexts/portal';
@@ -24,9 +25,12 @@ function Component({name}: {name: string}) {
 }
 
 function SetPortal({portal}: {portal: string}) {
-    const {setPortal} = usePortalContext();
+    const {setPortal, setSchoolData} = usePortalContext();
 
-    React.useEffect(() => setPortal(portal), [setPortal, portal]);
+    React.useEffect(() => {
+        setPortal(portal);
+        setSchoolData(schoolDataFor(true));
+    }, [setPortal, setSchoolData, portal]);
     return null;
 }
 

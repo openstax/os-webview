@@ -3,9 +3,6 @@ import {isEmbedScriptUrl} from '~/components/jsx-helpers/activate-scripts';
 import isSupported from '~/helpers/device';
 import {denyUrls, isIgnoredMessage, isFromDeniedScheme, isFromDeniedUrl} from '~/helpers/exception-filters';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const packageVersion = require('../../package.json').version;
-
 // Sentry-only: it substring-matches these against the whole exception value,
 // which is too broad to share with PostHog. See helpers/exception-filters.
 const ignoreErrors = [
@@ -136,7 +133,9 @@ Sentry.init({
     // let session envelopes through, which skews release health.
     enabled: window.location.hostname === 'openstax.org',
     dsn: 'https://68df3e19624c434eb975dafa316c03ff@o484761.ingest.sentry.io/5691260',
-    release: `osweb@${process.env.RELEASE_VERSION || packageVersion}`,
+    // Deployed builds set RELEASE_VERSION to the release tag, and webpack sets it to
+    // 'development' in every other build
+    release: `osweb@${process.env.RELEASE_VERSION}`,
     integrations: [Sentry.extraErrorDataIntegration()],
     environment: window.location.hostname,
     ignoreErrors,
