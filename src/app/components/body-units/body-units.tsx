@@ -2,6 +2,7 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import Quote from './quote';
 import JITLoad from '~/helpers/jit-load';
+import usePortalContext from '~/contexts/portal';
 
 function Unknown({data, type}: {data: unknown; type: string}) {
     console.warn('Unknown data type', type);
@@ -23,12 +24,13 @@ type CTAData = {
 
 function CTA({data}: {data: CTAData}) {
     const alignment = convertAlignment(data.alignment);
+    const {hrefInPortal} = usePortalContext();
 
     return (
         <div className={`blog-cta ${alignment}`}>
             <h2>{data.heading}</h2>
             <div>{data.description}</div>
-            <a className="btn primary" href={data.buttonHref}>
+            <a className="btn primary" href={hrefInPortal(data.buttonHref)}>
                 {data.buttonText}
             </a>
         </div>

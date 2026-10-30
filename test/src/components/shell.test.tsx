@@ -45,6 +45,10 @@ jest.mock('react-modal', () => ({
 }));
 global.scrollTo = jest.fn();
 
+// The first render in this file loads the app's lazy chunks, and jest transforms
+// them synchronously, so under CPU load it can exceed the default 5s on its own.
+jest.setTimeout(15000);
+
 describe('shell', () => {
     const user = userEvent.setup();
 
@@ -111,8 +115,11 @@ describe('shell', () => {
 
     function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
         jest.spyOn(PC, 'default').mockReturnValue({
+            portal: portalPrefix.slice(1),
             portalPrefix,
+            linkPrefix: isK12Portal ? portalPrefix : '',
             setPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal,
             setIsK12Portal: jest.fn()
@@ -375,8 +382,11 @@ describe('shell', () => {
 
         // Mock portal context with functions that can be tracked
         jest.spyOn(PC, 'default').mockReturnValue({
+            portal: '',
             portalPrefix: '',
+            linkPrefix: '',
             setPortal: mockSetPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: false,
             setIsK12Portal

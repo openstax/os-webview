@@ -3,6 +3,7 @@ import type {K12Data} from './k12-main';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import {useNavigate} from 'react-router-dom';
+import usePortalContext from '~/contexts/portal';
 import './banner.scss';
 
 const subjectLabel = 'Find your subject';
@@ -21,9 +22,10 @@ export default function Banner({data}: {data: K12Data}) {
         [data]
     );
     const navigate = useNavigate();
+    const {hrefInPortal} = usePortalContext();
     const navigateToSelection = React.useCallback<
         React.ChangeEventHandler<HTMLSelectElement>
-    >(({currentTarget}) => navigate(currentTarget.value), [navigate]);
+    >(({currentTarget}) => navigate(hrefInPortal(currentTarget.value)), [navigate, hrefInPortal]);
 
     return (
         <section className="banner">

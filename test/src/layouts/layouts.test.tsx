@@ -4,6 +4,8 @@ import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import LandingLayout from '~/layouts/landing/landing';
 import usePortalContext, {PortalContextProvider} from '~/contexts/portal';
 import '@testing-library/jest-dom';
+import * as PDU from '~/helpers/page-data-utils';
+import footerMenus from '../data/footer-menus';
 
 type Data = Parameters<typeof LandingLayout>[0]['data'];
 type Layout = Exclude<Data, undefined>['layout'];
@@ -92,12 +94,22 @@ describe('layouts/landing', () => {
         const meta = {type};
         const data = {title, layout, meta} as const;
 
+        const realUseDataFromSlug = PDU.useDataFromSlug;
+        const spy = jest
+            .spyOn(PDU, 'useDataFromSlug')
+            .mockImplementation((slug, ...rest) =>
+                slug === 'oxmenus/?placement=footer'
+                    ? footerMenus
+                    : realUseDataFromSlug(slug, ...rest)
+            );
+
         render(<Component data={data} />);
 
         // Find social links by title
         expect(await screen.findAllByTitle(/^OpenStax on .+$/)).toHaveLength(5);
         // Default footer has 17 links + 1 link in layout = 18 links
         expect(await screen.findAllByRole('link')).toHaveLength(19);
+        spy.mockRestore();
     });
     it('renders the flex footer for flex pages', async () => {
         const title = 'some-title';

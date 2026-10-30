@@ -1,8 +1,12 @@
 import type {WindowWithSettings} from './window-settings';
 
+// The first part of paths the server sends to other services, which are never
+// os-webview pages. The portal link rules use these too.
+export const OTHER_SERVICE_PATH_NAMES = ['accounts', 'oxauth', 'blog-feed', 'documents'];
+
 const EXTERNAL = /^([a-z]+:)/;
 const ABSOLUTE_OPENSTAX = new RegExp(
-    `(?:https?://openstax.org|${window.location.origin})(?!/(?:(?:.*/)?books|accounts|oxauth|blog-feed|documents)/)`
+    `(?:https?://openstax.org|${window.location.origin})(?!/(?:(?:.*/)?books|${OTHER_SERVICE_PATH_NAMES.join('|')})/)`
 );
 const MAILTO = /^mailto:(.+)/;
 

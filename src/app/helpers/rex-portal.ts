@@ -1,11 +1,11 @@
 import usePortalContext from '~/contexts/portal';
 
 // This is about making TOC links to Rex work with a portal there.
-// Will probably need to be revisited.
+// Only K12 school portals keep readers in the portal when they go to Rex.
 export function useRexPortalLinkOrNot(link: string) {
-    const {portalPrefix} = usePortalContext();
+    const {portalPrefix, isK12Portal} = usePortalContext();
 
-    if (!portalPrefix) {
+    if (!portalPrefix || !isK12Portal) {
         return link;
     }
     return link.replace('books/', `apps/rex/portal${portalPrefix}/books/`);

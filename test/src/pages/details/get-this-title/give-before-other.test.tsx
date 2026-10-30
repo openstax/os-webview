@@ -1,10 +1,16 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render as originalRender, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import GiveBeforeOther from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-other';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {LanguageContextProvider} from '~/contexts/language';
+import {PortalContextProvider} from '~/contexts/portal';
 import * as TY from '~/pages/details/common/get-this-title-files/give-before-pdf/thank-you-form';
+
+// The dialog reads the portal context
+function render(ui: React.ReactElement) {
+    return originalRender(ui, {wrapper: PortalContextProvider});
+}
 
 type PopupData = Parameters<typeof GiveBeforeOther>[0]['data'];
 
