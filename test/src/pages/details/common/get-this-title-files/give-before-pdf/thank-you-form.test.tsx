@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import {IntlProvider} from 'react-intl';
 import ThankYou from '~/pages/details/common/get-this-title-files/give-before-pdf/thank-you-form';
@@ -169,5 +170,95 @@ describe('ThankYou', () => {
 
         const neverMindLink = screen.getByText(/Never mind, just go to the PDF/i);
         expect(neverMindLink.getAttribute('data-track')).toBeNull();
+    });
+
+    describe('photo and video attachment', () => {
+        beforeEach(() => {
+            jest.spyOn(UserContext, 'default').mockReturnValue({
+                userModel: {}
+            } as ReturnType<typeof UserContext.default>);
+        });
+
+        function renderForm() {
+            return render(
+                <Wrapper>
+                    <ThankYou {...defaultProps} />
+                </Wrapper>
+            );
+        }
+
+        it('posts as multipart form data so a file can travel with the note', () => {
+            const {container} = renderForm();
+
+            expect(container.querySelector('form')).toHaveAttribute(
+                'enctype',
+                'multipart/form-data'
+            );
+        });
+
+        it('offers an optional photo or video upload', () => {
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]');
+
+            expect(
+                screen.getByRole('group', {name: /Optional: Upload a photo or video of yourself/})
+            ).toBeInTheDocument();
+            expect(fileInput).toHaveAttribute('name', 'attachment');
+            expect(fileInput).toHaveAttribute('accept', 'image/*,video/*');
+            expect(fileInput).not.toBeRequired();
+        });
+
+        it('shows the chosen file and lets it be cleared', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+            await user.upload(fileInput, new File(['x'], 'me-with-book.png', {type: 'image/png'}));
+            expect(screen.getByText('me-with-book.png')).toBeInTheDocument();
+
+            await user.click(screen.getByRole('button', {name: 'Clear file'}));
+            expect(screen.queryByText('me-with-book.png')).toBeNull();
+            // The file must not still be in the input, or it would be submitted
+            expect(fileInput.files).toHaveLength(0);
+            expect(fileInput.value).toBe('');
+        });
+
+        it.each([['Enter', '{Enter}'], ['Space', ' ']])(
+            'opens the file picker from the keyboard with %s',
+            async (_name, keys) => {
+                const user = userEvent.setup();
+                const {container} = renderForm();
+                const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+                const openPicker = jest.spyOn(fileInput, 'click');
+
+                screen.getByRole('button', {name: 'Add file'}).focus();
+                await user.keyboard(keys);
+
+                expect(openPicker).toHaveBeenCalledTimes(1);
+            }
+        );
+
+        it('ignores other keys on the Add file button', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+            const openPicker = jest.spyOn(fileInput, 'click');
+
+            screen.getByRole('button', {name: 'Add file'}).focus();
+            await user.keyboard('a');
+
+            expect(openPicker).not.toHaveBeenCalled();
+        });
+
+        it('requires consent, which now covers the use of an uploaded image, voice and name', () => {
+            renderForm();
+
+            const consent = screen.getByRole('checkbox', {
+                name: /grant OpenStax the right to use my image, voice, and name/
+            });
+
+            expect(consent).toBeRequired();
+            expect(consent).toHaveAttribute('name', 'consent_to_share_or_contact');
+        });
     });
 });
