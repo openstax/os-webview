@@ -20,9 +20,10 @@ const statesToInclude = ['live', 'new_edition_available', 'coming_soon'];
 export const filterLiveBooks = (entry: Book) =>
     statesToInclude.includes(entry.book_state);
 
-function BookToSalesforceBook(book: Book) {
+function bookToSalesforceBook(book: Book) {
     return {
         text: book.salesforce_name,
+        title: book.title,
         value: book.salesforce_abbreviation,
         comingSoon: book.book_state === 'coming_soon',
         subjects: book.subjects,
@@ -30,22 +31,35 @@ function BookToSalesforceBook(book: Book) {
     };
 }
 
-export type SalesforceBook = ReturnType<typeof BookToSalesforceBook>;
+export type SalesforceBook = ReturnType<typeof bookToSalesforceBook> & {
+    searchableTitles?: string[];
+};
 
 export function salesforceTitles(books: Book[]) {
-    const seenTitles: {[key: string]: boolean} = {};
+    const titlesByAbbreviation = new Map<string, SalesforceBook>();
 
-    return books
-        .filter(filterLiveBooks)
-        .filter((book) => {
-            const abbrev = book.salesforce_abbreviation;
-            const seen = abbrev in seenTitles;
+    books.filter(filterLiveBooks).forEach((book) => {
+        const abbrev = book.salesforce_abbreviation;
 
-            seenTitles[abbrev] = true;
-            return abbrev && !seen;
-        })
-        .map(BookToSalesforceBook)
-        .sort((a, b) => (a.text < b.text ? -1 : 1));
+        if (!abbrev) {
+            return;
+        }
+
+        const existing = titlesByAbbreviation.get(abbrev);
+
+        if (existing) {
+            existing.searchableTitles = [
+                ...(existing.searchableTitles ?? [existing.title]),
+                book.title
+            ];
+        } else {
+            titlesByAbbreviation.set(abbrev, bookToSalesforceBook(book));
+        }
+    });
+
+    return [...titlesByAbbreviation.values()].sort((a, b) =>
+        a.text < b.text ? -1 : 1
+    );
 }
 
 export function subjects(sfTitles: SalesforceBook[]) {

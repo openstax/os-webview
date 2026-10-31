@@ -34,7 +34,106 @@ jest.mock('~/models/books', () => {
             salesforce_name: 'Biology',
             slug: 'biology',
             subjects: ['Science'],
-            title: 'Biology',
+            title: 'Biology 2e',
+            content_warning_text: ''
+        },
+        {
+            id: 9,
+            book_state: 'live',
+            cover_url: 'http://example.com/medsurg.jpg',
+            salesforce_abbreviation: 'Medical-Surgical',
+            salesforce_name: 'Medical-Surgical Nursing',
+            slug: 'medical-surgical',
+            subjects: ['Nursing'],
+            title: 'Medical-Surgical Nursing',
+            content_warning_text: ''
+        },
+        {
+            id: 10,
+            book_state: 'live',
+            cover_url: 'http://example.com/maternal.jpg',
+            salesforce_abbreviation: 'Maternal Newborn',
+            salesforce_name: 'Maternal Newborn Nursing',
+            slug: 'maternal-newborn',
+            subjects: ['Nursing'],
+            title: 'Maternal-Newborn Nursing',
+            content_warning_text: ''
+        },
+        {
+            id: 11,
+            book_state: 'live',
+            cover_url: 'http://example.com/calc1.jpg',
+            salesforce_abbreviation: 'Calculus Volume 1',
+            salesforce_name: 'Calculus Volume 1',
+            slug: 'calculus-volume-1',
+            subjects: ['Math'],
+            title: 'Calculus Volume 1',
+            content_warning_text: ''
+        },
+        {
+            id: 12,
+            book_state: 'live',
+            cover_url: 'http://example.com/calc2.jpg',
+            salesforce_abbreviation: 'Calculus Volume 2',
+            salesforce_name: 'Calculus Volume 2',
+            slug: 'calculus-volume-2',
+            subjects: ['Math'],
+            title: 'Calculus Volume 2',
+            content_warning_text: ''
+        },
+        {
+            id: 13,
+            book_state: 'live',
+            cover_url: 'http://example.com/chem.jpg',
+            salesforce_abbreviation: 'Chemistry',
+            salesforce_name: 'Chemistry',
+            slug: 'chemistry',
+            subjects: ['Science'],
+            title: 'Chemistry 2e',
+            content_warning_text: ''
+        },
+        {
+            id: 14,
+            book_state: 'live',
+            cover_url: 'http://example.com/orgchem.jpg',
+            salesforce_abbreviation: 'Organic Chemistry',
+            salesforce_name: 'Organic Chemistry',
+            slug: 'organic-chemistry',
+            subjects: ['Science'],
+            title: 'Organic Chemistry',
+            content_warning_text: ''
+        },
+        {
+            id: 15,
+            book_state: 'live',
+            cover_url: 'http://example.com/university-physics-1.jpg',
+            salesforce_abbreviation: 'University Physics (Calc)',
+            salesforce_name: 'University Physics',
+            slug: 'university-physics-volume-1',
+            subjects: ['Science'],
+            title: 'University Physics Volume 1',
+            content_warning_text: ''
+        },
+        {
+            id: 16,
+            book_state: 'live',
+            cover_url: 'http://example.com/university-physics-2.jpg',
+            salesforce_abbreviation: 'University Physics (Calc)',
+            salesforce_name: 'University Physics',
+            slug: 'university-physics-volume-2',
+            subjects: ['Science'],
+            title: 'University Physics Volume 2',
+            content_warning_text: ''
+        },
+        {
+            id: 17,
+            book_state: 'live',
+            cover_url: 'http://example.com/university-physics-3.jpg',
+            salesforce_abbreviation: 'University Physics (Calc)',
+            salesforce_name: 'University Physics',
+            slug: 'university-physics-volume-3',
+            subjects: ['Science'],
+            title: 'University Physics Volume 3',
             content_warning_text: ''
         },
         {
@@ -398,6 +497,62 @@ describe('book-selector', () => {
             const invalidMsg = document.querySelector('.invalid-message');
 
             expect(invalidMsg?.textContent).toBe('');
+        });
+    });
+
+    describe('search matching', () => {
+        const bookNames = () =>
+            screen.queryAllByRole('checkbox').map((c) =>
+                c.getAttribute('aria-label') ?? c.textContent
+            );
+
+        async function search(text: string) {
+            render(<Component />);
+            await user.type(await screen.findByRole('searchbox'), text);
+            await screen.findAllByRole('checkbox');
+        }
+
+        it.each([
+            ['med surg', ['Medical-Surgical Nursing']],
+            ['Med-Surg', ['Medical-Surgical Nursing']],
+            ['medical surgical', ['Medical-Surgical Nursing']],
+            ['Biology 2e', ['Biology']],
+            ['Biology 3e', ['Biology']],
+            ['Maternal-Newborn', ['Maternal Newborn Nursing']],
+            ['chem', ['Chemistry', 'Organic Chemistry']],
+            ['calculus volume 1', ['Calculus Volume 1']],
+            ['university physics volume 2', ['University Physics']],
+            ['university physics volume 3', ['University Physics']],
+            ['algebra', ['Álgebra']]
+        ])('finds %s', async (query, expected) => {
+            await search(query);
+            expect(bookNames()).toEqual(expected);
+        });
+
+        it('treats an edition-only search as empty', async () => {
+            render(<Component />);
+            await user.type(await screen.findByRole('searchbox'), '2e');
+            expect(screen.getByRole('status').textContent).toBe('');
+            expect(screen.queryByRole('checkbox')).toBeNull();
+        });
+
+        it('shows a message and restores the list with Clear search', async () => {
+            render(<Component />);
+            await user.type(await screen.findByRole('searchbox'), 'zzzz');
+            await screen.findByText('No books match "zzzz".', {selector: 'p'});
+            expect(screen.getByRole('status').textContent).toBe(
+                'No books match "zzzz".'
+            );
+            expect(screen.queryByText('Math / Matemáticas')).toBeNull();
+
+            await user.click(
+                screen.getByRole('button', {name: 'Clear search'})
+            );
+            await screen.findByText('Math / Matemáticas');
+            expect(screen.getByRole('status').textContent).toBe('');
+            expect(
+                (screen.getByRole('searchbox') as HTMLInputElement).value
+            ).toBe('');
         });
     });
 });

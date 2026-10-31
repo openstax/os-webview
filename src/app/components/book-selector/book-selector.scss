@@ -119,6 +119,27 @@
         padding-top: 0.4rem;
     }
 
+    .no-matches {
+        display: grid;
+        grid-gap: 0.8rem;
+        justify-items: start;
+
+        p {
+            margin: 0;
+        }
+
+        button {
+            @include button-reset();
+
+            background: none;
+            border: 0;
+            color: text-color(link);
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+        }
+    }
+
     .two-columns {
         display: grid;
         grid-gap: 1rem;
