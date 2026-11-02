@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import {IntlProvider} from 'react-intl';
 import ThankYou from '~/pages/details/common/get-this-title-files/give-before-pdf/thank-you-form';
+import {FileButton} from '~/pages/errata-form/form/FileUploader';
 import * as UserContext from '~/contexts/user';
 
 // Mock SchoolSelector to avoid needing LanguageContext and MainClassContext
@@ -278,6 +279,17 @@ describe('ThankYou', () => {
             await user.upload(fileInput, exact);
             expect(screen.queryByRole('alert')).toBeNull();
             expect(screen.getByText('long-video.mp4')).toBeInTheDocument();
+        });
+
+        it('takes any file when the button has no accepted types or size limit', async () => {
+            const user = userEvent.setup();
+            const {container} = render(<FileButton name="anything" />);
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+            await user.upload(fileInput, new File(['x'], 'notes.pdf', {type: 'application/pdf'}));
+
+            expect(screen.getByText('notes.pdf')).toBeInTheDocument();
+            expect(screen.queryByRole('alert')).toBeNull();
         });
 
         it.each([['Enter', '{Enter}'], ['Space', ' ']])(

@@ -36,15 +36,18 @@ export function FileButton({name, accept, maxBytes}: FileButtonProps) {
 
     function setFile(event: React.ChangeEvent<HTMLInputElement>) {
         const input = event.target;
-        const file = input.files?.[0];
-        const newProblem = file ? problemWithFile(file, accept, maxBytes) : '';
+        // The list is empty if the picker was cancelled, which is no problem
+        const newProblem = Array.from(
+            input.files as FileList,
+            (file) => problemWithFile(file, accept, maxBytes)
+        ).join('');
 
         setProblem(newProblem);
         if (newProblem) {
             // A rejected file must not be submitted with the form
             input.value = '';
         }
-        updateFilePath(newProblem ? '' : input.value.replace(/.*\\/, ''));
+        updateFilePath(input.value.replace(/.*\\/, ''));
     }
 
     function clearFile() {
