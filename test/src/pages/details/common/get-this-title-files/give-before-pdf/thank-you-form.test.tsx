@@ -204,7 +204,10 @@ describe('ThankYou', () => {
                 screen.getByRole('group', {name: /Optional: Upload a photo or video of yourself/})
             ).toBeInTheDocument();
             expect(fileInput).toHaveAttribute('name', 'attachment');
-            expect(fileInput).toHaveAttribute('accept', 'image/*,video/*');
+            expect(fileInput).toHaveAttribute(
+                'accept',
+                '.jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.mp4,.mov,.m4v,.webm'
+            );
             expect(fileInput).not.toBeRequired();
         });
 
@@ -221,6 +224,60 @@ describe('ThankYou', () => {
             // The file must not still be in the input, or it would be submitted
             expect(fileInput.files).toHaveLength(0);
             expect(fileInput.value).toBe('');
+        });
+
+        it('turns away a type of file the CMS would reject, instead of submitting it', async () => {
+            const user = userEvent.setup({applyAccept: false});
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+            await user.upload(fileInput, new File(['<svg/>'], 'me.SVG', {type: 'image/svg+xml'}));
+
+            expect(screen.getByRole('alert')).toHaveTextContent(
+                /That type of file can't be attached. Choose a JPG, JPEG, PNG.*WEBM file./
+            );
+            expect(fileInput.files).toHaveLength(0);
+            expect(screen.queryByText('me.SVG')).toBeNull();
+            expect(screen.getByRole('button', {name: 'Add file'})).toBeInTheDocument();
+        });
+
+        it('accepts an allowed extension in any letter case', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+            await user.upload(fileInput, new File(['x'], 'IMG_0001.HEIC', {type: ''}));
+
+            expect(screen.getByText('IMG_0001.HEIC')).toBeInTheDocument();
+            expect(screen.queryByRole('alert')).toBeNull();
+        });
+
+        it('turns away a file over the CMS size limit, with the limit in the message', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+            const big = new File(['x'], 'long-video.mp4', {type: 'video/mp4'});
+
+            Object.defineProperty(big, 'size', {value: 100 * 1024 * 1024 + 1});
+            await user.upload(fileInput, big);
+
+            expect(screen.getByRole('alert')).toHaveTextContent('That file is too large. The limit is 100 MB.');
+            expect(fileInput.files).toHaveLength(0);
+        });
+
+        it('takes a file of exactly the limit, and drops the message once a good file is chosen', async () => {
+            const user = userEvent.setup({applyAccept: false});
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+            const exact = new File(['x'], 'long-video.mp4', {type: 'video/mp4'});
+
+            await user.upload(fileInput, new File(['x'], 'notes.pdf', {type: 'application/pdf'}));
+            expect(screen.getByRole('alert')).toBeInTheDocument();
+
+            Object.defineProperty(exact, 'size', {value: 100 * 1024 * 1024});
+            await user.upload(fileInput, exact);
+            expect(screen.queryByRole('alert')).toBeNull();
+            expect(screen.getByText('long-video.mp4')).toBeInTheDocument();
         });
 
         it.each([['Enter', '{Enter}'], ['Space', ' ']])(

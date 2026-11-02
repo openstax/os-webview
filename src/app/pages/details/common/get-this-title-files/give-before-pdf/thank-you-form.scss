@@ -71,6 +71,12 @@
             font-weight: bold;
         }
 
+        .file-problem {
+            @include set-font(body-regular);
+
+            color: os-color(red);
+        }
+
         .file-button {
             @include file-button();
 

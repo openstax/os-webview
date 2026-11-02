@@ -7,6 +7,15 @@ import {FileButton} from '~/pages/errata-form/form/FileUploader';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPaperclip} from '@fortawesome/free-solid-svg-icons/faPaperclip';
 
+// What the CMS stores for a thank you note (openstax-cms donations/views.py). It
+// rejects anything else, and the whole note with it, and this form posts through
+// a hidden iframe, so it can't see that and would show the thank-you either way.
+const ATTACHMENT_ACCEPT = [
+    '.jpg', '.jpeg', '.png', '.gif', '.webp', '.heic', '.heif',
+    '.mp4', '.mov', '.m4v', '.webm'
+].join(',');
+const ATTACHMENT_MAX_BYTES = 100 * 1024 * 1024;
+
 function FormWithAfterSubmit({
     afterSubmit,
     responseId = 'form-response',
@@ -155,7 +164,11 @@ export default function ThankYou({
                     Optional: Upload a photo or video of yourself to share
                     alongside your thank you note. It really means a lot!
                 </div>
-                <FileButton name="attachment" accept="image/*,video/*" />
+                <FileButton
+                    name="attachment"
+                    accept={ATTACHMENT_ACCEPT}
+                    maxBytes={ATTACHMENT_MAX_BYTES}
+                />
             </div>
             <div className="consent-checkbox">
                 <label>
