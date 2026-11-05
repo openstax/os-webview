@@ -4,8 +4,10 @@ import ProgressRing from '~/components/progress-ring/progress-ring';
 import useScrollProgress from './use-progress';
 import {ShareJsx} from '~/components/share/share';
 import React, {useState, useRef} from 'react';
-import usePageData from '~/helpers/use-page-data';
+import {FetchStateType} from '@openstax/ts-utils/fetch';
+import {usePageDataFetchState} from '~/helpers/use-page-data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import usePortalContext from '~/contexts/portal';
 import {
     setPageTitleAndDescriptionFromBookData,
     BookData
@@ -42,7 +44,9 @@ export type ArticleData = BookData & {
 };
 
 function ArticleLoader({slug, onLoad}: ArticleArgs) {
-    const data = usePageData<ArticleData>(slug, true);
+    const pageData = usePageDataFetchState<ArticleData>(slug, true);
+    // Only this article's loaded data, so the previous article's never sets the title or reaches onLoad
+    const data = pageData.type === FetchStateType.SUCCESS ? pageData.data : undefined;
 
     React.useEffect(() => setPageTitleAndDescriptionFromBookData(data), [data]);
 
@@ -64,13 +68,15 @@ function ArticleLoader({slug, onLoad}: ArticleArgs) {
 }
 
 function ArticleNotFound() {
+    const {linkPrefix} = usePortalContext();
+
     return (
         <div className="text-content article-not-found">
             <h1>This post is no longer available</h1>
             <p>
                 The story you&rsquo;re looking for may have been moved or taken
                 down. Browse our latest blog posts below, or head back to the{' '}
-                <a href="/blog">OpenStax blog</a>.
+                <a href={`${linkPrefix}/blog`}>OpenStax blog</a>.
             </p>
         </div>
     );

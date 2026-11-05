@@ -19,6 +19,21 @@ describe('stripOpenStaxDomain', () => {
 
         expect(linkHelper.stripOpenStaxDomain(url)).toBe(url);
     });
+    it('leaves paths served by other services', () => {
+        const urls = [
+            'https://openstax.org/accounts/i/login',
+            'https://openstax.org/oxauth/logout',
+            'https://openstax.org/blog-feed/',
+            'https://openstax.org/documents/file.pdf'
+        ];
+
+        urls.forEach((url) => expect(linkHelper.stripOpenStaxDomain(url)).toBe(url));
+    });
+    it('strips pages whose names only start with a service name', () => {
+        const url = 'https://openstax.org/accounts-help';
+
+        expect(linkHelper.stripOpenStaxDomain(url)).toBe('/accounts-help');
+    });
     it('recognizes external', () => {
         const urls = [
             `${window.location.origin}/oxauth/logout`,

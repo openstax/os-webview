@@ -1,8 +1,14 @@
 import React from 'react';
 import {describe, expect, it} from '@jest/globals';
-import {render, screen, waitFor} from '@testing-library/preact';
+import {render as originalRender, screen, waitFor} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import BodyUnit, {UnitType} from '~/components/body-units/body-units';
+import {PortalContextProvider} from '~/contexts/portal';
+
+// Body units read the portal context
+function render(ui: React.ReactElement) {
+    return originalRender(ui, {wrapper: PortalContextProvider});
+}
 
 // The PDF library is not jestable
 const mockDocument = jest.fn();

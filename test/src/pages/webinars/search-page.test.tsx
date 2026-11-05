@@ -6,11 +6,14 @@ import SearchPage from '~/pages/webinars/search-page/search-page';
 import * as UFD from '~/helpers/use-data';
 import {upcomingWebinar} from '../../data/webinars';
 import * as UWC from '~/pages/webinars/webinar-context';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 
-function Component({term = ''}: {term?: string}) {
+function Component({path}: {path: string}) {
     return (
-        <MemoryRouter initialEntries={[`/webinars/search?q=${term}`]}>
-            <SearchPage />
+        <MemoryRouter initialEntries={[path]}>
+            <ShellContextProvider>
+                <SearchPage />
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }
@@ -25,7 +28,12 @@ jest.spyOn(UWC, 'default').mockReturnValue({
     latestWebinars: []
 });
 
-jest.mock('~/helpers/use-data', () => jest.fn());
+// Only the default export is mocked; the shell's shared data context uses usePromise
+jest.mock('~/helpers/use-data', () => ({
+    ...jest.requireActual('~/helpers/use-data'),
+    __esModule: true,
+    default: jest.fn()
+}));
 const mockUseFetchedData = jest.spyOn(UFD, 'default');
 
 describe('webinar search page', () => {
@@ -35,13 +43,13 @@ describe('webinar search page', () => {
 
     it('short circuits while waiting for webinars to return', () => {
         mockUseFetchedData.mockReturnValue(undefined);
-        render(<Component term='waiting' />);
+        render(<Component path='/webinars/search?q=waiting' />);
 
         expect(screen.queryByText('matching')).toBeNull();
     });
     it('displays a message when search returns no results', () => {
         mockUseFetchedData.mockReturnValue([]);
-        render(<Component term='xnotfoundx' />);
+        render(<Component path='/webinars/search?q=xnotfoundx' />);
 
         expect(screen.getByText('No matching webinars found')).toBeTruthy();
     });
@@ -51,17 +59,13 @@ describe('webinar search page', () => {
             postProcess?.(upcomingWebinar);
             return [upcomingWebinar];
         });
-        render(<Component term='something' />);
+        render(<Component path='/webinars/search?q=something' />);
 
         expect(screen.queryByText('No matching webinars found')).toBeNull();
     });
     it('requests webinars without sort param when sort=relevance (default)', () => {
         mockUseFetchedData.mockReturnValue([]);
-        render(
-            <MemoryRouter initialEntries={['/webinars/search?q=test']}>
-                <SearchPage />
-            </MemoryRouter>
-        );
+        render(<Component path='/webinars/search?q=test' />);
 
         expect(mockUseFetchedData).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -72,11 +76,7 @@ describe('webinar search page', () => {
     });
     it('requests webinars with sort=newest param when specified in URL', () => {
         mockUseFetchedData.mockReturnValue([]);
-        render(
-            <MemoryRouter initialEntries={['/webinars/search?q=test&sort=newest']}>
-                <SearchPage />
-            </MemoryRouter>
-        );
+        render(<Component path='/webinars/search?q=test&sort=newest' />);
 
         expect(mockUseFetchedData).toHaveBeenCalledWith(
             expect.objectContaining({

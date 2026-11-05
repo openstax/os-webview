@@ -2,6 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEnvelopeOpen} from '@fortawesome/free-regular-svg-icons/faEnvelopeOpen';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import usePortalContext from '~/contexts/portal';
 
 import './sign-up.scss';
 
@@ -18,6 +19,8 @@ export default function SignUp({
     submitUrl,
     buttonText
 }: SignUpProps) {
+    const {hrefInPortal} = usePortalContext();
+
     return (
         <section className="sign-up green">
             <div className="content">
@@ -27,7 +30,7 @@ export default function SignUp({
                 />
                 <h2>{heading}</h2>
                 <RawHTML className="contact" html={contactHtml} />
-                <a className="btn primary" href={submitUrl}>
+                <a className="btn primary" href={hrefInPortal(submitUrl)}>
                     {buttonText}
                 </a>
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Carousel from '~/components/carousel/carousel';
 import useWindowContext from '~/contexts/window';
+import usePortalContext from '~/contexts/portal';
 import './carousel-section.scss';
 
 export default function CarouselSection({
@@ -14,6 +15,7 @@ export default function CarouselSection({
     minWidth: number;
 }>) {
     const {innerWidth} = useWindowContext();
+    const {hrefInPortal} = usePortalContext();
     const ref = React.useRef<HTMLDivElement & {base: Element}>(null);
     const [atATime, setAtATime] = React.useState(1);
 
@@ -32,7 +34,7 @@ export default function CarouselSection({
                 <h2>{heading}</h2>
                 <div>{description}</div>
             </div>
-            <a className="btn primary" href={linkUrl}>
+            <a className="btn primary" href={hrefInPortal(linkUrl)}>
                 {linkText}
             </a>
             <Carousel hoverTextThing={thing} ref={ref} atATime={atATime}>

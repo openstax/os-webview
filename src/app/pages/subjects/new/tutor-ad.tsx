@@ -1,6 +1,7 @@
 import React from 'react';
 import useSubjectsContext, {ImageData} from './context';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import usePortalContext from '~/contexts/portal';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import './tutor-ad.scss';
 
@@ -20,6 +21,7 @@ export function TutorAdThatTakesData({
     linkText
 }: TutorValue) {
     const optimizedImage = useOptimizedImage(image?.file, 400);
+    const {hrefInPortal} = usePortalContext();
 
     return (
         <section className="tutor-ad">
@@ -27,7 +29,7 @@ export function TutorAdThatTakesData({
                 <h2>{heading}</h2>
                 <img role="presentation" src={optimizedImage} />
                 <RawHTML html={adHtml} />
-                <a data-analytics-link className="btn primary" href={linkHref}>
+                <a data-analytics-link className="btn primary" href={hrefInPortal(linkHref)}>
                     {linkText}
                 </a>
             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {LanguageContextProvider} from '~/contexts/language';
+import {PortalContextProvider} from '~/contexts/portal';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import {TableResourceCell} from '~/pages/flex-page/blocks/TableResourceCell';
 import type {ResourceRefResolution} from '~/pages/flex-page/blocks/table-resource-links-utils';
@@ -26,7 +27,9 @@ jest.mock('~/pages/details/common/track-link', () => ({
 function Wrap({children}: React.PropsWithChildren) {
     return (
         <MemoryRouter initialEntries={['/some-flex-page']}>
-            <LanguageContextProvider>{children}</LanguageContextProvider>
+            <PortalContextProvider>
+                <LanguageContextProvider>{children}</LanguageContextProvider>
+            </PortalContextProvider>
         </MemoryRouter>
     );
 }

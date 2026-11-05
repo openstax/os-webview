@@ -25,6 +25,7 @@
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@openstax/experiments": "^1.0.2",
         "@openstax/flex-page-renderer": "https://github.com/openstax/flex-pages.git#renderer-1.1.24",
+        "@openstax/ts-utils": "^1.48.2",
         "@sentry/react": "^10",
         "@types/react-modal": "^3.16.3",
         "add-to-calendar-button-react": "^2.14.0",
@@ -109,6 +110,7 @@
         "moduleNameMapper": {
             "\\.s?css$": "<rootDir>/__mocks__/styleMock.js",
             "^@openstax/flex-page-renderer/(.*)$": "<rootDir>/node_modules/@openstax/flex-page-renderer/dist/cjs/$1",
+            "^@openstax/ts-utils/(.*)$": "<rootDir>/node_modules/@openstax/ts-utils/dist/cjs/$1",
             "^~/(.*)": "<rootDir>/src/app/$1",
             "settings": "<rootDir>/src/test-settings.js",
             "^react$": "preact/compat",

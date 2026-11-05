@@ -2,6 +2,7 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import FAQSection from '~/components/faq-section/faq-section';
 import BookTile from '~/components/book-tile/book-tile';
+import usePortalContext from '~/contexts/portal';
 import './books.scss';
 import {K12SubjectData} from './subject';
 
@@ -35,11 +36,13 @@ function AboutTheBooks({data}: {data: K12SubjectData}) {
 }
 
 function AdoptionBox({data}: {data: K12SubjectData}) {
+    const {hrefInPortal} = usePortalContext();
+
     return (
         <div className="adoption-box boxed">
             <h2>{data.adoptionHeading}</h2>
             <RawHTML html={data.adoptionText} />
-            <a href={data.adoptionLink} className="btn primary" data-analytics-link>
+            <a href={hrefInPortal(data.adoptionLink)} className="btn primary" data-analytics-link>
                 {data.adoptionLinkText}
             </a>
         </div>

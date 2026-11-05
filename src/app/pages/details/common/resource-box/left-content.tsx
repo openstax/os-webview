@@ -1,5 +1,6 @@
 import React from 'react';
 import useUserContext from '~/contexts/user';
+import usePortalContext from '~/contexts/portal';
 import {FormattedMessage} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
@@ -119,6 +120,7 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
     );
     const routeVariant = useVariant();
     const nudgeVariant = variant ?? routeVariant;
+    const {hrefInPortal} = usePortalContext();
     const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
@@ -138,7 +140,7 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
         <React.Fragment>
             <a
                 className='left-button'
-                href={model.link.url}
+                href={hrefInPortal(model.link.url)}
                 data-local={model.iconType === 'lock'}
                 onClick={openDialog}
                 data-track={model.heading}

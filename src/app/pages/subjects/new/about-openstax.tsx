@@ -1,6 +1,7 @@
 import React from 'react';
 import useSubjectsContext, {ImageData} from './context';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import usePortalContext from '~/contexts/portal';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import './about-openstax.scss';
 
@@ -28,7 +29,8 @@ export default function AboutOpenStax({
         linkHref: buttonUrl,
         image: {file: imgSrc}
     } = aboutOs;
-    const url = forceButtonUrl || buttonUrl;
+    const {hrefInPortal} = usePortalContext();
+    const url = hrefInPortal(forceButtonUrl || buttonUrl);
     const text = forceButtonText || buttonText;
     const optimizedImage = useOptimizedImage(imgSrc, 400);
 

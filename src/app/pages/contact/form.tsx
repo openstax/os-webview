@@ -4,6 +4,7 @@ import DropdownSelect from '~/components/select/drop-down/drop-down';
 import {useNavigate, useLocation} from 'react-router-dom';
 import { FileButton } from '../errata-form/form/FileUploader';
 import useUserContext from '~/contexts/user';
+import usePortalContext from '~/contexts/portal';
 import './form.scss';
 
 type SetSubmitted = React.Dispatch<React.SetStateAction<boolean>>;
@@ -79,16 +80,17 @@ function useIsEmbedded() {
 function useAfterSubmit(setSubmitted?: SetSubmitted) {
     const navigate = useNavigate();
     const isEmbedded = useIsEmbedded();
+    const {linkPrefix} = usePortalContext();
 
     return React.useCallback(
         () => {
             if (isEmbedded) {
                 (setSubmitted as SetSubmitted)(true); // the embedded form passes it
             } else {
-                navigate('/confirmation/contact');
+                navigate(`${linkPrefix}/confirmation/contact`);
             }
         },
-        [navigate, isEmbedded, setSubmitted]
+        [navigate, isEmbedded, setSubmitted, linkPrefix]
     );
 }
 

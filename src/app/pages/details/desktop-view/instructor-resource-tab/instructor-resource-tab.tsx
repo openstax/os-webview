@@ -14,6 +14,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import {usePartnerFeatures} from '../../common/hooks';
 import useUserContext, {UserStatus} from '~/contexts/user';
 import useDetailsContext, {ContextValues} from '~/pages/details/context';
+import usePortalContext from '~/contexts/portal';
 import Promo from '../promo';
 import './instructor-resource-tab.scss';
 
@@ -56,6 +57,7 @@ function FreeStuff({
 
 function Webinar() {
     const {webinarContent} = useDetailsContext();
+    const {hrefInPortal} = usePortalContext();
 
     if (!webinarContent?.content) {
         return null;
@@ -66,7 +68,7 @@ function Webinar() {
     const blurb = webinarContent.content.content;
 
     return (
-        <a href={url} className="webinars">
+        <a href={hrefInPortal(url)} className="webinars">
             <div className="icon-cell">
                 <FontAwesomeIcon icon={faDesktop} />
             </div>
