@@ -1,6 +1,6 @@
 .DS_Store
 src/settings.js
-node_modules/
+node_modules
 /dev/
 /dist/
 coverage/
@@ -8,4 +8,7 @@ coverage/
 yarn-error.log
 .idea
 Brewfile.lock.json
+
+# Local tooling and secrets, never committed
 .env
+.claude/

@@ -4,6 +4,7 @@ import RawHTML from '~/components/jsx-helpers/raw-html';
 import AccordionGroup from '~/components/accordion-group/accordion-group';
 import {ContentBlockRoot, type BlockData} from '@openstax/flex-page-renderer/ContentBlockRoot';
 import * as blocks from '@openstax/flex-page-renderer/blocks/index';
+import {tableBlockEntry} from './TableResourceLinksBlock';
 import {Image, type ImageFields} from '@openstax/flex-page-renderer/components/Image';
 import './FAQBlock.scss';
 
@@ -14,6 +15,11 @@ type FAQImageItem = {id: string; type: 'image'; value: {image: ImageFields; alt_
 type FAQContentItem = FAQImageItem | BlockData<typeof blocks>[number];
 
 const isFAQImage = (item: FAQContentItem): item is FAQImageItem => item.type === 'image';
+
+// Same override the page-level block map applies: without it a table inside
+// an FAQ item renders the renderer's stock TableBlock and its resource_ref
+// cells never resolve past the CMS's "View on book page" fallback.
+const faqBlocks = {...blocks, table: tableBlockEntry};
 
 export interface FAQBlockConfig {
     id: string;
@@ -38,7 +44,7 @@ export function FAQBlock({data}: {data: FAQBlockConfig}): React.ReactElement {
                 <RawHTML html={d.value.answer} />
                 {(d.value.content ?? []).map((item) => isFAQImage(item)
                     ? <Image key={item.id} image={item.value.image} alt={item.value.alt_text} />
-                    : <ContentBlockRoot key={item.id} data={[item]} blocks={blocks} />)}
+                    : <ContentBlockRoot key={item.id} data={[item]} blocks={faqBlocks} />)}
             </>
         }))
     , [data]);

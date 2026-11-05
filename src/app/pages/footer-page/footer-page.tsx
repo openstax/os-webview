@@ -46,11 +46,6 @@ export default function LoadFooterPage() {
     const slug = `pages${slugEnd}`;
     const data = usePageData<PageData>(slug);
 
-    React.useLayoutEffect(
-        () => window.scrollTo(0, 0),
-        [pathname]
-    );
-
     if (!data) {
         return null;
     }

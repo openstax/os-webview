@@ -2,7 +2,6 @@ import adoptionFormData from '../src/data/adoption-form';
 import allBooksData from '../src/data/all-books.json';
 import amazonBlurb from '../src/data/amazon-blurb';
 import algebraData from '../src/data/details-college-algebra';
-import assignableData from '../src/data/assignable.json';
 import biologyData from '../src/data/details-biology-2e';
 import blogArticleData from '../src/data/blog-article';
 import blogCollection from '../src/data/blogcollection';
@@ -13,18 +12,17 @@ import booksForAnalyticsData from '../src/data/books-for-analytics';
 import bookTitleData from '../src/data/book-titles';
 import buyprintData from '../src/data/buyprint';
 import chemistryData from '../src/data/chemistry-atoms-first.json';
+import donationLinksData from '../src/data/donation-links';
 import donationPopupData from '../src/data/donation-popup';
 import errataData from '../src/data/errata';
 import errataBookData from '../src/data/errata-book';
 import errata7199 from '../src/data/errata-7199';
 import errataSummary from '../src/data/errata-summary';
 import errataResources from '../src/data/errata-resources';
-import faq from '../src/data/faq';
 import flags from '../src/data/flags';
 import footerData from '../src/data/footer';
 import formHeadings from '../src/data/form-headings';
 import globalReachData from '../src/data/global-reach';
-import impact from '../src/data/impact';
 import institutionalPartnershipData from '../src/data/institutional-partnership.json';
 import kineticData from '../src/data/kinetic';
 import newSubjectsData from '../src/data/new-subjects';
@@ -32,9 +30,6 @@ import openstaxHomepageData from '../src/data/openstax-homepage';
 import osNewsData from '../src/data/openstax-news-detail';
 import pageData from '../src/data/partners';
 import polishData from '../src/data/details-polish';
-import pressData from '../src/data/press';
-import pressArticleData from '../src/data/press-article';
-import researchData from '../src/data/research';
 import renewalData from '../src/data/renewal';
 import resourcesData from '../src/data/resources';
 import rolesData from '../src/data/roles';
@@ -59,7 +54,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isAlgebra = (/v2\/pages\/(39|81)/).test(args[0]);
     const isAllBooks = (/book_subjects/).test(args[0]);
     const isAmazonBlurb = args[0].endsWith('snippets/amazonbookblurb/');
-    const isAssignable = args[0].endsWith('/assignable/?format=json');
     const isBiology = (/v2\/pages\/207/).test(args[0]);
     const isBlogPinned = (/pin_to_top=true/).test(args[0]);
     const isBlogMoreStories = (/pin_to_top=false/).test(args[0]);
@@ -70,19 +64,18 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isBookTitles = args[0].endsWith('pages/?type=books.Book&fields=title,id,book_state,promote_snippet&limit=250');
     const isBuyprint = args[0].includes('buyprint');
     const isChemistry = args[0].endsWith('pages/93/?format=json');
+    const isDonationLinks = args[0].includes('donation-links');
     const isDonationPopup = args[0].includes('donation-popup');
     const isErrata = (/pages\/errata\//).test(args[0]);
     const isErrataBook = (/errata\/\?book_title/).test(args[0]);
     const isErrata7199 = (/errata[?/]7199/).test(args[0]);
     const isErrataResources = (/errata-fields\?field/).test(args[0]);
     const isErrataSummary = args[0] === 'https://cms-dev.openstax.org/apps/cms/api/pages/errata?format=json';
-    const isFaq = args[0].includes('/pages/faq');
     const isFlags = args[0].includes('/flags');
     const isFooter = (/api\/footer/).test(args[0]);
     const isFormHeading = (/form-headings/).test(args[0]);
     const isSiteBanner = args[0].endsWith('donations/sitebanner/');
     const isGlobalReach = args[0].includes('/global-reach/');
-    const isImpact = args[0].includes('/pages/impact');
     const isInstitutionalPartnership = (/pages\/institutional-partners/).test(args[0]);
     const isKinetic = args[0].endsWith('kinetic/');
     const isHomepage = (/openstax-homepage/).test(args[0]);
@@ -92,10 +85,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isOxMenus = args[0].includes('/oxmenus/');
     const isPartner = (/pages\/partners/).test(args[0]);
     const isPolishPhysics = (/fizyka/).test(args[0]);
-    const isPress = (/api\/press\/\?/).test(args[0]);
-    const isPressArticle = (/api\/press\/[a-z]/).test(args[0]);
     const isRenewal = args[0].includes('renewal?account_uuid');
-    const isResearch = args[0].includes('pages/research');
     const isResources = args[0].endsWith('errata-fields/?field=resources');
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSchools = (/salesforce\/schools/).test(args[0]);
@@ -103,6 +93,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isSearchSubject = args[0].includes('/search/?subjects=');
     const isSfapiUser = (/api\/v1\/users/).test(args[0]);
     const isSfapiLists = (/api\/v1\/lists/).test(args[0]);
+    const isSfapiImpact = (/api\/v1\/impact\/books/).test(args[0]);
     const isSfapiSchoolTrinity = (/0017h00000YXEBzAAP/).test(args[0]);
     const isSubjects = (/snippets\/subjects/).test(args[0]);
     const isSubjectPage = args[0].includes('pages/subjects');
@@ -123,8 +114,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = amazonBlurb;
             } else if (isAllBooks) {
                 payload = allBooksData;
-            } else if (isAssignable) {
-                payload = assignableData;
             } else if (isPartner) {
                 payload = pageData;
             } else if (isBlogCollection) {
@@ -135,6 +124,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = blogPinned;
             } else if (isChemistry) {
                 payload = chemistryData;
+            } else if (isDonationLinks) {
+                payload = donationLinksData;
             } else if (isDonationPopup) {
                 payload = donationPopupData;
             } else if (isErrata) {
@@ -147,8 +138,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = errataResources;
             } else if (isErrataSummary) {
                 payload = errataSummary;
-            } else if (isFaq) {
-                payload = faq;
             } else if (isFlags) {
                 payload = flags;
             } else if (isFooter) {
@@ -161,8 +150,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = globalReachData;
             } else if (isHomepage) {
                 payload = openstaxHomepageData;
-            } else if (isImpact) {
-                payload = impact;
             } else if (isInstitutionalPartnership) {
                 payload = institutionalPartnershipData;
             } else if (isKinetic) {
@@ -179,10 +166,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = biologyData;
             } else if (isPolishPhysics) {
                 payload = polishData;
-            } else if (isPress) {
-                payload = pressData;
-            } else if (isPressArticle) {
-                payload = pressArticleData;
             } else if (isBookTitles) {
                 payload = bookTitleData;
             } else if (isOsNews) {
@@ -209,8 +192,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = archiveData;
             } else if (isBooks) {
                 payload = booksData;
-            } else if (isResearch) {
-                payload = researchData;
             } else if (isBuyprint) {
                 payload = buyprintData;
             } else if (isSalesforceForms) {
@@ -225,6 +206,8 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = searchSubject;
             } else if (isSfapiLists) {
                 payload = sfapiLists;
+            } else if (isSfapiImpact) {
+                payload = {books: []};
             } else if (isSfapiSchoolTrinity) {
                 payload = sfapiSchoolTrinity;
             } else if (isImage) {

@@ -324,10 +324,7 @@ export default [{
         "react/jsx-uses-react": "error",
         "react/prop-types": "off",
         "react/no-children-prop": "off",
-
-        "react/no-unknown-property": ["error", {
-            ignore: ["css"],
-        }],
+        "react/no-unknown-property": "error",
     },
 }, {
     files: ["src/**/*.js", "src/**/*.jsx"],

@@ -2,13 +2,16 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import {FormattedMessage, useIntl} from 'react-intl';
 import useDetailsContext from '../context';
+import usePortalContext from '~/contexts/portal';
 import $ from '~/helpers/$';
 
 function EnglishButtonGroup({title}: {title: string}) {
+    const {linkPrefix} = usePortalContext();
+
     return (
         <div className="button-group">
             <a
-                href={`/errata/form?book=${encodeURIComponent(title)}`}
+                href={`${linkPrefix}/errata/form?book=${encodeURIComponent(title)}`}
                 className="btn secondary medium"
             >
                 <FormattedMessage
@@ -17,7 +20,7 @@ function EnglishButtonGroup({title}: {title: string}) {
                 />
             </a>
             <a
-                href={`/errata/?book=${encodeURIComponent(title)}`}
+                href={`${linkPrefix}/errata/?book=${encodeURIComponent(title)}`}
                 className="btn default medium"
             >
                 <FormattedMessage

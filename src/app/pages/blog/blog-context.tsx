@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import usePageData from '~/helpers/use-page-data';
 import {useDataFromSlug, camelCaseKeys} from '~/helpers/page-data-utils';
 import buildContext from '~/components/jsx-helpers/build-context';
+import usePortalContext from '~/contexts/portal';
 import useLatestBlogEntries from '~/models/blog-entries';
 import useData from '~/helpers/use-data';
 
@@ -89,11 +90,16 @@ function useCollections() {
 
 export type TType = undefined | 'subjects' | 'collections';
 
-export function assertTType(s: string | undefined) {
-    if (s === undefined || ['subjects', 'collections'].includes(s)) {
-        return s as TType;
-    }
-    throw new Error(`Topic type is invalid: ${s}`);
+// CMS-authored links use the singular forms, e.g. /blog/explore/subject/Math
+const T_TYPES: Record<string, TType> = {
+    subject: 'subjects',
+    subjects: 'subjects',
+    collection: 'collections',
+    collections: 'collections'
+};
+
+export function toTType(s: string | undefined) {
+    return s === undefined ? undefined : T_TYPES[s];
 }
 
 function useTopicStories() {
@@ -151,6 +157,7 @@ function useContextValue({
     meta
 }: NewsPageData) {
     const navigate = useNavigate();
+    const {linkPrefix} = usePortalContext();
     const {topic, setTypeAndTopic, topicStories, topicFeatured, topicPopular} =
         useTopicStories();
     const pinnedData = useLatestBlogEntries(1);
@@ -171,8 +178,8 @@ function useContextValue({
         [navigate]
     );
     const searchFor = React.useCallback(
-        (searchString: string) => setPath(`/blog/?q=${searchString}`),
-        [setPath]
+        (searchString: string) => setPath(`${linkPrefix}/blog/?q=${searchString}`),
+        [setPath, linkPrefix]
     );
 
     if (pinnedStory && !pinnedStory.slug) {

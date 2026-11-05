@@ -189,6 +189,53 @@ describe('adoption-form logged-in flow', () => {
         );
     });
 });
+describe('adoption-form subject interest', () => {
+    const user = userEvent.setup();
+
+    beforeAll(() => {
+        jest.spyOn(UM, 'useUserModel').mockReturnValue(
+            userModel as unknown as UM.UserModelType
+        );
+    });
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('keeps the language suffix in subject_interest', async () => {
+        render(
+            <LanguageContextProvider>
+                <SharedDataContextProvider>
+                    <UserContextProvider>
+                        <MemoryRouter
+                            initialEntries={[
+                                '/details/books/college-algebra',
+                                '/adoption'
+                            ]}
+                        >
+                            <MainClassContextProvider>
+                                <AdoptionForm />
+                            </MainClassContextProvider>
+                        </MemoryRouter>
+                    </UserContextProvider>
+                </SharedDataContextProvider>
+            </LanguageContextProvider>
+        );
+
+        await screen.findByText(/Let us know you're using/);
+        await user.type(screen.getByRole('searchbox'), 'Cálculo');
+        await user.click(
+            (await screen.findAllByRole('checkbox', {name: /Cálculo/}))[0]
+        );
+
+        const subjectInterest = document.querySelector(
+            'input[name="subject_interest"]'
+        ) as HTMLInputElement;
+
+        expect(subjectInterest.value).toBe('Calculus Volume 1 [Spanish]');
+    });
+});
+
 describe('adoption-form year selection', () => {
     const user = userEvent.setup();
     const Component = () => (

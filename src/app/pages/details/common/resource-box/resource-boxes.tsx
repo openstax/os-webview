@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import ResourceBox from './resource-box';
 import useDetailsContext from '../../context';
+import usePortalContext from '~/contexts/portal';
 import {resourceBoxModel, ResourceData} from './resource-box-utils';
 import './resource-box.scss';
 
@@ -17,6 +18,7 @@ function CommonsHubBox() {
         communityResourceFeatureLinkUrl: featureUrl,
         communityResourceFeatureText: featureText
     } = useDetailsContext();
+    const {hrefInPortal} = usePortalContext();
 
     if (!url) {
         return null;
@@ -31,13 +33,13 @@ function CommonsHubBox() {
             <div className="blurb">
                 <RawHTML Tag="span" html={blurb} />
                 <br />
-                <a href={url}>
+                <a href={hrefInPortal(url)}>
                     {cta} <FontAwesomeIcon icon={faExternalLinkAlt} />
                 </a>
             </div>
             <div className="bottom">
                 <div className="right">
-                    {featureUrl && <a href={featureUrl}>{featureText}</a>}
+                    {featureUrl && <a href={hrefInPortal(featureUrl)}>{featureText}</a>}
                 </div>
             </div>
         </div>

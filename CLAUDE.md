@@ -10,7 +10,7 @@ OpenStax webview — the main openstax.org website. A Preact/TypeScript SPA that
 
 ### Build
 ```bash
-script/build             # Dev build (output in dev/)
+script/build             # Dev build (output in dist/; needs nvm, else run `yarn webpack --mode development`)
 ```
 
 ### Testing
@@ -19,7 +19,7 @@ yarn test                # Run all tests with coverage
 yarn jest layout.test    # Run a single test by name pattern
 yarn jest test/src/components/shell.test.tsx  # Run a specific test file
 ```
-Note: Tests require the dev build (`dev/` directory) to exist.
+Note: Tests require the build (`dist/` directory) to exist.
 
 ### Linting
 ```bash
@@ -34,7 +34,6 @@ yarn lint:css            # Stylelint on SCSS files
 ### Framework & Rendering
 - **Preact** with `@preact/compat` aliased as `react`/`react-dom` (in both webpack and jest configs)
 - **React Router DOM v6** for routing
-- **Emotion** (`@emotion/react`, `@emotion/styled`) for CSS-in-JS alongside SCSS files
 - **React Intl** for internationalization (babel-plugin-formatjs for message extraction)
 
 ### Entry Point & App Structure
@@ -58,10 +57,24 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - CMS API endpoint controlled by `API_ORIGIN` env var (defaults to `https://dev.openstax.org`)
 - Settings loaded from `{API_ORIGIN}/cms/webview-settings`
 - Custom hooks (`usePageData`, `useDocumentHead`, etc.) in `src/app/helpers/`
+- Book details "used in N classrooms, saving students $S" numbers come from sfapi
+  (`GET /api/v1/impact/books?name=<salesforce_name>`, Tableau rollover model), fetched by
+  `src/app/models/book-impact.ts`. The CMS `adoptions`/`savings` fields are stale and unused.
 
 ### Code Splitting
 - `src/app/helpers/jit-load.tsx` — lazy loading wrapper using `React.lazy` + `Suspense`
 - Webpack splits vendor chunks per-package
+- Production chunk names are content-hashed, so a deploy invalidates all ~500 of them. A tab
+  opened before a deploy 404s on the next chunk it requests; `src/app/helpers/stale-chunk.ts`
+  detects that and reloads (at most twice per tab, tracked in sessionStorage).
+
+### Patched dependencies
+- `patches/` holds `patch-package` diffs, reapplied by the `postinstall` script on every install.
+- `react-aria-carousel@0.2.0` is patched because its MutationObserver calls `hasAttribute` on
+  every added node, including text nodes, which throws on any page with a carousel. 0.2.0 is the
+  newest published version, so there is no upgrade to take instead. `test/src/components/
+  carousel.test.tsx` asserts the patch is present, since an install that skips scripts drops it
+  silently.
 
 ### Routing
 Main routes in `router.tsx`:
@@ -91,7 +104,6 @@ Main routes in `router.tsx`:
 - React hooks rules enforced (`exhaustive-deps` is an error)
 - `no-shadow` enabled — avoid variable shadowing
 - Unused vars pattern: prefix with `_`
-- The `css` prop is allowed on JSX elements (Emotion)
 
 ### Prettier Config
 - Single quotes, no trailing commas, no bracket spacing, JSX uses double quotes
@@ -99,3 +111,57 @@ Main routes in `router.tsx`:
 ### TypeScript
 - Strict mode enabled, target ES6, module ES2020
 - Gradually migrating from JS/JSX to TS/TSX
+
+## Error reporting (Sentry)
+
+- `src/app/sentry.js` is the only `Sentry.init` — imported first by `main.js`.
+- `enabled` is false everywhere but `openstax.org`. Don't move that check into `beforeSend`:
+  session envelopes skip `beforeSend`, so dev and staging would still skew release health.
+- Noise filtering lives in four lists. `ignoreErrors` stays in `sentry.js`: Sentry
+  substring-matches it against the whole exception value, which is too broad to reuse. The other
+  three are in `src/app/helpers/exception-filters.ts` so PostHog gets them too — `ignoreMessages`
+  (substring match, applied in `beforeSend`), `denyFrameSchemes` (drops an exception whose every
+  stack frame is a browser-extension url, including Safari's `webkit-masked-url://`), and
+  `denyUrls` (script origin). Use `denyUrls`, not `ignoreUrls` — the latter was removed in SDK v7
+  and silently does nothing.
+- `beforeSend` also drops errors whose stack has no `/dist/` frame and whose script frames all
+  come from other origins (vendor CDNs, extensions). Inline frames, which carry the page's URL,
+  are kept, because GTM custom-HTML tags (consent, PostHog) and CMS embeds run that way. The
+  exception is Chrome and the Google app on iOS: they inject inline scripts of their own, so
+  there every stack with no `/dist/` frame is dropped.
+- CMS-embedded scripts (RawHTML `embed`, which includes flex-page HTML blocks) run from `blob:`
+  URLs that `activate-scripts.ts` records. `beforeSend` keeps their errors on every browser and
+  tags them `cms_embed:true`, for filtering or alerting. A `blob:` URL is used rather than
+  `//# sourceURL` because WebKit ignores `sourceURL` in stacks, and a `sourceURL` on another
+  origin makes WebKit mute the error entirely.
+- Integrations come from `@sentry/react` (v10). Do not add `@sentry/integrations`; it pulls a
+  second copy of the SDK core into the bundle. `dedupe` is already on by default.
+- Errors only — no tracing, replay, or feedback. `browserTracingIntegration` is deliberately
+  absent, and the production webpack config defines `__SENTRY_TRACING__` and `__SENTRY_DEBUG__`
+  as `false` so that code is stripped rather than merely unused. Adding a tracing integration
+  back without removing those defines will silently not work.
+- Render errors surface through `useErrorBoundary` in `shell/router-context.tsx`. That hook
+  swallows the error unless a handler is passed, so the `Sentry.captureException` callback
+  there is load-bearing.
+- User context (uuid, `logged_in`, `user_role`) is attached in `contexts/user.ts`. Keep names
+  and emails out of it.
+- Chunk-load failures are recovered from rather than reported — see `stale-chunk.ts`. They stay
+  in the ignore lists because Sentry's own global handlers capture them before the reload runs.
+- Source maps are uploaded by CodeBuild, not GitHub Actions (`bit-deployment`
+  `cfn/fe_project.yml`). After `script/build production` it runs `posthog-cli sourcemap process`,
+  then `sentry-cli sourcemaps inject` and `upload` on `dist/`, under release
+  `osweb@$RELEASE_VERSION` (the release tag). `sentry.js` builds the same string from
+  `process.env.RELEASE_VERSION`. Tokens come from SSM `/shared/codebuild/*`. If one is missing the
+  build warns and skips the upload, so a release can ship unsymbolicated without failing.
+
+## Error reporting (PostHog)
+
+- PostHog is loaded by a tag inside the GTM container, not by this bundle, so `window.posthog` is
+  the only handle on it and it only exists once `initializeGTM()` has run (which itself only
+  happens off the K12 portal).
+- `src/app/helpers/posthog-exceptions.ts` polls for that global and installs a `before_send` hook
+  applying the shared filters from `exception-filters.ts`. Without it, exception autocapture
+  reports everything Sentry has been told to ignore.
+- Anywhere we start handling a rejection that used to go unhandled, report it deliberately with
+  both `Sentry.captureException` and this module's `captureException` — handling it removes it
+  from both tools' unhandled-rejection capture.

@@ -11,6 +11,7 @@ import {LinkFields} from '@openstax/flex-page-renderer/components/Link';
 import JITLoad from '~/helpers/jit-load';
 import {isFlexPage} from '~/pages/flex-page/flex-page';
 import './landing.scss';
+import {useSkipTargetFocus} from '~/components/shell/skip-to-content';
 
 type Props = {
     data?: {
@@ -67,6 +68,7 @@ function Main({children, data}: React.PropsWithChildren<Props>) {
     React.useEffect(() => {
         ReactModal.setAppElement(ref.current as HTMLDivElement);
     }, []);
+    useSkipTargetFocus();
 
     return (
         <div

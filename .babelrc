@@ -11,8 +11,7 @@
             }
         ],
         "@babel/preset-react",
-        "@babel/preset-typescript",
-        "@emotion/babel-preset-css-prop"
+        "@babel/preset-typescript"
     ],
     "env": {
         "development": {
@@ -32,7 +31,6 @@
                 "idInterpolationPattern": "[sha512:contenthash:base64:6]",
                 "ast": true
             }
-        ],
-        ["@emotion/babel-plugin"]
+        ]
     ]
 }

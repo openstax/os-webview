@@ -1,4 +1,5 @@
 import useDetailsContext from '~/pages/details/context';
+import useBookImpact from '~/models/book-impact';
 
 function plugInto(container: Element, id: string, value: string) {
     const el = container.querySelector(`#${id}`);
@@ -9,20 +10,18 @@ function plugInto(container: Element, id: string, value: string) {
 }
 
 export default function useSavingsData() {
-    const {
-        supportStatement: description,
-        adoptions,
-        savings
-    } = useDetailsContext();
+    const {supportStatement: description, salesforceName} =
+        useDetailsContext();
+    const impact = useBookImpact(salesforceName);
 
-    if (!adoptions) {
-        return description;
+    if (!impact) {
+        return null;
     }
     const numFormat = window.Intl.NumberFormat('en-US').format; // eslint-disable-line new-cap
     const el = document.createElement('div');
 
     el.innerHTML = description.trim();
-    plugInto(el, 'adoption_number', numFormat(adoptions));
-    plugInto(el, 'savings', numFormat(Math.round(+savings)));
+    plugInto(el, 'adoption_number', numFormat(impact.adoptions));
+    plugInto(el, 'savings', numFormat(Math.round(impact.savings)));
     return el.innerHTML;
 }

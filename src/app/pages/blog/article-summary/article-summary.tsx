@@ -2,6 +2,7 @@ import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import Byline from '~/components/byline/byline';
 import ClippedImage from '~/components/clipped-image/clipped-image';
+import usePortalContext from '~/contexts/portal';
 import type {
     ArticleSummary as BlurbDataBase,
     CollectionEntry,
@@ -98,6 +99,8 @@ export default function ArticleSummary({
     HeadTag = 'h2'
 }: ArticleSummaryData) {
     const tabTarget = openInNewWindow ? {target: '_blank'} : {};
+    const {linkPrefix} = usePortalContext();
+    const href = `${linkPrefix}/blog/${articleSlug}`;
     const SubTag = HeadTag.replace(/\d/, (n) =>
         (Number(n) + 1).toString()
     ) as keyof JSX.IntrinsicElements;
@@ -134,7 +137,7 @@ export default function ArticleSummary({
                 <HeadTag className="article-headline">
                     <a
                         {...analytics}
-                        href={`/blog/${articleSlug}`}
+                        href={href}
                         onClick={onClick}
                         {...tabTarget}
                     >
@@ -149,7 +152,7 @@ export default function ArticleSummary({
                 <a
                     {...analytics}
                     className="read-more"
-                    href={`/blog/${articleSlug}`}
+                    href={href}
                     onClick={onClick}
                     aria-label={`Read more about ${headline}`}
                     {...tabTarget}

@@ -33,4 +33,4 @@ async def test_subjects_philanthropic_support(chrome_page_unlogged, base_url):
 
     new_tab = await popup_info.value
 
-    assert "riceconnect.rice.edu/donation/support-openstax-" in new_tab.url
+    assert "donate.rice.edu" in new_tab.url

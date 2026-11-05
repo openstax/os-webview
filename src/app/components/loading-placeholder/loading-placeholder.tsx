@@ -1,10 +1,11 @@
 import React from 'react';
+import cn from 'classnames';
 import './loader.scss';
 
-export default function LoadingPlaceholder() {
+export default function LoadingPlaceholder({fullPage = false}: {fullPage?: boolean}) {
     /* eslint-disable */
     return (
-        <div className="os-loader">
+        <div className={cn('os-loader', {'os-loader--full-page': fullPage})}>
             <svg
                 version="1.1"
                 id="Layer_1"

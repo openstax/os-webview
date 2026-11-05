@@ -20,9 +20,6 @@ class HomeRex:
             "section.content-block-section", has_text="Higher Education"
         ).is_visible()
 
-    async def upper_menu_options(self):
-        return await self.page.locator("nav[aria-label='Upper Menu'] li").count()
-
     async def click_interested_link(self):
         interested_locator = self.page.get_by_text("I'm interested!")
         await interested_locator.scroll_into_view_if_needed()
@@ -44,10 +41,8 @@ class HomeRex:
 
     async def click_openstax_assignable_link_in_technology_menu(self):
 
-        tech_menu = self.page.get_by_role("button", name="Technology")
-        assignable_link = self.page.get_by_role(
-            "link", name="OpenStax Assignable"
-        )
+        tech_menu = self.page.get_by_role("button", name="Teach")
+        assignable_link = self.page.get_by_role("link", name="Assignable", exact=True)
 
         try:
             await tech_menu.hover(timeout=5000)
@@ -61,10 +56,9 @@ class HomeRex:
                 "The layout or URL routing may have changed in the CMS."
             )
 
-    async def available_book_list(self):
-        return (
-            await self.page.locator(".course-list").first.locator("div > div").count()
-        )
+    @property
+    def available_book_list(self):
+        return self.page.locator("#assignable_titles li")
 
     # Subjects homepage
 
@@ -175,7 +169,9 @@ class HomeRex:
     # Book page navigation
 
     async def subject_listing_book_is_visible(self):
-        return await self.page.locator("a").get_by_text("Astronomy").is_visible()
+        astronomy_locator = self.page.locator("a").get_by_text("Astronomy")
+        await astronomy_locator.scroll_into_view_if_needed()
+        return await astronomy_locator.is_visible()
 
     async def click_subject_listing_book(self):
         await self.page.locator("a").get_by_text("Astronomy").click()
@@ -183,11 +179,9 @@ class HomeRex:
     async def click_book_selection(self):
         await self.page.get_by_label("Astronomy 2e book").click()
 
-    async def buy_print_copy_button_is_visible(self):
-        return await self.page.locator("a").get_by_text("Buy a print copy").is_visible()
-
-    async def click_buy_print_copy_button(self):
-        await self.page.locator("a").get_by_text("Buy a print copy").click()
+    @property
+    def buy_print_copy_button(self):
+        return self.page.locator("a").get_by_text("Buy a print copy")
 
     async def bookstore_box_is_visible(self):
         return await self.page.get_by_role("heading", name="Bookstore").is_visible()
@@ -202,20 +196,18 @@ class HomeRex:
             .get_attribute("href")
         )
 
-    async def audiobook_link_is_visible(self):
-        return await self.page.get_by_role("heading", name="Audiobook").is_visible()
-
-    @property
-    def audiobook_link_purchase_options(self):
-        return self.page.get_by_role("link", name="Purchase options")
-
     # Higher Education and bookstore page
 
     async def click_higher_education_link(self):
-        await self.page.get_by_role("link", name="Explore Higher Ed resources").click()
+        hed_locator = self.page.get_by_role("link", name="Explore higher ed")
+        await hed_locator.scroll_into_view_if_needed()
+        await hed_locator.click()
 
     async def click_campus_affordability_link(self):
-        await self.page.get_by_role("link", name=re.compile(r"Explore your options", re.IGNORECASE)).click()
+        await self.page.locator("#accordion__heading-Campus_affordability_programs").click()
+
+    async def click_explore_your_options_link(self):
+        await self.page.get_by_role("link", name="Explore your options").click()
 
     @property
     def higher_education_bookstore_order_access_code(self):
@@ -248,16 +240,12 @@ class HomeRex:
         return self.page.get_by_role("link", name="order form")
 
     @property
-    def try_assignable_today_link(self):
-        return self.page.get_by_role("link", name=re.compile(r"Try Assignable", re.IGNORECASE))
+    def explore_openstax_assignable_link(self):
+        return self.page.get_by_role("link", name=re.compile(r"Explore Openstax Assignable", re.IGNORECASE))
 
     @property
     def free_digital_library_subjects(self):
-        return self.page.locator("div.content-block-cards a.cta-link")
-
-    @property
-    def search_technology_partners_link(self):
-        return self.page.get_by_role("link", name="Search Technology Partners")
+        return self.page.locator("div.content-block-links a")
 
     # K12 and Kinetic pages
 
@@ -267,36 +255,37 @@ class HomeRex:
         await k12.click()
 
     @property
-    def k12_find_your_subject_dropdown(self):
-        return self.page.locator("div.buttons select.classic")
-
-    @property
-    def k12_find_your_subject_dropdown_options(self):
-        return self.page.locator("div.buttons select.classic option[value]")
+    def k12_find_your_subject(self):
+        return self.page.get_by_text("Find your subject below")
 
     @pytest.mark.asyncio
     async def click_k12_find_your_subject_book_cards_science_menu(self):
-        await self.page.mouse.wheel(0, 1500)
-        radiogroup = self.page.locator('[role="radiogroup"]')
-        await radiogroup.wait_for(state="visible")
-        science_radio = self.page.get_by_role("radio", name="Science")
-        await science_radio.scroll_into_view_if_needed()
-        await science_radio.click()
+        science_group = self.page.get_by_role("link", name="Science")
+        await science_group.scroll_into_view_if_needed()
+        await science_group.click()
+
+    @property
+    def k12_find_your_subject_book_card_astronomy(self):
+        return self.page.get_by_role("link", name="Astronomy")
 
     @pytest.mark.asyncio
-    async def k12_find_your_subject_book_card_astronomy_is_visible(self):
-        return await self.page.get_by_role("link", name="Astronomy").is_visible()
+    async def check_links_in_subject_options(self):
+        anchor_link = "Math"
+        subject_links = self.page.locator("div").filter(has=self.page.get_by_role("link", name=anchor_link))
 
-    @pytest.mark.asyncio
-    async def click_osweb_kinetic_link(self):
-        kin_locator = self.page.get_by_role("link", name="Try OpenStax Kinetic")
-        await kin_locator.scroll_into_view_if_needed()
-        await kin_locator.click()
+        for subject in ["Math", "Social Studies", "Science"]:
+            link = subject_links.get_by_role("link", name=subject)
+            assert await link.is_visible(), f"'{subject}' link not found in the subject links section"
 
-    async def kinetic_page_sample_study_link_is_visible(self):
-        study_locator = self.page.get_by_role("link", name="Try a sample study")
-        await study_locator.scroll_into_view_if_needed()
-        return await study_locator.is_visible()
+    async def higher_ed_page_content_is_visible(self):
+        hedc_locator = self.page.locator("#he_cards")
+        await hedc_locator.scroll_into_view_if_needed()
+        return await hedc_locator.is_visible()
+
+    async def higher_ed_page_innovation_section_is_visible(self):
+        inno_locator = self.page.get_by_role("heading", name="Innovation and insights from the OpenStax community")
+        await inno_locator.scroll_into_view_if_needed()
+        return await inno_locator.is_visible()
 
     # Clears blockers/overlays
 

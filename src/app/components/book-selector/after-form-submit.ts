@@ -3,9 +3,11 @@ import fetchBooks from '~/models/books';
 import {filterLiveBooks, SalesforceBook} from '~/helpers/books';
 import {useNavigate, NavigateFunction, useLocation} from 'react-router-dom';
 import {captureEvent} from '~/helpers/posthog';
+import usePortalContext from '~/contexts/portal';
 
 function afterFormSubmit(
     navigate: NavigateFunction,
+    linkPrefix: string,
     preselectedTitle: string,
     selectedBooks: SalesforceBook[]
 ) {
@@ -19,7 +21,7 @@ function afterFormSubmit(
         const scoutBooks = selectedBooks.map((sfBook) => sfBook.value.replace(/ *\[.*/, ''));
 
         captureEvent('interest_form_submitted', {bookCount: selectedBooks.length});
-        navigate('/partners', {
+        navigate(`${linkPrefix}/partners`, {
             state: {
                 confirmation: true,
                 book: scoutBooks,
@@ -37,15 +39,17 @@ export function useFirstSearchArgument() {
 
 export function useAfterSubmit(selectedBooksRef: React.MutableRefObject<SalesforceBook[]>) {
     const navigate = useNavigate();
+    const {linkPrefix} = usePortalContext();
     const preselectedTitle = useFirstSearchArgument();
 
     return React.useCallback(
         () =>
             afterFormSubmit(
                 navigate,
+                linkPrefix,
                 preselectedTitle,
                 selectedBooksRef.current
             ),
-        [navigate, selectedBooksRef, preselectedTitle]
+        [navigate, linkPrefix, selectedBooksRef, preselectedTitle]
     );
 }

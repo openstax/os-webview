@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {getDisplayStatus, Errata, DisplayStatusValue} from '~/helpers/errata';
+import usePortalContext from '~/contexts/portal';
 import './table.scss';
 
 type ProcessedErrataItem = {
@@ -165,6 +166,8 @@ function DesktopHeaderRow({sortController}: DesktopHeaderRowProps): React.ReactE
 }
 
 function DesktopDataColumn({colSpec, entry}: DesktopDataColumnProps): React.ReactElement {
+    const {linkPrefix} = usePortalContext();
+
     return (
         <td>
             <div className={colSpec.cssClass}>
@@ -178,7 +181,7 @@ function DesktopDataColumn({colSpec, entry}: DesktopDataColumnProps): React.Reac
                             {
                                 colSpec.id === 'displayStatus' &&
                                 entry[colSpec.id] === 'No Correction' &&
-                                    <a href={`/errata/${entry.id}`}>Details</a>
+                                    <a href={`${linkPrefix}/errata/${entry.id}`}>Details</a>
                             }
                         </React.Fragment>
                 }

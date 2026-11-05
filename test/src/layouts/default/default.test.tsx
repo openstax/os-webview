@@ -248,6 +248,30 @@ describe('default layout', () => {
                 return saveFetch(...args);
             });
     });
+    // The skip link's click falls through to the browser when #main does not
+    // exist yet, leaving the hash behind; the region claims it on mount.
+    it('claims the focus the skip link asked for', async () => {
+        window.location.hash = '#main';
+
+        try {
+            render(
+                <MemoryRouter initialEntries={['/webinars']}>
+                    <DefaultLayout />
+                </MemoryRouter>
+            );
+
+            await screen.findByRole('button', {
+                name: 'Toggle Meta Navigation Menu'
+            });
+
+            expect(document.activeElement).toBe(
+                document.getElementById('main')
+            );
+        } finally {
+            window.location.hash = '';
+        }
+    });
+
     it('renders; menu opens and closes', async () => {
         render(<MemoryRouter initialEntries={['/webinars']}>
             <DefaultLayout />

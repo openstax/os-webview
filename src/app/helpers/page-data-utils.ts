@@ -1,5 +1,5 @@
 import React from 'react';
-import bookPromise from '~/models/book-titles';
+import * as BookTitles from '~/models/book-titles';
 import urlFromSlug from './url-from-slug';
 
 type TypeAndValue = {
@@ -48,7 +48,7 @@ export async function getUrlFor(initialSlug: string) {
     if (initialSlug.startsWith('books/') && initialSlug.length > 6) {
         const strippedSlug = initialSlug.substring(6);
 
-        const bookList = await bookPromise;
+        const bookList = await BookTitles.getBookTitles();
         const bookEntry = bookList.find(
             (e) => e.meta.slug === strippedSlug
         );
@@ -156,11 +156,29 @@ export function useDataFromPromise<T = Json>(
     const [data, setData] = React.useState<T | null | undefined>(defaultValue);
 
     React.useEffect(() => {
+        let cancelled = false;
+
         if (promise) {
-            promise.then(setData);
+            // Swallow rejections; a failed fetch reads the same as "no data"
+            promise.then(
+                (resolved) => {
+                    if (!cancelled) {
+                        setData(resolved);
+                    }
+                },
+                () => {
+                    if (!cancelled) {
+                        setData(null);
+                    }
+                }
+            );
         } else {
             setData(null);
         }
+
+        return () => {
+            cancelled = true;
+        };
     }, [promise]);
 
     return data;

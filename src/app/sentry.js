@@ -1,10 +1,10 @@
 import * as Sentry from '@sentry/react';
-import * as Integrations from '@sentry/integrations';
+import {isEmbedScriptUrl} from '~/components/jsx-helpers/activate-scripts';
 import isSupported from '~/helpers/device';
+import {denyUrls, isIgnoredMessage, isFromDeniedScheme, isFromDeniedUrl} from '~/helpers/exception-filters';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const packageVersion = require('../../package.json').version;
-
+// Sentry-only: it substring-matches these against the whole exception value,
+// which is too broad to share with PostHog. See helpers/exception-filters.
 const ignoreErrors = [
     'TypeError: Failed to fetch',
     'TypeError: Load failed',
@@ -32,40 +32,68 @@ const ignoreErrors = [
     'URIError: URI malformed'
 ];
 
-const ignoreMessages = [
-    'g.readyState',
-    'PulseInsightsObject.survey',
-    'script.crazyegg.com',
-    '//zamant.ru/',
-    'Cross-origin redirection',
-    'QuotaExceededError',
-    'window.webkit.messageHandlers',
-    'Failed to read the \'localStorage\' property from \'Window\'',
-    'b is not a function.',
-    'evaluating \'e.default\'',
-    'IDBFactory.open() called',
-    'Failed to load Google Analytics',
-    'operation was aborted',
-    'Object Not Found Matching Id',
-    'The string did not match the expected pattern.',
-    'chrome is not defined',
-    'Loading chunk',
-    'window.mobileAPI',
-    'wistia.com',
-    't.behaviors.embed.embed'
-];
+function exceptionValue(event) {
+    const values = event.exception?.values;
 
-const ignoreUrls = [
-    'https://www.google-analytics.com/analytics.js',
-    'https://js.pulseinsights.com'
-];
+    return values?.length ? values[0].value : '';
+}
+
+function frameFilenames(event) {
+    return (event.exception?.values ?? [])
+        .flatMap((value) => value.stacktrace?.frames ?? [])
+        .map((frame) => frame.filename || '');
+}
+
+// A rejected promise carrying a non-Error has no `message`, so reading only
+// hint.originalException misses it. Sentry still records the rejected value as
+// the exception value, which is what the ignore list needs to see.
+function messageOf(event, error) {
+    const value = error?.message || exceptionValue(event);
+
+    return typeof value === 'string' ? value : '';
+}
+
+function scriptUrls(event) {
+    return (event.exception?.values ?? [])
+        .flatMap((value) => value.stacktrace?.frames ?? [])
+        .map((frame) => frame.filename)
+        .filter((url) => (/^(blob:)?[a-z-]+:\/\//).test(url));
+}
+
+// Sentry's Safari and Firefox stack parser drops the blob: prefix from a frame
+// it reads, leaving https://origin/<uuid>, so the lookup has to put it back.
+function isCmsEmbed(url) {
+    return isEmbedScriptUrl(url) || isEmbedScriptUrl(`blob:${url}`);
+}
+
+// Our bundles live under /dist/, and CMS embeds run from blob: URLs that
+// activate-scripts records. GTM tags run inline, so their frames carry the
+// page's URL, and we keep those. A stack made only of other origins (vendor
+// CDNs, extensions) is dropped. denyUrls can't do this because it checks the
+// top frame alone.
+function isFromOtherScripts(urls) {
+    const origin = window.location.origin;
+
+    if (urls.some((url) => url.startsWith(`${origin}/dist/`) || isCmsEmbed(url))) {
+        return false;
+    }
+    // Chrome and the Google app on iOS inject scripts that report the page's URL
+    if ((/CriOS|GSA\//).test(window.navigator.userAgent)) {
+        return urls.length > 0;
+    }
+    return urls.length > 0 && !urls.some((url) => url.startsWith(`${origin}/`));
+}
 
 // eslint-disable-next-line complexity
 function beforeSend(event, hint) {
-    const error = hint.originalException;
+    const message = messageOf(event, hint?.originalException);
+    const urls = scriptUrls(event);
 
-    if (window.location.hostname !== 'openstax.org') {
+    if (isFromOtherScripts(urls)) {
         return null;
+    }
+    if (urls.some(isCmsEmbed)) {
+        event.tags = {...event.tags, 'cms_embed': true};
     }
     if (!isSupported()) {
         return null;
@@ -73,38 +101,44 @@ function beforeSend(event, hint) {
     if (window.location.pathname.startsWith('/l/') || window.location.pathname.startsWith('/rex/')) {
         return null;
     }
-    if (ignoreMessages.find((fragment) => error?.message?.includes(fragment))) {
+    if (isIgnoredMessage(message)) {
         return null;
     }
-    if (error?.message?.match(/mce-visual-caret/i)) {
+    if (isFromDeniedScheme(frameFilenames(event))) {
         return null;
     }
-    if (error?.message?.match(/unexpected token/i)) {
+    if (isFromDeniedUrl(frameFilenames(event))) {
+        return null;
+    }
+    if (message.match(/mce-visual-caret/i)) {
+        return null;
+    }
+    if (message.match(/unexpected token/i)) {
         event.fingerprint = ['unexpected token'];
     }
-    if (error?.message?.match(/unexpected (eof|end)/i)) {
+    if (message.match(/unexpected (eof|end)/i)) {
         event.fingerprint = ['unexpected end'];
     }
-    if (error?.message?.match(/pulseinsights/i)) {
+    if (message.match(/pulseinsights/i)) {
         event.fingerprint = ['pulseinsights'];
     }
-    if (error?.message?.match(/localStorage/)) {
+    if (message.match(/localStorage/)) {
         event.fingerprint = ['localStorage'];
     }
     return event;
 }
 
 Sentry.init({
+    // Off everywhere but production. Disabling only in beforeSend would still
+    // let session envelopes through, which skews release health.
+    enabled: window.location.hostname === 'openstax.org',
     dsn: 'https://68df3e19624c434eb975dafa316c03ff@o484761.ingest.sentry.io/5691260',
-    release: `osweb@${packageVersion}`,
-    integrations: [
-        Integrations.extraErrorDataIntegration(),
-        Integrations.dedupeIntegration(),
-        Sentry.browserTracingIntegration()
-    ],
-    tracesSampleRate: 0.05,
+    // Deployed builds set RELEASE_VERSION to the release tag, and webpack sets it to
+    // 'development' in every other build
+    release: `osweb@${process.env.RELEASE_VERSION}`,
+    integrations: [Sentry.extraErrorDataIntegration()],
     environment: window.location.hostname,
     ignoreErrors,
-    ignoreUrls,
+    denyUrls,
     beforeSend
 });

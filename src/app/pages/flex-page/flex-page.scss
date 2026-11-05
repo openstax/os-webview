@@ -4,6 +4,12 @@
   overflow: visible;
 }
 
+// LeftContent's icon/text spacing comes from resource-box.scss, which is
+// scoped to the book detail page and never reaches a table cell.
+.flex-page .table-resource-link svg {
+  margin-right: 0.5rem;
+}
+
 // CORE-2302 rich-text editor features. These are openstax-cms / Draftail
 // classes, so they're styled here rather than in the flex-page renderer.
 .flex-page.page div.content-block-rich-text {

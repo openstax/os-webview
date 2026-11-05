@@ -6,6 +6,7 @@ import {FontAwesomeIcon, FontAwesomeIconProps} from '@fortawesome/react-fontawes
 import {faUserPlus} from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import usePortalContext from '~/contexts/portal';
+import useUserContext from '~/contexts/user';
 import cn from 'classnames';
 import './let-us-know.scss';
 
@@ -61,7 +62,12 @@ function LetUsKnow({title}: {title: string}) {
 }
 
 export default function MaybeLetUsKnow({title}: {title?: string}) {
-    if (!title) {
+    const {userStatus} = useUserContext();
+    // isStudent is just "logged in, not in the Faculty group", which also covers
+    // instructors still awaiting verification -- they keep the buttons.
+    const isStudent = userStatus?.isStudent && !userStatus.pendingVerification;
+
+    if (!title || isStudent) {
         return null;
     }
     return (<LetUsKnow title={title} />);

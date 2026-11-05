@@ -27,34 +27,12 @@ jobs:
         name: "Lint osweb"
         run: yarn lint
       -
+        # Nothing here is shipped -- CodeBuild builds and deploys the real
+        # assets. This only proves the production build still compiles.
         name: "Build osweb"
         run: ./script/build production
       -
         name: "Run tests"
         run: ./script/test
-      -
-        # Injects a chunk id into each built asset and uploads the matching .map to
-        # PostHog, so exception stack traces resolve to real files and line numbers.
-        # Must run before the archive step so the injected assets are the ones we ship.
-        # Requires the POSTHOG_PROJECT_ID and POSTHOG_CLI_API_KEY secrets; symbolication
-        # is a diagnostic aid, so a failure here should never block a release.
-        name: "Upload source maps to PostHog"
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
-        continue-on-error: true
-        uses: PostHog/upload-source-maps@v2
-        with:
-          directory: dist
-          project-id: ${{ secrets.POSTHOG_PROJECT_ID }}
-          api-key: ${{ secrets.POSTHOG_CLI_API_KEY }}
-      -
-        name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.JENKINS_RUNDECK_ID_RSA }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      -
-        name: "Create archive for packages.cnx.org"
-        run: ./script/archive
 name: build
 on: push

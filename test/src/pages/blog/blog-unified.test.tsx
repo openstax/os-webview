@@ -2,6 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import {render, screen, waitFor} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 import {BlogContextProvider} from '~/pages/blog/blog-context';
 import {MainBlogPage} from '~/pages/blog/blog-pages';
 import {describe, it} from '@jest/globals';
@@ -10,9 +11,11 @@ import * as pageDataUtils from '~/helpers/page-data-utils';
 function renderMainBlog(initialEntry: string) {
     render(
         <MemoryRouter initialEntries={[initialEntry]}>
-            <BlogContextProvider>
-                <MainBlogPage />
-            </BlogContextProvider>
+            <ShellContextProvider>
+                <BlogContextProvider>
+                    <MainBlogPage />
+                </BlogContextProvider>
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }
@@ -23,7 +26,7 @@ describe('Unified MainBlogPage', () => {
         await waitFor(() =>
             expect(screen.getByRole('group', {name: 'Filter by subject'})).toBeInTheDocument()
         );
-        expect(screen.queryByText('Explore by subject')).not.toBeInTheDocument();
+        expect(screen.queryByText('Featured blog post')).not.toBeInTheDocument();
     });
 
     it('uses the CMS news-page title for the heading', async () => {
@@ -37,7 +40,7 @@ describe('Unified MainBlogPage', () => {
     it('shows discovery content and facet controls when no query or facets', async () => {
         renderMainBlog('/blog/');
         await waitFor(() =>
-            expect(screen.getByText('Explore by subject')).toBeInTheDocument()
+            expect(screen.getByText('Featured blog post')).toBeInTheDocument()
         );
         expect(screen.getByRole('group', {name: 'Filter by subject'})).toBeInTheDocument();
     });

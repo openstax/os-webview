@@ -75,7 +75,7 @@ function EnglishTab({model}: {model: ContextValues}) {
                 <div className="publication-info">
                     <PublicationInfo url={null} />
                 </div>
-                {model.adoptions && <SavingsBlurb />}
+                <SavingsBlurb />
             </div>
         </div>
     );

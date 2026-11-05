@@ -3,9 +3,12 @@ import {Tabs, Item} from '~/components/tablist/tablist';
 import useUserContext from '~/contexts/user';
 import {useOpenGiveDialog} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-give-dialog';
 import trackLink from '~/pages/details/common/track-link';
+import {itemTypeForVariant} from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-other';
 import bookTitles from '~/models/book-titles';
 import './resources.scss';
 import {ResourceHeader, LinkData, K12SubjectData} from './subject';
+
+const VARIANT = 'K12 resource';
 
 function LinkWithGiveDialog({
     href,
@@ -17,37 +20,64 @@ function LinkWithGiveDialog({
     track: string;
 }) {
     const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
-    const {userStatus} = useUserContext();
+    const bookId = useBookId(book);
     const trackDownloadClick = React.useCallback(
         (event: React.MouseEvent<HTMLAnchorElement>) => {
-            if (userStatus?.isInstructor) {
-                bookTitles.then((items) => {
-                    const b = items.find((i) => i.title === book);
-
-                    if (b) {
-                        trackLink(event, b.id.toString());
-                    } else {
-                        trackLink(event);
-                    }
-                });
+            trackLink(event, bookId);
+        },
+        [bookId]
+    );
+    const onClick = React.useCallback(
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
+            openGiveDialog(event);
+            // A skipped dialog means its link never reports the download.
+            if (!event.defaultPrevented) {
+                trackDownloadClick(event);
             }
         },
-        [userStatus, book]
+        [openGiveDialog, trackDownloadClick]
     );
 
     return (
         <React.Fragment>
-            <a href={href} onClick={openGiveDialog} data-track={track}>
+            <a
+                href={href}
+                onClick={onClick}
+                data-track={track}
+                data-variant={itemTypeForVariant(VARIANT)}
+            >
                 {book}
             </a>
             <GiveDialog
                 link={href}
-                variant="K12 resource"
+                variant={VARIANT}
                 track={track}
                 onDownload={trackDownloadClick}
             />
         </React.Fragment>
     );
+}
+
+// trackLink has to set its tracking info while the click is still being
+// dispatched, so the id has to be resolved before the reader clicks.
+function useBookId(book: string) {
+    const [bookId, setBookId] = React.useState<string>();
+
+    React.useEffect(() => {
+        let current = true;
+
+        bookTitles.then((items) => {
+            if (current) {
+                setBookId(items.find((i) => i.title === book)?.id.toString());
+            }
+        });
+
+        return () => {
+            current = false;
+        };
+    }, [book]);
+
+    return bookId;
 }
 
 function ResourceLink({data, track}: {data: LinkData; track: string}) {

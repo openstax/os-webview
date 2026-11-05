@@ -3,14 +3,14 @@ import {render, screen} from '@testing-library/preact';
 import Logo from '~/layouts/default/header/menus/logo/logo';
 
 describe('logo', () => {
-    it('links the OpenStax logo home and the Rice logo to rice.edu', () => {
+    it('links both logos to the OpenStax homepage', () => {
         render(<Logo />);
 
         expect(
             screen.getByRole('link', {name: 'OpenStax'}).getAttribute('href')
         ).toBe('/');
         expect(
-            screen.getByRole('link', {name: 'Rice University logo'}).getAttribute('href')
-        ).toBe('https://www.rice.edu');
+            screen.getByRole('link', {name: 'OpenStax home'}).getAttribute('href')
+        ).toBe('/');
     });
 });

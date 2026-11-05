@@ -92,9 +92,8 @@ export type ContextValues = GetThisTitleModel & {
     partnerListLabel: string;
     partnerPageLinkText: string;
     salesforceAbbreviation: string;
-    adoptions?: number;
+    salesforceName?: string;
     supportStatement: string;
-    savings: number;
 };
 
 function useContextValue({data}: {data: ContextValues}) {

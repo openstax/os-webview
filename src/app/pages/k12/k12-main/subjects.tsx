@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faRightLong} from '@fortawesome/free-solid-svg-icons/faRightLong';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import uniq from 'lodash/uniq';
+import usePortalContext from '~/contexts/portal';
 import './subjects.scss';
 import {K12Data} from './k12-main';
 
@@ -13,9 +14,10 @@ function Card({data}: {data: CardData}) {
     const optimizedImage = useOptimizedImage(data.image, 600);
     const style = {backgroundImage: `url(${optimizedImage})`};
     const fixedLink = data.link.replace(/^\/*/, '/'); // ensure one leading slash
+    const {hrefInPortal} = usePortalContext();
 
     return (
-        <a href={fixedLink} className={`card ${data.color}`}>
+        <a href={hrefInPortal(fixedLink)} className={`card ${data.color}`}>
             <div className="picture-stripe" style={style} />
             <div className="name-stripe">{data.title}</div>
             <div className="link-stripe">

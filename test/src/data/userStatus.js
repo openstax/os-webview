@@ -121,6 +121,5 @@ export default {
         }
     },
     school: 'Test University',
-    uuid: '3a2789ae-eced-483f-a7ff-246988e074be',
-    trackDownloads: false
+    uuid: '3a2789ae-eced-483f-a7ff-246988e074be'
 };

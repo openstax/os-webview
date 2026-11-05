@@ -1,12 +1,18 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/preact';
+import {fireEvent, render as originalRender, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import {PortalContextProvider} from '~/contexts/portal';
 import {LanguageContextProvider} from '~/contexts/language';
 import GiveBeforePdf from '~/pages/details/common/get-this-title-files/give-before-pdf/give-before-pdf';
 // eslint-disable-next-line max-len
 import type {DonationPopupData} from '~/pages/details/common/get-this-title-files/give-before-pdf/use-donation-popup-data';
 import * as TY from '~/pages/details/common/get-this-title-files/give-before-pdf/thank-you-form';
+
+// The dialog reads the portal context
+function render(ui: React.ReactElement) {
+    return originalRender(ui, {wrapper: PortalContextProvider});
+}
 
 jest.mock('~/helpers/main-class-hooks', () => ({
     useMainSticky: () => jest.fn()
@@ -20,7 +26,8 @@ const onDownload = jest.fn();
 const data: DonationPopupData = {
     download_ready: 'your download is ready',
     header_subtitle: 'header-subtitle',
-    download_image: 'image-url'
+    download_image: 'image-url',
+    give_link: 'https://example.test/fallback-give-link'
 } as unknown as DonationPopupData; // doesn't matter
 /* eslint-enable camelcase */
 

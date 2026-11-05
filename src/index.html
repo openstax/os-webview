@@ -20,13 +20,8 @@
         <link rel="preload" href="<%= process.env.API_ORIGIN %>/apps/cms/api/webview-settings/" as="fetch" crossorigin="anonymous">
         <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous"
             href="/cms/assets/fonts/5b1fbd62-45dc-4433-a7df-a2b24a146411.woff2">
-        <link rel="preconnect" href="https://www.facebook.com" crossorigin="anonymous">
-        <link rel="preconnect" href="https://connect.facebook.net" crossorigin="anonymous">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/books/?format=json">
         <link rel="prefetch" href="<%= process.env.API_ORIGIN %>/apps/cms/api/footer/?format=json">
-        <!-- crossorigin="anonymous" so exceptions thrown by this cross-origin script are
-             reported with a real message and stack instead of an opaque "Script error." -->
-        <script src="//script.crazyegg.com/pages/scripts/0084/9271.js" async="async" crossorigin="anonymous"></script>
     </head>
     <body class="page-loading">
         <noscript>

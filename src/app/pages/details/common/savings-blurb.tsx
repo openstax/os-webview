@@ -8,6 +8,10 @@ import './savings-blurb.scss';
 export default function SavingsBlurb() {
     const html = useSavingsData();
 
+    if (!html) {
+        return null;
+    }
+
     return (
         <div className="savings-blurb">
             <span className="book-icon">

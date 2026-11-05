@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import useBlogContext from './blog-context';
 import {useParams} from 'react-router-dom';
 import {WindowContextProvider} from '~/contexts/window';
 import useDocumentHead from '~/helpers/use-document-head';
 import RawHTML from '~/components/jsx-helpers/raw-html';
-import ExploreBy from '~/components/explore-by/explore-by';
 import PinnedArticle from './pinned-article/pinned-article';
 import MoreStories from './more-stories/more-stories';
 import {HeadingAndSearchBar} from '~/components/search-bar/search-bar';
@@ -14,6 +13,7 @@ import useBlogSearchParams from './use-blog-search-params';
 import {ArticleData, ArticleFromSlug} from './article/article';
 import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
 import {assertDefined} from '~/helpers/data';
+import usePortalContext from '~/contexts/portal';
 import './blog.scss';
 
 function WriteForUs({
@@ -25,10 +25,12 @@ function WriteForUs({
     text: string;
     link: string;
 }) {
+    const {hrefInPortal} = usePortalContext();
+
     return (
         <section className="boxed">
             <RawHTML Tag="h2" className="description" html={descriptionHtml} />
-            <a href={link} className="btn primary">
+            <a href={hrefInPortal(link)} className="btn primary">
                 {text}
             </a>
         </section>
@@ -57,20 +59,9 @@ function hasActiveQuery({q, subjects, collection, sort}: SearchState) {
     return Boolean(q || subjects.length || collection || sort !== 'relevance');
 }
 
-function DiscoveryContent({
-    categories,
-    pinnedSlug
-}: {
-    categories: ReturnType<typeof useBlogContext>['subjectSnippet'];
-    pinnedSlug?: string;
-}) {
+function DiscoveryContent({pinnedSlug}: {pinnedSlug?: string}) {
     return (
         <React.Fragment>
-            <ExploreBy
-                items={categories}
-                title="Explore by subject"
-                analyticsNav="Blog Subjects"
-            />
             <PinnedArticle />
             <MoreStories exceptSlug={pinnedSlug || ''} />
         </React.Fragment>
@@ -124,10 +115,7 @@ export function MainBlogPage() {
                 {isActive ? (
                     <SearchResults />
                 ) : (
-                    <DiscoveryContent
-                        categories={categories}
-                        pinnedSlug={pinnedSlug}
-                    />
+                    <DiscoveryContent pinnedSlug={pinnedSlug} />
                 )}
             </div>
             <div className="write-for-us">
@@ -142,13 +130,6 @@ export function ArticlePage() {
     // where :slug is a required route parameter
     const slug = assertDefined(useParams().slug);
     const [articleData, setArticleData] = React.useState<ArticleData>();
-
-    useEffect(
-        () => {
-            window.scrollTo(0, 0);
-        },
-        [slug]
-    );
 
     return (
         <WindowContextProvider>

@@ -8,6 +8,7 @@ import ResourceBoxes from '../../common/resource-box/resource-boxes';
 import VideoResourceBoxes from '../../common/resource-box/video-resource-box';
 import useUserContext, {type UserStatus} from '~/contexts/user';
 import useWindowContext, {WindowContextProvider} from '~/contexts/window';
+import usePortalContext from '~/contexts/portal';
 import type {ContextValues} from '../../context';
 import './instructor-resources-pane.scss';
 import {assertNotNull} from '~/helpers/data';
@@ -45,10 +46,11 @@ export function InstructorResourcesPane({
         )
         .map((res) => resourceBoxModel(res, userStatus, model));
     const navigate = useNavigate();
+    const {linkPrefix} = usePortalContext();
 
     function goToPartners(event: React.MouseEvent) {
         event.preventDefault();
-        navigate('/partners', {
+        navigate(`${linkPrefix}/partners`, {
             book: model.salesforceAbbreviation,
             redirect: true
         } as NavigateOptions);
@@ -63,7 +65,7 @@ export function InstructorResourcesPane({
                     models={featuredModels}
                 />
             )}
-            <a className="card filter-for-book" href="/partners" onClick={goToPartners}>
+            <a className="card filter-for-book" href={`${linkPrefix}/partners`} onClick={goToPartners}>
                 OpenStax Partners <FontAwesomeIcon icon={faSignOutAlt} />
             </a>
             <div

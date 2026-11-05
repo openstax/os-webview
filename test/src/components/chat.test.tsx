@@ -24,6 +24,7 @@ describe('Chat', () => {
         document.querySelectorAll('link[rel="preconnect"]').forEach((el) => el.remove());
         delete (window as any).embeddedservice_bootstrap;
         delete (window as any).__salesforceChatInitialized;
+        delete (window as any).__salesforceChatInitAttempted;
 
         // Enable fake timers for polling interval
         jest.useFakeTimers();
@@ -116,7 +117,7 @@ describe('Chat', () => {
         });
     });
 
-    it('sets sProduct for anonymous users', async () => {
+    it('sets Product for anonymous users', async () => {
         (UserContext.default as jest.Mock).mockReturnValue({});
 
         render(<Chat />);
@@ -133,7 +134,7 @@ describe('Chat', () => {
 
         await waitFor(() => {
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website'
+                Product: 'Website'
             });
             expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({});
         });
@@ -167,10 +168,10 @@ describe('Chat', () => {
         jest.advanceTimersByTime(250);
 
         await waitFor(() => {
-            // Hidden fields: sProduct and UUID only
+            // Hidden fields: Product and UUID only
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-123'
+                Product: 'Website',
+                OpenStax_UUID: 'test-uuid-123'
             });
 
             // Visible, editable fields: Name, Email, School
@@ -207,10 +208,10 @@ describe('Chat', () => {
         jest.advanceTimersByTime(250);
 
         await waitFor(() => {
-            // Hidden fields: sProduct and UUID
+            // Hidden fields: Product and UUID
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-123'
+                Product: 'Website',
+                OpenStax_UUID: 'test-uuid-123'
             });
 
             // Only FirstName should be set as visible field (others are missing)
@@ -307,7 +308,7 @@ describe('Chat', () => {
 
         // Verify initial fields (anonymous user)
         expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-            sProduct: 'Website'
+            Product: 'Website'
         });
         expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({});
 
@@ -332,10 +333,10 @@ describe('Chat', () => {
 
         // Verify fields updated with user information
         await waitFor(() => {
-            // Hidden fields: sProduct and UUID
+            // Hidden fields: Product and UUID
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website',
-                OpenStax_UUID__c: 'test-uuid-456'
+                Product: 'Website',
+                OpenStax_UUID: 'test-uuid-456'
             });
 
             // Visible fields: Name, Email, School
@@ -562,8 +563,8 @@ describe('Chat', () => {
         await waitFor(() => {
             // Should use userStatus fields (not userModel)
             expect(mockEmbeddedService.prechatAPI.setHiddenPrechatFields).toHaveBeenCalledWith({
-                sProduct: 'Website',
-                OpenStax_UUID__c: 'status-uuid-789'
+                Product: 'Website',
+                OpenStax_UUID: 'status-uuid-789'
             });
 
             expect(mockEmbeddedService.prechatAPI.setVisiblePrechatFields).toHaveBeenCalledWith({
@@ -573,5 +574,120 @@ describe('Chat', () => {
                 School: {value: 'Status School', isEditableByEndUser: true}
             });
         });
+    });
+
+    it('does not re-initialize after a failed init attempt', async () => {
+        const consoleError = jest.spyOn(console, 'error').mockImplementation();
+
+        (UserContext.default as jest.Mock).mockReturnValue({});
+
+        // First mount: init throws, leaving a half-initialized SDK behind
+        const throwingMockService = {
+            settings: {language: ''},
+            init: jest.fn(() => {
+                throw new Error('Init failed');
+            })
+        };
+
+        const {unmount} = render(<Chat />);
+        flushIdleCallback();
+
+        const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
+
+        (window as any).embeddedservice_bootstrap = throwingMockService;
+        script.onload?.(new Event('load'));
+
+        await waitFor(() => {
+            expect(throwingMockService.init).toHaveBeenCalledTimes(1);
+        });
+
+        // The failed attempt is recorded so it is never retried
+        expect((window as any).__salesforceChatInitAttempted).toBe(true);
+        expect((window as any).__salesforceChatInitialized).toBeUndefined();
+
+        unmount();
+
+        // Navigating back to a chat page remounts the component. init() must NOT
+        // run again on top of the half-initialized SDK (that is what orphans a
+        // second business-hours timer and multiplies the crash).
+        render(<Chat />);
+
+        expect(throwingMockService.init).toHaveBeenCalledTimes(1);
+
+        consoleError.mockRestore();
+    });
+
+    it('hides and shows the chat button through the vendor utilAPI when available', async () => {
+        (UserContext.default as jest.Mock).mockReturnValue({});
+
+        const utilMockService = {
+            settings: {language: ''},
+            init: jest.fn(),
+            utilAPI: {
+                showChatButton: jest.fn(),
+                hideChatButton: jest.fn()
+            }
+        };
+
+        const {unmount} = render(<Chat />);
+        flushIdleCallback();
+
+        const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
+
+        (window as any).embeddedservice_bootstrap = utilMockService;
+        script.onload?.(new Event('load'));
+
+        await waitFor(() => {
+            expect(utilMockService.init).toHaveBeenCalledTimes(1);
+        });
+
+        // Leaving a chat page hides the button via the vendor API
+        unmount();
+        expect(utilMockService.utilAPI.hideChatButton).toHaveBeenCalledTimes(1);
+
+        // Returning to a chat page shows it again through the same API
+        const {unmount: unmount2} = render(<Chat />);
+        await waitFor(() => {
+            expect(utilMockService.utilAPI.showChatButton).toHaveBeenCalledTimes(1);
+        });
+
+        // Leaving again should also hide the button
+        unmount2();
+        expect(utilMockService.utilAPI.hideChatButton).toHaveBeenCalledTimes(2);
+    });
+
+    it('logs but does not throw when toggling the chat button fails', () => {
+        const consoleError = jest.spyOn(console, 'error').mockImplementation();
+
+        (UserContext.default as jest.Mock).mockReturnValue({});
+
+        const throwingUtilService = {
+            settings: {language: ''},
+            init: jest.fn(),
+            utilAPI: {
+                showChatButton: jest.fn(),
+                hideChatButton: jest.fn(() => {
+                    throw new Error('cannot hide while chat window is open');
+                })
+            }
+        };
+
+        const {unmount} = render(<Chat />);
+        flushIdleCallback();
+
+        const script = document.querySelector('script[src*="bootstrap.min.js"]') as HTMLScriptElement;
+
+        (window as any).embeddedservice_bootstrap = throwingUtilService;
+        script.onload?.(new Event('load'));
+
+        // Unmount triggers hideChatButton, which throws; the error must be
+        // caught and logged rather than surfaced as an unhandled exception.
+        expect(() => unmount()).not.toThrow();
+        expect(consoleError).toHaveBeenCalledWith(
+            'Error toggling Salesforce chat button:',
+            expect.any(Error)
+        );
+
+        consoleError.mockRestore();
     });
 });

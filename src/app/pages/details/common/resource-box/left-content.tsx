@@ -1,5 +1,6 @@
 import React from 'react';
 import useUserContext from '~/contexts/user';
+import usePortalContext from '~/contexts/portal';
 import {FormattedMessage} from 'react-intl';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
@@ -9,6 +10,7 @@ import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons/faExternalLin
 import {useToggle} from '~/helpers/data';
 import {useLocation} from 'react-router-dom';
 import trackLink from '../track-link';
+import {itemTypeForVariant} from '../get-this-title-files/give-before-pdf/give-before-other';
 import useGiveDialog, { VariantValue } from '../get-this-title-files/give-before-pdf/use-give-dialog';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
@@ -21,7 +23,7 @@ type LinkIsSet = {
 };
 
 // eslint-disable-next-line complexity
-export default function LeftContent({model}: {model: ResourceModel}) {
+export default function LeftContent({model, variant}: {model: ResourceModel; variant?: VariantValue}) {
     const {userStatus} = useUserContext();
     const doneWaiting = useDoneWaitingForModelChange(model);
 
@@ -46,7 +48,7 @@ export default function LeftContent({model}: {model: ResourceModel}) {
         );
     }
 
-    return <LeftButton model={model as ResourceModel & LinkIsSet} />;
+    return <LeftButton model={model as ResourceModel & LinkIsSet} variant={variant} />;
 }
 
 function useDoneWaitingForModelChange(model: ResourceModel) {
@@ -77,13 +79,17 @@ const iconLookup: {[key: string]: IconDefinition} = {
     'external-link-alt': faExternalLinkAlt
 };
 
+// Callers that render a resource box outside the book detail page (e.g. a
+// flex-page table cell) pass an explicit variant instead - the route's query
+// string says nothing about the resource there.
 function useVariant(): VariantValue {
     const {search} = useLocation();
+    const keys = Array.from(new URLSearchParams(search).keys()).map((k) => k.toLowerCase());
 
-    if (search.includes('Instructor')) {
+    if (keys.includes('instructor resources')) {
         return 'Instructor resource';
     }
-    if (search.includes('Student')) {
+    if (keys.includes('student resources')) {
         return 'Student resource';
     }
     return '? resource';
@@ -96,20 +102,26 @@ function LinkText({iconType, link}: LinkIsSet & {iconType: ResourceModel['iconTy
     return link.text;
 }
 
-function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
+function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant?: VariantValue}) {
     const icon = iconLookup[model.iconType] || faExclamationTriangle;
     const isDownload = icon === faDownload;
     const {GiveDialog, open, enabled} = useGiveDialog();
-    const {userStatus} = useUserContext();
+    // trackLink reports for any signed-in account. Gating on instructor status
+    // here dropped every student's resource download, and dropped an
+    // instructor's too whenever the click beat the user request.
     const trackDownloadClick = React.useCallback(
         (event: TrackedMouseEvent) => {
-            if (userStatus?.isInstructor) {
-                trackLink(event, model.bookModel.id.toString());
-            }
+            // A malformed CMS resource can reach the exclamation-icon fallback
+            // with no book attached; trackLink treats a missing id as
+            // "nothing to report", and throwing here would abort the click
+            // before the resource opens.
+            trackLink(event, model.bookModel?.id.toString());
         },
-        [model.bookModel, userStatus]
+        [model.bookModel]
     );
-    const variant = useVariant();
+    const routeVariant = useVariant();
+    const nudgeVariant = variant ?? routeVariant;
+    const {hrefInPortal} = usePortalContext();
     const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
@@ -117,22 +129,29 @@ function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
             resourceName: model.heading,
             resourceCategory: model.resourceCategory
         });
-        if (isDownload && enabled) {
+        // The donation nudge is for downloads only, but every resource counts as
+        // a resource access — link-icon resources (Canvas cartridges, OER
+        // Commons items) have to report too.
+        if (isDownload && enabled && open()) {
             event.preventDefault();
-            open();
+            return;
         }
+        // The dialog's own link is what normally reports the download, so a
+        // skipped dialog has to report it here or the CMS never sees it.
+        trackDownloadClick(event);
     }
 
     return (
         <React.Fragment>
             <a
                 className='left-button'
-                href={model.link.url}
+                href={hrefInPortal(model.link.url)}
                 data-local={model.iconType === 'lock'}
                 onClick={openDialog}
                 data-track={model.heading}
                 data-analytics-select-content={model.heading}
                 data-content-type={`Book Resource (${model.resourceCategory})`}
+                data-variant={itemTypeForVariant(nudgeVariant)}
                 aria-label={ariaLabel}
             >
                 <FontAwesomeIcon icon={icon} />
@@ -147,7 +166,7 @@ function LeftButton({model}: {model: ResourceModel & LinkIsSet}) {
                             e: React.MouseEvent
                         ) => void
                     }
-                    variant={variant}
+                    variant={nudgeVariant}
                 />
             )}
         </React.Fragment>

@@ -1,3 +1,4 @@
+import fs from 'fs';
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
@@ -40,6 +41,18 @@ describe('carousel', () => {
             </Carousel>
         );
         expect(document.querySelectorAll('.hover-text')).toHaveLength(0);
+    });
+    // Its mutation observer calls hasAttribute on every added node, text nodes
+    // included; patches/react-aria-carousel+0.2.0.patch guards that.
+    it('is patched against non-element mutation records', () => {
+        const dist = fs.readFileSync(
+            require.resolve('react-aria-carousel'),
+            'utf8'
+        );
+
+        expect(dist).toContain(
+            'el.nodeType === 1 && el.hasAttribute("data-carousel-item")'
+        );
     });
 });
 

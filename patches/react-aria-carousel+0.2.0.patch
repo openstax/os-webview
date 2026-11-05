@@ -1,0 +1,39 @@
+diff --git a/node_modules/react-aria-carousel/dist/index.cjs b/node_modules/react-aria-carousel/dist/index.cjs
+index d4c57be..f272390 100644
+--- a/node_modules/react-aria-carousel/dist/index.cjs
++++ b/node_modules/react-aria-carousel/dist/index.cjs
+@@ -450,7 +450,7 @@ function useCarouselState({
+         (mutation) => (
+           // @ts-expect-error This is fine
+           [...mutation.addedNodes, ...mutation.removedNodes].some(
+-            (el) => el.hasAttribute("data-carousel-item") && !el.hasAttribute("data-clone")
++            (el) => el.nodeType === 1 && el.hasAttribute("data-carousel-item") && !el.hasAttribute("data-clone")
+           )
+         )
+       );
+diff --git a/node_modules/react-aria-carousel/dist/index.js b/node_modules/react-aria-carousel/dist/index.js
+index f44a6f5..02c17c3 100644
+--- a/node_modules/react-aria-carousel/dist/index.js
++++ b/node_modules/react-aria-carousel/dist/index.js
+@@ -409,7 +409,7 @@ function useCarouselState({
+         (mutation) => (
+           // @ts-expect-error This is fine
+           [...mutation.addedNodes, ...mutation.removedNodes].some(
+-            (el) => el.hasAttribute("data-carousel-item") && !el.hasAttribute("data-clone")
++            (el) => el.nodeType === 1 && el.hasAttribute("data-carousel-item") && !el.hasAttribute("data-clone")
+           )
+         )
+       );
+diff --git a/node_modules/react-aria-carousel/src/useCarouselState.ts b/node_modules/react-aria-carousel/src/useCarouselState.ts
+index 793cd0e..5095310 100644
+--- a/node_modules/react-aria-carousel/src/useCarouselState.ts
++++ b/node_modules/react-aria-carousel/src/useCarouselState.ts
+@@ -291,7 +291,7 @@ export function useCarouselState(
+         // @ts-expect-error This is fine
+         [...mutation.addedNodes, ...mutation.removedNodes].some(
+           (el: HTMLElement) =>
+-            el.hasAttribute("data-carousel-item") &&
++            el.nodeType === 1 && el.hasAttribute("data-carousel-item") &&
+             !el.hasAttribute("data-clone"),
+         ),
+       );

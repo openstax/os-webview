@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import {useLocation} from 'react-router-dom';
 import {captureEvent} from '~/helpers/posthog';
+import usePortalContext from '~/contexts/portal';
 
 type Data = {
     header_subtitle: string;
@@ -18,12 +19,18 @@ export default function CommonElements({
     data,
     onThankYouClick,
     headerSubtitle = data.header_subtitle,
-    giveLink
+    headerImage = data.header_image,
+    headerTitle = data.header_title,
+    giveLink,
+    giveLinkText = data.give_link_text
 }: {
     data: Data;
     onThankYouClick: React.MouseEventHandler;
     headerSubtitle?: string;
+    headerImage?: string;
+    headerTitle?: string;
     giveLink: string;
+    giveLinkText?: string;
 }) {
     const initialItem = React.useRef<HTMLAnchorElement>(null);
     const {pathname} = useLocation();
@@ -31,6 +38,7 @@ export default function CommonElements({
         captureEvent('donation_initiated');
         openGiveInNewWindow(event);
     }, []);
+    const {hrefInPortal} = usePortalContext();
 
     React.useEffect(() => initialItem.current?.focus(), []);
     return (
@@ -45,14 +53,14 @@ export default function CommonElements({
             ) : (
                 <img
                     className="header-image"
-                    src={data.header_image}
+                    src={headerImage}
                     alt=""
                     height="165"
                     width="165"
                 />
             )}
             <p>
-                <span className="header-title">{data.header_title}</span>
+                <span className="header-title">{headerTitle}</span>
                 <br />
                 <span>{headerSubtitle}</span>
             </p>
@@ -64,11 +72,11 @@ export default function CommonElements({
                     data-nudge-action="interacted"
                     ref={initialItem}
                 >
-                    {data.give_link_text}
+                    {giveLinkText}
                     <FontAwesomeIcon icon={faHeart} />
                 </a>
                 <a
-                    href={data.thank_you_link}
+                    href={hrefInPortal(data.thank_you_link)}
                     className="btn secondary"
                     onClick={onThankYouClick}
                     data-nudge-action="thank-you"

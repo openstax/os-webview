@@ -25,7 +25,9 @@ import homePage from '../data/home-page';
 import subjectPage from '../data/new-subjects';
 import flexPage from '../data/flex-page';
 import generalPage from '../data/general-page';
+import k12PageData from '../data/k12';
 import ChildrenContainer from '~/../../test/helpers/mock-children-container';
+import {pageDataState} from '~/../../test/helpers/page-data-state';
 
 const {useLocation} = RRD;
 const BrowserRouter = jest.spyOn(RRD, 'BrowserRouter').mockImplementation(({children}) => (
@@ -45,13 +47,17 @@ jest.mock('react-modal', () => ({
 }));
 global.scrollTo = jest.fn();
 
+// The first render in this file loads the app's lazy chunks, and jest transforms
+// them synchronously, so under CPU load it can exceed the default 5s on its own.
+jest.setTimeout(15000);
+
 describe('shell', () => {
     const user = userEvent.setup();
 
     function LocationDisplay() {
         const loc = useLocation();
 
-        return <div>-{loc.pathname}-</div>;
+        return <div>-{loc.pathname}{loc.search}-</div>;
     }
     function mockBrowserInitialEntriesWithLocation(entries: string[]) {
         BrowserRouter.mockImplementationOnce(({children}) => (
@@ -63,7 +69,7 @@ describe('shell', () => {
     }
 
     // eslint-disable-next-line complexity
-    const spyUpd = jest.spyOn(UPD, 'default').mockImplementation((path) => {
+    function pageDataFor(path: string) {
         switch (path) {
             case 'pages/form-headings?locale=en':
                 return camelCaseKeys(formHeadings);
@@ -86,6 +92,11 @@ describe('shell', () => {
                 return {error: 'intentional'};
             case 'pages/general-page':
                 return camelCaseKeys(transformData(generalPage));
+            case 'pages/k12':
+                return camelCaseKeys(transformData(k12PageData));
+            case 'pages/k12-math':
+                // @ts-expect-error flexPage type
+                return camelCaseKeys(flexPage);
             default:
                 if (path.startsWith('errata/') || path.startsWith('pages/')
                 || path.startsWith('snippets/roles')) {
@@ -94,7 +105,14 @@ describe('shell', () => {
                 console.info('*** Requested', path);
                 return {};
         }
-    });
+    }
+    const spyUpd = jest.spyOn(UPD, 'default').mockImplementation(pageDataFor);
+
+    // The page routes read their data through usePageDataFetchState; serve it from the
+    // mock above, treating no data as still loading
+    jest.spyOn(UPD, 'usePageDataFetchState').mockImplementation(
+        ((path: string) => pageDataState(UPD.default(path))) as unknown as typeof UPD.usePageDataFetchState
+    );
     const setPortal = jest.fn();
     const spyGP = jest.spyOn(GP, 'GeneralPageFromSlug');
 
@@ -106,11 +124,15 @@ describe('shell', () => {
 
     function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
         jest.spyOn(PC, 'default').mockReturnValue({
+            portal: portalPrefix.slice(1),
             portalPrefix,
+            linkPrefix: isK12Portal ? portalPrefix : '',
             setPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal,
-            setIsK12Portal: jest.fn()
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
     }
 
@@ -160,6 +182,20 @@ describe('shell', () => {
 
         render(AppElement);
         await screen.findByText('-/anything-');
+    });
+    it('preserves the query string through the "general" redirect', async () => {
+        mockBrowserInitialEntriesWithLocation(['/general/anything?utm_source=test']);
+
+        render(AppElement);
+        await screen.findByText('-/anything?utm_source=test-');
+    });
+    it('includes the query string when calling piTracker', async () => {
+        w.piTracker = (path: string) => piTracker(path);
+        mockBrowserInitialEntries(['/adoption?utm_source=test']);
+
+        render(AppElement);
+        await screen.findByRole('combobox');
+        await waitFor(() => expect(piTracker).toHaveBeenCalledWith(expect.stringContaining('?utm_source=test')));
     });
     it('routes adoption (no CMS page data) page', async () => {
         mockBrowserInitialEntries(['/adoption']);
@@ -286,6 +322,20 @@ describe('shell', () => {
         render(AppElement);
         await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
     });
+    it('routes "/k12/<subject>" to the "k12-<subject>" CMS page', async () => {
+        setPortalPrefix('');
+        mockBrowserInitialEntriesWithLocation(['/k12/math']);
+        render(AppElement);
+        await screen.findByRole('heading', {level: 2, name: 'Apply today to be an OpenStax Partner'});
+        // Renders in place -- no canonicalization redirect away from the subject URL
+        await screen.findByText('-/k12/math-');
+    });
+    it('routes "/k12" (no subject) to the "k12" CMS page as before', async () => {
+        setPortalPrefix('');
+        mockBrowserInitialEntries(['/k12']);
+        render(AppElement);
+        await screen.findByRole('link', {name: 'Algebra'});
+    });
     it('loads general page within a portal route', async () => {
         setPortalPrefix('/landing-page');
         mockBrowserInitialEntries(['/landing-page/general-page']);
@@ -293,60 +343,69 @@ describe('shell', () => {
         await waitFor(() => expect(spyGP).toHaveBeenCalled());
         spyGP.mockClear();
     });
-    it('does not load GTM script for K12 portals', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+    it('loads analytics for a K12 portal\'s school', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
 
         // Create a K12 portal page data
+        const schoolData = {
+            industry: 'K12',
+            salesforceId: 'sf-account-id',
+            researchAgreementActive: false
+        };
         const k12PortalPage = {
             ...camelCaseKeys(landingPage) as object,
-            schoolData: {industry: 'K12'}
+            schoolData
         };
 
         spyUpd.mockReturnValueOnce(k12PortalPage);
-        // Set portal context to indicate K12 portal (isK12Portal === true)
-        setPortalPrefix('', true);
+        setPortalPrefix('');
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
-        // GTM should NOT be initialized for K12 portals
-        expect(spyInitializeGTM).not.toHaveBeenCalled();
+        await waitFor(() => expect(spyInitializeAnalytics).toHaveBeenCalledWith(schoolData));
+        spyInitializeAnalytics.mockRestore();
     });
-    it('loads GTM script for non-K12 portals', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
+    it('loads analytics for a non-K12 portal\'s school', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
 
         // Create a non-K12 portal page data
+        const schoolData = {
+            industry: 'Higher Education',
+            salesforceId: 'sf-account-id',
+            researchAgreementActive: false
+        };
         const nonK12PortalPage = {
             ...camelCaseKeys(landingPage) as object,
-            schoolData: {industry: 'Higher Education'}
+            schoolData
         };
 
         spyUpd.mockReturnValueOnce(nonK12PortalPage);
-        // Set portal context to indicate non-K12 portal (isK12Portal === false)
-        setPortalPrefix('', false);
+        setPortalPrefix('');
         mockBrowserInitialEntries(['/landing-page']);
 
         render(AppElement);
         await waitFor(() => expect(setPortal).toHaveBeenCalledWith('landing-page'));
 
-        // GTM should be initialized for non-K12 portals
-        await waitFor(() => {
-            expect(spyInitializeGTM).toHaveBeenCalled();
-        });
+        await waitFor(() => expect(spyInitializeAnalytics).toHaveBeenCalledWith(schoolData));
+        spyInitializeAnalytics.mockRestore();
     });
-    it('loads GTM script for no-data pages (e.g., /adoption)', async () => {
-        const spyInitializeGTM = jest.spyOn(TM, 'initializeGTM');
-        const setIsK12Portal = jest.fn();
+    it('loads analytics for no school on no-data pages (e.g., /adoption)', async () => {
+        const spyInitializeAnalytics = jest.spyOn(TM, 'initializeAnalytics').mockImplementation(() => undefined);
         const mockSetPortal = jest.fn();
 
         // Mock portal context with functions that can be tracked
         jest.spyOn(PC, 'default').mockReturnValue({
+            portal: '',
             portalPrefix: '',
+            linkPrefix: '',
             setPortal: mockSetPortal,
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: false,
-            setIsK12Portal
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
 
         mockBrowserInitialEntries(['/adoption']);
@@ -357,18 +416,16 @@ describe('shell', () => {
         await screen.findByRole('combobox');
         await screen.findByText('Let us know you\'re using OpenStax');
 
-        // NonPortalRouteWrapper should have called setIsK12Portal(false) to enable GTM
+        // NonPortalRouteWrapper should have cleared the portal
         await waitFor(() => {
-            expect(setIsK12Portal).toHaveBeenCalledWith(false);
+            expect(mockSetPortal).toHaveBeenCalledWith('');
         });
 
-        // And GTM should be initialized
+        // And analytics for a page with no school should be loaded
         await waitFor(() => {
-            expect(spyInitializeGTM).toHaveBeenCalled();
+            expect(spyInitializeAnalytics).toHaveBeenCalledWith(null);
         });
-
-        // Portal should be cleared for non-portal pages
-        expect(mockSetPortal).toHaveBeenCalledWith('');
+        spyInitializeAnalytics.mockRestore();
     });
 
     it('identifies the user in PostHog once uuid resolves', async () => {

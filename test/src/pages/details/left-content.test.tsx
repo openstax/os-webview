@@ -1,9 +1,22 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render as originalRender, screen} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import {LanguageContextProvider} from '~/contexts/language';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 import LeftContent from '~/pages/details/common/resource-box/left-content';
+import * as TL from '~/pages/details/common/track-link';
+
+// Resource buttons read the portal context, which the shell provides
+function render(ui: React.ReactElement) {
+    return originalRender(ui, {wrapper: ShellContextProvider});
+}
+
+// enroll() picks a variant at random; these assertions read the rendered Give label,
+// so the choice has to be deterministic here.
+jest.mock('@openstax/experiments', () => ({
+    enroll: jest.fn(({variants}) => variants[0])
+}));
 
 const mockUseUserContext = jest.fn();
 
@@ -27,6 +40,9 @@ describe('left-content', () => {
     const link = {url: '#good-url', text: 'button-label'};
     // Setup option prevents await click from hanging when using faketimers
     const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
+
+    // Reset the give-dialog frequency cap so each click test starts uncapped.
+    beforeEach(() => window.localStorage.removeItem('giveDialogLastDisplay'));
 
     function Component({
         model,
@@ -76,7 +92,7 @@ describe('left-content', () => {
         });
         const model = {link, ...baseModel, ...{iconType: 'unlock'}};
 
-        render(<Component model={model} search="Student" />);
+        render(<Component model={model} search="STUDENT%20RESOURCES" />);
         const foundLink = screen.getByRole('link');
 
         expect(foundLink.textContent).toBe('button-label');
@@ -89,17 +105,21 @@ describe('left-content', () => {
         });
         const model = {link, ...baseModel, iconType: 'download'};
 
-        render(<Component model={model} />);
+        render(<Component model={model} search="instructor%20resources" />);
         const foundLink = screen.getByRole('link');
 
         expect(foundLink.textContent).toBe('button-label');
         await user.click(foundLink);
-        await screen.findByText('Give today');
+        const giveToday = await screen.findByText('Give today');
         const downloadLink = await screen.findByText('Go to your resource');
 
+        expect(giveToday.closest('a')?.getAttribute('href')).toContain('support-openstax-instructor-resources');
+        expect(document.querySelector('[data-nudge-placement="Instructor resource"]')).toBeTruthy();
         await user.click(downloadLink);
     });
-    it("Doesn't track downloads if not instructor", async () => {
+    it('tracks a download for a signed-in non-instructor', async () => {
+        const trackLink = jest.spyOn(TL, 'default');
+
         mockUseUserContext.mockReturnValue({
             userStatus: {
                 isInstructor: false
@@ -107,15 +127,68 @@ describe('left-content', () => {
         });
         const model = {link, ...baseModel, iconType: 'download'};
 
-        render(<Component model={model} search="Student" />);
+        render(<Component model={model} search="STUDENT%20RESOURCES" />);
         const foundLink = screen.getByRole('link');
 
         expect(foundLink.textContent).toBe('button-label');
         await user.click(foundLink);
-        await screen.findByText('Give today');
+        const giveToday = await screen.findByText('Give today');
         const downloadLink = await screen.findByText('Go to your resource');
 
+        expect(giveToday.closest('a')?.getAttribute('href')).toContain('support-openstax-student-resources');
+        expect(document.querySelector('[data-nudge-placement="Student resource"]')).toBeTruthy();
         await user.click(downloadLink);
+
+        expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
+        trackLink.mockRestore();
+    });
+    it.each([
+        ['Instructor', 'an instructor'],
+        ['Student', 'a student']
+    ])(
+        'reports a link-icon resource for %s resources',
+        async (search) => {
+            const trackLink = jest.spyOn(TL, 'default');
+
+            mockUseUserContext.mockReturnValue({
+                userStatus: {isInstructor: search === 'Instructor'}
+            });
+            const model = {
+                link,
+                ...baseModel,
+                iconType: 'external-link-alt'
+            };
+
+            render(<Component model={model} search={search} />);
+
+            await user.click(screen.getByRole('link'));
+
+            // The donation nudge is for downloads; a link resource goes straight
+            // through, but still has to be reported.
+            expect(screen.queryByText('Go to your resource')).toBeNull();
+            expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
+            trackLink.mockRestore();
+        }
+    );
+    it('still reports the download when the dialog is capped', async () => {
+        const trackLink = jest.spyOn(TL, 'default');
+
+        mockUseUserContext.mockReturnValue({
+            userStatus: {isInstructor: true}
+        });
+        const model = {link, ...baseModel, iconType: 'download'};
+
+        window.localStorage.setItem('giveDialogLastDisplay', String(Date.now()));
+        render(<Component model={model} />);
+        const foundLink = screen.getByRole('link');
+
+        expect(foundLink.dataset.variant).toBe('resource');
+
+        await user.click(foundLink);
+
+        expect(screen.queryByText('Go to your resource')).toBeNull();
+        expect(trackLink).toHaveBeenCalledWith(expect.anything(), '1');
+        trackLink.mockRestore();
     });
     it('handles unknown search', async () => {
         mockUseUserContext.mockReturnValue({
@@ -130,9 +203,11 @@ describe('left-content', () => {
 
         expect(foundLink.textContent).toBe('button-label');
         await user.click(foundLink);
-        await screen.findByText('Give today');
+        const giveToday = await screen.findByText('Give today');
         const downloadLink = await screen.findByText('Go to your resource');
 
+        expect(giveToday.closest('a')?.getAttribute('href')).toContain('support-openstax-subject');
+        expect(document.querySelector('[data-nudge-placement="? resource"]')).toBeTruthy();
         await user.click(downloadLink);
     });
     it('handles unknown icon and unknown search', async () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import ThankYou, {useOnThankYouClick} from './thank-you-form';
-import useGiveLinks from './use-give-links';
+import {placementForVariant, useResolvedGiveLink} from './use-give-links';
 import CommonElements from './common-elements';
 import type {DonationPopupData} from './use-donation-popup-data';
 
@@ -22,7 +22,13 @@ export default function GiveBeforeOther({
     id?: string;
 }) {
     const {showThankYou, onThankYouClick} = useOnThankYouClick();
-    const [controlLink] = useGiveLinks();
+    const {
+        url,
+        headerSubtitle,
+        headerImage,
+        headerTitle,
+        giveLinkText
+    } = useResolvedGiveLink(placementForVariant(variant), data);
     const beforeOpen = React.useCallback(
         (e: React.MouseEvent) => {
             close();
@@ -39,7 +45,7 @@ export default function GiveBeforeOther({
                 link={link}
                 close={close}
                 source={variant}
-                itemType={lookupVariant(variant)}
+                itemType={itemTypeForVariant(variant)}
                 track={track}
                 id={id}
             />
@@ -56,23 +62,30 @@ export default function GiveBeforeOther({
             <CommonElements
                 data={data}
                 onThankYouClick={onThankYouClick}
-                giveLink={controlLink}
+                giveLink={url}
+                headerSubtitle={headerSubtitle}
+                headerImage={headerImage}
+                headerTitle={headerTitle}
+                giveLinkText={giveLinkText}
             />
             <a
                 href={link}
                 onClick={beforeOpen}
                 className='btn go-to'
                 {...(track ? {'data-track': track} : {})}
-                data-variant={lookupVariant(variant)}
+                data-variant={itemTypeForVariant(variant)}
                 data-local="true"
             >
-                Go to your {lookupVariant(variant)}
+                Go to your {itemTypeForVariant(variant)}
             </a>
         </div>
     );
 }
 
-function lookupVariant(variant?: string) {
+// trackLink reads data-variant to decide whether a row lands in Salesforce as
+// a resource or a book format, so links that bypass this dialog must label
+// themselves the same way.
+export function itemTypeForVariant(variant?: string) {
     if (variant === 'View online') {
         return 'book';
     }

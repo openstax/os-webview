@@ -18,6 +18,10 @@ function encodeLocation(search: string) {
 }
 
 export type ResourceData = {
+    // The through-row's own pk (BookFacultyResources/BookStudentResources),
+    // distinct from `resource.id` (the underlying Resource row) - this is
+    // what a resource_ref marker's `resourceId` matches against.
+    id?: number;
     linkExternal?: string;
     linkDocumentUrl?: string;
     linkDocument?: {
@@ -149,13 +153,6 @@ export function resourceBoxModel(
             comingSoonText: resourceData.comingSoonText,
             k12: resourceData.k12,
             videoReferenceNumber: resourceData.videoReferenceNumber,
-            trackResource: Boolean(userStatus.trackDownloads) && {
-                book: bookModel.id,
-                // eslint-disable-next-line camelcase
-                account_id: userStatus.userInfo.accounts_id,
-                // eslint-disable-next-line camelcase
-                resource_name: resourceData.resource?.heading
-            },
             printLink: resourceData.printLink,
             bookModel
         },

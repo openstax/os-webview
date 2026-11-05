@@ -9,6 +9,30 @@ jest.mock('~/helpers/main-class-hooks', () => ({
 }));
 
 describe('school-selector', () => {
+    afterEach(() => {
+        jest.restoreAllMocks();
+        jest.useRealTimers();
+    });
+    it('restores focus to the active element when school info appears', () => {
+        jest.useFakeTimers();
+        jest.spyOn(document, 'hasFocus').mockReturnValue(true);
+        jest.spyOn(UMS, 'default').mockReturnValue({
+            schoolNames: [],
+            schoolIsOk: false,
+            selectedSchool: null
+        } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+        render(
+            <LanguageContextProvider>
+                <SchoolSelector initialValue="Rice University" />
+            </LanguageContextProvider>
+        );
+
+        const active = document.activeElement as HTMLElement;
+        const focusSpy = jest.spyOn(active, 'focus');
+
+        jest.advanceTimersByTime(40);
+        expect(focusSpy).toHaveBeenCalled();
+    });
     it('sets a hidden field when there is a selected school', async () => {
         jest.spyOn(UMS, 'default').mockReturnValue({
             schoolNames: ['one'],

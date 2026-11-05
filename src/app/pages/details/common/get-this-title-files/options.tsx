@@ -14,6 +14,7 @@ import {useIntl} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useTOCContext from '../toc-slideout/context';
 import {captureEvent} from '~/helpers/posthog';
+import usePortalContext from '~/contexts/portal';
 import {useDialog} from '~/components/dialog/dialog';
 import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
 import trackLink from '../track-link';
@@ -70,6 +71,7 @@ export function SimpleLinkOption({
 
 export function TocOption({model}: {model: Model}) {
     const {toggle, isOpen} = useTOCContext();
+    const {linkPrefix} = usePortalContext();
     const includeTOC = ['live', 'deprecated', 'new_edition_available'].includes(
         model.bookState
     );
@@ -93,7 +95,7 @@ export function TocOption({model}: {model: Model}) {
     return (
         <div className="option toc-option">
             <a
-                href="/"
+                href={`${linkPrefix}/`}
                 role="button"
                 className="show-toc"
                 aria-pressed={isOpen}
@@ -107,6 +109,13 @@ export function TocOption({model}: {model: Model}) {
     );
 }
 
+// The download is recorded from whichever link the reader actually follows:
+// the dialog's when it opens, the option's own when the frequency cap skips it.
+// GetThisTitle's delegated click handler runs trackLink either way, but it only
+// builds tracking info for links carrying data-track.
+const WEBVIEW_TRACK = 'Online';
+const PDF_TRACK = 'PDF';
+
 export function WebviewOption({model}: {model: Model}) {
     const intl = useIntl();
     const texts = {
@@ -118,7 +127,10 @@ export function WebviewOption({model}: {model: Model}) {
         icon: faLaptop,
         text: $.isPolish(model.title) ? 'Zobacz w przeglądarce' : texts.link
     };
-    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog(
+        model.contentWarningText ?? undefined,
+        model.id.toString()
+    );
     const trackDownload = React.useCallback(
         (event: TrackedMouseEvent) => {
             trackLink(event, model.id.toString());
@@ -141,6 +153,7 @@ export function WebviewOption({model}: {model: Model}) {
                     data-local={isRex}
                     rel="noreferrer"
                     onClick={handleWebviewClick}
+                    data-track={WEBVIEW_TRACK}
                 >
                     <IconAndText {...iconAndTextArgs} />
                 </a>
@@ -148,7 +161,7 @@ export function WebviewOption({model}: {model: Model}) {
                     link={webviewLink}
                     variant="View online"
                     warning={model.contentWarningText ?? undefined}
-                    track="Online"
+                    track={WEBVIEW_TRACK}
                     onDownload={trackDownload}
                     id={model.id.toString()}
                 />
@@ -157,18 +170,22 @@ export function WebviewOption({model}: {model: Model}) {
     );
 }
 
-export function PdfOption({model}: {model: Model}) {
+function usePdfOptionText(model: Model) {
     const polish = $.isPolish(model.title);
     const intl = useIntl();
-    const pdfText = polish
-        ? ' Pobierz PDF'
-        : intl.formatMessage({id: 'getit.pdf.download'});
-    const sampleText = polish
-        ? ' przykład'
-        : intl.formatMessage({id: 'getit.pdf.sample'});
-    const text = pdfText + (model.comingSoon ? sampleText : '');
+    const pdfText = polish ? ' Pobierz PDF' : intl.formatMessage({id: 'getit.pdf.download'});
+    const sampleText = polish ? ' przykład' : intl.formatMessage({id: 'getit.pdf.sample'});
+
+    return pdfText + (model.comingSoon ? sampleText : '');
+}
+
+export function PdfOption({model}: {model: Model}) {
+    const text = usePdfOptionText(model);
     const pdfLink = model.pdfUrl; // low/high-res split is obsolete; CMS serves a single PDF
-    const {GiveDialog, openGiveDialog} = useOpenGiveDialog();
+    const {GiveDialog, openGiveDialog} = useOpenGiveDialog(
+        model.contentWarningText ?? undefined,
+        model.id.toString()
+    );
     const trackDownload = React.useCallback(
         (event: TrackedMouseEvent) => {
             trackLink(event, model.id.toString());
@@ -183,10 +200,11 @@ export function PdfOption({model}: {model: Model}) {
                 icon={faCloudDownloadAlt}
                 text={text}
                 onClick={openGiveDialog}
+                data-track={PDF_TRACK}
             />
             <GiveDialog
                 link={pdfLink}
-                track="PDF"
+                track={PDF_TRACK}
                 onDownload={trackDownload}
                 id={model.id.toString()}
                 warning={model.contentWarningText ?? undefined}

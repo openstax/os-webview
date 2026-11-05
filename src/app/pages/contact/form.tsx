@@ -5,6 +5,7 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import { FileButton } from '../errata-form/form/FileUploader';
 import useUserContext from '~/contexts/user';
 import {captureEvent} from '~/helpers/posthog';
+import usePortalContext from '~/contexts/portal';
 import './form.scss';
 
 type SetSubmitted = React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +19,6 @@ const options: {
     'Adopting OpenStax Textbooks',
     'OpenStax Kinetic',
     'OpenStax Assignable',
-    'Staxly, AI Study Coach',
     'Donations',
     'College/University Partnerships',
     'Media Inquiries',
@@ -81,6 +81,7 @@ function useIsEmbedded() {
 function useAfterSubmit(setSubmitted?: SetSubmitted, subject?: string) {
     const navigate = useNavigate();
     const isEmbedded = useIsEmbedded();
+    const {linkPrefix} = usePortalContext();
 
     return React.useCallback(
         () => {
@@ -88,10 +89,10 @@ function useAfterSubmit(setSubmitted?: SetSubmitted, subject?: string) {
             if (isEmbedded) {
                 (setSubmitted as SetSubmitted)(true); // the embedded form passes it
             } else {
-                navigate('/confirmation/contact');
+                navigate(`${linkPrefix}/confirmation/contact`);
             }
         },
-        [navigate, isEmbedded, setSubmitted, subject]
+        [navigate, isEmbedded, setSubmitted, subject, linkPrefix]
     );
 }
 

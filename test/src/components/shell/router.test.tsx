@@ -1,15 +1,16 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/preact';
+import {act, render, screen, waitFor} from '@testing-library/preact';
 import '@testing-library/jest-dom';
+import {NavigateFunction, useNavigate} from 'react-router-dom';
 import Router from '~/components/shell/router';
 import * as LayoutContext from '~/contexts/layout';
 import * as PortalContext from '~/contexts/portal';
 import * as SharedDataContext from '~/contexts/shared-data';
 import * as UserContext from '~/contexts/user';
-import * as TagManager from '~/helpers/tag-manager';
 import * as UsePageData from '~/helpers/use-page-data';
 import * as UseLinkHandler from '~/components/shell/router-helpers/use-link-handler';
 import * as PageRoutes from '~/components/shell/router-helpers/page-routes';
+import $ from '~/helpers/$';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 
 declare global {
@@ -45,17 +46,18 @@ jest.mock('~/components/shell/router-helpers/non-portal-route-wrapper', () => ({
     )
 }));
 
+const FOCUSABLE_SELECTOR =
+    'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 jest.mock('~/helpers/$', () => ({
+    __esModule: true,
     default: {
-        focusable:
-            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
         scrollTo: jest.fn()
     }
 }));
 
 describe('Router', () => {
     let mockLinkHandler: jest.Mock;
-    let mockInitializeGTM: jest.Mock;
     let addEventListenerSpy: jest.SpyInstance;
     let removeEventListenerSpy: jest.SpyInstance;
 
@@ -65,7 +67,6 @@ describe('Router', () => {
 
         // Create mocks
         mockLinkHandler = jest.fn();
-        mockInitializeGTM = jest.fn();
 
         // Spy on event listeners
         addEventListenerSpy = jest.spyOn(document, 'addEventListener');
@@ -75,17 +76,18 @@ describe('Router', () => {
         jest.spyOn(UseLinkHandler, 'default').mockReturnValue(
             mockLinkHandler
         );
-        jest.spyOn(TagManager, 'initializeGTM').mockImplementation(
-            mockInitializeGTM
-        );
 
         // Mock contexts with default values
         jest.spyOn(PortalContext, 'default').mockReturnValue({
+            portal: '',
             portalPrefix: '',
+            linkPrefix: '',
             setPortal: jest.fn(),
+            hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: true,
-            setIsK12Portal: jest.fn()
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
 
         jest.spyOn(SharedDataContext, 'default').mockReturnValue({
@@ -113,6 +115,45 @@ describe('Router', () => {
 
     afterEach(() => {
         jest.clearAllMocks();
+    });
+
+    describe('scroll reset', () => {
+        let navigate: NavigateFunction;
+
+        const Navigator = () => {
+            navigate = useNavigate();
+            return null;
+        };
+
+        const renderAtHome = () => {
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Navigator />
+                    <Router />
+                </MemoryRouter>
+            );
+            (window.scrollTo as jest.Mock).mockClear();
+        };
+
+        beforeEach(() => {
+            window.scrollTo = jest.fn();
+        });
+
+        it('scrolls to the top on navigation to a new path', () => {
+            renderAtHome();
+
+            act(() => navigate('/subjects'));
+
+            expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+        });
+
+        it('leaves the scroll alone when the destination has a hash', () => {
+            renderAtHome();
+
+            act(() => navigate('/subjects#math'));
+
+            expect(window.scrollTo).not.toHaveBeenCalled();
+        });
     });
 
     describe('Router component', () => {
@@ -188,6 +229,22 @@ describe('Router', () => {
             expect(typeof window.piTracker).toBe('function');
         });
 
+        it('includes the query string when calling piTracker', async () => {
+            const mockPiTracker = jest.fn();
+
+            window.piTracker = (url: string) => mockPiTracker(url);
+
+            render(
+                <MemoryRouter initialEntries={['/subjects?utm_source=test']}>
+                    <Router />
+                </MemoryRouter>
+            );
+
+            await waitFor(() => {
+                expect(mockPiTracker).toHaveBeenCalledWith(expect.stringContaining('?utm_source=test'));
+            });
+        });
+
         it('does not call piTracker if it does not exist', () => {
             delete window.piTracker;
 
@@ -201,44 +258,6 @@ describe('Router', () => {
             expect(
                 screen.getByTestId('page-title-confirmation')
             ).toBeInTheDocument();
-        });
-
-        it('initializes GTM when isK12Portal is false', async () => {
-            jest.spyOn(PortalContext, 'default').mockReturnValue({
-                portalPrefix: '',
-                setPortal: jest.fn(),
-                rewriteLinks: jest.fn(),
-                isK12Portal: false,
-                setIsK12Portal: jest.fn()
-            });
-
-            render(
-                <MemoryRouter initialEntries={['/']}>
-                    <Router />
-                </MemoryRouter>
-            );
-
-            await waitFor(() => {
-                expect(mockInitializeGTM).toHaveBeenCalled();
-            });
-        });
-
-        it('does not initialize GTM when isK12Portal is true', () => {
-            jest.spyOn(PortalContext, 'default').mockReturnValue({
-                portalPrefix: '',
-                setPortal: jest.fn(),
-                rewriteLinks: jest.fn(),
-                isK12Portal: true,
-                setIsK12Portal: jest.fn()
-            });
-
-            render(
-                <MemoryRouter initialEntries={['/']}>
-                    <Router />
-                </MemoryRouter>
-            );
-
-            expect(mockInitializeGTM).not.toHaveBeenCalled();
         });
     });
 
@@ -519,6 +538,112 @@ describe('Router', () => {
             expect(skipLink.tagName).toBe('A');
             expect(skipLink.getAttribute('href')).toBe('#main');
             expect(skipLink.className).toBe('skiptocontent');
+        });
+
+        // The default MockLayout renders no #main at all, which is the state a
+        // page is in before a layout chunk resolves.
+        const MainWithNothingFocusable = ({
+            children
+        }: {
+            children: React.ReactNode;
+        }) => (
+            <div id="main" tabIndex={-1}>
+                {children}
+            </div>
+        );
+
+        const renderWithLayout = (
+            Layout?: React.ComponentType<{children: React.ReactNode}>
+        ) => {
+            if (Layout) {
+                jest.spyOn(LayoutContext, 'default').mockReturnValue({
+                    Layout,
+                    setLayoutParameters: jest.fn()
+                } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+            }
+
+            render(
+                <MemoryRouter initialEntries={['/']}>
+                    <Router />
+                </MemoryRouter>
+            );
+        };
+
+        // Dispatching a real event (rather than fireEvent) is what lets us
+        // assert on defaultPrevented afterwards.
+        const clickSkipLink = () => {
+            const event = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            });
+
+            act(() => {
+                screen.getByText('skip to main content').dispatchEvent(event);
+            });
+
+            return event;
+        };
+
+        it('focuses #main when it contains nothing focusable', () => {
+            renderWithLayout(MainWithNothingFocusable);
+
+            const event = clickSkipLink();
+
+            expect(
+                document.querySelector(`#main ${FOCUSABLE_SELECTOR}`)
+            ).toBeNull();
+            expect(document.activeElement).toBe(
+                document.getElementById('main')
+            );
+            expect($.scrollTo).toHaveBeenCalledWith(
+                document.getElementById('main')
+            );
+            expect(event.defaultPrevented).toBe(true);
+        });
+
+        it('leaves the default anchor behavior alone when #main is missing', () => {
+            renderWithLayout();
+
+            expect(document.getElementById('main')).toBeNull();
+
+            const event = clickSkipLink();
+
+            // The browser's own fragment navigation is what leaves #main in
+            // the URL for the layout to pick up when it mounts.
+            expect(event.defaultPrevented).toBe(false);
+        });
+
+        it('leaves the default alone when #main cannot take focus', () => {
+            // No tabIndex, so focus() is a no-op and the handler must not
+            // claim it moved focus.
+            const UnfocusableMain = ({
+                children
+            }: {
+                children: React.ReactNode;
+            }) => <div id="main">{children}</div>;
+
+            renderWithLayout(UnfocusableMain);
+
+            const event = clickSkipLink();
+
+            expect(document.activeElement).not.toBe(
+                document.getElementById('main')
+            );
+            expect(event.defaultPrevented).toBe(false);
+            // The default is left alone, so the browser performs its own
+            // fragment scroll; ours on top of it would be two at once.
+            expect($.scrollTo).not.toHaveBeenCalled();
+        });
+
+        it('keeps the document link handler off the fallback click', () => {
+            renderWithLayout();
+
+            clickSkipLink();
+
+            // Left to bubble, use-link-handler would preventDefault this click
+            // and route it instead -- a navigation that moves no focus at all
+            // and leaves no hash worth reading.
+            expect(mockLinkHandler).not.toHaveBeenCalled();
         });
     });
 });

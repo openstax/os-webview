@@ -1,5 +1,14 @@
 import React from 'react';
+import {
+    FetchState,
+    fetchError,
+    fetchLoading,
+    fetchSuccess,
+    stateHasData
+} from '@openstax/ts-utils/fetch';
+import * as Sentry from '@sentry/react';
 import {fetchFromCMS, camelCaseKeys, Json} from '~/helpers/page-data-utils';
+import {captureException} from '~/helpers/posthog-exceptions';
 import type {LocaleEntry} from '~/components/language-selector/language-selector';
 
 export type Data = {
@@ -8,6 +17,14 @@ export type Data = {
     image: number | object;
     [key: string | symbol]: Data | string | undefined | number | object;
 };
+
+function isPageNotFoundError(error: unknown) {
+    return error instanceof Error && error.message === 'page not found';
+}
+
+function hasError(data: Json): data is Json & {error: unknown} {
+    return data instanceof Object && 'error' in data;
+}
 
 // eslint-disable-next-line complexity
 async function replaceImageNumbersWithImageData(data: Data) {
@@ -30,6 +47,13 @@ async function fetchDataAndExpandImages(
 ): Promise<Json> {
     const data = await fetchFromCMS(slug, preserveWrapping);
 
+    if (data.error) {
+        if (isPageNotFoundError(data.error)) {
+            return data;
+        }
+        throw data.error;
+    }
+
     await replaceImageNumbersWithImageData(data);
 
     return data;
@@ -42,21 +66,78 @@ export function fetchPageData<T>(
 ): Promise<T> {
     const camelCaseOrNot = noCamelCase ? (obj: unknown) => obj : camelCaseKeys;
 
-    return fetchDataAndExpandImages(slug, preserveWrapping).then(
-        camelCaseOrNot
+    return fetchDataAndExpandImages(slug, preserveWrapping).then((data) =>
+        hasError(data) ? data : camelCaseOrNot(data)
     ) as Promise<T>;
 }
 
+// `onError` is optional so that the many callers that only ever read the data
+// keep their signature. Handling the rejection at all is the point: a CMS fetch
+// that gives up used to leave `data` undefined forever, and the page with it.
+export function usePageDataFetchState<T>(
+    slug: string,
+    preserveWrapping = false,
+    noCamelCase = false,
+    onError?: (error: Error) => void
+): FetchState<T, Error> {
+    // Kept with the slug it was fetched for, so that a new slug reads as loading
+    // on the same render instead of showing the previous page's data as loaded
+    const [fetched, setFetched] = React.useState<{slug: string; state: FetchState<T, Error>}>(
+        {slug, state: fetchLoading()}
+    );
+    // Held in a ref so an inline callback cannot restart the fetch on every
+    // render, and so refetching stays keyed to the slug alone.
+    const reportError = React.useRef(onError);
+
+    React.useEffect(() => {
+        reportError.current = onError;
+    }, [onError]);
+
+    React.useEffect(() => {
+        let cancelled = false;
+
+        fetchPageData<T>(slug, preserveWrapping, noCamelCase).then(
+            (data) => {
+                if (!cancelled) {
+                    setFetched({slug, state: fetchSuccess(data)});
+                }
+            },
+            (reason: unknown) => {
+                const failure =
+                    reason instanceof Error ? reason : new Error(String(reason));
+
+                // Handling the rejection takes it away from the
+                // unhandled-rejection reporters, so it has to be sent on
+                // deliberately or the failure stops being visible.
+                Sentry.captureException(failure);
+                captureException(failure);
+                if (!cancelled) {
+                    setFetched((previous) => ({slug, state: fetchError(failure, previous.state)}));
+                    reportError.current?.(failure);
+                }
+            }
+        );
+
+        return () => {
+            cancelled = true;
+        };
+    }, [slug, preserveWrapping, noCamelCase]);
+
+    // Loading keeps the previous page's data
+    return React.useMemo(
+        () => fetched.slug === slug ? fetched.state : fetchLoading(fetched.state),
+        [fetched, slug]
+    );
+}
+
+// While a new slug loads, this is still the previous slug's data
 export default function usePageData<T>(
     slug: string,
     preserveWrapping = false,
-    noCamelCase = false
+    noCamelCase = false,
+    onError?: (error: Error) => void
 ) {
-    const [data, setData] = React.useState<T>();
+    const state = usePageDataFetchState<T>(slug, preserveWrapping, noCamelCase, onError);
 
-    React.useEffect(() => {
-        fetchPageData<T>(slug, preserveWrapping, noCamelCase).then(setData);
-    }, [slug, preserveWrapping, noCamelCase]);
-
-    return data;
+    return stateHasData(state) ? state.data : undefined;
 }

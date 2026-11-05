@@ -4,6 +4,7 @@ import ShellContextProvider from '../../../helpers/shell-context';
 import MainMenu from '~/layouts/default/header/menus/main-menu/main-menu';
 import MemoryRouter from '../../../helpers/future-memory-router';
 import * as ULC from '~/contexts/language';
+import * as PDU from '~/helpers/page-data-utils';
 
 jest.mock('~/models/give-today', () => jest.fn().mockReturnValue({}));
 
@@ -28,6 +29,18 @@ describe('main-menu', () => {
 
         await screen.findByRole('link', {name: 'Math'});
         expect(screen.queryByRole('link', {name: 'Spanish'})).toBeNull();
+    });
+    // fetchFromCMS resolves with a truthy {error} object when the CMS is
+    // unreachable; the menu must not .map over it (Sentry: e.map is not a
+    // function during the 8/25-8/26 CMS outages).
+    it('renders no CMS menus when the fetch resolves with an error object', async () => {
+        const spy = jest.spyOn(PDU, 'useDataFromSlug')
+            .mockReturnValue({error: new Error('Failed to fetch'), slug: 'oxmenus'});
+
+        expect(() => render(<Component />)).not.toThrow();
+
+        await screen.findByRole('link', {name: '🍎 For K12 Teachers'});
+        spy.mockRestore();
     });
     it('hides k12 item in Spanish', async () => {
         const spyLang = jest.spyOn(ULC, 'default').mockReturnValue({language: 'es', setLanguage: jest.fn()});
