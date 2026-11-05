@@ -5,11 +5,24 @@ type BookContainer = {
     books: Book[];
 };
 
-const fetchBooks = cmsFetch('books?format=json').then((r: BookContainer) =>
-    r.books.filter((b) => b.book_state !== 'retired')
-);
+// Fetched on first use, not at import: the router imports this module on
+// every page, and most pages never use the book list.
+let booksPromise: Promise<Book[]> | null = null;
 
-export default fetchBooks;
+export default function fetchBooks() {
+    if (!booksPromise) {
+        booksPromise = cmsFetch('books?format=json')
+            .then((r: BookContainer) =>
+                r.books.filter((b) => b.book_state !== 'retired')
+            )
+            .catch((error: Error) => {
+                booksPromise = null;
+                throw error;
+            });
+    }
+
+    return booksPromise;
+}
 
 const bookFields = [
     'book_state',
