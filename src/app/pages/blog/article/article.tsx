@@ -4,7 +4,8 @@ import ProgressRing from '~/components/progress-ring/progress-ring';
 import useScrollProgress from './use-progress';
 import {ShareJsx} from '~/components/share/share';
 import React, {useState, useRef} from 'react';
-import usePageData from '~/helpers/use-page-data';
+import {FetchStateType} from '@openstax/ts-utils/fetch';
+import {usePageDataFetchState} from '~/helpers/use-page-data';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import usePortalContext from '~/contexts/portal';
 import {
@@ -43,7 +44,9 @@ export type ArticleData = BookData & {
 };
 
 function ArticleLoader({slug, onLoad}: ArticleArgs) {
-    const data = usePageData<ArticleData>(slug, true);
+    const pageData = usePageDataFetchState<ArticleData>(slug, true);
+    // Only this article's loaded data, so the previous article's never sets the title or reaches onLoad
+    const data = pageData.type === FetchStateType.SUCCESS ? pageData.data : undefined;
 
     React.useEffect(() => setPageTitleAndDescriptionFromBookData(data), [data]);
 

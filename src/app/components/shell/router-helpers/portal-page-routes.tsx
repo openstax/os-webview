@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {FetchStateType} from '@openstax/ts-utils/fetch';
 import {Routes, Route, Navigate, useLocation, useParams} from 'react-router-dom';
 import Error404 from '~/pages/404/404';
 import usePortalContext from '~/contexts/portal';
+import {initializeAnalytics} from '~/helpers/tag-manager';
 import FlexPage, {
     isFlexPage,
     LayoutUsingData
@@ -25,8 +27,17 @@ import {ImportedPage} from './page-loaders';
 // eslint-disable-next-line complexity
 export function RouteAsPortalOrNot() {
     const {name, data, hasError, other} = usePageDataFromRoute();
-    const {portalPrefix, setPortal, setIsK12Portal} = usePortalContext();
+    const {portalPrefix, setPortal, setSchoolData} = usePortalContext();
     const {pathname, search, hash} = useLocation();
+    const isFlex = !hasError && isFlexPage(data);
+    const isPortal = isFlex && data.layout?.[0]?.type === 'landing';
+    const schoolData = isPortal ? data.schoolData : null;
+
+    useEffect(() => {
+        if (data && !hasError) {
+            initializeAnalytics(schoolData);
+        }
+    }, [data, hasError, schoolData]);
 
     if (!data) {
         return null;
@@ -36,16 +47,10 @@ export function RouteAsPortalOrNot() {
         return <Error404 />;
     }
 
-    const isFlex = !hasError && isFlexPage(data);
-    const isPortal = isFlex && data.layout?.[0]?.type === 'landing';
-
     if (isPortal) {
         if (portalPrefix !== `/${name}`) {
             setPortal(assertDefined(name));
-            // Check if this portal is linked to a K12 school
-            const isK12 = data.schoolData?.industry === 'K12';
-
-            setIsK12Portal(isK12);
+            setSchoolData(schoolData);
             return null;
         }
 
@@ -72,7 +77,7 @@ export function RouteAsPortalOrNot() {
     }
 
     setPortal('');
-    setIsK12Portal(false);
+    setSchoolData(null);
     if (isFlex) {
         // Non-portal flex pages do not have children, and /name/ is the same
         // page as /name; keep it canonical
@@ -108,21 +113,27 @@ function PortalSubRoute() {
 }
 
 function PortalSubPage() {
-    const {data, hasError} = usePageDataFromRoute();
+    const {pageData, data, hasError} = usePageDataFromRoute();
     // The page module is named for the route segment, which can differ from the
     // CMS page name: /k12/<subject> is the k12 page, which routes the subject itself
     const {dir} = useParams();
+
+    // Waiting avoids importing a page by name before knowing it has no CMS data.
+    // A page whose data failed to load still falls through to ImportedPage below.
+    if (pageData.type === FetchStateType.LOADING) {
+        return null;
+    }
 
     if (hasError) {
         return <Error404 />;
     }
 
     if (isFlexPage(data)) {
-        return <FlexPage data={assertDefined(data)} />;
+        return <FlexPage data={data} />;
     }
 
     if (data?.body) {
-        return <GeneralPageFromSlug slug={`spike/${data?.meta.slug}`} />;
+        return <GeneralPageFromSlug slug={`spike/${data.meta.slug}`} />;
     }
 
     return <ImportedPage name={assertDefined(dir)} />;

@@ -1,4 +1,11 @@
 import React from 'react';
+import {
+    FetchState,
+    fetchError,
+    fetchLoading,
+    fetchSuccess,
+    stateHasData
+} from '@openstax/ts-utils/fetch';
 import * as Sentry from '@sentry/react';
 import {fetchFromCMS, camelCaseKeys, Json} from '~/helpers/page-data-utils';
 import {captureException} from '~/helpers/posthog-exceptions';
@@ -67,13 +74,17 @@ export function fetchPageData<T>(
 // `onError` is optional so that the many callers that only ever read the data
 // keep their signature. Handling the rejection at all is the point: a CMS fetch
 // that gives up used to leave `data` undefined forever, and the page with it.
-export default function usePageData<T>(
+export function usePageDataFetchState<T>(
     slug: string,
     preserveWrapping = false,
     noCamelCase = false,
     onError?: (error: Error) => void
-) {
-    const [data, setData] = React.useState<T>();
+): FetchState<T, Error> {
+    // Kept with the slug it was fetched for, so that a new slug reads as loading
+    // on the same render instead of showing the previous page's data as loaded
+    const [fetched, setFetched] = React.useState<{slug: string; state: FetchState<T, Error>}>(
+        {slug, state: fetchLoading()}
+    );
     // Held in a ref so an inline callback cannot restart the fetch on every
     // render, and so refetching stays keyed to the slug alone.
     const reportError = React.useRef(onError);
@@ -86,9 +97,9 @@ export default function usePageData<T>(
         let cancelled = false;
 
         fetchPageData<T>(slug, preserveWrapping, noCamelCase).then(
-            (fetched) => {
+            (data) => {
                 if (!cancelled) {
-                    setData(fetched);
+                    setFetched({slug, state: fetchSuccess(data)});
                 }
             },
             (reason: unknown) => {
@@ -101,6 +112,7 @@ export default function usePageData<T>(
                 Sentry.captureException(failure);
                 captureException(failure);
                 if (!cancelled) {
+                    setFetched((previous) => ({slug, state: fetchError(failure, previous.state)}));
                     reportError.current?.(failure);
                 }
             }
@@ -111,5 +123,21 @@ export default function usePageData<T>(
         };
     }, [slug, preserveWrapping, noCamelCase]);
 
-    return data;
+    // Loading keeps the previous page's data
+    return React.useMemo(
+        () => fetched.slug === slug ? fetched.state : fetchLoading(fetched.state),
+        [fetched, slug]
+    );
+}
+
+// While a new slug loads, this is still the previous slug's data
+export default function usePageData<T>(
+    slug: string,
+    preserveWrapping = false,
+    noCamelCase = false,
+    onError?: (error: Error) => void
+) {
+    const state = usePageDataFetchState<T>(slug, preserveWrapping, noCamelCase, onError);
+
+    return stateHasData(state) ? state.data : undefined;
 }

@@ -2756,7 +2756,7 @@
     color "^5.0.0"
     isomorphic-dompurify "^2.36.0"
 
-"@openstax/ts-utils@^1.2.3":
+"@openstax/ts-utils@^1.2.3", "@openstax/ts-utils@^1.48.2":
   version "1.48.2"
   resolved "https://registry.yarnpkg.com/@openstax/ts-utils/-/ts-utils-1.48.2.tgz#2b17a9b887094ff3043ca5a361ff43a4e5cc8ce5"
   integrity sha512-7O/NE9EyJENSRGGB1X78joFK4Zm5phV3T0I1Dcxv+4lErcOiZ6EwVc6wduURUxdKGC4WXMJCuLZ3SWB6nQbTPw==

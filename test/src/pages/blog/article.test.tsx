@@ -8,6 +8,7 @@ import pageData, {featuredVideo, pdfBody} from '~/../../test/src/data/article-pa
 import * as HelpersData from '~/helpers/data';
 import * as WCtx from '~/contexts/window';
 import * as DH from '~/helpers/use-document-head';
+import {pageDataState as mockPageDataState} from '~/../../test/helpers/page-data-state';
 
 // Articles read the portal context
 function render(ui: React.ReactElement) {
@@ -19,7 +20,7 @@ const onload = jest.fn();
 
 jest.mock('~/helpers/use-page-data', () => ({
     __esModule: true,
-    default: () => mockUsePageData()
+    usePageDataFetchState: () => mockPageDataState(mockUsePageData())
 }));
 
 const mockJITLoad = jest.fn();

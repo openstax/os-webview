@@ -27,7 +27,8 @@ function setPortalPrefix(portalPrefix: string, isK12Portal: boolean = false) {
         hrefInPortal: (href: string) => href,
         rewriteLinks: jest.fn(),
         isK12Portal,
-        setIsK12Portal: jest.fn()
+        schoolData: null,
+        setSchoolData: jest.fn()
     });
 }
 

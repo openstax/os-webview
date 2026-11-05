@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import ShellContextProvider from '~/../../test/helpers/shell-context';
+import {schoolDataFor} from '~/../../test/helpers/in-portal';
 import {LanguageContextProvider} from '~/contexts/language';
 import {Book as BookInfo} from '~/pages/subjects/new/specific/context';
 import BookTile from '~/components/book-tile/book-tile';
@@ -178,10 +179,10 @@ describe('book-tile-display portal link rewriting', () => {
     }
 
     function InPortal({isK12Portal = true, children}: React.PropsWithChildren<{isK12Portal?: boolean}>) {
-        const {setPortal, setIsK12Portal} = usePortalContext();
+        const {setPortal, setSchoolData} = usePortalContext();
 
         setPortal('k12');
-        setIsK12Portal(isK12Portal);
+        setSchoolData(schoolDataFor(isK12Portal));
         return (
             <LanguageContextProvider>
                 <MemoryRouter initialEntries={['/k12/subjects/math']}>

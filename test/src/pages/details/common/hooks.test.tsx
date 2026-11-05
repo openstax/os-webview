@@ -101,7 +101,8 @@ describe('details/common/hooks', () => {
             hrefInPortal: (href: string) => href,
             rewriteLinks: jest.fn(),
             isK12Portal: false,
-            setIsK12Portal: jest.fn()
+            schoolData: null,
+            setSchoolData: jest.fn()
         });
 
         function Component() {

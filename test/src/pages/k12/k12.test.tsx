@@ -38,7 +38,8 @@ const portalSpy = jest.spyOn(PC, 'default').mockReturnValue({
     hrefInPortal: (href: string) => href,
     rewriteLinks: jest.fn(),
     isK12Portal: false,
-    setIsK12Portal: jest.fn()
+    schoolData: null,
+    setSchoolData: jest.fn()
 });
 
 afterAll(() => portalSpy.mockRestore());
