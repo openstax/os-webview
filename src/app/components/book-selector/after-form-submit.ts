@@ -9,6 +9,10 @@ import usePortalContext from '~/contexts/portal';
 // The book list only supplies the "back to" slug, so a failed lookup
 // must not keep the user on the form they just submitted.
 async function backToSlug(preselectedTitle: string) {
+    // Nothing to look up, so don't wait for (or start) the request
+    if (!preselectedTitle) {
+        return undefined;
+    }
     try {
         const books = await fetchBooks();
 

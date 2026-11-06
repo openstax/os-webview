@@ -8,6 +8,7 @@ import type {SalesforceBook} from '~/helpers/books';
 
 const mockNavigate = jest.fn();
 const mockFetchBooks = jest.fn();
+let mockSearch = '?Calculus';
 
 jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
 jest.mock('~/models/books', () => ({
@@ -17,7 +18,7 @@ jest.mock('~/models/books', () => ({
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockNavigate,
-    useLocation: () => ({search: '?Calculus'})
+    useLocation: () => ({search: mockSearch})
 }));
 jest.mock('~/contexts/portal', () => ({
     __esModule: true,
@@ -37,6 +38,8 @@ function Submitter() {
 
 describe('after-form-submit', () => {
     beforeEach(() => {
+        mockSearch = '?Calculus';
+        mockFetchBooks.mockClear();
         mockNavigate.mockClear();
         reportToPostHog.mockClear();
         (Sentry.captureException as jest.Mock).mockClear();
@@ -62,5 +65,14 @@ describe('after-form-submit', () => {
         }));
         expect(Sentry.captureException).toHaveBeenCalledWith(failure);
         expect(reportToPostHog).toHaveBeenCalledWith(failure);
+    });
+
+    it('navigates without asking for the book list when no book is preselected', async () => {
+        mockSearch = '';
+        render(<Submitter />);
+        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/partners', {
+            state: {confirmation: true, book: ['Calculus'], slug: undefined}
+        }));
+        expect(mockFetchBooks).not.toHaveBeenCalled();
     });
 });
