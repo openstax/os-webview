@@ -10,9 +10,7 @@ import type {Store} from '~/pages/partners/search-context';
 import './book-options.scss';
 
 export default function BookOptions({store}: {store: Store}) {
-    const books = useDataFromPromise(
-        React.useMemo(() => fetchBooks(), [])
-    );
+    const books = useDataFromPromise(React.useMemo(fetchBooks, []));
 
     if (!books) {
         return null;

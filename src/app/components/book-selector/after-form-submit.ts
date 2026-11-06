@@ -6,24 +6,29 @@ import {filterLiveBooks, SalesforceBook} from '~/helpers/books';
 import {useNavigate, NavigateFunction, useLocation} from 'react-router-dom';
 import usePortalContext from '~/contexts/portal';
 
+// The book list only supplies the "back to" slug, so a failed lookup
+// must not keep the user on the form they just submitted.
+async function backToSlug(preselectedTitle: string) {
+    try {
+        const books = await fetchBooks();
+
+        return books.filter(filterLiveBooks).find(
+            (entry) => entry.salesforce_abbreviation === preselectedTitle
+        )?.slug;
+    } catch (error) {
+        Sentry.captureException(error);
+        captureException(error);
+        return undefined;
+    }
+}
+
 function afterFormSubmit(
     navigate: NavigateFunction,
     linkPrefix: string,
     preselectedTitle: string,
     selectedBooks: SalesforceBook[]
 ) {
-    // The book list only supplies the "back to" slug, so a failed lookup
-    // must not keep the user on the form they just submitted.
-    fetchBooks().then(
-        (b) => b.filter(filterLiveBooks).find(
-            (entry) => entry.salesforce_abbreviation === preselectedTitle
-        )?.slug,
-        (error: Error) => {
-            Sentry.captureException(error);
-            captureException(error);
-            return undefined;
-        }
-    ).then((slug) => {
+    backToSlug(preselectedTitle).then((slug) => {
         /* Send to Tech Scout with books pre-selected -- Language removed */
         const scoutBooks = selectedBooks.map((sfBook) => sfBook.value.replace(/ *\[.*/, ''));
 

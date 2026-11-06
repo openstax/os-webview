@@ -1,4 +1,6 @@
 import React from 'react';
+import * as Sentry from '@sentry/react';
+import {captureException} from '~/helpers/posthog-exceptions';
 import usePartnerContext, {
     PartnerContextProvider,
     Model
@@ -35,8 +37,15 @@ function useRealTitles(books: Model['books']) {
     const [titles, setTitles] = React.useState(books);
 
     React.useEffect(() => {
-        fetchBooks().then((results) =>
-            setTitles(getTitlesFromAbbreviations(books, results))
+        // Without the list, the abbreviations stay as they are
+        fetchBooks().then(
+            (results) => setTitles(getTitlesFromAbbreviations(books, results)),
+            (error: Error) => {
+                // Handling the rejection hides it from the unhandled-rejection
+                // reporters, so report it deliberately
+                Sentry.captureException(error);
+                captureException(error);
+            }
         );
     }, [books]);
 
