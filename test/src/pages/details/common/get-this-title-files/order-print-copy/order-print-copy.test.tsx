@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import {IntlProvider} from 'react-intl';
 import OrderPrintCopy from '~/pages/details/common/get-this-title-files/order-print-copy/order-print-copy';
 import * as cmsFetch from '~/helpers/cms-fetch';
+import * as posthog from '~/helpers/posthog';
 
 function Wrapper({children}: {children: React.ReactNode}) {
     return (
@@ -178,5 +179,30 @@ describe('OrderPrintCopy', () => {
             expect(nav?.getAttribute('aria-label')).toBe('Order print copy Navigation');
             expect(nav?.getAttribute('data-analytics-nav')).toBe('Order print copy');
         });
+    });
+
+    it('captures click events for phone and desktop print copy links', async () => {
+        const captureEventSpy = jest.spyOn(posthog, 'captureEvent').mockImplementation(() => undefined);
+        jest.spyOn(cmsFetch, 'default').mockResolvedValue({
+            amazon_link: 'https://example.com/amazon',
+            audiobook_link: 'https://example.com/audiobook'
+        });
+
+        const {container} = render(
+            <Wrapper>
+                <OrderPrintCopy slug="test-book" campaign="book-details" />
+            </Wrapper>
+        );
+
+        await waitFor(() => {
+            expect(container.querySelector('.phone-version .box[data-track=\"Audiobook\"]')).toBeInTheDocument();
+            expect(container.querySelector('.larger-version .btn[data-track=\"Print\"]')).toBeInTheDocument();
+        });
+
+        (container.querySelector('.phone-version .box[data-track=\"Audiobook\"]') as HTMLAnchorElement).click();
+        (container.querySelector('.larger-version .btn[data-track=\"Print\"]') as HTMLAnchorElement).click();
+
+        expect(captureEventSpy).toHaveBeenNthCalledWith(1, 'print_copy_clicked', {format: 'Audiobook'});
+        expect(captureEventSpy).toHaveBeenNthCalledWith(2, 'print_copy_clicked', {format: 'Print'});
     });
 });

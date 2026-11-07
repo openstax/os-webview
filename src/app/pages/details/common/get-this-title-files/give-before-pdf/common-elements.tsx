@@ -2,6 +2,7 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons/faHeart';
 import {useLocation} from 'react-router-dom';
+import {captureEvent} from '~/helpers/posthog';
 import usePortalContext from '~/contexts/portal';
 
 type Data = {
@@ -33,6 +34,10 @@ export default function CommonElements({
 }) {
     const initialItem = React.useRef<HTMLAnchorElement>(null);
     const {pathname} = useLocation();
+    const handleGiveClick = React.useCallback((event: React.MouseEvent) => {
+        captureEvent('donation_initiated');
+        openGiveInNewWindow(event);
+    }, []);
     const {hrefInPortal} = usePortalContext();
 
     React.useEffect(() => initialItem.current?.focus(), []);
@@ -63,7 +68,7 @@ export default function CommonElements({
                 <a
                     href={giveLink}
                     className="btn primary"
-                    onClick={OpenGiveInNewWindow}
+                    onClick={handleGiveClick}
                     data-nudge-action="interacted"
                     ref={initialItem}
                 >
@@ -85,7 +90,7 @@ export default function CommonElements({
     );
 }
 
-function OpenGiveInNewWindow(event: React.MouseEvent) {
+function openGiveInNewWindow(event: React.MouseEvent) {
     event.preventDefault();
     const url = (event.target as HTMLAnchorElement).href;
     const {innerWidth, innerHeight} = window;

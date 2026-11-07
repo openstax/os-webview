@@ -15,6 +15,7 @@ import useGiveDialog, { VariantValue } from '../get-this-title-files/give-before
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {TrackedMouseEvent} from '~/components/shell/router-helpers/use-link-handler';
 import {ResourceModel} from './resource-boxes';
+import {captureEvent} from '~/helpers/posthog';
 
 // ResourceModel & LinkIsSet changes link from optional to required.
 type LinkIsSet = {
@@ -124,6 +125,10 @@ function LeftButton({model, variant}: {model: ResourceModel & LinkIsSet; variant
     const ariaLabel = isDownload ? `Download ${model.heading}` : `Go to ${model.heading}`;
 
     function openDialog(event: TrackedMouseEvent) {
+        captureEvent('resource_accessed', {
+            resourceName: model.heading,
+            resourceCategory: model.resourceCategory
+        });
         // The donation nudge is for downloads only, but every resource counts as
         // a resource access — link-icon resources (Canvas cartridges, OER
         // Commons items) have to report too.

@@ -2,6 +2,7 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import type {PartnerEntry} from './results';
 import PartnerCard from '~/components/partner-card/partner-card';
+import {captureEvent} from '~/helpers/posthog';
 
 export const badgeImage = '/dist/images/partners/verified-badge.svg';
 export function useOnSelect() {
@@ -21,6 +22,13 @@ export function useOnSelect() {
 function ResultCard({entry}: {entry: PartnerEntry}) {
     const {type, title, logoUrl, tags} = entry;
     const onSelect = useOnSelect();
+    const handleClick = React.useCallback(
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
+            captureEvent('partner_card_clicked', {partnerName: title, partnerType: type});
+            onSelect(event);
+        },
+        [onSelect, title, type]
+    );
 
     return (
         <PartnerCard
@@ -29,7 +37,7 @@ function ResultCard({entry}: {entry: PartnerEntry}) {
             title={title}
             logoUrl={logoUrl}
             tags={tags.map((t) => t.value).filter((v) => v !== null)}
-            onClick={onSelect}
+            onClick={handleClick}
             badgeImage={badgeImage}
             analyticsContentType="Partner Profile"
         />

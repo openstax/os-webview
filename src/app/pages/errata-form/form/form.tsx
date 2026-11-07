@@ -11,6 +11,7 @@ import $ from '~/helpers/$';
 import Dialog from '~/components/dialog/dialog';
 import {useNavigate} from 'react-router-dom';
 import cn from 'classnames';
+import {captureEvent} from '~/helpers/posthog';
 import './form.scss';
 
 type ApiResponse = {
@@ -151,6 +152,7 @@ function useBannedDialog() {
     const handleSubmissionResponse = React.useCallback(
         (json: ApiResponse) => {
             if (json.id) {
+                captureEvent('errata_submitted');
                 navigate(`${linkPrefix}/confirmation/errata?id=${json.id}`);
             } else if (json.submitted_by_account_id) {
                 setBannedText(json.submitted_by_account_id[0]);

@@ -7,6 +7,7 @@ import {useIntl} from 'react-intl';
 import './order-print-copy.scss';
 import cmsFetch from '~/helpers/cms-fetch';
 import linkHelper, {type UtmCampaign} from '~/helpers/link';
+import {captureEvent} from '~/helpers/posthog';
 
 type Content = {
     headerText: string;
@@ -29,8 +30,13 @@ function Header({entry}: {entry: Content}) {
 }
 
 function PhoneBox({entry}: {entry: Content}) {
+    const handleClick = React.useCallback(
+        () => captureEvent('print_copy_clicked', {format: entry.trackingLabel}),
+        [entry.trackingLabel]
+    );
+
     return (
-        <a className="box" href={entry.buttonUrl} data-track={entry.trackingLabel}>
+        <a className="box" href={entry.buttonUrl} data-track={entry.trackingLabel} onClick={handleClick}>
             <Header entry={entry} />
         </a>
     );
@@ -57,8 +63,13 @@ function Button({
     buttonClass: string;
     trackingLabel: Content['trackingLabel'];
 }) {
+    const handleClick = React.useCallback(
+        () => captureEvent('print_copy_clicked', {format: trackingLabel}),
+        [trackingLabel]
+    );
+
     return (
-        <a className={`btn ${buttonClass}`} href={href} data-track={trackingLabel}>
+        <a className={`btn ${buttonClass}`} href={href} data-track={trackingLabel} onClick={handleClick}>
             {text}
         </a>
     );
