@@ -2,8 +2,6 @@ import React from 'react';
 import * as Sentry from '@sentry/react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import {useUserModel, UserModelType} from '~/models/usermodel';
-import useMyOpenStaxUser from '~/models/myopenstax-user';
-import {useRefreshable} from '~/helpers/data';
 import debounce from 'lodash/debounce';
 
 const debouncedDebug = debounce((...args) => console.debug(...args), 100);
@@ -50,8 +48,6 @@ function useContextValue() {
     const userStatus = React.useMemo(() => getUserStatus(model), [model]);
     const isVerified =
         model?.accountsModel?.faculty_status === 'confirmed_faculty';
-    const [fetchTime, updateMyOpenStaxUser] = useRefreshable(() => Date.now());
-    const myOpenStaxUser = useMyOpenStaxUser(isVerified, fetchTime);
     // Derive login state from userStatus (always available) with fallback to model
     // This is the canonical way to check if a user is logged in
     const isLoggedIn = Boolean(userStatus?.uuid || model?.uuid);
@@ -68,12 +64,10 @@ function useContextValue() {
                       uuid: model.uuid,
                       isVerified,
                       isLoggedIn,
-                      userStatus,
-                      myOpenStaxUser,
-                      updateMyOpenStaxUser
+                      userStatus
                   }
-                : {isLoggedIn, userStatus, myOpenStaxUser, uuid: userStatus?.uuid},
-        [model, userStatus, isVerified, isLoggedIn, myOpenStaxUser, updateMyOpenStaxUser]
+                : {isLoggedIn, userStatus, uuid: userStatus?.uuid},
+        [model, userStatus, isVerified, isLoggedIn]
     );
 
     React.useEffect(() => {
