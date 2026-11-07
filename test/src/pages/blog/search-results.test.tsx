@@ -32,9 +32,16 @@ function twelveArticles() {
     }));
 }
 
+// search/v2/ returns one page of `results` plus a server-side `total`; a
+// fixture standing in for "12 matching articles" now has to hand back only
+// page 1's worth (10) with total: 12, the same split the real endpoint does.
+function searchV2Envelope(results: unknown[], total = results.length) {
+    return {sources: {news: {total, results}}};
+}
+
 describe('search-results', () => {
     it('renders no results when there are no articles', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce([]);
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(searchV2Envelope([]));
         render(<Component />);
         await screen.findByText('No matching blog posts found');
         // Discovery content is offered alongside the no-results message.
@@ -54,7 +61,7 @@ describe('search-results', () => {
         jest.clearAllMocks();
     });
     it('renders with paginator context when there are articles', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(searchV2Envelope(twelveArticles().slice(0, 10), 12));
         const spyArticleSummary = jest.spyOn(AS, 'default');
 
         render(<Component />);
@@ -64,7 +71,7 @@ describe('search-results', () => {
         expect(spyArticleSummary).toHaveBeenCalledTimes(10);
     });
     it('announces the result count to screen readers', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(searchV2Envelope(twelveArticles().slice(0, 10), 12));
 
         render(<Component />);
 
@@ -82,7 +89,7 @@ describe('search-results', () => {
             article_subjects: [] // eslint-disable-line camelcase
         }];
 
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(oneArticle);
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(searchV2Envelope(oneArticle));
 
         render(<Component />);
 
@@ -92,7 +99,7 @@ describe('search-results', () => {
         jest.clearAllMocks();
     });
     it('moves focus to the first result on an explicit search', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(searchV2Envelope(twelveArticles().slice(0, 10), 12));
 
         render(<Component entry="/blog/?q=education" />);
 
@@ -102,7 +109,7 @@ describe('search-results', () => {
         jest.clearAllMocks();
     });
     it('does not steal focus when results come from facets, not a query', async () => {
-        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(twelveArticles());
+        jest.spyOn(PDU, 'fetchFromCMS').mockResolvedValueOnce(searchV2Envelope(twelveArticles().slice(0, 10), 12));
 
         render(<Component entry="/blog/?subjects=Math" />);
 
