@@ -319,22 +319,61 @@ describe('ThankYou', () => {
             expect(openPicker).not.toHaveBeenCalled();
         });
 
-        it('makes consent optional, and covers the use of an uploaded image, voice and name', async () => {
-            const user = userEvent.setup();
-            const {container} = renderForm();
-            const form = container.querySelector('form') as HTMLFormElement;
-            const consent = screen.getByRole('checkbox', {
-                name: /grant OpenStax the right to use my image, voice, and name/
+        describe('consent', () => {
+            function consentOptions() {
+                return {
+                    group: screen.getByRole('group', {name: /Consent/}),
+                    yes: screen.getByRole('radio', {name: 'Yes, I agree'}),
+                    no: screen.getByRole('radio', {name: 'No, I do not agree'})
+                };
+            }
+
+            it('asks yes or no, with neither chosen, and describes what is being agreed to', () => {
+                renderForm();
+                const {group, yes, no} = consentOptions();
+
+                expect(group).toHaveAccessibleDescription(
+                    /grant OpenStax the right to use my image, voice, and name/
+                );
+                expect(yes).not.toBeChecked();
+                expect(no).not.toBeChecked();
+                expect(yes).toBeRequired();
+                expect(no).toBeRequired();
+                expect(yes).toHaveAttribute('name', 'consent_to_share_or_contact');
+                expect(no).toHaveAttribute('name', 'consent_to_share_or_contact');
             });
 
-            expect(consent).not.toBeRequired();
-            expect(consent).not.toBeChecked();
-            expect(consent).toHaveAttribute('name', 'consent_to_share_or_contact');
-            // Not consenting sends nothing, which the CMS stores as no consent
-            expect(new FormData(form).has('consent_to_share_or_contact')).toBe(false);
+            it('does not let the form be submitted until one is chosen', async () => {
+                const user = userEvent.setup();
+                const {container} = renderForm();
+                const form = container.querySelector('form') as HTMLFormElement;
+                const {yes} = consentOptions();
 
-            await user.click(consent);
-            expect(new FormData(form).get('consent_to_share_or_contact')).toBe('True');
+                // The other required fields are filled in, so only consent is missing
+                form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+                    'textarea[required], input[required][type="text"]'
+                ).forEach((el) => {
+                    el.value = 'x';
+                });
+                expect(yes).toBeInvalid();
+                expect(new FormData(form).has('consent_to_share_or_contact')).toBe(false);
+
+                await user.click(yes);
+                expect(yes).toBeValid();
+            });
+
+            it.each([
+                ['Yes, I agree', 'True'],
+                ['No, I do not agree', 'False']
+            ])('sends the choice %s as %s', async (label, value) => {
+                const user = userEvent.setup();
+                const {container} = renderForm();
+                const form = container.querySelector('form') as HTMLFormElement;
+
+                await user.click(screen.getByRole('radio', {name: label}));
+
+                expect(new FormData(form).get('consent_to_share_or_contact')).toBe(value);
+            });
         });
     });
 });

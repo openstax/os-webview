@@ -3,6 +3,7 @@ import useUserContext from '~/contexts/user';
 import trackLink from '../../track-link';
 import './thank-you-form.scss';
 import SchoolSelector from '~/components/school-selector/school-selector';
+import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
 import {FileButton} from '~/pages/errata-form/form/FileUploader';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPaperclip} from '@fortawesome/free-solid-svg-icons/faPaperclip';
@@ -170,24 +171,33 @@ export default function ThankYou({
                     maxBytes={ATTACHMENT_MAX_BYTES}
                 />
             </div>
-            <div className="consent-checkbox">
-                <label>Consent</label>
-                {/* Optional: the note is wanted either way. Unchecked sends no
-                    value, which the CMS stores as no consent. */}
-                <label className="cb-group">
-                    <input
-                        type="checkbox"
-                        name="consent_to_share_or_contact"
-                        value="True"
-                    />
-                    By clicking here I understand that OpenStax may include my
-                    story in publications and distribution in printed,
-                    electronic, and digital media. If I have uploaded a photo
-                    or video, I hereby grant OpenStax the right to use my
-                    image, voice, and name in print, photographs, and video
-                    and audio recordings for educational or promotional
-                    purposes.
+            <div
+                className="consent"
+                role="group"
+                aria-labelledby="thank-you-consent-heading"
+                aria-describedby="thank-you-consent-text"
+            >
+                <label id="thank-you-consent-heading">
+                    Consent <span className="asterisk" />
                 </label>
+                <div id="thank-you-consent-text" className="statement">
+                    I understand that OpenStax may include my story in
+                    publications and distribution in printed, electronic, and
+                    digital media. If I have uploaded a photo or video, I
+                    hereby grant OpenStax the right to use my image, voice,
+                    and name in print, photographs, and video and audio
+                    recordings for educational or promotional purposes.
+                </div>
+                {/* The writer has to choose; the note is sent either way. The
+                    CMS stores 'True' as consent and 'False' as none. */}
+                <FormRadioGroup
+                    name="consent_to_share_or_contact"
+                    options={[
+                        {label: 'Yes, I agree', value: 'True'},
+                        {label: 'No, I do not agree', value: 'False'}
+                    ]}
+                    required
+                />
             </div>
             <button className="primary">
                 Submit note and go to {itemType}

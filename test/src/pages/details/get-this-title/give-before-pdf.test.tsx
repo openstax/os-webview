@@ -108,7 +108,7 @@ describe('give-before-pdf', () => {
         screen.getAllByRole('textbox').forEach((el) => {
             fireEvent.input(el, {target: {value: 'Casper College'}});
         });
-        await user.click(screen.getByRole('checkbox'));
+        await user.click(screen.getByRole('radio', {name: 'Yes, I agree'}));
         console.error = jest.fn();
         // This is the submit button, but submit doesn't work in testing :(
         await user.click(screen.getByRole('button', {name: /Submit note/}));

@@ -113,29 +113,13 @@
         }
     }
 
-    .cb-group {
-        @include set-font(body-regular);
-
-        align-items: start;
-        column-gap: 1rem;
+    .consent {
         display: grid;
-        grid-template-columns: 2rem auto;
         max-width: 55rem;
+        row-gap: 1rem;
 
-        [type="checkbox"] {
-            border: thin solid ui-color(form-border);
-            border-radius: 0.2rem;
-            height: 2rem;
-            margin: 0.4rem 0 0;
-            width: 2rem;
-
-            &:not(:checked) {
-                appearance: none;
-            }
-
-            &:checked {
-                margin-right: 0.1rem;
-            }
+        .statement {
+            @include set-font(body-regular);
         }
     }
 }
