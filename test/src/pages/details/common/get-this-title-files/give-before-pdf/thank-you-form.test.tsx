@@ -319,15 +319,22 @@ describe('ThankYou', () => {
             expect(openPicker).not.toHaveBeenCalled();
         });
 
-        it('requires consent, which now covers the use of an uploaded image, voice and name', () => {
-            renderForm();
-
+        it('makes consent optional, and covers the use of an uploaded image, voice and name', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const form = container.querySelector('form') as HTMLFormElement;
             const consent = screen.getByRole('checkbox', {
                 name: /grant OpenStax the right to use my image, voice, and name/
             });
 
-            expect(consent).toBeRequired();
+            expect(consent).not.toBeRequired();
+            expect(consent).not.toBeChecked();
             expect(consent).toHaveAttribute('name', 'consent_to_share_or_contact');
+            // Not consenting sends nothing, which the CMS stores as no consent
+            expect(new FormData(form).has('consent_to_share_or_contact')).toBe(false);
+
+            await user.click(consent);
+            expect(new FormData(form).get('consent_to_share_or_contact')).toBe('True');
         });
     });
 });

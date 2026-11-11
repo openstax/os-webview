@@ -171,15 +171,14 @@ export default function ThankYou({
                 />
             </div>
             <div className="consent-checkbox">
-                <label>
-                    Consent <span className="asterisk" />
-                </label>
+                <label>Consent</label>
+                {/* Optional: the note is wanted either way. Unchecked sends no
+                    value, which the CMS stores as no consent. */}
                 <label className="cb-group">
                     <input
                         type="checkbox"
                         name="consent_to_share_or_contact"
                         value="True"
-                        required
                     />
                     By clicking here I understand that OpenStax may include my
                     story in publications and distribution in printed,
