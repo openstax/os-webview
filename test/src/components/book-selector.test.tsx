@@ -102,7 +102,7 @@ jest.mock('~/models/books', () => {
     return {
         __esModule: true,
         fetchAllBooks: Promise.resolve(mockBooksWithSpanish),
-        default: Promise.resolve(filteredBooks)
+        default: () => Promise.resolve(filteredBooks)
     };
 });
 

@@ -31,7 +31,7 @@ function useContextValue(): ContextValue {
         [searchParams]
     );
     const [title, setTitle] = useState<string | null>(initialTitle);
-    const books = useDataFromPromise(fetchBooks);
+    const books = useDataFromPromise(React.useMemo(fetchBooks, []));
     const selectedBook = React.useMemo(
         () => books?.find((b) => b.title === title) || null,
         [books, title]
