@@ -9,6 +9,7 @@ function Wrapped({disabled} : {disabled?: boolean}) {
         book: {
             value: 'book-value',
             text: 'book-text',
+            title: 'book-text',
             coverUrl: 'book-url',
             subjects: [],
             comingSoon: false
