@@ -12,6 +12,7 @@ import type {ArticleData} from '../article/article';
 import useBlogContext from '../blog-context';
 import cn from 'classnames';
 import settings from '~/helpers/window-settings';
+import {captureEvent} from '~/helpers/posthog';
 import './gated-content-dialog.scss';
 
 const formSubmitUrl = settings().gatedContentEndpoint;
@@ -24,12 +25,17 @@ function GatedContentDialog() {
     const [Dialog, open, close] = useDialog();
     const {userModel} = useUserContext();
     const [submitted, setSubmitted] = React.useState(false);
+    const hasTrackedRef = React.useRef(false);
 
     React.useEffect(() => {
         if (userModel?.id || submitted) {
             close();
         } else {
             open();
+            if (!hasTrackedRef.current) {
+                captureEvent('gated_content_viewed');
+                hasTrackedRef.current = true;
+            }
         }
     }, [userModel, open, close, submitted]);
 
@@ -107,7 +113,10 @@ function GatedContentForm({
     setSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     const afterSubmit = React.useCallback(
-        () => setSubmitted(true),
+        () => {
+            captureEvent('gated_content_form_submitted');
+            setSubmitted(true);
+        },
         [setSubmitted]
     );
 

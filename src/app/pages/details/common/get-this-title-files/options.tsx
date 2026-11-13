@@ -13,6 +13,7 @@ import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import {useIntl} from 'react-intl';
 import OrderPrintCopy from './order-print-copy/order-print-copy';
 import useTOCContext from '../toc-slideout/context';
+import {captureEvent} from '~/helpers/posthog';
 import usePortalContext from '~/contexts/portal';
 import {useDialog} from '~/components/dialog/dialog';
 import {useOpenGiveDialog} from './give-before-pdf/use-give-dialog';
@@ -84,6 +85,9 @@ export function TocOption({model}: {model: Model}) {
     }
 
     function toggleToc(event: React.MouseEvent) {
+        if (!isOpen) {
+            captureEvent('toc_opened', {bookTitle: model.title});
+        }
         toggle();
         event.preventDefault();
     }
@@ -133,6 +137,13 @@ export function WebviewOption({model}: {model: Model}) {
         },
         [model.id]
     );
+    const handleWebviewClick = React.useCallback(
+        (event: React.MouseEvent) => {
+            captureEvent('book_webview_opened', {bookTitle: model.title});
+            openGiveDialog(event as React.MouseEvent);
+        },
+        [openGiveDialog, model.title]
+    );
 
     return (
         <Option condition={!model.comingSoon && webviewLink}>
@@ -141,7 +152,7 @@ export function WebviewOption({model}: {model: Model}) {
                     href={webviewLink}
                     data-local={isRex}
                     rel="noreferrer"
-                    onClick={openGiveDialog}
+                    onClick={handleWebviewClick}
                     data-track={WEBVIEW_TRACK}
                 >
                     <IconAndText {...iconAndTextArgs} />

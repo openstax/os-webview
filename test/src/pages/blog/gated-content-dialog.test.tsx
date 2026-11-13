@@ -8,6 +8,7 @@ import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import GatedContentDialog from '~/pages/blog/gated-content-dialog/gated-content-dialog';
 import type {ArticleData} from '~/pages/blog/article/article';
 import userEvent from '@testing-library/user-event';
+import * as posthog from '~/helpers/posthog';
 
 const articleData: ArticleData = {
     gatedContent: true,
@@ -136,5 +137,19 @@ describe('blog/gated-content-dialog', () => {
         await waitFor(() => expect(mockOpen).toHaveBeenCalled());
         expect(mockClose).not.toHaveBeenCalled();
         mockUseUserContext.mockClear();
+    });
+
+    it('tracks gated content view only once', async () => {
+        const captureEventSpy = jest.spyOn(posthog, 'captureEvent').mockImplementation(() => undefined);
+        mockUseUserContext.mockImplementation(() => ({userModel: {}}));
+        const {rerender} = render(<Component path="/blog/some-post" />);
+
+        await waitFor(() => expect(mockOpen).toHaveBeenCalled());
+        rerender(<Component path="/blog/some-post" />);
+        await waitFor(() => expect(mockOpen).toHaveBeenCalledTimes(2));
+
+        expect(captureEventSpy).toHaveBeenCalledTimes(1);
+        expect(captureEventSpy).toHaveBeenCalledWith('gated_content_viewed');
+        mockUseUserContext.mockReturnValue(userData);
     });
 });

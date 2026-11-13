@@ -4,6 +4,7 @@ import fetchBooks from '~/models/books';
 import {captureException} from '~/helpers/posthog-exceptions';
 import {filterLiveBooks, SalesforceBook} from '~/helpers/books';
 import {useNavigate, NavigateFunction, useLocation} from 'react-router-dom';
+import {captureEvent} from '~/helpers/posthog';
 import usePortalContext from '~/contexts/portal';
 
 // The book list only supplies the "back to" slug, so a failed lookup
@@ -36,6 +37,7 @@ function afterFormSubmit(
         /* Send to Tech Scout with books pre-selected -- Language removed */
         const scoutBooks = selectedBooks.map((sfBook) => sfBook.value.replace(/ *\[.*/, ''));
 
+        captureEvent('interest_form_submitted', {bookCount: selectedBooks.length});
         navigate(`${linkPrefix}/partners`, {
             state: {
                 confirmation: true,

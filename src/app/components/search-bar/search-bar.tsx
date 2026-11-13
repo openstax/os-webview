@@ -8,6 +8,7 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import cn from 'classnames';
+import {captureEvent} from '~/helpers/posthog';
 import './search-bar.scss';
 
 type SearchBarParams = {
@@ -51,10 +52,11 @@ function SearchInput({amongWhat}: Pick<SearchBarParams, 'amongWhat'>) {
         (event: React.KeyboardEvent) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
+                captureEvent('book_search_performed', {searchQuery: searchString});
                 doSearch();
             }
         },
-        [doSearch]
+        [doSearch, searchString]
     );
     const inputId = `search-${amongWhat}`;
 
@@ -119,13 +121,17 @@ function ClearButton() {
 }
 
 function SearchButton() {
-    const {doSearch} = useSearchContext();
+    const {doSearch, searchString} = useSearchContext();
+    const handleSearch = React.useCallback(() => {
+        captureEvent('book_search_performed', {searchQuery: searchString});
+        doSearch();
+    }, [doSearch, searchString]);
 
     return (
         <button
             className="btn primary"
             type="button"
-            onClick={doSearch}
+            onClick={handleSearch}
             aria-label="search"
         >
             <FontAwesomeIcon icon={faSearch} />
