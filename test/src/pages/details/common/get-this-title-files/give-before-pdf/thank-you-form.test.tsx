@@ -1,8 +1,10 @@
 import React from 'react';
 import {render, screen} from '@testing-library/preact';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import {IntlProvider} from 'react-intl';
 import ThankYou from '~/pages/details/common/get-this-title-files/give-before-pdf/thank-you-form';
+import {FileButton} from '~/pages/errata-form/form/FileUploader';
 import * as UserContext from '~/contexts/user';
 
 // Mock SchoolSelector to avoid needing LanguageContext and MainClassContext
@@ -169,5 +171,209 @@ describe('ThankYou', () => {
 
         const neverMindLink = screen.getByText(/Never mind, just go to the PDF/i);
         expect(neverMindLink.getAttribute('data-track')).toBeNull();
+    });
+
+    describe('photo and video attachment', () => {
+        beforeEach(() => {
+            jest.spyOn(UserContext, 'default').mockReturnValue({
+                userModel: {}
+            } as ReturnType<typeof UserContext.default>);
+        });
+
+        function renderForm() {
+            return render(
+                <Wrapper>
+                    <ThankYou {...defaultProps} />
+                </Wrapper>
+            );
+        }
+
+        it('posts as multipart form data so a file can travel with the note', () => {
+            const {container} = renderForm();
+
+            expect(container.querySelector('form')).toHaveAttribute(
+                'enctype',
+                'multipart/form-data'
+            );
+        });
+
+        it('offers an optional photo or video upload', () => {
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]');
+
+            expect(
+                screen.getByRole('group', {name: /Optional: Upload a photo or video of yourself/})
+            ).toBeInTheDocument();
+            expect(fileInput).toHaveAttribute('name', 'attachment');
+            expect(fileInput).toHaveAttribute(
+                'accept',
+                '.jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.mp4,.mov,.m4v,.webm'
+            );
+            expect(fileInput).not.toBeRequired();
+        });
+
+        it('shows the chosen file and lets it be cleared', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+            await user.upload(fileInput, new File(['x'], 'me-with-book.png', {type: 'image/png'}));
+            expect(screen.getByText('me-with-book.png')).toBeInTheDocument();
+
+            await user.click(screen.getByRole('button', {name: 'Clear file'}));
+            expect(screen.queryByText('me-with-book.png')).toBeNull();
+            // The file must not still be in the input, or it would be submitted
+            expect(fileInput.files).toHaveLength(0);
+            expect(fileInput.value).toBe('');
+        });
+
+        it('turns away a type of file the CMS would reject, instead of submitting it', async () => {
+            const user = userEvent.setup({applyAccept: false});
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+            await user.upload(fileInput, new File(['<svg/>'], 'me.SVG', {type: 'image/svg+xml'}));
+
+            expect(screen.getByRole('alert')).toHaveTextContent(
+                /That type of file can't be attached. Choose a JPG, JPEG, PNG.*WEBM file./
+            );
+            expect(fileInput.files).toHaveLength(0);
+            expect(screen.queryByText('me.SVG')).toBeNull();
+            expect(screen.getByRole('button', {name: 'Add file'})).toBeInTheDocument();
+        });
+
+        it('accepts an allowed extension in any letter case', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+            await user.upload(fileInput, new File(['x'], 'IMG_0001.HEIC', {type: ''}));
+
+            expect(screen.getByText('IMG_0001.HEIC')).toBeInTheDocument();
+            expect(screen.queryByRole('alert')).toBeNull();
+        });
+
+        it('turns away a file over the CMS size limit, with the limit in the message', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+            const big = new File(['x'], 'long-video.mp4', {type: 'video/mp4'});
+
+            Object.defineProperty(big, 'size', {value: 100 * 1024 * 1024 + 1});
+            await user.upload(fileInput, big);
+
+            expect(screen.getByRole('alert')).toHaveTextContent('That file is too large. The limit is 100 MB.');
+            expect(fileInput.files).toHaveLength(0);
+        });
+
+        it('takes a file of exactly the limit, and drops the message once a good file is chosen', async () => {
+            const user = userEvent.setup({applyAccept: false});
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+            const exact = new File(['x'], 'long-video.mp4', {type: 'video/mp4'});
+
+            await user.upload(fileInput, new File(['x'], 'notes.pdf', {type: 'application/pdf'}));
+            expect(screen.getByRole('alert')).toBeInTheDocument();
+
+            Object.defineProperty(exact, 'size', {value: 100 * 1024 * 1024});
+            await user.upload(fileInput, exact);
+            expect(screen.queryByRole('alert')).toBeNull();
+            expect(screen.getByText('long-video.mp4')).toBeInTheDocument();
+        });
+
+        it('takes any file when the button has no accepted types or size limit', async () => {
+            const user = userEvent.setup();
+            const {container} = render(<FileButton name="anything" />);
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+            await user.upload(fileInput, new File(['x'], 'notes.pdf', {type: 'application/pdf'}));
+
+            expect(screen.getByText('notes.pdf')).toBeInTheDocument();
+            expect(screen.queryByRole('alert')).toBeNull();
+        });
+
+        it.each([['Enter', '{Enter}'], ['Space', ' ']])(
+            'opens the file picker from the keyboard with %s',
+            async (_name, keys) => {
+                const user = userEvent.setup();
+                const {container} = renderForm();
+                const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+                const openPicker = jest.spyOn(fileInput, 'click');
+
+                screen.getByRole('button', {name: 'Add file'}).focus();
+                await user.keyboard(keys);
+
+                expect(openPicker).toHaveBeenCalledTimes(1);
+            }
+        );
+
+        it('ignores other keys on the Add file button', async () => {
+            const user = userEvent.setup();
+            const {container} = renderForm();
+            const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+            const openPicker = jest.spyOn(fileInput, 'click');
+
+            screen.getByRole('button', {name: 'Add file'}).focus();
+            await user.keyboard('a');
+
+            expect(openPicker).not.toHaveBeenCalled();
+        });
+
+        describe('consent', () => {
+            function consentOptions() {
+                return {
+                    group: screen.getByRole('group', {name: /Consent/}),
+                    yes: screen.getByRole('radio', {name: 'Yes, I agree'}),
+                    no: screen.getByRole('radio', {name: 'No, I do not agree'})
+                };
+            }
+
+            it('asks yes or no, with neither chosen, and describes what is being agreed to', () => {
+                renderForm();
+                const {group, yes, no} = consentOptions();
+
+                expect(group).toHaveAccessibleDescription(
+                    /grant OpenStax the right to use my image, voice, and name/
+                );
+                expect(yes).not.toBeChecked();
+                expect(no).not.toBeChecked();
+                expect(yes).toBeRequired();
+                expect(no).toBeRequired();
+                expect(yes).toHaveAttribute('name', 'consent_to_share_or_contact');
+                expect(no).toHaveAttribute('name', 'consent_to_share_or_contact');
+            });
+
+            it('does not let the form be submitted until one is chosen', async () => {
+                const user = userEvent.setup();
+                const {container} = renderForm();
+                const form = container.querySelector('form') as HTMLFormElement;
+                const {yes} = consentOptions();
+
+                // The other required fields are filled in, so only consent is missing
+                form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+                    'textarea[required], input[required][type="text"]'
+                ).forEach((el) => {
+                    el.value = 'x';
+                });
+                expect(yes).toBeInvalid();
+                expect(new FormData(form).has('consent_to_share_or_contact')).toBe(false);
+
+                await user.click(yes);
+                expect(yes).toBeValid();
+            });
+
+            it.each([
+                ['Yes, I agree', 'True'],
+                ['No, I do not agree', 'False']
+            ])('sends the choice %s as %s', async (label, value) => {
+                const user = userEvent.setup();
+                const {container} = renderForm();
+                const form = container.querySelector('form') as HTMLFormElement;
+
+                await user.click(screen.getByRole('radio', {name: label}));
+
+                expect(new FormData(form).get('consent_to_share_or_contact')).toBe(value);
+            });
+        });
     });
 });

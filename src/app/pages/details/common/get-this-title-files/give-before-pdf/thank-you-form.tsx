@@ -3,6 +3,19 @@ import useUserContext from '~/contexts/user';
 import trackLink from '../../track-link';
 import './thank-you-form.scss';
 import SchoolSelector from '~/components/school-selector/school-selector';
+import FormRadioGroup from '~/components/form-radiogroup/form-radiogroup';
+import {FileButton} from '~/pages/errata-form/form/FileUploader';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPaperclip} from '@fortawesome/free-solid-svg-icons/faPaperclip';
+
+// What the CMS stores for a thank you note (openstax-cms donations/views.py). It
+// rejects anything else, and the whole note with it, and this form posts through
+// a hidden iframe, so it can't see that and would show the thank-you either way.
+const ATTACHMENT_ACCEPT = [
+    '.jpg', '.jpeg', '.png', '.gif', '.webp', '.heic', '.heif',
+    '.mp4', '.mov', '.m4v', '.webm'
+].join(',');
+const ATTACHMENT_MAX_BYTES = 100 * 1024 * 1024;
 
 function FormWithAfterSubmit({
     afterSubmit,
@@ -89,6 +102,7 @@ export default function ThankYou({
         <FormWithAfterSubmit
             action={`${process.env.API_ORIGIN}/apps/cms/api/donations/thankyounote/`}
             method="post"
+            encType="multipart/form-data"
             className="thank-you-form"
             afterSubmit={afterSubmit}
         >
@@ -141,20 +155,49 @@ export default function ThankYou({
                     />
                 </label>
             </div>
-            <div className="consent-checkbox">
-                <label>
+            <div
+                className="attachment"
+                role="group"
+                aria-labelledby="thank-you-attachment-prompt"
+            >
+                <div id="thank-you-attachment-prompt" className="prompt">
+                    <FontAwesomeIcon icon={faPaperclip} aria-hidden="true" />
+                    Optional: Upload a photo or video of yourself to share
+                    alongside your thank you note. It really means a lot!
+                </div>
+                <FileButton
+                    name="attachment"
+                    accept={ATTACHMENT_ACCEPT}
+                    maxBytes={ATTACHMENT_MAX_BYTES}
+                />
+            </div>
+            <div
+                className="consent"
+                role="group"
+                aria-labelledby="thank-you-consent-heading"
+                aria-describedby="thank-you-consent-text"
+            >
+                <label id="thank-you-consent-heading">
                     Consent <span className="asterisk" />
                 </label>
-                <label className="cb-group">
-                    <input
-                        type="checkbox"
-                        name="consent_to_share_or_contact"
-                        value="True"
-                    />
-                    By clicking here I understand that OpenStax may include my
-                    story in publications and distribution in printed,
-                    electronic, and digital media.
-                </label>
+                <div id="thank-you-consent-text" className="statement">
+                    I understand that OpenStax may include my story in
+                    publications and distribution in printed, electronic, and
+                    digital media. If I have uploaded a photo or video, I
+                    hereby grant OpenStax the right to use my image, voice,
+                    and name in print, photographs, and video and audio
+                    recordings for educational or promotional purposes.
+                </div>
+                {/* The writer has to choose; the note is sent either way. The
+                    CMS stores 'True' as consent and 'False' as none. */}
+                <FormRadioGroup
+                    name="consent_to_share_or_contact"
+                    options={[
+                        {label: 'Yes, I agree', value: 'True'},
+                        {label: 'No, I do not agree', value: 'False'}
+                    ]}
+                    required
+                />
             </div>
             <button className="primary">
                 Submit note and go to {itemType}
