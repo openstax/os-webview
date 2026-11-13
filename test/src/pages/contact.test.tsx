@@ -2,11 +2,15 @@ import React from 'react';
 import {fireEvent, render, screen, waitFor} from '@testing-library/preact';
 import {describe, it} from '@jest/globals';
 import userEvent from '@testing-library/user-event';
+import {Routes, Route} from 'react-router-dom';
 import ContactPage from '~/pages/contact/contact';
 import Form from '~/pages/contact/form';
+import EmbeddedForm from '~/pages/contact/embedded';
 import * as UPD from '~/helpers/use-page-data';
 import * as UDH from '~/helpers/use-document-head';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
+import InPortal from '~/../../test/helpers/in-portal';
 import {SalesforceContextProvider} from '~/contexts/salesforce';
 import * as SFF from '~/components/salesforce-form/salesforce-form';
 
@@ -51,9 +55,11 @@ const pageData = {
 function Component({path='/contact'}) {
     return (
         <MemoryRouter initialEntries={[path]}>
-            <SalesforceContextProvider>
-                <ContactPage />
-            </SalesforceContextProvider>
+            <ShellContextProvider>
+                <SalesforceContextProvider>
+                    <ContactPage />
+                </SalesforceContextProvider>
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }
@@ -108,9 +114,11 @@ describe('contact page', () => {
         spyUsePageData.mockReturnValue(pageData);
         render(
             <MemoryRouter initialEntries={['/embedded/contact?body=1&body=2']}>
-                <SalesforceContextProvider>
-                    <Form setSubmitted={setSubmitted} />
-                </SalesforceContextProvider>
+                <ShellContextProvider>
+                    <SalesforceContextProvider>
+                        <Form setSubmitted={setSubmitted} />
+                    </SalesforceContextProvider>
+                </ShellContextProvider>
             </MemoryRouter>
         );
         const getLoadingText = () => screen.getByText('Loading...');
@@ -137,6 +145,135 @@ describe('contact page', () => {
 
         await user.click(submitButton);
         expect(setSubmitted).toHaveBeenCalledWith(true);
+    });
+});
+
+describe('contact form', () => {
+    const user = userEvent.setup();
+    const zapierHook = 'https://hooks.zapier.com/hooks/catch/175480/3n62dhe/';
+    const polskaEndpoint = '/apps/cms/api/mail/send_mail';
+
+    // The Salesforce context loads its oid asynchronously; until it arrives the
+    // form is replaced by a loading placeholder.
+    async function renderForm(portal = '') {
+        const prefix = portal ? `/${portal}` : '';
+        const routes = (
+            <Routes>
+                <Route path={`${prefix}/contact`} element={<Form />} />
+                <Route
+                    path={`${prefix}/confirmation/contact`}
+                    element={<div>Message sent</div>}
+                />
+            </Routes>
+        );
+        const result = render(
+            <MemoryRouter initialEntries={[`${prefix}/contact`]}>
+                <ShellContextProvider>
+                    <SalesforceContextProvider>
+                        {portal ? <InPortal portal={portal}>{routes}</InPortal> : routes}
+                    </SalesforceContextProvider>
+                </ShellContextProvider>
+            </MemoryRouter>
+        );
+
+        await waitFor(() => expect(result.container.querySelector('form')).not.toBeNull());
+
+        return result;
+    }
+
+    // The dropdown's toggle drops any open or close within 125ms of the last
+    // one (toggle-context.ts), so clicks that land inside that window silently
+    // do nothing. Let it lapse before each click that toggles the menu.
+    const afterToggleThrottle = () => new Promise((resolve) => setTimeout(resolve, 150));
+
+    async function chooseSubject(name: string) {
+        await afterToggleThrottle();
+        await user.click(screen.getAllByRole('combobox')[0]);
+        await afterToggleThrottle();
+        await user.click(await screen.findByRole('option', {name}));
+    }
+
+    it('posts to the Zapier hook, except for OpenStax Polska, which goes to the CMS', async () => {
+        const {container} = await renderForm();
+        const action = () => container.querySelector('form')?.getAttribute('action');
+
+        expect(action()).toBe(zapierHook);
+
+        await chooseSubject('OpenStax Polska');
+        expect(action()).toBe(polskaEndpoint);
+
+        await chooseSubject('Donations');
+        expect(action()).toBe(zapierHook);
+    });
+    it('asks for an Assignable topic and tags the product only when Assignable is chosen', async () => {
+        const {container} = await renderForm();
+        const product = () =>
+            container.querySelector<HTMLInputElement>('input[name="product"]')?.value;
+        const topicQuestion = () =>
+            screen.queryByText('What Assignable topic in particular?');
+
+        expect(topicQuestion()).toBeNull();
+        expect(product()).toBe('');
+
+        await chooseSubject('OpenStax Assignable');
+        expect(topicQuestion()).not.toBeNull();
+        expect(product()).toBe('Assignable');
+
+        await chooseSubject('General');
+        expect(topicQuestion()).toBeNull();
+        expect(product()).toBe('');
+    });
+    async function fillAndSubmit() {
+        // The fields are required, so fill them in before submitting
+        await user.type(screen.getByRole('textbox', {name: 'Your Name'}), 'Username');
+        await user.type(
+            screen.getByRole('textbox', {name: 'Your Email Address'}),
+            'somebody@example.com'
+        );
+        await user.type(screen.getByRole('textbox', {name: 'Your Message'}), 'message text');
+        await user.click(screen.getByRole('button', {name: 'Submit'}));
+    }
+
+    it('goes to the confirmation page after submitting outside the embedded form', async () => {
+        await renderForm();
+        await fillAndSubmit();
+
+        expect(await screen.findByText('Message sent')).toBeTruthy();
+    });
+    it('goes to the confirmation page in the portal after submitting there', async () => {
+        await renderForm('my-portal');
+        await fillAndSubmit();
+
+        expect(await screen.findByText('Message sent')).toBeTruthy();
+    });
+});
+
+describe('embedded contact form', () => {
+    afterEach(() => {
+        window.history.replaceState(null, '', '/');
+    });
+
+    // The form reads the page's own URL, since it runs in an iframe
+    function renderAt(path: string) {
+        window.history.replaceState(null, '', path);
+        render(
+            <MemoryRouter initialEntries={[path]}>
+                <SalesforceContextProvider>
+                    <EmbeddedForm />
+                </SalesforceContextProvider>
+            </MemoryRouter>
+        );
+    }
+
+    it.each([
+        ['/embedded/contact?portal=school-portal&body=x', '/school-portal/subjects'],
+        ['/embedded/contact?body=x', '/subjects'],
+        // A crafted portal must not make the link go to another site
+        ['/embedded/contact?portal=%2Fevil.example', '/subjects']
+    ])('at %s links to the subjects page at %s', (path, subjectsHref) => {
+        renderAt(path);
+
+        expect(screen.getByRole('link', {name: 'subjects page'}).getAttribute('href')).toBe(subjectsHref);
     });
 });
 

@@ -9,13 +9,4 @@
             font-style: normal;
         }
     }
-
-    .source {
-        font-style: italic;
-
-        &::after {
-            content: ' - ';
-            font-style: normal;
-        }
-    }
 }

@@ -1,9 +1,11 @@
 import React from 'react';
 import useWebinarContext from '../webinar-context';
+import usePortalContext from '~/contexts/portal';
 import WebinarGridSection from '../webinar-cards/webinar-grid-section';
 
 export default function LatestWebinars({limit}: {limit: number}) {
     const {latestWebinars} = useWebinarContext();
+    const {linkPrefix} = usePortalContext();
 
     return (
         <WebinarGridSection
@@ -13,7 +15,7 @@ export default function LatestWebinars({limit}: {limit: number}) {
         >
             <a
                 className='btn primary'
-                href='/webinars/latest'
+                href={`${linkPrefix}/webinars/latest`}
                 data-analytics-link='webinars_latest'
             >
                 View more of the latest

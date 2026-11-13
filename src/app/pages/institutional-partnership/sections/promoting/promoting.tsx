@@ -1,5 +1,6 @@
 import React from 'react';
 import RawHTML from '~/components/jsx-helpers/raw-html';
+import usePortalContext from '~/contexts/portal';
 import './promoting.scss';
 
 type WideCard = {
@@ -29,6 +30,8 @@ export default function Promoting({
     tallCards: [tallCards],
     wideCards: [wideCards]
 }: PromotingProps) {
+    const {hrefInPortal} = usePortalContext();
+
     return (
         <section className="promoting white">
             <div className="content-block">
@@ -52,7 +55,7 @@ export default function Promoting({
                         <div className="card tall" key={index}>
                             <RawHTML html={item.html} />
                             <a
-                                href={item.link}
+                                href={hrefInPortal(item.link)}
                                 className="btn primary"
                                 target="_blank"
                                 rel="noreferrer"

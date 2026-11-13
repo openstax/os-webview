@@ -1,4 +1,6 @@
 import React, {useState, useRef, useEffect, useMemo} from 'react';
+import * as Sentry from '@sentry/react';
+import {captureException} from '~/helpers/posthog-exceptions';
 import useErrataFormContext from '../../errata-form-context';
 import managedInvalidMessage from '../InvalidMessage';
 import bookToc from '~/models/book-toc';
@@ -141,16 +143,36 @@ function useTocTree(
     }, [tree, chapterFilter]);
 
     useEffect(() => {
-        if (slug) {
-            bookToc(slug).then((contents: TocContent[]) =>
-                updateTree(flattenTree(contents))
-            );
-            // FOR TESTING
-            // .catch(() => {
-            //     console.info('caught...using testdata', testData);
-            //     updateTree(flattenTree(testData.tree.contents));
-            // });
+        if (!slug) {
+            return undefined;
         }
+        let cancelled = false;
+
+        bookToc(slug).then(
+            (contents: TocContent[]) => {
+                if (!cancelled) {
+                    updateTree(flattenTree(contents));
+                }
+            },
+            (reason: unknown) => {
+                const failure =
+                    reason instanceof Error ? reason : new Error(String(reason));
+
+                // Handling the rejection takes it away from the
+                // unhandled-rejection reporters, so it is reported here
+                Sentry.captureException(failure);
+                captureException(failure);
+                if (!cancelled) {
+                    updateTree([]);
+                }
+            }
+            // FOR TESTING, replace the rejection handler above with
+            // () => updateTree(flattenTree(testData.tree.contents))
+        );
+
+        return () => {
+            cancelled = true;
+        };
     }, [slug]);
 
     return filteredTree;

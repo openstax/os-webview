@@ -13,6 +13,7 @@ import useBlogSearchParams from './use-blog-search-params';
 import {ArticleData, ArticleFromSlug} from './article/article';
 import GatedContentDialog from './gated-content-dialog/gated-content-dialog';
 import {assertDefined} from '~/helpers/data';
+import usePortalContext from '~/contexts/portal';
 import './blog.scss';
 
 function WriteForUs({
@@ -24,10 +25,12 @@ function WriteForUs({
     text: string;
     link: string;
 }) {
+    const {hrefInPortal} = usePortalContext();
+
     return (
         <section className="boxed">
             <RawHTML Tag="h2" className="description" html={descriptionHtml} />
-            <a href={link} className="btn primary">
+            <a href={hrefInPortal(link)} className="btn primary">
                 {text}
             </a>
         </section>

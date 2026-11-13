@@ -4,11 +4,14 @@ import {formatDateForBlog as formatDate} from '~/helpers/data';
 import fetchRexRelease from '~/models/rex-release';
 import {FormattedMessage, useIntl} from 'react-intl';
 import useDetailsContext, {ContextValues, IsbnType} from '../context';
+import usePortalContext from '~/contexts/portal';
 
 function PdfUpdateInfo({updateDate, url}: {
     updateDate?: string | null;
     url: string | null;
 }) {
+    const {hrefInPortal} = usePortalContext();
+
     if (!updateDate) {
         return null;
     }
@@ -30,7 +33,7 @@ function PdfUpdateInfo({updateDate, url}: {
                                 id="pubinfo.pdf.see"
                                 defaultMessage="See changes in the"
                             />{' '}
-                            <a href={url}>
+                            <a href={hrefInPortal(url)}>
                                 <FormattedMessage
                                     id="pubinfo.pdf.notes"
                                     defaultMessage="Revision Notes"

@@ -5,6 +5,7 @@ import {useDataFromSlug} from '~/helpers/page-data-utils';
 import useOptimizedImage from '~/helpers/use-optimized-image';
 import useEnglishSubject from './use-english-subject';
 import {useIntl} from 'react-intl';
+import usePortalContext from '~/contexts/portal';
 import './blog-posts.scss';
 import { assertDefined } from '~/helpers/data';
 
@@ -16,7 +17,8 @@ type Blurb = {
 }
 
 function Card({article_image: image, title: linkText, slug}: Omit<Blurb, 'id'>) {
-    const link = `/blog/${slug}`;
+    const {linkPrefix} = usePortalContext();
+    const link = `${linkPrefix}/blog/${slug}`;
     const optimizedImage = useOptimizedImage(image, 400);
 
     return (

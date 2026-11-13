@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
 import {Routes, Route} from 'react-router-dom';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
+import ShellContextProvider from '~/../../test/helpers/shell-context';
 import useBlogContext, {
     BlogContextProvider,
     toTType
@@ -19,9 +20,11 @@ import {describe, test, expect} from '@jest/globals';
 function renderLoader(entry: string) {
     return render(
         <MemoryRouter initialEntries={[entry]}>
-            <Routes>
-                <Route path="/blog/*" element={<BlogLoader />} />
-            </Routes>
+            <ShellContextProvider>
+                <Routes>
+                    <Route path="/blog/*" element={<BlogLoader />} />
+                </Routes>
+            </ShellContextProvider>
         </MemoryRouter>
     );
 }
@@ -56,11 +59,13 @@ describe('blog pages', () => {
     test('Article page', async () => {
         render(
             <MemoryRouter initialEntries={['/blog/blog-article']}>
-                <BlogContextProvider>
-                    <Routes>
-                        <Route path="/blog/:slug" element={<ArticlePage />} />
-                    </Routes>
-                </BlogContextProvider>
+                <ShellContextProvider>
+                    <BlogContextProvider>
+                        <Routes>
+                            <Route path="/blog/:slug" element={<ArticlePage />} />
+                        </Routes>
+                    </BlogContextProvider>
+                </ShellContextProvider>
             </MemoryRouter>
         );
         expect(await screen.findAllByText('Read more')).toHaveLength(3);
@@ -86,9 +91,11 @@ describe('blog pages', () => {
         function Outer() {
             return (
                 <MemoryRouter initialEntries={['/blog/blog-article']}>
-                    <BlogContextProvider>
-                        <Inner />
-                    </BlogContextProvider>
+                    <ShellContextProvider>
+                        <BlogContextProvider>
+                            <Inner />
+                        </BlogContextProvider>
+                    </ShellContextProvider>
                 </MemoryRouter>
             );
         }

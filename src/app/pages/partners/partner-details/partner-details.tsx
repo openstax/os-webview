@@ -1,4 +1,6 @@
 import React from 'react';
+import * as Sentry from '@sentry/react';
+import {captureException} from '~/helpers/posthog-exceptions';
 import usePartnerContext, {
     PartnerContextProvider,
     Model
@@ -8,7 +10,7 @@ import Carousel from './carousel/carousel';
 import RawHTML from '~/components/jsx-helpers/raw-html';
 import TabGroup from '~/components/tab-group/tab-group';
 import ContentGroup from '~/components/content-group/content-group';
-import booksPromise from '~/models/books';
+import fetchBooks from '~/models/books';
 import type {Book} from '~/helpers/books';
 import InfoRequestForm from './info-request-form/info-request-form';
 import './partner-details.scss';
@@ -35,8 +37,15 @@ function useRealTitles(books: Model['books']) {
     const [titles, setTitles] = React.useState(books);
 
     React.useEffect(() => {
-        booksPromise.then((results) =>
-            setTitles(getTitlesFromAbbreviations(books, results))
+        // Without the list, the abbreviations stay as they are
+        fetchBooks().then(
+            (results) => setTitles(getTitlesFromAbbreviations(books, results)),
+            (error: Error) => {
+                // Handling the rejection hides it from the unhandled-rejection
+                // reporters, so report it deliberately
+                Sentry.captureException(error);
+                captureException(error);
+            }
         );
     }, [books]);
 

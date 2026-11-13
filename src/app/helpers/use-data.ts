@@ -1,6 +1,8 @@
 // Universal data fetcher/processor to replace the various data-fetching hooks, I hope
 import React from 'react';
+import * as Sentry from '@sentry/react';
 import {getUrlFor, camelCaseKeys, transformData, Json} from './page-data-utils';
+import {captureException} from './posthog-exceptions';
 
 // Any Promise returned by fetch, or a CMS endpoint reference
 // we can use to make such a Promise
@@ -29,9 +31,17 @@ export default function useFetchedData<T>(
         if (!slug) {
             return null;
         }
-        return new Promise<Response>((resolve) =>
-            getUrlFor(slug).then((url: string) => fetch(url).then(resolve))
-        );
+        // usePromise swallows the rejection, which takes it away from the
+        // unhandled-rejection reporters, so it is reported here instead
+        return getUrlFor(slug)
+            .then((url: string) => fetch(url))
+            .catch((reason: unknown) => {
+                const failure = new Error(`Failed to fetch ${slug}: ${reason}`);
+
+                Sentry.captureException(failure);
+                captureException(failure);
+                throw failure;
+            });
     }, [slug]);
     const url = (options as UrlSource).url;
     const urlPromise = React.useMemo(() => {
