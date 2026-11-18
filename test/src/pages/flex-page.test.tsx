@@ -460,6 +460,7 @@ function bookListBlock(): BodyBlock {
                     coverUrl: 'cover-url',
                     bookState: 'book-state',
                     promoteSnippet: [],
+                    amazonLink: 'amazon-link',
                     bookstoreComingSoon: false,
                     description: ''
                 }

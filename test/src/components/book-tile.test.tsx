@@ -21,6 +21,7 @@ const bookData: BookInfo = {
     pdfUrl: 'hi-res.pdf',
     highResolutionPdfUrl: 'hi-res.pdf',
     coverUrl: 'cover.jpg',
+    amazonLink: 'https://example.com/print-copy',
     bookstoreComingSoon: false,
     description: ''
 };
@@ -148,7 +149,17 @@ describe('book-tile', () => {
 
         expect(screen.getAllByText('Audiobook')).toHaveLength(2);
     });
-    it('suppresses the print order item when bookstoreComingSoon is true', async () => {
+    it.each([
+        ['null', null],
+        ['empty', '']
+    ])('suppresses the print order item when the print link is %s', (_name, amazonLink) => {
+        render(<Component book={[{...bookData, amazonLink}]} />);
+        const menuItems = screen.getAllByRole('menuitem').map((i) => i.textContent);
+
+        expect(menuItems.includes('View online')).toBe(true);
+        expect(menuItems.includes('Order a print copy')).toBe(false);
+    });
+    it('suppresses the print order item when bookstoreComingSoon is true, even with a print link', async () => {
         const bd = {...bookData, bookstoreComingSoon: true};
 
         render(<Component book={[bd]} />);
