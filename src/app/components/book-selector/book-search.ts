@@ -1,3 +1,4 @@
+const numeric = /^\d+$/;
 const editionToken = /^\d+(st|nd|rd|th|e)$/;
 
 function normalize(s: string) {
@@ -16,6 +17,11 @@ export function searchTokens(query: string) {
         .filter((t) => t && t !== 'edition' && !editionToken.test(t));
 }
 
+// A bare number must be a whole word, or "2" would match "2e", "20" and every other edition
+function wordMatches(word: string, token: string) {
+    return numeric.test(token) ? word === token : word.startsWith(token);
+}
+
 export function matchesSearch(
     book: {text?: string; title?: string; searchableTitles?: string[]},
     query: string
@@ -25,5 +31,5 @@ export function matchesSearch(
         [book.text, book.title, ...(book.searchableTitles ?? [])].join(' ')
     ).split(' ');
 
-    return tokens.every((t) => words.some((w) => w.startsWith(t)));
+    return tokens.every((t) => words.some((w) => wordMatches(w, t)));
 }

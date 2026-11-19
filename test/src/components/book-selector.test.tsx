@@ -521,6 +521,8 @@ describe('book-selector', () => {
             ['Maternal-Newborn', ['Maternal Newborn Nursing']],
             ['chem', ['Chemistry', 'Organic Chemistry']],
             ['calculus volume 1', ['Calculus Volume 1']],
+            ['1', ['University Physics', 'Calculus Volume 1']],
+            ['2', ['University Physics', 'Calculus Volume 2']],
             ['university physics volume 2', ['University Physics']],
             ['university physics volume 3', ['University Physics']],
             ['algebra', ['Álgebra']]
