@@ -87,6 +87,12 @@ describe('separatemap', () => {
         );
         expect(screen.queryByRole('button', {name: 'close popup'})).toBeNull();
     });
+    it('has no control to close the map', async () => {
+        render(<SeparateMap />);
+        await screen.findByRole('button', {name: 'close popup'});
+        expect(screen.queryByText('Close map')).toBeNull();
+        expect(document.querySelector('a[href$="/global-reach"]')).toBeNull();
+    });
     it('handles school click', async () => {
         mockOn.mockImplementation(
             (eType: string, what: string, fn: (el: object) => void) => {

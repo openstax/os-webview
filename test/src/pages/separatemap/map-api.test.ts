@@ -6,6 +6,8 @@ const triggers: Record<string, (el?: object) => void> = {};
 let mockLoaded: jest.Mock;
 let mockResize: jest.Mock;
 let mockSetFilter: jest.Mock;
+let mockSetPaintProperty: jest.Mock;
+let mockSetLayoutProperty: jest.Mock;
 
 jest.mock('~/models/mapbox', () => () => console.info('*** LOADED?'));
 jest.mock('mapbox-gl', () => {
@@ -22,6 +24,8 @@ jest.mock('mapbox-gl', () => {
         resize: (mockResize = jest.fn()),
         getCanvas: () => ({style: {}}),
         setFilter: (mockSetFilter = jest.fn()),
+        setPaintProperty: (mockSetPaintProperty = jest.fn()),
+        setLayoutProperty: (mockSetLayoutProperty = jest.fn()),
         easeTo: jest.fn(),
         fitBounds: jest.fn()
     };
@@ -56,6 +60,22 @@ describe('map-api', () => {
         (tooltip.remove as jest.Mock).mockReset();
         triggers.click({features: true});
         expect(tooltip.remove).not.toHaveBeenCalled();
+    });
+    it('draws the schools as green dots with no halo once the style has loaded', async () => {
+        const container = document.createElement('div');
+
+        createMap({container});
+        await waitFor(() => expect(triggers.load).toBeTruthy());
+        mockLoaded.mockReturnValueOnce(false);
+        mockResize.mockClear();
+        triggers.load();
+
+        expect(mockResize).not.toHaveBeenCalled();
+        expect(mockSetPaintProperty).toHaveBeenCalledWith('os-schools', 'circle-color', '#63a524');
+        expect(mockSetLayoutProperty).toHaveBeenCalledWith('os-schools-heat-map', 'visibility', 'none');
+        expect(mockSetLayoutProperty).toHaveBeenCalledWith('os-schools-shadow-at-8', 'visibility', 'none');
+        // The dots themselves stay visible
+        expect(mockSetLayoutProperty).not.toHaveBeenCalledWith('os-schools', expect.anything(), expect.anything());
     });
     it('shows tooltip for school', async () => {
         const container = document.createElement('div');
