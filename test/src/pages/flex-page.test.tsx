@@ -6,6 +6,9 @@ import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
 import { LayoutContextProvider } from '~/contexts/layout';
+import * as UAC from '~/helpers/use-audience-conditions';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 type Data = Parameters<typeof FlexPage>[0]['data'];
 type BodyBlock = Data['body'][number];
@@ -475,3 +478,95 @@ function bigNumberBlock(number = '42', caption?: string, color?: string): BodyBl
         value: {number, caption, color}
     } as BodyBlock;
 }
+
+function conditionedBlock(id: string, condition: string | string[] | undefined, text: string): BodyBlock {
+    const config = condition === undefined ? [] : [{type: 'rendering_condition', value: condition}];
+
+    return {
+        id,
+        type: 'section',
+        value: {
+            content: [{id: `${id}-text`, type: 'text', value: text}],
+            config
+        }
+    } as BodyBlock;
+}
+
+// `divider` has no built-in condition check, so it exercises only our wrapper -
+// the renderer's own `condition.split(',')` would throw on the array form.
+function conditionedDivider(id: string, condition: string | string[]): BodyBlock {
+    return {
+        id,
+        type: 'divider',
+        value: {
+            image: {id: `${id}-image-id`, file: `/foo/${id}-image.jpg`, height: 400, width: 300},
+            config: [{type: 'rendering_condition', value: condition}]
+        }
+    } as BodyBlock;
+}
+
+describe('flex-page audience gating', () => {
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    function mockActiveConditions(value: string[] | undefined) {
+        jest.spyOn(UAC, 'default').mockReturnValue(value as any);
+    }
+
+    it('renders a block with no rendering_condition regardless of resolution state', () => {
+        mockActiveConditions(undefined);
+        body = [conditionedBlock('open', undefined, 'Open text')];
+        render(<Component />);
+        screen.getByText('Open text');
+    });
+
+    it('hides a conditioned block while activeConditions is unresolved (undefined)', () => {
+        mockActiveConditions(undefined);
+        body = [conditionedBlock('gated', 'role:instructor', 'Gated text')];
+        render(<Component />);
+        expect(screen.queryByText('Gated text')).toBe(null);
+    });
+
+    it('renders a conditioned block once its slug is active', () => {
+        mockActiveConditions(['role:instructor']);
+        body = [conditionedBlock('gated', 'role:instructor', 'Gated text')];
+        render(<Component />);
+        screen.getByText('Gated text');
+    });
+
+    it('hides a conditioned block whose slug is not active', () => {
+        mockActiveConditions(['role:student']);
+        body = [conditionedBlock('gated', 'role:instructor', 'Gated text')];
+        render(<Component />);
+        expect(screen.queryByText('Gated text')).toBe(null);
+    });
+
+    it('matches with OR semantics when only one of several slugs is active', () => {
+        mockActiveConditions(['role:admin']);
+        body = [conditionedBlock('gated', 'role:instructor,role:admin', 'Gated text')];
+        render(<Component />);
+        screen.getByText('Gated text');
+    });
+
+    it('tolerates whitespace around comma-separated condition slugs', () => {
+        mockActiveConditions(['role:admin']);
+        body = [conditionedBlock('gated', '  role:instructor ,  role:admin  ', 'Gated text')];
+        render(<Component />);
+        screen.getByText('Gated text');
+    });
+
+    it('accepts a condition value already given as an array of slugs', () => {
+        mockActiveConditions(['role:admin']);
+        body = [conditionedDivider('gated', [' role:instructor ', ' role:admin '])];
+        render(<Component />);
+        expect(screen.queryAllByRole('img')).toHaveLength(1);
+    });
+
+    it('hides an array-form condition whose slugs are not active', () => {
+        mockActiveConditions(['role:student']);
+        body = [conditionedDivider('gated', ['role:instructor', 'role:admin'])];
+        render(<Component />);
+        expect(screen.queryAllByRole('img')).toHaveLength(0);
+    });
+});
