@@ -79,59 +79,6 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
         }
     }
 
-    .back-impact-btn {
-        align-items: center;
-        background-color: white;
-        border-radius: 2.8rem;
-        display: grid;
-        height: 4rem;
-        justify-items: center;
-        width: 4rem;
-    }
-
-    .close-map-msg {
-        padding-left: $normal-margin;
-
-        @include width-up-to($phone-max) {
-            display: none;
-        }
-    }
-
-    .back-impact-div {
-        align-items: center;
-        background-color: white;
-        border-radius: 2.8rem;
-        bottom: auto;
-        box-shadow: $big-shadow;
-        color: text-color(normal);
-        display: grid;
-        grid-auto-flow: column;
-        grid-gap: 0;
-        position: fixed;
-        right: 2rem;
-        text-decoration: inherit;
-        top: 15.35rem;
-
-        @include width-up-to($tablet-max) {
-            bottom: auto;
-            right: 2rem;
-            top: 8rem;
-            z-index: 1;
-        }
-
-        @media (hover: hover) {
-            &:hover {
-                color: inherit;
-            }
-        }
-
-        &:not(:hover) {
-            .close-map-msg {
-                display: none;
-            }
-        }
-    }
-
     .popup-msg-div {
         background: white;
         border-radius: 0.3rem;
@@ -164,10 +111,6 @@ $small-shadow: 0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.15);
 
     .popup-msg-link {
         margin-bottom: 1.5rem;
-    }
-
-    .left-arrow-bak {
-        color: text-color(normal);
     }
 
     .mapboxgl-control-container {
