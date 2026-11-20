@@ -52,7 +52,7 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
                     warning={warning}
                     id={bookInfo.id.toString()}
                 />
-                {bookInfo.bookstoreComingSoon ? null : <PrintOption slug={bookInfo.slug} />}
+                {hasPrintOption(bookInfo) && <PrintOption slug={bookInfo.slug} />}
                 <hr />
                 <MenuItem
                     defaultMessage="Instructor resources"
@@ -65,6 +65,12 @@ export default function GetTheBookDropdown({bookInfo}: {bookInfo: BookInfo}) {
             </div>
         </div>
     );
+}
+
+// The print dialog has nothing to show without a print link, and the CMS's
+// "Bookstore coming soon" checkbox holds back a link that is not ready to go live
+function hasPrintOption({amazonLink, bookstoreComingSoon}: BookInfo) {
+    return Boolean(amazonLink) && !bookstoreComingSoon;
 }
 
 function useWarning(id: number) {

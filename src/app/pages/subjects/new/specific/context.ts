@@ -18,6 +18,7 @@ export type Book = {
     pdfUrl: string;
     highResolutionPdfUrl: string; // deprecated alias of pdfUrl
     coverUrl: string;
+    amazonLink: string | null;
     bookstoreComingSoon: boolean;
     description: string;
 };
