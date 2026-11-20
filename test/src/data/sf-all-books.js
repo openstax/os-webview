@@ -1,6 +1,7 @@
 export default [
     {
         text: 'AP Biology',
+        title: 'AP Biology',
         value: 'AP Bio',
         comingSoon: false,
         subjects: ['Science', 'K12'],
@@ -9,6 +10,7 @@ export default [
     },
     {
         text: 'AP Physics 2e',
+        title: 'AP Physics 2e',
         value: 'AP Physics 2e',
         comingSoon: false,
         subjects: ['Science', 'K12'],
@@ -17,6 +19,7 @@ export default [
     },
     {
         text: 'Algebra and Trigonometry',
+        title: 'Algebra and Trigonometry',
         value: 'Algebra and Trigonometry',
         comingSoon: true,
         subjects: ['Math'],
@@ -25,6 +28,7 @@ export default [
     },
     {
         text: 'American Government 2e',
+        title: 'American Government 2e',
         value: 'American Government',
         comingSoon: false,
         subjects: ['Social Sciences'],
@@ -33,6 +37,7 @@ export default [
     },
     {
         text: 'Anatomy & Physiology 2e',
+        title: 'Anatomy & Physiology 2e',
         value: 'Anatomy & Physiology 2e',
         comingSoon: true,
         subjects: ['Science'],
@@ -41,6 +46,7 @@ export default [
     },
     {
         text: 'Biology 2e',
+        title: 'Biology 2e',
         value: 'Biology',
         comingSoon: false,
         subjects: ['Science', 'K12'],
@@ -49,6 +55,7 @@ export default [
     },
     {
         text: 'Business Ethics',
+        title: 'Business Ethics',
         value: 'Business Ethics',
         comingSoon: false,
         subjects: ['Business'],
@@ -57,6 +64,7 @@ export default [
     },
     {
         text: 'Business Law I Essentials',
+        title: 'Business Law I Essentials',
         value: 'Business Law I Essentials',
         comingSoon: false,
         subjects: ['Business', 'Essentials'],
@@ -65,6 +73,7 @@ export default [
     },
     {
         text: 'Calculus',
+        title: 'Calculus',
         value: 'Calculus',
         comingSoon: false,
         subjects: ['Math'],
@@ -73,6 +82,7 @@ export default [
     },
     {
         text: 'Chemistry 2e',
+        title: 'Chemistry 2e',
         value: 'Chemistry',
         comingSoon: false,
         subjects: ['Science'],
@@ -81,6 +91,7 @@ export default [
     },
     {
         text: 'Chemistry: Atoms First 2e',
+        title: 'Chemistry: Atoms First 2e',
         value: 'Chem: Atoms First',
         comingSoon: false,
         subjects: ['Science'],
@@ -89,6 +100,7 @@ export default [
     },
     {
         text: 'College Algebra',
+        title: 'College Algebra',
         value: 'College Algebra',
         comingSoon: false,
         subjects: ['Math'],
@@ -97,6 +109,7 @@ export default [
     },
     {
         text: 'College Algebra with Corequisite Support',
+        title: 'College Algebra with Corequisite Support',
         value: 'College Algebra with Corequisite Support',
         comingSoon: true,
         subjects: ['Math'],
@@ -105,6 +118,7 @@ export default [
     },
     {
         text: 'College Physics 2e',
+        title: 'College Physics 2e',
         value: 'College Physics (Algebra) 2e',
         comingSoon: true,
         subjects: ['Science'],
@@ -113,6 +127,7 @@ export default [
     },
     {
         text: 'College Success',
+        title: 'College Success',
         value: 'College Success',
         comingSoon: false,
         subjects: ['College Success'],
@@ -121,6 +136,7 @@ export default [
     },
     {
         text: 'Concepts of Biology',
+        title: 'Concepts of Biology',
         value: 'Concepts of Bio (non-majors)',
         comingSoon: false,
         subjects: ['Science'],
@@ -129,6 +145,7 @@ export default [
     },
     {
         text: 'Elementary Algebra',
+        title: 'Elementary Algebra',
         value: 'Elementary Algebra',
         comingSoon: false,
         subjects: ['Math'],
@@ -137,6 +154,7 @@ export default [
     },
     {
         text: 'Entrepreneurship',
+        title: 'Entrepreneurship',
         value: 'Entrepreneurship',
         comingSoon: false,
         subjects: ['Business'],
@@ -145,6 +163,7 @@ export default [
     },
     {
         text: 'Foundations of Information Systems',
+        title: 'Foundations of Information Systems',
         value: 'Foundations of Information Systems',
         comingSoon: true,
         subjects: ['Computer Science'],
@@ -153,6 +172,7 @@ export default [
     },
     {
         text: 'Fundamentals of Nursing',
+        title: 'Fundamentals of Nursing',
         value: 'Fundamentals of Nursing',
         comingSoon: true,
         subjects: ['Nursing'],
@@ -161,6 +181,7 @@ export default [
     },
     {
         text: 'HS Physics',
+        title: 'HS Physics',
         value: 'HS Physics',
         comingSoon: false,
         subjects: ['Science', 'K12'],
@@ -169,6 +190,7 @@ export default [
     },
     {
         text: 'HS Statistics',
+        title: 'HS Statistics',
         value: 'HS Statistics',
         comingSoon: false,
         subjects: ['Math', 'K12'],
@@ -177,6 +199,7 @@ export default [
     },
     {
         text: 'Intermediate Algebra',
+        title: 'Intermediate Algebra',
         value: 'Intermediate Algebra',
         comingSoon: false,
         subjects: ['Math'],
@@ -185,6 +208,7 @@ export default [
     },
     {
         text: 'Financial Accounting',
+        title: 'Financial Accounting',
         value: 'Financial Accounting',
         comingSoon: false,
         subjects: ['Business'],
@@ -193,6 +217,7 @@ export default [
     },
     {
         text: 'Introduction to Business',
+        title: 'Introduction to Business',
         value: 'Introduction to Business',
         comingSoon: false,
         subjects: ['Business'],
@@ -201,6 +226,7 @@ export default [
     },
     {
         text: 'Introduction to Computer Science',
+        title: 'Introduction to Computer Science',
         value: 'Introduction to Computer Science',
         comingSoon: true,
         subjects: ['Computer Science'],
@@ -209,6 +235,7 @@ export default [
     },
     {
         text: 'Introduction to Intellectual Property',
+        title: 'Introduction to Intellectual Property',
         value: 'Introduction to Intellectual Property',
         comingSoon: true,
         subjects: ['Business'],
@@ -217,6 +244,7 @@ export default [
     },
     {
         text: 'Introduction to Philosophy',
+        title: 'Introduction to Philosophy',
         value: 'Introduction to Philosophy',
         comingSoon: true,
         subjects: ['Humanities'],
@@ -225,6 +253,7 @@ export default [
     },
     {
         text: 'Introduction to Sociology 3e',
+        title: 'Introduction to Sociology 3e',
         value: 'Introduction to Sociology',
         comingSoon: true,
         subjects: ['Social Sciences'],
@@ -233,6 +262,7 @@ export default [
     },
     {
         text: 'Life, Liberty and the Pursuit of Happiness',
+        title: 'Life, Liberty and the Pursuit of Happiness',
         value: 'LLPH',
         comingSoon: false,
         subjects: [],
@@ -241,6 +271,7 @@ export default [
     },
     {
         text: 'Management',
+        title: 'Management',
         value: 'Management',
         comingSoon: false,
         subjects: ['Business'],
@@ -249,6 +280,7 @@ export default [
     },
     {
         text: 'Managerial Accounting',
+        title: 'Managerial Accounting',
         value: 'Managerial Accounting',
         comingSoon: false,
         subjects: ['Business'],
@@ -257,6 +289,7 @@ export default [
     },
     {
         text: 'Medical-Surgical Nursing',
+        title: 'Medical-Surgical Nursing',
         value: 'Medical-Surgical Nursing',
         comingSoon: true,
         subjects: ['Nursing'],
@@ -265,6 +298,7 @@ export default [
     },
     {
         text: 'Microbiology',
+        title: 'Microbiology',
         value: 'Microbiology',
         comingSoon: false,
         subjects: ['Science'],
@@ -273,6 +307,7 @@ export default [
     },
     {
         text: 'Organic Chemistry',
+        title: 'Organic Chemistry',
         value: 'Organic Chemistry',
         comingSoon: true,
         subjects: ['Science'],
@@ -281,6 +316,7 @@ export default [
     },
     {
         text: 'Organizational Behavior',
+        title: 'Organizational Behavior',
         value: 'Organizational Behavior',
         comingSoon: false,
         subjects: ['Business'],
@@ -289,6 +325,7 @@ export default [
     },
     {
         text: 'Population Health for Nurses',
+        title: 'Population Health for Nurses',
         value: 'Population Health for Nurses',
         comingSoon: true,
         subjects: ['Nursing'],
@@ -297,6 +334,7 @@ export default [
     },
     {
         text: 'Prealgebra',
+        title: 'Prealgebra',
         value: 'Prealgebra',
         comingSoon: false,
         subjects: ['Math'],
@@ -305,6 +343,7 @@ export default [
     },
     {
         text: 'Precalculus',
+        title: 'Precalculus',
         value: 'Precalc',
         comingSoon: false,
         subjects: ['Math'],
@@ -313,6 +352,7 @@ export default [
     },
     {
         text: 'Principles of Economics',
+        title: 'Principles of Economics',
         value: 'Economics',
         comingSoon: false,
         subjects: [],
@@ -321,6 +361,7 @@ export default [
     },
     {
         text: 'Psychology',
+        title: 'Psychology',
         value: 'Psychology',
         comingSoon: false,
         subjects: ['Social Sciences'],
@@ -329,6 +370,7 @@ export default [
     },
     {
         text: 'U.S. History',
+        title: 'U.S. History',
         value: 'US History',
         comingSoon: false,
         subjects: ['Humanities'],
@@ -337,6 +379,7 @@ export default [
     },
     {
         text: 'University Physics',
+        title: 'University Physics',
         value: 'University Physics (Calc)',
         comingSoon: false,
         subjects: ['Science'],
@@ -345,6 +388,7 @@ export default [
     },
     {
         text: 'Writing Guide',
+        title: 'Writing Guide',
         value: 'Writing Guide',
         comingSoon: false,
         subjects: ['Humanities'],
@@ -353,6 +397,7 @@ export default [
     },
     {
         text: 'finance',
+        title: 'finance',
         value: 'finance',
         comingSoon: true,
         subjects: ['Business'],
