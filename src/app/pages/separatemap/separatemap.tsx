@@ -10,19 +10,6 @@ import {MapContextProvider} from './map-context';
 import usePortalContext from '~/contexts/portal';
 import './separatemap.scss';
 
-function GoBackControl() {
-    const {linkPrefix} = usePortalContext();
-
-    return (
-        <a href={`${linkPrefix}/global-reach`} className="back-impact-div">
-            <span className="close-map-msg">Close map</span>
-            <div className="back-impact-btn">
-                <FontAwesomeIcon icon={faTimes} className="left-arrow-bak" />
-            </div>
-        </a>
-    );
-}
-
 function SearchBoxDiv() {
     const [minimized, toggle] = useToggle(false);
 
@@ -76,7 +63,6 @@ export default function SeparateMap() {
         <main id="maincontent" className="separatemap page">
             <MapContextProvider contextValueParameters={{id: 'mapd'}}>
                 <div id="mapd" className="mapd" />
-                <GoBackControl />
                 <SearchBoxDiv />
                 <PopupMessage />
             </MapContextProvider>
