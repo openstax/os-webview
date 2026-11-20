@@ -491,6 +491,7 @@ describe('how-using', () => {
         const selectedBooks: SalesforceBook[] = [
             {
                 text: 'Fisica universitaria volumen 1',
+                title: 'Fisica universitaria volumen 1',
                 value: 'University Physics [Spanish]',
                 comingSoon: false,
                 subjects: [],

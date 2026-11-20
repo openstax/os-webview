@@ -2,10 +2,11 @@ import React, {useState, useCallback} from 'react';
 import {useDataFromPromise} from '~/helpers/page-data-utils';
 import LoadingPlaceholder from '~/components/loading-placeholder/loading-placeholder';
 import {fetchAllBooks} from '~/models/books';
-import {salesforceTitles, SalesforceBook} from '~/helpers/books';
+import {salesforceTitles, subjects as subjectsOf, SalesforceBook} from '~/helpers/books';
 import BookCheckbox from '~/components/book-checkbox/book-checkbox';
 import {useIntl} from 'react-intl';
 import {useFirstSearchArgument} from './after-form-submit';
+import {matchesSearch, searchTokens} from './book-search';
 import './book-selector.scss';
 
 const spanishPairings: Record<string, string> = {
@@ -166,6 +167,22 @@ function SelectedTag({
     );
 }
 
+function SelectedTags({
+    books,
+    onRemove
+}: {
+    books: SalesforceBook[];
+    onRemove: (b: SalesforceBook) => void;
+}) {
+    return books.length > 0 ? (
+        <div className="selected-tags">
+            {books.map((book) => (
+                <SelectedTag key={book.value} book={book} onRemove={onRemove} />
+            ))}
+        </div>
+    ) : null;
+}
+
 function useHintText(selectedCount: number, limit?: number) {
     const {formatMessage} = useIntl();
 
@@ -224,6 +241,34 @@ function usePreselection(
     }, [done, toSelect, selectedBooks, toggleBook]);
 }
 
+function NoMatches({
+    search,
+    show,
+    onClear
+}: {
+    search: string;
+    show: boolean;
+    onClear: () => void;
+}) {
+    const message = `No books match "${search}".`;
+
+    return (
+        <React.Fragment>
+            <div className="sr-only" role="status">
+                {show && message}
+            </div>
+            {show && (
+                <div className="no-matches">
+                    <p>{message}</p>
+                    <button type="button" onClick={onClear}>
+                        Clear search
+                    </button>
+                </div>
+            )}
+        </React.Fragment>
+    );
+}
+
 const defaultIncludeFilter = () => true;
 
 type PropsFromOutside = {
@@ -236,6 +281,45 @@ type PropsFromOutside = {
     includeFilter?: (b: SalesforceBook) => boolean;
     preselectedValues?: string[];
 };
+
+function useBookSearch(books: SalesforceBook[]) {
+    const [search, setSearch] = useState('');
+    const onSearchChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearch(e.target.value),
+        []
+    );
+    const clearSearch = useCallback(() => setSearch(''), []);
+    const searching = searchTokens(search).length > 0;
+    const subjectGroups = React.useMemo(
+        () => groupSubjects(subjectsOf(books)),
+        [books]
+    );
+    const booksBySubject = useCallback(
+        (subject: string) =>
+            books.filter(
+                (b) => b.subjects.includes(subject) && matchesSearch(b, search)
+            ),
+        [books, search]
+    );
+    const visibleGroups = searching
+        ? subjectGroups.filter((group) =>
+              group.subjects.some((s) => booksBySubject(s).length > 0)
+          )
+        : subjectGroups;
+
+    const noMatches = searching && visibleGroups.length === 0;
+
+    return {
+        search,
+        noMatches,
+        onSearchChange,
+        clearSearch,
+        searching,
+        booksBySubject,
+        visibleGroups
+    };
+}
 
 type Books = Parameters<typeof salesforceTitles>[0]
 
@@ -256,47 +340,21 @@ function BookSelector({
         () => salesforceTitles(data.books).filter(includeFilter),
         [data.books, includeFilter]
     );
-    const [search, setSearch] = useState('');
-    const onSearchChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) =>
-            setSearch(e.target.value),
-        []
-    );
-    const searchLower = search.toLowerCase();
-    const subjects = books
-        .reduce<string[]>((a, b) => a.concat(b.subjects), [])
-        .reduce<string[]>((a, b) => (a.includes(b) ? a : a.concat(b)), []);
-    const subjectGroups = React.useMemo(
-        () => groupSubjects(subjects),
-        [subjects]
-    );
-    const booksBySubject = useCallback(
-        (subject: string) => {
-            const subjectBooks = books.filter((b) =>
-                b.subjects.includes(subject)
-            );
-
-            if (!searchLower) {
-                return subjectBooks;
-            }
-            return subjectBooks.filter((b) =>
-                (b.text ?? '').toLowerCase().includes(searchLower)
-            );
-        },
-        [books, searchLower]
-    );
+    const {
+        search,
+        onSearchChange,
+        clearSearch,
+        searching,
+        noMatches,
+        booksBySubject,
+        visibleGroups
+    } = useBookSearch(books);
 
     const validationMessage =
         selectedBooks.length > 0 ? '' : 'Please select at least one book';
     const limitReached = limit !== undefined && selectedBooks.length >= limit;
 
     usePreselection(books, selectedBooks, toggleBook, preselectedValues);
-
-    const hasGroupResults = useCallback(
-        (group: {subjects: string[]}) =>
-            group.subjects.some((s) => booksBySubject(s).length > 0),
-        [booksBySubject]
-    );
 
     return (
         <div className="book-selector">
@@ -317,35 +375,25 @@ function BookSelector({
                     value={search}
                     onChange={onSearchChange}
                 />
-                {selectedBooks.length > 0 && (
-                    <div className="selected-tags">
-                        {selectedBooks.map((book) => (
-                            <SelectedTag
-                                key={book.value}
-                                book={book}
-                                onRemove={toggleBook}
-                            />
-                        ))}
-                    </div>
-                )}
+                <SelectedTags books={selectedBooks} onRemove={toggleBook} />
             </div>
-            {subjectGroups.map((group) => {
-                if (searchLower && !hasGroupResults(group)) {
-                    return null;
-                }
-                return (
-                    <Subject
-                        key={group.label}
-                        group={group}
-                        getBooks={booksBySubject}
-                        name={name}
-                        selectedBooks={selectedBooks}
-                        toggleBook={toggleBook}
-                        limitReached={limitReached}
-                        forceOpen={searchLower.length > 0}
-                    />
-                );
-            })}
+            <NoMatches
+                search={search}
+                show={noMatches}
+                onClear={clearSearch}
+            />
+            {visibleGroups.map((group) => (
+                <Subject
+                    key={group.label}
+                    group={group}
+                    getBooks={booksBySubject}
+                    name={name}
+                    selectedBooks={selectedBooks}
+                    toggleBook={toggleBook}
+                    limitReached={limitReached}
+                    forceOpen={searching}
+                />
+            ))}
             <div className="invalid-message">{validationMessage}</div>
         </div>
     );
