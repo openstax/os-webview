@@ -1,7 +1,13 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {render, screen, waitFor} from '@testing-library/preact';
+import * as Sentry from '@sentry/react';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
 import * as CMSF from '~/helpers/cms-fetch';
+import * as PostHog from '~/helpers/posthog-exceptions';
+
+jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
+
+const reportToSentry = Sentry.captureException as jest.Mock;
 
 describe('models/use-school-suggestion-list', () => {
     const saveFetch = global.fetch;
@@ -29,7 +35,18 @@ describe('models/use-school-suggestion-list', () => {
         });
     }
 
+    function reported(message: string) {
+        return expect.objectContaining({message: expect.stringContaining(message)});
+    }
+
     jest.useFakeTimers();
+
+    let reportToPostHog: jest.SpyInstance;
+
+    beforeEach(() => {
+        reportToSentry.mockClear();
+        reportToPostHog = jest.spyOn(PostHog, 'captureException').mockImplementation(() => undefined);
+    });
 
     afterEach(() => {
         global.fetch = saveFetch;
@@ -69,6 +86,7 @@ describe('models/use-school-suggestion-list', () => {
         jest.runAllTimers();
         await screen.findByText(0);
         expect(global.fetch).toHaveBeenCalled();
+        expect(reportToSentry).not.toHaveBeenCalled();
     });
 
     it.each(['reject' as const, 500])(
@@ -80,11 +98,47 @@ describe('models/use-school-suggestion-list', () => {
         }
     );
 
-    it('gives up when the CMS fails too', async () => {
+    it('reports an sfapi failure before falling back', async () => {
+        breakSfapi('reject');
+        render(<Component searchTerm="Casper College" />);
+        await screen.findByText(40);
+        expect(reportToSentry).toHaveBeenCalledTimes(1);
+        expect(reportToSentry).toHaveBeenCalledWith(reported('sfapi'));
+        expect(reportToPostHog).toHaveBeenCalledWith(reported('sfapi'));
+    });
+
+    it('does not report an sfapi 5xx, which the CMS then answers', async () => {
+        breakSfapi(500);
+        render(<Component searchTerm="Casper College" />);
+        await screen.findByText(40);
+        expect(reportToSentry).not.toHaveBeenCalled();
+    });
+
+    it('falls back to the CMS when the sfapi body cannot be read', async () => {
+        global.fetch = jest.fn().mockImplementation((url: string) =>
+            url.includes('salesforce.openstax.org')
+                ? Promise.resolve({
+                      ok: true,
+                      status: 200,
+                      json: () => Promise.reject(new Error('connection dropped'))
+                  })
+                : saveFetch(url)
+        );
+        render(<Component searchTerm="Casper College" />);
+        await screen.findByText(40);
+        expect(reportToSentry).toHaveBeenCalledWith(reported('connection dropped'));
+    });
+
+    it('gives up and reports when the CMS fails too', async () => {
         breakSfapi('reject');
         jest.spyOn(CMSF, 'default').mockRejectedValue(new Error('expected'));
         render(<Component searchTerm="Casper College" />);
         jest.runAllTimers();
-        await screen.findByText(0);
+        // the list starts empty, so wait for the CMS failure itself
+        await waitFor(() => {
+            expect(reportToSentry).toHaveBeenCalledWith(reported('the CMS'));
+        });
+        expect(reportToPostHog).toHaveBeenCalledWith(reported('the CMS'));
+        screen.getByText(0);
     });
 });

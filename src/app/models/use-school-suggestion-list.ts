@@ -1,5 +1,7 @@
 import React, {useState, useMemo} from 'react';
+import * as Sentry from '@sentry/react';
 import cmsFetch from '~/helpers/cms-fetch';
+import {captureException} from '~/helpers/posthog-exceptions';
 import debounce from 'lodash/debounce';
 
 export const schoolTypeValues = [
@@ -42,33 +44,42 @@ function locationOf(country: SFSchool['country']) {
     return country?.startsWith('United States') ? 'Domestic' : 'Foreign';
 }
 
+// Both sources swallow their failures so the autocomplete just goes empty, which would
+// hide an outage, so each one is reported here.
+function reportFailure(source: string, reason: unknown) {
+    const failure = new Error(`Failed to fetch schools from ${source}: ${reason}`);
+
+    Sentry.captureException(failure);
+    captureException(failure);
+}
+
 // null means "ask the CMS instead"; an empty array is sfapi answering that it has no match
 async function fetchFromSfapi(value: string): Promise<SchoolSuggestion[] | null> {
-    let response;
-
     try {
-        response = await fetch(
+        const response = await fetch(
             `${server}/api/v1/schools?name=${encodeURIComponent(value)}`,
             {mode: 'cors'}
         );
-    } catch {
-        return null;
-    }
-    if (response.status === 404) {
-        return [];
-    }
-    if (!response.ok) {
-        return null;
-    }
-    const {schools} = (await response.json()) as {schools: SFSchool[]};
 
-    return schools.map((school) => ({
-        name: school.name,
-        type: school.type,
-        location: locationOf(school.country),
-        // not in the public schools response
-        total_school_enrollment: null // eslint-disable-line camelcase
-    }));
+        if (response.status === 404) {
+            return [];
+        }
+        if (!response.ok) {
+            return null;
+        }
+        const {schools} = (await response.json()) as {schools: SFSchool[]};
+
+        return schools.map((school) => ({
+            name: school.name,
+            type: school.type,
+            location: locationOf(school.country),
+            // not in the public schools response
+            total_school_enrollment: null // eslint-disable-line camelcase
+        }));
+    } catch (reason) {
+        reportFailure('sfapi', reason);
+        return null;
+    }
 }
 
 async function fetchFromCms(value: string): Promise<SchoolSuggestion[]> {
@@ -83,7 +94,8 @@ async function fetchFromCms(value: string): Promise<SchoolSuggestion[]> {
             location: school.location,
             total_school_enrollment: school.total_school_enrollment // eslint-disable-line camelcase
         }));
-    } catch {
+    } catch (reason) {
+        reportFailure('the CMS', reason);
         return [];
     }
 }
