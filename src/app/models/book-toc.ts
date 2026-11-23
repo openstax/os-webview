@@ -12,4 +12,12 @@ export function bookToc(slug: string) {
         .then((result) => result.tree.contents);
 }
 
-export default memoize(bookToc);
+// Evict failures so a later call can retry instead of reusing the rejection
+const memoizedBookToc = memoize((slug: string) =>
+    bookToc(slug).catch((err) => {
+        memoizedBookToc.cache.delete(slug);
+        throw err;
+    })
+);
+
+export default memoizedBookToc;

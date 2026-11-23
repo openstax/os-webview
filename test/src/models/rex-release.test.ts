@@ -103,4 +103,27 @@ describe('models/rex-release', () => {
             'will-not-find'
         )).rejects.toThrow();
     });
+    // Also slow due to retry
+    it('does not cache a failure, so a later call can succeed', async () => {
+        const cnxId = '13ac107a-f15f-49d2-97e8-60ab2e3b519c';
+
+        mockFetch.mockImplementation((path: string) => {
+            if (path.includes('environment')) {
+                return Promise.reject(new TypeError('Load failed'));
+            }
+            return fetchImplementation(path);
+        });
+        await expect(fetchRexRelease(
+            'https://example3.com/wvlink',
+            cnxId
+        )).rejects.toThrow('Fetching Rex contents');
+
+        mockFetch.mockImplementation(fetchImplementation);
+        const result = await fetchRexRelease(
+            'https://example3.com/wvlink',
+            cnxId
+        );
+
+        expect(result).toEqual(contents);
+    });
 });

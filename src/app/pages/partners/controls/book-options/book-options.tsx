@@ -1,5 +1,5 @@
 import React from 'react';
-import booksPromise from '~/models/books';
+import fetchBooks from '~/models/books';
 import {
     salesforceTitles as getTitles,
     subjects as getSubjects
@@ -10,7 +10,7 @@ import type {Store} from '~/pages/partners/search-context';
 import './book-options.scss';
 
 export default function BookOptions({store}: {store: Store}) {
-    const books = useDataFromPromise(booksPromise);
+    const books = useDataFromPromise(React.useMemo(fetchBooks, []));
 
     if (!books) {
         return null;

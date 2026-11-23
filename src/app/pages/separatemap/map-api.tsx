@@ -24,6 +24,17 @@ import {AugmentedInfo} from '~/models/query-schools';
 
 mapboxgl.accessToken = settings().mapboxPK;
 
+// The Mapbox style that the CMS points to draws each school as a magenta dot,
+// with two heat-map layers behind it that glow pink and run neighboring dots
+// together. Show plain green dots instead.
+const SCHOOL_DOT_COLOR = '#63a524'; // OpenStax green
+const HALO_LAYERS = ['os-schools-heat-map', 'os-schools-shadow-at-8'];
+
+function restyleSchools(map: mapboxgl.Map) {
+    map.setPaintProperty('os-schools', 'circle-color', SCHOOL_DOT_COLOR);
+    HALO_LAYERS.forEach((id) => map.setLayoutProperty(id, 'visibility', 'none'));
+}
+
 function hasLngLat({lngLat}: {lngLat?: unknown}) {
     return Boolean(lngLat);
 }
@@ -129,7 +140,12 @@ export default function createMap(options: MapOptions) {
     }
 
     loaded.then((map) => {
-        map.on('load', () => map.loaded() && map.resize());
+        map.on('load', () => {
+            if (map.loaded()) {
+                map.resize();
+            }
+            restyleSchools(map);
+        });
         map.on('mouseenter', 'os-schools', () => {
             map.getCanvas().style.cursor = 'pointer';
         });
