@@ -113,6 +113,17 @@ describe('MainMenuItems — generic flag resolver', () => {
         await screen.findByText('Learn');
     });
 
+    it('hides a dropdown whose only child has no name or label', async () => {
+        (useDataFromSlug as jest.Mock).mockReturnValue([
+            {name: 'Learn', key: 'learn-dropdown', menu: [{partial_url: '/unlabeled'}]}
+        ]);
+
+        render(<Component />);
+
+        await screen.findByText('Subjects');
+        expect(screen.queryByText('Learn')).toBeNull();
+    });
+
     it('keeps a dropdown that still has a visible child', async () => {
         installPostHog();
         (useDataFromSlug as jest.Mock).mockReturnValue([
