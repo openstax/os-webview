@@ -1,4 +1,4 @@
-import sfApiFetch, {sfApiPost} from '~/models/sfapi';
+import sfApiFetch from '~/models/sfapi';
 
 const mockFetch = jest.fn();
 
@@ -18,36 +18,9 @@ describe('models/sfapi', () => {
         expect(console.warn).toHaveBeenCalled();
     });
     it('returns the parsed response', async () => {
-        const returnValue = {schools: ['a school']};
+        const returnValue = {things: ['a thing']};
 
         mockFetch.mockResolvedValue({json: () => Promise.resolve(returnValue)});
-        expect(await sfApiFetch('schools', '/search?name=a')).toEqual(returnValue);
-    });
-    it('handles post error', async () => {
-        console.warn = jest.fn();
-        mockFetch.mockRejectedValue(new Error('expected error'));
-        expect(await sfApiPost('thing', {data: 'foo'})).toBeNull();
-        expect(console.warn).toHaveBeenCalled();
-    });
-    it('handles post with raw return', async () => {
-        const returnValue = {
-            ok: true,
-            data: 'whatever'
-        };
-
-        mockFetch.mockResolvedValue(returnValue);
-        expect(await sfApiPost('thing', {data: 'foo'})).toEqual(returnValue);
-    });
-    it('handles post with no raw return', async () => {
-        const returnValue = {
-            ok: false,
-            json: () => ({error: 'expected error'}),
-            status: 'fail status'
-        };
-
-        console.warn = jest.fn();
-        mockFetch.mockResolvedValue(returnValue);
-        expect(await sfApiPost('thing', {data: 'foo'})).toEqual(returnValue);
-        expect(console.warn).toHaveBeenCalled();
+        expect(await sfApiFetch('things', '/search?name=a')).toEqual(returnValue);
     });
 });

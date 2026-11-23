@@ -5,37 +5,6 @@ const subdomain =
     subdomains.find((sd) => settings().accountHref?.includes(sd)) || '';
 const server = `https://${subdomain}salesforce.openstax.org`;
 
-export async function sfApiPost(
-    objectType: string,
-    data: object,
-    method = 'POST'
-) {
-    try {
-        const options = {
-            credentials: 'include',
-            method,
-            mode: 'cors',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        } as const;
-        const raw = await fetch(`${server}/api/v1/${objectType}`, options);
-
-        if (!raw.ok) {
-            const text = await raw.json();
-
-            console.warn('Failed with status', raw.status);
-            console.warn(text.error);
-        }
-        return raw;
-    } catch (err) {
-        console.warn(`Fetch (${method}) ${objectType}: ${err}`);
-        return null;
-    }
-}
-
 export default async function sfApiFetch(objectType: string, specifier = '') {
     try {
         const raw = await fetch(`${server}/api/v1/${objectType}${specifier}`, {
