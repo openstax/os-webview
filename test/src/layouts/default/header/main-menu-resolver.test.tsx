@@ -74,6 +74,64 @@ describe('MainMenuItems — generic flag resolver', () => {
         await screen.findByRole('link', {name: 'Example Item'});
     });
 
+    it('keeps a flag-gated item and its emptied dropdown hidden with no PostHog installed', async () => {
+        (useDataFromSlug as jest.Mock).mockReturnValue(
+            cmsMenuWithItem({feature_flag: 'nav-example-item'})
+        );
+
+        render(<Component />);
+
+        await screen.findByText('Subjects');
+        expect(screen.queryByRole('link', {name: 'Example Item'})).toBeNull();
+        expect(screen.queryByText('Learn')).toBeNull();
+    });
+
+    it('hides a dropdown whose children are all gated off, and shows it when one resolves', async () => {
+        let flagsLoaded = false;
+        const ph = installPostHog({
+            getFeatureFlag: jest.fn(() => (flagsLoaded ? true : undefined))
+        });
+        (useDataFromSlug as jest.Mock).mockReturnValue([
+            {
+                name: 'Learn',
+                key: 'learn-dropdown',
+                menu: [
+                    {label: 'Gated Item', partial_url: '/gated', feature_flag: 'nav-gated'}
+                ]
+            }
+        ]);
+
+        render(<Component />);
+        await screen.findByText('Subjects');
+
+        expect(screen.queryByText('Learn')).toBeNull();
+
+        flagsLoaded = true;
+        const allCbs = ph.onFeatureFlags.mock.calls.map((call: [() => void]) => call[0]);
+        act(() => allCbs.forEach((cb: () => void) => cb()));
+
+        await screen.findByText('Learn');
+    });
+
+    it('keeps a dropdown that still has a visible child', async () => {
+        installPostHog();
+        (useDataFromSlug as jest.Mock).mockReturnValue([
+            {
+                name: 'Learn',
+                key: 'learn-dropdown',
+                menu: [
+                    {label: 'Gated Item', partial_url: '/gated', feature_flag: 'nav-gated'},
+                    {label: 'Plain Item', partial_url: '/plain'}
+                ]
+            }
+        ]);
+
+        render(<Component />);
+
+        await screen.findByRole('link', {name: 'Plain Item'});
+        expect(screen.queryByRole('link', {name: 'Gated Item'})).toBeNull();
+    });
+
     it('hides a flag-gated item when the flag is falsy', async () => {
         installPostHog();
         (useDataFromSlug as jest.Mock).mockReturnValue(

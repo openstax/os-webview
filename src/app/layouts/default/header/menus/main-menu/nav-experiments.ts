@@ -21,7 +21,18 @@ export function isNodeVisible(
     const variant = getVariant(flag);
 
     if (node.flag_value) {
-        return String(variant) === node.flag_value;
+        return variant !== undefined && String(variant) === node.flag_value;
     }
     return Boolean(variant);
+}
+
+// True when any node in the (possibly nested) menu structure is flag-gated.
+export function hasFlaggedNodes(structure: unknown): boolean {
+    if (!Array.isArray(structure)) {
+        return false;
+    }
+    return structure.some(
+        (node: FlagAwareNode & {menu?: unknown}) =>
+            Boolean(node.feature_flag) || hasFlaggedNodes(node.menu)
+    );
 }

@@ -71,8 +71,9 @@ describe('useExperimentReader', () => {
         jest.useRealTimers();
     });
 
-    it('keeps polling when PostHog is still unavailable', () => {
+    it('backs off while PostHog is unavailable', () => {
         jest.useFakeTimers();
+        const setTimeoutSpy = jest.spyOn(window, 'setTimeout');
 
         function Probe() {
             useExperimentReader();
@@ -80,9 +81,82 @@ describe('useExperimentReader', () => {
         }
         render(<Probe />);
 
-        act(() => jest.advanceTimersByTime(500));
-        expect((window as unknown as {posthog?: unknown}).posthog).toBeUndefined();
+        act(() => jest.advanceTimersByTime(60000));
+        const delays = setTimeoutSpy.mock.calls.map((call) => call[1]);
 
+        expect(delays.slice(0, 6)).toEqual([250, 500, 1000, 2000, 4000, 5000]);
+        expect(Math.max(...(delays as number[]))).toBe(5000);
+
+        setTimeoutSpy.mockRestore();
+        jest.useRealTimers();
+    });
+
+    it('stops polling on unmount', () => {
+        jest.useFakeTimers();
+
+        function Probe() {
+            useExperimentReader();
+            return null;
+        }
+        const {unmount} = render(<Probe />);
+
+        unmount();
+        const ph = installPostHog();
+
+        act(() => jest.advanceTimersByTime(10000));
+        expect(ph.onFeatureFlags).not.toHaveBeenCalled();
+
+        jest.useRealTimers();
+    });
+
+    it('does not subscribe or poll when disabled', () => {
+        jest.useFakeTimers();
+        const ph = installPostHog();
+
+        function Probe() {
+            useExperimentReader(false);
+            return null;
+        }
+        render(<Probe />);
+
+        act(() => jest.advanceTimersByTime(10000));
+        expect(ph.onFeatureFlags).not.toHaveBeenCalled();
+        expect(jest.getTimerCount()).toBe(0);
+
+        jest.useRealTimers();
+    });
+
+    it('removes its flag listener on unmount', () => {
+        const unsubscribe = jest.fn();
+        const ph = installPostHog({onFeatureFlags: jest.fn().mockReturnValue(unsubscribe)});
+
+        function Probe() {
+            useExperimentReader();
+            return null;
+        }
+        const {unmount} = render(<Probe />);
+
+        expect(ph.onFeatureFlags).toHaveBeenCalledTimes(1);
+        expect(unsubscribe).not.toHaveBeenCalled();
+        unmount();
+        expect(unsubscribe).toHaveBeenCalledTimes(1);
+    });
+
+    it('removes a listener added after polling, on unmount', () => {
+        jest.useFakeTimers();
+
+        function Probe() {
+            useExperimentReader();
+            return null;
+        }
+        const {unmount} = render(<Probe />);
+        const unsubscribe = jest.fn();
+
+        installPostHog({onFeatureFlags: jest.fn().mockReturnValue(unsubscribe)});
+        act(() => jest.advanceTimersByTime(250));
+        unmount();
+
+        expect(unsubscribe).toHaveBeenCalledTimes(1);
         jest.useRealTimers();
     });
 });

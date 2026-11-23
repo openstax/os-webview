@@ -9,7 +9,7 @@ import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import {useExperimentReader, type FlagValue} from '~/helpers/posthog';
-import {isNodeVisible, type FlagAwareNode} from './nav-experiments';
+import {hasFlaggedNodes, isNodeVisible, type FlagAwareNode} from './nav-experiments';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveItem from '../give-item/give-item';
@@ -29,11 +29,24 @@ type MenuItemData =
 
 type GetVariant = (flag: string) => FlagValue;
 
+// A dropdown with no rendered children would be an expandable control with no links.
+function isRendered(item: MenuItemData, getVariant: GetVariant): boolean {
+    if (!('name' in item) && !('label' in item)) {
+        return false;
+    }
+    if (!isNodeVisible(item, getVariant)) {
+        return false;
+    }
+    return 'menu' in item
+        ? (item.menu as MenuItemData[]).some((child) => isRendered(child, getVariant))
+        : true;
+}
+
 function DropdownOrMenuItem({item, getVariant}: {item: MenuItemData; getVariant: GetVariant}) {
     if (!('name' in item) && !('label' in item)) {
         return null;
     }
-    if (!isNodeVisible(item, getVariant)) {
+    if (!isRendered(item, getVariant)) {
         return null;
     }
     if ('menu' in item) {
@@ -75,8 +88,8 @@ function MenusFromStructure({structure, getVariant}: {structure: MenuItemData[];
 }
 
 function MenusFromCMS() {
-    const getVariant = useExperimentReader();
     const structure = useDataFromSlug<MenuItemData[]>('oxmenus');
+    const getVariant = useExperimentReader(hasFlaggedNodes(structure));
 
     // fetchFromCMS resolves with an {error} object (not an array) when the
     // CMS is unreachable, so a truthiness check alone lets it through to .map.
