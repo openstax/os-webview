@@ -3,22 +3,32 @@ import {render, act} from '@testing-library/preact';
 import {getExperimentVariant, useExperimentReader} from '~/helpers/posthog';
 
 type FakePostHog = {
+    __loaded?: boolean;
     getFeatureFlag: jest.Mock;
     onFeatureFlags: jest.Mock;
 };
 
 function installPostHog(overrides: Partial<FakePostHog> = {}) {
     const ph: FakePostHog = {
+        __loaded: true,
         getFeatureFlag: jest.fn(),
         onFeatureFlags: jest.fn(),
         ...overrides
     };
+
     (window as unknown as {posthog?: FakePostHog}).posthog = ph;
     return ph;
 }
 
+function Probe({enabled}: {enabled?: boolean}) {
+    useExperimentReader(enabled);
+    return null;
+}
+
 afterEach(() => {
     delete (window as unknown as {posthog?: unknown}).posthog;
+    jest.useRealTimers();
+    jest.restoreAllMocks();
 });
 
 describe('posthog helper', () => {
@@ -30,34 +40,37 @@ describe('posthog helper', () => {
         installPostHog({getFeatureFlag: jest.fn().mockReturnValue('tools')});
         expect(getExperimentVariant('nav-example-item')).toBe('tools');
     });
+
+    it('getExperimentVariant does not read from the bootstrap stub', () => {
+        const ph = installPostHog({__loaded: false});
+
+        expect(getExperimentVariant('nav-example-item')).toBeUndefined();
+        expect(ph.getFeatureFlag).not.toHaveBeenCalled();
+    });
 });
 
 describe('useExperimentReader', () => {
     it('returns a reader and re-renders when flags resolve', async () => {
-        const ph = {
-            getFeatureFlag: jest.fn().mockReturnValueOnce(undefined).mockReturnValue('on'),
-            onFeatureFlags: jest.fn()
-        };
-        (window as unknown as {posthog?: typeof ph}).posthog = ph;
+        const ph = installPostHog({
+            getFeatureFlag: jest.fn().mockReturnValueOnce(undefined).mockReturnValue('on')
+        });
 
-        function Probe() {
+        function Reader() {
             const getVariant = useExperimentReader();
+
             return <span>{String(getVariant('f'))}</span>;
         }
-        const {findByText, getByText} = render(<Probe />);
+        const {findByText, getByText} = render(<Reader />);
+
         getByText('undefined');
         const cb = ph.onFeatureFlags.mock.calls[0][0] as () => void;
+
         act(() => cb());
         await findByText('on');
     });
 
     it('polls until PostHog loads (pre-consent), then subscribes and stops polling', () => {
         jest.useFakeTimers();
-
-        function Probe() {
-            useExperimentReader();
-            return null;
-        }
         render(<Probe />);
 
         const ph = installPostHog();
@@ -67,37 +80,42 @@ describe('useExperimentReader', () => {
 
         act(() => jest.advanceTimersByTime(1000));
         expect(ph.onFeatureFlags).toHaveBeenCalledTimes(1);
+    });
 
-        jest.useRealTimers();
+    it('waits for the SDK to initialize before subscribing, ignoring the stub', () => {
+        jest.useFakeTimers();
+        const unsubscribe = jest.fn();
+        const ph = installPostHog({
+            __loaded: false,
+            onFeatureFlags: jest.fn().mockReturnValue(unsubscribe)
+        });
+        const {unmount} = render(<Probe />);
+
+        act(() => jest.advanceTimersByTime(2000));
+        expect(ph.onFeatureFlags).not.toHaveBeenCalled();
+
+        ph.__loaded = true;
+        act(() => jest.advanceTimersByTime(5000));
+        expect(ph.onFeatureFlags).toHaveBeenCalledTimes(1);
+
+        unmount();
+        expect(unsubscribe).toHaveBeenCalledTimes(1);
     });
 
     it('backs off while PostHog is unavailable', () => {
         jest.useFakeTimers();
         const setTimeoutSpy = jest.spyOn(window, 'setTimeout');
 
-        function Probe() {
-            useExperimentReader();
-            return null;
-        }
         render(<Probe />);
-
         act(() => jest.advanceTimersByTime(60000));
         const delays = setTimeoutSpy.mock.calls.map((call) => call[1]);
 
         expect(delays.slice(0, 6)).toEqual([250, 500, 1000, 2000, 4000, 5000]);
         expect(Math.max(...(delays as number[]))).toBe(5000);
-
-        setTimeoutSpy.mockRestore();
-        jest.useRealTimers();
     });
 
     it('stops polling on unmount', () => {
         jest.useFakeTimers();
-
-        function Probe() {
-            useExperimentReader();
-            return null;
-        }
         const {unmount} = render(<Probe />);
 
         unmount();
@@ -105,35 +123,22 @@ describe('useExperimentReader', () => {
 
         act(() => jest.advanceTimersByTime(10000));
         expect(ph.onFeatureFlags).not.toHaveBeenCalled();
-
-        jest.useRealTimers();
     });
 
     it('does not subscribe or poll when disabled', () => {
         jest.useFakeTimers();
         const ph = installPostHog();
 
-        function Probe() {
-            useExperimentReader(false);
-            return null;
-        }
-        render(<Probe />);
+        render(<Probe enabled={false} />);
 
         act(() => jest.advanceTimersByTime(10000));
         expect(ph.onFeatureFlags).not.toHaveBeenCalled();
         expect(jest.getTimerCount()).toBe(0);
-
-        jest.useRealTimers();
     });
 
     it('removes its flag listener on unmount', () => {
         const unsubscribe = jest.fn();
         const ph = installPostHog({onFeatureFlags: jest.fn().mockReturnValue(unsubscribe)});
-
-        function Probe() {
-            useExperimentReader();
-            return null;
-        }
         const {unmount} = render(<Probe />);
 
         expect(ph.onFeatureFlags).toHaveBeenCalledTimes(1);
@@ -142,21 +147,10 @@ describe('useExperimentReader', () => {
         expect(unsubscribe).toHaveBeenCalledTimes(1);
     });
 
-    it('removes a listener added after polling, on unmount', () => {
-        jest.useFakeTimers();
-
-        function Probe() {
-            useExperimentReader();
-            return null;
-        }
+    it('tolerates a client whose onFeatureFlags returns no unsubscribe', () => {
+        installPostHog();
         const {unmount} = render(<Probe />);
-        const unsubscribe = jest.fn();
 
-        installPostHog({onFeatureFlags: jest.fn().mockReturnValue(unsubscribe)});
-        act(() => jest.advanceTimersByTime(250));
-        unmount();
-
-        expect(unsubscribe).toHaveBeenCalledTimes(1);
-        jest.useRealTimers();
+        expect(() => unmount()).not.toThrow();
     });
 });

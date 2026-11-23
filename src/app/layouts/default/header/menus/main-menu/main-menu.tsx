@@ -16,43 +16,41 @@ import GiveItem from '../give-item/give-item';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
-type MenuItemData =
-    | (FlagAwareNode & {
-          name: string;
-          menu: MenuItemData[];
-      })
-    | (FlagAwareNode & {
-          label: string;
-          partial_url: string;
-      })
-    | object;
+type DropdownData = FlagAwareNode & {
+    name: string;
+    menu: MenuItemData[];
+};
+type LinkData = FlagAwareNode & {
+    label: string;
+    partial_url: string;
+};
+type MenuItemData = DropdownData | LinkData | object;
 
 type GetVariant = (flag: string) => FlagValue;
 
-// A dropdown with no rendered children would be an expandable control with no links.
+function isRenderable(item: MenuItemData): item is DropdownData | LinkData {
+    return 'name' in item || 'label' in item;
+}
+
+// A dropdown counts only if one of its children does, so a fully gated
+// dropdown is not left as an expandable control with no links.
 function isRendered(item: MenuItemData, getVariant: GetVariant): boolean {
-    if (!('name' in item) && !('label' in item)) {
-        return false;
-    }
-    if (!isNodeVisible(item, getVariant)) {
+    if (!isRenderable(item) || !isNodeVisible(item, getVariant)) {
         return false;
     }
     return 'menu' in item
-        ? (item.menu as MenuItemData[]).some((child) => isRendered(child, getVariant))
+        ? item.menu.some((child) => isRendered(child, getVariant))
         : true;
 }
 
 function DropdownOrMenuItem({item, getVariant}: {item: MenuItemData; getVariant: GetVariant}) {
-    if (!('name' in item) && !('label' in item)) {
-        return null;
-    }
-    if (!isRendered(item, getVariant)) {
+    if (!isRenderable(item) || !isRendered(item, getVariant)) {
         return null;
     }
     if ('menu' in item) {
         return (
             <Dropdown
-                label={item.name!}
+                label={item.name}
                 navAnalytics={`Main Menu (${item.name})`}
             >
                 <MenusFromStructure structure={item.menu} getVariant={getVariant} />

@@ -17,12 +17,14 @@ jest.mock('~/helpers/page-data-utils', () => ({
 /* eslint-disable camelcase */
 
 type FakePostHog = {
+    __loaded?: boolean;
     getFeatureFlag: jest.Mock;
     onFeatureFlags: jest.Mock;
 };
 
 function installPostHog(overrides: Partial<FakePostHog> = {}) {
     const ph: FakePostHog = {
+        __loaded: true,
         getFeatureFlag: jest.fn().mockReturnValue(undefined),
         onFeatureFlags: jest.fn(),
         ...overrides
