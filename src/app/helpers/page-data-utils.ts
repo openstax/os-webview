@@ -100,8 +100,10 @@ export async function fetchFromCMS(slug: string, preserveWrapping = false) {
             return response.json();
         });
     } catch (err) {
-        console.warn(`ERROR fetching slug ${slug}: ${err}`);
-        data = {error: err};
+        const failure = new Error(`Failed to fetch ${slug}: ${err}`);
+
+        console.warn(failure.message);
+        data = {error: failure};
     }
 
     data.slug = slug;

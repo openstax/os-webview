@@ -29,10 +29,10 @@ describe('page-data-utils', () => {
 
             console.warn = jest.fn();
             mockFetch.mockImplementation(() => {
-                throw new Error('expected error');
+                throw new TypeError('Load failed');
             });
             expect(await fetchFromCMS('whatever')).toEqual({
-                error: new Error('expected error'),
+                error: new Error('Failed to fetch whatever: TypeError: Load failed'),
                 slug: 'whatever'
             });
             expect(console.warn).toHaveBeenCalled();
