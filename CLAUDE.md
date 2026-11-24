@@ -65,6 +65,8 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
   headers beyond `Accept`: anything else triggers a CORS preflight, and sfapi allows a fixed list.
   Writes go through `sfApiPost`, which fetches a CSRF token from `/csrf` first. sfapi accepts
   cookie-authenticated writes only from its named frontend origins, on its browser-facing routes.
+  Local development (localhost) gets no sfapi data: CORS allows only each environment's own openstax.org
+  origins (production sfapi allows only the apex; dev sfapi allows dev, qa and staging).
 
 ### Code Splitting
 - `src/app/helpers/jit-load.tsx` — lazy loading wrapper using `React.lazy` + `Suspense`

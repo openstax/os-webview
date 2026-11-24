@@ -4,7 +4,7 @@ const mockFetch = jest.fn();
 
 global.fetch = mockFetch;
 
-const tokenResponse = {json: () => ({csrf_token: 'tok123'})};
+const tokenResponse = {ok: true, json: () => ({csrf_token: 'tok123'})};
 
 function mockPostResponse(response: object) {
     mockFetch
@@ -46,7 +46,7 @@ describe('models/sfapi', () => {
     it('handles post with no raw return', async () => {
         const returnValue = {
             ok: false,
-            json: () => ({error: 'expected error'}),
+            json: () => Promise.resolve({detail: 'expected error'}),
             status: 'fail status'
         };
 
@@ -105,5 +105,44 @@ describe('models/sfapi', () => {
         expect(await sfApiPost('thing', {data: 'foo'})).toBeNull();
         expect(mockFetch).toHaveBeenCalledTimes(1);
         expect(console.warn).toHaveBeenCalled();
+    });
+    it('returns null and warns when /csrf is not ok', async () => {
+        console.warn = jest.fn();
+        mockFetch.mockResolvedValueOnce({ok: false, status: 404});
+        expect(await sfApiPost('thing', {data: 'foo'})).toBeNull();
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(console.warn).toHaveBeenCalled();
+    });
+    it('returns null and warns when /csrf has no token', async () => {
+        console.warn = jest.fn();
+        mockFetch.mockResolvedValueOnce({ok: true, json: () => ({})});
+        expect(await sfApiPost('thing', {data: 'foo'})).toBeNull();
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(console.warn).toHaveBeenCalled();
+    });
+    it('warns with status and detail on a failed write', async () => {
+        const failure = {
+            ok: false,
+            status: 403,
+            json: () => Promise.resolve({detail: 'CSRF check Failed'})
+        };
+
+        console.warn = jest.fn();
+        mockPostResponse(failure);
+        expect(await sfApiPost('thing', {data: 'foo'})).toBe(failure);
+        expect(console.warn).toHaveBeenCalledWith('Failed with status', 403);
+        expect(console.warn).toHaveBeenCalledWith('CSRF check Failed');
+    });
+    it('returns the response when a failed write has a non-JSON body', async () => {
+        const failure = {
+            ok: false,
+            status: 502,
+            json: () => Promise.reject(new Error('not json'))
+        };
+
+        console.warn = jest.fn();
+        mockPostResponse(failure);
+        expect(await sfApiPost('thing', {data: 'foo'})).toBe(failure);
+        expect(console.warn).toHaveBeenCalledWith('Failed with status', 502);
     });
 });

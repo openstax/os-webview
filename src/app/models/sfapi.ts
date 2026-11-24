@@ -10,9 +10,12 @@ async function fetchCsrfToken() {
         credentials: 'include',
         headers: {Accept: 'application/json'}
     });
-    const {csrf_token: token} = await raw.json();
+    const body = raw.ok ? await raw.json() : {};
 
-    return token as string;
+    if (typeof body?.csrf_token !== 'string') {
+        throw new Error(`no CSRF token (status ${raw.status})`);
+    }
+    return body.csrf_token as string;
 }
 
 export async function sfApiPost(
@@ -34,10 +37,10 @@ export async function sfApiPost(
         const raw = await fetch(`${server}/api/v1/${objectType}`, options);
 
         if (!raw.ok) {
-            const text = await raw.json();
+            const body = await raw.json().catch(() => ({}));
 
             console.warn('Failed with status', raw.status);
-            console.warn(text.error);
+            console.warn(body?.detail);
         }
         return raw;
     } catch (err) {
