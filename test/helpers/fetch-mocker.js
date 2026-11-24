@@ -85,7 +85,7 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isRenewal = args[0].includes('renewal?account_uuid');
     const isResources = args[0].endsWith('errata-fields/?field=resources');
     const isRoles = (/snippets\/roles/).test(args[0]);
-    const isSfapiSchools = (/salesforce\.openstax\.org\/api\/v1\/schools/).test(args[0]);
+    const isSfapiSchools = (/api\/v1\/schools/).test(args[0]);
     const isSearchCollection = args[0].includes('/search/?collection=');
     const isSearchSubject = args[0].includes('/search/?subjects=');
     const isSfapiImpact = (/api\/v1\/impact\/books/).test(args[0]);
