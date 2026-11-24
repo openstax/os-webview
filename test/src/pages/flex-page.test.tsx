@@ -494,9 +494,8 @@ function conditionedBlock(id: string, condition: string | string[] | undefined, 
     } as BodyBlock;
 }
 
-// `divider` has no built-in condition check, so it exercises only our wrapper -
-// the renderer's own `condition.split(',')` would throw on the array form.
-function conditionedDivider(id: string, condition: string | string[]): BodyBlock {
+// `divider` has no built-in condition check, so it exercises only our wrapper.
+function conditionedDivider(id: string, condition: string): BodyBlock {
     return {
         id,
         type: 'divider',
@@ -558,16 +557,16 @@ describe('flex-page audience gating', () => {
         screen.getByText('Gated text');
     });
 
-    it('accepts a condition value already given as an array of slugs', () => {
+    it('gates a block type that has no condition check of its own', () => {
         mockActiveConditions(['role:admin']);
-        body = [conditionedDivider('gated', [' role:instructor ', ' role:admin '])];
+        body = [conditionedDivider('gated', ' role:instructor , role:admin ')];
         render(<Component />);
         expect(screen.queryAllByRole('img')).toHaveLength(1);
     });
 
-    it('hides an array-form condition whose slugs are not active', () => {
+    it('hides a block type with no check of its own when no slug is active', () => {
         mockActiveConditions(['role:student']);
-        body = [conditionedDivider('gated', ['role:instructor', 'role:admin'])];
+        body = [conditionedDivider('gated', 'role:instructor,role:admin')];
         render(<Component />);
         expect(screen.queryAllByRole('img')).toHaveLength(0);
     });

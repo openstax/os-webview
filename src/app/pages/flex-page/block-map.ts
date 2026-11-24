@@ -34,7 +34,7 @@ const composedBlockMap = {
 // The literal-typed member is what keeps findByType's Extract-based return type
 // from collapsing to `never` for a map handling every block type generically.
 type RenderingConditionConfig = Array<
-    {type: 'rendering_condition'; value: string | string[]} | {type: string; value: unknown}
+    {type: 'rendering_condition'; value: string} | {type: string; value: unknown}
 >;
 
 // `html`'s value is a plain string, not an object, so a missing config just
@@ -48,15 +48,14 @@ function getConditionConfig(data: {value?: unknown}): RenderingConditionConfig |
     return undefined;
 }
 
-// The CMS field emits a comma-separated string; an array is accepted too so a
-// change to that serialization degrades instead of throwing.
-function conditionSlugs(condition: string | string[] | undefined): string[] {
+function conditionSlugs(condition: string | undefined): string[] {
     if (!condition) {
         return [];
     }
-    const raw = Array.isArray(condition) ? condition : condition.split(',');
-
-    return raw.map((slug) => slug.trim()).filter((slug) => slug.length > 0);
+    return condition
+        .split(',')
+        .map((slug) => slug.trim())
+        .filter((slug) => slug.length > 0);
 }
 
 // SectionBlock, HeroBlock and CTABlock run this same check internally, so they

@@ -135,10 +135,9 @@ are accepted; any other version, a null, or a failed request is `error`.
   slugs for `error`.
 - `block-map.ts` wraps every block type (not just hero/section/CTA) with the same
   `rendering_condition` check at module scope, so gating works even for block types the
-  `flex-page-renderer` package hasn't added its own check to yet. The condition value may be a
-  comma-separated string or an array of slugs (the CMS's `rendering_condition` field is a
-  `MultipleChoiceBlock` whose API representation joins picked slugs into that same string, so the
-  wrapper accepts both for resilience if that join is ever dropped).
+  `flex-page-renderer` package hasn't added its own check to yet. The condition value is a
+  comma-separated string, which is what the CMS's `rendering_condition` field emits and what the
+  renderer's own hero, section and CTA checks require.
 
 ### Patched dependencies
 - `patches/` holds `patch-package` diffs, reapplied by the `postinstall` script on every install.
