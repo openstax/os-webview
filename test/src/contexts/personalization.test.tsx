@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/preact';
+import {act, render, screen} from '@testing-library/preact';
 import * as UC from '~/contexts/user';
 import {
     PersonalizationContextProvider,
@@ -56,6 +56,12 @@ describe('personalization context', () => {
         sessionStorage.clear();
         jest.restoreAllMocks();
         jest.spyOn(console, 'warn').mockImplementation(() => null);
+    });
+
+    it('defaults to loading without a provider', () => {
+        render(<Probe />);
+        expect(screen.getByTestId('probe').textContent).toBe('loading|none|noname|false|false');
+        expect(mockFetch).not.toHaveBeenCalled();
     });
 
     it('stays loading until the user model is known', () => {
@@ -195,6 +201,19 @@ describe('personalization context', () => {
         expect(mockFetch).toHaveBeenCalledTimes(1);
     });
 
+    it('shares the request between providers for the same uuid', async () => {
+        mockUser(loggedIn);
+        respondWith(payload);
+        render(
+            <>
+                <PersonalizationContextProvider><Probe label="a" /></PersonalizationContextProvider>
+                <PersonalizationContextProvider><Probe label="b" /></PersonalizationContextProvider>
+            </>
+        );
+        expect(await screen.findAllByText('ready|instructor|Roy|true|false')).toHaveLength(2);
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+
     it('refetches for a different uuid', async () => {
         mockUser(loggedIn);
         respondWith(payload);
@@ -209,5 +228,28 @@ describe('personalization context', () => {
         );
         await screen.findByText(/^ready/);
         expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+
+    it('ignores a late response for the previous uuid', async () => {
+        mockUser(loggedIn);
+        let resolveFirst: (response: unknown) => void = () => undefined;
+
+        mockFetch.mockReturnValueOnce(new Promise((resolve) => {
+            resolveFirst = resolve;
+        }));
+        respondWith({...payload, first_name: 'New'});
+        const view = renderProbe();
+
+        mockUser({...loggedIn, uuid: 'uuid-2'});
+        view.rerender(
+            <PersonalizationContextProvider>
+                <Probe />
+            </PersonalizationContextProvider>
+        );
+        await screen.findByText('ready|instructor|New|true|false');
+        await act(async () => {
+            resolveFirst({ok: true, json: () => Promise.resolve(payload)});
+        });
+        expect(screen.getByTestId('probe').textContent).toBe('ready|instructor|New|true|false');
     });
 });
