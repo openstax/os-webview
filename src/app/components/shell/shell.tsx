@@ -2,6 +2,7 @@ import React from 'react';
 import {LanguageContextProvider} from '~/contexts/language';
 import {SubjectCategoryContextProvider} from '~/contexts/subject-category';
 import {UserContextProvider} from '~/contexts/user';
+import {PersonalizationContextProvider} from '~/contexts/personalization';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {SharedDataContextProvider} from '../../contexts/shared-data';
 import JITLoad from '~/helpers/jit-load';
@@ -16,13 +17,15 @@ function AppContext({children}: React.PropsWithChildren<object>) {
     return (
         <SharedDataContextProvider>
             <UserContextProvider>
-                <LanguageContextProvider>
-                    <PortalContextProvider>
-                        <SubjectCategoryContextProvider>
-                            {children}
-                        </SubjectCategoryContextProvider>
-                    </PortalContextProvider>
-                </LanguageContextProvider>
+                <PersonalizationContextProvider>
+                    <LanguageContextProvider>
+                        <PortalContextProvider>
+                            <SubjectCategoryContextProvider>
+                                {children}
+                            </SubjectCategoryContextProvider>
+                        </PortalContextProvider>
+                    </LanguageContextProvider>
+                </PersonalizationContextProvider>
             </UserContextProvider>
         </SharedDataContextProvider>
     );

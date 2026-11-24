@@ -39,7 +39,7 @@ yarn lint:css            # Stylelint on SCSS files
 ### Entry Point & App Structure
 - `src/app/main.js` — bootstraps the app: fetches CMS settings, renders `<App>` into `#app`
 - `src/app/components/shell/shell.tsx` — top-level component, wraps everything in context providers
-- Context provider nesting: `SharedData → User → Language → Portal → SubjectCategory → BrowserRouter`
+- Context provider nesting: `SharedData → User → Personalization → Language → Portal → SubjectCategory → BrowserRouter`
 - `src/app/components/shell/router.tsx` — main route definitions
 
 ### State Management
@@ -51,6 +51,23 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - `salesforce.tsx` — Salesforce form integration
 - `shared-data.ts` — shared data across components
 - `subject-category.ts` — subject filtering
+- `personalization.tsx` — audience and segments for the visitor (see below)
+
+#### Personalization
+`usePersonalization()` returns `{status, data, has(segment)}`; `status` is `loading | anonymous | ready | error`.
+The provider sits directly inside the User provider and reads `GET /api/v1/personalization` from sfapi
+(`models/personalization.ts`, via `sfApiFetch(..., {withCredentials: true})`). Only contract `v: 1` payloads
+are accepted; any other version, a null, or a failed request is `error`.
+- Anonymous visitors get `anonymous` and no request. Logged-in visitors trigger one request per page load,
+  shared by every consumer and keyed by the user's uuid, so a different login refetches.
+- sessionStorage holds only `{uuid, audience, segments, v, savedAt}` (10-minute TTL) so a reload paints
+  without flicker. It is used only while the request is in flight and only if the uuid matches. Until the
+  response arrives, `data` has just those fields; `first_name`, `school`, `adoption` and `assignable` are
+  undefined.
+- Source of truth: Accounts owns identity and verification; sfapi owns school, adoption and Assignable
+  state; the CMS owns content and flags.
+- Guardrail: personalization data never goes on `window`, in `dataLayer`, GTM, PostHog or Sentry, or in
+  storage other than the segments above. GTM tags, PostHog and CMS embeds can read anything global.
 
 ### Data Fetching
 - `src/app/helpers/cms-fetch.ts` — primary data fetching utility, wraps `fetch()` with retry logic
