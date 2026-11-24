@@ -8,6 +8,7 @@ import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
 import { LayoutContextProvider } from '~/contexts/layout';
 import * as UAC from '~/helpers/use-audience-conditions';
 import * as PC from '~/contexts/personalization';
+import * as PortalContext from '~/contexts/portal';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -481,7 +482,7 @@ function bigNumberBlock(number = '42', caption?: string, color?: string): BodyBl
     } as BodyBlock;
 }
 
-function conditionedBlock(id: string, condition: string | string[] | undefined, text: string): BodyBlock {
+function conditionedBlock(id: string, condition: string | undefined, text: string): BodyBlock {
     const config = condition === undefined ? [] : [{type: 'rendering_condition', value: condition}];
 
     return {
@@ -569,6 +570,35 @@ describe('flex-page audience gating', () => {
         body = [conditionedDivider('gated', 'role:instructor,role:admin')];
         render(<Component />);
         expect(screen.queryAllByRole('img')).toHaveLength(0);
+    });
+
+    it('rewrites portal links again when conditioned blocks appear', () => {
+        const rewriteLinks = jest.fn();
+        const actualPortalContext = PortalContext.default;
+
+        jest.spyOn(PortalContext, 'default').mockImplementation(() => ({...actualPortalContext(), rewriteLinks}));
+        mockActiveConditions(undefined);
+        // The same data object each render, so only the audience can trigger a rewrite
+        const data = {
+            body: [conditionedBlock('gated', 'role:admin', 'Gated text')],
+            layout: [{type: 'landing'}],
+            schoolData: null
+        } as Data;
+        const StableComponent = () => (
+            <ShellContextProvider>
+                <MemoryRouter initialEntries={['']}>
+                    <FlexPage data={data} />
+                </MemoryRouter>
+            </ShellContextProvider>
+        );
+        const {rerender} = render(<StableComponent />);
+        const callsWhileLoading = rewriteLinks.mock.calls.length;
+
+        expect(screen.queryByText('Gated text')).toBe(null);
+        mockActiveConditions(['role:admin']);
+        rerender(<StableComponent />);
+        screen.getByText('Gated text');
+        expect(rewriteLinks.mock.calls.length).toBeGreaterThan(callsWhileLoading);
     });
 
     describe('with segments from sfapi personalization', () => {

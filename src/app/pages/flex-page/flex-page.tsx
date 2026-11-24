@@ -21,9 +21,7 @@ export const isFlexPage = (
     typeof data?.meta?.type === 'string' &&
     ['pages.FlexPage', 'pages.RootPage'].includes(data.meta.type);
 
-function FlexPageBody({data}: {data: FlexPageData}) {
-    const activeConditions = useAudienceConditions();
-
+function FlexPageBody({data, activeConditions}: {data: FlexPageData; activeConditions?: string[]}) {
     return <ContentBlockRoot data={data.body} blocks={blockMap} activeConditions={activeConditions} />;
 }
 
@@ -55,10 +53,12 @@ export function LayoutUsingData({
 export default function FlexPage({data}: {data: FlexPageData}) {
     const ref = React.useRef<HTMLElement>(null);
     const {rewriteLinks} = usePortalContext();
+    const activeConditions = useAudienceConditions();
 
+    // Blocks with a rendering_condition mount when the audience is known, so rewrite again then
     React.useLayoutEffect(() => {
         rewriteLinks(assertNotNull(ref.current));
-    }, [data, rewriteLinks]);
+    }, [data, rewriteLinks, activeConditions]);
 
     return (
         <main className="flex-page page flex-structure-container" ref={ref}>
@@ -67,7 +67,7 @@ export default function FlexPage({data}: {data: FlexPageData}) {
                 Child={FlexPageBody}
                 doDocumentSetup
                 noCamelCase={true}
-                props={{}}
+                props={{activeConditions}}
             />
         </main>
     );
