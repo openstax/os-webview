@@ -4,7 +4,8 @@ import ShellContextProvider from '../../../helpers/shell-context';
 import LetUsKnow from '~/pages/details/common/let-us-know/let-us-know';
 import type {UserStatus} from '~/contexts/user';
 
-const mockUseUserContext = jest.fn(() => ({userStatus: {} as UserStatus}));
+const defaultUser = () => ({userStatus: {} as UserStatus});
+const mockUseUserContext = jest.fn(defaultUser);
 
 jest.mock('~/contexts/user', () => ({
     ...jest.requireActual('~/contexts/user'),
@@ -24,6 +25,9 @@ function Component({title}: {title?: string}) {
 }
 
 describe('details/let-us-know', () => {
+    afterEach(() => {
+        mockUseUserContext.mockImplementation(defaultUser);
+    });
     test('handles English title', () => {
         render(<Component title={englishTitle} />);
 
@@ -34,7 +38,7 @@ describe('details/let-us-know', () => {
         screen.getByText('Korzystasz z tej książki? Daj nam znać.');
     });
     test('hides itself from logged-in students', () => {
-        mockUseUserContext.mockReturnValueOnce({
+        mockUseUserContext.mockReturnValue({
             userStatus: {isStudent: true} as UserStatus
         });
         const {container} = render(<Component title={englishTitle} />);
@@ -42,7 +46,7 @@ describe('details/let-us-know', () => {
         expect(container.textContent).toBe('');
     });
     test('stays visible for instructors awaiting verification', () => {
-        mockUseUserContext.mockReturnValueOnce({
+        mockUseUserContext.mockReturnValue({
             userStatus: {isStudent: true, pendingVerification: true} as UserStatus
         });
         render(<Component title={englishTitle} />);

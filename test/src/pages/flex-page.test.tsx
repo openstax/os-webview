@@ -7,6 +7,7 @@ import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
 import { LayoutContextProvider } from '~/contexts/layout';
 import * as UAC from '~/helpers/use-audience-conditions';
+import * as PC from '~/contexts/personalization';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -569,5 +570,43 @@ describe('flex-page audience gating', () => {
         body = [conditionedDivider('gated', ['role:instructor', 'role:admin'])];
         render(<Component />);
         expect(screen.queryAllByRole('img')).toHaveLength(0);
+    });
+
+    describe('with segments from sfapi personalization', () => {
+        function mockPersonalization(status: string, segments?: string[]) {
+            jest.spyOn(PC, 'usePersonalization').mockReturnValue({
+                status,
+                data: segments && {v: 1, audience: 'instructor', segments},
+                has: () => false
+            } as any);
+        }
+
+        it('renders a conditioned block when sfapi returns its slug', () => {
+            mockPersonalization('ready', ['role:instructor', 'adopter:current']);
+            body = [conditionedBlock('gated', 'adopter:current', 'Gated text')];
+            render(<Component />);
+            screen.getByText('Gated text');
+        });
+
+        it('hides a conditioned block for a slug sfapi did not return', () => {
+            mockPersonalization('ready', ['role:instructor']);
+            body = [conditionedBlock('gated', 'adopter:lapsed', 'Gated text')];
+            render(<Component />);
+            expect(screen.queryByText('Gated text')).toBe(null);
+        });
+
+        it('hides a conditioned block while personalization is loading', () => {
+            mockPersonalization('loading');
+            body = [conditionedBlock('gated', 'role:anonymous', 'Gated text')];
+            render(<Component />);
+            expect(screen.queryByText('Gated text')).toBe(null);
+        });
+
+        it('shows the anonymous variant to an anonymous visitor', () => {
+            mockPersonalization('anonymous');
+            body = [conditionedBlock('gated', 'role:anonymous', 'Gated text')];
+            render(<Component />);
+            screen.getByText('Gated text');
+        });
     });
 });
