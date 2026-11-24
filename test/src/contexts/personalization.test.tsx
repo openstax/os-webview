@@ -6,6 +6,10 @@ import {
     usePersonalization
 } from '~/contexts/personalization';
 import {clearPersonalizationCache} from '~/models/personalization';
+import * as Sentry from '@sentry/react';
+import * as PostHog from '~/helpers/posthog-exceptions';
+
+jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
 
 const mockFetch = jest.fn();
 
@@ -56,6 +60,8 @@ describe('personalization context', () => {
         sessionStorage.clear();
         jest.restoreAllMocks();
         jest.spyOn(console, 'warn').mockImplementation(() => null);
+        (Sentry.captureException as jest.Mock).mockClear();
+        jest.spyOn(PostHog, 'captureException').mockImplementation(() => undefined);
     });
 
     it('defaults to loading without a provider', () => {
@@ -102,6 +108,26 @@ describe('personalization context', () => {
         respondWith(null);
         renderProbe();
         await screen.findByText(/^error\|none/);
+    });
+
+    it('sends a failed load to both error reporters, without the response', async () => {
+        mockUser(loggedIn);
+        respondWith({...payload, v: 2});
+        renderProbe();
+        await screen.findByText(/^error\|none/);
+        const [reported] = (Sentry.captureException as jest.Mock).mock.calls[0];
+
+        expect(reported).toBeInstanceOf(Error);
+        expect(reported.message).not.toMatch(/Roy|Rice|Physics/);
+        expect(PostHog.captureException).toHaveBeenCalledWith(reported);
+    });
+
+    it('does not report a successful load', async () => {
+        mockUser(loggedIn);
+        respondWith(payload);
+        renderProbe();
+        await screen.findByText(/^ready/);
+        expect(Sentry.captureException).not.toHaveBeenCalled();
     });
 
     it('reports an error and stores nothing when sfapi says the logged-in visitor is anonymous', async () => {
@@ -251,5 +277,32 @@ describe('personalization context', () => {
             resolveFirst({ok: true, json: () => Promise.resolve(payload)});
         });
         expect(screen.getByTestId('probe').textContent).toBe('ready|instructor|New|true|false');
+    });
+
+    it('does not let a late response for the previous uuid overwrite the stored entry', async () => {
+        mockUser(loggedIn);
+        let resolveFirst: (response: unknown) => void = () => undefined;
+
+        mockFetch.mockReturnValueOnce(new Promise((resolve) => {
+            resolveFirst = resolve;
+        }));
+        respondWith({...payload, audience: 'student', segments: ['role:student']});
+        const view = renderProbe();
+
+        mockUser({...loggedIn, uuid: 'uuid-2'});
+        view.rerender(
+            <PersonalizationContextProvider>
+                <Probe />
+            </PersonalizationContextProvider>
+        );
+        await screen.findByText(/^ready\|student/);
+        await act(async () => {
+            resolveFirst({ok: true, json: () => Promise.resolve(payload)});
+            await new Promise((settle) => window.setTimeout(settle, 0));
+        });
+        expect(JSON.parse(sessionStorage.getItem('personalization') as string)).toMatchObject({
+            uuid: 'uuid-2',
+            audience: 'student'
+        });
     });
 });

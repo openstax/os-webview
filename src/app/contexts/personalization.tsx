@@ -1,4 +1,6 @@
 import React from 'react';
+import * as Sentry from '@sentry/react';
+import {captureException} from '~/helpers/posthog-exceptions';
 import buildContext from '~/components/jsx-helpers/build-context';
 import useUserContext from '~/contexts/user';
 import {
@@ -33,6 +35,9 @@ function useFetchedResult(uuid: string | undefined, shouldFetch: boolean) {
 
         loadPersonalization(uuid).then(
             (data) => {
+                if (cancelled) {
+                    return;
+                }
                 // The login cookie did not reach sfapi, so its anonymous answer is wrong for this visitor
                 if (!data.logged_in) {
                     finish();
@@ -41,7 +46,15 @@ function useFetchedResult(uuid: string | undefined, shouldFetch: boolean) {
                 storePersonalization(uuid, data);
                 finish(data);
             },
-            () => finish()
+            (reason: unknown) => {
+                // Handling the rejection hides it from the unhandled-rejection reporters
+                const failure =
+                    reason instanceof Error ? reason : new Error(String(reason));
+
+                Sentry.captureException(failure);
+                captureException(failure);
+                finish();
+            }
         );
 
         return () => {
