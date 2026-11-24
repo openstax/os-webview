@@ -104,7 +104,7 @@ function SchoolHiddenInfo({school}: {school: Exclude<School, null>}) {
             <input type="hidden" name="school_location" value={school.location} />
             <input
                 type="hidden" name="school_total_enrollment"
-                value={school.total_school_enrollment ?? ''}
+                value={school.total_school_enrollment}
             />
         </React.Fragment>
     );

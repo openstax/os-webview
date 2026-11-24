@@ -40,7 +40,7 @@ describe('school-selector', () => {
             selectedSchool: {
                 location: 'loc',
                 // eslint-disable-next-line camelcase
-                total_school_enrollment: null,
+                total_school_enrollment: '',
                 type: 'college'
             }
         } as any); // eslint-disable-line @typescript-eslint/no-explicit-any

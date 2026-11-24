@@ -36,7 +36,6 @@ import rolesData from '../src/data/roles';
 import salesforceData from '../src/data/salesforce';
 import salesforcePartnerData from '../src/data/salesforce-partners';
 import sfapiSchools from '../src/data/sfapi-schools';
-import schoolsData from '../src/data/schools';
 import searchCollection from '../src/data/search-collection';
 import searchSubject from '../src/data/search-subject';
 import subjectData from '../src/data/subject-categories';
@@ -87,7 +86,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
     const isResources = args[0].endsWith('errata-fields/?field=resources');
     const isRoles = (/snippets\/roles/).test(args[0]);
     const isSfapiSchools = (/salesforce\.openstax\.org\/api\/v1\/schools/).test(args[0]);
-    const isCmsSchools = (/salesforce\/schools/).test(args[0]);
     const isSearchCollection = args[0].includes('/search/?collection=');
     const isSearchSubject = args[0].includes('/search/?subjects=');
     const isSfapiImpact = (/api\/v1\/impact\/books/).test(args[0]);
@@ -182,8 +180,6 @@ global.fetch = jest.fn().mockImplementation((...args) => {
                 payload = rolesData;
             } else if (isSfapiSchools) {
                 payload = sfapiSchools;
-            } else if (isCmsSchools) {
-                payload = schoolsData;
             } else if (isUser) {
                 payload = userData;
             } else if (isArchive) {

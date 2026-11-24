@@ -1,6 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import * as Sentry from '@sentry/react';
-import cmsFetch from '~/helpers/cms-fetch';
+import sfApiFetch from '~/models/sfapi';
 import {captureException} from '~/helpers/posthog-exceptions';
 import debounce from 'lodash/debounce';
 
@@ -17,91 +17,57 @@ export const schoolTypeValues = [
 // sfapi rejects a shorter query with a 422
 const MINIMUM_QUERY_LENGTH = 3;
 
-const server = 'https://salesforce.openstax.org';
-
 export type SchoolSuggestion = {
     name: string;
     type: string;
     location: string;
-    total_school_enrollment: string | null;
+    total_school_enrollment: string;
 };
 
 type SFSchool = {
     name: string;
     type: string;
     country: string | null;
+    total_school_enrollment?: number | null;
 };
 
-type CMSSchool = {
-    name: string;
-    type: string;
-    location: string;
-    total_school_enrollment: string | null;
-};
+type SFSchoolsResponse = {schools?: SFSchool[]};
 
 // Salesforce counts territories as domestic, and sfapi gives us only the country.
 function locationOf(country: SFSchool['country']) {
     return country?.startsWith('United States') ? 'Domestic' : 'Foreign';
 }
 
-// Both sources swallow their failures so the autocomplete just goes empty, which would
-// hide an outage, so each one is reported here.
-function reportFailure(source: string, reason: unknown) {
-    const failure = new Error(`Failed to fetch schools from ${source}: ${reason}`);
+// The form field is a string, empty when sfapi withholds the number or has none.
+function enrollmentOf(enrollment: SFSchool['total_school_enrollment']) {
+    return typeof enrollment === 'number' ? String(enrollment) : '';
+}
+
+// sfApiFetch swallows its failures and returns null, which would hide an outage.
+function reportFailure() {
+    const failure = new Error('Failed to fetch schools from sfapi');
 
     Sentry.captureException(failure);
     captureException(failure);
 }
 
-// null means "ask the CMS instead"; an empty array is sfapi answering that it has no match
-async function fetchFromSfapi(value: string): Promise<SchoolSuggestion[] | null> {
-    try {
-        const response = await fetch(
-            `${server}/api/v1/schools?name=${encodeURIComponent(value)}`,
-            {mode: 'cors'}
-        );
+// A 404 ("No schools found"), a 429 throttle or any other error body has no schools list.
+async function fetchSchools(value: string): Promise<SchoolSuggestion[]> {
+    const body: SFSchoolsResponse | null = await sfApiFetch(
+        'schools',
+        `?name=${encodeURIComponent(value)}`
+    );
 
-        if (response.status === 404) {
-            return [];
-        }
-        if (!response.ok) {
-            return null;
-        }
-        const {schools} = (await response.json()) as {schools: SFSchool[]};
-
-        return schools.map((school) => ({
-            name: school.name,
-            type: school.type,
-            location: locationOf(school.country),
-            // not in the public schools response
-            total_school_enrollment: null // eslint-disable-line camelcase
-        }));
-    } catch (reason) {
-        reportFailure('sfapi', reason);
-        return null;
-    }
-}
-
-async function fetchFromCms(value: string): Promise<SchoolSuggestion[]> {
-    try {
-        const schools: CMSSchool[] = await cmsFetch(
-            `salesforce/schools?search=${value}`
-        );
-
-        return schools.map((school) => ({
-            name: school.name,
-            type: school.type,
-            location: school.location,
-            total_school_enrollment: school.total_school_enrollment // eslint-disable-line camelcase
-        }));
-    } catch (reason) {
-        reportFailure('the CMS', reason);
+    if (body === null) {
+        reportFailure();
         return [];
     }
-}
-
-async function fetchSchools(value: string) {
-    return (await fetchFromSfapi(value)) ?? fetchFromCms(value);
+    return (body.schools ?? []).map((school) => ({
+        name: school.name,
+        type: school.type,
+        location: locationOf(school.country),
+        total_school_enrollment: enrollmentOf(school.total_school_enrollment) // eslint-disable-line camelcase
+    }));
 }
 
 const debouncedFetch = debounce((value, setSchools) => {
