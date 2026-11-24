@@ -1,9 +1,12 @@
 import settings from '~/helpers/window-settings';
 
-const subdomains = ['dev.', 'qa.', 'staging.'];
-const subdomain =
-    subdomains.find((sd) => settings().accountHref?.includes(sd)) || '';
-const server = `https://${subdomain}salesforce.openstax.org`;
+// Only dev and production sfapi exist. QA uses the dev Salesforce sandbox;
+// staging shares production Salesforce.
+const sandboxEnvironments = ['dev.', 'qa.'];
+const useSandbox = sandboxEnvironments.some((env) =>
+    settings().accountHref?.includes(env)
+);
+const server = `https://${useSandbox ? 'dev.' : ''}salesforce.openstax.org`;
 
 async function fetchCsrfToken() {
     const raw = await fetch(`${server}/api/v1/csrf`, {
