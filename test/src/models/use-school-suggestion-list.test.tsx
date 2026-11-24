@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/preact';
+import {render, screen, waitFor, act} from '@testing-library/preact';
 import * as Sentry from '@sentry/react';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
 import * as CMSF from '~/helpers/cms-fetch';
@@ -58,17 +58,22 @@ describe('models/use-school-suggestion-list', () => {
         await screen.findByText(6);
     });
 
-    it('does not fetch below the minimum query length', () => {
-        render(<Component searchTerm="Am" />);
-        jest.runAllTimers();
-        screen.getByText(0);
-    });
+    async function expectNoRequests(searchTerm: string) {
+        global.fetch = jest.fn();
+        const cmsFetch = jest.spyOn(CMSF, 'default');
 
-    it('returns empty list for empty search string', () => {
-        render(<Component searchTerm="" />);
-        jest.runAllTimers();
+        render(<Component searchTerm={searchTerm} />);
+        await act(async () => {
+            jest.runAllTimers();
+        });
         screen.getByText(0);
-    });
+        expect(global.fetch).not.toHaveBeenCalled();
+        expect(cmsFetch).not.toHaveBeenCalled();
+    }
+
+    it('does not fetch below the minimum query length', () => expectNoRequests('Am'));
+
+    it('does not fetch for an empty search string', () => expectNoRequests(''));
 
     it.each([
         ['American Career College', 'Domestic'],
