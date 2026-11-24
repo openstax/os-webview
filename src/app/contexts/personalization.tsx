@@ -33,6 +33,11 @@ function useFetchedResult(uuid: string | undefined, shouldFetch: boolean) {
 
         loadPersonalization(uuid).then(
             (data) => {
+                // The login cookie did not reach sfapi, so its anonymous answer is wrong for this visitor
+                if (!data.logged_in) {
+                    finish();
+                    return;
+                }
                 storePersonalization(uuid, data);
                 finish(data);
             },

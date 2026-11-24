@@ -98,6 +98,14 @@ describe('personalization context', () => {
         await screen.findByText(/^error\|none/);
     });
 
+    it('reports an error and stores nothing when sfapi says the logged-in visitor is anonymous', async () => {
+        mockUser(loggedIn);
+        respondWith({...payload, logged_in: false, audience: 'anonymous', segments: ['role:anonymous']});
+        renderProbe();
+        await screen.findByText(/^error\|none/);
+        expect(sessionStorage.getItem('personalization')).toBeNull();
+    });
+
     it('reports an error for an unknown contract version', async () => {
         mockUser(loggedIn);
         respondWith({...payload, v: 2});
