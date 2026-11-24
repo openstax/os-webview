@@ -20,6 +20,12 @@ describe('models/sfapi', () => {
         expect(await sfApiFetch('thing')).toBeNull();
         expect(console.warn).toHaveBeenCalled();
     });
+    it('returns the parsed response', async () => {
+        const returnValue = {schools: ['a school']};
+
+        mockFetch.mockResolvedValue({json: () => Promise.resolve(returnValue)});
+        expect(await sfApiFetch('schools', '/search?name=a')).toEqual(returnValue);
+    });
     it('omits credentials and sends only Accept by default', async () => {
         mockFetch.mockResolvedValue({json: () => ({ok: true})});
         await sfApiFetch('thing', '?a=b');
