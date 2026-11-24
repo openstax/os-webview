@@ -5,6 +5,16 @@ const subdomain =
     subdomains.find((sd) => settings().accountHref?.includes(sd)) || '';
 const server = `https://${subdomain}salesforce.openstax.org`;
 
+async function fetchCsrfToken() {
+    const raw = await fetch(`${server}/api/v1/csrf`, {
+        credentials: 'include',
+        headers: {Accept: 'application/json'}
+    });
+    const {csrf_token: token} = await raw.json();
+
+    return token as string;
+}
+
 export async function sfApiPost(
     objectType: string,
     data: object,
@@ -14,10 +24,10 @@ export async function sfApiPost(
         const options = {
             credentials: 'include',
             method,
-            mode: 'cors',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': await fetchCsrfToken()
             },
             body: JSON.stringify(data)
         } as const;

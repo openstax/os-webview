@@ -4,9 +4,20 @@ const mockFetch = jest.fn();
 
 global.fetch = mockFetch;
 
+const tokenResponse = {json: () => ({csrf_token: 'tok123'})};
+
+function mockPostResponse(response: object) {
+    mockFetch
+        .mockResolvedValueOnce(tokenResponse)
+        .mockResolvedValueOnce(response);
+}
+
 describe('models/sfapi', () => {
     const saveWarn = console.warn;
 
+    beforeEach(() => {
+        mockFetch.mockReset();
+    });
     afterEach(() => {
         console.warn = saveWarn;
     });
@@ -29,7 +40,7 @@ describe('models/sfapi', () => {
             data: 'whatever'
         };
 
-        mockFetch.mockResolvedValue(returnValue);
+        mockPostResponse(returnValue);
         expect(await sfApiPost('thing', {data: 'foo'})).toEqual(returnValue);
     });
     it('handles post with no raw return', async () => {
@@ -40,7 +51,7 @@ describe('models/sfapi', () => {
         };
 
         console.warn = jest.fn();
-        mockFetch.mockResolvedValue(returnValue);
+        mockPostResponse(returnValue);
         expect(await sfApiPost('thing', {data: 'foo'})).toEqual(returnValue);
         expect(console.warn).toHaveBeenCalled();
     });
@@ -59,5 +70,40 @@ describe('models/sfapi', () => {
             expect.any(String),
             expect.objectContaining({credentials: 'include'})
         );
+    });
+    it('requests a CSRF token with credentials before writing', async () => {
+        mockPostResponse({ok: true});
+        await sfApiPost('thing', {data: 'foo'});
+        expect(mockFetch).toHaveBeenNthCalledWith(
+            1,
+            expect.stringMatching(/\/api\/v1\/csrf$/),
+            {credentials: 'include', headers: {Accept: 'application/json'}}
+        );
+    });
+    it('sends the token, credentials, method and body on the write', async () => {
+        mockPostResponse({ok: true});
+        await sfApiPost('thing', {data: 'foo'}, 'PUT');
+        expect(mockFetch).toHaveBeenNthCalledWith(
+            2,
+            expect.stringMatching(/\/api\/v1\/thing$/),
+            {
+                credentials: 'include',
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': 'tok123'
+                },
+                body: JSON.stringify({data: 'foo'})
+            }
+        );
+    });
+    it('returns null and warns when the token fetch fails', async () => {
+        console.warn = jest.fn();
+        mockFetch.mockReset();
+        mockFetch.mockRejectedValueOnce(new Error('no token'));
+        expect(await sfApiPost('thing', {data: 'foo'})).toBeNull();
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(console.warn).toHaveBeenCalled();
     });
 });

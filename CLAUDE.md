@@ -63,6 +63,8 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - `~/models/sfapi.ts` sends no cookies by default. Pass `{withCredentials: true}` only for endpoints
   that need the Accounts login cookie (sfapi must allow credentials for that origin). Send no
   headers beyond `Accept`: anything else triggers a CORS preflight, and sfapi allows a fixed list.
+  Writes go through `sfApiPost`, which fetches a CSRF token from `/csrf` first. sfapi accepts
+  cookie-authenticated writes only from its named frontend origins, on its browser-facing routes.
 
 ### Code Splitting
 - `src/app/helpers/jit-load.tsx` — lazy loading wrapper using `React.lazy` + `Suspense`
