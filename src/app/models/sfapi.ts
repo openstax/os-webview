@@ -36,16 +36,18 @@ export async function sfApiPost(
     }
 }
 
-export default async function sfApiFetch(objectType: string, specifier = '') {
+type FetchOptions = {withCredentials?: boolean};
+
+// Only safelisted headers are sent, so the GET needs no CORS preflight.
+export default async function sfApiFetch(
+    objectType: string,
+    specifier = '',
+    {withCredentials = false}: FetchOptions = {}
+) {
     try {
         const raw = await fetch(`${server}/api/v1/${objectType}${specifier}`, {
-            credentials: 'include',
-            mode: 'cors',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Cache: 'no-0d4zFOeMPUmfxkCjHocCuoLa2SAGzBI8AREcH3eP3758F672DppA'
-            }
+            credentials: withCredentials ? 'include' : 'omit',
+            headers: {Accept: 'application/json'}
         });
         const result = await raw.json();
 
