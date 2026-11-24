@@ -57,6 +57,8 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - CMS API endpoint controlled by `API_ORIGIN` env var (defaults to `https://dev.openstax.org`)
 - Settings loaded from `{API_ORIGIN}/cms/webview-settings`
 - Custom hooks (`usePageData`, `useDocumentHead`, etc.) in `src/app/helpers/`
+- sfapi host (`src/app/models/sfapi.ts`) follows `accountHref`: dev and qa call
+  `dev.salesforce.openstax.org`; staging and production call `salesforce.openstax.org`.
 - Book details "used in N classrooms, saving students $S" numbers come from sfapi
   (`GET /api/v1/impact/books?name=<salesforce_name>`, Tableau rollover model), fetched by
   `src/app/models/book-impact.ts`. The CMS `adoptions`/`savings` fields are stale and unused.
