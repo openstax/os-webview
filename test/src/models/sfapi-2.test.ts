@@ -23,7 +23,7 @@ describe('exercise the fallback subdomain', () => {
         expect(mockFetch).toHaveBeenCalledWith(
             'https://salesforce.openstax.org/api/v1/thing',
             expect.objectContaining({
-                credentials: 'include'
+                credentials: 'omit'
             })
         );
         console.warn = saveWarn;
