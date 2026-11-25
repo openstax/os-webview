@@ -2,7 +2,6 @@ import React from 'react';
 import {render, waitFor} from '@testing-library/preact';
 import {describe, it, expect} from '@jest/globals';
 import * as Sentry from '@sentry/react';
-import * as PostHog from '~/helpers/posthog-exceptions';
 import {useAfterSubmit} from '~/components/book-selector/after-form-submit';
 import type {SalesforceBook} from '~/helpers/books';
 
@@ -25,7 +24,6 @@ jest.mock('~/contexts/portal', () => ({
     default: () => ({linkPrefix: ''})
 }));
 
-const reportToPostHog = jest.spyOn(PostHog, 'captureException');
 const selectedBooks = [{value: 'Calculus [Spanish]'}] as SalesforceBook[];
 
 function Submitter() {
@@ -41,7 +39,6 @@ describe('after-form-submit', () => {
         mockSearch = '?Calculus';
         mockFetchBooks.mockClear();
         mockNavigate.mockClear();
-        reportToPostHog.mockClear();
         (Sentry.captureException as jest.Mock).mockClear();
     });
 
@@ -64,7 +61,6 @@ describe('after-form-submit', () => {
             state: {confirmation: true, book: ['Calculus'], slug: undefined}
         }));
         expect(Sentry.captureException).toHaveBeenCalledWith(failure);
-        expect(reportToPostHog).toHaveBeenCalledWith(failure);
     });
 
     it('navigates without asking for the book list when no book is preselected', async () => {

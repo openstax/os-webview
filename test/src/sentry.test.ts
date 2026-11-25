@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react';
+import {CmsUnreachableError} from '~/helpers/cms-errors';
 import '~/sentry';
 
 jest.mock('@sentry/react', () => ({
@@ -17,15 +18,18 @@ type Frame = {filename?: string};
 type SentryEvent = {
     exception?: {values: {stacktrace?: {frames: Frame[]}}[]};
     tags?: Record<string, unknown>;
+    level?: string;
+    fingerprint?: string[];
 };
 
 const options = (Sentry.init as jest.Mock).mock.calls[0][0];
-const beforeSend: (event: SentryEvent) => SentryEvent | null = options.beforeSend;
+const beforeSend: (event: SentryEvent, hint?: {originalException?: unknown}) => SentryEvent | null = options.beforeSend;
 const page = 'https://dev.openstax.org/details/books/biology-2e';
 const ourBundle = 'https://dev.openstax.org/dist/main-abc.min.js';
 const vendor = 'https://cdn.example.com/dist/lib.js';
 const extension = 'chrome-extension://abc/content.js';
 const cmsEmbed = 'blob:https://dev.openstax.org/cms-1';
+const sentryWrapper = 'https://dev.openstax.org/dist/npm.sentry-abc.min.js';
 
 function eventWithFrames(...filenames: (string | undefined)[]): SentryEvent {
     return {
@@ -50,6 +54,11 @@ describe('sentry', () => {
     it('drops errors made only of other origins', () => {
         expect(sentOrDropped(eventWithFrames(extension, vendor, '<anonymous>'))).toBe('dropped');
     });
+    it('does not count the frame Sentry adds when it wraps a third-party callback', () => {
+        expect(sentOrDropped(eventWithFrames(vendor, sentryWrapper))).toBe('dropped');
+        expect(sentOrDropped(eventWithFrames(ourBundle, sentryWrapper))).toBe('sent');
+        expect(sentOrDropped(eventWithFrames(page, sentryWrapper))).toBe('sent');
+    });
     it('keeps inline scripts, which GTM tags and CMS embeds run as', () => {
         expect(sentOrDropped(eventWithFrames(page, vendor))).toBe('sent');
         expect(sentOrDropped(eventWithFrames('<anonymous>'))).toBe('sent');
@@ -73,6 +82,18 @@ describe('sentry', () => {
         expect(sentOrDropped({exception: {values: [{}]}})).toBe('sent');
         expect(sentOrDropped({})).toBe('sent');
         expect(sentOrDropped(eventWithFrames(undefined))).toBe('sent');
+    });
+    it('keeps the first CMS failure per endpoint and drops the next', () => {
+        const hint = {originalException: new CmsUnreachableError('sentry-test/one', 'x')};
+        const first = eventWithFrames(ourBundle);
+
+        expect(beforeSend(first, hint)).toBe(first);
+        expect(first).toMatchObject({
+            level: 'warning',
+            fingerprint: ['CmsUnreachableError', 'sentry-test'],
+            tags: {'cms_endpoint': 'sentry-test'}
+        });
+        expect(beforeSend(eventWithFrames(ourBundle), hint)).toBeNull();
     });
     describe('on Chrome or the Google app for iOS', () => {
         beforeEach(() => {

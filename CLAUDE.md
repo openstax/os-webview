@@ -20,6 +20,10 @@ yarn jest layout.test    # Run a single test by name pattern
 yarn jest test/src/components/shell.test.tsx  # Run a specific test file
 ```
 Note: Tests require the build (`dist/` directory) to exist.
+CI runs `jest --coverage ./test/src` with a 100% global threshold on branches, lines, functions and
+statements (`package.json`), so one untested branch fails the build even when every test passes. Run
+the same command before pushing. If `.claude/worktrees/` exists, add
+`--testPathIgnorePatterns '/.claude/worktrees/'`, or jest also runs the worktree copies.
 
 ### Linting
 ```bash
@@ -57,6 +61,15 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - CMS API endpoint controlled by `API_ORIGIN` env var (defaults to `https://dev.openstax.org`)
 - Settings loaded from `{API_ORIGIN}/cms/webview-settings`
 - Custom hooks (`usePageData`, `useDocumentHead`, etc.) in `src/app/helpers/`
+- CMS failures are reported to Sentry where they happen (`cmsFetch`, `fetchFromCMS`, and
+  `useFetchedData`'s slug branch), as the classes in `helpers/cms-errors.ts`:
+  `CmsUnreachableError` (fetch rejected) and `NotJsonError`
+  (`CMS returned text/html instead of JSON (HTTP 502) for <path>`). Keep the browser's own error
+  text out of their messages: each engine words it differently, and those wordings are on
+  Sentry's noise lists. `CmsUnreachableError` keeps it in `reason`, which Sentry shows as extra
+  data. `applyCmsRules` in `beforeSend` keeps the first of each kind per endpoint per page load,
+  so each endpoint is one Sentry issue (unreachable at warning level). Call sites may report the
+  same error object again; Sentry skips an object it has already captured.
 - sfapi host (`src/app/models/sfapi.ts`) follows `accountHref`: dev and qa call
   `dev.salesforce.openstax.org`; staging and production call `salesforce.openstax.org`.
 - Book details "used in N classrooms, saving students $S" numbers come from sfapi
@@ -72,7 +85,7 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - The school autocomplete (`src/app/models/use-school-suggestion-list.ts`) reads sfapi
   `GET /api/v1/schools?name=` through `sfApiFetch`, with a 3-character minimum and a 300 ms debounce.
   There is no CMS fallback: a 404, a 429 or `null` all give an empty list, and only `null` (a network
-  failure) is reported to Sentry and PostHog. sfapi adds `total_school_enrollment` for openstax.org
+  failure) is reported to Sentry. sfapi adds `total_school_enrollment` for openstax.org
   origins; it becomes a string for the form's hidden field, or empty. The separatemap page still uses
   the CMS schools endpoint through `query-schools.ts`.
 
@@ -134,7 +147,7 @@ Main routes in `router.tsx`:
   session envelopes skip `beforeSend`, so dev and staging would still skew release health.
 - Noise filtering lives in four lists. `ignoreErrors` stays in `sentry.js`: Sentry
   substring-matches it against the whole exception value, which is too broad to reuse. The other
-  three are in `src/app/helpers/exception-filters.ts` so PostHog gets them too — `ignoreMessages`
+  three are in `src/app/helpers/exception-filters.ts` — `ignoreMessages`
   (substring match, applied in `beforeSend`), `denyFrameSchemes` (drops an exception whose every
   stack frame is a browser-extension url, including Safari's `webkit-masked-url://`), and
   `denyUrls` (script origin). Use `denyUrls`, not `ignoreUrls` — the latter was removed in SDK v7
@@ -158,6 +171,11 @@ Main routes in `router.tsx`:
 - Render errors surface through `useErrorBoundary` in `shell/router-context.tsx`. That hook
   swallows the error unless a handler is passed, so the `Sentry.captureException` callback
   there is load-bearing.
+- Anywhere we start handling a rejection that used to go unhandled, report it with
+  `Sentry.captureException`: handling it removes it from Sentry's unhandled-rejection capture.
+- Filters here reach only pages running the current bundle. Restored Safari and iOS tabs keep
+  running builds that are months old, so a new ignore entry won't silence them. Filter those by
+  release in Sentry instead.
 - User context (uuid, `logged_in`, `user_role`) is attached in `contexts/user.ts`. Keep names
   and emails out of it.
 - Chunk-load failures are recovered from rather than reported — see `stale-chunk.ts`. They stay
@@ -171,12 +189,9 @@ Main routes in `router.tsx`:
 
 ## Error reporting (PostHog)
 
-- PostHog is loaded by a tag inside the GTM container, not by this bundle, so `window.posthog` is
-  the only handle on it and it only exists once `initializeGTM()` has run (which itself only
-  happens off the K12 portal).
-- `src/app/helpers/posthog-exceptions.ts` polls for that global and installs a `before_send` hook
-  applying the shared filters from `exception-filters.ts`. Without it, exception autocapture
-  reports everything Sentry has been told to ignore.
-- Anywhere we start handling a rejection that used to go unhandled, report it deliberately with
-  both `Sentry.captureException` and this module's `captureException` — handling it removes it
-  from both tools' unhandled-rejection capture.
+- Webview errors go to Sentry only. Don't report them to PostHog from this repo.
+- PostHog is loaded by a Custom HTML tag in the GTM container, not by this bundle. Its
+  `posthog.init` passes `capture_exceptions: false` when the dataLayer holds
+  `'os.app': 'os-webview'` (pushed by `tag-manager.js`). That init option overrides the project's
+  autocapture setting, which stays on for the other apps sharing the PostHog project (Accounts,
+  help). Because GTM always loads the current tag, this reaches stale bundles too.

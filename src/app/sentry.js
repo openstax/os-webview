@@ -1,10 +1,11 @@
 import * as Sentry from '@sentry/react';
 import {isEmbedScriptUrl} from '~/components/jsx-helpers/activate-scripts';
+import {applyCmsRules} from '~/helpers/cms-errors';
 import isSupported from '~/helpers/device';
 import {denyUrls, isIgnoredMessage, isFromDeniedScheme, isFromDeniedUrl} from '~/helpers/exception-filters';
 
-// Sentry-only: it substring-matches these against the whole exception value,
-// which is too broad to share with PostHog. See helpers/exception-filters.
+// Sentry substring-matches these against the whole exception value, which is
+// too broad for the lists in helpers/exception-filters.
 const ignoreErrors = [
     'TypeError: Failed to fetch',
     'TypeError: Load failed',
@@ -53,11 +54,17 @@ function messageOf(event, error) {
     return typeof value === 'string' ? value : '';
 }
 
+// Sentry runs third-party callbacks inside its own wrapper, which leaves a frame
+// from our npm.sentry chunk on their stacks. That frame says nothing about who threw.
+function isSentryWrapper(url) {
+    return url.startsWith(`${window.location.origin}/dist/npm.sentry`);
+}
+
 function scriptUrls(event) {
     return (event.exception?.values ?? [])
         .flatMap((value) => value.stacktrace?.frames ?? [])
         .map((frame) => frame.filename)
-        .filter((url) => (/^(blob:)?[a-z-]+:\/\//).test(url));
+        .filter((url) => (/^(blob:)?[a-z-]+:\/\//).test(url) && !isSentryWrapper(url));
 }
 
 // Sentry's Safari and Firefox stack parser drops the blob: prefix from a frame
@@ -90,6 +97,9 @@ function beforeSend(event, hint) {
     const urls = scriptUrls(event);
 
     if (isFromOtherScripts(urls)) {
+        return null;
+    }
+    if (!applyCmsRules(event, hint?.originalException)) {
         return null;
     }
     if (urls.some(isCmsEmbed)) {

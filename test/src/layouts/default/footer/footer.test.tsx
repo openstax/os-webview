@@ -1,11 +1,15 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
 import '@testing-library/jest-dom';
+import * as Sentry from '@sentry/react';
 import * as UPD from '~/helpers/use-page-data';
 import * as PDU from '~/helpers/page-data-utils';
 import FooterLoader from '~/layouts/default/footer/footer';
 import MemoryRouter from '../../../../helpers/future-memory-router';
 import footerMenus from '../../../data/footer-menus';
+import {CmsUnreachableError} from '~/helpers/cms-errors';
+
+jest.mock('@sentry/react', () => ({captureMessage: jest.fn(), captureException: jest.fn()}));
 
 const mockUsePageData = jest.spyOn(UPD, 'default');
 const mockUseDataFromSlug = jest.spyOn(PDU, 'useDataFromSlug');
@@ -136,16 +140,30 @@ describe('Footer', () => {
     });
 
     it('falls back to the built-in links when the columns request fails', () => {
-        mockUseDataFromSlug.mockReturnValue({error: new Error('Failed to fetch'), slug: 'oxmenus'});
+        mockUseDataFromSlug.mockReturnValue({error: new CmsUnreachableError('oxmenus/', 'x'), slug: 'oxmenus'});
 
         expect(() => renderFooter()).not.toThrow();
 
+        // The request already reported this failure where it happened
+        expect(Sentry.captureMessage).not.toHaveBeenCalled();
         expect(screen.getByRole('link', {name: 'Privacy Notice'})).toHaveAttribute('href', '/privacy');
         expect(screen.getByText(footerData.supporters)).toBeInTheDocument();
         expect(screen.getByRole('link', {name: 'Rice University logo'})).toHaveAttribute(
             'href',
             'http://www.rice.edu'
         );
+    });
+
+    it('reports a fallback whose cause was not reported upstream', () => {
+        (Sentry.captureMessage as jest.Mock).mockClear();
+        mockUseDataFromSlug.mockReturnValue({error: new Error('page not found'), slug: 'oxmenus'});
+        renderFooter();
+
+        expect(Sentry.captureMessage).toHaveBeenCalledWith(
+            'Footer columns request failed; using fallback links',
+            'warning'
+        );
+        expect(screen.getByRole('link', {name: 'Privacy Notice'})).toBeInTheDocument();
     });
 
     it('shows no columns while the request is still loading', () => {

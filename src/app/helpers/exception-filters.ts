@@ -1,13 +1,9 @@
-// Exception noise policy, shared by Sentry (src/app/sentry.js) and by the
-// PostHog exception autocapture that GTM loads (src/app/helpers/posthog.ts).
-// Keeping one list means a message the team has already decided to ignore is
-// ignored everywhere, instead of sitting at the top of one tool's issue list.
+// Noise lists for Sentry's `beforeSend` in src/app/sentry.js.
 //
-// Sentry's own `ignoreErrors` stays in sentry.js and is deliberately not shared:
-// Sentry substring-matches it against the whole exception value, so an entry
-// like 'TypeError: Failed to fetch' also swallows our own
-// `Failed to fetch <slug>: ... TypeError: Failed to fetch` CMS failures, which
-// are exactly the ones we want to keep seeing.
+// `ignoreErrors` lives in sentry.js because Sentry applies it itself, as a
+// substring match against the whole exception value. That also catches our own
+// wrapped messages: 'TypeError: Failed to fetch' drops
+// `Failed to fetch <slug>: ... TypeError: Failed to fetch` as well.
 
 export const ignoreMessages = [
     'g.readyState',

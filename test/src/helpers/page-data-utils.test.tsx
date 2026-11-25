@@ -1,5 +1,7 @@
 import React from 'react';
 import {act, render, screen} from '@testing-library/preact';
+import * as Sentry from '@sentry/react';
+import {CmsUnreachableError, NotJsonError} from '~/helpers/cms-errors';
 import * as BookTitles from '~/models/book-titles';
 import {
     fetchFromCMS,
@@ -7,6 +9,8 @@ import {
     useDataFromPromise,
     useTextFromSlug
 } from '~/helpers/page-data-utils';
+
+jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
 
 const mockFetch = jest.fn();
 
@@ -19,24 +23,80 @@ describe('page-data-utils', () => {
             mockFetch.mockResolvedValueOnce({
                 status: 404
             });
+            (Sentry.captureException as jest.Mock).mockClear();
             expect(await fetchFromCMS('whatever')).toEqual({
                 error: new Error('page not found'),
                 slug: 'whatever'
             });
+            expect(Sentry.captureException).not.toHaveBeenCalled();
         });
-        it('handles error', async () => {
+        it('returns CmsUnreachableError, reported once, when the fetch rejects', async () => {
             const saveWarn = console.warn;
 
             console.warn = jest.fn();
+            (Sentry.captureException as jest.Mock).mockClear();
             mockFetch.mockImplementation(() => {
                 throw new TypeError('Load failed');
             });
-            expect(await fetchFromCMS('whatever')).toEqual({
-                error: new Error('Failed to fetch whatever: TypeError: Load failed'),
-                slug: 'whatever'
-            });
-            expect(console.warn).toHaveBeenCalled();
+            const {error, slug} = await fetchFromCMS('whatever/more');
+
+            expect(slug).toBe('whatever/more');
+            expect(error).toBeInstanceOf(CmsUnreachableError);
+            expect(error.message).toBe('Couldn\'t reach the CMS for whatever/more');
+            expect(error.reason).toBe('TypeError: Load failed');
+            expect(console.warn).toHaveBeenCalledWith(error.message);
+            expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+            expect(Sentry.captureException).toHaveBeenCalledWith(error);
             console.warn = saveWarn;
+        });
+        it('returns NotJsonError, reported once, when the body is not JSON', async () => {
+            const saveWarn = console.warn;
+
+            console.warn = jest.fn();
+            (Sentry.captureException as jest.Mock).mockClear();
+            mockFetch.mockResolvedValueOnce({
+                status: 200,
+                json: () => Promise.reject(new SyntaxError('Unexpected token <'))
+            });
+            const {error} = await fetchFromCMS('whatever');
+
+            expect(error).toBeInstanceOf(NotJsonError);
+            expect(error.message).toBe('CMS returned no content type instead of JSON (HTTP 200) for whatever');
+            expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+            expect(Sentry.captureException).toHaveBeenCalledWith(error);
+            console.warn = saveWarn;
+        });
+    });
+    describe('fetchFromCMS with a body that is not JSON', () => {
+        const saveWarn = console.warn;
+        const htmlResponse = (status: number, contentType: string | null) => ({
+            status,
+            headers: {get: (name: string) => (name === 'content-type' ? contentType : null)},
+            json: () => Promise.reject(new SyntaxError('Unexpected token \'<\''))
+        });
+
+        beforeEach(() => {console.warn = jest.fn();});
+        afterEach(() => {console.warn = saveWarn;});
+        it.each([
+            [200, 'text/html', 'text/html'],
+            [502, 'text/html; charset=utf-8', 'text/html'],
+            [502, null, 'no content type']
+        ])('reports HTTP %s with content type %s', async (status, header, shown) => {
+            mockFetch.mockResolvedValueOnce(htmlResponse(status, header));
+            const result = await fetchFromCMS('emergency/');
+
+            expect(result).toEqual({
+                error: new Error(`CMS returned ${shown} instead of JSON (HTTP ${status}) for emergency/`),
+                slug: 'emergency/'
+            });
+            expect(console.warn).toHaveBeenCalledWith(result.error.message);
+        });
+        it('returns the parsed body of a non-OK JSON response', async () => {
+            mockFetch.mockResolvedValueOnce({
+                status: 400,
+                json: () => Promise.resolve({detail: 'bad'})
+            });
+            expect(await fetchFromCMS('whatever', true)).toEqual({detail: 'bad', slug: 'whatever'});
         });
     });
     describe('getUrlFor', () => {

@@ -1,7 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import * as Sentry from '@sentry/react';
 import sfApiFetch from '~/models/sfapi';
-import {captureException} from '~/helpers/posthog-exceptions';
 import debounce from 'lodash/debounce';
 
 export const schoolTypeValues = [
@@ -48,7 +47,6 @@ function reportFailure() {
     const failure = new Error('Failed to fetch schools from sfapi');
 
     Sentry.captureException(failure);
-    captureException(failure);
 }
 
 // A 404 ("No schools found"), a 429 throttle or any other error body has no schools list.

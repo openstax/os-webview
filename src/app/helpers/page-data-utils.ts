@@ -1,5 +1,7 @@
 import React from 'react';
 import * as BookTitles from '~/models/book-titles';
+import {readJson, reported} from './cms-fetch';
+import {CmsUnreachableError} from './cms-errors';
 import urlFromSlug from './url-from-slug';
 
 type TypeAndValue = {
@@ -87,22 +89,34 @@ export function camelCaseKeys(obj?: Json): Json | undefined {
     }, {} as Record<string, Json>);
 }
 
+async function fetchJson(slug: string, apiUrl: string) {
+    let response;
+
+    try {
+        response = await fetch(apiUrl);
+    } catch (err) {
+        throw reported(new CmsUnreachableError(slug, err));
+    }
+    if (response.status === 404) {
+        return {error: new Error('page not found')};
+    }
+
+    try {
+        // `await` is required: without it .json() rejects outside the try
+        return await readJson(response, slug);
+    } catch (err) {
+        throw reported(err);
+    }
+}
+
 export async function fetchFromCMS(slug: string, preserveWrapping = false) {
     const apiUrl = await getUrlFor(slug);
     let data;
 
     try {
-        data = await fetch(apiUrl).then((response) => {
-            if (response.status === 404) {
-                return {error: new Error('page not found')};
-            }
-
-            return response.json();
-        });
-    } catch (err) {
-        const failure = new Error(`Failed to fetch ${slug}: ${err}`);
-
-        console.warn(failure.message);
+        data = await fetchJson(slug, apiUrl);
+    } catch (failure) {
+        console.warn((failure as Error).message);
         data = {error: failure};
     }
 

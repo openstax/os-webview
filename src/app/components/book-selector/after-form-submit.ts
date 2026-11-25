@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
 import fetchBooks from '~/models/books';
-import {captureException} from '~/helpers/posthog-exceptions';
 import {filterLiveBooks, SalesforceBook} from '~/helpers/books';
 import {useNavigate, NavigateFunction, useLocation} from 'react-router-dom';
 import usePortalContext from '~/contexts/portal';
@@ -21,7 +20,6 @@ async function backToSlug(preselectedTitle: string) {
         )?.slug;
     } catch (error) {
         Sentry.captureException(error);
-        captureException(error);
         return undefined;
     }
 }

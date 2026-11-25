@@ -15,9 +15,10 @@ import {faTiktok} from '@fortawesome/free-brands-svg-icons/faTiktok';
 import {faThreads} from '@fortawesome/free-brands-svg-icons/faThreads';
 import {faBluesky} from '@fortawesome/free-brands-svg-icons/faBluesky';
 import {faMastodon} from '@fortawesome/free-brands-svg-icons/faMastodon';
-import * as Sentry from '@sentry/react';
 import usePortalContext from '~/contexts/portal';
+import * as Sentry from '@sentry/react';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
+import {isCmsError} from '~/helpers/cms-errors';
 import './footer.scss';
 
 type FooterMenuItem = {
@@ -84,16 +85,23 @@ const fallbackColumns: FooterMenuColumn[] = fallbackLinks.map(([key, name, links
     menu: links.map(([label, url]) => ({label, 'partial_url': url}))
 }));
 
+// Network failures and non-JSON bodies are reported where the request failed;
+// a 404 or a body that isn't a list of columns is not.
+function hasUnreportedCause(structure: unknown) {
+    return !isCmsError((structure as {error?: unknown} | null)?.error);
+}
+
 // undefined means still loading; null (rejected) or {error} means the request failed.
 function useFooterColumns() {
     const structure = useDataFromSlug<FooterMenuColumn[]>('oxmenus/?placement=footer');
     const failed = structure === null || (structure !== undefined && !Array.isArray(structure));
+    const unreported = failed && hasUnreportedCause(structure);
 
     React.useEffect(() => {
-        if (failed) {
-            Sentry.captureMessage('Footer columns request failed; using fallback links');
+        if (unreported) {
+            Sentry.captureMessage('Footer columns request failed; using fallback links', 'warning');
         }
-    }, [failed]);
+    }, [unreported]);
 
     if (failed) {
         return fallbackColumns;
