@@ -5,8 +5,6 @@ import {usePromise} from '~/helpers/use-data';
 import {registerProperties} from '~/helpers/posthog';
 
 type FlagName =
-    | 'myox_pardot'
-    | 'my_openstax'
     | 'new_subjects'
     | 'streamlined_nav'
     | 'chat_book_details'
