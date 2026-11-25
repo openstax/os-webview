@@ -57,10 +57,15 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - CMS API endpoint controlled by `API_ORIGIN` env var (defaults to `https://dev.openstax.org`)
 - Settings loaded from `{API_ORIGIN}/cms/webview-settings`
 - Custom hooks (`usePageData`, `useDocumentHead`, etc.) in `src/app/helpers/`
-- `cmsFetch` and `fetchFromCMS` turn a body that isn't JSON into a `NotJsonError`
-  (`CMS returned text/html instead of JSON (HTTP 502) for <path>`). Don't rewrap it in the
-  browser's `SyntaxError` text: each engine words that differently, and those wordings are on
-  Sentry's noise lists.
+- CMS failures are reported to Sentry where they happen (`cmsFetch`, `fetchFromCMS`, and
+  `useFetchedData`'s slug branch), as the classes in `helpers/cms-errors.ts`:
+  `CmsUnreachableError` (fetch rejected) and `NotJsonError`
+  (`CMS returned text/html instead of JSON (HTTP 502) for <path>`). Keep the browser's own error
+  text out of their messages: each engine words it differently, and those wordings are on
+  Sentry's noise lists. `CmsUnreachableError` keeps it in `reason`, which Sentry shows as extra
+  data. `applyCmsRules` in `beforeSend` keeps the first of each kind per endpoint per page load,
+  so each endpoint is one Sentry issue (unreachable at warning level). Call sites may report the
+  same error object again; Sentry skips an object it has already captured.
 - sfapi host (`src/app/models/sfapi.ts`) follows `accountHref`: dev and qa call
   `dev.salesforce.openstax.org`; staging and production call `salesforce.openstax.org`.
 - Book details "used in N classrooms, saving students $S" numbers come from sfapi
