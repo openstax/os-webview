@@ -3,21 +3,28 @@ import React from 'react';
 export type FlagValue = string | boolean | undefined;
 
 type PostHogClient = {
+    __loaded?: boolean;
     getFeatureFlag: (key: string) => FlagValue;
-    onFeatureFlags: (cb: () => void) => void;
+    onFeatureFlags: (cb: () => void) => (() => void) | undefined;
     capture: (event: string, properties?: Record<string, unknown>) => void;
     identify: (uuid: string, properties?: Record<string, unknown>) => void;
     reset: () => void;
     register: (properties: Record<string, unknown>) => void;
 };
 
-/** PostHog is loaded by GTM; it may not be present yet (pre-consent). */
+const POLL_START_MS = 250;
+const POLL_MAX_MS = 5000;
+
+// Loaded by GTM, so it may not be present yet (pre-consent). Before the SDK
+// initializes, `window.posthog` is a stub that queues calls and returns nothing,
+// so only a client with `__loaded` set is usable.
 function getPostHog(): PostHogClient | undefined {
-    return (window as unknown as {posthog?: PostHogClient}).posthog;
+    const posthog = (window as unknown as {posthog?: PostHogClient}).posthog;
+
+    return posthog?.__loaded ? posthog : undefined;
 }
 
-/** Read an experiment/feature-flag variant. Reading it auto-fires the
- *  `$feature_flag_called` exposure event in PostHog. */
+// Reading a flag auto-fires PostHog's `$feature_flag_called` exposure event.
 export function getExperimentVariant(flagKey: string): FlagValue {
     return getPostHog()?.getFeatureFlag(flagKey);
 }
@@ -43,14 +50,20 @@ export function registerProperties(properties: Record<string, unknown>) {
     getPostHog()?.register(properties);
 }
 
-/** Subscribe to PostHog flag resolution and return a synchronous variant
- *  reader. Re-renders the caller once flags load, so callers can read any
- *  number of flags (e.g. while filtering a list) without breaking hooks rules. */
-export function useExperimentReader(): (flag: string) => FlagValue {
+// Returns a plain reader rather than a hook per flag so callers can read any
+// number of flags, e.g. while filtering a list, without breaking hooks rules.
+// Pass `enabled` false when nothing on the page is flagged, so no listener or
+// timer is created.
+export function useExperimentReader(enabled = true): (flag: string) => FlagValue {
     const [, forceRender] = React.useReducer((n: number) => n + 1, 0);
 
     React.useEffect(() => {
-        let interval: number | undefined;
+        if (!enabled) {
+            return undefined;
+        }
+        let timer: number | undefined;
+        let unsubscribe: (() => void) | undefined;
+        let delay = POLL_START_MS;
 
         const subscribe = () => {
             const ph = getPostHog();
@@ -58,21 +71,24 @@ export function useExperimentReader(): (flag: string) => FlagValue {
             if (!ph) {
                 return false;
             }
-            ph.onFeatureFlags(() => forceRender());
+            unsubscribe = ph.onFeatureFlags(() => forceRender());
             return true;
         };
+        // PostHog has no "loaded" event, so poll with a growing delay.
+        const trySubscribe = () => {
+            if (subscribe()) {
+                return;
+            }
+            timer = window.setTimeout(trySubscribe, delay);
+            delay = Math.min(delay * 2, POLL_MAX_MS);
+        };
 
-        if (!subscribe()) {
-            interval = window.setInterval(() => {
-                if (subscribe()) {
-                    window.clearInterval(interval);
-                }
-            }, 250);
-        }
+        trySubscribe();
 
         return () => {
-            window.clearInterval(interval);
+            window.clearTimeout(timer);
+            unsubscribe?.();
         };
-    }, []);
+    }, [enabled]);
     return getExperimentVariant;
 }

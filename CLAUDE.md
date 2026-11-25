@@ -57,9 +57,18 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - CMS API endpoint controlled by `API_ORIGIN` env var (defaults to `https://dev.openstax.org`)
 - Settings loaded from `{API_ORIGIN}/cms/webview-settings`
 - Custom hooks (`usePageData`, `useDocumentHead`, etc.) in `src/app/helpers/`
+- sfapi host (`src/app/models/sfapi.ts`) follows `accountHref`: dev and qa call
+  `dev.salesforce.openstax.org`; staging and production call `salesforce.openstax.org`.
 - Book details "used in N classrooms, saving students $S" numbers come from sfapi
   (`GET /api/v1/impact/books?name=<salesforce_name>`, Tableau rollover model), fetched by
   `src/app/models/book-impact.ts`. The CMS `adoptions`/`savings` fields are stale and unused.
+- `~/models/sfapi.ts` sends no cookies by default. Pass `{withCredentials: true}` only for endpoints
+  that need the Accounts login cookie (sfapi must allow credentials for that origin). Send no
+  headers beyond `Accept`: anything else triggers a CORS preflight, and sfapi allows a fixed list.
+  Writes go through `sfApiPost`, which fetches a CSRF token from `/csrf` first. sfapi accepts
+  cookie-authenticated writes only from its named frontend origins, on its browser-facing routes.
+  Local development (localhost) gets no sfapi data: CORS allows only each environment's own openstax.org
+  origins (production sfapi allows only the apex; dev sfapi allows dev, qa and staging).
 
 ### Code Splitting
 - `src/app/helpers/jit-load.tsx` — lazy loading wrapper using `React.lazy` + `Suspense`

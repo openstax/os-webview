@@ -11,8 +11,10 @@ import {useDataFromSlug} from '~/helpers/page-data-utils';
 import {useExperimentReader, type FlagValue} from '~/helpers/posthog';
 import {
     NAV_PRODUCTS_LABEL_FLAG,
+    dropdownLabel,
+    hasFlaggedNodes,
     isNodeVisible,
-    dropdownLabel
+    type FlagAwareNode
 } from './nav-experiments';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
@@ -20,34 +22,35 @@ import GiveItem from '../give-item/give-item';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import './main-menu.scss';
 
-type MenuItemData =
-    | {
-          name: string;
-          menu: MenuItemData[];
-          key?: string;
-          feature_flag?: string;
-          flag_value?: string;
-      }
-    | {
-          label: string;
-          partial_url: string;
-          key?: string;
-          feature_flag?: string;
-          flag_value?: string;
-      }
-    | object;
+type DropdownData = FlagAwareNode & {
+    name: string;
+    menu: MenuItemData[];
+};
+type LinkData = FlagAwareNode & {
+    label: string;
+    partial_url: string;
+};
+type MenuItemData = DropdownData | LinkData | object;
 
-function DropdownOrMenuItem({
-    item,
-    getVariant
-}: {
-    item: MenuItemData;
-    getVariant: (flag: string) => FlagValue;
-}) {
-    if (!('name' in item) && !('label' in item)) {
-        return null;
+type GetVariant = (flag: string) => FlagValue;
+
+function isRenderable(item: MenuItemData): item is DropdownData | LinkData {
+    return 'name' in item || 'label' in item;
+}
+
+// A dropdown counts only if one of its children does, so a fully gated
+// dropdown is not left as an expandable control with no links.
+function isRendered(item: MenuItemData, getVariant: GetVariant): boolean {
+    if (!isRenderable(item) || !isNodeVisible(item, getVariant)) {
+        return false;
     }
-    if (!isNodeVisible(item, getVariant)) {
+    return 'menu' in item
+        ? item.menu.some((child) => isRendered(child, getVariant))
+        : true;
+}
+
+function DropdownOrMenuItem({item, getVariant}: {item: MenuItemData; getVariant: GetVariant}) {
+    if (!isRenderable(item) || !isRendered(item, getVariant)) {
         return null;
     }
     if ('menu' in item) {
@@ -63,26 +66,17 @@ function DropdownOrMenuItem({
     return <MenuItem label={item.label} url={item.partial_url} />;
 }
 
-function stringProp(item: MenuItemData, prop: 'key' | 'partial_url' | 'name'): string | undefined {
-    const value = (item as Record<string, unknown>)[prop];
-
-    return typeof value === 'string' ? value : undefined;
-}
-
 function keyFor(item: MenuItemData, index: number): string | number {
-    return stringProp(item, 'key') ||
-        stringProp(item, 'partial_url') ||
-        stringProp(item, 'name') ||
-        index;
+    if ('key' in item && item.key) {
+        return item.key;
+    }
+    if ('label' in item) {
+        return item.label;
+    }
+    return index;
 }
 
-function MenusFromStructure({
-    structure,
-    getVariant
-}: {
-    structure: MenuItemData[];
-    getVariant: (flag: string) => FlagValue;
-}) {
+function MenusFromStructure({structure, getVariant}: {structure: MenuItemData[]; getVariant: GetVariant}) {
     return (
         <React.Fragment>
             {structure.map((item, index) => (
@@ -97,8 +91,8 @@ function MenusFromStructure({
 }
 
 function MenusFromCMS() {
-    const getVariant = useExperimentReader();
     const structure = useDataFromSlug<MenuItemData[]>('oxmenus');
+    const getVariant = useExperimentReader(hasFlaggedNodes(structure));
 
     // fetchFromCMS resolves with an {error} object (not an array) when the
     // CMS is unreachable, so a truthiness check alone lets it through to .map.

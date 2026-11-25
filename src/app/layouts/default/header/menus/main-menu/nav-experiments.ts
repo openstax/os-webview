@@ -7,21 +7,15 @@ export const NAV_PRODUCTS_LABEL_FLAG = 'nav-products-label';
 export const PRODUCTS_DROPDOWN_KEY = 'products-dropdown';
 const TOOLS_LABEL = 'Tools';
 
-/** Flag metadata any CMS menu node may carry (snake_case, matching the
- *  oxmenus API — same casing as `partial_url`). */
+// snake_case to match the oxmenus API, as with `partial_url`.
 export type FlagAwareNode = {
     key?: string;
     feature_flag?: string;
     flag_value?: string;
 };
 
-/** Generic visibility gate from a node's optional flag metadata.
- *  - no feature_flag     → always visible
- *  - flag_value provided → visible iff String(variant) === flag_value
- *  - flag_value blank    → visible iff the flag is truthy
- *  Nodes gated ON by a flag appear once PostHog's flags resolve (fine for
- *  additive items); author controls/defaults WITHOUT a feature_flag so they
- *  render immediately. */
+// Flagged nodes appear only once PostHog resolves, so anything that must paint
+// immediately is authored without a feature_flag.
 export function isNodeVisible(
     node: FlagAwareNode,
     getVariant: (flag: string) => FlagValue
@@ -34,7 +28,7 @@ export function isNodeVisible(
     const variant = getVariant(flag);
 
     if (node.flag_value) {
-        return String(variant) === node.flag_value;
+        return variant !== undefined && String(variant) === node.flag_value;
     }
     return Boolean(variant);
 }
@@ -49,4 +43,15 @@ export function dropdownLabel(
         return TOOLS_LABEL;
     }
     return node.name ?? '';
+}
+
+// True when any node in the (possibly nested) menu structure is flag-gated.
+export function hasFlaggedNodes(structure: unknown): boolean {
+    if (!Array.isArray(structure)) {
+        return false;
+    }
+    return structure.some(
+        (node: FlagAwareNode & {menu?: unknown}) =>
+            Boolean(node.feature_flag) || hasFlaggedNodes(node.menu)
+    );
 }

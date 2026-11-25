@@ -1,9 +1,25 @@
 import settings from '~/helpers/window-settings';
 
-const subdomains = ['dev.', 'qa.', 'staging.'];
-const subdomain =
-    subdomains.find((sd) => settings().accountHref?.includes(sd)) || '';
-const server = `https://${subdomain}salesforce.openstax.org`;
+// Only dev and production sfapi exist. QA uses the dev Salesforce sandbox;
+// staging shares production Salesforce.
+const sandboxEnvironments = ['dev.', 'qa.'];
+const useSandbox = sandboxEnvironments.some((env) =>
+    settings().accountHref?.includes(env)
+);
+const server = `https://${useSandbox ? 'dev.' : ''}salesforce.openstax.org`;
+
+async function fetchCsrfToken() {
+    const raw = await fetch(`${server}/api/v1/csrf`, {
+        credentials: 'include',
+        headers: {Accept: 'application/json'}
+    });
+    const body = raw.ok ? await raw.json() : {};
+
+    if (typeof body?.csrf_token !== 'string') {
+        throw new Error(`no CSRF token (status ${raw.status})`);
+    }
+    return body.csrf_token as string;
+}
 
 export async function sfApiPost(
     objectType: string,
@@ -14,20 +30,20 @@ export async function sfApiPost(
         const options = {
             credentials: 'include',
             method,
-            mode: 'cors',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': await fetchCsrfToken()
             },
             body: JSON.stringify(data)
         } as const;
         const raw = await fetch(`${server}/api/v1/${objectType}`, options);
 
         if (!raw.ok) {
-            const text = await raw.json();
+            const body = await raw.json().catch(() => ({}));
 
             console.warn('Failed with status', raw.status);
-            console.warn(text.error);
+            console.warn(body?.detail);
         }
         return raw;
     } catch (err) {
@@ -36,16 +52,18 @@ export async function sfApiPost(
     }
 }
 
-export default async function sfApiFetch(objectType: string, specifier = '') {
+type FetchOptions = {withCredentials?: boolean};
+
+// Only safelisted headers are sent, so the GET needs no CORS preflight.
+export default async function sfApiFetch(
+    objectType: string,
+    specifier = '',
+    {withCredentials = false}: FetchOptions = {}
+) {
     try {
         const raw = await fetch(`${server}/api/v1/${objectType}${specifier}`, {
-            credentials: 'include',
-            mode: 'cors',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Cache: 'no-0d4zFOeMPUmfxkCjHocCuoLa2SAGzBI8AREcH3eP3758F672DppA'
-            }
+            credentials: withCredentials ? 'include' : 'omit',
+            headers: {Accept: 'application/json'}
         });
         const result = await raw.json();
 
