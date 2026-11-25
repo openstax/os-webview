@@ -20,6 +20,10 @@ yarn jest layout.test    # Run a single test by name pattern
 yarn jest test/src/components/shell.test.tsx  # Run a specific test file
 ```
 Note: Tests require the build (`dist/` directory) to exist.
+CI runs `jest --coverage ./test/src` with a 100% global threshold on branches, lines, functions and
+statements (`package.json`), so one untested branch fails the build even when every test passes. Run
+the same command before pushing. If `.claude/worktrees/` exists, add
+`--testPathIgnorePatterns '/.claude/worktrees/'`, or jest also runs the worktree copies.
 
 ### Linting
 ```bash
