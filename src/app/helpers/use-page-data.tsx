@@ -8,7 +8,6 @@ import {
 } from '@openstax/ts-utils/fetch';
 import * as Sentry from '@sentry/react';
 import {fetchFromCMS, camelCaseKeys, Json} from '~/helpers/page-data-utils';
-import {captureException} from '~/helpers/posthog-exceptions';
 import type {LocaleEntry} from '~/components/language-selector/language-selector';
 
 export type Data = {
@@ -106,11 +105,10 @@ export function usePageDataFetchState<T>(
                 const failure =
                     reason instanceof Error ? reason : new Error(String(reason));
 
-                // Handling the rejection takes it away from the
-                // unhandled-rejection reporters, so it has to be sent on
+                // Handling the rejection takes it away from Sentry's
+                // unhandled-rejection capture, so it has to be sent on
                 // deliberately or the failure stops being visible.
                 Sentry.captureException(failure);
-                captureException(failure);
                 if (!cancelled) {
                     setFetched((previous) => ({slug, state: fetchError(failure, previous.state)}));
                     reportError.current?.(failure);

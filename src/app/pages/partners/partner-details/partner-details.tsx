@@ -1,6 +1,5 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
-import {captureException} from '~/helpers/posthog-exceptions';
 import usePartnerContext, {
     PartnerContextProvider,
     Model
@@ -41,10 +40,9 @@ function useRealTitles(books: Model['books']) {
         fetchBooks().then(
             (results) => setTitles(getTitlesFromAbbreviations(books, results)),
             (error: Error) => {
-                // Handling the rejection hides it from the unhandled-rejection
-                // reporters, so report it deliberately
+                // Handling the rejection hides it from Sentry's unhandled-rejection
+                // capture, so report it deliberately
                 Sentry.captureException(error);
-                captureException(error);
             }
         );
     }, [books]);

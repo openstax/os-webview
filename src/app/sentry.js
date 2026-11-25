@@ -3,8 +3,8 @@ import {isEmbedScriptUrl} from '~/components/jsx-helpers/activate-scripts';
 import isSupported from '~/helpers/device';
 import {denyUrls, isIgnoredMessage, isFromDeniedScheme, isFromDeniedUrl} from '~/helpers/exception-filters';
 
-// Sentry-only: it substring-matches these against the whole exception value,
-// which is too broad to share with PostHog. See helpers/exception-filters.
+// Sentry substring-matches these against the whole exception value, which is
+// too broad for the lists in helpers/exception-filters.
 const ignoreErrors = [
     'TypeError: Failed to fetch',
     'TypeError: Load failed',

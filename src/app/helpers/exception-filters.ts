@@ -1,9 +1,6 @@
-// Exception noise policy, shared by Sentry (src/app/sentry.js) and by the
-// PostHog exception autocapture that GTM loads (src/app/helpers/posthog.ts).
-// Keeping one list means a message the team has already decided to ignore is
-// ignored everywhere, instead of sitting at the top of one tool's issue list.
+// Exception noise policy, used by Sentry's `beforeSend` in src/app/sentry.js.
 //
-// Sentry's own `ignoreErrors` stays in sentry.js and is deliberately not shared:
+// Sentry's own `ignoreErrors` stays in sentry.js and is deliberately not here:
 // Sentry substring-matches it against the whole exception value, so an entry
 // like 'TypeError: Failed to fetch' also swallows our own
 // `Failed to fetch <slug>: ... TypeError: Failed to fetch` CMS failures, which

@@ -1,7 +1,6 @@
 import {fetchLoading, fetchSuccess, FetchStateType} from '@openstax/ts-utils/fetch';
 import {renderHook, waitFor, act} from '@testing-library/preact';
 import * as Sentry from '@sentry/react';
-import * as PostHog from '~/helpers/posthog-exceptions';
 import * as PageDataUtils from '~/helpers/page-data-utils';
 import usePageData, {usePageDataFetchState} from '~/helpers/use-page-data';
 
@@ -9,13 +8,11 @@ jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
 
 const captureException = Sentry.captureException as jest.Mock;
 const fetchFromCMS = jest.spyOn(PageDataUtils, 'fetchFromCMS');
-const reportToPostHog = jest.spyOn(PostHog, 'captureException');
 
 describe('use-page-data', () => {
     beforeEach(() => {
         captureException.mockClear();
         fetchFromCMS.mockReset();
-        reportToPostHog.mockReset().mockImplementation(() => undefined);
     });
 
     it('returns the data once it arrives', async () => {
@@ -45,10 +42,9 @@ describe('use-page-data', () => {
         );
         expect(onError).toHaveBeenCalledWith(failure);
 
-        // Handling the rejection takes it away from the unhandled-rejection
-        // reporters, so both tools have to hear about it explicitly.
+        // Handling the rejection takes it away from Sentry's unhandled-rejection
+        // capture, so it has to be reported explicitly.
         expect(captureException).toHaveBeenCalledWith(failure);
-        expect(reportToPostHog).toHaveBeenCalledWith(failure);
     });
 
     it('keeps a 404 response as page data', async () => {
@@ -62,7 +58,6 @@ describe('use-page-data', () => {
 
         await waitFor(() => expect(result.current).toEqual(fetchSuccess(missing)));
         expect(captureException).not.toHaveBeenCalled();
-        expect(reportToPostHog).not.toHaveBeenCalled();
     });
 
     it('wraps a rejection that is not an Error', async () => {

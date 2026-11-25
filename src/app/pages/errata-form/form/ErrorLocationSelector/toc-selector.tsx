@@ -1,6 +1,5 @@
 import React, {useState, useRef, useEffect, useMemo} from 'react';
 import * as Sentry from '@sentry/react';
-import {captureException} from '~/helpers/posthog-exceptions';
 import useErrataFormContext from '../../errata-form-context';
 import managedInvalidMessage from '../InvalidMessage';
 import bookToc from '~/models/book-toc';
@@ -158,10 +157,9 @@ function useTocTree(
                 const failure =
                     reason instanceof Error ? reason : new Error(String(reason));
 
-                // Handling the rejection takes it away from the
-                // unhandled-rejection reporters, so it is reported here
+                // Handling the rejection takes it away from Sentry's
+                // unhandled-rejection capture, so it is reported here
                 Sentry.captureException(failure);
-                captureException(failure);
                 if (!cancelled) {
                     updateTree([]);
                 }

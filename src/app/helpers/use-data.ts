@@ -2,7 +2,6 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
 import {getUrlFor, camelCaseKeys, transformData, Json} from './page-data-utils';
-import {captureException} from './posthog-exceptions';
 
 // Any Promise returned by fetch, or a CMS endpoint reference
 // we can use to make such a Promise
@@ -39,7 +38,6 @@ export default function useFetchedData<T>(
                 const failure = new Error(`Failed to fetch ${slug}: ${reason}`);
 
                 Sentry.captureException(failure);
-                captureException(failure);
                 throw failure;
             });
     }, [slug]);
