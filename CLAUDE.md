@@ -94,6 +94,51 @@ are accepted; any other version, a null, or a failed request is `error`.
   opened before a deploy 404s on the next chunk it requests; `src/app/helpers/stale-chunk.ts`
   detects that and reloads (at most twice per tab, tracked in sessionStorage).
 
+### Flex pages and audience gating
+- `src/app/pages/flex-page/flex-page.tsx` renders CMS-authored flex pages via
+  `@openstax/flex-page-renderer`'s `ContentBlockRoot`, using the block components in
+  `src/app/pages/flex-page/block-map.ts`.
+- CMS editors can set a free-text `rendering_condition` on a `hero`, `section`, or CTA button-bar
+  block (comma-separated condition slugs — OR semantics, at least one active slug renders the
+  block). `src/app/helpers/use-audience-conditions.ts` returns the slugs that apply to the current
+  viewer and `flex-page.tsx` passes that as `activeConditions` to `ContentBlockRoot`. The slugs are
+  the segments from sfapi personalization (see State Management); only when that request fails does
+  the hook fall back to deriving them from the Accounts user model, so gating degrades to the
+  pre-sfapi behaviour instead of breaking.
+- Slug vocabulary (the source of truth — keep this table, the CMS field's help text, and sfapi's
+  segment list in sync). The condition column is the Accounts-derived fallback (`buildConditions`
+  in the hook); sfapi computes the same segments server-side and also returns server-only ones such
+  as `adopter:current`, `adopter:renewal_due`, `adopter:lapsed`, `adopter:confirmed`,
+  `school:assignable_possible` and `assignable:user`, which have no fallback and are never active
+  when sfapi is down. `adopter:yes` may be absent from sfapi if Accounts does not expose it:
+  check that before relying on it.
+
+  | slug | condition |
+  |---|---|
+  | `role:anonymous` | not logged in |
+  | `role:student` | `accountsModel.self_reported_role === 'student'` |
+  | `role:instructor` | `accountsModel.faculty_status === 'confirmed_faculty'` |
+  | `role:admin` | `accountsModel.self_reported_role` is `administrator`, `librarian`, or `designer` |
+  | `status:verified` | `accountsModel.faculty_status === 'confirmed_faculty'` |
+  | `status:pending` | `userModel.pendingInstructorAccess` is true |
+  | `school:assignable` | `accountsModel.assignable_school_integrated === true` |
+  | `adopter:yes` | `accountsModel.using_openstax === true` |
+
+  A viewer can match several slugs at once (e.g. a confirmed-faculty self-declared administrator
+  gets `role:instructor`, `status:verified`, and `role:admin`).
+- `useAudienceConditions` returns `undefined` while personalization is `loading`, not an early
+  `['role:anonymous']`. That keeps gating additive: unconditioned blocks always render, and a
+  conditioned block only appears once the viewer's audience is actually known — emitting
+  `role:anonymous` immediately would show anonymous content to a logged-in instructor for a
+  moment and then swap it, a flash of wrong content plus a double layout shift. It returns
+  `['role:anonymous']` for `anonymous`, `data.segments` for `ready`, and the Accounts-derived
+  slugs for `error`.
+- `block-map.ts` wraps every block type (not just hero/section/CTA) with the same
+  `rendering_condition` check at module scope, so gating works even for block types the
+  `flex-page-renderer` package hasn't added its own check to yet. The condition value is a
+  comma-separated string, which is what the CMS's `rendering_condition` field emits and what the
+  renderer's own hero, section and CTA checks require.
+
 ### Patched dependencies
 - `patches/` holds `patch-package` diffs, reapplied by the `postinstall` script on every install.
 - `react-aria-carousel@0.2.0` is patched because its MutationObserver calls `hasAttribute` on
