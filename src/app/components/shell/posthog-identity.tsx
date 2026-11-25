@@ -15,17 +15,23 @@ function personProperties(data: PersonalizationData) {
 
 // Names and books stay out of PostHog; see the Personalization notes in CLAUDE.md.
 export default function PostHogIdentity() {
-    const {uuid} = useUserContext();
+    const {uuid, userLoaded} = useUserContext();
     const {status, data} = usePersonalization();
     const identifiedAs = React.useRef<string | undefined>(undefined);
 
     React.useEffect(() => {
         if (!uuid) {
-            if (!identifiedAs.current) {
+            if (!userLoaded) {
                 return undefined;
             }
-            identifiedAs.current = undefined;
-            return whenPostHogLoads((posthog) => posthog.reset());
+            // PostHog persists its identity across visits, so an Accounts session
+            // that expired since the last one leaves the old person attached.
+            return whenPostHogLoads((posthog) => {
+                identifiedAs.current = undefined;
+                if (posthog.get_property('$user_state') === 'identified') {
+                    posthog.reset();
+                }
+            });
         }
         const properties = status === 'ready' && data ? personProperties(data) : undefined;
 
@@ -38,7 +44,7 @@ export default function PostHogIdentity() {
                 posthog.setPersonProperties(properties);
             }
         });
-    }, [uuid, status, data]);
+    }, [uuid, userLoaded, status, data]);
 
     return null;
 }

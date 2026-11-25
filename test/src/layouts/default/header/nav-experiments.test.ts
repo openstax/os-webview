@@ -2,7 +2,8 @@ import {
     hasFlaggedNodes,
     isNodeVisible,
     dropdownLabel,
-    PRODUCTS_DROPDOWN_KEY
+    PRODUCTS_DROPDOWN_KEY,
+    usesExperiments
 } from '~/layouts/default/header/menus/main-menu/nav-experiments';
 
 /* eslint-disable camelcase */
@@ -37,6 +38,18 @@ describe('dropdownLabel', () => {
     });
     it('falls back to an empty string when name is missing', () => {
         expect(dropdownLabel({key: 'subjects'}, undefined)).toBe('');
+    });
+});
+
+describe('usesExperiments', () => {
+    it('is true for the Products dropdown even with no flagged node', () => {
+        expect(usesExperiments([{name: 'Products', key: 'products-dropdown', menu: []}])).toBe(true);
+        expect(usesExperiments([{name: 'More', menu: [{name: 'P', key: 'products-dropdown'}]}])).toBe(true);
+    });
+    it('is true for a flagged node and false otherwise', () => {
+        expect(usesExperiments([{label: 'A', feature_flag: 'f'}])).toBe(true);
+        expect(usesExperiments([{name: 'Learn', key: 'learn-dropdown', menu: [{label: 'A'}]}])).toBe(false);
+        expect(usesExperiments({error: 'CMS unreachable'})).toBe(false);
     });
 });
 

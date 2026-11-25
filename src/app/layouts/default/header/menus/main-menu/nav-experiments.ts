@@ -55,3 +55,15 @@ export function hasFlaggedNodes(structure: unknown): boolean {
             Boolean(node.feature_flag) || hasFlaggedNodes(node.menu)
     );
 }
+
+function hasProductsDropdown(structure: unknown): boolean {
+    return Array.isArray(structure) && structure.some(
+        (node: FlagAwareNode & {menu?: unknown}) =>
+            node.key === PRODUCTS_DROPDOWN_KEY || hasProductsDropdown(node.menu)
+    );
+}
+
+// The Products/Tools label swap reads a flag even when no node is flag-gated.
+export function usesExperiments(structure: unknown): boolean {
+    return hasFlaggedNodes(structure) || hasProductsDropdown(structure);
+}

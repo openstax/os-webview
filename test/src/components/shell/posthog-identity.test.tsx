@@ -9,7 +9,8 @@ import PostHogIdentity from '~/components/shell/posthog-identity';
 const posthog = {
     identify: jest.fn(),
     setPersonProperties: jest.fn(),
-    reset: jest.fn()
+    reset: jest.fn(),
+    'get_property': jest.fn()
 };
 const mockUser = jest.spyOn(UC, 'default');
 const mockPersonalization = jest.spyOn(PC, 'default');
@@ -26,8 +27,8 @@ const fetched = {
     school: {id: '001', name: 'Rice University', type: null, 'assignable_stage': null}
 };
 
-function setState(uuid: string | undefined, status: string, data?: object) {
-    mockUser.mockReturnValue({uuid} as any);
+function setState(uuid: string | undefined, status: string, data?: object, userLoaded = true) {
+    mockUser.mockReturnValue({uuid, userLoaded} as any);
     mockPersonalization.mockReturnValue({status, data, has: () => false} as any);
 }
 
@@ -79,7 +80,8 @@ describe('PostHogIdentity', () => {
         expect(posthog.setPersonProperties).toHaveBeenCalledTimes(1);
     });
 
-    it('does nothing for an anonymous visitor', () => {
+    it('leaves an already-anonymous PostHog identity alone', () => {
+        posthog.get_property.mockReturnValue('anonymous');
         setState(undefined, 'anonymous');
         render(<PostHogIdentity />);
 
@@ -87,10 +89,28 @@ describe('PostHogIdentity', () => {
         expect(posthog.reset).not.toHaveBeenCalled();
     });
 
+    it('waits for Accounts before deciding the visitor is anonymous', () => {
+        posthog.get_property.mockReturnValue('identified');
+        setState(undefined, 'loading', undefined, false);
+        render(<PostHogIdentity />);
+
+        expect(posthog.reset).not.toHaveBeenCalled();
+    });
+
+    it('clears an identity PostHog kept from an expired session', () => {
+        posthog.get_property.mockReturnValue('identified');
+        setState(undefined, 'anonymous');
+        render(<PostHogIdentity />);
+
+        expect(posthog.get_property).toHaveBeenCalledWith('$user_state');
+        expect(posthog.reset).toHaveBeenCalledTimes(1);
+    });
+
     it('resets the identity on logout', () => {
         setState('user-1', 'ready', fetched);
         const {rerender} = render(<PostHogIdentity />);
 
+        posthog.get_property.mockReturnValue('identified');
         setState(undefined, 'anonymous');
         rerender(<PostHogIdentity />);
 

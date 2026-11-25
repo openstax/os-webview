@@ -230,4 +230,29 @@ describe('MainMenuItems — generic flag resolver', () => {
         await screen.findByText('Tools');
         expect(screen.queryByText('Products')).toBeNull();
     });
+
+    it('relabels the Products dropdown when its flag resolves after render', async () => {
+        let flagsLoaded = false;
+        const ph = installPostHog({
+            getFeatureFlag: jest.fn((flag: string) =>
+                flagsLoaded && flag === 'nav-products-label' ? 'tools' : undefined
+            )
+        });
+        (useDataFromSlug as jest.Mock).mockReturnValue([
+            {
+                name: 'Products',
+                key: 'products-dropdown',
+                menu: [{label: 'Example Item', partial_url: '/example'}]
+            }
+        ]);
+
+        render(<Component />);
+        await screen.findByText('Products');
+
+        flagsLoaded = true;
+        const allCbs = ph.onFeatureFlags.mock.calls.map((call: [() => void]) => call[0]);
+
+        act(() => allCbs.forEach((cb: () => void) => cb()));
+        await screen.findByText('Tools');
+    });
 });

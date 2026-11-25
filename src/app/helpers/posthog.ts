@@ -11,6 +11,7 @@ type PostHogClient = {
     capture: (event: string, properties?: Properties) => void;
     identify: (uuid: string, properties?: Properties) => void;
     setPersonProperties: (properties: Properties) => void;
+    get_property: (name: string) => unknown;
     reset: () => void;
     register: (properties: Properties) => void;
 };

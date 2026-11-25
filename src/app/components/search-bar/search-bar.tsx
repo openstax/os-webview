@@ -34,7 +34,7 @@ export default function SearchBar({searchFor, amongWhat}: SearchBarParams) {
         <SearchContextProvider contextValueParameters={{searchFor}}>
             <div className="search-bar">
                 <SearchInput amongWhat={amongWhat} />
-                <SearchButton />
+                <SearchButton amongWhat={amongWhat} />
             </div>
         </SearchContextProvider>
     );
@@ -52,11 +52,11 @@ function SearchInput({amongWhat}: Pick<SearchBarParams, 'amongWhat'>) {
         (event: React.KeyboardEvent) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                captureEvent('book_search_performed', {searchQuery: searchString});
+                captureEvent('content_search_performed', {searchQuery: searchString, contentType: amongWhat});
                 doSearch();
             }
         },
-        [doSearch, searchString]
+        [doSearch, searchString, amongWhat]
     );
     const inputId = `search-${amongWhat}`;
 
@@ -120,12 +120,12 @@ function ClearButton() {
     );
 }
 
-function SearchButton() {
+function SearchButton({amongWhat}: Pick<SearchBarParams, 'amongWhat'>) {
     const {doSearch, searchString} = useSearchContext();
     const handleSearch = React.useCallback(() => {
-        captureEvent('book_search_performed', {searchQuery: searchString});
+        captureEvent('content_search_performed', {searchQuery: searchString, contentType: amongWhat});
         doSearch();
-    }, [doSearch, searchString]);
+    }, [doSearch, searchString, amongWhat]);
 
     return (
         <button

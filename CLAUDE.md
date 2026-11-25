@@ -240,10 +240,15 @@ Main routes in `router.tsx`:
   (`useExperimentReader`), events (`captureEvent`), super properties (`registerProperties`), and
   `whenPostHogLoads` for anything that must wait for GTM to load PostHog. Calls made before then are
   dropped, not queued.
-- Some events come from GTM tags, not this repo: `book_engagement_clicked` (View online, Download a PDF,
-  Order a print copy, Table of contents and resource links), `donate_clicked`, `resource_downloaded`,
-  `nav_click` and `form_submitted_gtm`. `book_engagement_clicked` and `donate_clicked` are PostHog
-  conversion goals. Don't capture the same clicks again from code under another name.
+- Some events come from GTM tags, not this repo, and GTM decides what counts:
+  - `book_engagement_clicked` matches link text: View online, Download a PDF, Order a print copy, Table of
+    contents, the Instructor and Student resources tabs, Download for Kindle, and the order options.
+  - `resource_downloaded` matches only some instructor-resource file URLs.
+  - The others are `donate_clicked`, `nav_click` (`[data-analytics-link]`) and `form_submitted_gtm`.
+
+  `book_engagement_clicked` and `donate_clicked` are PostHog conversion goals. Don't capture the same
+  clicks again from code under another name. `resource_accessed` is not a duplicate: it covers every
+  resource item, which neither GTM event does.
 
 ## Error reporting (PostHog)
 

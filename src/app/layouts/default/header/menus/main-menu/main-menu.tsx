@@ -12,8 +12,8 @@ import {useExperimentReader, type FlagValue} from '~/helpers/posthog';
 import {
     NAV_PRODUCTS_LABEL_FLAG,
     dropdownLabel,
-    hasFlaggedNodes,
     isNodeVisible,
+    usesExperiments,
     type FlagAwareNode
 } from './nav-experiments';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
@@ -92,7 +92,7 @@ function MenusFromStructure({structure, getVariant}: {structure: MenuItemData[];
 
 function MenusFromCMS() {
     const structure = useDataFromSlug<MenuItemData[]>('oxmenus');
-    const getVariant = useExperimentReader(hasFlaggedNodes(structure));
+    const getVariant = useExperimentReader(usesExperiments(structure));
 
     // fetchFromCMS resolves with an {error} object (not an array) when the
     // CMS is unreachable, so a truthiness check alone lets it through to .map.

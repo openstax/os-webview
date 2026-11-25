@@ -2,7 +2,7 @@ import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/helpers/cms-fetch';
 import {usePromise} from '~/helpers/use-data';
-import {registerProperties} from '~/helpers/posthog';
+import {registerProperties, whenPostHogLoads} from '~/helpers/posthog';
 
 type FlagName =
     | 'new_subjects'
@@ -35,10 +35,11 @@ function useContextValue() {
     // Tag every subsequent PostHog event with the streamlined_nav cohort, so
     // its effect on any existing funnel can be measured without new events.
     React.useEffect(() => {
-        if (flags) {
-            /* eslint-disable-next-line camelcase */
-            registerProperties({streamlined_nav: Boolean(flags.streamlined_nav)});
+        if (!flags) {
+            return undefined;
         }
+        /* eslint-disable-next-line camelcase */
+        return whenPostHogLoads(() => registerProperties({streamlined_nav: Boolean(flags.streamlined_nav)}));
     }, [flags]);
 
     return {
