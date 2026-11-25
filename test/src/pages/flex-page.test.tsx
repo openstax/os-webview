@@ -6,6 +6,11 @@ import userEvent from '@testing-library/user-event';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import FlexPage, {LayoutUsingData} from '~/pages/flex-page/flex-page';
 import { LayoutContextProvider } from '~/contexts/layout';
+import * as UAC from '~/helpers/use-audience-conditions';
+import * as PC from '~/contexts/personalization';
+import * as PortalContext from '~/contexts/portal';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 type Data = Parameters<typeof FlexPage>[0]['data'];
 type BodyBlock = Data['body'][number];
@@ -476,3 +481,161 @@ function bigNumberBlock(number = '42', caption?: string, color?: string): BodyBl
         value: {number, caption, color}
     } as BodyBlock;
 }
+
+function conditionedBlock(id: string, condition: string | undefined, text: string): BodyBlock {
+    const config = condition === undefined ? [] : [{type: 'rendering_condition', value: condition}];
+
+    return {
+        id,
+        type: 'section',
+        value: {
+            content: [{id: `${id}-text`, type: 'text', value: text}],
+            config
+        }
+    } as BodyBlock;
+}
+
+// `divider` has no built-in condition check, so it exercises only our wrapper.
+function conditionedDivider(id: string, condition: string): BodyBlock {
+    return {
+        id,
+        type: 'divider',
+        value: {
+            image: {id: `${id}-image-id`, file: `/foo/${id}-image.jpg`, height: 400, width: 300},
+            config: [{type: 'rendering_condition', value: condition}]
+        }
+    } as BodyBlock;
+}
+
+describe('flex-page audience gating', () => {
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    function mockActiveConditions(value: string[] | undefined) {
+        jest.spyOn(UAC, 'default').mockReturnValue(value as any);
+    }
+
+    it('renders a block with no rendering_condition regardless of resolution state', () => {
+        mockActiveConditions(undefined);
+        body = [conditionedBlock('open', undefined, 'Open text')];
+        render(<Component />);
+        screen.getByText('Open text');
+    });
+
+    it('hides a conditioned block while activeConditions is unresolved (undefined)', () => {
+        mockActiveConditions(undefined);
+        body = [conditionedBlock('gated', 'role:instructor', 'Gated text')];
+        render(<Component />);
+        expect(screen.queryByText('Gated text')).toBe(null);
+    });
+
+    it('renders a conditioned block once its slug is active', () => {
+        mockActiveConditions(['role:instructor']);
+        body = [conditionedBlock('gated', 'role:instructor', 'Gated text')];
+        render(<Component />);
+        screen.getByText('Gated text');
+    });
+
+    it('hides a conditioned block whose slug is not active', () => {
+        mockActiveConditions(['role:student']);
+        body = [conditionedBlock('gated', 'role:instructor', 'Gated text')];
+        render(<Component />);
+        expect(screen.queryByText('Gated text')).toBe(null);
+    });
+
+    it('matches with OR semantics when only one of several slugs is active', () => {
+        mockActiveConditions(['role:admin']);
+        body = [conditionedBlock('gated', 'role:instructor,role:admin', 'Gated text')];
+        render(<Component />);
+        screen.getByText('Gated text');
+    });
+
+    it('tolerates whitespace around comma-separated condition slugs', () => {
+        mockActiveConditions(['role:admin']);
+        body = [conditionedBlock('gated', '  role:instructor ,  role:admin  ', 'Gated text')];
+        render(<Component />);
+        screen.getByText('Gated text');
+    });
+
+    it('gates a block type that has no condition check of its own', () => {
+        mockActiveConditions(['role:admin']);
+        body = [conditionedDivider('gated', ' role:instructor , role:admin ')];
+        render(<Component />);
+        expect(screen.queryAllByRole('img')).toHaveLength(1);
+    });
+
+    it('hides a block type with no check of its own when no slug is active', () => {
+        mockActiveConditions(['role:student']);
+        body = [conditionedDivider('gated', 'role:instructor,role:admin')];
+        render(<Component />);
+        expect(screen.queryAllByRole('img')).toHaveLength(0);
+    });
+
+    it('rewrites portal links again when conditioned blocks appear', () => {
+        const rewriteLinks = jest.fn();
+        const actualPortalContext = PortalContext.default;
+
+        jest.spyOn(PortalContext, 'default').mockImplementation(() => ({...actualPortalContext(), rewriteLinks}));
+        mockActiveConditions(undefined);
+        // The same data object each render, so only the audience can trigger a rewrite
+        const data = {
+            body: [conditionedBlock('gated', 'role:admin', 'Gated text')],
+            layout: [{type: 'landing'}],
+            schoolData: null
+        } as Data;
+        const StableComponent = () => (
+            <ShellContextProvider>
+                <MemoryRouter initialEntries={['']}>
+                    <FlexPage data={data} />
+                </MemoryRouter>
+            </ShellContextProvider>
+        );
+        const {rerender} = render(<StableComponent />);
+        const callsWhileLoading = rewriteLinks.mock.calls.length;
+
+        expect(screen.queryByText('Gated text')).toBe(null);
+        mockActiveConditions(['role:admin']);
+        rerender(<StableComponent />);
+        screen.getByText('Gated text');
+        expect(rewriteLinks.mock.calls.length).toBeGreaterThan(callsWhileLoading);
+    });
+
+    describe('with segments from sfapi personalization', () => {
+        function mockPersonalization(status: string, segments?: string[]) {
+            jest.spyOn(PC, 'usePersonalization').mockReturnValue({
+                status,
+                data: segments && {v: 1, audience: 'instructor', segments},
+                has: () => false
+            } as any);
+        }
+
+        it('renders a conditioned block when sfapi returns its slug', () => {
+            mockPersonalization('ready', ['role:instructor', 'adopter:current']);
+            body = [conditionedBlock('gated', 'adopter:current', 'Gated text')];
+            render(<Component />);
+            screen.getByText('Gated text');
+        });
+
+        it('hides a conditioned block for a slug sfapi did not return', () => {
+            mockPersonalization('ready', ['role:instructor']);
+            body = [conditionedBlock('gated', 'adopter:lapsed', 'Gated text')];
+            render(<Component />);
+            expect(screen.queryByText('Gated text')).toBe(null);
+        });
+
+        it('hides a conditioned block while personalization is loading', () => {
+            mockPersonalization('loading');
+            body = [conditionedBlock('gated', 'role:anonymous', 'Gated text')];
+            render(<Component />);
+            expect(screen.queryByText('Gated text')).toBe(null);
+        });
+
+        it('shows the anonymous variant to an anonymous visitor', () => {
+            mockPersonalization('anonymous');
+            body = [conditionedBlock('gated', 'role:anonymous', 'Gated text')];
+            render(<Component />);
+            screen.getByText('Gated text');
+        });
+    });
+});

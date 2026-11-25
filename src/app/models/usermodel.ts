@@ -120,8 +120,16 @@ const throttledLoginCheck = throttle((setData) => {
     });
 }, 20000);
 
+const NOT_LOADED: Partial<UserModelType> = {};
+
+// Anonymous visitors load as an empty model too, so identity tells them apart
+// from a model that has not loaded yet.
+function isUserModelLoaded(model: unknown) {
+    return model !== NOT_LOADED;
+}
+
 function useUserModel() {
-    const [data, setData] = useState<Partial<UserModelType>>({});
+    const [data, setData] = useState<Partial<UserModelType>>(NOT_LOADED);
 
     useEffect(() => {
         const check = () => throttledLoginCheck(setData);
@@ -136,4 +144,4 @@ function useUserModel() {
 }
 
 export default userModel;
-export {useUserModel};
+export {useUserModel, isUserModelLoaded};

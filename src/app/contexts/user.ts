@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
 import buildContext from '~/components/jsx-helpers/build-context';
-import {useUserModel, UserModelType} from '~/models/usermodel';
+import {useUserModel, isUserModelLoaded, UserModelType} from '~/models/usermodel';
 import debounce from 'lodash/debounce';
 
 const debouncedDebug = debounce((...args) => console.debug(...args), 100);
@@ -51,6 +51,7 @@ function useContextValue() {
     // Derive login state from userStatus (always available) with fallback to model
     // This is the canonical way to check if a user is logged in
     const isLoggedIn = Boolean(userStatus?.uuid || model?.uuid);
+    const userLoaded = isUserModelLoaded(model);
     const value = React.useMemo(
         () =>
             model.last_name
@@ -64,10 +65,11 @@ function useContextValue() {
                       uuid: model.uuid,
                       isVerified,
                       isLoggedIn,
+                      userLoaded,
                       userStatus
                   }
-                : {isLoggedIn, userStatus, uuid: userStatus?.uuid},
-        [model, userStatus, isVerified, isLoggedIn]
+                : {isLoggedIn, userLoaded, userStatus, uuid: userStatus?.uuid},
+        [model, userStatus, isVerified, isLoggedIn, userLoaded]
     );
 
     React.useEffect(() => {
