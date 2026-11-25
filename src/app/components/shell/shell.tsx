@@ -10,6 +10,7 @@ import {SalesforceContextProvider} from '~/contexts/salesforce';
 import {PortalContextProvider} from '~/contexts/portal';
 import HeadlessUserbar from '~/components/headless-userbar/headless-userbar';
 import ChromeFallback from './chrome-fallback';
+import PostHogIdentity from './posthog-identity';
 
 import Error404 from '~/pages/404/404';
 
@@ -18,6 +19,7 @@ function AppContext({children}: React.PropsWithChildren<object>) {
         <SharedDataContextProvider>
             <UserContextProvider>
                 <PersonalizationContextProvider>
+                    <PostHogIdentity />
                     <LanguageContextProvider>
                         <PortalContextProvider>
                             <SubjectCategoryContextProvider>

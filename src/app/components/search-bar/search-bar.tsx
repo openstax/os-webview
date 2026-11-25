@@ -8,6 +8,7 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import {treatSpaceOrEnterAsClick} from '~/helpers/events';
 import cn from 'classnames';
+import {captureEvent} from '~/helpers/posthog';
 import './search-bar.scss';
 
 type SearchBarParams = {
@@ -33,7 +34,7 @@ export default function SearchBar({searchFor, amongWhat}: SearchBarParams) {
         <SearchContextProvider contextValueParameters={{searchFor}}>
             <div className="search-bar">
                 <SearchInput amongWhat={amongWhat} />
-                <SearchButton />
+                <SearchButton amongWhat={amongWhat} />
             </div>
         </SearchContextProvider>
     );
@@ -51,10 +52,11 @@ function SearchInput({amongWhat}: Pick<SearchBarParams, 'amongWhat'>) {
         (event: React.KeyboardEvent) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
+                captureEvent('content_search_performed', {searchQuery: searchString, contentType: amongWhat});
                 doSearch();
             }
         },
-        [doSearch]
+        [doSearch, searchString, amongWhat]
     );
     const inputId = `search-${amongWhat}`;
 
@@ -118,14 +120,18 @@ function ClearButton() {
     );
 }
 
-function SearchButton() {
-    const {doSearch} = useSearchContext();
+function SearchButton({amongWhat}: Pick<SearchBarParams, 'amongWhat'>) {
+    const {doSearch, searchString} = useSearchContext();
+    const handleSearch = React.useCallback(() => {
+        captureEvent('content_search_performed', {searchQuery: searchString, contentType: amongWhat});
+        doSearch();
+    }, [doSearch, searchString, amongWhat]);
 
     return (
         <button
             className="btn primary"
             type="button"
-            onClick={doSearch}
+            onClick={handleSearch}
             aria-label="search"
         >
             <FontAwesomeIcon icon={faSearch} />

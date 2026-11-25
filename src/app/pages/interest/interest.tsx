@@ -6,6 +6,7 @@ import StudentForm from '~/components/student-form/student-form';
 import MultiPageForm from '~/components/multi-page-form/multi-page-form';
 import ContactInfo from '~/components/contact-info/contact-info';
 import {useAfterSubmit} from '~/components/book-selector/after-form-submit';
+import {captureEvent} from '~/helpers/posthog';
 import BookSelector, {
     useSelectedBooks
 } from '~/components/book-selector/book-selector';
@@ -134,7 +135,11 @@ function FacultyForm({
     role: string;
 }) {
     const selectedBooksRef = useRef<SalesforceBook[]>([]);
-    const afterSubmit = useAfterSubmit(selectedBooksRef);
+    const goToPartners = useAfterSubmit(selectedBooksRef);
+    const afterSubmit = React.useCallback(() => {
+        captureEvent('interest_form_submitted', {bookCount: selectedBooksRef.current.length});
+        goToPartners();
+    }, [goToPartners]);
     const {onSubmit, submitting, FormTarget} = useFormTarget(afterSubmit);
     const {interestUrl} = useSalesforceContext();
 

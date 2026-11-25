@@ -7,8 +7,6 @@ import {useDataFromSlug} from '~/helpers/page-data-utils';
 
 jest.mock('~/models/give-today', () => jest.fn().mockReturnValue({}));
 
-// Mock page-data-utils so we can control what useDataFromSlug('oxmenus') returns.
-// We spread requireActual so everything else (fetchFromCMS, etc.) still works.
 jest.mock('~/helpers/page-data-utils', () => ({
     ...jest.requireActual('~/helpers/page-data-utils'),
     useDataFromSlug: jest.fn()
@@ -20,6 +18,7 @@ type FakePostHog = {
     __loaded?: boolean;
     getFeatureFlag: jest.Mock;
     onFeatureFlags: jest.Mock;
+    register: jest.Mock;
 };
 
 function installPostHog(overrides: Partial<FakePostHog> = {}) {
@@ -27,6 +26,7 @@ function installPostHog(overrides: Partial<FakePostHog> = {}) {
         __loaded: true,
         getFeatureFlag: jest.fn().mockReturnValue(undefined),
         onFeatureFlags: jest.fn(),
+        register: jest.fn(),
         ...overrides
     };
     (window as unknown as {posthog?: FakePostHog}).posthog = ph;
@@ -209,5 +209,50 @@ describe('MainMenuItems — generic flag resolver', () => {
 
         await screen.findByText('Subjects');
         expect(screen.queryByRole('link', {name: 'Example Item'})).toBeNull();
+    });
+
+    it('shows the Tools label for the Products dropdown experiment', async () => {
+        installPostHog({
+            getFeatureFlag: jest.fn((flag: string) =>
+                flag === 'nav-products-label' ? 'tools' : undefined
+            )
+        });
+        (useDataFromSlug as jest.Mock).mockReturnValue([
+            {
+                name: 'Products',
+                key: 'products-dropdown',
+                menu: [{label: 'Example Item', partial_url: '/example'}]
+            }
+        ]);
+
+        render(<Component />);
+
+        await screen.findByText('Tools');
+        expect(screen.queryByText('Products')).toBeNull();
+    });
+
+    it('relabels the Products dropdown when its flag resolves after render', async () => {
+        let flagsLoaded = false;
+        const ph = installPostHog({
+            getFeatureFlag: jest.fn((flag: string) =>
+                flagsLoaded && flag === 'nav-products-label' ? 'tools' : undefined
+            )
+        });
+        (useDataFromSlug as jest.Mock).mockReturnValue([
+            {
+                name: 'Products',
+                key: 'products-dropdown',
+                menu: [{label: 'Example Item', partial_url: '/example'}]
+            }
+        ]);
+
+        render(<Component />);
+        await screen.findByText('Products');
+
+        flagsLoaded = true;
+        const allCbs = ph.onFeatureFlags.mock.calls.map((call: [() => void]) => call[0]);
+
+        act(() => allCbs.forEach((cb: () => void) => cb()));
+        await screen.findByText('Tools');
     });
 });

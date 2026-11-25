@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
-import {render, screen} from '@testing-library/preact';
+import {render, screen, fireEvent} from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import InterestPage from '~/pages/interest/interest';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
@@ -9,6 +9,7 @@ import {SharedDataContextProvider} from '~/contexts/shared-data';
 import {LanguageContextProvider} from '~/contexts/language';
 import * as CI from '~/components/contact-info/contact-info';
 import * as DH from '~/helpers/use-document-head';
+import * as PostHog from '~/helpers/posthog';
 
 jest.spyOn(CI, 'default').mockReturnValue(<h1>Contact info</h1>);
 jest.spyOn(DH, 'default').mockReturnValue();
@@ -79,6 +80,13 @@ describe('interest form', () => {
         await user.click(screen.getByRole('button', {name: 'Submit'}));
         expect(console.error).toHaveBeenCalled();
         console.error = saveError;
+
+        // The hidden iframe loading is what tells the form the submission went through
+        const captureEvent = jest.spyOn(PostHog, 'captureEvent').mockImplementation(() => undefined);
+
+        fireEvent.load(document.getElementById('form-target') as HTMLIFrameElement);
+        expect(captureEvent).toHaveBeenCalledWith('interest_form_submitted', {bookCount: expect.any(Number)});
+        captureEvent.mockRestore();
     });
     it('navigates to previous page', async () => {
         render(<Component />);

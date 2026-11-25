@@ -9,7 +9,13 @@ import {FormattedMessage} from 'react-intl';
 import {useLocation} from 'react-router-dom';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import {useExperimentReader, type FlagValue} from '~/helpers/posthog';
-import {hasFlaggedNodes, isNodeVisible, type FlagAwareNode} from './nav-experiments';
+import {
+    NAV_PRODUCTS_LABEL_FLAG,
+    dropdownLabel,
+    isNodeVisible,
+    usesExperiments,
+    type FlagAwareNode
+} from './nav-experiments';
 import Dropdown, {MenuItem} from './dropdown/dropdown';
 import LoginMenu from './login-menu/login-menu';
 import GiveItem from '../give-item/give-item';
@@ -48,11 +54,10 @@ function DropdownOrMenuItem({item, getVariant}: {item: MenuItemData; getVariant:
         return null;
     }
     if ('menu' in item) {
+        const label = dropdownLabel(item, getVariant(NAV_PRODUCTS_LABEL_FLAG));
+
         return (
-            <Dropdown
-                label={item.name}
-                navAnalytics={`Main Menu (${item.name})`}
-            >
+            <Dropdown label={label} navAnalytics={`Main Menu (${item.name})`}>
                 <MenusFromStructure structure={item.menu} getVariant={getVariant} />
             </Dropdown>
         );
@@ -87,7 +92,7 @@ function MenusFromStructure({structure, getVariant}: {structure: MenuItemData[];
 
 function MenusFromCMS() {
     const structure = useDataFromSlug<MenuItemData[]>('oxmenus');
-    const getVariant = useExperimentReader(hasFlaggedNodes(structure));
+    const getVariant = useExperimentReader(usesExperiments(structure));
 
     // fetchFromCMS resolves with an {error} object (not an array) when the
     // CMS is unreachable, so a truthiness check alone lets it through to .map.

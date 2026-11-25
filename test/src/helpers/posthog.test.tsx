@@ -1,11 +1,21 @@
 import React from 'react';
 import {render, act} from '@testing-library/preact';
-import {getExperimentVariant, useExperimentReader} from '~/helpers/posthog';
+import {
+    getExperimentVariant,
+    captureEvent,
+    registerProperties,
+    useExperimentReader,
+    whenPostHogLoads
+} from '~/helpers/posthog';
 
 type FakePostHog = {
     __loaded?: boolean;
     getFeatureFlag: jest.Mock;
     onFeatureFlags: jest.Mock;
+    capture: jest.Mock;
+    identify: jest.Mock;
+    reset: jest.Mock;
+    register: jest.Mock;
 };
 
 function installPostHog(overrides: Partial<FakePostHog> = {}) {
@@ -13,6 +23,10 @@ function installPostHog(overrides: Partial<FakePostHog> = {}) {
         __loaded: true,
         getFeatureFlag: jest.fn(),
         onFeatureFlags: jest.fn(),
+        capture: jest.fn(),
+        identify: jest.fn(),
+        reset: jest.fn(),
+        register: jest.fn(),
         ...overrides
     };
 
@@ -38,7 +52,7 @@ describe('posthog helper', () => {
 
     it('getExperimentVariant reads the flag', () => {
         installPostHog({getFeatureFlag: jest.fn().mockReturnValue('tools')});
-        expect(getExperimentVariant('nav-example-item')).toBe('tools');
+        expect(getExperimentVariant('nav-products-label')).toBe('tools');
     });
 
     it('getExperimentVariant does not read from the bootstrap stub', () => {
@@ -46,6 +60,56 @@ describe('posthog helper', () => {
 
         expect(getExperimentVariant('nav-example-item')).toBeUndefined();
         expect(ph.getFeatureFlag).not.toHaveBeenCalled();
+    });
+
+    it('captureEvent no-ops without posthog', () => {
+        delete (window as unknown as {posthog?: unknown}).posthog;
+        expect(() => captureEvent('thing_clicked')).not.toThrow();
+    });
+
+    it('captureEvent forwards to posthog', () => {
+        const ph = installPostHog();
+        captureEvent('thing_clicked', {a: 1});
+        expect(ph.capture).toHaveBeenCalledWith('thing_clicked', {a: 1});
+    });
+
+    it('registerProperties no-ops without posthog', () => {
+        delete (window as unknown as {posthog?: unknown}).posthog;
+        expect(() => registerProperties({streamlined_nav: true})).not.toThrow();
+    });
+
+    it('registerProperties forwards to posthog', () => {
+        const ph = installPostHog();
+        registerProperties({streamlined_nav: true});
+        expect(ph.register).toHaveBeenCalledWith({streamlined_nav: true});
+    });
+});
+
+describe('whenPostHogLoads', () => {
+    it('calls back at once when PostHog is loaded', () => {
+        const ph = installPostHog();
+        const callback = jest.fn();
+
+        whenPostHogLoads(callback);
+        expect(callback).toHaveBeenCalledWith(ph);
+    });
+
+    it('waits for PostHog to load, and can be cancelled', () => {
+        jest.useFakeTimers();
+        const callback = jest.fn();
+        const late = jest.fn();
+
+        whenPostHogLoads(callback);
+        const cancel = whenPostHogLoads(late);
+
+        cancel();
+        const ph = installPostHog();
+
+        act(() => {
+            jest.advanceTimersByTime(1000);
+        });
+        expect(callback).toHaveBeenCalledWith(ph);
+        expect(late).not.toHaveBeenCalled();
     });
 });
 

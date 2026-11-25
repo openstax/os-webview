@@ -1,9 +1,12 @@
+import React from 'react';
 import buildContext from '~/components/jsx-helpers/build-context';
 import cmsFetch from '~/helpers/cms-fetch';
 import {usePromise} from '~/helpers/use-data';
+import {registerProperties, whenPostHogLoads} from '~/helpers/posthog';
 
 type FlagName =
     | 'new_subjects'
+    | 'streamlined_nav'
     | 'chat_book_details'
     | 'chat_subjects'
     | 'chat_contact'
@@ -28,6 +31,16 @@ function useFlags() {
 
 function useContextValue() {
     const flags = useFlags();
+
+    // Tag every subsequent PostHog event with the streamlined_nav cohort, so
+    // its effect on any existing funnel can be measured without new events.
+    React.useEffect(() => {
+        if (!flags) {
+            return undefined;
+        }
+        /* eslint-disable-next-line camelcase */
+        return whenPostHogLoads(() => registerProperties({streamlined_nav: Boolean(flags.streamlined_nav)}));
+    }, [flags]);
 
     return {
         flags

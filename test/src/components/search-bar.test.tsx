@@ -3,6 +3,7 @@ import {describe, it, expect} from '@jest/globals';
 import {render, screen, fireEvent} from '@testing-library/preact';
 import MemoryRouter from '~/../../test/helpers/future-memory-router';
 import SearchBar from '~/components/search-bar/search-bar';
+import * as PostHog from '~/helpers/posthog';
 
 describe('search-bar', () => {
     const searchFor = jest.fn();
@@ -41,5 +42,26 @@ describe('search-bar', () => {
         expect(clear).toBeTruthy();
         fireEvent.click(clear as HTMLButtonElement);
         expect(input.value).toBe('');
+    });
+    it('handles search button click', () => {
+        const searchButton = screen.getAllByRole('button').find((el) => el.getAttribute('aria-label') === 'search');
+
+        fireEvent.input(input, {target: {value: 'biology'}});
+        fireEvent.click(searchButton as HTMLButtonElement);
+        expect(searchFor).toHaveBeenCalled();
+    });
+    it('records a content search with what was searched, from Enter and the button', () => {
+        const captureEvent = jest.spyOn(PostHog, 'captureEvent').mockImplementation(() => undefined);
+        const searchButton = screen.getAllByRole('button').find((el) => el.getAttribute('aria-label') === 'search');
+
+        fireEvent.input(input, {target: {value: 'biology'}});
+        fireEvent.keyDown(input, {key: 'Enter'});
+        fireEvent.click(searchButton as HTMLButtonElement);
+        expect(captureEvent).toHaveBeenCalledTimes(2);
+        expect(captureEvent).toHaveBeenCalledWith(
+            'content_search_performed',
+            {searchQuery: 'biology', contentType: 'things'}
+        );
+        captureEvent.mockRestore();
     });
 });
