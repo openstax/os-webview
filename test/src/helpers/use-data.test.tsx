@@ -2,6 +2,7 @@ import React from 'react';
 import {describe, it, expect} from '@jest/globals';
 import {act, render, screen, waitFor} from '@testing-library/preact';
 import * as Sentry from '@sentry/react';
+import {CmsUnreachableError} from '~/helpers/cms-errors';
 import useFetchedData, {usePromise} from '~/helpers/use-data';
 
 jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
@@ -77,11 +78,12 @@ describe('use-data', () => {
 
         screen.getByText('ok');
         expect(unhandled).not.toHaveBeenCalled();
-        const failure = reportToSentry.mock.calls[0][0] as Error;
+        const failure = reportToSentry.mock.calls[0][0] as CmsUnreachableError;
 
-        expect(failure.message).toBe(
-            'Failed to fetch failing-slug: TypeError: Load failed'
-        );
+        expect(reportToSentry).toHaveBeenCalledTimes(1);
+        expect(failure).toBeInstanceOf(CmsUnreachableError);
+        expect(failure.message).toBe('Couldn\'t reach the CMS for failing-slug');
+        expect(failure.reason).toBe('TypeError: Load failed');
     });
     it('handles url', async () => {
         (global.fetch as jest.Mock).mockImplementationOnce(() =>

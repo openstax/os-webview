@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react';
+import {CmsUnreachableError} from '~/helpers/cms-errors';
 import '~/sentry';
 
 jest.mock('@sentry/react', () => ({
@@ -17,10 +18,12 @@ type Frame = {filename?: string};
 type SentryEvent = {
     exception?: {values: {stacktrace?: {frames: Frame[]}}[]};
     tags?: Record<string, unknown>;
+    level?: string;
+    fingerprint?: string[];
 };
 
 const options = (Sentry.init as jest.Mock).mock.calls[0][0];
-const beforeSend: (event: SentryEvent) => SentryEvent | null = options.beforeSend;
+const beforeSend: (event: SentryEvent, hint?: {originalException?: unknown}) => SentryEvent | null = options.beforeSend;
 const page = 'https://dev.openstax.org/details/books/biology-2e';
 const ourBundle = 'https://dev.openstax.org/dist/main-abc.min.js';
 const vendor = 'https://cdn.example.com/dist/lib.js';
@@ -79,6 +82,18 @@ describe('sentry', () => {
         expect(sentOrDropped({exception: {values: [{}]}})).toBe('sent');
         expect(sentOrDropped({})).toBe('sent');
         expect(sentOrDropped(eventWithFrames(undefined))).toBe('sent');
+    });
+    it('keeps the first CMS failure per endpoint and drops the next', () => {
+        const hint = {originalException: new CmsUnreachableError('sentry-test/one', 'x')};
+        const first = eventWithFrames(ourBundle);
+
+        expect(beforeSend(first, hint)).toBe(first);
+        expect(first).toMatchObject({
+            level: 'warning',
+            fingerprint: ['CmsUnreachableError', 'sentry-test'],
+            tags: {'cms_endpoint': 'sentry-test'}
+        });
+        expect(beforeSend(eventWithFrames(ourBundle), hint)).toBeNull();
     });
     describe('on Chrome or the Google app for iOS', () => {
         beforeEach(() => {

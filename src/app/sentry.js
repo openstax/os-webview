@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/react';
 import {isEmbedScriptUrl} from '~/components/jsx-helpers/activate-scripts';
+import {applyCmsRules} from '~/helpers/cms-errors';
 import isSupported from '~/helpers/device';
 import {denyUrls, isIgnoredMessage, isFromDeniedScheme, isFromDeniedUrl} from '~/helpers/exception-filters';
 
@@ -96,6 +97,9 @@ function beforeSend(event, hint) {
     const urls = scriptUrls(event);
 
     if (isFromOtherScripts(urls)) {
+        return null;
+    }
+    if (!applyCmsRules(event, hint?.originalException)) {
         return null;
     }
     if (urls.some(isCmsEmbed)) {

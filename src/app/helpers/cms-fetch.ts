@@ -1,37 +1,38 @@
+import * as Sentry from '@sentry/react';
 import retry from '~/helpers/retry';
+import {CmsUnreachableError, NotJsonError} from './cms-errors';
 import urlFromSlug from './url-from-slug';
 
-export class NotJsonError extends Error {
-
-    name = 'NotJsonError';
-
+export function reported<E>(failure: E) {
+    Sentry.captureException(failure);
+    return failure;
 }
 
-// The browser's own SyntaxError wording differs per engine, and the noise
-// filters match on it, so report what the CMS sent instead.
 export async function readJson(response: Response, path: string) {
     try {
         return await response.json();
     } catch {
         const contentType = response.headers?.get('content-type')?.split(';')[0].trim() || 'no content type';
 
-        throw new NotJsonError(
-            `CMS returned ${contentType} instead of JSON (HTTP ${response.status}) for ${path}`
-        );
+        throw new NotJsonError(path, response.status, contentType);
     }
 }
 
 export default async function cmsFetch(path: string) {
     const url = path.replace(/[^?]+/, urlFromSlug);
+    let response;
+
+    try {
+        response = await retry(() => fetch(url));
+    } catch (err) {
+        return Promise.reject(reported(new CmsUnreachableError(path, err)));
+    }
 
     try {
         // `await` is required: without it .json() rejects outside the try
-        return await readJson(await retry(() => fetch(url)), path);
+        return await readJson(response, path);
     } catch (err) {
-        if (err instanceof NotJsonError) {
-            return Promise.reject(err);
-        }
-        return Promise.reject(new Error(`Failed to fetch ${path}: ${err}`));
+        return Promise.reject(reported(err));
     }
 }
 

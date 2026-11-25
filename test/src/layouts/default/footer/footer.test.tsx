@@ -1,11 +1,14 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/preact';
 import '@testing-library/jest-dom';
+import * as Sentry from '@sentry/react';
 import * as UPD from '~/helpers/use-page-data';
 import * as PDU from '~/helpers/page-data-utils';
 import FooterLoader from '~/layouts/default/footer/footer';
 import MemoryRouter from '../../../../helpers/future-memory-router';
 import footerMenus from '../../../data/footer-menus';
+
+jest.mock('@sentry/react', () => ({captureMessage: jest.fn(), captureException: jest.fn()}));
 
 const mockUsePageData = jest.spyOn(UPD, 'default');
 const mockUseDataFromSlug = jest.spyOn(PDU, 'useDataFromSlug');
@@ -140,6 +143,7 @@ describe('Footer', () => {
 
         expect(() => renderFooter()).not.toThrow();
 
+        expect(Sentry.captureMessage).not.toHaveBeenCalled();
         expect(screen.getByRole('link', {name: 'Privacy Notice'})).toHaveAttribute('href', '/privacy');
         expect(screen.getByText(footerData.supporters)).toBeInTheDocument();
         expect(screen.getByRole('link', {name: 'Rice University logo'})).toHaveAttribute(

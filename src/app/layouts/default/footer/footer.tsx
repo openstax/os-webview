@@ -15,7 +15,6 @@ import {faTiktok} from '@fortawesome/free-brands-svg-icons/faTiktok';
 import {faThreads} from '@fortawesome/free-brands-svg-icons/faThreads';
 import {faBluesky} from '@fortawesome/free-brands-svg-icons/faBluesky';
 import {faMastodon} from '@fortawesome/free-brands-svg-icons/faMastodon';
-import * as Sentry from '@sentry/react';
 import usePortalContext from '~/contexts/portal';
 import {useDataFromSlug} from '~/helpers/page-data-utils';
 import './footer.scss';
@@ -88,12 +87,6 @@ const fallbackColumns: FooterMenuColumn[] = fallbackLinks.map(([key, name, links
 function useFooterColumns() {
     const structure = useDataFromSlug<FooterMenuColumn[]>('oxmenus/?placement=footer');
     const failed = structure === null || (structure !== undefined && !Array.isArray(structure));
-
-    React.useEffect(() => {
-        if (failed) {
-            Sentry.captureMessage('Footer columns request failed; using fallback links');
-        }
-    }, [failed]);
 
     if (failed) {
         return fallbackColumns;

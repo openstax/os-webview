@@ -2,6 +2,7 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
 import {getUrlFor, camelCaseKeys, transformData, Json} from './page-data-utils';
+import {CmsUnreachableError} from './cms-errors';
 
 // Any Promise returned by fetch, or a CMS endpoint reference
 // we can use to make such a Promise
@@ -30,12 +31,12 @@ export default function useFetchedData<T>(
         if (!slug) {
             return null;
         }
-        // usePromise swallows the rejection, which takes it away from the
-        // unhandled-rejection reporters, so it is reported here instead
+        // usePromise swallows the rejection, which takes it away from Sentry's
+        // unhandled-rejection capture, so it is reported here instead
         return getUrlFor(slug)
             .then((url: string) => fetch(url))
             .catch((reason: unknown) => {
-                const failure = new Error(`Failed to fetch ${slug}: ${reason}`);
+                const failure = new CmsUnreachableError(slug, reason);
 
                 Sentry.captureException(failure);
                 throw failure;

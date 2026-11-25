@@ -1,5 +1,7 @@
 import React from 'react';
 import {act, render, screen} from '@testing-library/preact';
+import * as Sentry from '@sentry/react';
+import {CmsUnreachableError, NotJsonError} from '~/helpers/cms-errors';
 import * as BookTitles from '~/models/book-titles';
 import {
     fetchFromCMS,
@@ -7,6 +9,8 @@ import {
     useDataFromPromise,
     useTextFromSlug
 } from '~/helpers/page-data-utils';
+
+jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
 
 const mockFetch = jest.fn();
 
@@ -19,23 +23,47 @@ describe('page-data-utils', () => {
             mockFetch.mockResolvedValueOnce({
                 status: 404
             });
+            (Sentry.captureException as jest.Mock).mockClear();
             expect(await fetchFromCMS('whatever')).toEqual({
                 error: new Error('page not found'),
                 slug: 'whatever'
             });
+            expect(Sentry.captureException).not.toHaveBeenCalled();
         });
-        it('handles error', async () => {
+        it('returns CmsUnreachableError, reported once, when the fetch rejects', async () => {
             const saveWarn = console.warn;
 
             console.warn = jest.fn();
+            (Sentry.captureException as jest.Mock).mockClear();
             mockFetch.mockImplementation(() => {
                 throw new TypeError('Load failed');
             });
-            expect(await fetchFromCMS('whatever')).toEqual({
-                error: new Error('Failed to fetch whatever: TypeError: Load failed'),
-                slug: 'whatever'
+            const {error, slug} = await fetchFromCMS('whatever/more');
+
+            expect(slug).toBe('whatever/more');
+            expect(error).toBeInstanceOf(CmsUnreachableError);
+            expect(error.message).toBe('Couldn\'t reach the CMS for whatever/more');
+            expect(error.reason).toBe('TypeError: Load failed');
+            expect(console.warn).toHaveBeenCalledWith(error.message);
+            expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+            expect(Sentry.captureException).toHaveBeenCalledWith(error);
+            console.warn = saveWarn;
+        });
+        it('returns NotJsonError, reported once, when the body is not JSON', async () => {
+            const saveWarn = console.warn;
+
+            console.warn = jest.fn();
+            (Sentry.captureException as jest.Mock).mockClear();
+            mockFetch.mockResolvedValueOnce({
+                status: 200,
+                json: () => Promise.reject(new SyntaxError('Unexpected token <'))
             });
-            expect(console.warn).toHaveBeenCalled();
+            const {error} = await fetchFromCMS('whatever');
+
+            expect(error).toBeInstanceOf(NotJsonError);
+            expect(error.message).toBe('CMS returned no content type instead of JSON (HTTP 200) for whatever');
+            expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+            expect(Sentry.captureException).toHaveBeenCalledWith(error);
             console.warn = saveWarn;
         });
     });
