@@ -3,7 +3,6 @@ import {render, screen, act} from '@testing-library/preact';
 import * as Sentry from '@sentry/react';
 import useMatchingSchools from '~/models/use-school-suggestion-list';
 import * as SFAPI from '~/models/sfapi';
-import * as PostHog from '~/helpers/posthog-exceptions';
 
 jest.mock('@sentry/react', () => ({captureException: jest.fn()}));
 
@@ -47,11 +46,9 @@ describe('models/use-school-suggestion-list', () => {
 
     jest.useFakeTimers();
 
-    let reportToPostHog: jest.SpyInstance;
 
     beforeEach(() => {
         reportToSentry.mockClear();
-        reportToPostHog = jest.spyOn(PostHog, 'captureException').mockImplementation(() => undefined);
     });
 
     afterEach(() => {
@@ -128,10 +125,9 @@ describe('models/use-school-suggestion-list', () => {
         expect(global.fetch).toHaveBeenCalledTimes(1);
         expectNoCmsRequest(global.fetch as jest.Mock);
         expect(reportToSentry).not.toHaveBeenCalled();
-        expect(reportToPostHog).not.toHaveBeenCalled();
     });
 
-    it('gives an empty list, and reports to both tools, when the request fails', async () => {
+    it('gives an empty list, and reports to Sentry, when the request fails', async () => {
         global.fetch = jest.fn().mockRejectedValue(new Error('expected'));
         jest.spyOn(console, 'warn').mockImplementation(() => undefined);
         render(<Component searchTerm="Casper College" />);
@@ -140,7 +136,6 @@ describe('models/use-school-suggestion-list', () => {
         expect(global.fetch).toHaveBeenCalledTimes(1);
         expectNoCmsRequest(global.fetch as jest.Mock);
         expect(reportToSentry).toHaveBeenCalledTimes(1);
-        expect(reportToPostHog).toHaveBeenCalledTimes(1);
     });
 
     it('reports only when sfApiFetch returns null', async () => {
@@ -149,6 +144,5 @@ describe('models/use-school-suggestion-list', () => {
         await settle();
         screen.getByText(0);
         expect(reportToSentry).toHaveBeenCalledTimes(1);
-        expect(reportToPostHog).toHaveBeenCalledTimes(1);
     });
 });

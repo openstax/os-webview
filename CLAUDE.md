@@ -81,7 +81,7 @@ All state management uses React Context (no Redux). Key contexts in `src/app/con
 - The school autocomplete (`src/app/models/use-school-suggestion-list.ts`) reads sfapi
   `GET /api/v1/schools?name=` through `sfApiFetch`, with a 3-character minimum and a 300 ms debounce.
   There is no CMS fallback: a 404, a 429 or `null` all give an empty list, and only `null` (a network
-  failure) is reported to Sentry and PostHog. sfapi adds `total_school_enrollment` for openstax.org
+  failure) is reported to Sentry. sfapi adds `total_school_enrollment` for openstax.org
   origins; it becomes a string for the form's hidden field, or empty. The separatemap page still uses
   the CMS schools endpoint through `query-schools.ts`.
 
