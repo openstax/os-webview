@@ -1,10 +1,9 @@
-// Exception noise policy, used by Sentry's `beforeSend` in src/app/sentry.js.
+// Noise lists for Sentry's `beforeSend` in src/app/sentry.js.
 //
-// Sentry's own `ignoreErrors` stays in sentry.js and is deliberately not here:
-// Sentry substring-matches it against the whole exception value, so an entry
-// like 'TypeError: Failed to fetch' also swallows our own
-// `Failed to fetch <slug>: ... TypeError: Failed to fetch` CMS failures, which
-// are exactly the ones we want to keep seeing.
+// `ignoreErrors` lives in sentry.js because Sentry applies it itself, as a
+// substring match against the whole exception value. That also catches our own
+// wrapped messages: 'TypeError: Failed to fetch' drops
+// `Failed to fetch <slug>: ... TypeError: Failed to fetch` as well.
 
 export const ignoreMessages = [
     'g.readyState',

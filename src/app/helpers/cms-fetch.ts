@@ -1,7 +1,11 @@
 import retry from '~/helpers/retry';
 import urlFromSlug from './url-from-slug';
 
-export class NotJsonError extends Error {}
+export class NotJsonError extends Error {
+
+    name = 'NotJsonError';
+
+}
 
 // The browser's own SyntaxError wording differs per engine, and the noise
 // filters match on it, so report what the CMS sent instead.

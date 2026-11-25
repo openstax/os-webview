@@ -33,9 +33,10 @@ describe('cms-fetch', () => {
     it('says what the CMS sent when a 502 body is not JSON', async () => {
         (retry as jest.Mock).mockResolvedValueOnce(htmlResponse(502, 'text/html'));
 
-        await expect(cmsFetch('emergency/')).rejects.toThrow(
-            new Error('CMS returned text/html instead of JSON (HTTP 502) for emergency/')
-        );
+        await expect(cmsFetch('emergency/')).rejects.toMatchObject({
+            name: 'NotJsonError',
+            message: 'CMS returned text/html instead of JSON (HTTP 502) for emergency/'
+        });
     });
     it('says so when the response has no content type', async () => {
         (retry as jest.Mock).mockResolvedValueOnce(htmlResponse(502, null));
