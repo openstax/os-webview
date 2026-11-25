@@ -53,11 +53,17 @@ function messageOf(event, error) {
     return typeof value === 'string' ? value : '';
 }
 
+// Sentry runs third-party callbacks inside its own wrapper, which leaves a frame
+// from our npm.sentry chunk on their stacks. That frame says nothing about who threw.
+function isSentryWrapper(url) {
+    return url.startsWith(`${window.location.origin}/dist/npm.sentry`);
+}
+
 function scriptUrls(event) {
     return (event.exception?.values ?? [])
         .flatMap((value) => value.stacktrace?.frames ?? [])
         .map((frame) => frame.filename)
-        .filter((url) => (/^(blob:)?[a-z-]+:\/\//).test(url));
+        .filter((url) => (/^(blob:)?[a-z-]+:\/\//).test(url) && !isSentryWrapper(url));
 }
 
 // Sentry's Safari and Firefox stack parser drops the blob: prefix from a frame

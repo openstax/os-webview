@@ -26,6 +26,7 @@ const ourBundle = 'https://dev.openstax.org/dist/main-abc.min.js';
 const vendor = 'https://cdn.example.com/dist/lib.js';
 const extension = 'chrome-extension://abc/content.js';
 const cmsEmbed = 'blob:https://dev.openstax.org/cms-1';
+const sentryWrapper = 'https://dev.openstax.org/dist/npm.sentry-abc.min.js';
 
 function eventWithFrames(...filenames: (string | undefined)[]): SentryEvent {
     return {
@@ -49,6 +50,11 @@ describe('sentry', () => {
     });
     it('drops errors made only of other origins', () => {
         expect(sentOrDropped(eventWithFrames(extension, vendor, '<anonymous>'))).toBe('dropped');
+    });
+    it('does not count the frame Sentry adds when it wraps a third-party callback', () => {
+        expect(sentOrDropped(eventWithFrames(vendor, sentryWrapper))).toBe('dropped');
+        expect(sentOrDropped(eventWithFrames(ourBundle, sentryWrapper))).toBe('sent');
+        expect(sentOrDropped(eventWithFrames(page, sentryWrapper))).toBe('sent');
     });
     it('keeps inline scripts, which GTM tags and CMS embeds run as', () => {
         expect(sentOrDropped(eventWithFrames(page, vendor))).toBe('sent');
