@@ -39,6 +39,38 @@ describe('page-data-utils', () => {
             console.warn = saveWarn;
         });
     });
+    describe('fetchFromCMS with a body that is not JSON', () => {
+        const saveWarn = console.warn;
+        const htmlResponse = (status: number, contentType: string | null) => ({
+            status,
+            headers: {get: (name: string) => (name === 'content-type' ? contentType : null)},
+            json: () => Promise.reject(new SyntaxError('Unexpected token \'<\''))
+        });
+
+        beforeEach(() => {console.warn = jest.fn();});
+        afterEach(() => {console.warn = saveWarn;});
+        it.each([
+            [200, 'text/html', 'text/html'],
+            [502, 'text/html; charset=utf-8', 'text/html'],
+            [502, null, 'no content type']
+        ])('reports HTTP %s with content type %s', async (status, header, shown) => {
+            mockFetch.mockResolvedValueOnce(htmlResponse(status, header));
+            const result = await fetchFromCMS('emergency/');
+
+            expect(result).toEqual({
+                error: new Error(`CMS returned ${shown} instead of JSON (HTTP ${status}) for emergency/`),
+                slug: 'emergency/'
+            });
+            expect(console.warn).toHaveBeenCalledWith(result.error.message);
+        });
+        it('returns the parsed body of a non-OK JSON response', async () => {
+            mockFetch.mockResolvedValueOnce({
+                status: 400,
+                json: () => Promise.resolve({detail: 'bad'})
+            });
+            expect(await fetchFromCMS('whatever', true)).toEqual({detail: 'bad', slug: 'whatever'});
+        });
+    });
     describe('getUrlFor', () => {
         it('leaves url as slug if no book found', async () => {
             expect(await getUrlFor('books/originalslug')).toMatch(

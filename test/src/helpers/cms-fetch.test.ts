@@ -15,16 +15,49 @@ const mockFetch = jest.fn().mockResolvedValue({
 global.fetch = mockFetch;
 
 describe('cms-fetch', () => {
-    it('rejects when response json parsing fails', async () => {
-        (retry as jest.Mock).mockResolvedValueOnce({
-            json() {
-                return Promise.reject(new Error('json failed'));
-            }
-        });
+    const htmlResponse = (status: number, contentType: string | null) => ({
+        status,
+        headers: {get: (name: string) => (name === 'content-type' ? contentType : null)},
+        json() {
+            return Promise.reject(new SyntaxError('Unexpected token \'<\''));
+        }
+    });
+
+    it('says what the CMS sent when a 200 body is not JSON', async () => {
+        (retry as jest.Mock).mockResolvedValueOnce(htmlResponse(200, 'text/html; charset=utf-8'));
+
+        await expect(cmsFetch('emergency/')).rejects.toThrow(
+            new Error('CMS returned text/html instead of JSON (HTTP 200) for emergency/')
+        );
+    });
+    it('says what the CMS sent when a 502 body is not JSON', async () => {
+        (retry as jest.Mock).mockResolvedValueOnce(htmlResponse(502, 'text/html'));
+
+        await expect(cmsFetch('emergency/')).rejects.toThrow(
+            new Error('CMS returned text/html instead of JSON (HTTP 502) for emergency/')
+        );
+    });
+    it('says so when the response has no content type', async () => {
+        (retry as jest.Mock).mockResolvedValueOnce(htmlResponse(502, null));
+
+        await expect(cmsFetch('emergency/')).rejects.toThrow(
+            new Error('CMS returned no content type instead of JSON (HTTP 502) for emergency/')
+        );
+    });
+    it('keeps the old message when fetch fails', async () => {
+        (retry as jest.Mock).mockRejectedValueOnce(new TypeError('Load failed'));
 
         await expect(cmsFetch('anything')).rejects.toThrow(
-            'Failed to fetch anything: Error: json failed'
+            new Error('Failed to fetch anything: TypeError: Load failed')
         );
+    });
+    it('returns the parsed body of a non-OK JSON response', async () => {
+        (retry as jest.Mock).mockResolvedValueOnce({
+            status: 400,
+            json: () => Promise.resolve({detail: 'bad'})
+        });
+
+        await expect(cmsFetch('anything')).resolves.toEqual({detail: 'bad'});
     });
     it('rejects when retry throws', async () => {
         (retry as jest.Mock).mockImplementationOnce(() => {

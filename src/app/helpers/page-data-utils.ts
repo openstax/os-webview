@@ -1,5 +1,6 @@
 import React from 'react';
 import * as BookTitles from '~/models/book-titles';
+import {NotJsonError, readJson} from './cms-fetch';
 import urlFromSlug from './url-from-slug';
 
 type TypeAndValue = {
@@ -97,10 +98,11 @@ export async function fetchFromCMS(slug: string, preserveWrapping = false) {
                 return {error: new Error('page not found')};
             }
 
-            return response.json();
+            return readJson(response, slug);
         });
     } catch (err) {
-        const failure = new Error(`Failed to fetch ${slug}: ${err}`);
+        const failure =
+            err instanceof NotJsonError ? err : new Error(`Failed to fetch ${slug}: ${err}`);
 
         console.warn(failure.message);
         data = {error: failure};
