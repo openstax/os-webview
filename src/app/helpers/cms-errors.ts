@@ -46,7 +46,7 @@ export class NotJsonError extends Error {
 
 }
 
-function isCmsError(error: unknown): error is CmsErrorLike {
+export function isCmsError(error: unknown): error is CmsErrorLike {
     const candidate = error as Partial<CmsErrorLike> | null | undefined;
 
     return (

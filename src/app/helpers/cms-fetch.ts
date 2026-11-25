@@ -8,13 +8,23 @@ export function reported<E>(failure: E) {
     return failure;
 }
 
+function contentTypeOf(response: Response) {
+    return response.headers?.get('content-type')?.split(';')[0].trim() || 'no content type';
+}
+
+// A connection that drops mid-body also rejects .json(). Safari's parse failure
+// is a DOMException named SyntaxError, so check the name, not the class.
+function isParseFailure(err: unknown) {
+    return (err as {name?: string} | null)?.name === 'SyntaxError';
+}
+
 export async function readJson(response: Response, path: string) {
     try {
         return await response.json();
-    } catch {
-        const contentType = response.headers?.get('content-type')?.split(';')[0].trim() || 'no content type';
-
-        throw new NotJsonError(path, response.status, contentType);
+    } catch (err) {
+        throw isParseFailure(err)
+            ? new NotJsonError(path, response.status, contentTypeOf(response))
+            : new CmsUnreachableError(path, err);
     }
 }
 

@@ -7,6 +7,7 @@ import * as PDU from '~/helpers/page-data-utils';
 import FooterLoader from '~/layouts/default/footer/footer';
 import MemoryRouter from '../../../../helpers/future-memory-router';
 import footerMenus from '../../../data/footer-menus';
+import {CmsUnreachableError} from '~/helpers/cms-errors';
 
 jest.mock('@sentry/react', () => ({captureMessage: jest.fn(), captureException: jest.fn()}));
 
@@ -139,10 +140,11 @@ describe('Footer', () => {
     });
 
     it('falls back to the built-in links when the columns request fails', () => {
-        mockUseDataFromSlug.mockReturnValue({error: new Error('Failed to fetch'), slug: 'oxmenus'});
+        mockUseDataFromSlug.mockReturnValue({error: new CmsUnreachableError('oxmenus/', 'x'), slug: 'oxmenus'});
 
         expect(() => renderFooter()).not.toThrow();
 
+        // The request already reported this failure where it happened
         expect(Sentry.captureMessage).not.toHaveBeenCalled();
         expect(screen.getByRole('link', {name: 'Privacy Notice'})).toHaveAttribute('href', '/privacy');
         expect(screen.getByText(footerData.supporters)).toBeInTheDocument();
@@ -150,6 +152,18 @@ describe('Footer', () => {
             'href',
             'http://www.rice.edu'
         );
+    });
+
+    it('reports a fallback whose cause was not reported upstream', () => {
+        (Sentry.captureMessage as jest.Mock).mockClear();
+        mockUseDataFromSlug.mockReturnValue({error: new Error('page not found'), slug: 'oxmenus'});
+        renderFooter();
+
+        expect(Sentry.captureMessage).toHaveBeenCalledWith(
+            'Footer columns request failed; using fallback links',
+            'warning'
+        );
+        expect(screen.getByRole('link', {name: 'Privacy Notice'})).toBeInTheDocument();
     });
 
     it('shows no columns while the request is still loading', () => {

@@ -49,6 +49,27 @@ describe('cms-fetch', () => {
         expect(Sentry.captureException).toHaveBeenCalledTimes(1);
         expect(Sentry.captureException).toHaveBeenCalledWith(failure);
     });
+    it('treats a body that fails to arrive as unreachable, not as bad JSON', async () => {
+        (retry as jest.Mock).mockResolvedValueOnce({
+            status: 200,
+            json: () => Promise.reject(new TypeError('Load failed'))
+        });
+
+        const failure = await cmsFetch('emergency/').catch((err) => err);
+
+        expect(failure).toBeInstanceOf(CmsUnreachableError);
+        expect(failure.reason).toBe('TypeError: Load failed');
+        expect(Sentry.captureException).toHaveBeenCalledWith(failure);
+    });
+    it('treats Safari\'s SyntaxError DOMException as bad JSON', async () => {
+        (retry as jest.Mock).mockResolvedValueOnce({
+            status: 200,
+            headers: {get: () => 'text/html'},
+            json: () => Promise.reject(new DOMException('The string did not match the expected pattern.', 'SyntaxError'))
+        });
+
+        await expect(cmsFetch('emergency/')).rejects.toBeInstanceOf(NotJsonError);
+    });
     it('says so when the response has no content type', async () => {
         (retry as jest.Mock).mockResolvedValueOnce(htmlResponse(502, null));
 
