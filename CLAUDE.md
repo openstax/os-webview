@@ -86,6 +86,12 @@ are accepted; any other version, a null, or a failed request is `error`.
   cookie-authenticated writes only from its named frontend origins, on its browser-facing routes.
   Local development (localhost) gets no sfapi data: CORS allows only each environment's own openstax.org
   origins (production sfapi allows only the apex; dev sfapi allows dev, qa and staging).
+- The school autocomplete (`src/app/models/use-school-suggestion-list.ts`) reads sfapi
+  `GET /api/v1/schools?name=` through `sfApiFetch`, with a 3-character minimum and a 300 ms debounce.
+  There is no CMS fallback: a 404, a 429 or `null` all give an empty list, and only `null` (a network
+  failure) is reported to Sentry and PostHog. sfapi adds `total_school_enrollment` for openstax.org
+  origins; it becomes a string for the form's hidden field, or empty. The separatemap page still uses
+  the CMS schools endpoint through `query-schools.ts`.
 
 ### Code Splitting
 - `src/app/helpers/jit-load.tsx` — lazy loading wrapper using `React.lazy` + `Suspense`
