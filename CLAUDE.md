@@ -66,8 +66,11 @@ are accepted; any other version, a null, or a failed request is `error`.
   undefined.
 - Source of truth: Accounts owns identity and verification; sfapi owns school, adoption and Assignable
   state; the CMS owns content and flags.
-- Guardrail: personalization data never goes on `window`, in `dataLayer`, GTM, PostHog or Sentry, or in
-  storage other than the segments above. GTM tags, PostHog and CMS embeds can read anything global.
+- Guardrail: personalization data never goes on `window`, in `dataLayer`, GTM or Sentry, or in storage
+  other than the segments above. GTM tags and CMS embeds can read anything global. The one exception is
+  PostHog: `components/shell/posthog-identity.tsx` identifies a logged-in visitor by uuid and sets
+  `audience`, `segments` and the school name as person properties, for experiment targeting and
+  breakdowns. Names, adoption books and Assignable details never go to PostHog.
 
 ### Data Fetching
 - `src/app/helpers/cms-fetch.ts` — primary data fetching utility, wraps `fetch()` with retry logic
@@ -230,6 +233,17 @@ Main routes in `router.tsx`:
   `osweb@$RELEASE_VERSION` (the release tag). `sentry.js` builds the same string from
   `process.env.RELEASE_VERSION`. Tokens come from SSM `/shared/codebuild/*`. If one is missing the
   build warns and skips the upload, so a release can ship unsymbolicated without failing.
+
+## PostHog analytics and experiments
+
+- `helpers/posthog.ts` is the only handle on PostHog for analytics: feature flags
+  (`useExperimentReader`), events (`captureEvent`), super properties (`registerProperties`), and
+  `whenPostHogLoads` for anything that must wait for GTM to load PostHog. Calls made before then are
+  dropped, not queued.
+- Some events come from GTM tags, not this repo: `book_engagement_clicked` (View online, Download a PDF,
+  Order a print copy, Table of contents and resource links), `donate_clicked`, `resource_downloaded`,
+  `nav_click` and `form_submitted_gtm`. `book_engagement_clicked` and `donate_clicked` are PostHog
+  conversion goals. Don't capture the same clicks again from code under another name.
 
 ## Error reporting (PostHog)
 

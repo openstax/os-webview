@@ -2,7 +2,6 @@ import React from 'react';
 import ThankYou, {useOnThankYouClick} from './thank-you-form';
 import CommonElements from './common-elements';
 import type {DonationPopupData} from './use-donation-popup-data';
-import {captureEvent} from '~/helpers/posthog';
 import {useResolvedGiveLink} from './use-give-links';
 import './give-before-pdf.scss';
 
@@ -86,13 +85,12 @@ function GiveBeforePdfAfterConditionals({
 
     const closeAfterDelay = React.useCallback(
         (event: React.MouseEvent) => {
-            captureEvent('pdf_downloaded', {bookFormat: track});
             if (onDownload) {
                 onDownload(event);
             }
             window.setTimeout(close, 200);
         },
-        [close, onDownload, track]
+        [close, onDownload]
     );
 
     return (

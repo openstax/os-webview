@@ -3,10 +3,9 @@ import {render, act} from '@testing-library/preact';
 import {
     getExperimentVariant,
     captureEvent,
-    identifyUser,
-    resetUser,
     registerProperties,
-    useExperimentReader
+    useExperimentReader,
+    whenPostHogLoads
 } from '~/helpers/posthog';
 
 type FakePostHog = {
@@ -74,28 +73,6 @@ describe('posthog helper', () => {
         expect(ph.capture).toHaveBeenCalledWith('thing_clicked', {a: 1});
     });
 
-    it('identifyUser no-ops without posthog', () => {
-        delete (window as unknown as {posthog?: unknown}).posthog;
-        expect(() => identifyUser('uuid-1')).not.toThrow();
-    });
-
-    it('identifyUser forwards to posthog', () => {
-        const ph = installPostHog();
-        identifyUser('uuid-1', {isInstructor: true});
-        expect(ph.identify).toHaveBeenCalledWith('uuid-1', {isInstructor: true});
-    });
-
-    it('resetUser no-ops without posthog', () => {
-        delete (window as unknown as {posthog?: unknown}).posthog;
-        expect(() => resetUser()).not.toThrow();
-    });
-
-    it('resetUser forwards to posthog', () => {
-        const ph = installPostHog();
-        resetUser();
-        expect(ph.reset).toHaveBeenCalled();
-    });
-
     it('registerProperties no-ops without posthog', () => {
         delete (window as unknown as {posthog?: unknown}).posthog;
         expect(() => registerProperties({streamlined_nav: true})).not.toThrow();
@@ -105,6 +82,34 @@ describe('posthog helper', () => {
         const ph = installPostHog();
         registerProperties({streamlined_nav: true});
         expect(ph.register).toHaveBeenCalledWith({streamlined_nav: true});
+    });
+});
+
+describe('whenPostHogLoads', () => {
+    it('calls back at once when PostHog is loaded', () => {
+        const ph = installPostHog();
+        const callback = jest.fn();
+
+        whenPostHogLoads(callback);
+        expect(callback).toHaveBeenCalledWith(ph);
+    });
+
+    it('waits for PostHog to load, and can be cancelled', () => {
+        jest.useFakeTimers();
+        const callback = jest.fn();
+        const late = jest.fn();
+
+        whenPostHogLoads(callback);
+        const cancel = whenPostHogLoads(late);
+
+        cancel();
+        const ph = installPostHog();
+
+        act(() => {
+            jest.advanceTimersByTime(1000);
+        });
+        expect(callback).toHaveBeenCalledWith(ph);
+        expect(late).not.toHaveBeenCalled();
     });
 });
 
