@@ -39,8 +39,11 @@ describe('use-page-data', () => {
             usePageDataFetchState('snippets/sticky', false, false, onError)
         );
 
-        await waitFor(() => expect(onError).toHaveBeenCalledWith(failure));
-        expect(result.current).toEqual({type: FetchStateType.ERROR, error: failure});
+        // onError is called right after the state is set, before the re-render
+        await waitFor(() =>
+            expect(result.current).toEqual({type: FetchStateType.ERROR, error: failure})
+        );
+        expect(onError).toHaveBeenCalledWith(failure);
 
         // Handling the rejection takes it away from the unhandled-rejection
         // reporters, so both tools have to hear about it explicitly.
